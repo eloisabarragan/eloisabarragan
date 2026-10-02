@@ -86,21 +86,19 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:100;op
 .seal{display:grid;place-items:center;text-align:center;width:5.2rem;aspect-ratio:1;border-radius:50%;background:var(--green);color:var(--gold);border:2px solid var(--gold);box-shadow:0 0 0 3px var(--green);font-family:var(--cond);font-weight:800;text-transform:uppercase;line-height:.95;font-size:.7rem;padding:.5rem}
 .seal big{display:block;font-size:1.6rem;font-weight:900}
 
-.burger-wrap{position:absolute;left:58%;top:50%;width:min(40vw,520px);transform:translate(-50%,-50%);z-index:2}
-.burger{display:flex;flex-direction:column;align-items:center;width:100%;filter:drop-shadow(0 40px 40px rgba(0,0,0,.35))}
-.layer{position:relative;width:100%;will-change:transform}
-.layer svg{display:block;width:100%;height:auto}
-.layer + .layer{margin-top:-7%}
-.layer.l-lettuce{margin-top:-9%;z-index:-1}
-.layer.l-top{z-index:6}.layer.l-lettuce{z-index:5}.layer.l-tomato{z-index:4}.layer.l-cheese{z-index:3}.layer.l-patty{z-index:2}.layer.l-bottom{z-index:1}
-.tagline{position:absolute;left:104%;top:50%;transform:translateY(-50%);white-space:nowrap;display:flex;align-items:center;gap:.6rem;opacity:var(--o,0);font-family:var(--cond);font-weight:800;text-transform:uppercase;letter-spacing:.08em;font-size:clamp(.85rem,1.1vw,1.05rem);color:var(--cream);pointer-events:none}
-.tagline::before{content:"";width:clamp(20px,4vw,60px);height:2px;background:var(--gold)}
-.tagline small{display:block;font-family:var(--body);font-weight:500;text-transform:none;letter-spacing:0;color:var(--moss);font-size:.85em}
-.leaf{position:absolute;z-index:4;width:var(--s,90px);will-change:transform;pointer-events:none;filter:drop-shadow(0 14px 14px rgba(0,0,0,.3))}
-.leaf.blur{filter:blur(3px) drop-shadow(0 14px 14px rgba(0,0,0,.25))}
-.side-num{position:absolute;right:var(--gutter);top:50%;transform:translateY(-50%);text-align:right;font-family:var(--cond);font-weight:800;text-transform:uppercase;color:var(--cream);letter-spacing:.1em;z-index:3}
-.side-num b{display:block;font-size:2.4rem;font-weight:900;color:var(--gold)}
-.side-num span{font-size:.8rem}
+.loaf-wrap{position:absolute;left:62%;top:50%;width:min(52vw,720px);transform:translate(-50%,-50%);z-index:2;text-align:center}
+.loaf-wrap svg{display:block;width:100%;height:auto;filter:drop-shadow(0 40px 36px rgba(0,0,0,.4))}
+.loaf-cap{display:inline-flex;align-items:baseline;gap:.7rem;margin-top:.4rem;font-family:var(--cond);text-transform:uppercase;color:var(--cream);background:color-mix(in srgb,var(--forest) 70%,transparent);border:1px solid color-mix(in srgb,var(--gold) 50%,transparent);padding:.45em 1.1em;border-radius:99px;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.loaf-cap b{font-weight:900;font-size:clamp(1.2rem,2vw,1.8rem);color:var(--gold);letter-spacing:.02em}
+.loaf-cap span{font-weight:700;letter-spacing:.12em;font-size:clamp(.75rem,1vw,.9rem)}
+.forms{position:absolute;right:var(--gutter);top:50%;transform:translateY(-50%);list-style:none;margin:0;padding:0;z-index:3;display:grid;gap:1.2rem;text-align:right}
+.forms li{font-family:var(--cond);text-transform:uppercase;color:var(--moss);opacity:.45;transition:opacity .3s,color .3s,transform .3s;transform-origin:right}
+.forms li b{display:block;font-weight:900;font-size:clamp(1.4rem,2.2vw,2rem);line-height:1}
+.forms li span{font-weight:700;letter-spacing:.12em;font-size:.78rem}
+.forms li i{font-style:normal;font-family:var(--script);text-transform:none;color:var(--gold);font-size:1.1rem;margin-right:.3rem}
+.forms li.on{opacity:1;color:var(--cream);transform:scale(1.08)}
+.crumb{position:absolute;z-index:4;will-change:transform;pointer-events:none}
+.crumb.blur{filter:blur(2.5px)}
 .scroll-hint{position:absolute;left:50%;bottom:calc(1.5rem + env(safe-area-inset-bottom,0px));transform:translateX(-50%);font-family:var(--cond);font-weight:800;letter-spacing:.2em;text-transform:uppercase;font-size:.75rem;color:var(--green);display:flex;flex-direction:column;align-items:center;gap:.4rem;z-index:3}
 .scroll-hint i{width:2px;height:34px;background:var(--green);animation:drop 1.6s ease-in-out infinite;transform-origin:top}
 @keyframes drop{50%{transform:scaleY(.4)}}
@@ -110,11 +108,9 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:100;op
   .hero-copy{top:5.5rem;transform:none;max-width:none;right:var(--gutter)}
   .hero-copy h1{font-size:clamp(3rem,14vw,5.5rem)}
   .hero-copy p,.seals{display:none}
-  .burger-wrap{left:50%;top:auto;bottom:6%;transform:translateX(-50%);width:min(64vw,340px)}
-  .tagline{font-size:.72rem;left:auto;right:-4%;transform:translate(100%,-50%)}
-  .tagline::before{width:12px}
-  .tagline small{display:none}
-  .side-num{display:none}
+  .loaf-wrap{left:50%;top:auto;bottom:7%;transform:translateX(-50%);width:min(92vw,460px)}
+  .forms{display:none}
+  .loaf-cap{flex-direction:column;align-items:center;gap:.1rem;border-radius:18px;white-space:nowrap}
   .scroll-hint{display:none}
 }
 
@@ -288,15 +284,15 @@ footer{overflow:hidden;padding-top:2rem}
   </div>
 </nav>
 
-<section class="explode" id="top" aria-label="Bun de papa Martino">
+<section class="explode" id="top" aria-label="Pan de papa Martino">
   <div class="stick" id="stick">
     <div class="hero-copy">
       <span class="kicker">Panadería premium · Industria uruguaya</span>
-      <h1 aria-label="Bun de papa, esponjoso y liviano">
-        <span class="w thin" style="--i:0">Bun de</span>
+      <h1 aria-label="Pan de papa, esponjoso y liviano">
+        <span class="w thin" style="--i:0">Pan de</span>
         <span class="w" style="--i:1">papa</span>
       </h1>
-      <p>Esponjoso y liviano. La papa en la masa lo deja tierno, aguanta la salsa y no se desarma. <b>Bajá y miralo trabajar.</b></p>
+      <p>Esponjoso y liviano. Una misma masa, tres formas: redondo, mediano y largo. <b>Bajá y mirá cómo se estira.</b></p>
       <div class="cta">
         <a class="btn dark" href="#productos">Ver la línea →</a>
         <a class="btn line" href="#contacto">Para comercios</a>
@@ -306,11 +302,16 @@ footer{overflow:hidden;padding-top:2rem}
         <div class="seal"><span>Industria<br>uruguaya</span></div>
       </div>
     </div>
-    <div class="burger-wrap">
-      <div class="burger" id="burger" role="img" aria-label="Hamburguesa armada con Bun de papa Martino con sésamo"></div>
+    <div class="loaf-wrap">
+      <div id="loaf" role="img" aria-label="Pan de papa Martino que pasa de Bun redondo a Brot y a Hoagie"></div>
+      <div class="loaf-cap" aria-live="polite"><b id="capName">Bun de papa</b><span id="capInfo">Sésamo · 6 u · 450 g</span></div>
     </div>
-    <div id="leaves" aria-hidden="true"></div>
-    <div class="side-num" aria-hidden="true"><b>01.</b><span>Bun de papa<br>Sésamo</span></div>
+    <ol class="forms" id="forms" aria-label="Las tres formas">
+      <li class="on"><i>01</i><b>Bun</b><span>Redondo · 6 u · 450 g</span></li>
+      <li><i>02</i><b>Brot</b><span>Mediano · 4 u · 320 g</span></li>
+      <li><i>03</i><b>Hoagie</b><span>Largo · 8 u · 510 g</span></li>
+    </ol>
+    <div id="crumbs" aria-hidden="true"></div>
     <div class="scroll-hint" aria-hidden="true">Bajá<i></i></div>
   </div>
 </section>
@@ -458,52 +459,60 @@ function guard(img){
   if (img.complete && !img.naturalWidth) fail(); else img.addEventListener('error', fail, {once:true});
 }
 
-/* ---------- Hamburguesa por capas ---------- */
-function burgerLayers(){
-  const r = rnd(42); let seeds = '';
-  for (let i = 0; i < 70; i++){ const a = r()*Math.PI, d = .15 + r()*.8; const x = 200 + Math.cos(a)*d*165, y = 150 - Math.sin(a)*d*118; const dark = r() < .14; seeds += `<ellipse cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" rx="6" ry="3" fill="${dark ? '#1d140d' : '#fff4d6'}" stroke="${dark ? '#000' : '#d6b06f'}" stroke-width=".8" transform="rotate(${(r()*180)|0} ${x.toFixed(1)} ${y.toFixed(1)})"/>`; }
-  let tomSeeds = ''; [110, 290].forEach(cx => { for (let i = 0; i < 6; i++) tomSeeds += `<ellipse cx="${cx - 50 + i*20}" cy="${24 + (i%2?4:-4)}" rx="5" ry="2.4" fill="#f7d38a" opacity=".8"/>`; });
-  let lettuce = 'M6 22'; for (let x = 6; x < 394; x += 28) lettuce += ` q7 ${x % 56 ? 26 : 34} 14 4 q7 -18 14 0`; lettuce += ' L394 10 Q200 -4 6 10 Z';
-  let patty = ''; for (let i = 0; i < 40; i++){ const x = 40 + r()*320, y = 14 + r()*50; patty += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${(1+r()*2.5).toFixed(1)}" fill="#2a1207" opacity=".6"/>`; }
-  return [
-    ['l-top','Bun de papa','La tapa con sésamo', `<svg viewBox="0 0 400 175"><defs><radialGradient id="bt" cx="38%" cy="25%" r="85%"><stop offset="0" stop-color="#ffd08a"/><stop offset=".5" stop-color="#e48d38"/><stop offset="1" stop-color="#a24f17"/></radialGradient></defs>
-      <path d="M18 152 Q14 30 200 18 Q386 30 382 152 Q382 170 360 170 H40 Q18 170 18 152Z" fill="url(#bt)"/><path d="M28 160 H372" stroke="#f6d39b" stroke-width="7" stroke-linecap="round" opacity=".8"/>
-      <ellipse cx="130" cy="62" rx="70" ry="18" fill="#fff" opacity=".25" transform="rotate(-14 130 62)"/>${seeds}</svg>`],
-    ['l-lettuce','Lechuga','Fresca y crocante', `<svg viewBox="0 0 400 60"><path d="${lettuce}" fill="#68b33f" stroke="#3f8422" stroke-width="3" stroke-linejoin="round"/></svg>`],
-    ['l-tomato','Tomate','Dos rodajas', `<svg viewBox="0 0 400 52">${[110,290].map(cx => `<ellipse cx="${cx}" cy="26" rx="100" ry="22" fill="#c92b22"/><ellipse cx="${cx}" cy="24" rx="84" ry="15" fill="#ee5a45"/>`).join('')}${tomSeeds}</svg>`],
-    ['l-cheese','Cheddar','Derretido', `<svg viewBox="0 0 400 66"><path d="M22 10 H378 L384 26 L350 30 Q344 58 330 30 L250 30 Q240 64 226 30 L140 30 Q130 54 118 30 L30 30 Z" fill="#f6b21f" stroke="#d88c0c" stroke-width="2"/><path d="M40 16 H360" stroke="#ffd760" stroke-width="5" stroke-linecap="round"/></svg>`],
-    ['l-patty','Carne','A la parrilla', `<svg viewBox="0 0 400 80"><defs><linearGradient id="pt" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7a3d1b"/><stop offset="1" stop-color="#341607"/></linearGradient></defs><rect x="22" y="6" width="356" height="66" rx="33" fill="url(#pt)"/>${patty}<path d="M70 26 l60 10 M150 22 l70 12 M240 22 l70 12" stroke="#1d0a03" stroke-width="5" stroke-linecap="round" opacity=".55"/></svg>`],
-    ['l-bottom','Base','El mismo Bun de papa', `<svg viewBox="0 0 400 84"><defs><linearGradient id="bb" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f3c88a"/><stop offset=".35" stop-color="#e08f3e"/><stop offset="1" stop-color="#9a4c18"/></linearGradient></defs><path d="M28 8 H372 Q388 8 386 26 Q378 76 330 78 H70 Q22 76 14 26 Q12 8 28 8Z" fill="url(#bb)"/><path d="M30 12 H370" stroke="#fbe2b4" stroke-width="8" stroke-linecap="round"/></svg>`],
-  ];
+/* ---------- El pan que se estira: Bun → Brot → Hoagie ---------- */
+const FORMS = [
+  {rx:150, ry:96, y:132, name:'Bun de papa', info:'Sésamo · 6 u · 450 g'},
+  {rx:212, ry:74, y:150, name:'Brot de papa', info:'Clásico · 4 u · 320 g'},
+  {rx:272, ry:54, y:166, name:'Hoagie de papa', info:'Queso · 8 u · 510 g'},
+];
+const R = rnd(7);
+const seedPts = Array.from({length:120}, () => { const a = R()*Math.PI*2, d = Math.sqrt(R()); return [Math.cos(a)*d, Math.sin(a)*d, R()*180|0, R() < .14]; });
+const cheesePts = Array.from({length:170}, () => { const a = R()*Math.PI*2, d = Math.sqrt(R()); return [Math.cos(a)*d, Math.sin(a)*d, R()*180|0, ['#e38b2a','#c9661c','#f3b14a','#fbe2a0'][R()*4|0], 6 + R()*8]; });
+const lerp = (a, b, k) => a + (b - a) * k;
+const loafBox = $('#loaf');
+let lastT = -1;
+function drawLoaf(t){
+  if (Math.abs(t - lastT) < .002) return; lastT = t;
+  const i = Math.min(1, Math.floor(t)), k = t - i, A = FORMS[i], B = FORMS[i + 1];
+  const rx = lerp(A.rx, B.rx, k), ry = lerp(A.ry, B.ry, k), cy = lerp(A.y, B.y, k), cx = 300, base = 262;
+  const seedO = clamp(1 - t / .8), cheeseO = clamp((t - 1.25) / .6), scoreO = clamp(1 - Math.abs(t - 1) / .6);
+  const queso = cheeseO > .5;
+  const c0 = queso ? '#fbe9bd' : '#ffd08a', c1 = queso ? '#f0c47a' : '#e48d38', c2 = queso ? '#c98b3c' : '#a24f17';
+  let seeds = '', cheese = '', scores = '';
+  if (seedO > 0) seeds = `<g opacity="${seedO.toFixed(2)}">` + seedPts.map(([u,v,r,dark]) => { const x = (cx + u*rx*.86).toFixed(1), y = (cy + v*ry*.78 - 4).toFixed(1); return `<ellipse cx="${x}" cy="${y}" rx="5.5" ry="2.8" fill="${dark ? '#1d140d' : '#fff4d6'}" stroke="${dark ? '#000' : '#d6b06f'}" stroke-width=".7" transform="rotate(${r} ${x} ${y})"/>`; }).join('') + '</g>';
+  if (cheeseO > 0) cheese = `<g opacity="${cheeseO.toFixed(2)}">` + cheesePts.map(([u,v,r,c,w]) => { const x = (cx + u*rx*.94).toFixed(1), y = (cy + 6 + v*(ry+14)*.84).toFixed(1); return `<rect x="${x}" y="${y}" width="${w.toFixed(1)}" height="3" rx="1.4" fill="${c}" transform="rotate(${r} ${x} ${y})"/>`; }).join('') + '</g>';
+  if (scoreO > 0) for (let j = -1; j <= 1; j++) scores += `<path d="M${cx + j*rx*.5 - 18} ${cy - ry*.6} q16 ${ry*.55} 34 ${ry*.95}" stroke="#a95a1f" stroke-width="3.5" fill="none" stroke-linecap="round" opacity="${(scoreO*.5).toFixed(2)}"/>`;
+  loafBox.innerHTML = `<svg viewBox="0 0 600 300">
+    <defs><radialGradient id="lc" cx="40%" cy="22%" r="80%"><stop offset="0" stop-color="${c0}"/><stop offset=".55" stop-color="${c1}"/><stop offset="1" stop-color="${c2}"/></radialGradient>
+    <linearGradient id="ls" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f8e2b0"/><stop offset="1" stop-color="#d39a55"/></linearGradient></defs>
+    <ellipse cx="${cx}" cy="${base + 18}" rx="${rx * 1.02}" ry="13" fill="#000" opacity=".3"/>
+    <path d="M${cx-rx+6} ${cy+10} Q${cx-rx} ${base+12} ${cx-rx+34} ${base+14} H${cx+rx-34} Q${cx+rx} ${base+12} ${cx+rx-6} ${cy+10} Z" fill="url(#ls)"/>
+    <ellipse cx="${cx}" cy="${cy}" rx="${rx}" ry="${ry}" fill="url(#lc)"/>
+    <ellipse cx="${cx - rx*.3}" cy="${cy - ry*.5}" rx="${rx*.3}" ry="${ry*.15}" fill="#fff" opacity=".22" transform="rotate(-8 ${cx - rx*.3} ${cy - ry*.5})"/>
+    ${scores}${seeds}${cheese}</svg>`;
+  const n = Math.round(t);
+  $('#capName').textContent = FORMS[n].name; $('#capInfo').textContent = FORMS[n].info;
+  [...$('#forms').children].forEach((li, j) => li.classList.toggle('on', j === n));
 }
-const burger = $('#burger');
-burger.innerHTML = burgerLayers().map(([c, t, s, svg]) => `<div class="layer ${c}">${svg}<span class="tagline"><span>${t}<small>${s}</small></span></span></div>`).join('');
-const layers = [...burger.children];
 
-/* hojas que flotan alrededor */
-const leafSVG = id => `<svg viewBox="0 0 100 60"><defs><linearGradient id="lf${id}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7cc24a"/><stop offset="1" stop-color="#2f6f1d"/></linearGradient></defs><path d="M4 34 Q34 -8 96 18 Q70 62 4 34Z" fill="url(#lf${id})"/><path d="M8 33 Q50 26 92 19" stroke="#245a14" stroke-width="2" fill="none" opacity=".7"/></svg>`;
-const leafSpec = [[52,14,90,-20,1.4],[83,22,70,30,1.9,'blur'],[48,74,80,140,1.2],[90,70,110,-60,2.4,'blur'],[66,8,56,60,1.7],[72,86,64,-120,2.1]];
-$('#leaves').innerHTML = leafSpec.map(([x,y,s,r,d,b],i) => `<div class="leaf ${b||''}" data-d="${d}" data-r="${r}" style="left:${x}%;top:${y}%;--s:clamp(${s*.5}px,${s/14}vw,${s*1.3}px)">${leafSVG(i)}</div>`).join('');
-const leaves = [...document.querySelectorAll('.leaf')];
+/* sésamo y queso rallado que flotan alrededor */
+const crumbSpec = [[48,16,1.4,'s'],[84,20,1.9,'c','blur'],[50,78,1.2,'c'],[92,72,2.4,'s','blur'],[68,9,1.7,'s'],[74,88,2.1,'c'],[58,30,1,'s'],[96,44,1.6,'c'],[44,56,2.2,'s','blur'],[80,60,1.3,'s']];
+$('#crumbs').innerHTML = crumbSpec.map(([x,y,d,k,b], i) => `<div class="crumb ${b||''}" data-d="${d}" data-r="${i*47}" style="left:${x}%;top:${y}%">${k === 's'
+  ? `<svg width="${14*d}" height="${7*d}" viewBox="0 0 20 10"><ellipse cx="10" cy="5" rx="9" ry="4.2" fill="${i % 4 === 0 ? '#1d140d' : '#fff4d6'}" stroke="#c9a464" stroke-width=".8"/></svg>`
+  : `<svg width="${22*d}" height="${6*d}" viewBox="0 0 30 8"><rect x="1" y="1" width="28" height="6" rx="3" fill="#f2a83c"/></svg>`}</div>`).join('');
+const crumbs = [...document.querySelectorAll('.crumb')];
 
 let mx = 0, my = 0;
 $('#stick').addEventListener('pointermove', e => { mx = e.clientX / innerWidth - .5; my = e.clientY / innerHeight - .5; });
-const explode = $('#top'), nav = $('#nav'), sideNum = $('.side-num'), hint = $('.scroll-hint');
+const hero = $('#top'), nav = $('#nav'), hint = $('.scroll-hint');
+const hold = f => { const x = clamp((f - .15) / .7); return x * x * (3 - 2 * x); };
 function onScroll(){
-  const r = explode.getBoundingClientRect();
-  const p = reduce ? .55 : clamp(-r.top / (r.height - innerHeight));
-  const e = clamp(p / .7); const ease = 1 - Math.pow(1 - e, 3);
-  const spread = Math.min(innerHeight * .085, 80);
-  layers.forEach((l, i) => {
-    const off = (i - 2.5) * spread * ease;
-    l.style.transform = `translateY(${off}px) rotate(${(i % 2 ? 1 : -1) * 3 * ease}deg)`;
-    l.querySelector('.tagline').style.setProperty('--o', clamp((ease - .35 - i*.05) * 3));
-  });
-  leaves.forEach((lf, i) => {
-    const d = +lf.dataset.d;
-    lf.style.transform = `translate(${mx*d*30}px, ${(my*d*30) - p*d*160}px) rotate(${+lf.dataset.r + p*d*90}deg)`;
-  });
-  sideNum.style.opacity = 1 - clamp(ease * 3); hint.style.opacity = 1 - clamp(p * 6);
+  const r = hero.getBoundingClientRect();
+  const p = clamp(-r.top / (r.height - innerHeight));
+  const raw = clamp(p / .9) * 2, seg = Math.min(1, Math.floor(raw));
+  drawLoaf(reduce ? Math.round(raw) : seg + hold(raw - seg));
+  crumbs.forEach(c => { const d = +c.dataset.d; c.style.transform = `translate(${mx*d*30}px, ${(my*d*30) - p*d*170}px) rotate(${+c.dataset.r + p*d*120}deg)`; });
+  hint.style.opacity = 1 - clamp(p * 6);
   nav.classList.toggle('solid', r.bottom < 80);
 }
 addEventListener('scroll', onScroll, {passive:true}); addEventListener('resize', onScroll);
