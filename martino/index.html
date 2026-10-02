@@ -7,18 +7,22 @@
 <meta name="description" content="Martino, panadería premium. Bun, Brot y Hoagie de papa: esponjosos y livianos, 0% grasas trans. Industria uruguaya.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;700;800;900&family=Barlow:wght@400;500;600&family=Yellowtail&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;500;700;800;900&family=Barlow:wght@400;500;600&family=Yellowtail&display=swap">
 <style>
-/* Layout: el empaque de Martino llevado a pantalla completa. Verde bosque de fondo, banda dorada,
-   condensada en mayúsculas como en la bolsa y la firma en cursiva. Un solo acento: el dorado. */
+/* Layout: la bolsa de Martino hecha web. Hero partido dorado/verde con una hamburguesa que se desarma al bajar,
+   después un panel de vidrio esmerilado sobre una cocina, donde los panes giran como platos. */
 :root{
   --forest:#0e2618;      /* fondo */
   --green:#18432a;       /* verde de la etiqueta */
-  --leaf:#245c39;        /* superficies elevadas */
+  --leaf:#245c39;
   --gold:#f3c234;        /* dorado de la banda */
   --gold-deep:#c98d0e;
-  --cream:#fbf3df;       /* texto */
-  --moss:#a9bfa7;        /* texto secundario */
+  --amber:#e9a514;
+  --cream:#fbf3df;       /* texto sobre oscuro */
+  --moss:#a9bfa7;
+  --ink:#16261c;         /* texto sobre vidrio */
+  --ink-soft:#4d5d52;
+  --wall:#e7e2d8;
   --line:#2d6040;
   --cond:"Barlow Condensed", "Arial Narrow", "Roboto Condensed", sans-serif;
   --body:"Barlow", "Helvetica Neue", Arial, sans-serif;
@@ -41,94 +45,156 @@ h2{font-size:clamp(3.2rem,8.5vw,8.5rem);letter-spacing:-.01em}
 .script{font-family:var(--script);font-weight:400;text-transform:none;color:var(--gold);letter-spacing:0}
 .btn{display:inline-flex;align-items:center;gap:.6em;font-family:var(--cond);font-weight:800;font-size:1.05rem;letter-spacing:.1em;text-transform:uppercase;border:2px solid var(--gold);color:var(--forest);background:var(--gold);padding:.8em 1.5em;border-radius:999px;cursor:pointer;text-decoration:none;transition:transform .25s,background .25s,color .25s}
 .btn:hover{transform:translateY(-2px) rotate(-1deg);background:var(--cream);border-color:var(--cream)}
-.btn.ghost{background:transparent;color:var(--cream);border-color:var(--line)}
-.btn.ghost:hover{border-color:var(--gold);color:var(--gold)}
-/* el mordisco de la etiqueta, arriba a la derecha */
-.bite{-webkit-mask:radial-gradient(circle at 100% 0,#0000 11%,#000 11.3%);mask:radial-gradient(circle at 100% 0,#0000 11%,#000 11.3%)}
-body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:100;opacity:.06;mix-blend-mode:overlay;
+.btn.dark{background:var(--green);border-color:var(--green);color:var(--gold)}
+.btn.dark:hover{background:var(--forest);border-color:var(--forest)}
+.btn.line{background:transparent;color:var(--green);border-color:var(--green)}
+.btn.line:hover{background:var(--green);color:var(--gold)}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:100;opacity:.05;mix-blend-mode:overlay;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
 
 /* ---------- NAV ---------- */
-.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);background:color-mix(in srgb,var(--forest) 78%,transparent);border-bottom:1px solid var(--line)}
-.nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding-block:.6rem}
-.logo{text-decoration:none;display:flex;flex-direction:column;line-height:1}
-.logo b{font-family:var(--script);font-weight:400;font-size:2.2rem;color:var(--gold);line-height:.9}
-.logo small{font-family:var(--cond);font-weight:700;font-size:.62rem;letter-spacing:.3em;color:var(--cream);margin-top:.15rem;padding-left:.3rem}
+.nav{position:fixed;left:0;right:0;top:0;z-index:50;padding-top:env(safe-area-inset-top,0px);transition:background .3s,backdrop-filter .3s}
+.nav.solid{background:color-mix(in srgb,var(--forest) 82%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding-block:.7rem}
+.logo{text-decoration:none;display:flex;flex-direction:column;line-height:1;color:var(--green)}
+.logo b{font-family:var(--script);font-weight:400;font-size:2.2rem;line-height:.9}
+.logo small{font-family:var(--cond);font-weight:700;font-size:.62rem;letter-spacing:.3em;margin-top:.15rem;padding-left:.3rem}
+.nav.solid .logo{color:var(--gold)}
 .nav ul{display:flex;gap:2rem;list-style:none;margin:0;padding:0}
-.nav ul a{font-family:var(--cond);font-weight:700;font-size:.95rem;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;color:var(--moss);transition:color .2s}
-.nav ul a:hover{color:var(--gold)}
-.nav .btn{font-size:.9rem;padding:.6em 1.2em}
-@media (max-width:860px){.nav ul{display:none}}
+.nav ul a{font-family:var(--cond);font-weight:800;font-size:.95rem;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;color:var(--green);transition:color .2s}
+.nav.solid ul a{color:var(--moss)}
+.nav ul a:hover{color:var(--cream)}
+.nav .btn{font-size:.9rem;padding:.6em 1.2em;background:transparent;color:var(--cream);border-color:var(--cream)}
+.nav .btn:hover{background:var(--gold);color:var(--forest);border-color:var(--gold)}
+@media (max-width:900px){.nav ul{display:none}}
 
-/* ---------- HERO ---------- */
-.hero{position:relative;overflow:hidden;isolation:isolate;padding-block:clamp(2rem,5vw,4.5rem) clamp(3rem,6vw,5rem)}
-#seeds{position:absolute;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none}
-.hero::before{content:"";position:absolute;right:-10%;top:-20%;width:70%;aspect-ratio:1;z-index:-2;background:radial-gradient(closest-side,color-mix(in srgb,var(--gold) 22%,transparent),transparent);filter:blur(20px)}
-.hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(2rem,5vw,5rem);align-items:center}
-.hero h1{font-size:clamp(4rem,11.5vw,12.5rem);letter-spacing:-.02em;line-height:.8;margin-top:1rem}
-.hero h1 .w{display:inline-block;animation:pop 1.1s cubic-bezier(.3,1.5,.5,1) both;animation-delay:calc(var(--i)*90ms);transform-origin:50% 100%}
-@keyframes pop{from{transform:scale(.6,1.25) translateY(10%);opacity:.2}}
-.hero h1 .script{display:block;font-size:.56em;line-height:1.05;margin-top:.05em;transform:rotate(-4deg);transform-origin:left;padding-left:.1em}
-.hero-copy{font-size:clamp(1.1rem,1.5vw,1.35rem);max-width:38ch;color:var(--moss);margin:1.8rem 0 0}
-.hero-copy b{color:var(--cream);font-weight:600}
-.cta{display:flex;flex-wrap:wrap;gap:.8rem;margin-top:2rem}
-.seals{display:flex;gap:1.2rem;flex-wrap:wrap;margin-top:2.2rem}
-.seal{display:grid;place-items:center;text-align:center;width:6.2rem;aspect-ratio:1;border-radius:50%;background:var(--green);border:2px solid var(--gold);box-shadow:0 0 0 4px var(--forest),0 0 0 5px var(--gold-deep);font-family:var(--cond);font-weight:800;text-transform:uppercase;line-height:.95;font-size:.82rem;color:var(--gold);padding:.6rem}
-.seal big{display:block;font-size:2rem;font-weight:900}
-.hero-art{position:relative;max-width:540px;width:100%;justify-self:end}
-.hero-photo{aspect-ratio:4/5;border-radius:28px;overflow:hidden;background:var(--green);position:relative;max-width:100%}
-.hero-photo img,.hero-photo svg{width:100%;height:100%;object-fit:cover;display:block}
-.hero-photo svg{object-fit:contain;padding:12%;background:radial-gradient(circle at 50% 40%,var(--leaf),var(--green))}
-.ring{position:absolute;left:-12%;bottom:-8%;width:42%;aspect-ratio:1;animation:spin 18s linear infinite;max-width:210px}
-.ring circle{fill:var(--gold)}
-.ring text{font-family:var(--cond);font-weight:800;font-size:13px;letter-spacing:3px;fill:var(--forest)}
-@keyframes spin{to{transform:rotate(360deg)}}
-@media (max-width:900px){.hero-grid{grid-template-columns:1fr}.hero-art{justify-self:center;max-width:440px}.ring{left:-4%}}
+/* ---------- HERO: hamburguesa que se desarma ---------- */
+.explode{position:relative;height:230vh}
+.stick{position:sticky;top:0;height:100vh;height:100svh;min-height:600px;overflow:hidden;isolation:isolate;
+  background:linear-gradient(90deg,var(--amber) 0,var(--gold) 58%,var(--forest) 58%,var(--green) 100%)}
+.stick::before{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(60% 70% at 30% 40%,color-mix(in srgb,#fff 30%,transparent),transparent 70%)}
+.hero-copy{position:absolute;left:var(--gutter);top:50%;transform:translateY(-46%);max-width:min(560px,52vw);color:var(--green);z-index:3}
+.hero-copy .kicker{font-family:var(--cond);font-weight:800;letter-spacing:.2em;text-transform:uppercase;font-size:.9rem}
+.hero-copy h1{font-size:clamp(3.6rem,9vw,9.5rem);line-height:.82;margin-top:.6rem}
+.hero-copy h1 span{display:block}
+.hero-copy h1 .thin{font-weight:300}
+.hero-copy h1 .w{animation:pop 1s cubic-bezier(.3,1.5,.5,1) both;animation-delay:calc(var(--i)*110ms);transform-origin:0 100%}
+@keyframes pop{from{transform:scale(.7,1.2) translateY(12%);opacity:.15}}
+.hero-copy p{font-size:clamp(1.05rem,1.4vw,1.25rem);max-width:34ch;margin:1.4rem 0 0;color:color-mix(in srgb,var(--green) 88%,var(--gold))}
+.hero-copy .cta{display:flex;flex-wrap:wrap;gap:.8rem;margin-top:1.8rem}
+.seals{display:flex;gap:.6rem;margin-top:1.8rem;flex-wrap:wrap}
+.seal{display:grid;place-items:center;text-align:center;width:5.2rem;aspect-ratio:1;border-radius:50%;background:var(--green);color:var(--gold);border:2px solid var(--gold);box-shadow:0 0 0 3px var(--green);font-family:var(--cond);font-weight:800;text-transform:uppercase;line-height:.95;font-size:.7rem;padding:.5rem}
+.seal big{display:block;font-size:1.6rem;font-weight:900}
+
+.burger-wrap{position:absolute;left:58%;top:50%;width:min(40vw,520px);transform:translate(-50%,-50%);z-index:2}
+.burger{display:flex;flex-direction:column;align-items:center;width:100%;filter:drop-shadow(0 40px 40px rgba(0,0,0,.35))}
+.layer{position:relative;width:100%;will-change:transform}
+.layer svg{display:block;width:100%;height:auto}
+.layer + .layer{margin-top:-7%}
+.layer.l-lettuce{margin-top:-9%;z-index:-1}
+.layer.l-top{z-index:6}.layer.l-lettuce{z-index:5}.layer.l-tomato{z-index:4}.layer.l-cheese{z-index:3}.layer.l-patty{z-index:2}.layer.l-bottom{z-index:1}
+.tagline{position:absolute;left:104%;top:50%;transform:translateY(-50%);white-space:nowrap;display:flex;align-items:center;gap:.6rem;opacity:var(--o,0);font-family:var(--cond);font-weight:800;text-transform:uppercase;letter-spacing:.08em;font-size:clamp(.85rem,1.1vw,1.05rem);color:var(--cream);pointer-events:none}
+.tagline::before{content:"";width:clamp(20px,4vw,60px);height:2px;background:var(--gold)}
+.tagline small{display:block;font-family:var(--body);font-weight:500;text-transform:none;letter-spacing:0;color:var(--moss);font-size:.85em}
+.leaf{position:absolute;z-index:4;width:var(--s,90px);will-change:transform;pointer-events:none;filter:drop-shadow(0 14px 14px rgba(0,0,0,.3))}
+.leaf.blur{filter:blur(3px) drop-shadow(0 14px 14px rgba(0,0,0,.25))}
+.side-num{position:absolute;right:var(--gutter);top:50%;transform:translateY(-50%);text-align:right;font-family:var(--cond);font-weight:800;text-transform:uppercase;color:var(--cream);letter-spacing:.1em;z-index:3}
+.side-num b{display:block;font-size:2.4rem;font-weight:900;color:var(--gold)}
+.side-num span{font-size:.8rem}
+.scroll-hint{position:absolute;left:50%;bottom:calc(1.5rem + env(safe-area-inset-bottom,0px));transform:translateX(-50%);font-family:var(--cond);font-weight:800;letter-spacing:.2em;text-transform:uppercase;font-size:.75rem;color:var(--green);display:flex;flex-direction:column;align-items:center;gap:.4rem;z-index:3}
+.scroll-hint i{width:2px;height:34px;background:var(--green);animation:drop 1.6s ease-in-out infinite;transform-origin:top}
+@keyframes drop{50%{transform:scaleY(.4)}}
+@media (max-width:900px){
+  .explode{height:200vh}
+  .stick{background:linear-gradient(180deg,var(--amber) 0,var(--gold) 56%,var(--forest) 56%,var(--green) 100%)}
+  .hero-copy{top:5.5rem;transform:none;max-width:none;right:var(--gutter)}
+  .hero-copy h1{font-size:clamp(3rem,14vw,5.5rem)}
+  .hero-copy p,.seals{display:none}
+  .burger-wrap{left:50%;top:auto;bottom:6%;transform:translateX(-50%);width:min(64vw,340px)}
+  .tagline{font-size:.72rem;left:auto;right:-4%;transform:translate(100%,-50%)}
+  .tagline::before{width:12px}
+  .tagline small{display:none}
+  .side-num{display:none}
+  .scroll-hint{display:none}
+}
 
 /* ---------- BANDA ---------- */
-.band{background:var(--gold);color:var(--green);overflow:hidden;border-block:3px solid var(--green)}
+.band{background:var(--gold);color:var(--green);overflow:hidden;border-block:3px solid var(--green);position:relative;z-index:2}
 .band-track{display:flex;width:max-content;animation:scroll 34s linear infinite}
 .band span{font-family:var(--cond);font-weight:900;text-transform:uppercase;font-size:clamp(1.6rem,3vw,2.6rem);padding:.3em 0;white-space:nowrap;display:flex;align-items:center}
 .band span::after{content:"";width:.35em;height:.35em;border-radius:50%;background:var(--green);margin-inline:.8em}
 @keyframes scroll{to{transform:translateX(-50%)}}
 
-/* ---------- PRODUCTOS ---------- */
-.products{padding-block:clamp(4rem,9vw,8rem)}
-.sec-head{display:flex;justify-content:space-between;align-items:flex-end;gap:2rem;flex-wrap:wrap;margin-bottom:clamp(2rem,4vw,3.5rem)}
-.sec-head p{max-width:40ch;color:var(--moss);margin:0;font-size:1.08rem}
-.stage{display:grid;grid-template-columns:1fr 1fr;gap:clamp(1.5rem,5vw,5rem);align-items:center;background:var(--green);border-radius:32px;padding:clamp(1rem,3vw,2.5rem);position:relative;overflow:hidden}
-.stage::after{content:"";position:absolute;left:0;right:0;top:50%;height:16%;transform:translateY(-50%);background:var(--gold);opacity:.07;pointer-events:none}
-.stage-photo{aspect-ratio:1;border-radius:22px;overflow:hidden;background:var(--cream);position:relative;z-index:1;max-width:100%}
-.stage-photo img,.stage-photo svg{width:100%;height:100%;object-fit:cover;display:block;animation:fadeIn .5s ease both}
-.stage-photo img{object-fit:contain;background:#fff}
-.stage-photo svg{object-fit:contain;padding:8%;background:radial-gradient(circle at 50% 45%,var(--leaf),var(--forest))}
-@keyframes fadeIn{from{opacity:.2;transform:scale(1.04)}}
-.stage-info{position:relative;z-index:1;min-width:0}
-.stage-line{font-family:var(--script);font-size:clamp(2rem,3.4vw,3rem);color:var(--gold);line-height:1}
-.stage-name{font-size:clamp(3.6rem,8vw,7.5rem);margin-top:.2rem}
-.stage-desc{color:var(--moss);font-size:1.15rem;max-width:38ch;margin:1rem 0 0}
-.specs{display:grid;grid-template-columns:repeat(3,1fr);margin-top:1.8rem;border-block:1px solid var(--line)}
-.specs div{padding:1rem 0;min-width:0}
-.specs div + div{border-left:1px solid var(--line);padding-left:1rem}
-.specs span{display:block;font-family:var(--cond);font-weight:700;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--moss)}
-.specs b{font-family:var(--cond);font-weight:900;font-size:clamp(2.2rem,3.6vw,3.2rem);line-height:1;font-variant-numeric:tabular-nums;color:var(--cream)}
-.specs b small{font-size:.45em;color:var(--gold);margin-left:.1em}
-.tags{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:1.4rem}
-.tag{font-family:var(--cond);font-weight:700;font-size:.82rem;letter-spacing:.12em;text-transform:uppercase;border:1px solid var(--gold);color:var(--gold);padding:.35em .9em;border-radius:99px}
-.lines{display:grid;grid-template-columns:3fr 2fr 2fr;gap:12px;margin-top:16px}
-.line-group{background:var(--green);border-radius:22px;padding:.9rem;min-width:0}
-.line-group > span{display:block;font-family:var(--script);color:var(--gold);font-size:1.5rem;line-height:1;padding:.2rem .3rem .7rem}
-.line-picks{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:8px}
-.pick{background:var(--forest);border:2px solid transparent;border-radius:16px;padding:.6rem .6rem .8rem;cursor:pointer;color:var(--cream);text-align:left;display:flex;flex-direction:column;gap:.3rem;transition:border-color .25s,transform .25s,background .25s;min-width:0}
-.pick:hover{transform:translateY(-3px);background:var(--leaf)}
-.pick[aria-pressed="true"]{border-color:var(--gold);background:var(--leaf)}
-.pick svg{width:100%;height:auto;aspect-ratio:300/200}
-.pick b{font-family:var(--cond);font-weight:900;text-transform:uppercase;font-size:1.35rem;line-height:.9}
-.pick small{font-family:var(--cond);font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--moss);font-size:.75rem}
-@media (max-width:1000px){.stage{grid-template-columns:1fr}.lines{grid-template-columns:1fr}}
+/* ---------- COCINA + PANEL DE VIDRIO ---------- */
+.kitchen{position:relative;overflow:hidden;padding-block:clamp(4rem,8vw,7rem);isolation:isolate;
+  background:linear-gradient(180deg,#d9d4ca 0,var(--wall) 30%,#dcd6cb 64%,#8a6a4c 64%,#6f533a 100%)}
+.kitchen::before{content:"";position:absolute;left:0;right:0;bottom:0;height:36%;z-index:-1;opacity:.5;background:repeating-linear-gradient(90deg,transparent 0 120px,rgba(0,0,0,.18) 120px 122px)}
+.deco{position:absolute;z-index:-1;pointer-events:none}
+.lamp{right:12%;top:0;width:clamp(50px,6vw,90px);height:clamp(150px,22vw,300px)}
+.lamp::before{content:"";position:absolute;left:50%;top:0;width:2px;height:60%;background:#222}
+.lamp::after{content:"";position:absolute;left:0;right:0;bottom:0;height:40%;background:linear-gradient(90deg,#111,#3a3a3a 40%,#111);border-radius:50% 50% 6px 6px/80% 80% 6px 6px}
+.counter{right:-2%;bottom:18%;width:34%;height:30%;background:linear-gradient(180deg,#f4f2ee 0 14%,#d8d4cc 14%);border-radius:6px;filter:blur(1.5px)}
+.stool{right:16%;bottom:0;width:clamp(70px,9vw,130px);height:38%;background:radial-gradient(ellipse 50% 9% at 50% 6%,#1b1b1b 98%,transparent),linear-gradient(90deg,transparent 18%,#1b1b1b 18% 23%,transparent 23% 77%,#1b1b1b 77% 82%,transparent 82%);filter:blur(1px)}
+.plant{left:3%;bottom:30%;width:clamp(80px,12vw,180px);aspect-ratio:1;background:radial-gradient(circle at 40% 40%,#4f8a4a,#2b5a2c 60%,transparent 62%),radial-gradient(circle at 70% 30%,#5d9b55,transparent 40%);filter:blur(4px)}
+.fridge{left:0;top:0;width:clamp(30px,5vw,80px);height:70%;background:linear-gradient(90deg,#8d8d8d,#c9c9c9 40%,#9a9a9a);filter:blur(2px)}
+
+.glass{position:relative;border-radius:clamp(22px,3vw,36px);padding:clamp(1rem,2.6vw,2.2rem);color:var(--ink);
+  background:color-mix(in srgb,#fff 46%,transparent);border:1px solid color-mix(in srgb,#fff 70%,transparent);
+  backdrop-filter:blur(26px) saturate(1.2);-webkit-backdrop-filter:blur(26px) saturate(1.2);box-shadow:0 30px 80px rgba(30,25,15,.25)}
+.glass-top{display:flex;justify-content:space-between;align-items:center;gap:1rem}
+.glass-top .logo{color:var(--green)}
+.glass-top .logo b{font-size:1.8rem}
+.icons{display:flex;gap:.5rem;align-items:center}
+.ico{width:2.6rem;height:2.6rem;border-radius:50%;display:grid;place-items:center;background:color-mix(in srgb,#fff 55%,transparent);border:0;color:var(--ink);cursor:pointer;font-size:1rem}
+.ico:hover{background:#fff}
+.feature{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1.1fr) minmax(0,.85fr);gap:clamp(1rem,3vw,2.5rem);align-items:center;margin-top:1rem;min-height:clamp(300px,34vw,440px)}
+.plate{position:relative;aspect-ratio:1;max-width:100%;border-radius:50%;background:radial-gradient(circle at 50% 45%,#fff 0 58%,#efede8 60%,#fff 66%,#e4e1da 100%);box-shadow:0 30px 50px rgba(0,0,0,.22),inset 0 -6px 14px rgba(0,0,0,.06);display:grid;place-items:center;overflow:hidden}
+.plate img,.plate svg{width:80%;height:auto;max-height:80%;object-fit:contain}
+.plate img{width:100%;height:100%;max-height:none;object-fit:cover;border-radius:50%}
+.plate.spin{animation:plateIn .9s cubic-bezier(.2,.9,.25,1.05) both}
+@keyframes plateIn{from{transform:rotate(-120deg) scale(.6) translateX(-30%);opacity:.1}}
+.f-title .rank{font-family:var(--cond);font-weight:700;letter-spacing:.14em;text-transform:uppercase;font-size:.8rem;color:var(--ink-soft)}
+.f-title h3{font-size:clamp(2.6rem,6.2vw,6.4rem);line-height:.85;margin-top:.4rem;color:var(--ink)}
+.f-title h3 .thin{display:block;font-weight:300}
+.f-title h3 .ch{display:inline-block;animation:chIn .5s cubic-bezier(.2,.9,.3,1) both;animation-delay:calc(var(--d)*28ms)}
+@keyframes chIn{from{transform:translateY(40%);opacity:0}}
+.f-actions{display:flex;gap:1.4rem;margin-top:1.2rem;font-family:var(--cond);font-weight:700;letter-spacing:.1em;text-transform:uppercase;font-size:.85rem}
+.f-actions a{text-decoration:none;color:var(--ink-soft);display:flex;align-items:center;gap:.4rem}
+.f-actions a:hover{color:var(--ink)}
+.card{background:color-mix(in srgb,#fff 62%,transparent);border-radius:22px;padding:1.2rem;min-width:0}
+.tabs{display:flex;gap:1rem;border-bottom:1px solid rgba(0,0,0,.08);margin-bottom:1rem}
+.tab{background:none;border:0;padding:.3rem 0 .6rem;font-family:var(--cond);font-weight:700;font-size:.85rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px}
+.tab[aria-selected="true"]{color:var(--ink);border-color:var(--ink)}
+.badge{display:inline-flex;flex-direction:column;align-items:center;justify-content:center;width:4.4rem;aspect-ratio:1;border-radius:16px;background:var(--b,#f6d36b);font-family:var(--cond);font-weight:900;font-size:2.2rem;line-height:.9;color:var(--ink)}
+.badge small{font-size:.75rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+.card h4{font-family:var(--cond);font-weight:800;font-size:1.5rem;margin:.8rem 0 .1rem;text-transform:uppercase}
+.card .sub{font-size:.8rem;color:var(--ink-soft);font-family:var(--cond);letter-spacing:.1em;text-transform:uppercase;font-weight:700}
+.card p{font-size:.95rem;color:var(--ink-soft);margin:.6rem 0 0}
+.card ul{margin:.2rem 0 0;padding-left:1.1rem;color:var(--ink-soft);font-size:.95rem}
+.card-foot{display:flex;justify-content:space-between;align-items:center;margin-top:1rem;font-family:var(--cond);font-weight:800;letter-spacing:.08em;text-transform:uppercase;font-size:.85rem}
+.dots{display:flex;gap:.35rem}
+.dots i{width:.5rem;height:.5rem;border-radius:50%;background:rgba(0,0,0,.18)}
+.dots i.on{background:var(--ink);width:1.4rem;border-radius:99px;transition:width .3s}
+.picker-row{display:flex;align-items:center;gap:.6rem;margin-top:clamp(1rem,2.5vw,2rem)}
+.arrow{flex:none;width:2.6rem;height:2.6rem;border-radius:50%;border:0;background:color-mix(in srgb,#fff 60%,transparent);color:var(--ink);font-size:1.1rem;cursor:pointer}
+.arrow:hover{background:#fff}
+.thumbs{display:flex;gap:clamp(.4rem,1.5vw,1.2rem);overflow-x:auto;scroll-snap-type:x mandatory;flex:1;padding:.4rem .2rem;scrollbar-width:none}
+.thumbs::-webkit-scrollbar{display:none}
+.thumb{flex:0 0 auto;scroll-snap-align:center;background:none;border:0;border-radius:20px;padding:.6rem .5rem;display:flex;flex-direction:column;align-items:center;gap:.4rem;cursor:pointer;color:var(--ink);width:clamp(96px,10vw,128px);transition:background .25s,transform .25s}
+.thumb:hover{transform:translateY(-3px)}
+.thumb[aria-pressed="true"]{background:color-mix(in srgb,#fff 70%,transparent)}
+.thumb .disc{width:72%;aspect-ratio:1;border-radius:50%;background:#fff;display:grid;place-items:center;box-shadow:0 10px 18px rgba(0,0,0,.14);overflow:hidden}
+.thumb .disc svg{width:86%}
+.thumb b{font-family:var(--cond);font-weight:800;font-size:.85rem;text-transform:uppercase;line-height:1.05;text-align:center}
+.thumb small{font-size:.7rem;color:var(--ink-soft);font-family:var(--cond);font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.dock{display:flex;justify-content:center;gap:.6rem;margin-top:1.2rem}
+.dock .ico{width:3rem;height:3rem}
+.dock .ico.on{background:var(--green);color:var(--gold)}
+@media (max-width:1000px){.feature{grid-template-columns:1fr 1fr}.feature .card{grid-column:1 / -1}}
+@media (max-width:620px){.feature{grid-template-columns:1fr}.plate{width:min(260px,70%);justify-self:center}.f-title{text-align:center}.f-actions{justify-content:center}}
 
 /* ---------- APRETALO ---------- */
-.squish{padding-block:clamp(4rem,9vw,8rem);background:var(--cream);color:var(--green);position:relative;overflow:hidden}
+.squish{padding-block:clamp(4rem,9vw,8rem);background:var(--cream);color:var(--green)}
 .squish .label{color:var(--gold-deep)}
 .squish-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,6vw,6rem);align-items:center}
 .squish h2 .script{color:var(--gold-deep);font-size:.7em;display:block;margin-top:.05em}
@@ -143,19 +209,20 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:100;op
 .facts span{font-size:.95rem;color:color-mix(in srgb,var(--green) 80%,var(--cream))}
 @media (max-width:860px){.squish-grid{grid-template-columns:1fr}.facts{grid-template-columns:1fr}}
 
-/* ---------- USOS ---------- */
+/* ---------- USOS (tarjetas tipo "explorá") ---------- */
 .uses{padding-block:clamp(4rem,9vw,8rem)}
+.sec-head{display:flex;justify-content:space-between;align-items:flex-end;gap:2rem;flex-wrap:wrap;margin-bottom:clamp(2rem,4vw,3.5rem)}
+.sec-head p{max-width:40ch;color:var(--moss);margin:0;font-size:1.08rem}
 .use-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
-.use{background:var(--green);border-radius:28px;padding:1.6rem;display:flex;flex-direction:column;gap:1rem;position:relative;overflow:hidden;min-height:400px;transition:transform .4s cubic-bezier(.3,1.5,.5,1)}
-.use:hover{transform:translateY(-6px) rotate(-.6deg)}
-.use .num{font-family:var(--script);font-size:1.6rem;color:var(--gold);position:relative}
-.use h3{font-size:clamp(2.6rem,4vw,3.8rem);position:relative}
-.use p{color:var(--moss);margin:0;max-width:32ch;position:relative}
-.use .with{margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:1rem;border-top:1px solid var(--line);padding-top:1rem;position:relative}
-.use .with a{font-family:var(--cond);font-weight:800;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;color:var(--gold);font-size:.95rem}
-.use svg.bg{position:absolute;right:-14%;top:-8%;width:62%;opacity:.9;transform:rotate(-12deg);transition:transform .6s cubic-bezier(.3,1.5,.5,1)}
-.use:hover svg.bg{transform:rotate(-4deg) scale(1.06)}
-@media (max-width:900px){.use-grid{grid-template-columns:1fr}.use{min-height:320px}}
+.use{display:flex;flex-direction:column;gap:.8rem;min-width:0;text-decoration:none;color:inherit}
+.use .pic{aspect-ratio:16/10;border-radius:22px;overflow:hidden;position:relative;background:var(--c);display:grid;place-items:center;max-width:100%}
+.use .pic svg{width:78%;transition:transform .6s cubic-bezier(.3,1.5,.5,1)}
+.use:hover .pic svg{transform:scale(1.08) rotate(-3deg)}
+.use h3{font-size:clamp(2rem,3vw,2.8rem)}
+.use .meta{display:flex;align-items:center;gap:.5rem;font-family:var(--cond);font-weight:700;letter-spacing:.06em;text-transform:uppercase;font-size:.9rem;color:var(--gold)}
+.use .meta i{width:1.1rem;height:1.1rem;border-radius:50%;background:var(--gold);color:var(--green);display:grid;place-items:center;font-style:normal;font-size:.7rem}
+.use p{color:var(--moss);margin:0;max-width:36ch}
+@media (max-width:900px){.use-grid{grid-template-columns:1fr}}
 
 /* ---------- GALERÍA ---------- */
 .gallery{padding-block:0 clamp(4rem,9vw,8rem)}
@@ -204,7 +271,7 @@ footer{overflow:hidden;padding-top:2rem}
 </head>
 <body>
 
-<nav class="nav" aria-label="Principal">
+<nav class="nav" id="nav" aria-label="Principal">
   <div class="wrap">
     <a class="logo" href="#top" aria-label="Martino, panadería premium"><b>Martino</b><small>PANADERÍA PREMIUM</small></a>
     <ul>
@@ -217,60 +284,67 @@ footer{overflow:hidden;padding-top:2rem}
   </div>
 </nav>
 
-<header class="hero" id="top">
-  <canvas id="seeds" aria-hidden="true"></canvas>
-  <div class="wrap hero-grid">
-    <div>
-      <span class="label">Panadería premium · Industria uruguaya</span>
-      <h1 aria-label="Esponjoso y liviano">
-        <span class="w" style="--i:0">Esponjoso</span>
-        <span class="script w" style="--i:3">y liviano.</span>
+<section class="explode" id="top" aria-label="Bun de papa Martino">
+  <div class="stick" id="stick">
+    <div class="hero-copy">
+      <span class="kicker">Panadería premium · Industria uruguaya</span>
+      <h1 aria-label="Bun de papa, esponjoso y liviano">
+        <span class="w thin" style="--i:0">Bun de</span>
+        <span class="w" style="--i:1">papa</span>
       </h1>
-      <p class="hero-copy">Pan de papa en tres formas: el <b>Bun</b> redondo para la hamburguesa, el <b>Brot</b> para el chivito y el choripán, y el <b>Hoagie</b> largo para el pancho. Clásico, con sésamo o con costra de queso.</p>
+      <p>Esponjoso y liviano. La papa en la masa lo deja tierno, aguanta la salsa y no se desarma. <b>Bajá y miralo trabajar.</b></p>
       <div class="cta">
-        <a class="btn" href="#productos">Ver la línea →</a>
-        <a class="btn ghost" href="#papa">Apretá uno</a>
+        <a class="btn dark" href="#productos">Ver la línea →</a>
+        <a class="btn line" href="#contacto">Para comercios</a>
       </div>
       <div class="seals" aria-label="Sellos">
         <div class="seal"><span><big>0%</big>grasas trans</span></div>
         <div class="seal"><span>Industria<br>uruguaya</span></div>
       </div>
     </div>
-    <div class="hero-art">
-      <div class="hero-photo bite" data-art="queso:bun"><img src="img/hero.jpg" alt="Bun de papa con costra de queso recién horneado"></div>
-      <svg class="ring" viewBox="0 0 200 200" aria-hidden="true"><circle cx="100" cy="100" r="99"/><defs><path id="circ" d="M100,100 m-74,0 a74,74 0 1,1 148,0 a74,74 0 1,1 -148,0"/></defs>
-        <text><textPath href="#circ">CALIDAD • TRADICIÓN • PASIÓN • CALIDAD • TRADICIÓN • PASIÓN •</textPath></text>
-        <path d="M100 66 v58 M100 80 q-14 -2 -18 -14 M100 80 q14 -2 18 -14 M100 94 q-16 -2 -20 -14 M100 94 q16 -2 20 -14 M100 108 q-16 -2 -20 -14 M100 108 q16 -2 20 -14" stroke="var(--green)" stroke-width="5" fill="none" stroke-linecap="round"/></svg>
+    <div class="burger-wrap">
+      <div class="burger" id="burger" role="img" aria-label="Hamburguesa armada con Bun de papa Martino con sésamo"></div>
     </div>
+    <div id="leaves" aria-hidden="true"></div>
+    <div class="side-num" aria-hidden="true"><b>01.</b><span>Bun de papa<br>Sésamo</span></div>
+    <div class="scroll-hint" aria-hidden="true">Bajá<i></i></div>
   </div>
-</header>
+</section>
 
 <div class="band" aria-hidden="true"><div class="band-track" id="band"></div></div>
 
-<section class="products" id="productos" aria-labelledby="ptitle">
+<section class="kitchen" id="productos" aria-labelledby="ptitle">
+  <span class="deco fridge"></span><span class="deco plant"></span><span class="deco lamp"></span><span class="deco counter"></span><span class="deco stool"></span>
   <div class="wrap">
-    <div class="sec-head">
-      <div>
-        <span class="label">La línea</span>
-        <h2 id="ptitle">Elegí <span class="script">tu pan</span></h2>
+    <div class="glass">
+      <div class="glass-top">
+        <span class="logo"><b>Martino</b></span>
+        <h2 id="ptitle" class="label" style="color:var(--ink-soft);font-size:.85rem;margin:0">¿Qué pan va hoy?</h2>
+        <div class="icons"><button class="ico" type="button" id="playBtn" aria-label="Pausar el carrusel">❚❚</button></div>
       </div>
-      <p>Tres formas, siete panes. Tocá uno para ver la bolsa, cuánto trae y para qué lo usamos nosotros.</p>
-    </div>
-    <div class="stage" aria-live="polite">
-      <div class="stage-photo bite" id="stagePhoto"></div>
-      <div class="stage-info">
-        <div class="stage-line" id="sLine">Bun de papa</div>
-        <h3 class="stage-name" id="sName">Clásico</h3>
-        <p class="stage-desc" id="sDesc"></p>
-        <div class="specs">
-          <div><span>Unidades</span><b id="sUnits">6</b></div>
-          <div><span>Cont. neto</span><b id="sWeight">450<small>g</small></b></div>
-          <div><span>Por unidad</span><b id="sEach">75<small>g</small></b></div>
+      <div class="feature" aria-live="polite">
+        <div class="plate" id="plate"></div>
+        <div class="f-title">
+          <span class="rank" id="fRank">N.º 1 · el más pedido</span>
+          <h3 id="fTitle"></h3>
+          <div class="f-actions"><a href="#papa">▶ Por qué papa</a><a href="#contacto">● Pedir para mi local</a></div>
         </div>
-        <div class="tags"><span class="tag">0% grasas trans</span><span class="tag">Esponjoso y liviano</span><span class="tag">Industria uruguaya</span></div>
+        <div class="card">
+          <div class="tabs" role="tablist">
+            <button class="tab" role="tab" type="button" id="tabA" aria-selected="true">La bolsa</button>
+            <button class="tab" role="tab" type="button" id="tabB" aria-selected="false">Ideal para</button>
+          </div>
+          <div id="cardBody"></div>
+          <div class="card-foot"><span id="fCount">1 / 7</span><span class="dots" id="dots"></span></div>
+        </div>
       </div>
+      <div class="picker-row">
+        <button class="arrow" type="button" id="prev" aria-label="Pan anterior">‹</button>
+        <div class="thumbs" id="thumbs" role="group" aria-label="Elegir pan"></div>
+        <button class="arrow" type="button" id="next" aria-label="Pan siguiente">›</button>
+      </div>
+      <div class="dock" aria-hidden="true"><span class="ico on">◉</span><span class="ico">⌁</span><span class="ico">✦</span><span class="ico">☰</span></div>
     </div>
-    <div class="lines" id="lines" role="group" aria-label="Elegir producto"></div>
   </div>
 </section>
 
@@ -351,10 +425,11 @@ footer{overflow:hidden;padding-top:2rem}
 (() => {
 const $ = s => document.querySelector(s);
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+const rnd = seed => () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+let uid = 0;
 
 /* ---------- Ilustración de pan de papa (se usa si falta una foto) ---------- */
-let uid = 0;
-const rnd = seed => () => (seed = (seed * 16807) % 2147483647) / 2147483647;
 const SHAPES = {bun:{rx:112, ry:66, y:88}, brot:{rx:128, ry:52, y:96}, hoagie:{rx:142, ry:36, y:110}};
 function bread(top = 'clasico', shape = 'bun'){
   const g = 'g'+uid++, s = 'k'+uid++, r = rnd(top.length * 97 + shape.length * 13);
@@ -367,50 +442,121 @@ function bread(top = 'clasico', shape = 'bun'){
   return `<svg viewBox="0 0 300 200" role="img" aria-label="${shape} de papa">
     <defs><radialGradient id="${g}" cx="40%" cy="22%" r="80%"><stop offset="0" stop-color="${crust[0]}"/><stop offset=".55" stop-color="${crust[1]}"/><stop offset="1" stop-color="${crust[2]}"/></radialGradient>
     <linearGradient id="${s}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f8e2b0"/><stop offset="1" stop-color="#d9a660"/></linearGradient></defs>
-    <ellipse cx="150" cy="182" rx="${rx}" ry="11" fill="#000" opacity=".3"/>
+    <ellipse cx="150" cy="182" rx="${rx}" ry="11" fill="#000" opacity=".25"/>
     <path d="M${cx-rx+6} ${domeY+8} Q${cx-rx} 176 ${cx-rx+30} 178 H${cx+rx-30} Q${cx+rx} 176 ${cx+rx-6} ${domeY+8} Z" fill="url(#${s})"/>
     <ellipse cx="${cx}" cy="${domeY}" rx="${rx}" ry="${ry}" fill="url(#${g})"/>
     <ellipse cx="${cx-rx*.3}" cy="${domeY-ry*.5}" rx="${rx*.3}" ry="${ry*.15}" fill="#fff" opacity=".22" transform="rotate(-10 ${cx-rx*.3} ${domeY-ry*.5})"/>
     ${deco}</svg>`;
 }
-/* Si la foto no está en img/, se reemplaza por la ilustración */
 function guard(img){
   const box = img.parentElement; const [top, shape] = (box.dataset.art || 'clasico:bun').split(':');
   const fail = () => img.replaceWith(Object.assign(document.createElement('div'), {innerHTML: bread(top, shape)}).firstElementChild);
   if (img.complete && !img.naturalWidth) fail(); else img.addEventListener('error', fail, {once:true});
 }
 
+/* ---------- Hamburguesa por capas ---------- */
+function burgerLayers(){
+  const r = rnd(42); let seeds = '';
+  for (let i = 0; i < 70; i++){ const a = r()*Math.PI, d = .15 + r()*.8; const x = 200 + Math.cos(a)*d*165, y = 150 - Math.sin(a)*d*118; const dark = r() < .14; seeds += `<ellipse cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" rx="6" ry="3" fill="${dark ? '#1d140d' : '#fff4d6'}" stroke="${dark ? '#000' : '#d6b06f'}" stroke-width=".8" transform="rotate(${(r()*180)|0} ${x.toFixed(1)} ${y.toFixed(1)})"/>`; }
+  let tomSeeds = ''; [110, 290].forEach(cx => { for (let i = 0; i < 6; i++) tomSeeds += `<ellipse cx="${cx - 50 + i*20}" cy="${24 + (i%2?4:-4)}" rx="5" ry="2.4" fill="#f7d38a" opacity=".8"/>`; });
+  let lettuce = 'M6 22'; for (let x = 6; x < 394; x += 28) lettuce += ` q7 ${x % 56 ? 26 : 34} 14 4 q7 -18 14 0`; lettuce += ' L394 10 Q200 -4 6 10 Z';
+  let patty = ''; for (let i = 0; i < 40; i++){ const x = 40 + r()*320, y = 14 + r()*50; patty += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${(1+r()*2.5).toFixed(1)}" fill="#2a1207" opacity=".6"/>`; }
+  return [
+    ['l-top','Bun de papa','La tapa con sésamo', `<svg viewBox="0 0 400 175"><defs><radialGradient id="bt" cx="38%" cy="25%" r="85%"><stop offset="0" stop-color="#ffd08a"/><stop offset=".5" stop-color="#e48d38"/><stop offset="1" stop-color="#a24f17"/></radialGradient></defs>
+      <path d="M18 152 Q14 30 200 18 Q386 30 382 152 Q382 170 360 170 H40 Q18 170 18 152Z" fill="url(#bt)"/><path d="M28 160 H372" stroke="#f6d39b" stroke-width="7" stroke-linecap="round" opacity=".8"/>
+      <ellipse cx="130" cy="62" rx="70" ry="18" fill="#fff" opacity=".25" transform="rotate(-14 130 62)"/>${seeds}</svg>`],
+    ['l-lettuce','Lechuga','Fresca y crocante', `<svg viewBox="0 0 400 60"><path d="${lettuce}" fill="#68b33f" stroke="#3f8422" stroke-width="3" stroke-linejoin="round"/></svg>`],
+    ['l-tomato','Tomate','Dos rodajas', `<svg viewBox="0 0 400 52">${[110,290].map(cx => `<ellipse cx="${cx}" cy="26" rx="100" ry="22" fill="#c92b22"/><ellipse cx="${cx}" cy="24" rx="84" ry="15" fill="#ee5a45"/>`).join('')}${tomSeeds}</svg>`],
+    ['l-cheese','Cheddar','Derretido', `<svg viewBox="0 0 400 66"><path d="M22 10 H378 L384 26 L350 30 Q344 58 330 30 L250 30 Q240 64 226 30 L140 30 Q130 54 118 30 L30 30 Z" fill="#f6b21f" stroke="#d88c0c" stroke-width="2"/><path d="M40 16 H360" stroke="#ffd760" stroke-width="5" stroke-linecap="round"/></svg>`],
+    ['l-patty','Carne','A la parrilla', `<svg viewBox="0 0 400 80"><defs><linearGradient id="pt" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7a3d1b"/><stop offset="1" stop-color="#341607"/></linearGradient></defs><rect x="22" y="6" width="356" height="66" rx="33" fill="url(#pt)"/>${patty}<path d="M70 26 l60 10 M150 22 l70 12 M240 22 l70 12" stroke="#1d0a03" stroke-width="5" stroke-linecap="round" opacity=".55"/></svg>`],
+    ['l-bottom','Base','El mismo Bun de papa', `<svg viewBox="0 0 400 84"><defs><linearGradient id="bb" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f3c88a"/><stop offset=".35" stop-color="#e08f3e"/><stop offset="1" stop-color="#9a4c18"/></linearGradient></defs><path d="M28 8 H372 Q388 8 386 26 Q378 76 330 78 H70 Q22 76 14 26 Q12 8 28 8Z" fill="url(#bb)"/><path d="M30 12 H370" stroke="#fbe2b4" stroke-width="8" stroke-linecap="round"/></svg>`],
+  ];
+}
+const burger = $('#burger');
+burger.innerHTML = burgerLayers().map(([c, t, s, svg]) => `<div class="layer ${c}">${svg}<span class="tagline"><span>${t}<small>${s}</small></span></span></div>`).join('');
+const layers = [...burger.children];
+
+/* hojas que flotan alrededor */
+const leafSVG = id => `<svg viewBox="0 0 100 60"><defs><linearGradient id="lf${id}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7cc24a"/><stop offset="1" stop-color="#2f6f1d"/></linearGradient></defs><path d="M4 34 Q34 -8 96 18 Q70 62 4 34Z" fill="url(#lf${id})"/><path d="M8 33 Q50 26 92 19" stroke="#245a14" stroke-width="2" fill="none" opacity=".7"/></svg>`;
+const leafSpec = [[52,14,90,-20,1.4],[83,22,70,30,1.9,'blur'],[48,74,80,140,1.2],[90,70,110,-60,2.4,'blur'],[66,8,56,60,1.7],[72,86,64,-120,2.1]];
+$('#leaves').innerHTML = leafSpec.map(([x,y,s,r,d,b],i) => `<div class="leaf ${b||''}" data-d="${d}" data-r="${r}" style="left:${x}%;top:${y}%;--s:clamp(${s*.5}px,${s/14}vw,${s*1.3}px)">${leafSVG(i)}</div>`).join('');
+const leaves = [...document.querySelectorAll('.leaf')];
+
+let mx = 0, my = 0;
+$('#stick').addEventListener('pointermove', e => { mx = e.clientX / innerWidth - .5; my = e.clientY / innerHeight - .5; });
+const explode = $('#top'), nav = $('#nav'), sideNum = $('.side-num'), hint = $('.scroll-hint');
+function onScroll(){
+  const r = explode.getBoundingClientRect();
+  const p = reduce ? .55 : clamp(-r.top / (r.height - innerHeight));
+  const e = clamp(p / .7); const ease = 1 - Math.pow(1 - e, 3);
+  const spread = Math.min(innerHeight * .085, 80);
+  layers.forEach((l, i) => {
+    const off = (i - 2.5) * spread * ease;
+    l.style.transform = `translateY(${off}px) rotate(${(i % 2 ? 1 : -1) * 3 * ease}deg)`;
+    l.querySelector('.tagline').style.setProperty('--o', clamp((ease - .35 - i*.05) * 3));
+  });
+  leaves.forEach((lf, i) => {
+    const d = +lf.dataset.d;
+    lf.style.transform = `translate(${mx*d*30}px, ${(my*d*30) - p*d*160}px) rotate(${+lf.dataset.r + p*d*90}deg)`;
+  });
+  sideNum.style.opacity = 1 - clamp(ease * 3); hint.style.opacity = 1 - clamp(p * 6);
+  nav.classList.toggle('solid', r.bottom < 80);
+}
+addEventListener('scroll', onScroll, {passive:true}); addEventListener('resize', onScroll);
+(function loop(){ onScroll(); if (!reduce) requestAnimationFrame(loop); })();
+
 /* ---------- Banda ---------- */
 const words = ['Calidad','Tradición','Pasión','Esponjoso y liviano','0% grasas trans','Industria uruguaya'];
 $('#band').innerHTML = [...words, ...words].map(w => `<span>${w}</span>`).join('');
 
-/* ---------- Productos: datos de las bolsas ---------- */
+/* ---------- Productos (datos de las bolsas) ---------- */
 const products = [
-  {id:'bun-clasico', line:'Bun de papa', name:'Clásico', top:'clasico', shape:'bun', units:6, g:450, img:'img/pack-bun-clasico.jpg', desc:'Redondo, dorado y suave. La base de la hamburguesa casera y del sándwich de todos los días.'},
-  {id:'bun-sesamo', line:'Bun de papa', name:'Sésamo', top:'sesamo', shape:'bun', units:6, g:450, img:'img/pack-bun-sesamo.jpg', desc:'El mismo bun esponjoso con la tapa cubierta de sésamo. Le suma un crocante tostado a cualquier hamburguesa.'},
-  {id:'bun-queso', line:'Bun de papa', name:'Queso', top:'queso', shape:'bun', units:6, g:450, img:'img/pack-bun-queso.jpg', desc:'Costra de queso gratinado por arriba y por los costados. Calentalo un minuto y se come solo.'},
-  {id:'brot-clasico', line:'Brot de papa', name:'Clásico', top:'clasico', shape:'brot', units:4, g:320, img:'img/pack-brot-clasico.jpg', desc:'Más largo que un bun y más ancho que un pancho. Hecho para el chivito y los sándwiches abundantes.'},
-  {id:'brot-queso', line:'Brot de papa', name:'Queso', top:'queso', shape:'brot', units:4, g:320, img:'img/pack-brot-queso.jpg', desc:'El Brot con costra de queso. Con un chorizo a la parrilla adentro, no necesita nada más.'},
-  {id:'hoagie-clasico', line:'Hoagie de papa', name:'Clásico', top:'clasico', shape:'hoagie', units:8, g:510, img:'img/pack-hoagie-clasico.jpg', desc:'Largo, angosto y tierno. El pan del pancho, del sub y de la merienda con fiambre.'},
-  {id:'hoagie-queso', line:'Hoagie de papa', name:'Queso', top:'queso', shape:'hoagie', units:8, g:510, img:'img/pack-hoagie-queso.jpg', desc:'Ocho hoagies con queso rallado tostado por encima. El pancho deja de ser un pancho cualquiera.'},
+  {id:'bun-clasico', line:'Bun de papa', name:'Clásico', top:'clasico', shape:'bun', units:6, g:450, img:'img/plato-bun-clasico.jpg', color:'#f6d36b', desc:'Redondo, dorado y suave. La base de la hamburguesa casera y del sándwich de todos los días.', for:['Hamburguesa casera','Sándwich de milanesa','Tostado de jamón y queso']},
+  {id:'bun-sesamo', line:'Bun de papa', name:'Sésamo', top:'sesamo', shape:'bun', units:6, g:450, img:'img/plato-bun-sesamo.jpg', color:'#f3b9a6', desc:'El mismo bun esponjoso con la tapa cubierta de sésamo blanco y negro. Le suma un crocante tostado.', for:['Hamburguesa doble','Pulled pork','Burger de pollo crispy']},
+  {id:'bun-queso', line:'Bun de papa', name:'Queso', top:'queso', shape:'bun', units:6, g:450, img:'img/plato-bun-queso.jpg', color:'#bfe0a8', desc:'Costra de queso gratinado por arriba y por los costados. Calentalo un minuto y se come solo.', for:['Cheeseburger','Sándwich de bondiola','Merienda tibia, solo']},
+  {id:'brot-clasico', line:'Brot de papa', name:'Clásico', top:'clasico', shape:'brot', units:4, g:320, img:'img/plato-brot-clasico.jpg', color:'#f6d36b', desc:'Más largo que un bun y más ancho que un pancho. Hecho para el chivito y los sándwiches abundantes.', for:['Chivito al pan','Sándwich de lomo','Choripán']},
+  {id:'brot-queso', line:'Brot de papa', name:'Queso', top:'queso', shape:'brot', units:4, g:320, img:'img/plato-brot-queso.jpg', color:'#bfe0a8', desc:'El Brot con costra de queso. Con un chorizo a la parrilla adentro, no necesita nada más.', for:['Choripán','Sándwich de pollo','Bondiola con morrones']},
+  {id:'hoagie-clasico', line:'Hoagie de papa', name:'Clásico', top:'clasico', shape:'hoagie', units:8, g:510, img:'img/plato-hoagie-clasico.jpg', color:'#f6d36b', desc:'Largo, angosto y tierno. El pan del pancho, del sub y de la merienda con fiambre.', for:['Pancho','Sub de fiambres','Sándwich de atún']},
+  {id:'hoagie-queso', line:'Hoagie de papa', name:'Queso', top:'queso', shape:'hoagie', units:8, g:510, img:'img/plato-hoagie-queso.jpg', color:'#bfe0a8', desc:'Ocho hoagies con queso rallado tostado por encima. El pancho deja de ser un pancho cualquiera.', for:['Pancho con queso','Sub de pollo','Picada caliente']},
 ];
-const lines = ['Bun de papa','Brot de papa','Hoagie de papa'];
-$('#lines').innerHTML = lines.map(l => { const ps = products.filter(p => p.line === l); return `<div class="line-group"><span>${l}</span><div class="line-picks">${ps.map(p => `<button class="pick" type="button" data-id="${p.id}" aria-pressed="false">${bread(p.top, p.shape)}<b>${p.name}</b><small>${p.units} u · ${p.g} g</small></button>`).join('')}</div></div>`; }).join('');
-function show(id){
-  const p = products.find(x => x.id === id) || products[0];
-  document.querySelectorAll('.pick').forEach(b => b.setAttribute('aria-pressed', b.dataset.id === p.id));
-  const box = $('#stagePhoto'); box.dataset.art = `${p.top}:${p.shape}`;
-  box.innerHTML = `<img src="${p.img}" alt="Bolsa de ${p.line} ${p.name} Martino, ${p.units} unidades, ${p.g} g">`; guard(box.firstElementChild);
-  $('#sLine').textContent = p.line; $('#sName').textContent = p.name; $('#sDesc').textContent = p.desc;
-  $('#sUnits').textContent = p.units;
-  $('#sWeight').innerHTML = `${p.g}<small>g</small>`;
-  $('#sEach').innerHTML = `${Math.round(p.g / p.units)}<small>g</small>`;
+const thumbs = $('#thumbs');
+thumbs.innerHTML = products.map((p,i) => `<button class="thumb" type="button" data-i="${i}" aria-pressed="false"><span class="disc">${bread(p.top, p.shape)}</span><b>${p.line.replace(' de papa','')}<br>${p.name}</b><small>${p.units} u · ${p.g} g</small></button>`).join('');
+$('#dots').innerHTML = products.map(() => '<i></i>').join('');
+let cur = 0, tab = 'a';
+const ranks = ['N.º 1 · el más pedido','N.º 2 · el de las burgers','N.º 3 · el que se come solo','N.º 4 · el del chivito','N.º 5 · el del chori','N.º 6 · el del pancho','N.º 7 · el pancho premium'];
+function renderCard(){
+  const p = products[cur];
+  $('#cardBody').innerHTML = tab === 'a'
+    ? `<span class="badge" style="--b:${p.color}">${p.units}<small>unid.</small></span><h4>${p.line} ${p.name}</h4><span class="sub">Cont. neto ${p.g} g · ${Math.round(p.g/p.units)} g c/u</span><p>${p.desc}</p>`
+    : `<span class="badge" style="--b:${p.color}">0%<small>trans</small></span><h4>Ideal para</h4><ul>${p.for.map(f => `<li>${f}</li>`).join('')}</ul>`;
 }
-$('#lines').addEventListener('click', e => { const b = e.target.closest('.pick'); if (b) show(b.dataset.id); });
-const hash = location.hash.slice(1);
-show(products.some(p => p.id === hash) ? hash : 'bun-clasico');
-
-guard($('.hero-photo img'));
+function show(i, fromUser){
+  cur = (i + products.length) % products.length; const p = products[cur];
+  thumbs.querySelectorAll('.thumb').forEach((b,j) => b.setAttribute('aria-pressed', j === cur));
+  const t = thumbs.children[cur]; if (fromUser !== 'init') thumbs.scrollTo({left: t.offsetLeft - thumbs.clientWidth/2 + t.clientWidth/2, behavior: reduce ? 'auto' : 'smooth'});
+  const plate = $('#plate'); plate.dataset.art = `${p.top}:${p.shape}`;
+  plate.innerHTML = `<img src="${p.img}" alt="${p.line} ${p.name} Martino servido en un plato">`; guard(plate.firstElementChild);
+  plate.classList.remove('spin'); void plate.offsetWidth; plate.classList.add('spin');
+  let d = 0; const split = s => [...s].map(c => c === ' ' ? ' ' : `<span class="ch" style="--d:${d++}">${c}</span>`).join('');
+  $('#fTitle').innerHTML = `<span class="thin">${split(p.line)}</span>${split(p.name)}`;
+  $('#fRank').textContent = ranks[cur];
+  $('#fCount').textContent = `${cur + 1} / ${products.length}`;
+  [...$('#dots').children].forEach((dt,j) => dt.classList.toggle('on', j === cur));
+  renderCard();
+}
+thumbs.addEventListener('click', e => { const b = e.target.closest('.thumb'); if (b){ show(+b.dataset.i); restart(); } });
+$('#prev').onclick = () => { show(cur - 1); restart(); };
+$('#next').onclick = () => { show(cur + 1); restart(); };
+$('#tabA').onclick = () => { tab = 'a'; $('#tabA').setAttribute('aria-selected', true); $('#tabB').setAttribute('aria-selected', false); renderCard(); };
+$('#tabB').onclick = () => { tab = 'b'; $('#tabB').setAttribute('aria-selected', true); $('#tabA').setAttribute('aria-selected', false); renderCard(); };
+let timer, playing = !reduce;
+function restart(){ clearInterval(timer); if (playing) timer = setInterval(() => { if (!document.hidden && !hovering) show(cur + 1, 'auto'); }, 5000); }
+let hovering = false; const glass = $('.glass');
+glass.addEventListener('pointerenter', () => hovering = true); glass.addEventListener('pointerleave', () => hovering = false);
+$('#playBtn').onclick = () => { playing = !playing; $('#playBtn').textContent = playing ? '❚❚' : '▶'; $('#playBtn').setAttribute('aria-label', playing ? 'Pausar el carrusel' : 'Reproducir el carrusel'); restart(); };
+if (!playing) $('#playBtn').textContent = '▶';
+show(0, 'init'); restart();
+document.addEventListener('click', e => { const a = e.target.closest('[data-go]'); if (a) show(products.findIndex(p => p.id === a.dataset.go)); });
 
 /* ---------- Apretalo ---------- */
 const sq = $('#squish'); sq.innerHTML = bread('sesamo','bun');
@@ -421,15 +567,25 @@ sq.addEventListener('pointerdown', down); addEventListener('pointerup', up); add
 sq.addEventListener('keydown', e => { if ((e.key === ' ' || e.key === 'Enter') && !e.repeat) down(e); });
 sq.addEventListener('keyup', e => { if (e.key === ' ' || e.key === 'Enter') up(); });
 sq.addEventListener('click', e => e.preventDefault());
+function burst(){
+  if (reduce) return;
+  const host = sq.getBoundingClientRect();
+  for (let i = 0; i < 16; i++){
+    const d = document.createElement('span'); const a = Math.random()*Math.PI - Math.PI, v = 60 + Math.random()*90;
+    d.style.cssText = `position:fixed;left:${host.left + host.width/2}px;top:${host.top + host.height*.4}px;width:9px;height:4px;border-radius:4px;background:${Math.random()<.5?'#c98d0e':'#f2a83c'};pointer-events:none;z-index:60;transition:transform .8s cubic-bezier(.2,.8,.3,1),opacity .8s`;
+    document.body.append(d);
+    requestAnimationFrame(() => { d.style.transform = `translate(${Math.cos(a)*v*1.6}px,${Math.sin(a)*v}px) rotate(${Math.random()*400}deg)`; d.style.opacity = '0'; });
+    setTimeout(() => d.remove(), 850);
+  }
+}
 
 /* ---------- Usos ---------- */
 const uses = [
-  {n:'La del domingo', t:'Hamburguesa', d:'Carne a la parrilla, cheddar derretido y el Bun tostado de un lado. Aguanta los jugos sin romperse.', p:'bun-sesamo'},
-  {n:'El de siempre', t:'Chivito', d:'Lomito, jamón, muzzarella, huevo y todo lo que entre. Hace falta un pan esponjoso que abrace sin aplastar.', p:'brot-clasico'},
-  {n:'El de la esquina', t:'Pancho', d:'Salchicha, mostaza, ketchup y papas pay. En un Hoagie con queso es otro pancho.', p:'hoagie-queso'},
+  {t:'Hamburguesa', d:'Carne a la parrilla, cheddar y el Bun tostado de un lado. Aguanta los jugos sin romperse.', p:'bun-sesamo', c:'#e9a514'},
+  {t:'Chivito', d:'Lomito, jamón, muzzarella, huevo y todo lo que entre. Un pan que abraza sin aplastar.', p:'brot-clasico', c:'#245c39'},
+  {t:'Pancho', d:'Salchicha, mostaza y papas pay. En un Hoagie con queso es otro pancho.', p:'hoagie-queso', c:'#7a2c1a'},
 ];
-$('#useGrid').innerHTML = uses.map(u => { const p = products.find(x => x.id === u.p); return `<article class="use">${bread(p.top, p.shape).replace('<svg ', '<svg class="bg" aria-hidden="true" ')}<span class="num">${u.n}</span><h3>${u.t}</h3><p>${u.d}</p><div class="with"><span class="label" style="color:var(--moss)">${p.line} · ${p.name}</span><a href="#productos" data-go="${p.id}">Ver →</a></div></article>`; }).join('');
-document.addEventListener('click', e => { const a = e.target.closest('[data-go]'); if (a) show(a.dataset.go); });
+$('#useGrid').innerHTML = uses.map(u => { const p = products.find(x => x.id === u.p); return `<a class="use" href="#productos" data-go="${p.id}"><div class="pic" style="--c:${u.c}">${bread(p.top, p.shape)}</div><h3>${u.t}</h3><span class="meta"><i>★</i>${p.line} ${p.name} · ${p.units} u · ${p.g} g</span><p>${u.d}</p></a>`; }).join('');
 
 /* ---------- Galería ---------- */
 const shots = [
@@ -444,51 +600,10 @@ const shots = [
 $('#bento').innerHTML = shots.map(([c, src, art, alt, cap]) => `<figure class="${c}" data-art="${art}"><img src="${src}" alt="${alt}" loading="lazy"><figcaption>${cap}</figcaption></figure>`).join('');
 document.querySelectorAll('#bento img').forEach(guard);
 
-/* ---------- Valores que se encienden ---------- */
+/* ---------- Valores ---------- */
 const vs = [...document.querySelectorAll('.values .v')];
 if (reduce || !('IntersectionObserver' in window)) vs.forEach(v => v.classList.add('on'));
 else { const vio = new IntersectionObserver(es => es.forEach(e => e.target.classList.toggle('on', e.isIntersecting)), {rootMargin:'-30% 0px -30% 0px'}); vs.forEach(v => vio.observe(v)); }
-
-/* ---------- Sésamo y queso flotando en el hero ---------- */
-const cv = $('#seeds'), cx = cv.getContext('2d');
-let W, H, parts = [], mx = -999, my = -999;
-function size(){ const d = Math.min(2, devicePixelRatio || 1); W = cv.clientWidth; H = cv.clientHeight; cv.width = W*d; cv.height = H*d; cx.setTransform(d,0,0,d,0,0); }
-const make = init => ({x:Math.random()*W, y: init ? Math.random()*H : -10, vy:Math.random()*.35+.15, vx:(Math.random()-.5)*.2, rot:Math.random()*6.28, vr:(Math.random()-.5)*.03, kind:Math.random() < .4 ? 'cheese' : Math.random() < .15 ? 'black' : 'seed', s:Math.random()*.6+.7});
-function init(){ size(); parts = Array.from({length: Math.min(110, Math.round(W/12))}, () => make(true)); }
-$('.hero').addEventListener('pointermove', e => { const r = cv.getBoundingClientRect(); mx = e.clientX - r.left; my = e.clientY - r.top; });
-$('.hero').addEventListener('pointerleave', () => { mx = my = -999; });
-function drawP(p, a){
-  cx.save(); cx.translate(p.x, p.y); cx.rotate(p.rot); cx.globalAlpha = a;
-  if (p.kind === 'cheese'){ cx.fillStyle = '#f2a83c'; cx.fillRect(-4*p.s, -1.2*p.s, 8*p.s, 2.4*p.s); }
-  else { cx.fillStyle = p.kind === 'black' ? '#05110a' : '#fbf0d2'; cx.beginPath(); cx.ellipse(0,0,4*p.s,2*p.s,0,0,6.283); cx.fill(); }
-  cx.restore();
-}
-function frame(){
-  cx.clearRect(0,0,W,H);
-  for (const p of parts){
-    p.x += p.vx; p.y += p.vy; p.rot += p.vr;
-    const dx = p.x - mx, dy = p.y - my;
-    if (dx*dx + dy*dy < 8000){ p.x += dx/60; p.y += dy/60; p.vr += .004; }
-    if (p.y > H + 10) Object.assign(p, make(false));
-    drawP(p, .55);
-  }
-  requestAnimationFrame(frame);
-}
-init(); addEventListener('resize', init);
-if (!reduce) requestAnimationFrame(frame); else parts.forEach(p => drawP(p, .45));
-
-/* Ráfaga de sésamo al soltar el pan */
-function burst(){
-  if (reduce) return;
-  const host = sq.getBoundingClientRect();
-  for (let i = 0; i < 16; i++){
-    const d = document.createElement('span'); const a = Math.random()*Math.PI - Math.PI, v = 60 + Math.random()*90;
-    d.style.cssText = `position:fixed;left:${host.left + host.width/2}px;top:${host.top + host.height*.4}px;width:9px;height:4px;border-radius:4px;background:${Math.random()<.5?'#c98d0e':'#f2a83c'};pointer-events:none;z-index:60;transition:transform .8s cubic-bezier(.2,.8,.3,1),opacity .8s`;
-    document.body.append(d);
-    requestAnimationFrame(() => { d.style.transform = `translate(${Math.cos(a)*v*1.6}px,${Math.sin(a)*v}px) rotate(${Math.random()*400}deg)`; d.style.opacity = '0'; });
-    setTimeout(() => d.remove(), 850);
-  }
-}
 
 /* ---------- Copiar contactos ---------- */
 const toast = m => { const t = $('#toast'); t.textContent = m; t.classList.add('show'); clearTimeout(toast.k); toast.k = setTimeout(() => t.classList.remove('show'), 2000); };
