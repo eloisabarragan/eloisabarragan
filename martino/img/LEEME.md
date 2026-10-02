@@ -1,22 +1,20 @@
 # Fotos de Martino
 
-Guardá las fotos en esta carpeta con estos nombres exactos (JPG, idealmente de menos de 400 KB cada una).
-Mientras falte alguna, la web muestra una ilustración del pan en su lugar, así que nunca queda un hueco.
+Fotos bajadas del Drive de Martino y optimizadas para la web (1100–1200 px de ancho, JPG).
 
-| Archivo | Qué foto usar |
-|---|---|
-| `hero.jpg` | Bun de queso de frente sobre la mesada (vertical) |
-| `pack-bun-clasico.jpg` | Bolsa Bun de papa clásico, fondo blanco |
-| `pack-bun-sesamo.jpg` | Bolsa Bun de papa sésamo, fondo blanco |
-| `pack-bun-queso.jpg` | Bolsa Bun de papa queso, fondo blanco |
-| `pack-brot-clasico.jpg` | Bolsa Brot de papa clásico |
-| `pack-brot-queso.jpg` | Bolsa Brot de papa queso |
-| `pack-hoagie-clasico.jpg` | Bolsa Hoagie de papa clásico, fondo blanco |
-| `pack-hoagie-queso.jpg` | Bolsa Hoagie de papa queso, fondo blanco |
-| `bolsas-mix.jpg` | Varias bolsas mezcladas, vista cenital |
-| `buns-fila.jpg` | Fila de buns con sésamo (horizontal o vertical) |
-| `bun-queso-horno.jpg` | Buns de queso en los aros, en la bandeja del horno |
-| `brot-trio.jpg` | Brot clásico, queso y sésamo uno al lado del otro |
-| `hoagies.jpg` | Hoagies clásicos sobre la mesada |
-| `bun-sesamo-detalle.jpg` | Un bun de sésamo de perfil |
-| `bun-queso-detalle.jpg` | Primer plano de la costra de queso |
+| Archivo | Original en Drive | Dónde se usa |
+|---|---|---|
+| `pack-bun-clasico.jpg` | 270A9614.JPG | Carrusel: Bun clásico |
+| `pack-bun-sesamo.jpg` | 270A9610.JPG | Carrusel: Bun sésamo y galería |
+| `bun-queso-mano.jpg` | 270A2931.JPG | Carrusel: Bun queso |
+| `pack-brot-clasico.jpg` | 270A9198.JPG | Carrusel: Brot clásico |
+| `pack-brot-queso.jpg` | 270A9195.JPG | Carrusel: Brot queso |
+| `pack-hoagie-clasico.jpg` | 270A9632.JPG | Carrusel: Hoagie clásico |
+| `pack-hoagie-queso.jpg` | 270A9639.JPG | Carrusel: Hoagie queso |
+| `bun-queso-horno.jpg` | IMG_0153.JPG | Galería |
+| `bun-queso-horno-2.jpg` | IMG_0155.JPG | Galería |
+| `buns-fila.jpg` | IMG_0251.JPG | Galería |
+| `buns-fila-2.jpg` | IMG_0252.JPG | Galería |
+| `buns-cenital.jpg` | IMG_0256.JPG | Galería |
+
+Si falta alguna foto, la web dibuja el pan en su lugar.

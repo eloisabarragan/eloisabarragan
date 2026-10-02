@@ -148,14 +148,16 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:100;op
 .ico{width:2.6rem;height:2.6rem;border-radius:50%;display:grid;place-items:center;background:color-mix(in srgb,#fff 55%,transparent);border:0;color:var(--ink);cursor:pointer;font-size:1rem}
 .ico:hover{background:#fff}
 .feature{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1.1fr) minmax(0,.85fr);gap:clamp(1rem,3vw,2.5rem);align-items:center;margin-top:1rem;min-height:clamp(300px,34vw,440px)}
-.plate{position:relative;aspect-ratio:1;max-width:100%;border-radius:50%;background:radial-gradient(circle at 50% 45%,#fff 0 58%,#efede8 60%,#fff 66%,#e4e1da 100%);box-shadow:0 30px 50px rgba(0,0,0,.22),inset 0 -6px 14px rgba(0,0,0,.06);display:grid;place-items:center;overflow:hidden}
-.plate img,.plate svg{width:80%;height:auto;max-height:80%;object-fit:contain}
-.plate img{width:100%;height:100%;max-height:none;object-fit:cover;border-radius:50%}
+.plate{position:relative;aspect-ratio:4/3;max-width:100%;border-radius:24px;background:#fff;box-shadow:0 30px 60px rgba(0,0,0,.22);display:grid;place-items:center;overflow:hidden;transform:rotate(-3deg)}
+.plate img{width:100%;height:100%;object-fit:contain;padding:4%}
+.plate img.cover{object-fit:cover;padding:0}
+.plate svg{width:80%;height:auto}
 .plate.spin{animation:plateIn .9s cubic-bezier(.2,.9,.25,1.05) both}
-@keyframes plateIn{from{transform:rotate(-120deg) scale(.6) translateX(-30%);opacity:.1}}
+@keyframes plateIn{from{transform:rotate(-24deg) scale(.7) translateX(-25%);opacity:.1}}
 .f-title .rank{font-family:var(--cond);font-weight:700;letter-spacing:.14em;text-transform:uppercase;font-size:.8rem;color:var(--ink-soft)}
-.f-title h3{font-size:clamp(2.6rem,6.2vw,6.4rem);line-height:.85;margin-top:.4rem;color:var(--ink)}
+.f-title h3{font-size:clamp(2.4rem,5.2vw,5.6rem);line-height:.85;margin-top:.4rem;color:var(--ink)}
 .f-title h3 .thin{display:block;font-weight:300}
+.f-title h3 .wd{display:inline-block;white-space:nowrap}
 .f-title h3 .ch{display:inline-block;animation:chIn .5s cubic-bezier(.2,.9,.3,1) both;animation-delay:calc(var(--d)*28ms)}
 @keyframes chIn{from{transform:translateY(40%);opacity:0}}
 .f-actions{display:flex;gap:1.4rem;margin-top:1.2rem;font-family:var(--cond);font-weight:700;letter-spacing:.1em;text-transform:uppercase;font-size:.85rem}
@@ -230,6 +232,8 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:100;op
 .bento figure{margin:0;position:relative;overflow:hidden;border-radius:20px;background:var(--green);min-width:0}
 .bento .big{grid-column:span 2;grid-row:span 2}
 .bento .wide{grid-column:span 2}
+.bento .tall{grid-row:span 2}
+.bento figure.wide img{object-fit:contain;background:#fff}
 .bento img,.bento svg{width:100%;height:100%;object-fit:cover;display:block;transition:transform 1.4s cubic-bezier(.2,.9,.2,1)}
 .bento svg{object-fit:contain;padding:10%;background:radial-gradient(circle at 50% 45%,var(--leaf),var(--green))}
 .bento figure:hover img,.bento figure:hover svg{transform:scale(1.06)}
@@ -511,13 +515,13 @@ $('#band').innerHTML = [...words, ...words].map(w => `<span>${w}</span>`).join('
 
 /* ---------- Productos (datos de las bolsas) ---------- */
 const products = [
-  {id:'bun-clasico', line:'Bun de papa', name:'Clásico', top:'clasico', shape:'bun', units:6, g:450, img:'img/plato-bun-clasico.jpg', color:'#f6d36b', desc:'Redondo, dorado y suave. La base de la hamburguesa casera y del sándwich de todos los días.', for:['Hamburguesa casera','Sándwich de milanesa','Tostado de jamón y queso']},
-  {id:'bun-sesamo', line:'Bun de papa', name:'Sésamo', top:'sesamo', shape:'bun', units:6, g:450, img:'img/plato-bun-sesamo.jpg', color:'#f3b9a6', desc:'El mismo bun esponjoso con la tapa cubierta de sésamo blanco y negro. Le suma un crocante tostado.', for:['Hamburguesa doble','Pulled pork','Burger de pollo crispy']},
-  {id:'bun-queso', line:'Bun de papa', name:'Queso', top:'queso', shape:'bun', units:6, g:450, img:'img/plato-bun-queso.jpg', color:'#bfe0a8', desc:'Costra de queso gratinado por arriba y por los costados. Calentalo un minuto y se come solo.', for:['Cheeseburger','Sándwich de bondiola','Merienda tibia, solo']},
-  {id:'brot-clasico', line:'Brot de papa', name:'Clásico', top:'clasico', shape:'brot', units:4, g:320, img:'img/plato-brot-clasico.jpg', color:'#f6d36b', desc:'Más largo que un bun y más ancho que un pancho. Hecho para el chivito y los sándwiches abundantes.', for:['Chivito al pan','Sándwich de lomo','Choripán']},
-  {id:'brot-queso', line:'Brot de papa', name:'Queso', top:'queso', shape:'brot', units:4, g:320, img:'img/plato-brot-queso.jpg', color:'#bfe0a8', desc:'El Brot con costra de queso. Con un chorizo a la parrilla adentro, no necesita nada más.', for:['Choripán','Sándwich de pollo','Bondiola con morrones']},
-  {id:'hoagie-clasico', line:'Hoagie de papa', name:'Clásico', top:'clasico', shape:'hoagie', units:8, g:510, img:'img/plato-hoagie-clasico.jpg', color:'#f6d36b', desc:'Largo, angosto y tierno. El pan del pancho, del sub y de la merienda con fiambre.', for:['Pancho','Sub de fiambres','Sándwich de atún']},
-  {id:'hoagie-queso', line:'Hoagie de papa', name:'Queso', top:'queso', shape:'hoagie', units:8, g:510, img:'img/plato-hoagie-queso.jpg', color:'#bfe0a8', desc:'Ocho hoagies con queso rallado tostado por encima. El pancho deja de ser un pancho cualquiera.', for:['Pancho con queso','Sub de pollo','Picada caliente']},
+  {id:'bun-clasico', line:'Bun de papa', name:'Clásico', top:'clasico', shape:'bun', units:6, g:450, img:'img/pack-bun-clasico.jpg', color:'#f6d36b', desc:'Redondo, dorado y suave. La base de la hamburguesa casera y del sándwich de todos los días.', for:['Hamburguesa casera','Sándwich de milanesa','Tostado de jamón y queso']},
+  {id:'bun-sesamo', line:'Bun de papa', name:'Sésamo', top:'sesamo', shape:'bun', units:6, g:450, img:'img/pack-bun-sesamo.jpg', color:'#f3b9a6', desc:'El mismo bun esponjoso con la tapa cubierta de sésamo blanco y negro. Le suma un crocante tostado.', for:['Hamburguesa doble','Pulled pork','Burger de pollo crispy']},
+  {id:'bun-queso', line:'Bun de papa', name:'Queso', top:'queso', shape:'bun', units:6, g:450, img:'img/bun-queso-mano.jpg', cover:true, color:'#bfe0a8', desc:'Costra de queso gratinado por arriba y por los costados. Calentalo un minuto y se come solo.', for:['Cheeseburger','Sándwich de bondiola','Merienda tibia, solo']},
+  {id:'brot-clasico', line:'Brot de papa', name:'Clásico', top:'clasico', shape:'brot', units:4, g:320, img:'img/pack-brot-clasico.jpg', color:'#f6d36b', desc:'Más largo que un bun y más ancho que un pancho. Hecho para el chivito y los sándwiches abundantes.', for:['Chivito al pan','Sándwich de lomo','Choripán']},
+  {id:'brot-queso', line:'Brot de papa', name:'Queso', top:'queso', shape:'brot', units:4, g:320, img:'img/pack-brot-queso.jpg', color:'#bfe0a8', desc:'El Brot con costra de queso. Con un chorizo a la parrilla adentro, no necesita nada más.', for:['Choripán','Sándwich de pollo','Bondiola con morrones']},
+  {id:'hoagie-clasico', line:'Hoagie de papa', name:'Clásico', top:'clasico', shape:'hoagie', units:8, g:510, img:'img/pack-hoagie-clasico.jpg', color:'#f6d36b', desc:'Largo, angosto y tierno. El pan del pancho, del sub y de la merienda con fiambre.', for:['Pancho','Sub de fiambres','Sándwich de atún']},
+  {id:'hoagie-queso', line:'Hoagie de papa', name:'Queso', top:'queso', shape:'hoagie', units:8, g:510, img:'img/pack-hoagie-queso.jpg', color:'#bfe0a8', desc:'Ocho hoagies con queso rallado tostado por encima. El pancho deja de ser un pancho cualquiera.', for:['Pancho con queso','Sub de pollo','Picada caliente']},
 ];
 const thumbs = $('#thumbs');
 thumbs.innerHTML = products.map((p,i) => `<button class="thumb" type="button" data-i="${i}" aria-pressed="false"><span class="disc">${bread(p.top, p.shape)}</span><b>${p.line.replace(' de papa','')}<br>${p.name}</b><small>${p.units} u · ${p.g} g</small></button>`).join('');
@@ -535,9 +539,9 @@ function show(i, fromUser){
   thumbs.querySelectorAll('.thumb').forEach((b,j) => b.setAttribute('aria-pressed', j === cur));
   const t = thumbs.children[cur]; if (fromUser !== 'init') thumbs.scrollTo({left: t.offsetLeft - thumbs.clientWidth/2 + t.clientWidth/2, behavior: reduce ? 'auto' : 'smooth'});
   const plate = $('#plate'); plate.dataset.art = `${p.top}:${p.shape}`;
-  plate.innerHTML = `<img src="${p.img}" alt="${p.line} ${p.name} Martino servido en un plato">`; guard(plate.firstElementChild);
+  plate.innerHTML = `<img src="${p.img}"${p.cover ? ' class="cover"' : ''} alt="${p.cover ? 'Mano sosteniendo un ' + p.line + ' con queso Martino' : 'Bolsa de ' + p.line + ' ' + p.name + ' Martino, ' + p.units + ' unidades, ' + p.g + ' g'}">`; guard(plate.firstElementChild);
   plate.classList.remove('spin'); void plate.offsetWidth; plate.classList.add('spin');
-  let d = 0; const split = s => [...s].map(c => c === ' ' ? ' ' : `<span class="ch" style="--d:${d++}">${c}</span>`).join('');
+  let d = 0; const split = s => s.split(' ').map(w => `<span class="wd">${[...w].map(c => `<span class="ch" style="--d:${d++}">${c}</span>`).join('')}</span>`).join(' ');
   $('#fTitle').innerHTML = `<span class="thin">${split(p.line)}</span>${split(p.name)}`;
   $('#fRank').textContent = ranks[cur];
   $('#fCount').textContent = `${cur + 1} / ${products.length}`;
@@ -589,13 +593,12 @@ $('#useGrid').innerHTML = uses.map(u => { const p = products.find(x => x.id === 
 
 /* ---------- Galería ---------- */
 const shots = [
-  ['big','img/bolsas-mix.jpg','queso:bun','Bolsas de Bun, Brot y Hoagie de papa Martino','Toda la línea'],
-  ['wide','img/buns-fila.jpg','sesamo:bun','Fila de Bun de papa con sésamo blanco y negro','Bun de papa · Sésamo'],
-  ['','img/bun-queso-horno.jpg','queso:bun','Buns de queso recién salidos del horno en sus aros','Recién salidos'],
-  ['','img/brot-trio.jpg','queso:brot','Brot clásico, con queso y con sésamo','Brot de papa'],
-  ['wide','img/hoagies.jpg','clasico:hoagie','Hoagies de papa clásicos sobre la mesada','Hoagie de papa'],
-  ['','img/bun-sesamo-detalle.jpg','sesamo:bun','Bun de papa con sésamo de perfil','La altura'],
-  ['','img/bun-queso-detalle.jpg','queso:bun','Detalle de la costra de queso del Bun','La costra'],
+  ['big','img/bun-queso-horno.jpg','queso:bun','Buns de queso recién salidos del horno en sus aros','Recién salidos'],
+  ['tall','img/buns-fila.jpg','sesamo:bun','Fila de Bun de papa con sésamo blanco y negro','Bun de papa · Sésamo'],
+  ['tall','img/buns-cenital.jpg','sesamo:bun','Cinco buns con sésamo vistos desde arriba','Desde arriba'],
+  ['wide','img/pack-bun-sesamo.jpg','sesamo:bun','Bolsa de Bun de papa con sésamo','6 unidades · 450 g'],
+  ['','img/bun-queso-horno-2.jpg','queso:bun','Bandejas de buns de queso en el horno','En el horno'],
+  ['','img/buns-fila-2.jpg','sesamo:bun','Buns de sésamo en fila','Uno atrás del otro'],
 ];
 $('#bento').innerHTML = shots.map(([c, src, art, alt, cap]) => `<figure class="${c}" data-art="${art}"><img src="${src}" alt="${alt}" loading="lazy"><figcaption>${cap}</figcaption></figure>`).join('');
 document.querySelectorAll('#bento img').forEach(guard);
