@@ -274,6 +274,29 @@ footer{overflow:hidden;padding-top:2rem}
 .team-sign small{font-family:var(--cond);font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--moss)}
 @media (max-width:860px){.team-grid{grid-template-columns:1fr}.team-photo{max-width:400px}}
 
+/* ---------- LA PIEZA: presentación de producto ---------- */
+.show{position:relative;height:280vh;background:#070d09}
+.show-stick{position:sticky;top:0;height:100vh;height:100svh;min-height:600px;overflow:hidden;display:grid;place-items:center;isolation:isolate}
+.show-light{position:absolute;inset:-20%;z-index:-1;background:radial-gradient(38% 42% at 50% 52%,color-mix(in srgb,var(--gold) 26%,transparent),color-mix(in srgb,var(--green) 40%,transparent) 45%,transparent 70%);opacity:var(--lo,.4)}
+.show-title{position:absolute;top:12%;left:0;right:0;text-align:center;z-index:1;opacity:var(--to,1);transform:translateY(var(--tt,0))}
+.show-title .label{display:block}
+.show-big{display:block;font-size:clamp(3.5rem,11vw,11rem);color:var(--cream);letter-spacing:-.01em}
+.show-title .script{display:block;font-size:clamp(2rem,5vw,4.5rem);margin-top:-.1em}
+.show-bun{position:relative;width:min(56vw,640px);transform:translateY(var(--by,12%)) scale(var(--bs,.55)) rotate(var(--br,-6deg));will-change:transform;z-index:2}
+.show-bun img{width:100%;height:auto;display:block;filter:brightness(var(--bb,.75)) saturate(1.1) drop-shadow(0 50px 40px rgba(0,0,0,.6))}
+.show-sheen{position:absolute;inset:0;background:linear-gradient(105deg,transparent 35%,rgba(255,240,200,.55) 50%,transparent 65%);background-size:300% 100%;background-position:var(--sh,120%) 0;mix-blend-mode:soft-light;pointer-events:none}
+.show-stick::after{content:"";position:absolute;left:50%;bottom:9%;width:min(46vw,520px);height:40px;transform:translateX(-50%) scaleX(var(--bs,.55));background:radial-gradient(closest-side,rgba(0,0,0,.8),transparent);z-index:1;filter:blur(6px)}
+.specs-x{list-style:none;margin:0;padding:0;position:absolute;inset:0;pointer-events:none;z-index:3}
+.sx{position:absolute;color:var(--cream);font-family:var(--cond);text-transform:uppercase;opacity:0;transform:translateY(16px);transition:opacity .6s,transform .6s cubic-bezier(.2,.9,.25,1)}
+.sx.on{opacity:1;transform:none}
+.sx b{display:block;font-weight:900;font-size:clamp(2rem,4vw,3.6rem);line-height:.9;color:var(--gold)}
+.sx span{font-weight:700;letter-spacing:.14em;font-size:.8rem;color:var(--moss);display:block;max-width:18ch}
+.sx::before{content:"";position:absolute;top:1.1em;height:1px;width:clamp(40px,9vw,150px);background:linear-gradient(90deg,var(--gold),transparent)}
+.sx1{left:8%;top:22%}.sx2{left:8%;bottom:20%}.sx3{right:8%;top:22%;text-align:right}.sx4{right:8%;bottom:20%;text-align:right}
+.sx1::before,.sx2::before{left:calc(100% + 16px)}
+.sx3::before,.sx4::before{right:calc(100% + 16px);background:linear-gradient(270deg,var(--gold),transparent)}
+@media (max-width:760px){.show-bun{width:86vw}.sx1,.sx3{top:auto;bottom:24%}.sx2,.sx4{bottom:9%}.sx::before{display:none}.sx b{font-size:1.9rem}.sx span{font-size:.66rem}.show-title{top:9%}}
+
 /* ---------- LA LÍNEA EN EL AIRE ---------- */
 .air{position:relative;overflow:hidden;background:radial-gradient(80% 70% at 50% 45%,var(--leaf),var(--forest) 75%);padding-block:clamp(4rem,8vw,6rem) 2rem;isolation:isolate}
 .air-head{text-align:center;position:relative;z-index:3;padding-inline:var(--gutter);pointer-events:none}
@@ -422,6 +445,22 @@ footer{overflow:hidden;padding-top:2rem}
 </section>
 
 <div class="band" aria-hidden="true"><div class="band-track" id="band"></div></div>
+
+<section class="show" id="pieza" aria-labelledby="stitle">
+  <div class="show-stick">
+    <div class="show-light" aria-hidden="true"></div>
+    <h2 class="show-title" id="stitle"><span class="label">La pieza</span><span class="show-big">Bun de papa</span><span class="script">con sésamo</span></h2>
+    <div class="show-bun" id="showBun">
+      <img src="img/cut-bun-sesamo.webp" alt="Bun de papa Martino con sésamo, de frente">
+    </div>
+    <ul class="specs-x" aria-label="Datos del Bun de papa">
+      <li class="sx sx1"><b>0%</b><span>grasas trans</span></li>
+      <li class="sx sx2"><b>6</b><span>unidades por bolsa</span></li>
+      <li class="sx sx3"><b>450 g</b><span>contenido neto</span></li>
+      <li class="sx sx4"><b>Papa</b><span>en la masa. Por eso es tierno</span></li>
+    </ul>
+  </div>
+</section>
 
 <section class="air" id="aire" aria-labelledby="atitle">
   <div class="air-head">
@@ -756,6 +795,25 @@ if (matchMedia('(pointer:fine)').matches && !reduce){
 /* ---------- Quiénes somos: la foto se desliza dentro de la etiqueta ---------- */
 const teamImg = $('.team-photo img');
 if (!reduce) addEventListener('scroll', () => { const r = teamImg.parentElement.getBoundingClientRect(); const k = clamp((innerHeight - r.top) / (innerHeight + r.height)); teamImg.style.setProperty('--ty', (-k * 15).toFixed(2) + '%'); }, {passive:true});
+
+/* ---------- La pieza: el bun crece bajo el foco ---------- */
+const showSec = $('#pieza'), showBun = $('#showBun'), showSt = showSec.querySelector('.show-stick'), sxs = [...document.querySelectorAll('.sx')];
+const ease3 = x => 1 - Math.pow(1 - x, 3);
+function showTick(){
+  const r = showSec.getBoundingClientRect(), p = reduce ? .8 : clamp(-r.top / (r.height - innerHeight));
+  const g = ease3(clamp(p / .55));
+  showBun.style.setProperty('--bs', (.55 + g * .5).toFixed(3));
+  showBun.style.setProperty('--by', (12 - g * 10).toFixed(2) + '%');
+  showBun.style.setProperty('--br', (-6 + g * 6).toFixed(2) + 'deg');
+  showBun.style.setProperty('--bb', (.7 + g * .35 + Math.sin(clamp((p - .1) / .5) * Math.PI) * .12).toFixed(3));
+  showSt.style.setProperty('--bs', (.55 + g * .5).toFixed(3));
+  const t = showSec.querySelector('.show-title');
+  t.style.setProperty('--to', (1 - clamp((p - .25) / .2)).toFixed(2)); t.style.setProperty('--tt', (-clamp((p - .25) / .2) * 40).toFixed(1) + 'px');
+  showSec.querySelector('.show-light').style.setProperty('--lo', (.4 + g * .6).toFixed(2));
+  sxs.forEach((x, i) => x.classList.toggle('on', p > .5 + i * .08));
+  if (!reduce) requestAnimationFrame(showTick);
+}
+showTick();
 
 /* ---------- Panes en el aire: profundidad con mouse y scroll ---------- */
 const air = $('#aire'), fls = [...document.querySelectorAll('.fl')];
