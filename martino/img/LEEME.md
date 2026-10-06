@@ -19,3 +19,8 @@ Fotos bajadas del Drive de Martino y optimizadas para la web (1100–1200 px de 
 
 Si falta alguna foto, su recuadro queda oculto (la web ya no usa dibujos).
 | `th-*.jpg` | recortes de las fotos de arriba | Miniaturas del carrusel |
+| `buns-mix.jpg` | foto enviada por chat (buns mezclados) | Inicio |
+| `bun-queso-cerca.jpg` | foto enviada por chat | Inicio y galería |
+| `hoagies-mix.jpg` | foto enviada por chat | Inicio, usos y galería |
+| `bun-sesamo-lado.jpg` | foto enviada por chat | Inicio y usos |
+| `pan-molde.jpg` | foto enviada por chat | Galería |

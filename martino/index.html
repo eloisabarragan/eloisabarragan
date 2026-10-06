@@ -56,12 +56,12 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:100;op
 .nav{position:fixed;left:0;right:0;top:0;z-index:50;padding-top:env(safe-area-inset-top,0px);transition:background .3s,backdrop-filter .3s}
 .nav.solid{background:color-mix(in srgb,var(--forest) 82%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
 .nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding-block:.7rem}
-.logo{text-decoration:none;display:flex;flex-direction:column;line-height:1;color:var(--green)}
+.logo{text-decoration:none;display:flex;flex-direction:column;line-height:1;color:var(--gold)}
 .logo b{font-family:var(--script);font-weight:400;font-size:2.2rem;line-height:.9}
 .logo small{font-family:var(--cond);font-weight:700;font-size:.62rem;letter-spacing:.3em;margin-top:.15rem;padding-left:.3rem}
 .nav.solid .logo{color:var(--gold)}
 .nav ul{display:flex;gap:2rem;list-style:none;margin:0;padding:0}
-.nav ul a{font-family:var(--cond);font-weight:800;font-size:.95rem;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;color:var(--green);transition:color .2s}
+.nav ul a{font-family:var(--cond);font-weight:800;font-size:.95rem;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;color:var(--cream);transition:color .2s}
 .nav.solid ul a{color:var(--moss)}
 .nav ul a:hover{color:var(--cream)}
 .nav .btn{font-size:.9rem;padding:.6em 1.2em;background:transparent;color:var(--cream);border-color:var(--cream)}
@@ -69,51 +69,47 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:100;op
 @media (max-width:900px){.nav ul{display:none}}
 
 /* ---------- HERO: hamburguesa que se desarma ---------- */
-.explode{position:relative;height:230vh}
-.stick{position:sticky;top:0;height:100vh;height:100svh;min-height:600px;overflow:hidden;isolation:isolate;
-  background:linear-gradient(90deg,var(--amber) 0,var(--gold) 58%,var(--forest) 58%,var(--green) 100%)}
-.stick::before{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(60% 70% at 30% 40%,color-mix(in srgb,#fff 30%,transparent),transparent 70%)}
-.hero-copy{position:absolute;left:var(--gutter);top:50%;transform:translateY(-46%);max-width:min(560px,52vw);color:var(--green);z-index:3}
-.hero-copy .kicker{font-family:var(--cond);font-weight:800;letter-spacing:.2em;text-transform:uppercase;font-size:.9rem}
+.explode{position:relative;height:340vh}
+.stick{position:sticky;top:0;height:100vh;height:100svh;min-height:600px;overflow:hidden;isolation:isolate;background:var(--forest)}
+.shot{position:absolute;inset:0;margin:0;opacity:0;transition:opacity 1s ease;z-index:-2}
+.shot img{object-position:var(--pos,50% 50%);width:100%;height:100%;object-fit:cover;display:block;transform:scale(var(--z,1.12));transition:transform 1.4s cubic-bezier(.2,.8,.2,1);will-change:transform}
+.shot.on{opacity:1}
+.stick::after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
+  background:linear-gradient(180deg,color-mix(in srgb,var(--forest) 70%,transparent),transparent 18%),linear-gradient(90deg,color-mix(in srgb,var(--forest) 92%,transparent) 0,color-mix(in srgb,var(--forest) 70%,transparent) 32%,transparent 62%),linear-gradient(0deg,color-mix(in srgb,var(--forest) 60%,transparent),transparent 30%)}
+.hero-copy{position:absolute;left:var(--gutter);top:50%;transform:translateY(-46%);max-width:min(560px,52vw);color:var(--cream);z-index:3}
+.hero-copy .kicker{font-family:var(--cond);font-weight:800;letter-spacing:.2em;text-transform:uppercase;font-size:.9rem;color:var(--gold)}
 .hero-copy h1{font-size:clamp(3.6rem,9vw,9.5rem);line-height:.82;margin-top:.6rem}
 .hero-copy h1 span{display:block}
 .hero-copy h1 .thin{font-weight:300}
 .hero-copy h1 .w{animation:pop 1s cubic-bezier(.3,1.5,.5,1) both;animation-delay:calc(var(--i)*110ms);transform-origin:0 100%}
 @keyframes pop{from{transform:scale(.7,1.2) translateY(12%);opacity:.15}}
-.hero-copy p{font-size:clamp(1.05rem,1.4vw,1.25rem);max-width:34ch;margin:1.4rem 0 0;color:color-mix(in srgb,var(--green) 88%,var(--gold))}
+.hero-copy p{font-size:clamp(1.05rem,1.4vw,1.25rem);max-width:34ch;margin:1.4rem 0 0;color:color-mix(in srgb,var(--cream) 85%,var(--moss))}
 .hero-copy .cta{display:flex;flex-wrap:wrap;gap:.8rem;margin-top:1.8rem}
+.btn.light{background:transparent;color:var(--cream);border-color:var(--cream)}
+.btn.light:hover{background:var(--cream);color:var(--forest)}
 .seals{display:flex;gap:.6rem;margin-top:1.8rem;flex-wrap:wrap}
-.seal{display:grid;place-items:center;text-align:center;width:5.2rem;aspect-ratio:1;border-radius:50%;background:var(--green);color:var(--gold);border:2px solid var(--gold);box-shadow:0 0 0 3px var(--green);font-family:var(--cond);font-weight:800;text-transform:uppercase;line-height:.95;font-size:.7rem;padding:.5rem}
+.seal{display:grid;place-items:center;text-align:center;width:5.2rem;aspect-ratio:1;border-radius:50%;background:var(--green);color:var(--gold);border:2px solid var(--gold);box-shadow:0 0 0 3px var(--forest);font-family:var(--cond);font-weight:800;text-transform:uppercase;line-height:.95;font-size:.7rem;padding:.5rem}
 .seal big{display:block;font-size:1.6rem;font-weight:900}
-
-.stack{position:absolute;left:61%;top:50%;width:min(44vw,600px);transform:translate(-50%,-50%);z-index:2;text-align:center}
-.cards{position:relative;aspect-ratio:1200/714;max-width:100%}
-.card-ph{position:absolute;inset:0;margin:0;border-radius:24px;overflow:hidden;background:#fff;box-shadow:0 40px 60px rgba(0,0,0,.35);opacity:0;transform:translateY(40px) rotate(6deg) scale(.92);transition:opacity .6s,transform .8s cubic-bezier(.2,.9,.25,1.05)}
-.card-ph img{width:100%;height:100%;object-fit:cover;display:block}
-.card-ph.on{opacity:1;transform:rotate(-3deg)}
-.card-ph.out{opacity:0;transform:translateY(-40px) rotate(-10deg) scale(.92)}
-.loaf-cap{display:inline-flex;align-items:baseline;gap:.7rem;margin-top:1.6rem;font-family:var(--cond);text-transform:uppercase;color:var(--cream);background:color-mix(in srgb,var(--forest) 70%,transparent);border:1px solid color-mix(in srgb,var(--gold) 50%,transparent);padding:.45em 1.1em;border-radius:99px}
-.loaf-cap b{font-weight:900;font-size:clamp(1.2rem,2vw,1.8rem);color:var(--gold);letter-spacing:.02em}
-.loaf-cap span{font-weight:700;letter-spacing:.12em;font-size:clamp(.75rem,1vw,.9rem)}
-.forms{position:absolute;right:var(--gutter);top:50%;transform:translateY(-50%);list-style:none;margin:0;padding:0;z-index:3;display:grid;gap:1.2rem;text-align:right}
-.forms li{font-family:var(--cond);text-transform:uppercase;color:var(--moss);opacity:.45;transition:opacity .3s,color .3s,transform .3s;transform-origin:right}
-.forms li b{display:block;font-weight:900;font-size:clamp(1.4rem,2.2vw,2rem);line-height:1}
-.forms li span{font-weight:700;letter-spacing:.12em;font-size:.78rem}
-.forms li i{font-style:normal;font-family:var(--script);text-transform:none;color:var(--gold);font-size:1.1rem;margin-right:.3rem}
-.forms li.on{opacity:1;color:var(--cream);transform:scale(1.08)}
-.scroll-hint{position:absolute;left:50%;bottom:calc(1.5rem + env(safe-area-inset-bottom,0px));transform:translateX(-50%);font-family:var(--cond);font-weight:800;letter-spacing:.2em;text-transform:uppercase;font-size:.75rem;color:var(--green);display:flex;flex-direction:column;align-items:center;gap:.4rem;z-index:3}
-.scroll-hint i{width:2px;height:34px;background:var(--green);animation:drop 1.6s ease-in-out infinite;transform-origin:top}
-@keyframes drop{50%{transform:scaleY(.4)}}
+.forms{position:absolute;right:var(--gutter);bottom:calc(2rem + env(safe-area-inset-bottom,0px));list-style:none;margin:0;padding:0;z-index:3;display:flex;gap:1.6rem}
+.forms li{font-family:var(--cond);text-transform:uppercase;color:var(--cream);opacity:.5;transition:opacity .3s;border-top:2px solid color-mix(in srgb,var(--cream) 35%,transparent);padding-top:.6rem;min-width:7.5rem;position:relative}
+.forms li::before{content:"";position:absolute;left:0;top:-2px;height:2px;width:0;background:var(--gold);transition:width .5s}
+.forms li.on{opacity:1}
+.forms li.on::before{width:100%}
+.forms li b{display:block;font-weight:900;font-size:1.15rem;line-height:1}
+.forms li span{font-weight:700;letter-spacing:.1em;font-size:.72rem;color:var(--gold)}
+.scroll-hint{position:absolute;left:var(--gutter);bottom:calc(1.5rem + env(safe-area-inset-bottom,0px));font-family:var(--cond);font-weight:800;letter-spacing:.2em;text-transform:uppercase;font-size:.75rem;color:var(--cream);display:flex;align-items:center;gap:.6rem;z-index:3}
+.scroll-hint i{width:34px;height:2px;background:var(--gold);animation:drop 1.6s ease-in-out infinite;transform-origin:left}
+@keyframes drop{50%{transform:scaleX(.4)}}
 @media (max-width:900px){
-  .explode{height:200vh}
-  .stick{background:linear-gradient(180deg,var(--amber) 0,var(--gold) 56%,var(--forest) 56%,var(--green) 100%)}
-  .hero-copy{top:5.5rem;transform:none;max-width:none;right:var(--gutter)}
-  .hero-copy h1{font-size:clamp(3rem,14vw,5.5rem)}
-  .hero-copy p,.seals{display:none}
-  .stack{left:50%;top:auto;bottom:7%;transform:translateX(-50%);width:min(88vw,440px)}
-  .forms{display:none}
-  .loaf-cap{flex-direction:column;align-items:center;gap:.1rem;border-radius:18px;white-space:nowrap}
-  .scroll-hint{display:none}
+  .explode{height:300vh}
+  .stick::after{background:linear-gradient(180deg,color-mix(in srgb,var(--forest) 70%,transparent),transparent 18%),linear-gradient(0deg,color-mix(in srgb,var(--forest) 95%,transparent) 0,color-mix(in srgb,var(--forest) 70%,transparent) 42%,transparent 70%)}
+  .hero-copy{top:auto;bottom:calc(5.5rem + env(safe-area-inset-bottom,0px));transform:none;max-width:none;right:var(--gutter)}
+  .hero-copy h1{font-size:clamp(3rem,15vw,5.5rem)}
+  .hero-copy p,.seals,.scroll-hint{display:none}
+  .forms{left:var(--gutter);right:var(--gutter);gap:.6rem}
+  .forms li{min-width:0;flex:1}
+  .forms li b{font-size:.8rem}
+  .forms li span{display:none}
 }
 
 /* ---------- BANDA ---------- */
@@ -223,7 +219,7 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:100;op
 
 /* ---------- GALERÍA ---------- */
 .gallery{padding-block:0 clamp(4rem,9vw,8rem)}
-.bento{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-rows:clamp(170px,21vw,320px);gap:12px}
+.bento{display:grid;grid-auto-flow:dense;grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-rows:clamp(170px,21vw,320px);gap:12px}
 .bento figure{margin:0;position:relative;overflow:hidden;border-radius:20px;background:var(--green);min-width:0}
 .bento .big{grid-column:span 2;grid-row:span 2}
 .bento .wide{grid-column:span 2}
@@ -290,28 +286,25 @@ footer{overflow:hidden;padding-top:2rem}
         <span class="w thin" style="--i:0">Pan de</span>
         <span class="w" style="--i:1">papa</span>
       </h1>
-      <p>Esponjoso y liviano. Una misma masa, tres formas: redondo, mediano y largo. <b>Bajá y conocé las tres.</b></p>
+      <p>Esponjoso y liviano. Una misma masa en tres formas: Bun, Brot y Hoagie. Clásico, con sésamo o con costra de queso.</p>
       <div class="cta">
-        <a class="btn dark" href="#productos">Ver la línea →</a>
-        <a class="btn line" href="#contacto">Para comercios</a>
+        <a class="btn" href="#productos">Ver la línea →</a>
+        <a class="btn light" href="#contacto">Para comercios</a>
       </div>
       <div class="seals" aria-label="Sellos">
         <div class="seal"><span><big>0%</big>grasas trans</span></div>
         <div class="seal"><span>Industria<br>uruguaya</span></div>
       </div>
     </div>
-    <div class="stack">
-      <div class="cards" id="cards">
-        <figure class="card-ph on"><img src="img/pack-bun-sesamo.jpg" alt="Bolsa de Bun de papa con sésamo Martino, 6 unidades"></figure>
-        <figure class="card-ph"><img src="img/pack-brot-clasico.jpg" alt="Bolsa de Brot de papa clásico Martino, 4 unidades"></figure>
-        <figure class="card-ph"><img src="img/pack-hoagie-queso.jpg" alt="Bolsa de Hoagie de papa con queso Martino, 8 unidades"></figure>
-      </div>
-      <div class="loaf-cap" aria-live="polite"><b id="capName">Bun de papa</b><span id="capInfo">Sésamo · 6 u · 450 g</span></div>
-    </div>
-    <ol class="forms" id="forms" aria-label="Las tres formas">
-      <li class="on"><i>01</i><b>Bun</b><span>Redondo · 6 u · 450 g</span></li>
-      <li><i>02</i><b>Brot</b><span>Mediano · 4 u · 320 g</span></li>
-      <li><i>03</i><b>Hoagie</b><span>Largo · 8 u · 510 g</span></li>
+    <figure class="shot on" style="--pos:50% 55%"><img src="img/buns-mix.jpg" alt="Buns de papa Martino clásicos, con sésamo y con queso"></figure>
+    <figure class="shot" style="--pos:50% 45%"><img src="img/bun-queso-cerca.jpg" alt="Primer plano de un Bun de papa con costra de queso" loading="lazy"></figure>
+    <figure class="shot" style="--pos:50% 55%"><img src="img/hoagies-mix.jpg" alt="Hoagies de papa con queso, con sésamo y clásicos" loading="lazy"></figure>
+    <figure class="shot" style="--pos:30% 75%"><img src="img/bun-sesamo-lado.jpg" alt="Bun de papa con sésamo de costado, mostrando su altura" loading="lazy"></figure>
+    <ol class="forms" id="forms" aria-label="Fotos">
+      <li class="on"><b>La línea</b><span>Clásico · Sésamo · Queso</span></li>
+      <li><b>Bun queso</b><span>6 u · 450 g</span></li>
+      <li><b>Hoagie</b><span>8 u · 510 g</span></li>
+      <li><b>Bun sésamo</b><span>6 u · 450 g</span></li>
     </ol>
     <div class="scroll-hint" aria-hidden="true">Bajá<i></i></div>
   </div>
@@ -437,25 +430,20 @@ function guard(img){
 }
 document.querySelectorAll('img').forEach(guard);
 
-/* ---------- Hero: Bun → Brot → Hoagie con las bolsas reales ---------- */
-const FORMS = [
-  {name:'Bun de papa', info:'Sésamo · 6 u · 450 g'},
-  {name:'Brot de papa', info:'Clásico · 4 u · 320 g'},
-  {name:'Hoagie de papa', info:'Queso · 8 u · 510 g'},
-];
-const cardEls = [...document.querySelectorAll('.card-ph')];
+/* ---------- Hero: fotos a pantalla completa que cambian al bajar ---------- */
+const heroShots = [...document.querySelectorAll('.shot')];
 let lastN = -1;
-function setForm(n){
+function setShot(n, k){
+  heroShots.forEach((sh, j) => sh.querySelector('img').style.setProperty('--z', j === n ? (1.12 - k * .1).toFixed(3) : 1.12));
   if (n === lastN) return; lastN = n;
-  cardEls.forEach((c, j) => { c.classList.toggle('on', j === n); c.classList.toggle('out', j < n); });
-  $('#capName').textContent = FORMS[n].name; $('#capInfo').textContent = FORMS[n].info;
+  heroShots.forEach((sh, j) => sh.classList.toggle('on', j === n));
   [...$('#forms').children].forEach((li, j) => li.classList.toggle('on', j === n));
 }
 const hero = $('#top'), nav = $('#nav'), hint = $('.scroll-hint');
 function onScroll(){
   const r = hero.getBoundingClientRect();
   const p = clamp(-r.top / (r.height - innerHeight));
-  setForm(Math.min(2, Math.floor(p * 3.2)));
+  const f = p * heroShots.length * .999; setShot(Math.floor(f), reduce ? 0 : f % 1);
   hint.style.opacity = 1 - clamp(p * 6);
   nav.classList.toggle('solid', r.bottom < 80);
 }
@@ -518,9 +506,9 @@ document.addEventListener('click', e => { const a = e.target.closest('[data-go]'
 
 /* ---------- Usos ---------- */
 const uses = [
-  {t:'Hamburguesa', d:'Carne a la parrilla, cheddar y el Bun tostado de un lado. Aguanta los jugos sin romperse.', p:'bun-sesamo', c:'#e9a514', img:'img/buns-fila.jpg', pos:'50% 72%'},
+  {t:'Hamburguesa', d:'Carne a la parrilla, cheddar y el Bun tostado de un lado. Aguanta los jugos sin romperse.', p:'bun-sesamo', c:'#e9a514', img:'img/bun-sesamo-lado.jpg', pos:'0% 84%'},
   {t:'Chivito', d:'Lomito, jamón, muzzarella, huevo y todo lo que entre. Un pan que abraza sin aplastar.', p:'brot-clasico', c:'#fff', img:'img/pack-brot-clasico.jpg'},
-  {t:'Pancho', d:'Salchicha, mostaza y papas pay. En un Hoagie con queso es otro pancho.', p:'hoagie-queso', c:'#fff', img:'img/pack-hoagie-queso.jpg'},
+  {t:'Pancho', d:'Salchicha, mostaza y papas pay. En un Hoagie con queso es otro pancho.', p:'hoagie-queso', c:'#fff', img:'img/hoagies-mix.jpg', pos:'50% 50%'},
 ];
 $('#useGrid').innerHTML = uses.map(u => { const p = products.find(x => x.id === u.p); return `<a class="use" href="#productos" data-go="${p.id}"><div class="pic" style="--c:${u.c}"><img src="${u.img}" style="object-position:${u.pos||'50% 50%'}" alt="${p.line} ${p.name}" loading="lazy"></div><h3>${u.t}</h3><span class="meta"><i>★</i>${p.line} ${p.name} · ${p.units} u · ${p.g} g</span><p>${u.d}</p></a>`; }).join('');
 document.querySelectorAll('#useGrid img').forEach(guard);
@@ -533,6 +521,9 @@ const shots = [
   ['wide','img/pack-bun-sesamo.jpg','sesamo:bun','Bolsa de Bun de papa con sésamo','6 unidades · 450 g'],
   ['','img/bun-queso-horno-2.jpg','queso:bun','Bandejas de buns de queso en el horno','En el horno'],
   ['','img/buns-fila-2.jpg','sesamo:bun','Buns de sésamo en fila','Uno atrás del otro'],
+  ['tall','img/pan-molde.jpg','','Pan de molde Martino cortado en rebanadas','Pan de molde'],
+  ['','img/bun-queso-cerca.jpg','','Primer plano de la costra de queso','La costra de queso'],
+  ['','img/hoagies-mix.jpg','','Hoagies con queso, sésamo y clásicos','Hoagie de papa'],
 ];
 $('#bento').innerHTML = shots.map(([c, src, art, alt, cap]) => `<figure class="${c}" data-art="${art}"><img src="${src}" alt="${alt}" loading="lazy"><figcaption>${cap}</figcaption></figure>`).join('');
 document.querySelectorAll('#bento img').forEach(guard);
