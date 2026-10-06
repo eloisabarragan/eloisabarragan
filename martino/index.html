@@ -209,6 +209,8 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:100;op
 .use-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
 .use{display:flex;flex-direction:column;gap:.8rem;min-width:0;text-decoration:none;color:inherit}
 .use .pic{aspect-ratio:16/10;border-radius:22px;overflow:hidden;position:relative;background:var(--c);display:grid;place-items:center;max-width:100%}
+.use .pic.cut img{position:absolute;inset:0;object-fit:contain;padding:10% 14%;filter:drop-shadow(0 26px 22px rgba(0,0,0,.4))}
+.use .pic.flat img{padding:0;filter:none}
 .use .pic img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 1s cubic-bezier(.2,.9,.2,1)}
 .use:hover .pic img{transform:scale(1.06)}
 .use h3{font-size:clamp(2rem,3vw,2.8rem)}
@@ -302,7 +304,7 @@ footer{overflow:hidden;padding-top:2rem}
 .air-head{text-align:center;position:relative;z-index:3;padding-inline:var(--gutter);pointer-events:none}
 .air-head h2 .script{display:block;font-size:.62em}
 .air-head p{color:var(--moss);margin:.8rem 0 0}
-.air-stage{position:relative;height:clamp(560px,78vh,820px);max-width:1500px;margin:-2rem auto 0}
+.air-stage{position:relative;height:clamp(560px,80vh,820px);max-width:1500px;margin:1rem auto 0;overflow:hidden}
 .fl{position:absolute;left:var(--x);top:var(--y);width:var(--w);max-width:44%;background:none;border:0;padding:0;cursor:pointer;transform:translate(var(--mx,0),var(--my,0));transition:opacity .4s,filter .4s;color:var(--cream)}
 .fl img{width:100%;height:auto;display:block;filter:drop-shadow(0 40px 30px rgba(0,0,0,.45));animation:hover var(--t) ease-in-out infinite;transform-origin:50% 60%;transition:scale .5s cubic-bezier(.3,1.5,.5,1)}
 @keyframes hover{0%,100%{transform:translateY(0) rotate(var(--r))}50%{transform:translateY(-18px) rotate(calc(var(--r) * -.4))}}
@@ -469,12 +471,12 @@ footer{overflow:hidden;padding-top:2rem}
     <p>Pasá el mouse o tocá un pan para ver cuál es.</p>
   </div>
   <div class="air-stage" id="airStage">
-    <button class="fl" type="button" data-pi="1" data-d="1.6" style="--x:18%;--y:14%;--w:clamp(150px,21vw,330px);--r:-8deg;--t:6.5s"><img src="img/cut-bun-sesamo.webp" alt="Bun de papa con sésamo"><span>Bun · Sésamo</span></button>
-    <button class="fl" type="button" data-pi="-1" data-d="1" style="--x:70%;--y:8%;--w:clamp(130px,17vw,270px);--r:10deg;--t:7.5s"><img src="img/cut-bun-queso.webp" alt="Bun de papa con queso"><span>Bun · Queso</span></button>
-    <button class="fl" type="button" data-pi="2" data-d="2.2" style="--x:44%;--y:44%;--w:clamp(190px,30vw,470px);--r:-4deg;--t:8s"><img src="img/cut-largo-clasico.webp" alt="Brot de papa clásico"><span>Brot · Clásico</span></button>
-    <button class="fl" type="button" data-pi="3" data-d=".7" style="--x:6%;--y:62%;--w:clamp(170px,24vw,380px);--r:7deg;--t:7s"><img src="img/cut-largo-queso.webp" alt="Brot de papa con queso"><span>Brot · Queso</span></button>
-    <button class="fl" type="button" data-pi="-1" data-d="1.3" style="--x:66%;--y:70%;--w:clamp(170px,24vw,380px);--r:-11deg;--t:9s"><img src="img/cut-largo-sesamo.webp" alt="Brot de papa con sésamo"><span>Brot · Sésamo</span></button>
-    <button class="fl" type="button" data-pi="-1" data-d="1.9" style="--x:76%;--y:36%;--w:clamp(150px,19vw,300px);--r:9deg;--t:8.5s"><img src="img/cut-largo-harina.webp" alt="Brot de papa enharinado"><span>Brot · Enharinado</span></button>
+    <button class="fl" type="button" data-pi="1" data-d="1.6" style="--x:6%;--y:4%;--w:clamp(150px,22vw,330px);--r:-8deg;--t:6.5s"><img src="img/cut-bun-sesamo.webp" alt="Bun de papa con sésamo"><span>Bun · Sésamo</span></button>
+    <button class="fl" type="button" data-pi="-1" data-d="1" style="--x:70%;--y:2%;--w:clamp(130px,18vw,270px);--r:10deg;--t:7.5s"><img src="img/cut-bun-queso.webp" alt="Bun de papa con queso"><span>Bun · Queso</span></button>
+    <button class="fl" type="button" data-pi="2" data-d="2.2" style="--x:34%;--y:20%;--w:clamp(190px,24vw,470px);--r:-4deg;--t:8s"><img src="img/cut-largo-clasico.webp" alt="Brot de papa clásico"><span>Brot · Clásico</span></button>
+    <button class="fl" type="button" data-pi="3" data-d=".7" style="--x:4%;--y:62%;--w:clamp(170px,22vw,380px);--r:7deg;--t:7s"><img src="img/cut-largo-queso.webp" alt="Brot de papa con queso"><span>Brot · Queso</span></button>
+    <button class="fl" type="button" data-pi="-1" data-d="1.3" style="--x:64%;--y:58%;--w:clamp(170px,24vw,380px);--r:-11deg;--t:9s"><img src="img/cut-largo-sesamo.webp" alt="Brot de papa con sésamo"><span>Brot · Sésamo</span></button>
+    <button class="fl" type="button" data-pi="-1" data-d="1.9" style="--x:44%;--y:64%;--w:clamp(150px,16vw,300px);--r:9deg;--t:8.5s"><img src="img/cut-largo-harina.webp" alt="Brot de papa enharinado"><span>Brot · Enharinado</span></button>
   </div>
 </section>
 
@@ -609,7 +611,7 @@ footer{overflow:hidden;padding-top:2rem}
   <div class="foot-big" aria-hidden="true">Martino</div>
   <div class="wrap foot-row">
     <span>© <span id="yr">2026</span> Martino · Panadería premium</span>
-    <span>Calidad · Tradición · Pasión</span>
+    <span>Creado con amor y mucho café por Eloísa Barragán</span>
     <a href="#top">Volver arriba ↑</a>
   </div>
 </footer>
@@ -709,11 +711,11 @@ document.addEventListener('click', e => { const a = e.target.closest('[data-go]'
 
 /* ---------- Usos ---------- */
 const uses = [
-  {t:'Hamburguesa', d:'Carne a la parrilla, cheddar y el Bun tostado de un lado. Aguanta los jugos sin romperse.', p:'bun-sesamo', c:'#e9a514', img:'img/bun-sesamo-lado.jpg', pos:'0% 84%'},
-  {t:'Chivito', d:'Lomito, jamón, muzzarella, huevo y todo lo que entre. Un pan que abraza sin aplastar.', p:'brot-clasico', c:'#fff', img:'img/pack-brot-clasico.jpg'},
-  {t:'Pancho', d:'Salchicha, mostaza y papas pay. En un Hoagie con queso es otro pancho.', p:'hoagie-queso', c:'#fff', img:'img/hoagies-mix.jpg', pos:'50% 50%'},
+  {t:'Hamburguesa', d:'Carne a la parrilla, cheddar y el Bun tostado de un lado. Aguanta los jugos sin romperse.', p:'bun-sesamo', c:'radial-gradient(circle at 50% 60%,#f6c94a,#c98d0e)', img:'img/cut-bun-sesamo.webp', cut:true},
+  {t:'Chivito', d:'Lomito, jamón, muzzarella, huevo y todo lo que entre. Un pan que abraza sin aplastar.', p:'brot-clasico', c:'radial-gradient(circle at 50% 60%,#2f7448,#123a22)', img:'img/cut-largo-clasico.webp', cut:true},
+  {t:'Pancho', d:'Salchicha, mostaza y papas pay. En un Hoagie con queso es otro pancho.', p:'hoagie-queso', c:'#fff', img:'img/pack-hoagie-queso.jpg', cut:true, flat:true},
 ];
-$('#useGrid').innerHTML = uses.map(u => { const p = products.find(x => x.id === u.p); return `<a class="use" href="#productos" data-go="${p.id}"><div class="pic" style="--c:${u.c}"><img src="${u.img}" style="object-position:${u.pos||'50% 50%'}" alt="${p.line} ${p.name}" loading="lazy"></div><h3>${u.t}</h3><span class="meta"><i>★</i>${p.line} ${p.name} · ${p.units} u · ${p.g} g</span><p>${u.d}</p></a>`; }).join('');
+$('#useGrid').innerHTML = uses.map(u => { const p = products.find(x => x.id === u.p); return `<a class="use" href="#productos" data-go="${p.id}"><div class="pic${u.cut ? ' cut' : ''}${u.flat ? ' flat' : ''}" style="--c:${u.c}"><img src="${u.img}" style="object-position:${u.pos||'50% 50%'}" alt="${p.line} ${p.name}" loading="lazy"></div><h3>${u.t}</h3><span class="meta"><i>★</i>${p.line} ${p.name} · ${p.units} u · ${p.g} g</span><p>${u.d}</p></a>`; }).join('');
 document.querySelectorAll('#useGrid img').forEach(guard);
 
 /* ---------- Galería ---------- */
@@ -825,7 +827,7 @@ air.addEventListener('pointermove', e => { const r = air.getBoundingClientRect()
 air.addEventListener('pointerleave', () => { amx = amy = 0; });
 function airTick(){
   const r = air.getBoundingClientRect(), p = (innerHeight - r.top) / (innerHeight + r.height) - .5;
-  fls.forEach(f => { const d = +f.dataset.d; f.style.setProperty('--mx', (amx * d * -40).toFixed(1) + 'px'); f.style.setProperty('--my', (amy * d * -40 - p * d * 160).toFixed(1) + 'px'); });
+  fls.forEach(f => { const d = +f.dataset.d; f.style.setProperty('--mx', (amx * d * -30).toFixed(1) + 'px'); f.style.setProperty('--my', (amy * d * -30 - p * d * 50).toFixed(1) + 'px'); });
   if (!reduce) requestAnimationFrame(airTick);
 }
 airTick();
