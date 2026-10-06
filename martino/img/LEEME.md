@@ -25,3 +25,4 @@ Si falta alguna foto, su recuadro queda oculto (la web ya no usa dibujos).
 | `bun-sesamo-lado.jpg` | foto enviada por chat | Inicio y usos |
 | `pan-molde.jpg` | foto enviada por chat | Galería |
 | `equipo.jpg` | foto enviada por chat | Quiénes somos |
+| `cut-*.webp` | fotos sin fondo enviadas por chat | La línea en el aire y entrada |
