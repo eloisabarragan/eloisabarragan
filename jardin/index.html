@@ -7,482 +7,356 @@
   <meta name="description" content="I Love My Kinder, jardín maternal e inicial en Parque Batlle, Montevideo. Mindfulness, Método Vaz Ferreira, yoga, psicomotricidad, inglés y huerta. Agendá una visita.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&family=Gochi+Hand&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..600&family=Manrope:wght@400;500;600;700&family=Caveat:wght@500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>❤️</text></svg>">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><path d='M16 28C7 22 3 17 4 11c1-5 7-7 12-2 5-5 11-3 12 2 1 6-3 11-12 17z' fill='%23C8664A'/></svg>">
 </head>
 <body>
 
-<!-- Confetti layer -->
-<canvas id="confetti" aria-hidden="true"></canvas>
-
 <!-- ============ NAV ============ -->
-<header class="nav" id="top">
+<header class="nav" id="nav">
   <a href="#top" class="logo" aria-label="I Love My Kinder, inicio">
-    <svg class="logo-mark" viewBox="0 0 60 60" aria-hidden="true">
-      <path d="M30 52 C12 40 4 30 6 19 C8 9 20 5 30 15 C40 5 52 9 54 19 C56 30 48 40 30 52Z" fill="var(--tomato)" stroke="var(--ink)" stroke-width="3" stroke-linejoin="round"/>
-      <circle cx="22" cy="25" r="2.8" fill="var(--ink)"/>
-      <circle cx="38" cy="25" r="2.8" fill="var(--ink)"/>
-      <circle cx="17" cy="31" r="3" fill="var(--tomato-light)"/>
-      <circle cx="43" cy="31" r="3" fill="var(--tomato-light)"/>
-      <path d="M24 32 Q30 38 36 32" stroke="var(--ink)" stroke-width="2.8" fill="none" stroke-linecap="round"/>
-    </svg>
-    <span>I <em>Love</em> My Kinder</span>
+    <svg class="logo-heart" viewBox="0 0 32 32" aria-hidden="true"><path d="M16 28C7 22 3 17 4 11c1-5 7-7 12-2 5-5 11-3 12 2 1 6-3 11-12 17z"/></svg>
+    <span>I Love My Kinder</span>
   </a>
   <nav class="nav-links" aria-label="Principal">
+    <a href="#propuesta">Propuesta</a>
     <a href="#pilares">Pilares</a>
-    <a href="#dia">Un día acá</a>
-    <a href="#salas">Niveles</a>
-    <a href="#jugar">Jugá</a>
-    <a href="#familias">Talleres</a>
+    <a href="#dia">Un día</a>
+    <a href="#niveles">Niveles</a>
+    <a href="#talleres">Talleres</a>
     <a href="#faq">Preguntas</a>
   </nav>
-  <div class="nav-right">
-    <button class="duck-counter" id="duckCounter" title="Hay 5 patitos escondidos en la página. ¿Los encontrás?">
-      <svg viewBox="0 0 40 40" aria-hidden="true"><use href="#duck"/></svg>
-      <span><b id="duckCount">0</b>/5</span>
-    </button>
-    <a href="#visita" class="btn btn-small">Agendá una visita</a>
-  </div>
+  <a href="#visita" class="btn btn-dark btn-sm">Agendar visita</a>
 </header>
 
-<!-- SVG sprites -->
-<svg width="0" height="0" style="position:absolute" aria-hidden="true">
-  <defs>
-    <symbol id="duck" viewBox="0 0 40 40">
-      <ellipse cx="20" cy="27" rx="14" ry="9" fill="#FFC531"/>
-      <circle cx="26" cy="15" r="8" fill="#FFC531"/>
-      <path d="M33 15 L39 17 L33 19Z" fill="#FF7A1A"/>
-      <circle cx="28" cy="13" r="1.8" fill="#2B2140"/>
-      <path d="M10 25 Q16 21 20 27" stroke="#E5A800" stroke-width="2" fill="none" stroke-linecap="round"/>
-    </symbol>
-    <filter id="wobble">
-      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
-      <feDisplacementMap in="SourceGraphic" scale="4"/>
-    </filter>
-  </defs>
-</svg>
-
-<main>
+<main id="top">
 
 <!-- ============ HERO ============ -->
-<section class="hero" id="hero">
-  <div class="hero-sky">
-    <div class="cloud c1"></div><div class="cloud c2"></div><div class="cloud c3"></div>
-
-    <div class="sun" id="sun" aria-hidden="true">
-      <div class="sun-rays"></div>
-      <div class="sun-face">
-        <div class="eye"><div class="pupil"></div></div>
-        <div class="eye"><div class="pupil"></div></div>
-        <div class="cheek l"></div><div class="cheek r"></div>
-        <div class="mouth"></div>
-      </div>
+<section class="hero">
+  <div class="hero-copy">
+    <p class="eyebrow">Jardín maternal e inicial · Parque Batlle, Montevideo</p>
+    <h1 class="hero-title">
+      Un lugar para <span class="i">crecer</span>, aprender y <span class="i accent">jugar</span>.
+    </h1>
+    <p class="hero-sub">Acompañamos el desarrollo de cada niño y niña desde una mirada integral, respetuosa y basada en el afecto, para que crezcan autónomos, seguros y fortalecidos para la vida.</p>
+    <div class="hero-ctas">
+      <a href="#visita" class="btn btn-accent">Agendar una visita</a>
+      <a href="#propuesta" class="link-arrow">Conocer la propuesta <span aria-hidden="true">→</span></a>
     </div>
-
-    <div class="hero-copy">
-      <p class="kicker">Jardín maternal e inicial · Parque Batlle</p>
-      <h1 class="hero-title" id="heroTitle">
-        <span class="line">Acá se aprende</span>
-        <span class="line"><em class="hl hl-sun">jugando,</em></span>
-        <span class="line"><em class="hl hl-grass">ensuciándose</em> y</span>
-        <span class="line">riéndose <em class="hl hl-tomato">fuerte.</em></span>
-      </h1>
-      <p class="hero-sub">Un lugar para crecer, aprender y jugar. Acompañamos a cada peque desde una mirada integral, respetuosa y basada en el afecto, para que crezca autónomo, seguro y fortalecido para la vida.</p>
-      <div class="hero-ctas">
-        <a href="#visita" class="btn">Quiero conocerlo <span aria-hidden="true">→</span></a>
-        <a href="#dia" class="btn btn-ghost">Ver un día acá</a>
-      </div>
-    </div>
-
-    <svg class="duck hidden-duck" data-duck="1" style="right:9%; top:62%" viewBox="0 0 40 40" role="button" tabindex="0" aria-label="Patito escondido"><use href="#duck"/></svg>
   </div>
 
-  <div class="hero-ground" id="ground" title="Tocá el pasto para plantar algo">
-    <svg class="hills" viewBox="0 0 1440 220" preserveAspectRatio="none" aria-hidden="true">
-      <path d="M0 120 C200 40 380 60 560 110 C760 165 900 50 1100 70 C1260 85 1360 130 1440 110 L1440 220 L0 220Z" fill="var(--grass-light)"/>
-      <path d="M0 160 C220 110 420 130 640 160 C860 190 1040 110 1240 130 C1340 140 1400 160 1440 155 L1440 220 L0 220Z" fill="var(--grass)"/>
+  <figure class="hero-art">
+    <svg id="meadow" viewBox="0 0 400 520" role="img" aria-label="Ilustración de un jardín con pasto que se mueve. Tocá para plantar flores.">
+      <defs>
+        <clipPath id="arch"><path d="M0 520V200A200 200 0 0 1 400 200V520Z"/></clipPath>
+        <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#F3E3CF"/>
+          <stop offset="1" stop-color="#E6ECDD"/>
+        </linearGradient>
+      </defs>
+      <g clip-path="url(#arch)">
+        <rect width="400" height="520" fill="url(#skyGrad)"/>
+        <circle id="heroSun" cx="285" cy="175" r="44" fill="#E2B04A"/>
+        <path d="M0 360 C80 320 160 330 230 352 C300 374 350 340 400 332 V520 H0Z" fill="#C9D3BC"/>
+        <path d="M0 410 C90 388 180 396 260 414 C320 428 370 412 400 406 V520 H0Z" fill="#A9B8A0"/>
+        <g id="grass"></g>
+        <g id="flowers"></g>
+      </g>
+      <path d="M1 520V200A199 199 0 0 1 399 200V520" fill="none" stroke="#1F2A24" stroke-opacity=".18" stroke-width="1.5"/>
     </svg>
-    <div class="garden" id="garden"></div>
-    <p class="ground-hint"><span>tocá el pasto y plantá algo</span> 🌱</p>
+    <figcaption class="note-hand">tocá el pasto para plantar una flor</figcaption>
+  </figure>
+</section>
+
+<!-- ============ FACTS ============ -->
+<ul class="facts" aria-label="Datos principales">
+  <li><b>Lun a Vie</b><span>de 8:00 a 18:30</span></li>
+  <li><b>Maternal e inicial</b><span>de bebés a 5 años</span></li>
+  <li><b>4 talleres</b><span>incluidos en la cuota</span></li>
+  <li><b>Método Vaz Ferreira</b><span>desde los 24 meses</span></li>
+</ul>
+
+<!-- ============ MANIFIESTO ============ -->
+<section class="manifesto" id="propuesta">
+  <p class="eyebrow">Nuestra propuesta</p>
+  <p class="manifesto-text" id="manifesto">Creemos que jugar es la forma más seria de aprender. Por eso cada propuesta parte de la curiosidad de los chicos: ellos preguntan, prueban, investigan y construyen. Nosotros acompañamos, con tiempo, con afecto y con una mirada atenta a cada uno.</p>
+  <div class="team">
+    <svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="22" cy="22" r="9"/><circle cx="44" cy="26" r="7"/><path d="M6 56c2-12 9-18 16-18s14 6 16 18M32 56c2-9 7-14 12-14s10 5 12 14"/></svg>
+    <p>Un equipo de <b>maestras y educadoras especializadas en atención temprana y estimulación oportuna</b>.</p>
   </div>
 </section>
 
-<!-- ============ MARQUEE ============ -->
-<div class="marquee" aria-hidden="true">
-  <div class="marquee-track">
-    <span>Yoga</span><i>✿</i><span>Psicomotricidad</span><i>✦</i><span>Huerta</span><i>●</i><span>Inglés</span><i>✿</i><span>Mindfulness</span><i>✦</i><span>Arte todos los días</span><i>●</i><span>Exploración sensorial</span><i>✿</i><span>Método Vaz Ferreira</span><i>✦</i>
-    <span>Yoga</span><i>✿</i><span>Psicomotricidad</span><i>✦</i><span>Huerta</span><i>●</i><span>Inglés</span><i>✿</i><span>Mindfulness</span><i>✦</i><span>Arte todos los días</span><i>●</i><span>Exploración sensorial</span><i>✿</i><span>Método Vaz Ferreira</span><i>✦</i>
+<!-- ============ DIMENSIONES ============ -->
+<section class="dims section">
+  <div class="dims-copy">
+    <p class="eyebrow">Desarrollo integral</p>
+    <h2>Educamos al niño entero, no por partes.</h2>
+    <p class="lead">Nuestro modelo incorpora todo lo que favorece un crecimiento integral, en cinco dimensiones. Tocá cada una.</p>
+    <div class="dim-detail" aria-live="polite">
+      <h3 id="dimTitle">Intelectual</h3>
+      <p id="dimText"></p>
+    </div>
   </div>
-</div>
-
-<!-- ============ POR QUÉ ============ -->
-<section class="why section" id="por-que">
-  <div class="section-head reveal">
-    <p class="scribble">lo que vas a sentir cuando entres</p>
-    <h2>Un lugar donde tu peque <span class="underline">quiere</span> volver.</h2>
+  <div class="dims-art">
+    <svg id="dimFlower" viewBox="-200 -200 400 400" aria-label="Las cinco dimensiones del desarrollo">
+      <g id="petals"></g>
+      <circle r="58" fill="#FBF8F3" stroke="#1F2A24" stroke-opacity=".15"/>
+      <text y="-6" text-anchor="middle" class="flower-center">cada</text>
+      <text y="20" text-anchor="middle" class="flower-center">peque</text>
+    </svg>
   </div>
-
-  <div class="why-grid">
-    <article class="why-card reveal" style="--c: var(--sun); --r:-2deg">
-      <div class="why-num" data-count="4">0</div>
-      <h3>talleres, todos incluidos en la cuota</h3>
-      <p>Yoga, psicomotricidad, huerta e inglés. Sin extras ni sorpresas a fin de mes.</p>
-    </article>
-    <article class="why-card reveal" style="--c: var(--grass-light); --r:1.5deg">
-      <div class="why-num" data-count="18" data-suffix=":30">0</div>
-      <h3>abierto hasta, de lunes a viernes</h3>
-      <p>Abrimos 8:00 y cerramos 18:30. Pensado para familias que trabajan.</p>
-    </article>
-    <article class="why-card reveal" style="--c: var(--sky); --r:-1deg">
-      <div class="why-num" data-count="24" data-suffix=" m">0</div>
-      <h3>meses: desde ahí, Método Vaz Ferreira</h3>
-      <p>Una metodología pensada para la primera infancia, de los 24 meses a los 5 años.</p>
-    </article>
-    <article class="why-card reveal" style="--c: var(--tomato-light); --r:2deg">
-      <div class="why-num" data-count="5">0</div>
-      <h3>dimensiones de crecimiento</h3>
-      <p>Intelectual, emocional, física, social y espiritual. Educamos al peque entero.</p>
-    </article>
-  </div>
-
-  <svg class="duck hidden-duck" data-duck="2" style="left:3%; bottom:6%" viewBox="0 0 40 40" role="button" tabindex="0" aria-label="Patito escondido"><use href="#duck"/></svg>
 </section>
 
 <!-- ============ PILARES ============ -->
 <section class="pillars section" id="pilares">
-  <div class="section-head reveal">
-    <p class="scribble">tocá cada carta</p>
-    <h2>Nuestros pilares.</h2>
-    <p class="lead">Seis ideas que guían todo lo que pasa adentro del Kinder.</p>
+  <div class="section-head">
+    <p class="eyebrow">Nuestros pilares</p>
+    <h2>Seis ideas que guían todo lo que hacemos.</h2>
   </div>
-
-  <div class="pillar-grid">
-    <button class="pillar reveal" style="--c:var(--sky-light); --r:-2deg">
-      <span class="pillar-inner">
-        <span class="pillar-front"><span class="pillar-icon">🧘</span><b>Mindfulness</b><small>dar vuelta ↻</small></span>
-        <span class="pillar-back">Momentos de relajación y observación para celebrar el presente, cultivar la calma y sentir gratitud.</span>
-      </span>
-    </button>
-    <button class="pillar reveal" style="--c:#FFE27A; --r:1deg">
-      <span class="pillar-inner">
-        <span class="pillar-front"><span class="pillar-icon">🌈</span><b>Desarrollo integral</b><small>dar vuelta ↻</small></span>
-        <span class="pillar-back">Acompañamiento pedagógico y social para que cada peque crezca en todas sus dimensiones.</span>
-      </span>
-    </button>
-    <button class="pillar reveal" style="--c:var(--grass-light); --r:-1deg">
-      <span class="pillar-inner">
-        <span class="pillar-front"><span class="pillar-icon">🔍</span><b>Peques protagonistas</b><small>dar vuelta ↻</small></span>
-        <span class="pillar-back">Aprender es construir e investigar. Los chicos no miran desde afuera: son los protagonistas.</span>
-      </span>
-    </button>
-    <button class="pillar reveal" style="--c:var(--tomato-light); --r:2deg">
-      <span class="pillar-inner">
-        <span class="pillar-front"><span class="pillar-icon">🧩</span><b>Método Vaz Ferreira</b><small>dar vuelta ↻</small></span>
-        <span class="pillar-back">Respeta la singularidad de cada peque: sus intereses, necesidades y aptitudes. Promueve autonomía e identidad.</span>
-      </span>
-    </button>
-    <button class="pillar reveal" style="--c:#E4D7FF; --r:-1.5deg">
-      <span class="pillar-inner">
-        <span class="pillar-front"><span class="pillar-icon">🎨</span><b>Creatividad artística</b><small>dar vuelta ↻</small></span>
-        <span class="pillar-back">Todos los días hay expresión plástica y visual, con materiales, herramientas y técnicas de todo tipo.</span>
-      </span>
-    </button>
-    <button class="pillar reveal" style="--c:#FFD9CF; --r:1.5deg">
-      <span class="pillar-inner">
-        <span class="pillar-front"><span class="pillar-icon">✋</span><b>Exploración sensorial</b><small>dar vuelta ↻</small></span>
-        <span class="pillar-back">Tocar, oler, mirar, escuchar y probar. La estimulación sensorial está en las propuestas de todos los días.</span>
-      </span>
-    </button>
-  </div>
+  <ol class="pillar-list">
+    <li class="pillar">
+      <span class="pillar-n">01</span>
+      <h3>Mindfulness</h3>
+      <p>Momentos de relajación y observación para celebrar el presente, cultivar la calma, la armonía interior y la gratitud.</p>
+    </li>
+    <li class="pillar">
+      <span class="pillar-n">02</span>
+      <h3>Desarrollo integral</h3>
+      <p>El acompañamiento pedagógico y social que cada niño y niña necesita para crecer en todas sus dimensiones.</p>
+    </li>
+    <li class="pillar">
+      <span class="pillar-n">03</span>
+      <h3>Enseñanza–aprendizaje</h3>
+      <p>Un proceso activo de construcción e investigación, donde los chicos son los protagonistas.</p>
+    </li>
+    <li class="pillar">
+      <span class="pillar-n">04</span>
+      <h3>Método Vaz Ferreira</h3>
+      <p>Considera la singularidad de cada peque: respeta sus intereses, necesidades y aptitudes, y promueve su autonomía e identidad. Lo aplicamos de los 24 meses a los 5 años.</p>
+    </li>
+    <li class="pillar">
+      <span class="pillar-n">05</span>
+      <h3>Creatividad artística</h3>
+      <p>Expresión plástica y visual todos los días, con una gran variedad de materiales, herramientas y técnicas.</p>
+    </li>
+    <li class="pillar">
+      <span class="pillar-n">06</span>
+      <h3>Exploración sensorial</h3>
+      <p>La estimulación sensorial es parte de las propuestas de todos los días: tocar, mirar, escuchar, oler, descubrir.</p>
+    </li>
+  </ol>
 </section>
 
 <!-- ============ UN DÍA ============ -->
 <section class="day section" id="dia">
-  <div class="section-head reveal">
-    <p class="scribble">bajá despacito</p>
-    <h2>Un día en el Kinder, de punta a punta.</h2>
-    <p class="lead">Un día tipo, para que te hagas una idea.</p>
-  </div>
-
   <div class="day-wrap">
-    <div class="day-sky-wrap">
+    <div class="day-panel">
+      <p class="eyebrow">Un día en el Kinder</p>
       <div class="day-sky" id="daySky">
-        <div class="day-sun" id="daySun"></div>
-        <div class="day-moon" id="dayMoon"></div>
-        <div class="stars"></div>
-        <svg class="day-hills" viewBox="0 0 400 120" preserveAspectRatio="none" aria-hidden="true">
-          <path d="M0 60 C80 20 160 30 220 60 C280 90 340 40 400 50 L400 120 L0 120Z" fill="var(--grass-light)"/>
-          <path d="M0 90 C90 70 180 80 260 95 C320 105 370 85 400 88 L400 120 L0 120Z" fill="var(--grass)"/>
+        <svg viewBox="0 0 400 220" aria-hidden="true">
+          <path d="M30 190 A170 150 0 0 1 370 190" fill="none" stroke="#1F2A24" stroke-opacity=".2" stroke-dasharray="2 7" stroke-linecap="round" stroke-width="2"/>
+          <circle id="daySun" cx="30" cy="190" r="16" fill="#E2B04A"/>
+          <line x1="0" y1="190" x2="400" y2="190" stroke="#1F2A24" stroke-opacity=".25"/>
         </svg>
-        <div class="day-house" aria-hidden="true">
-          <div class="roof"></div><div class="walls"><div class="door"></div><div class="win"></div></div>
-        </div>
-        <div class="day-clock" id="dayClock">8:00</div>
+        <p class="day-time" id="dayTime">8:00</p>
       </div>
+      <p class="day-disclaimer">Un día tipo, para que te hagas una idea.</p>
     </div>
 
     <ol class="day-steps">
-      <li class="day-step" data-time="8:00" data-sun="0">
-        <span class="step-emoji">👋</span>
-        <h3>Llegada sin apuro</h3>
-        <p>Te recibimos en la puerta. Respetamos los hábitos y rutinas de cada peque para que el día arranque con confianza.</p>
+      <li class="day-step" data-time="8:00" data-k="0">
+        <h3>Llegada</h3>
+        <p>Recibimos a cada peque respetando sus hábitos y rutinas, para que el día empiece con confianza.</p>
       </li>
-      <li class="day-step" data-time="9:00" data-sun="1">
-        <span class="step-emoji">🧘</span>
+      <li class="day-step" data-time="9:00" data-k="1">
         <h3>Ronda y calma</h3>
-        <p>Nos saludamos y hacemos un ratito de mindfulness: respirar, observar y celebrar el momento presente.</p>
+        <p>Nos encontramos y hacemos un momento de mindfulness: respirar, observar, estar presentes.</p>
       </li>
-      <li class="day-step" data-time="10:00" data-sun="2">
-        <span class="step-emoji">🎨</span>
+      <li class="day-step" data-time="10:00" data-k="2">
         <h3>Arte y exploración</h3>
-        <p>Pintura, masa, texturas, sonidos. Expresión artística y estimulación sensorial, todos los días.</p>
+        <p>Expresión plástica y propuestas sensoriales con materiales, texturas y técnicas diversas.</p>
       </li>
-      <li class="day-step" data-time="11:00" data-sun="3">
-        <span class="step-emoji">🤸</span>
+      <li class="day-step" data-time="11:00" data-k="3">
         <h3>Talleres</h3>
-        <p>Yoga, psicomotricidad, inglés (desde Kinder 2) y, desde setiembre, huerta. Todo incluido en la cuota.</p>
+        <p>Yoga, psicomotricidad, inglés y, desde setiembre, huerta. Todos incluidos en la cuota.</p>
       </li>
-      <li class="day-step" data-time="13:00" data-sun="4">
-        <span class="step-emoji">🔍</span>
-        <h3>Proyectos e investigación</h3>
-        <p>Aprender es construir: preguntan, prueban y descubren. Los peques son los protagonistas.</p>
+      <li class="day-step" data-time="13:00" data-k="4">
+        <h3>Proyectos</h3>
+        <p>Preguntan, prueban y descubren. Aprender como un proceso de construcción e investigación.</p>
       </li>
-      <li class="day-step" data-time="15:00" data-sun="5">
-        <span class="step-emoji">🧩</span>
+      <li class="day-step" data-time="15:00" data-k="5">
         <h3>Método Vaz Ferreira</h3>
-        <p>En la última hora del horario curricular aplicamos el Método Vaz Ferreira, de los 24 meses a los 5 años.</p>
+        <p>En la última hora del horario curricular, una propuesta pensada para la singularidad de cada uno.</p>
       </li>
-      <li class="day-step" data-time="18:30" data-sun="6">
-        <span class="step-emoji">🏡</span>
+      <li class="day-step" data-time="18:30" data-k="6">
         <h3>Hasta mañana</h3>
-        <p>Abiertos hasta las 18:30. Se van cansados, felices y con ganas de volver.</p>
+        <p>Estamos abiertos hasta las 18:30, para acompañar los tiempos de cada familia.</p>
       </li>
     </ol>
   </div>
 </section>
 
-<!-- ============ SALAS ============ -->
-<section class="salas section" id="salas">
-  <div class="section-head reveal">
-    <p class="scribble">elegí el nivel</p>
-    <h2>De bebés a grandotes.</h2>
+<!-- ============ NIVELES ============ -->
+<section class="levels section" id="niveles">
+  <div class="section-head">
+    <p class="eyebrow">Niveles</p>
+    <h2>Un recorrido que acompaña cada etapa.</h2>
   </div>
-
-  <div class="sala-tabs" role="tablist" aria-label="Niveles">
-    <button role="tab" class="sala-tab is-active" aria-selected="true" data-sala="0" style="--c:var(--sun)">Maternal</button>
-    <button role="tab" class="sala-tab" aria-selected="false" data-sala="1" style="--c:var(--tomato)">Kinder 1</button>
-    <button role="tab" class="sala-tab" aria-selected="false" data-sala="2" style="--c:var(--sky)">Kinder 2</button>
-    <button role="tab" class="sala-tab" aria-selected="false" data-sala="3" style="--c:var(--plum)">Kinder 3</button>
-  </div>
-
-  <div class="sala-stage" id="salaStage" role="tabpanel" aria-live="polite">
-    <div class="sala-critter" id="salaCritter" aria-hidden="true">
-      <div class="critter-body">
-        <div class="critter-eye l"><i></i></div>
-        <div class="critter-eye r"><i></i></div>
-        <div class="critter-mouth"></div>
-        <div class="critter-extra"></div>
-      </div>
-    </div>
-    <div class="sala-info">
-      <p class="sala-tag" id="salaTag"></p>
-      <h3 id="salaName">Maternal</h3>
-      <p id="salaDesc"></p>
-      <ul class="sala-facts" id="salaFacts"></ul>
-    </div>
+  <div class="level-grid">
+    <article class="level" style="--tone:#EBD9C3">
+      <div class="level-art" aria-hidden="true"><svg viewBox="0 0 120 120"><circle cx="60" cy="74" r="26"/><circle cx="60" cy="38" r="10"/></svg></div>
+      <p class="level-kicker">Los más chiquitos</p>
+      <h3>Maternal</h3>
+      <p>El apego es lo fundamental. Confianza, contención y cuidado como base de un desarrollo sano, respetando los hábitos y rutinas de cada uno.</p>
+      <ul><li>Estimulación oportuna</li><li>Psicomotricidad semanal</li></ul>
+    </article>
+    <article class="level" style="--tone:#DCE3D3">
+      <div class="level-art" aria-hidden="true"><svg viewBox="0 0 120 120"><circle cx="44" cy="78" r="22"/><circle cx="80" cy="56" r="16"/><circle cx="62" cy="28" r="8"/></svg></div>
+      <p class="level-kicker">Primeros pasos</p>
+      <h3>Kinder 1</h3>
+      <p>Empieza el Método Vaz Ferreira y llega el yoga. Explorar se vuelve el centro del día.</p>
+      <ul><li>Yoga semanal</li><li>Psicomotricidad</li><li>Método Vaz Ferreira</li></ul>
+    </article>
+    <article class="level" style="--tone:#D6E2E6">
+      <div class="level-art" aria-hidden="true"><svg viewBox="0 0 120 120"><rect x="24" y="66" width="34" height="34" rx="6"/><rect x="62" y="66" width="34" height="34" rx="6"/><rect x="43" y="28" width="34" height="34" rx="6"/></svg></div>
+      <p class="level-kicker">Se suma el inglés</p>
+      <h3>Kinder 2</h3>
+      <p>Preguntan, investigan y construyen. Son protagonistas de lo que aprenden.</p>
+      <ul><li>Inglés</li><li>Yoga y psicomotricidad</li><li>Huerta desde setiembre</li></ul>
+    </article>
+    <article class="level" style="--tone:#EED8CF">
+      <div class="level-art" aria-hidden="true"><svg viewBox="0 0 120 120"><path d="M60 18 L96 100 H24 Z"/><circle cx="60" cy="72" r="10" fill="#FBF8F3"/></svg></div>
+      <p class="level-kicker">Listos para lo que viene</p>
+      <h3>Kinder 3</h3>
+      <p>Más autonomía, más identidad, más proyectos propios. Crecen seguros y fortalecidos.</p>
+      <ul><li>Inglés</li><li>Yoga y mindfulness</li><li>Proyectos de investigación</li></ul>
+    </article>
   </div>
 </section>
 
-<!-- ============ JUGÁ ============ -->
-<section class="play section" id="jugar">
-  <div class="section-head reveal">
-    <p class="scribble">sí, es en serio</p>
-    <h2>Pará un segundo y jugá.</h2>
-    <p class="lead">Lo que hacen tus peques acá adentro, en chiquito. Probalo con ellos.</p>
+<!-- ============ TALLERES ============ -->
+<section class="workshops section" id="talleres">
+  <div class="section-head">
+    <p class="eyebrow">Talleres</p>
+    <h2>Todos incluidos en la cuota.</h2>
+    <p class="lead">Sin extras ni sorpresas a fin de mes.</p>
   </div>
-
-  <div class="play-grid">
-    <!-- Xylophone -->
-    <div class="play-card reveal">
-      <h3>El xilofón de la sala</h3>
-      <p class="hint">Tocá las barras, o usá las teclas <kbd>A</kbd> a <kbd>K</kbd>.</p>
-      <div class="xylo" id="xylo">
-        <button class="bar" style="--c:#FF5A36;--h:100%" data-note="0" aria-label="Do">Do</button>
-        <button class="bar" style="--c:#FF8A1F;--h:93%" data-note="1" aria-label="Re">Re</button>
-        <button class="bar" style="--c:#FFC531;--h:86%" data-note="2" aria-label="Mi">Mi</button>
-        <button class="bar" style="--c:#3DBE7A;--h:79%" data-note="3" aria-label="Fa">Fa</button>
-        <button class="bar" style="--c:#2BB3C0;--h:72%" data-note="4" aria-label="Sol">Sol</button>
-        <button class="bar" style="--c:#5B8DEF;--h:65%" data-note="5" aria-label="La">La</button>
-        <button class="bar" style="--c:#7B4FD8;--h:58%" data-note="6" aria-label="Si">Si</button>
-        <button class="bar" style="--c:#E85AAE;--h:51%" data-note="7" aria-label="Do agudo">Do</button>
-      </div>
-      <button class="btn btn-small btn-ghost" id="playSong">▶ Tocá “Estrellita”</button>
-    </div>
-
-    <!-- Drawing -->
-    <div class="play-card reveal">
-      <h3>El pizarrón</h3>
-      <p class="hint">Dibujá lo que quieras. Nadie corrige acá.</p>
-      <div class="board">
-        <canvas id="board" aria-label="Pizarrón para dibujar"></canvas>
-        <div class="board-tools">
-          <div class="crayons" id="crayons">
-            <button class="crayon is-active" style="--c:#2B2140" data-color="#2B2140" aria-label="Negro"></button>
-            <button class="crayon" style="--c:#FF5A36" data-color="#FF5A36" aria-label="Rojo"></button>
-            <button class="crayon" style="--c:#FFC531" data-color="#FFC531" aria-label="Amarillo"></button>
-            <button class="crayon" style="--c:#3DBE7A" data-color="#3DBE7A" aria-label="Verde"></button>
-            <button class="crayon" style="--c:#5B8DEF" data-color="#5B8DEF" aria-label="Azul"></button>
-            <button class="crayon" style="--c:#7B4FD8" data-color="#7B4FD8" aria-label="Violeta"></button>
-            <button class="crayon rainbow" data-color="rainbow" aria-label="Arcoíris"></button>
-          </div>
-          <div class="board-actions">
-            <button class="btn btn-small btn-ghost" id="boardClear">Borrar</button>
-            <button class="btn btn-small" id="boardSave">Guardar 💾</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <svg class="duck hidden-duck" data-duck="3" style="right:4%; top:14%" viewBox="0 0 40 40" role="button" tabindex="0" aria-label="Patito escondido"><use href="#duck"/></svg>
-</section>
-
-<!-- ============ FAMILIAS ============ -->
-<section class="fridge section" id="familias">
-  <div class="section-head reveal">
-    <p class="scribble">la heladera del Kinder</p>
-    <h2>Lo que vas a encontrar pegado.</h2>
-    <p class="lead">Arrastrá las notas, como en la heladera de tu cocina.</p>
-  </div>
-
-  <div class="fridge-door" id="fridge">
-    <div class="fridge-handle" aria-hidden="true"></div>
-
-    <figure class="note" style="--x:4%; --y:6%; --r:-4deg; --bg:#FFF1A8">
-      <span class="magnet" style="--m:var(--tomato)"></span>
-      <blockquote>“Talleres de yoga, psicomotricidad, huerta e inglés: todos incluidos en la cuota.”</blockquote>
-      <figcaption>— Aviso para las familias</figcaption>
-    </figure>
-    <figure class="note" style="--x:36%; --y:2%; --r:3deg; --bg:#D6F3FF">
-      <span class="magnet" style="--m:var(--grass)"></span>
-      <blockquote>“Huerta: arrancamos en setiembre, cuando el tiempo acompaña. ¡Traigan botas!”</blockquote>
-      <figcaption>— Taller de huerta</figcaption>
-    </figure>
-    <figure class="note" style="--x:68%; --y:8%; --r:-2deg; --bg:#FFD9CF">
-      <span class="magnet" style="--m:var(--plum)"></span>
-      <blockquote>“Yoga una vez por semana, desde Kinder 1. Respirar también se aprende.”</blockquote>
-      <figcaption>— Taller de yoga</figcaption>
-    </figure>
-    <figure class="note drawing" style="--x:10%; --y:52%; --r:5deg; --bg:#fff">
-      <span class="magnet" style="--m:var(--sun)"></span>
-      <svg viewBox="0 0 160 110" aria-label="Dibujo infantil: una casa, un sol y una familia" role="img">
-        <g fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="3.5">
-          <circle cx="130" cy="24" r="14" stroke="#FFC531"/>
-          <path d="M130 2v6M150 24h-6M144 10l-4 4M116 10l4 4" stroke="#FFC531"/>
-          <path d="M20 96 V58 L50 32 L80 58 V96Z" stroke="#FF5A36"/>
-          <path d="M42 96 V74 H58 V96" stroke="#7B4FD8"/>
-          <circle cx="104" cy="62" r="7" stroke="#2B2140"/><path d="M104 69 V86 M94 76 H114 M104 86 L97 98 M104 86 L111 98" stroke="#2B2140"/>
-          <circle cx="128" cy="72" r="5" stroke="#2B2140"/><path d="M128 77 V89 M121 82 H135 M128 89 L123 98 M128 89 L133 98" stroke="#2B2140"/>
-          <path d="M4 100 Q40 92 80 100 T156 100" stroke="#3DBE7A"/>
-        </g>
+  <div class="ws-grid">
+    <article class="ws">
+      <svg class="ws-art" viewBox="0 0 120 100" aria-hidden="true">
+        <circle cx="60" cy="22" r="9"/>
+        <path d="M60 32 V60 M60 40 C48 44 40 36 34 30 M60 40 C72 44 80 36 86 30 M30 70 C42 60 52 62 60 60 C68 62 78 60 90 70 M30 70 C46 78 74 78 90 70"/>
       </svg>
-      <figcaption>— “Mi jardín”, con crayones</figcaption>
-    </figure>
-    <figure class="note" style="--x:42%; --y:50%; --r:-3deg; --bg:#E1F7DF">
-      <span class="magnet" style="--m:var(--sky)"></span>
-      <blockquote>“Psicomotricidad en todos los niveles, una vez por semana: coordinación, espacio, imaginación.”</blockquote>
-      <figcaption>— Taller de psicomotricidad</figcaption>
-    </figure>
-    <figure class="note" style="--x:72%; --y:54%; --r:4deg; --bg:#EEE3FF">
-      <span class="magnet" style="--m:var(--tomato)"></span>
-      <blockquote>“Hello! Inglés jugando desde Kinder 2.”</blockquote>
-      <figcaption>— Taller de inglés</figcaption>
-    </figure>
-
-    <svg class="duck hidden-duck" data-duck="4" style="right:2.5%; bottom:3%; width:30px" viewBox="0 0 40 40" role="button" tabindex="0" aria-label="Patito escondido"><use href="#duck"/></svg>
+      <h3>Yoga</h3>
+      <p>Desde Kinder 1, una vez por semana. Une dos de nuestros pilares: desarrollo integral y mindfulness.</p>
+    </article>
+    <article class="ws">
+      <svg class="ws-art" viewBox="0 0 120 100" aria-hidden="true">
+        <circle cx="38" cy="20" r="8"/>
+        <path d="M38 28 L44 52 L30 74 M44 52 L60 70 M40 36 L22 30 M40 36 L60 26"/>
+        <circle cx="86" cy="64" r="16"/>
+        <path d="M70 64 H102 M86 48 C80 56 80 72 86 80"/>
+        <path d="M10 88 H110"/>
+      </svg>
+      <h3>Psicomotricidad</h3>
+      <p>En todos los niveles, una vez por semana. Coordinación, relación con el espacio, comunicación, imaginación y creatividad.</p>
+    </article>
+    <article class="ws">
+      <svg class="ws-art" viewBox="0 0 120 100" aria-hidden="true">
+        <path d="M60 88 V44 M60 60 C46 58 38 48 36 36 C50 36 58 46 60 60 M60 50 C72 46 80 36 82 24 C68 26 60 36 60 50"/>
+        <path d="M20 88 H100 M28 88 C34 80 44 80 50 88 M70 88 C76 80 86 80 92 88"/>
+      </svg>
+      <h3>Huerta</h3>
+      <p>Taller semestral que empieza en setiembre, cuando el tiempo acompaña. Explorar la naturaleza y aprender a cuidarla.</p>
+    </article>
+    <article class="ws">
+      <svg class="ws-art" viewBox="0 0 120 100" aria-hidden="true">
+        <path d="M20 24 H82 C88 24 92 28 92 34 V58 C92 64 88 68 82 68 H44 L28 82 V68 H20 C14 68 10 64 10 58 V34 C10 28 14 24 20 24Z"/>
+        <path d="M34 38 V54 M34 46 H46 M46 38 V54 M58 38 V54 M58 34 V34"/>
+        <path d="M98 40 C104 36 112 40 110 48 C108 54 100 54 98 50"/>
+      </svg>
+      <h3>Inglés</h3>
+      <p>Desde Kinder 2. Un segundo idioma que se aprende como se aprende todo acá: jugando.</p>
+    </article>
   </div>
 </section>
 
 <!-- ============ FAQ ============ -->
 <section class="faq section" id="faq">
-  <div class="section-head reveal">
-    <p class="scribble">lo que todos preguntan</p>
-    <h2>Preguntas de mamás y papás.</h2>
-  </div>
-
-  <div class="faq-list">
-    <details class="reveal">
-      <summary>¿Qué horarios tienen?</summary>
-      <p>Estamos abiertos de lunes a viernes, de 8:00 a 18:30.</p>
-    </details>
-    <details class="reveal">
-      <summary>¿Desde qué edad reciben?</summary>
-      <p>Somos jardín maternal e inicial: tenemos sala maternal para los más chiquitos y niveles de Kinder hasta los 5 años.</p>
-    </details>
-    <details class="reveal">
-      <summary>¿Los talleres se pagan aparte?</summary>
-      <p>No. Yoga, psicomotricidad, huerta e inglés están incluidos en la cuota.</p>
-    </details>
-    <details class="reveal">
-      <summary>¿Qué es el Método Vaz Ferreira?</summary>
-      <p>Una metodología pensada para la primera infancia, de los 24 meses a los 5 años. Tiene en cuenta la singularidad de cada peque, respeta sus intereses, necesidades y aptitudes, y promueve su autonomía e identidad. La aplicamos en la última hora del horario curricular.</p>
-    </details>
-    <details class="reveal">
-      <summary>¿Quiénes cuidan a los chicos?</summary>
-      <p>Maestras y educadoras especializadas en atención temprana y estimulación oportuna.</p>
-    </details>
-    <details class="reveal">
-      <summary>¿Puedo ir a conocerlo antes de inscribirlo?</summary>
-      <p>¡Obvio! Es lo que más recomendamos. Vení con tu peque y recorré el Kinder. Agendalo acá abajo o llamanos al 2483 0694.</p>
-    </details>
+  <div class="faq-wrap">
+    <div class="section-head left">
+      <p class="eyebrow">Preguntas frecuentes</p>
+      <h2>Lo que suelen preguntarnos.</h2>
+      <p class="lead">¿Te quedó alguna duda? Escribinos al <a href="https://wa.me/59892545120" target="_blank" rel="noopener">092 545 120</a>.</p>
+    </div>
+    <div class="faq-list">
+      <details>
+        <summary>¿Qué horarios tienen?</summary>
+        <p>Estamos abiertos de lunes a viernes, de 8:00 a 18:30.</p>
+      </details>
+      <details>
+        <summary>¿Desde qué edad reciben?</summary>
+        <p>Somos jardín maternal e inicial: tenemos sala maternal para los más chiquitos y niveles de Kinder hasta los 5 años.</p>
+      </details>
+      <details>
+        <summary>¿Los talleres se pagan aparte?</summary>
+        <p>No. Yoga, psicomotricidad, huerta e inglés están incluidos en la cuota.</p>
+      </details>
+      <details>
+        <summary>¿Qué es el Método Vaz Ferreira?</summary>
+        <p>Una metodología específica para la primera infancia, de los 24 meses a los 5 años. Considera la singularidad de cada niño y niña, respeta sus intereses, necesidades y aptitudes, y promueve su autonomía e identidad. La aplicamos en la última hora del horario curricular.</p>
+      </details>
+      <details>
+        <summary>¿Quiénes están a cargo de los chicos?</summary>
+        <p>Maestras y educadoras especializadas en atención temprana y estimulación oportuna.</p>
+      </details>
+      <details>
+        <summary>¿Puedo conocer el jardín antes de inscribir a mi hijo o hija?</summary>
+        <p>Sí, y es lo que recomendamos. Coordiná una visita con el formulario de abajo o llamanos al 2483 0694.</p>
+      </details>
+    </div>
   </div>
 </section>
 
 <!-- ============ VISITA ============ -->
 <section class="visit section" id="visita">
-  <div class="visit-card reveal">
+  <div class="visit-grid">
     <div class="visit-copy">
-      <p class="scribble">el paso más lindo</p>
-      <h2>Vení a conocernos.<br>Traé a tu peque.</h2>
-      <p>Una visita vale más que mil fotos. Contanos un poquito y coordinamos por WhatsApp.</p>
-
-      <ul class="visit-contact">
-        <li><span>📍</span> <a href="https://maps.google.com/?q=Dr.+Alfredo+Navarro+3178,+Montevideo" target="_blank" rel="noopener">Dr. Alfredo Navarro 3178 esq. Ayacucho, Parque Batlle</a></li>
-        <li><span>🕗</span> Lunes a viernes, 8:00 a 18:30</li>
-        <li><span>☎️</span> <a href="tel:+59824830694">2483 0694</a></li>
-        <li><span>💬</span> <a href="https://wa.me/59892545120" target="_blank" rel="noopener">092 545 120</a></li>
-        <li><span>✉️</span> <a href="mailto:contacto@ilovemykinder.edu.uy">contacto@ilovemykinder.edu.uy</a></li>
-      </ul>
+      <p class="eyebrow light">Visitas</p>
+      <h2>Vení a conocernos.</h2>
+      <p class="lead">La mejor forma de elegir un jardín es recorrerlo. Contanos un poco y coordinamos por WhatsApp.</p>
+      <dl class="contact">
+        <div><dt>Dirección</dt><dd><a href="https://maps.google.com/?q=Dr.+Alfredo+Navarro+3178,+Montevideo" target="_blank" rel="noopener">Dr. Alfredo Navarro 3178 esq. Ayacucho<br>Parque Batlle, Montevideo</a></dd></div>
+        <div><dt>Horario</dt><dd>Lunes a viernes, 8:00 a 18:30</dd></div>
+        <div><dt>Teléfonos</dt><dd><a href="tel:+59824830694">2483 0694</a> · <a href="https://wa.me/59892545120" target="_blank" rel="noopener">092 545 120</a></dd></div>
+        <div><dt>Email</dt><dd><a href="mailto:contacto@ilovemykinder.edu.uy">contacto@ilovemykinder.edu.uy</a></dd></div>
+      </dl>
     </div>
 
     <form class="visit-form" id="visitForm" novalidate>
       <label class="field">
         <span>Tu nombre</span>
-        <input type="text" name="nombre" required autocomplete="name" placeholder="Ej: Carolina">
+        <input type="text" name="nombre" required autocomplete="name">
       </label>
       <label class="field">
-        <span>Nombre de tu peque</span>
-        <input type="text" name="peque" required placeholder="Ej: Simón">
+        <span>Nombre de tu hijo o hija</span>
+        <input type="text" name="peque" required>
       </label>
-
-      <div class="field">
-        <span>¿Cuántos años tiene?</span>
-        <div class="age-picker">
-          <div class="age-kid" id="ageKid" aria-hidden="true">
-            <div class="kid-head"><i></i><i></i><b></b></div>
-            <div class="kid-body"></div>
-          </div>
-          <div class="age-control">
-            <input type="range" id="age" name="edad" min="0" max="5" step="1" value="2" aria-describedby="ageOut">
-            <output id="ageOut">2 años</output>
-          </div>
-        </div>
-      </div>
-
       <fieldset class="field">
-        <legend>¿Qué día te queda mejor?</legend>
-        <div class="chips" id="dayChips">
+        <legend>Edad</legend>
+        <div class="seg" id="ageSeg">
+          <label><input type="radio" name="edad" value="menos de 1 año"><span>Bebé</span></label>
+          <label><input type="radio" name="edad" value="1 año"><span>1</span></label>
+          <label><input type="radio" name="edad" value="2 años" checked><span>2</span></label>
+          <label><input type="radio" name="edad" value="3 años"><span>3</span></label>
+          <label><input type="radio" name="edad" value="4 años"><span>4</span></label>
+          <label><input type="radio" name="edad" value="5 años"><span>5</span></label>
+        </div>
+      </fieldset>
+      <fieldset class="field">
+        <legend>Día preferido</legend>
+        <div class="seg">
           <label><input type="radio" name="dia" value="lunes"><span>Lun</span></label>
           <label><input type="radio" name="dia" value="martes"><span>Mar</span></label>
           <label><input type="radio" name="dia" value="miércoles" checked><span>Mié</span></label>
@@ -490,12 +364,14 @@
           <label><input type="radio" name="dia" value="viernes"><span>Vie</span></label>
         </div>
       </fieldset>
-
-      <button type="submit" class="btn btn-big">Quiero agendar la visita 🎈</button>
+      <button type="submit" class="btn btn-accent btn-block">Coordinar visita por WhatsApp</button>
       <p class="form-msg" id="formMsg" role="status"></p>
     </form>
+  </div>
 
-    <svg class="duck hidden-duck" data-duck="5" style="left:46%; bottom:-12px; width:28px" viewBox="0 0 40 40" role="button" tabindex="0" aria-label="Patito escondido"><use href="#duck"/></svg>
+  <div class="map">
+    <iframe title="Mapa: Dr. Alfredo Navarro 3178, Montevideo" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+      src="https://www.google.com/maps?q=Dr.+Alfredo+Navarro+3178,+Montevideo,+Uruguay&z=16&output=embed"></iframe>
   </div>
 </section>
 
@@ -503,26 +379,29 @@
 
 <!-- ============ FOOTER ============ -->
 <footer class="footer">
-  <svg class="footer-grass" viewBox="0 0 1440 80" preserveAspectRatio="none" aria-hidden="true">
-    <path d="M0 80 V40 Q20 0 40 40 Q60 10 80 40 Q100 4 120 40 Q140 14 160 40 Q180 0 200 40 Q220 12 240 40 Q260 2 280 40 Q300 16 320 40 Q340 0 360 40 Q380 10 400 40 Q420 4 440 40 Q460 14 480 40 Q500 0 520 40 Q540 12 560 40 Q580 2 600 40 Q620 16 640 40 Q660 0 680 40 Q700 10 720 40 Q740 4 760 40 Q780 14 800 40 Q820 0 840 40 Q860 12 880 40 Q900 2 920 40 Q940 16 960 40 Q980 0 1000 40 Q1020 10 1040 40 Q1060 4 1080 40 Q1100 14 1120 40 Q1140 0 1160 40 Q1180 12 1200 40 Q1220 2 1240 40 Q1260 16 1280 40 Q1300 0 1320 40 Q1340 10 1360 40 Q1380 4 1400 40 Q1420 14 1440 40 V80Z" fill="var(--grass)"/>
-  </svg>
   <div class="footer-inner">
     <div>
-      <p class="footer-logo">I Love My Kinder ❤️</p>
-      <p>Jardín maternal e inicial.<br>Dr. Alfredo Navarro 3178 esq. Ayacucho, Parque Batlle, Montevideo.<br>2483 0694 · 092 545 120 · contacto@ilovemykinder.edu.uy</p>
+      <p class="footer-logo">
+        <svg class="logo-heart" viewBox="0 0 32 32" aria-hidden="true"><path d="M16 28C7 22 3 17 4 11c1-5 7-7 12-2 5-5 11-3 12 2 1 6-3 11-12 17z"/></svg>
+        I Love My Kinder
+      </p>
+      <p>Jardín maternal e inicial.<br>Un lugar para crecer, aprender y jugar.</p>
     </div>
-    <div class="footer-links">
+    <div>
+      <p>Dr. Alfredo Navarro 3178 esq. Ayacucho<br>Parque Batlle, Montevideo</p>
+      <p><a href="tel:+59824830694">2483 0694</a> · <a href="https://wa.me/59892545120" target="_blank" rel="noopener">092 545 120</a><br><a href="mailto:contacto@ilovemykinder.edu.uy">contacto@ilovemykinder.edu.uy</a></p>
+    </div>
+    <nav class="footer-links" aria-label="Pie de página">
+      <a href="#propuesta">Propuesta</a>
       <a href="#pilares">Pilares</a>
-      <a href="#dia">Un día acá</a>
-      <a href="#salas">Niveles</a>
-      <a href="#visita">Visita</a>
+      <a href="#niveles">Niveles</a>
+      <a href="#talleres">Talleres</a>
+      <a href="#visita">Visitas</a>
       <a href="https://www.facebook.com/ilovemykinder/" target="_blank" rel="noopener">Facebook</a>
-    </div>
-    <p class="footer-small">Hecho con crayones y mucho cariño · © <span id="year"></span></p>
+    </nav>
   </div>
+  <p class="footer-small">© <span id="year"></span> I Love My Kinder</p>
 </footer>
-
-<div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script src="app.js"></script>
 </body>
