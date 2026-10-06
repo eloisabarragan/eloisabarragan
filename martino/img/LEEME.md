@@ -24,3 +24,4 @@ Si falta alguna foto, su recuadro queda oculto (la web ya no usa dibujos).
 | `hoagies-mix.jpg` | foto enviada por chat | Inicio, usos y galería |
 | `bun-sesamo-lado.jpg` | foto enviada por chat | Inicio y usos |
 | `pan-molde.jpg` | foto enviada por chat | Galería |
+| `equipo.jpg` | foto enviada por chat | Quiénes somos |

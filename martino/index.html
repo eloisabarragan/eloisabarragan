@@ -258,6 +258,22 @@ footer{overflow:hidden;padding-top:2rem}
 .toast.show{transform:translate(-50%,0);visibility:visible}
 
 
+/* ---------- QUIÉNES SOMOS ---------- */
+.team{padding-block:clamp(5rem,10vw,9rem);background:var(--green);overflow:hidden}
+.team-grid{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(2rem,6vw,6rem);align-items:center}
+.team-photo{margin:0;position:relative;aspect-ratio:4/5;max-width:520px;width:100%;justify-self:center;
+  border-radius:50% 50% 28px 28px / 34% 34% 28px 28px;overflow:hidden;box-shadow:0 0 0 6px var(--green),0 0 0 8px var(--gold),0 40px 70px rgba(0,0,0,.35);
+  -webkit-mask:radial-gradient(circle at 92% 7%,#0000 9%,#000 9.3%),radial-gradient(circle at 80% 2%,#0000 6.5%,#000 6.8%),radial-gradient(circle at 99% 18%,#0000 6%,#000 6.3%);-webkit-mask-composite:source-in;
+  mask:radial-gradient(circle at 92% 7%,#0000 9%,#000 9.3%),radial-gradient(circle at 80% 2%,#0000 6.5%,#000 6.8%),radial-gradient(circle at 99% 18%,#0000 6%,#000 6.3%);mask-composite:intersect}
+.team-photo img{width:100%;height:118%;object-fit:cover;object-position:50% 30%;display:block;transform:translateY(var(--ty,0));will-change:transform}
+.team-copy h2 .script{display:block;font-size:.62em;margin-top:.05em}
+.team-lead{font-size:clamp(1.3rem,2vw,1.75rem);line-height:1.3;color:var(--cream);max-width:30ch;margin:1.6rem 0 0}
+.team-copy p:not(.team-lead){color:var(--moss);max-width:44ch}
+.team-sign{margin-top:2rem;display:flex;align-items:baseline;gap:1rem}
+.team-sign .script{font-size:3rem;line-height:1}
+.team-sign small{font-family:var(--cond);font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--moss)}
+@media (max-width:860px){.team-grid{grid-template-columns:1fr}.team-photo{max-width:400px}}
+
 /* ---------- ENTRADA: el mordisco se come la pantalla ---------- */
 @property --bite{syntax:'<length>';inherits:false;initial-value:0px}
 .intro{position:fixed;inset:0;z-index:200;display:grid;place-items:center;background:var(--forest);pointer-events:none;
@@ -347,6 +363,7 @@ footer{overflow:hidden;padding-top:2rem}
       <li><a href="#productos">Productos</a></li>
       <li><a href="#papa">Por qué papa</a></li>
       <li><a href="#usos">Para qué</a></li>
+      <li><a href="#nosotros">Nosotros</a></li>
       <li><a href="#contacto">Contacto</a></li>
     </ul>
     <a class="btn" href="#contacto">Vendé Martino</a>
@@ -470,6 +487,21 @@ footer{overflow:hidden;padding-top:2rem}
       </div>
     </div>
     <div class="hgal-bar" aria-hidden="true"><i id="hBar"></i></div>
+  </div>
+</section>
+
+<section class="team" id="nosotros" aria-labelledby="ttitle">
+  <div class="wrap team-grid">
+    <figure class="team-photo" data-cursor="Hola">
+      <img src="img/equipo.jpg" alt="El equipo de Martino sonriendo, con remeras de la marca" loading="lazy">
+    </figure>
+    <div class="team-copy">
+      <span class="label">Quiénes somos</span>
+      <h2 id="ttitle">Las manos <span class="script">detrás del pan</span></h2>
+      <p class="team-lead">Martino no sale de una línea de montaje. Lo hacemos nosotros: amasamos, horneamos y probamos cada tanda antes de que llegue a tu mesa.</p>
+      <p>Por eso en cada bolsa dice lo mismo: calidad, tradición y pasión. Son las tres cosas que no negociamos.</p>
+      <div class="team-sign"><span class="script">Martino</span><small>El equipo</small></div>
+    </div>
   </div>
 </section>
 
@@ -687,6 +719,10 @@ if (matchMedia('(pointer:fine)').matches && !reduce){
   document.addEventListener('pointerleave', () => cursorEl.classList.remove('on'));
   (function follow(){ cx2 += (tx - cx2) * .22; cy2 += (ty - cy2) * .22; cursorEl.style.transform = `translate(${cx2}px,${cy2}px)`; requestAnimationFrame(follow); })();
 }
+
+/* ---------- Quiénes somos: la foto se desliza dentro de la etiqueta ---------- */
+const teamImg = $('.team-photo img');
+if (!reduce) addEventListener('scroll', () => { const r = teamImg.parentElement.getBoundingClientRect(); const k = clamp((innerHeight - r.top) / (innerHeight + r.height)); teamImg.style.setProperty('--ty', (-k * 15).toFixed(2) + '%'); }, {passive:true});
 
 /* ---------- Banda que se inclina con la velocidad del scroll ---------- */
 const band = $('.band'); let lastY = scrollY, skew = 0;
