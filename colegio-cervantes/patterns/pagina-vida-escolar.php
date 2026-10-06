@@ -3,7 +3,7 @@
  * Title: Página completa · Vida escolar
  * Slug: colegio-cervantes/pagina-vida-escolar
  * Categories: cervantes-paginas
- * Description: Actividades extracurriculares, talleres, salidas didácticas, deportes y celebraciones en el Colegio Español Cervantes.
+ * Description: Diseño original completo de la página Vida escolar.
  * Keywords: cervantes, página, vida escolar
  * Post Types: page
  * Block Types: core/post-content
@@ -15,644 +15,602 @@
  */
 
 ?>
-<!-- wp:group {"metadata":{"name":"Banner de la página"},"align":"full","className":"cv-hero","style":{"spacing":{"margin":{"top":"0","bottom":"0"}}},"layout":{"type":"default"}} -->
-<div class="wp-block-group alignfull cv-hero" style="margin-top:0;margin-bottom:0"><!-- wp:cover {<?php cv_idjson( '2026/01/IMG_9233-scaled.jpg' ); ?>"url":"<?php cv_src( '2026/01/IMG_9233-scaled.jpg' ); ?>","isUserOverlayColor":true,"minHeight":72,"minHeightUnit":"vh","customGradient":"linear-gradient(180deg,rgba(0,18,35,0.55) 0%,rgba(0,18,35,0.35) 40%,rgba(0,18,35,0.85) 100%)","contentPosition":"bottom left","align":"full","className":"cv-page-hero cv-slide","layout":{"type":"constrained","contentSize":"1360px"}} -->
-<div class="wp-block-cover alignfull has-custom-content-position is-position-bottom-left cv-page-hero cv-slide" style="min-height:72vh"><span aria-hidden="true" class="wp-block-cover__background has-background-dim-100 has-background-dim wp-block-cover__gradient-background has-background-gradient" style="background:linear-gradient(180deg,rgba(0,18,35,0.55) 0%,rgba(0,18,35,0.35) 40%,rgba(0,18,35,0.85) 100%)"></span><img class="wp-block-cover__image-background<?php cv_idclass( '2026/01/IMG_9233-scaled.jpg' ); ?>" alt="" src="<?php cv_src( '2026/01/IMG_9233-scaled.jpg' ); ?>" data-object-fit="cover"/><div class="wp-block-cover__inner-container"><!-- wp:paragraph {"className":"is-style-antetitulo"} -->
-<p class="is-style-antetitulo">Vida escolar</p>
+<!-- wp:group {"tagName":"section","layout":{"type":"default"}} -->
+<section id="cerv-extracurriculares" class="wp-block-group"><!-- wp:group {"className":"ext-inner","layout":{"type":"default"}} -->
+<div class="wp-block-group ext-inner"><!-- wp:group {"className":"ext-header","layout":{"type":"default"}} -->
+<div class="wp-block-group ext-header"><!-- wp:paragraph {"className":"ext-eyebrow cv-t-div"} -->
+<p class="ext-eyebrow cv-t-div">Vida escolar</p>
 <!-- /wp:paragraph -->
 
-<!-- wp:heading {"level":1,"fontSize":"display"} -->
-<h1 class="wp-block-heading has-display-font-size">Aprender también <em>fuera del aula</em></h1>
+<!-- wp:heading {"className":"ext-title"} -->
+<h2 class="wp-block-heading ext-title">Actividades <em>extracurriculares</em></h2>
 <!-- /wp:heading -->
 
-<!-- wp:paragraph {"className":"cv-hero-text","fontSize":"large"} -->
-<p class="cv-hero-text has-large-font-size">Complementamos la formación académica con propuestas que estimulan el desarrollo físico, artístico, social y emocional de nuestros alumnos.</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:buttons -->
-<div class="wp-block-buttons"><!-- wp:button {"className":"is-style-outline"} -->
-<div class="wp-block-button is-style-outline"><a class="wp-block-button__link wp-element-button" href="#actividades">Actividades</a></div>
-<!-- /wp:button -->
-
-<!-- wp:button {"className":"is-style-outline"} -->
-<div class="wp-block-button is-style-outline"><a class="wp-block-button__link wp-element-button" href="#talleres">Talleres</a></div>
-<!-- /wp:button -->
-
-<!-- wp:button {"className":"is-style-outline"} -->
-<div class="wp-block-button is-style-outline"><a class="wp-block-button__link wp-element-button" href="#salidas">Salidas</a></div>
-<!-- /wp:button -->
-
-<!-- wp:button {"className":"is-style-outline"} -->
-<div class="wp-block-button is-style-outline"><a class="wp-block-button__link wp-element-button" href="#deportes">Deportes</a></div>
-<!-- /wp:button -->
-
-<!-- wp:button {"className":"is-style-outline"} -->
-<div class="wp-block-button is-style-outline"><a class="wp-block-button__link wp-element-button" href="#celebraciones">Celebraciones</a></div>
-<!-- /wp:button --></div>
-<!-- /wp:buttons --></div></div>
-<!-- /wp:cover --></div>
-<!-- /wp:group -->
-
-<!-- wp:group {"metadata":{"name":"Actividades extracurriculares"},"align":"full","className":"cv-section","style":{"spacing":{"padding":{"top":"var:preset|spacing|80","bottom":"var:preset|spacing|80"},"margin":{"top":"0","bottom":"0"}}},"backgroundColor":"blanco","layout":{"type":"constrained"}} -->
-<div class="wp-block-group alignfull cv-section has-blanco-background-color has-background" id="actividades" style="margin-top:0;margin-bottom:0;padding-top:var(--wp--preset--spacing--80);padding-bottom:var(--wp--preset--spacing--80)"><!-- wp:group {"style":{"spacing":{"margin":{"bottom":"var:preset|spacing|60"},"blockGap":"1rem"}},"layout":{"type":"constrained","contentSize":"760px"}} -->
-<div class="wp-block-group" style="margin-bottom:var(--wp--preset--spacing--60)"><!-- wp:paragraph {"align":"center","className":"is-style-antetitulo"} -->
-<p class="has-text-align-center is-style-antetitulo">Vida escolar</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:heading {"textAlign":"center"} -->
-<h2 class="wp-block-heading has-text-align-center">Actividades <em>extracurriculares</em></h2>
-<!-- /wp:heading -->
-
-<!-- wp:paragraph {"align":"center","className":"cv-lead"} -->
-<p class="has-text-align-center cv-lead">Propuestas para cada edad que amplían intereses, fortalecen vínculos y hacen de la escuela un lugar para descubrir.</p>
+<!-- wp:paragraph {"className":"ext-intro"} -->
+<p class="ext-intro">Complementamos la formación académica con propuestas que estimulan el desarrollo físico, artístico, social y emocional de nuestros alumnos.</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group -->
 
-<!-- wp:group {"align":"wide","className":"cv-reveal-children","style":{"spacing":{"blockGap":"var:preset|spacing|40"}},"layout":{"type":"grid","columnCount":3,"minimumColumnWidth":"18rem"}} -->
-<div class="wp-block-group alignwide cv-reveal-children"><!-- wp:cover {<?php cv_idjson( '2026/01/IMG_5838-scaled.jpg' ); ?>"url":"<?php cv_src( '2026/01/IMG_5838-scaled.jpg' ); ?>","isUserOverlayColor":true,"minHeight":460,"customGradient":"linear-gradient(180deg,rgba(0,18,35,0) 25%,rgba(0,18,35,0.55) 60%,rgba(0,18,35,0.92) 100%)","contentPosition":"bottom left","className":"cv-photo-card","style":{"spacing":{"padding":{"top":"var:preset|spacing|50","bottom":"var:preset|spacing|50","left":"var:preset|spacing|50","right":"var:preset|spacing|50"}},"border":{"radius":"24px"}}} -->
-<div class="wp-block-cover has-custom-content-position is-position-bottom-left cv-photo-card" style="border-radius:24px;padding-top:var(--wp--preset--spacing--50);padding-right:var(--wp--preset--spacing--50);padding-bottom:var(--wp--preset--spacing--50);padding-left:var(--wp--preset--spacing--50);min-height:460px"><span aria-hidden="true" class="wp-block-cover__background has-background-dim-100 has-background-dim wp-block-cover__gradient-background has-background-gradient" style="background:linear-gradient(180deg,rgba(0,18,35,0) 25%,rgba(0,18,35,0.55) 60%,rgba(0,18,35,0.92) 100%)"></span><img class="wp-block-cover__image-background<?php cv_idclass( '2026/01/IMG_5838-scaled.jpg' ); ?>" alt="" src="<?php cv_src( '2026/01/IMG_5838-scaled.jpg' ); ?>" data-object-fit="cover"/><div class="wp-block-cover__inner-container"><!-- wp:paragraph {"className":"is-style-antetitulo"} -->
-<p class="is-style-antetitulo">Todos los niveles</p>
+<!-- wp:group {"className":"ext-grid","layout":{"type":"default"}} -->
+<div class="wp-block-group ext-grid"><!-- wp:group {"tagName":"article","className":"ext-card","layout":{"type":"default"}} -->
+<article class="wp-block-group ext-card"><!-- wp:cervantes/html -->
+<div class="ext-bg" style="background-image:url('<?php cv_src( '2026/01/IMG_5838-scaled.jpg' ); ?>')"></div>
+<!-- /wp:cervantes/html -->
+
+<!-- wp:cervantes/html -->
+<div class="ext-overlay"></div>
+<!-- /wp:cervantes/html -->
+
+<!-- wp:group {"className":"ext-content","layout":{"type":"default"}} -->
+<div class="wp-block-group ext-content"><!-- wp:paragraph {"className":"ext-card-eyebrow cv-t-div"} -->
+<p class="ext-card-eyebrow cv-t-div">Todos los niveles</p>
 <!-- /wp:paragraph -->
 
-<!-- wp:heading {"level":3,"fontSize":"x-large"} -->
-<h3 class="wp-block-heading has-x-large-font-size">Deporte y movimiento</h3>
-<!-- /wp:heading -->
-
-<!-- wp:paragraph {"fontSize":"small"} -->
-<p class="has-small-font-size">Desarrollo físico, trabajo en equipo y cuidado del cuerpo.</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:list {"className":"is-style-chips"} -->
-<ul class="wp-block-list is-style-chips"><!-- wp:list-item -->
-<li>Inicial · Primaria · Secundaria</li>
-<!-- /wp:list-item --></ul>
-<!-- /wp:list --></div></div>
-<!-- /wp:cover -->
-
-<!-- wp:cover {<?php cv_idjson( '2026/01/IMG_9096-1-scaled.jpg' ); ?>"url":"<?php cv_src( '2026/01/IMG_9096-1-scaled.jpg' ); ?>","isUserOverlayColor":true,"minHeight":460,"customGradient":"linear-gradient(180deg,rgba(0,18,35,0) 25%,rgba(0,18,35,0.55) 60%,rgba(0,18,35,0.92) 100%)","contentPosition":"bottom left","className":"cv-photo-card","style":{"spacing":{"padding":{"top":"var:preset|spacing|50","bottom":"var:preset|spacing|50","left":"var:preset|spacing|50","right":"var:preset|spacing|50"}},"border":{"radius":"24px"}}} -->
-<div class="wp-block-cover has-custom-content-position is-position-bottom-left cv-photo-card" style="border-radius:24px;padding-top:var(--wp--preset--spacing--50);padding-right:var(--wp--preset--spacing--50);padding-bottom:var(--wp--preset--spacing--50);padding-left:var(--wp--preset--spacing--50);min-height:460px"><span aria-hidden="true" class="wp-block-cover__background has-background-dim-100 has-background-dim wp-block-cover__gradient-background has-background-gradient" style="background:linear-gradient(180deg,rgba(0,18,35,0) 25%,rgba(0,18,35,0.55) 60%,rgba(0,18,35,0.92) 100%)"></span><img class="wp-block-cover__image-background<?php cv_idclass( '2026/01/IMG_9096-1-scaled.jpg' ); ?>" alt="" src="<?php cv_src( '2026/01/IMG_9096-1-scaled.jpg' ); ?>" data-object-fit="cover"/><div class="wp-block-cover__inner-container"><!-- wp:paragraph {"className":"is-style-antetitulo"} -->
-<p class="is-style-antetitulo">Expresión</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:heading {"level":3,"fontSize":"x-large"} -->
-<h3 class="wp-block-heading has-x-large-font-size">Arte y expresión artística</h3>
-<!-- /wp:heading -->
-
-<!-- wp:paragraph {"fontSize":"small"} -->
-<p class="has-small-font-size">Música, artes visuales y expresión corporal para el desarrollo creativo.</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:list {"className":"is-style-chips"} -->
-<ul class="wp-block-list is-style-chips"><!-- wp:list-item -->
-<li>Inicial · Primaria</li>
-<!-- /wp:list-item --></ul>
-<!-- /wp:list --></div></div>
-<!-- /wp:cover -->
-
-<!-- wp:cover {<?php cv_idjson( '2026/01/IMG_6842-1-scaled.jpg' ); ?>"url":"<?php cv_src( '2026/01/IMG_6842-1-scaled.jpg' ); ?>","isUserOverlayColor":true,"minHeight":460,"customGradient":"linear-gradient(180deg,rgba(0,18,35,0) 25%,rgba(0,18,35,0.55) 60%,rgba(0,18,35,0.92) 100%)","contentPosition":"bottom left","className":"cv-photo-card","style":{"spacing":{"padding":{"top":"var:preset|spacing|50","bottom":"var:preset|spacing|50","left":"var:preset|spacing|50","right":"var:preset|spacing|50"}},"border":{"radius":"24px"}}} -->
-<div class="wp-block-cover has-custom-content-position is-position-bottom-left cv-photo-card" style="border-radius:24px;padding-top:var(--wp--preset--spacing--50);padding-right:var(--wp--preset--spacing--50);padding-bottom:var(--wp--preset--spacing--50);padding-left:var(--wp--preset--spacing--50);min-height:460px"><span aria-hidden="true" class="wp-block-cover__background has-background-dim-100 has-background-dim wp-block-cover__gradient-background has-background-gradient" style="background:linear-gradient(180deg,rgba(0,18,35,0) 25%,rgba(0,18,35,0.55) 60%,rgba(0,18,35,0.92) 100%)"></span><img class="wp-block-cover__image-background<?php cv_idclass( '2026/01/IMG_6842-1-scaled.jpg' ); ?>" alt="" src="<?php cv_src( '2026/01/IMG_6842-1-scaled.jpg' ); ?>" data-object-fit="cover"/><div class="wp-block-cover__inner-container"><!-- wp:paragraph {"className":"is-style-antetitulo"} -->
-<p class="is-style-antetitulo">Idiomas</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:heading {"level":3,"fontSize":"x-large"} -->
-<h3 class="wp-block-heading has-x-large-font-size">Idiomas y comunicación</h3>
-<!-- /wp:heading -->
-
-<!-- wp:paragraph {"fontSize":"small"} -->
-<p class="has-small-font-size">Espacios que fortalecen la competencia comunicativa en lenguas extranjeras.</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:list {"className":"is-style-chips"} -->
-<ul class="wp-block-list is-style-chips"><!-- wp:list-item -->
-<li>Primaria · Secundaria</li>
-<!-- /wp:list-item --></ul>
-<!-- /wp:list --></div></div>
-<!-- /wp:cover -->
-
-<!-- wp:cover {<?php cv_idjson( '2026/01/IMG_8744-scaled.jpg' ); ?>"url":"<?php cv_src( '2026/01/IMG_8744-scaled.jpg' ); ?>","isUserOverlayColor":true,"minHeight":460,"customGradient":"linear-gradient(180deg,rgba(0,18,35,0) 25%,rgba(0,18,35,0.55) 60%,rgba(0,18,35,0.92) 100%)","contentPosition":"bottom left","className":"cv-photo-card","style":{"spacing":{"padding":{"top":"var:preset|spacing|50","bottom":"var:preset|spacing|50","left":"var:preset|spacing|50","right":"var:preset|spacing|50"}},"border":{"radius":"24px"}}} -->
-<div class="wp-block-cover has-custom-content-position is-position-bottom-left cv-photo-card" style="border-radius:24px;padding-top:var(--wp--preset--spacing--50);padding-right:var(--wp--preset--spacing--50);padding-bottom:var(--wp--preset--spacing--50);padding-left:var(--wp--preset--spacing--50);min-height:460px"><span aria-hidden="true" class="wp-block-cover__background has-background-dim-100 has-background-dim wp-block-cover__gradient-background has-background-gradient" style="background:linear-gradient(180deg,rgba(0,18,35,0) 25%,rgba(0,18,35,0.55) 60%,rgba(0,18,35,0.92) 100%)"></span><img class="wp-block-cover__image-background<?php cv_idclass( '2026/01/IMG_8744-scaled.jpg' ); ?>" alt="" src="<?php cv_src( '2026/01/IMG_8744-scaled.jpg' ); ?>" data-object-fit="cover"/><div class="wp-block-cover__inner-container"><!-- wp:paragraph {"className":"is-style-antetitulo"} -->
-<p class="is-style-antetitulo">STEM</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:heading {"level":3,"fontSize":"x-large"} -->
-<h3 class="wp-block-heading has-x-large-font-size">Ciencia y tecnología</h3>
-<!-- /wp:heading -->
-
-<!-- wp:paragraph {"fontSize":"small"} -->
-<p class="has-small-font-size">Talleres que estimulan el pensamiento lógico y la curiosidad científica.</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:list {"className":"is-style-chips"} -->
-<ul class="wp-block-list is-style-chips"><!-- wp:list-item -->
-<li>Primaria · Secundaria</li>
-<!-- /wp:list-item --></ul>
-<!-- /wp:list --></div></div>
-<!-- /wp:cover -->
-
-<!-- wp:cover {<?php cv_idjson( '2026/01/IMG_5127-scaled.jpg' ); ?>"url":"<?php cv_src( '2026/01/IMG_5127-scaled.jpg' ); ?>","isUserOverlayColor":true,"minHeight":460,"customGradient":"linear-gradient(180deg,rgba(0,18,35,0) 25%,rgba(0,18,35,0.55) 60%,rgba(0,18,35,0.92) 100%)","contentPosition":"bottom left","className":"cv-photo-card","style":{"spacing":{"padding":{"top":"var:preset|spacing|50","bottom":"var:preset|spacing|50","left":"var:preset|spacing|50","right":"var:preset|spacing|50"}},"border":{"radius":"24px"}}} -->
-<div class="wp-block-cover has-custom-content-position is-position-bottom-left cv-photo-card" style="border-radius:24px;padding-top:var(--wp--preset--spacing--50);padding-right:var(--wp--preset--spacing--50);padding-bottom:var(--wp--preset--spacing--50);padding-left:var(--wp--preset--spacing--50);min-height:460px"><span aria-hidden="true" class="wp-block-cover__background has-background-dim-100 has-background-dim wp-block-cover__gradient-background has-background-gradient" style="background:linear-gradient(180deg,rgba(0,18,35,0) 25%,rgba(0,18,35,0.55) 60%,rgba(0,18,35,0.92) 100%)"></span><img class="wp-block-cover__image-background<?php cv_idclass( '2026/01/IMG_5127-scaled.jpg' ); ?>" alt="" src="<?php cv_src( '2026/01/IMG_5127-scaled.jpg' ); ?>" data-object-fit="cover"/><div class="wp-block-cover__inner-container"><!-- wp:paragraph {"className":"is-style-antetitulo"} -->
-<p class="is-style-antetitulo">Valores</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:heading {"level":3,"fontSize":"x-large"} -->
-<h3 class="wp-block-heading has-x-large-font-size">Formación integral</h3>
-<!-- /wp:heading -->
-
-<!-- wp:paragraph {"fontSize":"small"} -->
-<p class="has-small-font-size">Actividades que promueven valores, autonomía y habilidades sociales.</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:list {"className":"is-style-chips"} -->
-<ul class="wp-block-list is-style-chips"><!-- wp:list-item -->
-<li>Todos los niveles</li>
-<!-- /wp:list-item --></ul>
-<!-- /wp:list --></div></div>
-<!-- /wp:cover -->
-
-<!-- wp:cover {<?php cv_idjson( '2026/03/DSC02474-scaled.jpg' ); ?>"url":"<?php cv_src( '2026/03/DSC02474-scaled.jpg' ); ?>","isUserOverlayColor":true,"minHeight":460,"customGradient":"linear-gradient(180deg,rgba(0,18,35,0) 25%,rgba(0,18,35,0.55) 60%,rgba(0,18,35,0.92) 100%)","contentPosition":"bottom left","className":"cv-photo-card","style":{"spacing":{"padding":{"top":"var:preset|spacing|50","bottom":"var:preset|spacing|50","left":"var:preset|spacing|50","right":"var:preset|spacing|50"}},"border":{"radius":"24px"}}} -->
-<div class="wp-block-cover has-custom-content-position is-position-bottom-left cv-photo-card" style="border-radius:24px;padding-top:var(--wp--preset--spacing--50);padding-right:var(--wp--preset--spacing--50);padding-bottom:var(--wp--preset--spacing--50);padding-left:var(--wp--preset--spacing--50);min-height:460px"><span aria-hidden="true" class="wp-block-cover__background has-background-dim-100 has-background-dim wp-block-cover__gradient-background has-background-gradient" style="background:linear-gradient(180deg,rgba(0,18,35,0) 25%,rgba(0,18,35,0.55) 60%,rgba(0,18,35,0.92) 100%)"></span><img class="wp-block-cover__image-background<?php cv_idclass( '2026/03/DSC02474-scaled.jpg' ); ?>" alt="" src="<?php cv_src( '2026/03/DSC02474-scaled.jpg' ); ?>" data-object-fit="cover"/><div class="wp-block-cover__inner-container"><!-- wp:paragraph {"className":"is-style-antetitulo"} -->
-<p class="is-style-antetitulo">Proyectos</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:heading {"level":3,"fontSize":"x-large"} -->
-<h3 class="wp-block-heading has-x-large-font-size">Proyectos especiales</h3>
-<!-- /wp:heading -->
-
-<!-- wp:paragraph {"fontSize":"small"} -->
-<p class="has-small-font-size">Propuestas interdisciplinarias que enriquecen la experiencia educativa.</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:list {"className":"is-style-chips"} -->
-<ul class="wp-block-list is-style-chips"><!-- wp:list-item -->
-<li>Según propuesta</li>
-<!-- /wp:list-item --></ul>
-<!-- /wp:list --></div></div>
-<!-- /wp:cover --></div>
-<!-- /wp:group --></div>
-<!-- /wp:group -->
-
-<!-- wp:group {"metadata":{"name":"Talleres"},"align":"full","className":"cv-section","style":{"spacing":{"padding":{"top":"var:preset|spacing|80","bottom":"var:preset|spacing|80"},"margin":{"top":"0","bottom":"0"}}},"backgroundColor":"crema","layout":{"type":"constrained"}} -->
-<div class="wp-block-group alignfull cv-section has-crema-background-color has-background" id="talleres" style="margin-top:0;margin-bottom:0;padding-top:var(--wp--preset--spacing--80);padding-bottom:var(--wp--preset--spacing--80)"><!-- wp:columns {"style":{"spacing":{"blockGap":{"left":"var:preset|spacing|80","top":"var:preset|spacing|80"}}}} -->
-<div class="wp-block-columns"><!-- wp:column {"width":"40%","className":"cv-sticky"} -->
-<div class="wp-block-column cv-sticky" style="flex-basis:40%"><!-- wp:paragraph {"className":"is-style-antetitulo"} -->
-<p class="is-style-antetitulo">Vida escolar</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:heading -->
-<h2 class="wp-block-heading"><em>Talleres</em></h2>
+<!-- wp:heading {"level":3} -->
+<h3 class="wp-block-heading">Deporte y movimiento</h3>
 <!-- /wp:heading -->
 
 <!-- wp:paragraph -->
-<p>Propuestas prácticas y participativas que complementan la formación curricular, promoviendo habilidades, intereses y aprendizajes significativos en un marco cuidado.</p>
+<p>Actividades orientadas al desarrollo físico, el trabajo en equipo y el cuidado del cuerpo.</p>
 <!-- /wp:paragraph -->
 
-<!-- wp:group {"className":"is-style-borde-oro","style":{"spacing":{"padding":{"top":"var:preset|spacing|40","bottom":"var:preset|spacing|40","left":"var:preset|spacing|40","right":"var:preset|spacing|40"},"margin":{"top":"var:preset|spacing|40"},"blockGap":"0.8rem"}},"layout":{"type":"default"}} -->
-<div class="wp-block-group is-style-borde-oro" style="margin-top:var(--wp--preset--spacing--40);padding-top:var(--wp--preset--spacing--40);padding-right:var(--wp--preset--spacing--40);padding-bottom:var(--wp--preset--spacing--40);padding-left:var(--wp--preset--spacing--40)"><!-- wp:heading {"level":3,"fontSize":"large"} -->
-<h3 class="wp-block-heading has-large-font-size">Cómo funcionan</h3>
-<!-- /wp:heading -->
-
-<!-- wp:paragraph {"textColor":"gris","fontSize":"small"} -->
-<p class="has-gris-color has-text-color has-small-font-size">Se organizan por períodos y disponibilidad, con cupos limitados y propuestas acordes a cada edad. Algunas actividades pueden variar según nivel y etapa del año.</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph {"fontSize":"small"} -->
-<p class="has-small-font-size"><strong>Tip:</strong> al consultar, indicá el nivel y la edad o año del estudiante para recomendarte las opciones disponibles.</p>
+<!-- wp:paragraph {"className":"ext-tag cv-t-span"} -->
+<p class="ext-tag cv-t-span">Inicial · Primaria · Secundaria</p>
 <!-- /wp:paragraph --></div>
-<!-- /wp:group --></div>
-<!-- /wp:column -->
-
-<!-- wp:column {"width":"60%"} -->
-<div class="wp-block-column" style="flex-basis:60%"><!-- wp:group {"className":"cv-reveal-children","style":{"spacing":{"blockGap":"var:preset|spacing|30"}},"layout":{"type":"flex","orientation":"vertical","flexWrap":"wrap"}} -->
-<div class="wp-block-group cv-reveal-children"><!-- wp:group {"className":"is-style-tarjeta cv-hover","style":{"spacing":{"padding":{"top":"var:preset|spacing|40","bottom":"var:preset|spacing|40","left":"var:preset|spacing|40","right":"var:preset|spacing|40"},"blockGap":"0.8rem"}},"layout":{"type":"default"}} -->
-<div class="wp-block-group is-style-tarjeta cv-hover" style="padding-top:var(--wp--preset--spacing--40);padding-right:var(--wp--preset--spacing--40);padding-bottom:var(--wp--preset--spacing--40);padding-left:var(--wp--preset--spacing--40)"><!-- wp:group {"style":{"spacing":{"blockGap":"1rem"}},"layout":{"type":"flex","flexWrap":"nowrap","verticalAlignment":"center"}} -->
-<div class="wp-block-group"><!-- wp:cervantes/icon {"icon":"paleta","size":52} /-->
-
-<!-- wp:heading {"level":3,"fontSize":"large"} -->
-<h3 class="wp-block-heading has-large-font-size">Taller de arte y creatividad</h3>
-<!-- /wp:heading --></div>
+<!-- /wp:group --></article>
 <!-- /wp:group -->
 
-<!-- wp:paragraph {"textColor":"gris","fontSize":"small"} -->
-<p class="has-gris-color has-text-color has-small-font-size">Exploración de técnicas y materiales para desarrollar la expresión personal, la observación y la sensibilidad artística.</p>
+<!-- wp:group {"tagName":"article","className":"ext-card","layout":{"type":"default"}} -->
+<article class="wp-block-group ext-card"><!-- wp:cervantes/html -->
+<div class="ext-bg" style="background-image:url('<?php cv_src( '2026/01/IMG_9096-1-scaled.jpg' ); ?>')"></div>
+<!-- /wp:cervantes/html -->
+
+<!-- wp:cervantes/html -->
+<div class="ext-overlay"></div>
+<!-- /wp:cervantes/html -->
+
+<!-- wp:group {"className":"ext-content","layout":{"type":"default"}} -->
+<div class="wp-block-group ext-content"><!-- wp:paragraph {"className":"ext-card-eyebrow cv-t-div"} -->
+<p class="ext-card-eyebrow cv-t-div">Expresión</p>
 <!-- /wp:paragraph -->
 
-<!-- wp:list {"className":"is-style-chips"} -->
-<ul class="wp-block-list is-style-chips"><!-- wp:list-item -->
-<li>Inicial · Primaria</li>
-<!-- /wp:list-item -->
-
-<!-- wp:list-item -->
-<li>Cupos limitados</li>
-<!-- /wp:list-item --></ul>
-<!-- /wp:list --></div>
-<!-- /wp:group -->
-
-<!-- wp:group {"className":"is-style-tarjeta cv-hover","style":{"spacing":{"padding":{"top":"var:preset|spacing|40","bottom":"var:preset|spacing|40","left":"var:preset|spacing|40","right":"var:preset|spacing|40"},"blockGap":"0.8rem"}},"layout":{"type":"default"}} -->
-<div class="wp-block-group is-style-tarjeta cv-hover" style="padding-top:var(--wp--preset--spacing--40);padding-right:var(--wp--preset--spacing--40);padding-bottom:var(--wp--preset--spacing--40);padding-left:var(--wp--preset--spacing--40)"><!-- wp:group {"style":{"spacing":{"blockGap":"1rem"}},"layout":{"type":"flex","flexWrap":"nowrap","verticalAlignment":"center"}} -->
-<div class="wp-block-group"><!-- wp:cervantes/icon {"icon":"ciencia","size":52} /-->
-
-<!-- wp:heading {"level":3,"fontSize":"large"} -->
-<h3 class="wp-block-heading has-large-font-size">Taller de ciencia y experimentación</h3>
-<!-- /wp:heading --></div>
-<!-- /wp:group -->
-
-<!-- wp:paragraph {"textColor":"gris","fontSize":"small"} -->
-<p class="has-gris-color has-text-color has-small-font-size">Actividades guiadas que despiertan curiosidad, pensamiento crítico y método, con experiencias adaptadas a la edad.</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:list {"className":"is-style-chips"} -->
-<ul class="wp-block-list is-style-chips"><!-- wp:list-item -->
-<li>Primaria · Secundaria</li>
-<!-- /wp:list-item -->
-
-<!-- wp:list-item -->
-<li>Según propuesta</li>
-<!-- /wp:list-item --></ul>
-<!-- /wp:list --></div>
-<!-- /wp:group -->
-
-<!-- wp:group {"className":"is-style-tarjeta cv-hover","style":{"spacing":{"padding":{"top":"var:preset|spacing|40","bottom":"var:preset|spacing|40","left":"var:preset|spacing|40","right":"var:preset|spacing|40"},"blockGap":"0.8rem"}},"layout":{"type":"default"}} -->
-<div class="wp-block-group is-style-tarjeta cv-hover" style="padding-top:var(--wp--preset--spacing--40);padding-right:var(--wp--preset--spacing--40);padding-bottom:var(--wp--preset--spacing--40);padding-left:var(--wp--preset--spacing--40)"><!-- wp:group {"style":{"spacing":{"blockGap":"1rem"}},"layout":{"type":"flex","flexWrap":"nowrap","verticalAlignment":"center"}} -->
-<div class="wp-block-group"><!-- wp:cervantes/icon {"icon":"robot","size":52} /-->
-
-<!-- wp:heading {"level":3,"fontSize":"large"} -->
-<h3 class="wp-block-heading has-large-font-size">Taller de tecnología y proyectos</h3>
-<!-- /wp:heading --></div>
-<!-- /wp:group -->
-
-<!-- wp:paragraph {"textColor":"gris","fontSize":"small"} -->
-<p class="has-gris-color has-text-color has-small-font-size">Propuestas aplicadas para resolver desafíos, trabajar en equipo y desarrollar habilidades digitales de forma responsable.</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:list {"className":"is-style-chips"} -->
-<ul class="wp-block-list is-style-chips"><!-- wp:list-item -->
-<li>Primaria · Secundaria</li>
-<!-- /wp:list-item -->
-
-<!-- wp:list-item -->
-<li>Por período</li>
-<!-- /wp:list-item --></ul>
-<!-- /wp:list --></div>
-<!-- /wp:group -->
-
-<!-- wp:group {"className":"is-style-tarjeta cv-hover","style":{"spacing":{"padding":{"top":"var:preset|spacing|40","bottom":"var:preset|spacing|40","left":"var:preset|spacing|40","right":"var:preset|spacing|40"},"blockGap":"0.8rem"}},"layout":{"type":"default"}} -->
-<div class="wp-block-group is-style-tarjeta cv-hover" style="padding-top:var(--wp--preset--spacing--40);padding-right:var(--wp--preset--spacing--40);padding-bottom:var(--wp--preset--spacing--40);padding-left:var(--wp--preset--spacing--40)"><!-- wp:group {"style":{"spacing":{"blockGap":"1rem"}},"layout":{"type":"flex","flexWrap":"nowrap","verticalAlignment":"center"}} -->
-<div class="wp-block-group"><!-- wp:cervantes/icon {"icon":"chat","size":52} /-->
-
-<!-- wp:heading {"level":3,"fontSize":"large"} -->
-<h3 class="wp-block-heading has-large-font-size">Taller de comunicación e idiomas</h3>
-<!-- /wp:heading --></div>
-<!-- /wp:group -->
-
-<!-- wp:paragraph {"textColor":"gris","fontSize":"small"} -->
-<p class="has-gris-color has-text-color has-small-font-size">Espacios de práctica y conversación para fortalecer la expresión oral y escrita, con foco en confianza y fluidez.</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:list {"className":"is-style-chips"} -->
-<ul class="wp-block-list is-style-chips"><!-- wp:list-item -->
-<li>Primaria · Secundaria</li>
-<!-- /wp:list-item -->
-
-<!-- wp:list-item -->
-<li>En horarios definidos</li>
-<!-- /wp:list-item --></ul>
-<!-- /wp:list --></div>
-<!-- /wp:group --></div>
-<!-- /wp:group --></div>
-<!-- /wp:column --></div>
-<!-- /wp:columns --></div>
-<!-- /wp:group -->
-
-<!-- wp:group {"metadata":{"name":"Salidas didácticas"},"align":"full","className":"cv-section","style":{"spacing":{"padding":{"top":"var:preset|spacing|80","bottom":"var:preset|spacing|80"},"margin":{"top":"0","bottom":"0"}}},"backgroundColor":"blanco","layout":{"type":"constrained"}} -->
-<div class="wp-block-group alignfull cv-section has-blanco-background-color has-background" id="salidas" style="margin-top:0;margin-bottom:0;padding-top:var(--wp--preset--spacing--80);padding-bottom:var(--wp--preset--spacing--80)"><!-- wp:group {"style":{"spacing":{"margin":{"bottom":"var:preset|spacing|60"},"blockGap":"1rem"}},"layout":{"type":"constrained","contentSize":"760px"}} -->
-<div class="wp-block-group" style="margin-bottom:var(--wp--preset--spacing--60)"><!-- wp:paragraph {"align":"center","className":"is-style-antetitulo"} -->
-<p class="has-text-align-center is-style-antetitulo">Vida escolar</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:heading {"textAlign":"center"} -->
-<h2 class="wp-block-heading has-text-align-center">Salidas <em>didácticas</em></h2>
+<!-- wp:heading {"level":3} -->
+<h3 class="wp-block-heading">Arte y expresión artística</h3>
 <!-- /wp:heading -->
 
-<!-- wp:paragraph {"align":"center","className":"cv-lead"} -->
-<p class="has-text-align-center cv-lead">Forman parte del proyecto educativo: amplían los aprendizajes con experiencias directas en contextos culturales, científicos y sociales.</p>
+<!-- wp:paragraph -->
+<p>Música, artes visuales y expresión corporal para el desarrollo creativo.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph {"className":"ext-tag cv-t-span"} -->
+<p class="ext-tag cv-t-span">Inicial · Primaria</p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:group --></article>
+<!-- /wp:group -->
+
+<!-- wp:group {"tagName":"article","className":"ext-card","layout":{"type":"default"}} -->
+<article class="wp-block-group ext-card"><!-- wp:cervantes/html -->
+<div class="ext-bg" style="background-image:url('<?php cv_src( '2026/01/IMG_6842-1-scaled.jpg' ); ?>')"></div>
+<!-- /wp:cervantes/html -->
+
+<!-- wp:cervantes/html -->
+<div class="ext-overlay"></div>
+<!-- /wp:cervantes/html -->
+
+<!-- wp:group {"className":"ext-content","layout":{"type":"default"}} -->
+<div class="wp-block-group ext-content"><!-- wp:paragraph {"className":"ext-card-eyebrow cv-t-div"} -->
+<p class="ext-card-eyebrow cv-t-div">Idiomas</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+<h3 class="wp-block-heading">Idiomas y comunicación</h3>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Espacios que fortalecen la competencia comunicativa en lenguas extranjeras.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph {"className":"ext-tag cv-t-span"} -->
+<p class="ext-tag cv-t-span">Primaria · Secundaria</p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:group --></article>
+<!-- /wp:group -->
+
+<!-- wp:group {"tagName":"article","className":"ext-card","layout":{"type":"default"}} -->
+<article class="wp-block-group ext-card"><!-- wp:cervantes/html -->
+<div class="ext-bg" style="background-image:url('<?php cv_src( '2026/01/IMG_8744-scaled.jpg' ); ?>')"></div>
+<!-- /wp:cervantes/html -->
+
+<!-- wp:cervantes/html -->
+<div class="ext-overlay"></div>
+<!-- /wp:cervantes/html -->
+
+<!-- wp:group {"className":"ext-content","layout":{"type":"default"}} -->
+<div class="wp-block-group ext-content"><!-- wp:paragraph {"className":"ext-card-eyebrow cv-t-div"} -->
+<p class="ext-card-eyebrow cv-t-div">STEM</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+<h3 class="wp-block-heading">Ciencia y tecnología</h3>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Talleres que estimulan el pensamiento lógico y la curiosidad científica.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph {"className":"ext-tag cv-t-span"} -->
+<p class="ext-tag cv-t-span">Primaria · Secundaria</p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:group --></article>
+<!-- /wp:group -->
+
+<!-- wp:group {"tagName":"article","className":"ext-card","layout":{"type":"default"}} -->
+<article class="wp-block-group ext-card"><!-- wp:cervantes/html -->
+<div class="ext-bg" style="background-image:url('<?php cv_src( '2026/01/IMG_5127-scaled.jpg' ); ?>')"></div>
+<!-- /wp:cervantes/html -->
+
+<!-- wp:cervantes/html -->
+<div class="ext-overlay"></div>
+<!-- /wp:cervantes/html -->
+
+<!-- wp:group {"className":"ext-content","layout":{"type":"default"}} -->
+<div class="wp-block-group ext-content"><!-- wp:paragraph {"className":"ext-card-eyebrow cv-t-div"} -->
+<p class="ext-card-eyebrow cv-t-div">Valores</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+<h3 class="wp-block-heading">Formación integral</h3>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Actividades que promueven valores, autonomía y habilidades sociales.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph {"className":"ext-tag cv-t-span"} -->
+<p class="ext-tag cv-t-span">Todos los niveles</p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:group --></article>
+<!-- /wp:group -->
+
+<!-- wp:group {"tagName":"article","className":"ext-card","layout":{"type":"default"}} -->
+<article class="wp-block-group ext-card"><!-- wp:cervantes/html -->
+<div class="ext-bg" style="background-image:url('<?php cv_src( '2026/03/DSC02474-scaled.jpg' ); ?>')"></div>
+<!-- /wp:cervantes/html -->
+
+<!-- wp:cervantes/html -->
+<div class="ext-overlay"></div>
+<!-- /wp:cervantes/html -->
+
+<!-- wp:group {"className":"ext-content","layout":{"type":"default"}} -->
+<div class="wp-block-group ext-content"><!-- wp:paragraph {"className":"ext-card-eyebrow cv-t-div"} -->
+<p class="ext-card-eyebrow cv-t-div">Proyectos</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+<h3 class="wp-block-heading">Proyectos especiales</h3>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Propuestas interdisciplinarias que enriquecen la experiencia educativa.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph {"className":"ext-tag cv-t-span"} -->
+<p class="ext-tag cv-t-span">Según propuesta</p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:group --></article>
+<!-- /wp:group --></div>
+<!-- /wp:group --></div>
+<!-- /wp:group --></section>
+<!-- /wp:group -->
+
+<!-- wp:group {"tagName":"section","layout":{"type":"default"}} -->
+<section id="cerv-talleres" class="wp-block-group"><!-- wp:group {"className":"tal-wrap","layout":{"type":"default"}} -->
+<div class="wp-block-group tal-wrap"><!-- wp:group {"tagName":"header","className":"tal-header","layout":{"type":"default"}} -->
+<header class="wp-block-group tal-header"><!-- wp:heading {"className":"tal-title"} -->
+<h2 class="wp-block-heading tal-title">Talleres</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph {"className":"tal-intro"} -->
+<p class="tal-intro">Propuestas prácticas y participativas que complementan la formación curricular, promoviendo habilidades, intereses y aprendizajes significativos en un marco cuidado.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:cervantes/html -->
+<div aria-hidden="true" class="tal-rule"></div>
+<!-- /wp:cervantes/html --></header>
+<!-- /wp:group -->
+
+<!-- wp:group {"className":"tal-grid","layout":{"type":"default"}} -->
+<div class="wp-block-group tal-grid"><!-- wp:group {"tagName":"aside","className":"tal-card tal-col-left","layout":{"type":"default"}} -->
+<aside class="wp-block-group tal-card tal-col-left"><!-- wp:heading {"level":3} -->
+<h3 class="wp-block-heading">Cómo funcionan</h3>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Los talleres se organizan por períodos y disponibilidad, con cupos limitados y propuestas acordes a cada edad. Algunas actividades pueden variar según nivel y etapa del año.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph {"className":"tal-note cv-t-div"} -->
+<p class="tal-note cv-t-div"><strong>Tip:</strong> al consultar, indicá el nivel y la edad/año del estudiante para recomendarte opciones disponibles.</p>
+<!-- /wp:paragraph --></aside>
+<!-- /wp:group -->
+
+<!-- wp:group {"className":"tal-col-right tal-list","layout":{"type":"default"}} -->
+<div class="wp-block-group tal-col-right tal-list"><!-- wp:group {"tagName":"article","className":"tal-item","layout":{"type":"default"}} -->
+<article class="wp-block-group tal-item"><!-- wp:heading {"level":4} -->
+<h4 class="wp-block-heading">Taller de arte y creatividad</h4>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Exploración de técnicas y materiales para desarrollar la expresión personal, la observación y la sensibilidad artística.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph {"className":"tal-meta cv-t-div"} -->
+<p class="tal-meta cv-t-div"><span class="tal-pill accent">Inicial · Primaria</span><span class="tal-pill">Cupos limitados</span></p>
+<!-- /wp:paragraph --></article>
+<!-- /wp:group -->
+
+<!-- wp:group {"tagName":"article","className":"tal-item","layout":{"type":"default"}} -->
+<article class="wp-block-group tal-item"><!-- wp:heading {"level":4} -->
+<h4 class="wp-block-heading">Taller de ciencia y experimentación</h4>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Actividades guiadas que despiertan curiosidad, pensamiento crítico y método, con experiencias adaptadas a la edad.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph {"className":"tal-meta cv-t-div"} -->
+<p class="tal-meta cv-t-div"><span class="tal-pill accent">Primaria · Secundaria</span><span class="tal-pill">Según propuesta</span></p>
+<!-- /wp:paragraph --></article>
+<!-- /wp:group -->
+
+<!-- wp:group {"tagName":"article","className":"tal-item","layout":{"type":"default"}} -->
+<article class="wp-block-group tal-item"><!-- wp:heading {"level":4} -->
+<h4 class="wp-block-heading">Taller de tecnología y proyectos</h4>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Propuestas aplicadas para resolver desafíos, trabajar en equipo y desarrollar habilidades digitales de forma responsable.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph {"className":"tal-meta cv-t-div"} -->
+<p class="tal-meta cv-t-div"><span class="tal-pill accent">Primaria · Secundaria</span><span class="tal-pill">Por período</span></p>
+<!-- /wp:paragraph --></article>
+<!-- /wp:group -->
+
+<!-- wp:group {"tagName":"article","className":"tal-item","layout":{"type":"default"}} -->
+<article class="wp-block-group tal-item"><!-- wp:heading {"level":4} -->
+<h4 class="wp-block-heading">Taller de comunicación e idiomas</h4>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Espacios de práctica y conversación para fortalecer la expresión oral y escrita, con foco en confianza y fluidez.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph {"className":"tal-meta cv-t-div"} -->
+<p class="tal-meta cv-t-div"><span class="tal-pill accent">Primaria · Secundaria</span><span class="tal-pill">En horarios definidos</span></p>
+<!-- /wp:paragraph --></article>
+<!-- /wp:group --></div>
+<!-- /wp:group --></div>
+<!-- /wp:group --></div>
+<!-- /wp:group --></section>
+<!-- /wp:group -->
+
+<!-- wp:group {"tagName":"section","layout":{"type":"default"}} -->
+<section id="cerv-salidas-didacticas" class="wp-block-group"><!-- wp:group {"className":"sal-inner","layout":{"type":"default"}} -->
+<div class="wp-block-group sal-inner"><!-- wp:group {"className":"sal-header","layout":{"type":"default"}} -->
+<div class="wp-block-group sal-header"><!-- wp:paragraph {"className":"sal-eyebrow cv-t-div"} -->
+<p class="sal-eyebrow cv-t-div">Vida escolar</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"className":"sal-title"} -->
+<h2 class="wp-block-heading sal-title">Salidas <em>didácticas</em></h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph {"className":"sal-intro"} -->
+<p class="sal-intro">Las salidas didácticas forman parte del proyecto educativo, ampliando los aprendizajes a través de experiencias directas en contextos culturales, científicos y sociales.</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group -->
 
-<!-- wp:columns {"align":"wide","className":"cv-reveal-children","style":{"spacing":{"blockGap":{"left":"var:preset|spacing|40","top":"var:preset|spacing|40"}}}} -->
-<div class="wp-block-columns alignwide cv-reveal-children"><!-- wp:column -->
-<div class="wp-block-column"><!-- wp:image {<?php cv_idjson( '2026/01/IMG_6842-1-scaled.jpg' ); ?>"lightbox":{"enabled":true},"aspectRatio":"4/3","scale":"cover","sizeSlug":"large","linkDestination":"none"} -->
-<figure class="wp-block-image size-large"><img src="<?php cv_src( '2026/01/IMG_6842-1-scaled.jpg' ); ?>" alt="Salida didáctica" style="aspect-ratio:4/3;object-fit:cover"<?php cv_idattr( '2026/01/IMG_6842-1-scaled.jpg' ); ?>/><figcaption class="wp-element-caption">Experiencias en contexto</figcaption></figure>
-<!-- /wp:image --></div>
-<!-- /wp:column -->
-
-<!-- wp:column -->
-<div class="wp-block-column"><!-- wp:image {<?php cv_idjson( '2026/01/IMG_5127-scaled.jpg' ); ?>"lightbox":{"enabled":true},"aspectRatio":"4/3","scale":"cover","sizeSlug":"large","linkDestination":"none"} -->
-<figure class="wp-block-image size-large"><img src="<?php cv_src( '2026/01/IMG_5127-scaled.jpg' ); ?>" alt="Actividad fuera del aula" style="aspect-ratio:4/3;object-fit:cover"<?php cv_idattr( '2026/01/IMG_5127-scaled.jpg' ); ?>/><figcaption class="wp-element-caption">Aprender haciendo</figcaption></figure>
-<!-- /wp:image --></div>
-<!-- /wp:column --></div>
-<!-- /wp:columns -->
-
-<!-- wp:columns {"align":"wide","className":"cv-reveal-children","style":{"spacing":{"margin":{"top":"var:preset|spacing|40"},"blockGap":{"left":"var:preset|spacing|40","top":"var:preset|spacing|40"}}}} -->
-<div class="wp-block-columns alignwide cv-reveal-children" style="margin-top:var(--wp--preset--spacing--40)"><!-- wp:column -->
-<div class="wp-block-column"><!-- wp:group {"className":"is-style-tarjeta","style":{"spacing":{"padding":{"top":"var:preset|spacing|50","bottom":"var:preset|spacing|50","left":"var:preset|spacing|50","right":"var:preset|spacing|50"},"blockGap":"1rem"}},"layout":{"type":"default"}} -->
-<div class="wp-block-group is-style-tarjeta" style="padding-top:var(--wp--preset--spacing--50);padding-right:var(--wp--preset--spacing--50);padding-bottom:var(--wp--preset--spacing--50);padding-left:var(--wp--preset--spacing--50)"><!-- wp:cervantes/icon {"icon":"bus"} /-->
-
-<!-- wp:heading {"level":3,"fontSize":"x-large"} -->
-<h3 class="wp-block-heading has-x-large-font-size">Aprender en contexto</h3>
-<!-- /wp:heading -->
-
-<!-- wp:paragraph {"textColor":"gris"} -->
-<p class="has-gris-color has-text-color">Cada salida se diseña con objetivos pedagógicos claros, integrados al trabajo en el aula y adecuados a la etapa evolutiva de los estudiantes.</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:list {"className":"is-style-chips"} -->
-<ul class="wp-block-list is-style-chips"><!-- wp:list-item -->
-<li>Inicial · Primaria · Secundaria</li>
-<!-- /wp:list-item -->
-
-<!-- wp:list-item -->
-<li>Con acompañamiento docente</li>
-<!-- /wp:list-item --></ul>
-<!-- /wp:list --></div>
-<!-- /wp:group --></div>
-<!-- /wp:column -->
-
-<!-- wp:column -->
-<div class="wp-block-column"><!-- wp:group {"className":"is-style-tarjeta","style":{"spacing":{"padding":{"top":"var:preset|spacing|50","bottom":"var:preset|spacing|50","left":"var:preset|spacing|50","right":"var:preset|spacing|50"},"blockGap":"1rem"}},"layout":{"type":"default"}} -->
-<div class="wp-block-group is-style-tarjeta" style="padding-top:var(--wp--preset--spacing--50);padding-right:var(--wp--preset--spacing--50);padding-bottom:var(--wp--preset--spacing--50);padding-left:var(--wp--preset--spacing--50)"><!-- wp:cervantes/icon {"icon":"diana","variant":"solido"} /-->
-
-<!-- wp:heading {"level":3,"fontSize":"x-large"} -->
-<h3 class="wp-block-heading has-x-large-font-size">Objetivos pedagógicos</h3>
-<!-- /wp:heading -->
-
-<!-- wp:list {"className":"is-style-check"} -->
-<ul class="wp-block-list is-style-check"><!-- wp:list-item -->
-<li><strong>Relacionar teoría y práctica</strong> a través de experiencias reales.</li>
-<!-- /wp:list-item -->
-
-<!-- wp:list-item -->
-<li><strong>Estimular la curiosidad</strong> y la observación del entorno.</li>
-<!-- /wp:list-item -->
-
-<!-- wp:list-item -->
-<li><strong>Fortalecer la convivencia</strong> y el trabajo grupal.</li>
-<!-- /wp:list-item --></ul>
-<!-- /wp:list --></div>
-<!-- /wp:group --></div>
-<!-- /wp:column --></div>
-<!-- /wp:columns --></div>
-<!-- /wp:group -->
-
-<!-- wp:group {"metadata":{"name":"Deportes"},"align":"full","className":"cv-section","style":{"spacing":{"padding":{"top":"var:preset|spacing|80","bottom":"var:preset|spacing|80"},"margin":{"top":"0","bottom":"0"}}},"backgroundColor":"niebla","layout":{"type":"constrained"}} -->
-<div class="wp-block-group alignfull cv-section has-niebla-background-color has-background" id="deportes" style="margin-top:0;margin-bottom:0;padding-top:var(--wp--preset--spacing--80);padding-bottom:var(--wp--preset--spacing--80)"><!-- wp:group {"style":{"spacing":{"margin":{"bottom":"var:preset|spacing|60"},"blockGap":"1rem"}},"layout":{"type":"constrained","contentSize":"760px"}} -->
-<div class="wp-block-group" style="margin-bottom:var(--wp--preset--spacing--60)"><!-- wp:paragraph {"align":"center","className":"is-style-antetitulo"} -->
-<p class="has-text-align-center is-style-antetitulo">Vida escolar</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:heading {"textAlign":"center"} -->
-<h2 class="wp-block-heading has-text-align-center"><em>Deportes</em> y movimiento</h2>
-<!-- /wp:heading -->
-
-<!-- wp:paragraph {"align":"center","className":"cv-lead"} -->
-<p class="has-text-align-center cv-lead">Promovemos el deporte como parte esencial de la formación integral: desarrolla hábitos saludables, fortalece vínculos, construye valores y acompaña el crecimiento de cada estudiante.</p>
-<!-- /wp:paragraph --></div>
-<!-- /wp:group -->
-
-<!-- wp:image {<?php cv_idjson( '2026/01/IMG_5838-scaled.jpg' ); ?>"aspectRatio":"21/9","scale":"cover","sizeSlug":"large","linkDestination":"none","align":"wide","className":"cv-reveal-zoom"} -->
-<figure class="wp-block-image alignwide size-large cv-reveal-zoom"><img src="<?php cv_src( '2026/01/IMG_5838-scaled.jpg' ); ?>" alt="Deportes en el Colegio Cervantes" style="aspect-ratio:21/9;object-fit:cover"<?php cv_idattr( '2026/01/IMG_5838-scaled.jpg' ); ?>/></figure>
+<!-- wp:group {"className":"sal-media","layout":{"type":"default"}} -->
+<div id="salMedia" class="wp-block-group sal-media"><!-- wp:group {"className":"sal-photo","layout":{"type":"default"}} -->
+<div class="wp-block-group sal-photo"><!-- wp:image {<?php cv_idjson( '2026/01/IMG_6842-1-scaled.jpg' ); ?>"sizeSlug":"full","linkDestination":"none","className":"cv-img"} -->
+<figure class="wp-block-image size-full cv-img"><img src="<?php cv_src( '2026/01/IMG_6842-1-scaled.jpg' ); ?>" alt="Salida didáctica"<?php cv_idattr( '2026/01/IMG_6842-1-scaled.jpg' ); ?>/></figure>
 <!-- /wp:image -->
 
-<!-- wp:columns {"align":"wide","className":"cv-reveal-children","style":{"spacing":{"margin":{"top":"var:preset|spacing|40"},"blockGap":{"left":"var:preset|spacing|40","top":"var:preset|spacing|40"}}}} -->
-<div class="wp-block-columns alignwide cv-reveal-children" style="margin-top:var(--wp--preset--spacing--40)"><!-- wp:column -->
-<div class="wp-block-column"><!-- wp:group {"className":"is-style-tarjeta","style":{"spacing":{"padding":{"top":"var:preset|spacing|50","bottom":"var:preset|spacing|50","left":"var:preset|spacing|50","right":"var:preset|spacing|50"},"blockGap":"1rem"}},"layout":{"type":"default"}} -->
-<div class="wp-block-group is-style-tarjeta" style="padding-top:var(--wp--preset--spacing--50);padding-right:var(--wp--preset--spacing--50);padding-bottom:var(--wp--preset--spacing--50);padding-left:var(--wp--preset--spacing--50)"><!-- wp:heading {"level":3,"fontSize":"x-large"} -->
-<h3 class="wp-block-heading has-x-large-font-size">Formación en movimiento</h3>
-<!-- /wp:heading -->
-
-<!-- wp:paragraph {"textColor":"gris"} -->
-<p class="has-gris-color has-text-color">Estimulamos la motricidad, la coordinación y el rendimiento, con acompañamiento docente y respeto por los procesos individuales.</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:list {"className":"is-style-check"} -->
-<ul class="wp-block-list is-style-check"><!-- wp:list-item -->
-<li><strong>Hábitos saludables</strong> y disfrute del movimiento.</li>
-<!-- /wp:list-item -->
-
-<!-- wp:list-item -->
-<li><strong>Trabajo en equipo</strong> y sentido de pertenencia.</li>
-<!-- /wp:list-item -->
-
-<!-- wp:list-item -->
-<li><strong>Valores deportivos</strong>: respeto, esfuerzo y constancia.</li>
-<!-- /wp:list-item --></ul>
-<!-- /wp:list --></div>
-<!-- /wp:group --></div>
-<!-- /wp:column -->
-
-<!-- wp:column -->
-<div class="wp-block-column"><!-- wp:group {"className":"is-style-tarjeta","style":{"spacing":{"padding":{"top":"var:preset|spacing|50","bottom":"var:preset|spacing|50","left":"var:preset|spacing|50","right":"var:preset|spacing|50"},"blockGap":"0.8rem"}},"layout":{"type":"default"}} -->
-<div class="wp-block-group is-style-tarjeta" style="padding-top:var(--wp--preset--spacing--50);padding-right:var(--wp--preset--spacing--50);padding-bottom:var(--wp--preset--spacing--50);padding-left:var(--wp--preset--spacing--50)"><!-- wp:heading {"level":3,"fontSize":"x-large"} -->
-<h3 class="wp-block-heading has-x-large-font-size">Propuesta por niveles</h3>
-<!-- /wp:heading -->
-
-<!-- wp:paragraph {"textColor":"gris"} -->
-<p class="has-gris-color has-text-color">Las actividades se adaptan a cada etapa, combinando iniciación, práctica y desarrollo técnico.</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph {"fontSize":"small"} -->
-<p class="has-small-font-size"><strong>Inicial</strong></p>
-<!-- /wp:paragraph -->
-
-<!-- wp:list {"className":"is-style-chips"} -->
-<ul class="wp-block-list is-style-chips"><!-- wp:list-item -->
-<li>Psicomotricidad</li>
-<!-- /wp:list-item -->
-
-<!-- wp:list-item -->
-<li>Juegos predeportivos</li>
-<!-- /wp:list-item --></ul>
-<!-- /wp:list -->
-
-<!-- wp:paragraph {"fontSize":"small"} -->
-<p class="has-small-font-size"><strong>Primaria</strong></p>
-<!-- /wp:paragraph -->
-
-<!-- wp:list {"className":"is-style-chips"} -->
-<ul class="wp-block-list is-style-chips"><!-- wp:list-item -->
-<li>Deportes colectivos</li>
-<!-- /wp:list-item -->
-
-<!-- wp:list-item -->
-<li>Atletismo</li>
-<!-- /wp:list-item -->
-
-<!-- wp:list-item -->
-<li>Entrenamiento</li>
-<!-- /wp:list-item --></ul>
-<!-- /wp:list -->
-
-<!-- wp:paragraph {"fontSize":"small"} -->
-<p class="has-small-font-size"><strong>Secundaria</strong></p>
-<!-- /wp:paragraph -->
-
-<!-- wp:list {"className":"is-style-chips"} -->
-<ul class="wp-block-list is-style-chips"><!-- wp:list-item -->
-<li>Entrenamiento</li>
-<!-- /wp:list-item -->
-
-<!-- wp:list-item -->
-<li>Competencias</li>
-<!-- /wp:list-item -->
-
-<!-- wp:list-item -->
-<li>Preparación física</li>
-<!-- /wp:list-item --></ul>
-<!-- /wp:list --></div>
-<!-- /wp:group --></div>
-<!-- /wp:column --></div>
-<!-- /wp:columns --></div>
-<!-- /wp:group -->
-
-<!-- wp:group {"metadata":{"name":"Celebraciones"},"align":"full","className":"cv-section","style":{"spacing":{"padding":{"top":"var:preset|spacing|80","bottom":"var:preset|spacing|80"},"margin":{"top":"0","bottom":"0"}}},"backgroundColor":"crema","layout":{"type":"constrained"}} -->
-<div class="wp-block-group alignfull cv-section has-crema-background-color has-background" id="celebraciones" style="margin-top:0;margin-bottom:0;padding-top:var(--wp--preset--spacing--80);padding-bottom:var(--wp--preset--spacing--80)"><!-- wp:group {"style":{"spacing":{"margin":{"bottom":"var:preset|spacing|60"},"blockGap":"1rem"}},"layout":{"type":"constrained","contentSize":"760px"}} -->
-<div class="wp-block-group" style="margin-bottom:var(--wp--preset--spacing--60)"><!-- wp:paragraph {"align":"center","className":"is-style-antetitulo"} -->
-<p class="has-text-align-center is-style-antetitulo">Vida escolar</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:heading {"textAlign":"center"} -->
-<h2 class="wp-block-heading has-text-align-center"><em>Celebraciones</em></h2>
-<!-- /wp:heading -->
-
-<!-- wp:paragraph {"align":"center","className":"cv-lead"} -->
-<p class="has-text-align-center cv-lead">Fortalecen la identidad, crean comunidad y generan experiencias significativas que acompañan el crecimiento de alumnos y familias.</p>
+<!-- wp:paragraph {"className":"sal-photo-label cv-t-span"} -->
+<p class="sal-photo-label cv-t-span">Experiencias en contexto</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group -->
 
-<!-- wp:columns {"align":"wide","style":{"spacing":{"blockGap":{"left":"var:preset|spacing|50","top":"var:preset|spacing|50"}}}} -->
-<div class="wp-block-columns alignwide"><!-- wp:column {"width":"40%"} -->
-<div class="wp-block-column" style="flex-basis:40%"><!-- wp:group {"className":"is-style-tarjeta-oscura","style":{"spacing":{"padding":{"top":"var:preset|spacing|60","bottom":"var:preset|spacing|60","left":"var:preset|spacing|60","right":"var:preset|spacing|60"},"blockGap":"1rem"}},"layout":{"type":"default"}} -->
-<div class="wp-block-group is-style-tarjeta-oscura" style="padding-top:var(--wp--preset--spacing--60);padding-right:var(--wp--preset--spacing--60);padding-bottom:var(--wp--preset--spacing--60);padding-left:var(--wp--preset--spacing--60)"><!-- wp:paragraph {"className":"is-style-antetitulo"} -->
-<p class="is-style-antetitulo">Una cultura de comunidad</p>
+<!-- wp:group {"className":"sal-photo","layout":{"type":"default"}} -->
+<div class="wp-block-group sal-photo"><!-- wp:image {<?php cv_idjson( '2026/01/IMG_5127-scaled.jpg' ); ?>"sizeSlug":"full","linkDestination":"none","className":"cv-img"} -->
+<figure class="wp-block-image size-full cv-img"><img src="<?php cv_src( '2026/01/IMG_5127-scaled.jpg' ); ?>" alt="Actividad fuera del aula"<?php cv_idattr( '2026/01/IMG_5127-scaled.jpg' ); ?>/></figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph {"className":"sal-photo-label cv-t-span"} -->
+<p class="sal-photo-label cv-t-span">Aprender haciendo</p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:group --></div>
+<!-- /wp:group -->
+
+<!-- wp:group {"className":"sal-content","layout":{"type":"default"}} -->
+<div class="wp-block-group sal-content"><!-- wp:group {"tagName":"article","className":"sal-card","layout":{"type":"default"}} -->
+<article class="wp-block-group sal-card"><!-- wp:heading {"level":3,"className":"sal-card-title"} -->
+<h3 class="wp-block-heading sal-card-title">Aprender en contexto</h3>
+<!-- /wp:heading -->
+
+<!-- wp:cervantes/html -->
+<div class="sal-card-divider"></div>
+<!-- /wp:cervantes/html -->
+
+<!-- wp:paragraph -->
+<p>Cada salida se diseña con objetivos pedagógicos claros, integrados al trabajo en el aula y adecuados a la etapa evolutiva de los estudiantes.</p>
 <!-- /wp:paragraph -->
 
-<!-- wp:heading {"level":3,"textColor":"blanco","fontSize":"x-large"} -->
-<h3 class="wp-block-heading has-blanco-color has-text-color has-x-large-font-size">Encuentros con sentido</h3>
+<!-- wp:paragraph {"className":"sal-pills cv-s12 cv-t-div"} -->
+<p class="sal-pills cv-s12 cv-t-div"><span class="sal-pill">Inicial · Primaria · Secundaria</span> <span class="sal-pill">Con acompañamiento docente</span></p>
+<!-- /wp:paragraph --></article>
+<!-- /wp:group -->
+
+<!-- wp:group {"tagName":"article","className":"sal-card","layout":{"type":"default"}} -->
+<article class="wp-block-group sal-card"><!-- wp:heading {"level":3,"className":"sal-card-title"} -->
+<h3 class="wp-block-heading sal-card-title">Objetivos pedagógicos</h3>
+<!-- /wp:heading -->
+
+<!-- wp:cervantes/html -->
+<div class="sal-card-divider"></div>
+<!-- /wp:cervantes/html -->
+
+<!-- wp:group {"tagName":"ul","className":"sal-list","layout":{"type":"default"}} -->
+<ul class="wp-block-group sal-list"><!-- wp:group {"tagName":"li","className":"sal-li","layout":{"type":"default"}} -->
+<li class="wp-block-group sal-li"><!-- wp:cervantes/html -->
+<div class="sal-bullet"><svg viewbox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+<!-- /wp:cervantes/html -->
+
+<!-- wp:paragraph {"className":"cv-t-span"} -->
+<p class="cv-t-span"><strong>Relacionar teoría y práctica</strong> a través de experiencias reales.</p>
+<!-- /wp:paragraph --></li>
+<!-- /wp:group -->
+
+<!-- wp:group {"tagName":"li","className":"sal-li","layout":{"type":"default"}} -->
+<li class="wp-block-group sal-li"><!-- wp:cervantes/html -->
+<div class="sal-bullet"><svg viewbox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+<!-- /wp:cervantes/html -->
+
+<!-- wp:paragraph {"className":"cv-t-span"} -->
+<p class="cv-t-span"><strong>Estimular la curiosidad</strong> y la observación del entorno.</p>
+<!-- /wp:paragraph --></li>
+<!-- /wp:group -->
+
+<!-- wp:group {"tagName":"li","className":"sal-li","layout":{"type":"default"}} -->
+<li class="wp-block-group sal-li"><!-- wp:cervantes/html -->
+<div class="sal-bullet"><svg viewbox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+<!-- /wp:cervantes/html -->
+
+<!-- wp:paragraph {"className":"cv-t-span"} -->
+<p class="cv-t-span"><strong>Fortalecer la convivencia</strong> y el trabajo grupal.</p>
+<!-- /wp:paragraph --></li>
+<!-- /wp:group --></ul>
+<!-- /wp:group --></article>
+<!-- /wp:group --></div>
+<!-- /wp:group --></div>
+<!-- /wp:group --></section>
+<!-- /wp:group -->
+
+<!-- wp:group {"tagName":"section","layout":{"type":"default"}} -->
+<section id="cerv-deportes" class="wp-block-group"><!-- wp:group {"className":"dep-inner","layout":{"type":"default"}} -->
+<div class="wp-block-group dep-inner"><!-- wp:group {"className":"dep-header","layout":{"type":"default"}} -->
+<div class="wp-block-group dep-header"><!-- wp:paragraph {"className":"dep-eyebrow cv-t-div"} -->
+<p class="dep-eyebrow cv-t-div">Vida escolar</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"className":"dep-title"} -->
+<h2 class="wp-block-heading dep-title"><em>Deportes</em> y movimiento</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph {"className":"dep-intro"} -->
+<p class="dep-intro">Promovemos el deporte como parte esencial de la formación integral: desarrolla hábitos saludables, fortalece vínculos, construye valores y acompaña el crecimiento de cada estudiante.</p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:group -->
+
+<!-- wp:group {"className":"dep-media","layout":{"type":"default"}} -->
+<div id="depMedia" class="wp-block-group dep-media"><!-- wp:image {<?php cv_idjson( '2026/01/IMG_5838-scaled.jpg' ); ?>"sizeSlug":"full","linkDestination":"none","className":"cv-img"} -->
+<figure class="wp-block-image size-full cv-img"><img src="<?php cv_src( '2026/01/IMG_5838-scaled.jpg' ); ?>" alt="Deportes en el Colegio Cervantes"<?php cv_idattr( '2026/01/IMG_5838-scaled.jpg' ); ?>/></figure>
+<!-- /wp:image --></div>
+<!-- /wp:group -->
+
+<!-- wp:group {"className":"dep-split","layout":{"type":"default"}} -->
+<div class="wp-block-group dep-split"><!-- wp:group {"tagName":"article","className":"dep-card","layout":{"type":"default"}} -->
+<article class="wp-block-group dep-card"><!-- wp:heading {"level":3,"className":"dep-card-title"} -->
+<h3 class="wp-block-heading dep-card-title">Formación en movimiento</h3>
+<!-- /wp:heading -->
+
+<!-- wp:cervantes/html -->
+<div class="dep-card-divider"></div>
+<!-- /wp:cervantes/html -->
+
+<!-- wp:paragraph -->
+<p>Nuestra propuesta deportiva busca estimular la motricidad, la coordinación y el rendimiento, en un marco de acompañamiento docente y respeto por los procesos individuales.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:group {"tagName":"ul","className":"dep-list","layout":{"type":"default"}} -->
+<ul class="wp-block-group dep-list"><!-- wp:group {"tagName":"li","className":"dep-li","layout":{"type":"default"}} -->
+<li class="wp-block-group dep-li"><!-- wp:cervantes/html -->
+<div class="dep-bullet"><svg viewbox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+<!-- /wp:cervantes/html -->
+
+<!-- wp:paragraph {"className":"cv-t-span"} -->
+<p class="cv-t-span"><strong>Hábitos saludables</strong> y disfrute del movimiento.</p>
+<!-- /wp:paragraph --></li>
+<!-- /wp:group -->
+
+<!-- wp:group {"tagName":"li","className":"dep-li","layout":{"type":"default"}} -->
+<li class="wp-block-group dep-li"><!-- wp:cervantes/html -->
+<div class="dep-bullet"><svg viewbox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+<!-- /wp:cervantes/html -->
+
+<!-- wp:paragraph {"className":"cv-t-span"} -->
+<p class="cv-t-span"><strong>Trabajo en equipo</strong> y sentido de pertenencia.</p>
+<!-- /wp:paragraph --></li>
+<!-- /wp:group -->
+
+<!-- wp:group {"tagName":"li","className":"dep-li","layout":{"type":"default"}} -->
+<li class="wp-block-group dep-li"><!-- wp:cervantes/html -->
+<div class="dep-bullet"><svg viewbox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+<!-- /wp:cervantes/html -->
+
+<!-- wp:paragraph {"className":"cv-t-span"} -->
+<p class="cv-t-span"><strong>Valores deportivos</strong> como respeto, esfuerzo y constancia.</p>
+<!-- /wp:paragraph --></li>
+<!-- /wp:group --></ul>
+<!-- /wp:group --></article>
+<!-- /wp:group -->
+
+<!-- wp:group {"tagName":"article","className":"dep-card","layout":{"type":"default"}} -->
+<article class="wp-block-group dep-card"><!-- wp:heading {"level":3,"className":"dep-card-title"} -->
+<h3 class="wp-block-heading dep-card-title">Propuesta por niveles</h3>
+<!-- /wp:heading -->
+
+<!-- wp:cervantes/html -->
+<div class="dep-card-divider"></div>
+<!-- /wp:cervantes/html -->
+
+<!-- wp:paragraph -->
+<p>Las actividades se adaptan a cada etapa, combinando iniciación, práctica y desarrollo técnico.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:group {"className":"dep-nivel","layout":{"type":"default"}} -->
+<div class="wp-block-group dep-nivel"><!-- wp:paragraph {"className":"dep-chips cv-t-div"} -->
+<p class="dep-chips cv-t-div"><span class="dep-chip dep-chip--nivel">Inicial</span><span class="dep-chip">Psicomotricidad</span><span class="dep-chip">Juegos predeportivos</span></p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:group -->
+
+<!-- wp:group {"className":"dep-nivel","layout":{"type":"default"}} -->
+<div class="wp-block-group dep-nivel"><!-- wp:paragraph {"className":"dep-chips cv-t-div"} -->
+<p class="dep-chips cv-t-div"><span class="dep-chip dep-chip--nivel">Primaria</span><span class="dep-chip">Deportes colectivos</span><span class="dep-chip">Atletismo</span><span class="dep-chip">Entrenamiento</span></p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:group -->
+
+<!-- wp:group {"className":"dep-nivel","layout":{"type":"default"}} -->
+<div class="wp-block-group dep-nivel"><!-- wp:paragraph {"className":"dep-chips cv-t-div"} -->
+<p class="dep-chips cv-t-div"><span class="dep-chip dep-chip--nivel">Secundaria</span><span class="dep-chip">Entrenamiento</span><span class="dep-chip">Competencias</span><span class="dep-chip">Preparación física</span></p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:group --></article>
+<!-- /wp:group --></div>
+<!-- /wp:group --></div>
+<!-- /wp:group --></section>
+<!-- /wp:group -->
+
+<!-- wp:group {"tagName":"section","layout":{"type":"default"}} -->
+<section id="cerv-celebraciones" class="wp-block-group"><!-- wp:group {"className":"cel-wrap","layout":{"type":"default"}} -->
+<div class="wp-block-group cel-wrap"><!-- wp:group {"tagName":"header","className":"cel-header","layout":{"type":"default"}} -->
+<header class="wp-block-group cel-header"><!-- wp:heading {"className":"cel-title"} -->
+<h2 class="wp-block-heading cel-title">Celebraciones</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph {"className":"cel-intro"} -->
+<p class="cel-intro">Las celebraciones forman parte de la vida institucional: fortalecen la identidad, crean comunidad y generan experiencias significativas que acompañan el crecimiento de nuestros alumnos y familias.</p>
+<!-- /wp:paragraph --></header>
+<!-- /wp:group -->
+
+<!-- wp:group {"className":"cel-grid","layout":{"type":"default"}} -->
+<div class="wp-block-group cel-grid"><!-- wp:group {"tagName":"section","className":"cel-panel","layout":{"type":"default"}} -->
+<section class="wp-block-group cel-panel"><!-- wp:heading {"level":3} -->
+<h3 class="wp-block-heading">Una cultura de comunidad</h3>
 <!-- /wp:heading -->
 
 <!-- wp:paragraph -->
 <p>A lo largo del año realizamos instancias que integran a estudiantes, docentes y familias. Cada celebración se planifica con sentido pedagógico, cuidando la participación, el respeto por la diversidad y el espíritu institucional.</p>
 <!-- /wp:paragraph -->
 
-<!-- wp:list {"className":"is-style-chips"} -->
-<ul class="wp-block-list is-style-chips"><!-- wp:list-item -->
-<li>Inicial</li>
-<!-- /wp:list-item -->
+<!-- wp:paragraph {"className":"cel-pills cv-t-div"} -->
+<p class="cel-pills cv-t-div"><span class="cel-pill accent">Inicial</span> <span class="cel-pill">Primaria</span> <span class="cel-pill">Secundaria / Bachillerato</span> <span class="cel-pill">Familias</span> <span class="cel-pill">Comunidad</span></p>
+<!-- /wp:paragraph --></section>
+<!-- /wp:group -->
 
-<!-- wp:list-item -->
-<li>Primaria</li>
-<!-- /wp:list-item -->
-
-<!-- wp:list-item -->
-<li>Secundaria y Bachillerato</li>
-<!-- /wp:list-item -->
-
-<!-- wp:list-item -->
-<li>Familias</li>
-<!-- /wp:list-item -->
-
-<!-- wp:list-item -->
-<li>Comunidad</li>
-<!-- /wp:list-item --></ul>
-<!-- /wp:list --></div>
-<!-- /wp:group --></div>
-<!-- /wp:column -->
-
-<!-- wp:column {"width":"60%"} -->
-<div class="wp-block-column" style="flex-basis:60%"><!-- wp:group {"className":"cv-reveal-children","style":{"spacing":{"blockGap":"var:preset|spacing|30"}},"layout":{"type":"flex","orientation":"vertical","flexWrap":"wrap"}} -->
-<div class="wp-block-group cv-reveal-children"><!-- wp:group {"className":"is-style-tarjeta","style":{"spacing":{"padding":{"top":"var:preset|spacing|40","bottom":"var:preset|spacing|40","left":"var:preset|spacing|40","right":"var:preset|spacing|40"},"blockGap":"0.7rem"}},"layout":{"type":"default"}} -->
-<div class="wp-block-group is-style-tarjeta" style="padding-top:var(--wp--preset--spacing--40);padding-right:var(--wp--preset--spacing--40);padding-bottom:var(--wp--preset--spacing--40);padding-left:var(--wp--preset--spacing--40)"><!-- wp:group {"style":{"spacing":{"blockGap":"1rem"}},"layout":{"type":"flex","flexWrap":"nowrap","verticalAlignment":"center"}} -->
-<div class="wp-block-group"><!-- wp:cervantes/icon {"icon":"bandera"} /-->
-
-<!-- wp:heading {"level":4} -->
+<!-- wp:group {"tagName":"article","className":"cel-card","layout":{"type":"default"}} -->
+<article class="wp-block-group cel-card"><!-- wp:heading {"level":4} -->
 <h4 class="wp-block-heading">Fechas patrias y actos institucionales</h4>
-<!-- /wp:heading --></div>
-<!-- /wp:group -->
-
-<!-- wp:paragraph {"textColor":"gris","fontSize":"small"} -->
-<p class="has-gris-color has-text-color has-small-font-size">Encuentros que promueven valores, pertenencia y memoria colectiva, con participación activa de los estudiantes.</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:list {"className":"is-style-chips"} -->
-<ul class="wp-block-list is-style-chips"><!-- wp:list-item -->
-<li>Todos los niveles</li>
-<!-- /wp:list-item --></ul>
-<!-- /wp:list --></div>
-<!-- /wp:group -->
-
-<!-- wp:group {"className":"is-style-tarjeta","style":{"spacing":{"padding":{"top":"var:preset|spacing|40","bottom":"var:preset|spacing|40","left":"var:preset|spacing|40","right":"var:preset|spacing|40"},"blockGap":"0.7rem"}},"layout":{"type":"default"}} -->
-<div class="wp-block-group is-style-tarjeta" style="padding-top:var(--wp--preset--spacing--40);padding-right:var(--wp--preset--spacing--40);padding-bottom:var(--wp--preset--spacing--40);padding-left:var(--wp--preset--spacing--40)"><!-- wp:group {"style":{"spacing":{"blockGap":"1rem"}},"layout":{"type":"flex","flexWrap":"nowrap","verticalAlignment":"center"}} -->
-<div class="wp-block-group"><!-- wp:cervantes/icon {"icon":"torta"} /-->
-
-<!-- wp:heading {"level":4} -->
-<h4 class="wp-block-heading">Celebraciones por nivel</h4>
-<!-- /wp:heading --></div>
-<!-- /wp:group -->
-
-<!-- wp:paragraph {"textColor":"gris","fontSize":"small"} -->
-<p class="has-gris-color has-text-color has-small-font-size">Proyectos, muestras, encuentros y cierres pensados según la edad y el proceso de cada etapa.</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:list {"className":"is-style-chips"} -->
-<ul class="wp-block-list is-style-chips"><!-- wp:list-item -->
-<li>Inicial · Primaria</li>
-<!-- /wp:list-item --></ul>
-<!-- /wp:list --></div>
-<!-- /wp:group -->
-
-<!-- wp:group {"className":"is-style-tarjeta","style":{"spacing":{"padding":{"top":"var:preset|spacing|40","bottom":"var:preset|spacing|40","left":"var:preset|spacing|40","right":"var:preset|spacing|40"},"blockGap":"0.7rem"}},"layout":{"type":"default"}} -->
-<div class="wp-block-group is-style-tarjeta" style="padding-top:var(--wp--preset--spacing--40);padding-right:var(--wp--preset--spacing--40);padding-bottom:var(--wp--preset--spacing--40);padding-left:var(--wp--preset--spacing--40)"><!-- wp:group {"style":{"spacing":{"blockGap":"1rem"}},"layout":{"type":"flex","flexWrap":"nowrap","verticalAlignment":"center"}} -->
-<div class="wp-block-group"><!-- wp:cervantes/icon {"icon":"manos"} /-->
-
-<!-- wp:heading {"level":4} -->
-<h4 class="wp-block-heading">Eventos de comunidad</h4>
-<!-- /wp:heading --></div>
-<!-- /wp:group -->
-
-<!-- wp:paragraph {"textColor":"gris","fontSize":"small"} -->
-<p class="has-gris-color has-text-color has-small-font-size">Instancias culturales, recreativas y solidarias que fortalecen el vínculo con las familias.</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:list {"className":"is-style-chips"} -->
-<ul class="wp-block-list is-style-chips"><!-- wp:list-item -->
-<li>Familias</li>
-<!-- /wp:list-item --></ul>
-<!-- /wp:list --></div>
-<!-- /wp:group --></div>
-<!-- /wp:group --></div>
-<!-- /wp:column --></div>
-<!-- /wp:columns -->
-
-<!-- wp:heading {"textAlign":"center","level":3,"style":{"spacing":{"margin":{"top":"var:preset|spacing|60"}}}} -->
-<h3 class="wp-block-heading has-text-align-center" style="margin-top:var(--wp--preset--spacing--60)">Galería</h3>
 <!-- /wp:heading -->
 
-<!-- wp:gallery {"linkTo":"none","align":"wide","className":"is-style-mosaico"} -->
-<figure class="wp-block-gallery alignwide has-nested-images columns-default is-cropped is-style-mosaico"><!-- wp:image {<?php cv_idjson( '2026/03/IMG_4911-1-scaled.jpg' ); ?>"lightbox":{"enabled":true},"sizeSlug":"large","linkDestination":"none"} -->
-<figure class="wp-block-image size-large"><img src="<?php cv_src( '2026/03/IMG_4911-1-scaled.jpg' ); ?>" alt="Celebración del Día del Amigo"<?php cv_idattr( '2026/03/IMG_4911-1-scaled.jpg' ); ?>/><figcaption class="wp-element-caption">Día del Amigo · Momentos de encuentro</figcaption></figure>
-<!-- /wp:image -->
+<!-- wp:paragraph -->
+<p>Espacios de encuentro que promueven valores, pertenencia y construcción de memoria colectiva, con participación activa de los estudiantes.</p>
+<!-- /wp:paragraph -->
 
-<!-- wp:image {<?php cv_idjson( '2026/03/DSC02474-scaled.jpg' ); ?>"lightbox":{"enabled":true},"sizeSlug":"large","linkDestination":"none"} -->
-<figure class="wp-block-image size-large"><img src="<?php cv_src( '2026/03/DSC02474-scaled.jpg' ); ?>" alt="Encuentro con familias"<?php cv_idattr( '2026/03/DSC02474-scaled.jpg' ); ?>/><figcaption class="wp-element-caption">Eventos con familias · Comunidad Cervantes</figcaption></figure>
-<!-- /wp:image -->
-
-<!-- wp:image {<?php cv_idjson( '2026/03/IMG_8678-scaled.jpg' ); ?>"lightbox":{"enabled":true},"sizeSlug":"large","linkDestination":"none"} -->
-<figure class="wp-block-image size-large"><img src="<?php cv_src( '2026/03/IMG_8678-scaled.jpg' ); ?>" alt="Presentación musical de alumnos"<?php cv_idattr( '2026/03/IMG_8678-scaled.jpg' ); ?>/><figcaption class="wp-element-caption">Muestras y shows · Un año compartido</figcaption></figure>
-<!-- /wp:image -->
-
-<!-- wp:image {<?php cv_idjson( '2026/03/IMG_6725-1-scaled.jpg' ); ?>"lightbox":{"enabled":true},"sizeSlug":"large","linkDestination":"none"} -->
-<figure class="wp-block-image size-large"><img src="<?php cv_src( '2026/03/IMG_6725-1-scaled.jpg' ); ?>" alt="Acto institucional"<?php cv_idattr( '2026/03/IMG_6725-1-scaled.jpg' ); ?>/><figcaption class="wp-element-caption">Actos institucionales · Identidad y pertenencia</figcaption></figure>
-<!-- /wp:image --></figure>
-<!-- /wp:gallery --></div>
+<!-- wp:paragraph {"className":"cel-tag cv-t-span"} -->
+<p class="cel-tag cv-t-span">Todos los niveles</p>
+<!-- /wp:paragraph --></article>
 <!-- /wp:group -->
 
-<!-- wp:pattern {"slug":"colegio-cervantes/cta-visita"} /-->
+<!-- wp:group {"tagName":"article","className":"cel-card","layout":{"type":"default"}} -->
+<article class="wp-block-group cel-card"><!-- wp:heading {"level":4} -->
+<h4 class="wp-block-heading">Celebraciones por nivel</h4>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Momentos significativos que acompañan cada etapa: proyectos, muestras, encuentros y cierres pensados según la edad y el proceso.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph {"className":"cel-tag cv-t-span"} -->
+<p class="cel-tag cv-t-span">Inicial · Primaria</p>
+<!-- /wp:paragraph --></article>
+<!-- /wp:group -->
+
+<!-- wp:group {"tagName":"article","className":"cel-card","layout":{"type":"default"}} -->
+<article class="wp-block-group cel-card"><!-- wp:heading {"level":4} -->
+<h4 class="wp-block-heading">Eventos de comunidad</h4>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Instancias que fortalecen el vínculo con las familias y el sentido de comunidad, integrando propuestas culturales, recreativas y solidarias.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph {"className":"cel-tag cv-t-span"} -->
+<p class="cel-tag cv-t-span">Familias</p>
+<!-- /wp:paragraph --></article>
+<!-- /wp:group -->
+
+<!-- wp:group {"tagName":"section","className":"cel-gallery","layout":{"type":"default"}} -->
+<section class="wp-block-group cel-gallery"><!-- wp:group {"className":"cel-gallery-head","layout":{"type":"default"}} -->
+<div class="wp-block-group cel-gallery-head"><!-- wp:heading {"level":3} -->
+<h3 class="wp-block-heading">Galería</h3>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Algunas imágenes de celebraciones y momentos compartidos en la vida institucional.</p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:group -->
+
+<!-- wp:group {"className":"cel-track","layout":{"type":"default"}} -->
+<div id="celTrack" class="wp-block-group cel-track"><!-- wp:image {<?php cv_idjson( 'celebraciones/celebracion-1.jpg' ); ?>"sizeSlug":"full","linkDestination":"none","className":"cel-shot"} -->
+<figure class="wp-block-image size-full cel-shot"><img src="<?php cv_src( 'celebraciones/celebracion-1.jpg' ); ?>" alt="Celebración 1"<?php cv_idattr( 'celebraciones/celebracion-1.jpg' ); ?>/><figcaption class="wp-element-caption"><strong>Acto institucional</strong> · Momentos de encuentro</figcaption></figure>
+<!-- /wp:image -->
+
+<!-- wp:image {<?php cv_idjson( 'celebraciones/celebracion-2.jpg' ); ?>"sizeSlug":"full","linkDestination":"none","className":"cel-shot"} -->
+<figure class="wp-block-image size-full cel-shot"><img src="<?php cv_src( 'celebraciones/celebracion-2.jpg' ); ?>" alt="Celebración 2"<?php cv_idattr( 'celebraciones/celebracion-2.jpg' ); ?>/><figcaption class="wp-element-caption"><strong>Feria y proyectos</strong> · Aprender en comunidad</figcaption></figure>
+<!-- /wp:image -->
+
+<!-- wp:image {<?php cv_idjson( 'celebraciones/celebracion-3.jpg' ); ?>"sizeSlug":"full","linkDestination":"none","className":"cel-shot"} -->
+<figure class="wp-block-image size-full cel-shot"><img src="<?php cv_src( 'celebraciones/celebracion-3.jpg' ); ?>" alt="Celebración 3"<?php cv_idattr( 'celebraciones/celebracion-3.jpg' ); ?>/><figcaption class="wp-element-caption"><strong>Eventos con familias</strong> · Comunidad Cervantes</figcaption></figure>
+<!-- /wp:image -->
+
+<!-- wp:image {<?php cv_idjson( 'celebraciones/celebracion-4.jpg' ); ?>"sizeSlug":"full","linkDestination":"none","className":"cel-shot"} -->
+<figure class="wp-block-image size-full cel-shot"><img src="<?php cv_src( 'celebraciones/celebracion-4.jpg' ); ?>" alt="Celebración 4"<?php cv_idattr( 'celebraciones/celebracion-4.jpg' ); ?>/><figcaption class="wp-element-caption"><strong>Cierres y muestras</strong> · Un año compartido</figcaption></figure>
+<!-- /wp:image --></div>
+<!-- /wp:group --></section>
+<!-- /wp:group --></div>
+<!-- /wp:group --></div>
+<!-- /wp:group -->
+
+<!-- wp:cervantes/html -->
+<div aria-hidden="true" class="cel-modal" id="celModal">
+<div aria-modal="true" class="cel-modal-dialog" role="dialog">
+<div class="cel-modal-media"><img alt="" id="celModalImg" src=""/></div>
+<div class="cel-modal-bar">
+<p class="cel-modal-caption" id="celModalCaption"></p>
+<button class="cel-close" id="celClose" type="button">Cerrar</button>
+</div>
+</div>
+</div>
+<!-- /wp:cervantes/html --></section>
+<!-- /wp:group -->

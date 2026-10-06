@@ -10,6 +10,8 @@ IMG_BLOCK_RX = re.compile(r'<!-- wp:image \{(.*?)\} -->\n<figure([^>]*)>(<a [^>]
 COVER_RX = re.compile(r'<!-- wp:cover \{"url":"https://cv\.img/([^"]+)"')
 COVER_IMG_RX = re.compile(r'<img class="wp-block-cover__image-background([^"]*)"([^>]*?) src="https://cv\.img/([^"]+)"')
 CAT_RX = re.compile(r'"__CAT_([a-z0-9-]+)__"')
+BG_JSON_RX = re.compile(r'"backgroundImage":\{"url":"https://cv\.img/([^"]+)"')
+BG_STYLE_RX = re.compile(r"background-image:url\('https://cv\.img/([^']+)'\)")
 
 
 def php(markup):
@@ -26,6 +28,10 @@ def php(markup):
     markup = IMG_BLOCK_RX.sub(img_block, markup)
     markup = COVER_RX.sub(lambda m: '<!-- wp:cover {<?php cv_idjson( \'%s\' ); ?>"url":"<?php cv_src( \'%s\' ); ?>"' % (m.group(1), m.group(1)), markup)
     markup = COVER_IMG_RX.sub(lambda m: '<img class="wp-block-cover__image-background%s<?php cv_idclass( \'%s\' ); ?>"%s src="<?php cv_src( \'%s\' ); ?>"' % (m.group(1), m.group(3), m.group(2), m.group(3)), markup)
+    markup = BG_JSON_RX.sub(lambda m: '"backgroundImage":{"url":"<?php cv_src( \'%s\' ); ?>"' % m.group(1), markup)
+    markup = BG_STYLE_RX.sub(lambda m: "background-image:url('<?php cv_src( '%s' ); ?>')" % m.group(1), markup)
+    # cualquier otra foto (dentro de elementos del diseño)
+    markup = re.sub(r'https://cv\.img/([^"\'\s)<]+)', lambda m: "<?php cv_src( '%s' ); ?>" % m.group(1), markup)
     markup = LINK_RX.sub(lambda m: "<?php cv_link( '%s'%s ); ?>" % (m.group(1), (", '%s'" % m.group(2)) if m.group(2) else ''), markup)
     markup = CAT_RX.sub(lambda m: "<?php cv_cat( '%s' ); ?>" % m.group(1), markup)
     left = [x for x in ('cv.img', 'cv.link', '__CAT_') if x in markup]
@@ -48,29 +54,25 @@ def header(title, slug, cats, desc='', page=False, keywords='', inserter=True):
     return '\n'.join(lines) + '\n'
 
 
-for f in glob.glob(os.path.join(OUT, '*.php')):
-    os.remove(f)
+for pg in data['pages']:
+    f = os.path.join(OUT, 'pagina-%s.php' % pg['slug'])
+    if os.path.exists(f):
+        os.remove(f)
 
 n = 0
 for pg in data['pages']:
-    slug = pg['slug']
-    body = php(pg['markup'])
-    with open(os.path.join(OUT, 'pagina-%s.php' % slug), 'w') as fh:
-        fh.write(header('Página completa · ' + pg['title'], 'pagina-' + slug, 'cervantes-paginas', pg['desc'], page=True, keywords='cervantes, página, ' + pg['title'].lower()))
-        fh.write(body + '\n')
+    with open(os.path.join(OUT, 'pagina-%s.php' % pg['slug']), 'w') as fh:
+        fh.write(header('Página completa · ' + pg['title'], 'pagina-' + pg['slug'], 'cervantes-paginas',
+                        'Diseño original completo de la página %s.' % pg['title'], page=True,
+                        keywords='cervantes, página, ' + pg['title'].lower()))
+        fh.write(php(pg['markup']) + '\n')
     n += 1
-    for i, (name, part) in enumerate(zip(pg['names'], pg['parts'])):
-        if not name or 'wp:pattern' in part[:40]:
-            continue
-        sslug = 'seccion-%s-%02d' % (slug, i + 1)
-        with open(os.path.join(OUT, sslug + '.php'), 'w') as fh:
-            fh.write(header('%s · %s' % (pg['title'], name), sslug, 'cervantes-secciones', keywords='cervantes, sección, ' + name.lower()))
-            fh.write(php(part) + '\n')
-        n += 1
 
-for pt in data['patterns']:
-    with open(os.path.join(OUT, pt['slug'] + '.php'), 'w') as fh:
-        fh.write(header(pt['title'], pt['slug'], 'cervantes-secciones, call-to-action', keywords='cervantes, visita, inscripciones'))
-        fh.write(php(pt['markup']) + '\n')
+for pt in data['parts']:
+    lines = ['<?php', '/**', ' * Title: Pie de página (original)', ' * Slug: colegio-cervantes/pie', ' * Categories: footer',
+             ' * Block Types: core/template-part/footer', ' * Inserter: no', ' *',
+             ' * Generado automáticamente desde _build/ (no editar a mano).', ' *', ' * @package colegio-cervantes', ' */', '', '?>']
+    with open(os.path.join(OUT, 'pie.php'), 'w') as fh:
+        fh.write('\n'.join(lines) + '\n' + php(pt['markup']) + '\n')
     n += 1
 print(n, 'patrones')

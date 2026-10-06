@@ -1,0 +1,103 @@
+/*
+ * Compatibilidad WordPress ↔ diseño original.
+ *
+ * El diseño es el CSS ORIGINAL (original.css). Este archivo NO cambia el diseño:
+ * solo neutraliza lo que WordPress agrega alrededor de cada bloque para que el
+ * resultado se vea igual que el HTML original.
+ */
+
+/* 1. Fotos: el <figure> que agrega WordPress no ocupa lugar (la foto queda como en el original). */
+figure.wp-block-image.cv-img { display: contents; }
+:where(figure.wp-block-image) { margin: 0; }
+
+/* 2. Textos que en el original eran <span>, <strong>, <a>, <label>… siguen siendo "en línea". */
+:where(.cv-t-span, .cv-t-strong, .cv-t-b, .cv-t-em, .cv-t-i, .cv-t-small, .cv-t-a, .cv-t-label, .cv-t-text) { display: inline; }
+:where(.cv-t-button) { display: inline-block; }
+
+/* 3. Botones y enlaces: el enlace editable vive dentro del bloque y hereda su estilo. */
+.cv-a { cursor: pointer; }
+.cv-a > a {
+	color: inherit !important;
+	font: inherit !important;
+	letter-spacing: inherit !important;
+	text-transform: inherit !important;
+	text-decoration: inherit !important;
+	background: none !important;
+	border: 0 !important;
+	box-shadow: none !important;
+	margin: 0 !important;
+	padding: 0 !important;
+	width: auto !important;
+	height: auto !important;
+	min-width: 0 !important;
+	transform: none !important;
+	position: static !important;
+	display: inline !important;
+	opacity: 1 !important;
+}
+.cv-a > a::before,
+.cv-a > a::after { content: none !important; }
+
+/* Tarjetas que eran un enlace completo. */
+.cv-linkcard { cursor: pointer; }
+.cv-linkcard :is(h1, h2, h3, h4, h5, h6, p) > a:only-child { color: inherit; text-decoration: inherit; }
+
+/* 4. Flechas e íconos de los botones (en el original eran <svg>). */
+.cv-arrow::after,
+.cv-arrow-pre::before {
+	content: "";
+	display: inline-block;
+	width: 1em;
+	height: 1em;
+	flex-shrink: 0;
+	vertical-align: -0.125em;
+	background-color: currentColor;
+	-webkit-mask-position: center;
+	mask-position: center;
+	-webkit-mask-size: contain;
+	mask-size: contain;
+	-webkit-mask-repeat: no-repeat;
+	mask-repeat: no-repeat;
+}
+.cv-arrow::after { margin-left: 0.4em; }
+.cv-arrow-pre::before { margin-right: 0.4em; }
+:where(.cv-ico-color)::before,
+:where(.cv-ico-color)::after { -webkit-mask: none; mask: none; }
+
+/* 5. Diapositivas del banner: sus textos son párrafos editables que el JS lee (no se muestran). */
+.cv-slide > .cv-d { display: none; }
+
+/* 6. Contact Form 7 dentro del diseño original. */
+.wpcf7-form-control-wrap { display: contents; }
+.wpcf7-checkbox,
+.wpcf7-checkbox > .wpcf7-list-item { display: contents; }
+.wpcf7-list-item { margin: 0; }
+.wpcf7 form .wpcf7-response-output { margin: 16px 0 0; border-radius: 10px; font-size: 14px; }
+.wpcf7-not-valid-tip { font-size: 12px; margin-top: 4px; }
+.wpcf7 .screen-reader-response { position: absolute; overflow: hidden; clip: rect(1px, 1px, 1px, 1px); height: 1px; width: 1px; margin: -1px; padding: 0; border: 0; }
+
+/* 7. Envolturas de la plantilla. */
+.wp-site-blocks > .wp-block-template-part,
+.wp-site-blocks > main { margin: 0; }
+
+/* 8. Entradas del blog y páginas simples (no existían en el original). */
+.cv-simple { padding: 56px 20px 72px; }
+.cv-simple h1 { color: #00325A; font-size: clamp(28px, 4vw, 40px); margin-bottom: 12px; }
+.cv-simple .wp-block-post-date { color: #5B667A; font-size: 14px; margin-bottom: 24px; }
+.cv-simple .wp-block-post-content p,
+.cv-simple .wp-block-post-content li { line-height: 1.7; margin-bottom: 1em; }
+.cv-simple .wp-block-post-content ul,
+.cv-simple .wp-block-post-content ol { padding-left: 1.4em; margin-bottom: 1em; }
+.cv-simple .wp-block-post-template { list-style: none; display: grid; gap: 32px; margin-top: 24px; }
+.cv-simple .wp-block-post-title a { color: #00325A; text-decoration: none; }
+
+/* 9. Aviso si falta Contact Form 7. */
+.cv-form-missing { padding: 16px 18px; border-radius: 12px; background: #fff7e6; border: 1px solid #D39A47; color: #00325A; font-size: 14px; line-height: 1.6; }
+.cv-simple h2 { color: #00325A; font-size: 22px; margin: 28px 0 10px; }
+.cv-simple a { color: #00325A; }
+.wpcf7 .hidden-fields-container { display: none; border: 0; padding: 0; margin: 0; }
+.wpcf7 form.init .wpcf7-response-output { display: none; }
+
+/* 10. Lo que en el original era <button>: misma tipografía por defecto del navegador para botones. */
+:where(.cv-t-button) { font: -moz-button; font: -webkit-small-control; line-height: normal; align-content: center; letter-spacing: normal; word-spacing: normal; text-transform: none; text-indent: 0; text-align: center; }
+:where(.wp-block-group.has-background) { padding: 0; }

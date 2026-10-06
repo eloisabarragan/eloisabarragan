@@ -2,16 +2,21 @@
 /**
  * Colegio Cervantes — funciones del tema.
  *
+ * El diseño es el del HTML original del colegio: se usan su CSS y su JS tal
+ * cual (assets/css/original.css y assets/js/original.js). compat.css solo
+ * neutraliza las envolturas que agrega WordPress para que se vea idéntico.
+ *
  * @package colegio-cervantes
  */
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'CERVANTES_VERSION', '1.0.0' );
+define( 'CERVANTES_VERSION', '2.0.0' );
 define( 'CERVANTES_DIR', get_template_directory() );
 define( 'CERVANTES_URI', get_template_directory_uri() );
 
 require_once CERVANTES_DIR . '/inc/helpers.php';
+require_once CERVANTES_DIR . '/inc/menu.php';
 require_once CERVANTES_DIR . '/inc/forms.php';
 require_once CERVANTES_DIR . '/inc/importer.php';
 require_once CERVANTES_DIR . '/inc/seo.php';
@@ -20,8 +25,6 @@ require_once CERVANTES_DIR . '/inc/seo.php';
  * Soportes del tema.
  */
 function cervantes_setup() {
-	load_theme_textdomain( 'colegio-cervantes', CERVANTES_DIR . '/languages' );
-	add_theme_support( 'wp-block-styles' );
 	add_theme_support( 'editor-styles' );
 	add_theme_support( 'responsive-embeds' );
 	add_theme_support( 'post-thumbnails' );
@@ -34,180 +37,93 @@ function cervantes_setup() {
 			'flex-width'  => true,
 		)
 	);
-	add_editor_style( 'assets/css/main.css' );
-	add_post_type_support( 'page', 'excerpt' );
+	// En el editor se ve con el mismo CSS que el sitio.
+	add_editor_style( array( 'assets/css/original.css', 'assets/css/compat.css', 'assets/css/editor.css' ) );
 }
 add_action( 'after_setup_theme', 'cervantes_setup' );
 
 /**
- * Estilos y scripts del sitio.
+ * Recursos del sitio (los mismos que cargaba el HTML original).
  */
 function cervantes_assets() {
-	$css = CERVANTES_DIR . '/assets/css/main.css';
-	$js  = CERVANTES_DIR . '/assets/js/main.js';
+	$ver = function ( $rel ) {
+		return (string) filemtime( CERVANTES_DIR . '/' . $rel );
+	};
 
-	wp_enqueue_style( 'cervantes-main', CERVANTES_URI . '/assets/css/main.css', array(), (string) filemtime( $css ) );
+	wp_enqueue_style( 'cervantes-poppins', 'https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap', array(), null );
+	wp_enqueue_style( 'cervantes-font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css', array(), null );
+	wp_enqueue_style( 'cervantes-original', CERVANTES_URI . '/assets/css/original.css', array(), $ver( 'assets/css/original.css' ) );
+	wp_enqueue_style( 'cervantes-compat', CERVANTES_URI . '/assets/css/compat.css', array( 'cervantes-original' ), $ver( 'assets/css/compat.css' ) );
+
 	wp_enqueue_script(
-		'cervantes-main',
-		CERVANTES_URI . '/assets/js/main.js',
+		'cervantes-bridge',
+		CERVANTES_URI . '/assets/js/cervantes.js',
 		array(),
-		(string) filemtime( $js ),
-		array(
-			'in_footer' => true,
-			'strategy'  => 'defer',
-		)
+		$ver( 'assets/js/cervantes.js' ),
+		array( 'in_footer' => true )
+	);
+	wp_enqueue_script(
+		'cervantes-original',
+		CERVANTES_URI . '/assets/js/original.js',
+		array( 'cervantes-bridge' ),
+		$ver( 'assets/js/original.js' ),
+		array( 'in_footer' => true )
 	);
 }
 add_action( 'wp_enqueue_scripts', 'cervantes_assets' );
 
 /**
- * Precarga de la tipografía principal (mejora el primer pintado).
+ * Fuentes también en el editor.
  */
-function cervantes_preload_fonts() {
-	foreach ( array( 'fraunces.woff2', 'plus-jakarta-sans.woff2' ) as $font ) {
-		printf(
-			'<link rel="preload" href="%s" as="font" type="font/woff2" crossorigin>' . "\n",
-			esc_url( CERVANTES_URI . '/assets/fonts/' . $font )
-		);
-	}
-}
-add_action( 'wp_head', 'cervantes_preload_fonts', 1 );
-
-/**
- * Marca que hay JavaScript (activa las animaciones de entrada). Si por algún
- * motivo el script principal no carga, a los 3 s se quita para mostrar todo.
- */
-function cervantes_js_flag() {
-	echo "<script>(function(d){d.classList.add('cv-js');setTimeout(function(){if(!d.classList.contains('cv-ready')){d.classList.remove('cv-js');}},3000);})(document.documentElement);</script>\n";
-}
-add_action( 'wp_head', 'cervantes_js_flag', 2 );
-
-/**
- * Bloque propio: ícono editable (cervantes/icon).
- */
-function cervantes_register_blocks() {
-	register_block_type( CERVANTES_DIR . '/blocks/icon' );
-
-	$icons = cervantes_icons();
-	$data  = array();
-	foreach ( $icons as $slug => $icon ) {
-		$data[ $slug ] = array(
-			'label' => $icon['label'],
-			'svg'   => $icon['svg'],
-		);
-	}
-	wp_add_inline_script( 'cervantes-icon-editor-script', 'window.cervantesIcons = ' . wp_json_encode( $data ) . ';', 'before' );
-}
-add_action( 'init', 'cervantes_register_blocks' );
-
-/**
- * Estilos de bloque: aparecen en el panel "Estilos" del editor,
- * así cualquier persona puede aplicarlos con un clic.
- */
-function cervantes_block_styles() {
-	$styles = array(
-		'core/paragraph' => array(
-			'antetitulo' => 'Antetítulo',
-			'destacado'  => 'Destacado',
-		),
-		'core/heading'   => array(
-			'subrayado-oro' => 'Subrayado oro',
-		),
-		'core/group'     => array(
-			'tarjeta'        => 'Tarjeta',
-			'tarjeta-oscura' => 'Tarjeta oscura',
-			'vidrio'         => 'Vidrio',
-			'borde-oro'      => 'Borde oro',
-		),
-		'core/columns'   => array(
-			'tarjetas' => 'Columnas como tarjetas',
-		),
-		'core/list'      => array(
-			'chips'  => 'Etiquetas (chips)',
-			'check'  => 'Lista con tildes',
-			'puntos' => 'Lista con puntos oro',
-		),
-		'core/image'     => array(
-			'arco'   => 'Arco',
-			'sombra' => 'Con sombra',
-		),
-		'core/gallery'   => array(
-			'carrusel' => 'Carrusel deslizable',
-			'mosaico'  => 'Mosaico',
-		),
-		'core/button'    => array(
-			'claro'  => 'Claro (para fondos oscuros)',
-			'oro'    => 'Oro',
-			'flecha' => 'Texto con flecha',
-		),
-		'core/separator' => array(
-			'corto-oro' => 'Corto oro',
-		),
-		'core/quote'     => array(
-			'testimonio' => 'Testimonio',
-		),
+function cervantes_editor_assets() {
+	wp_enqueue_style( 'cervantes-poppins', 'https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap', array(), null );
+	wp_enqueue_style( 'cervantes-font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css', array(), null );
+	wp_enqueue_script(
+		'cervantes-editor',
+		CERVANTES_URI . '/assets/js/editor.js',
+		array( 'wp-hooks', 'wp-compose', 'wp-element', 'wp-block-editor' ),
+		(string) filemtime( CERVANTES_DIR . '/assets/js/editor.js' ),
+		true
 	);
-
-	foreach ( $styles as $block => $variations ) {
-		foreach ( $variations as $name => $label ) {
-			register_block_style(
-				$block,
-				array(
-					'name'  => $name,
-					'label' => $label,
-				)
-			);
-		}
-	}
 }
-add_action( 'init', 'cervantes_block_styles' );
+add_action( 'enqueue_block_editor_assets', 'cervantes_editor_assets' );
 
 /**
- * Categorías de patrones.
+ * Categoría de patrones con las páginas completas (para restaurar una página).
  */
 function cervantes_pattern_categories() {
 	register_block_pattern_category( 'cervantes-paginas', array( 'label' => 'Cervantes · Páginas completas' ) );
-	register_block_pattern_category( 'cervantes-secciones', array( 'label' => 'Cervantes · Secciones' ) );
 }
 add_action( 'init', 'cervantes_pattern_categories' );
 
 /**
- * Clase en <body> para páginas que empiezan con un banner a pantalla completa
- * (el encabezado se vuelve transparente sobre la foto).
+ * Las fotos se muestran como en el original: sin ancho/alto fijos agregados por
+ * WordPress (el tamaño lo define el CSS original).
  */
-function cervantes_body_class( $classes ) {
-	if ( is_singular() ) {
-		$post = get_post();
-		if ( $post && preg_match( '/^\s*<!-- wp:(group|cover) \{[^\n]*"className":"[^"]*\bcv-hero\b/', $post->post_content ) ) {
-			$classes[] = 'has-hero';
-		}
+add_filter( 'wp_img_tag_add_width_and_height_attr', '__return_false' );
+add_filter( 'wp_img_tag_add_auto_sizes', '__return_false' );
+
+/**
+ * En el sitio no se cargan los estilos propios del bloque Imagen (agregan
+ * márgenes y "height:auto" que el diseño original no tenía).
+ */
+function cervantes_dequeue_block_styles() {
+	if ( ! is_admin() ) {
+		wp_dequeue_style( 'wp-block-image' );
 	}
-	return $classes;
 }
-add_filter( 'body_class', 'cervantes_body_class' );
+add_action( 'wp_print_styles', 'cervantes_dequeue_block_styles', 1 );
+add_action( 'wp_print_footer_scripts', 'cervantes_dequeue_block_styles', 1 );
 
 /**
- * Extracto más corto y elegante para las tarjetas de noticias.
+ * Los textos se muestran tal cual se escribieron (sin cambiar comillas ni guiones).
  */
-add_filter(
-	'excerpt_length',
-	function () {
-		return 26;
-	}
-);
-add_filter(
-	'excerpt_more',
-	function () {
-		return '…';
-	}
-);
+add_filter( 'run_wptexturize', '__return_false' );
 
 /**
- * [cervantes_anio] — año actual (para el pie de página).
+ * Bloque "Elemento del diseño" (íconos y adornos del original).
  */
-add_shortcode(
-	'cervantes_anio',
-	function () {
-		return esc_html( wp_date( 'Y' ) );
-	}
-);
+function cervantes_register_blocks() {
+	register_block_type( CERVANTES_DIR . '/blocks/html' );
+}
+add_action( 'init', 'cervantes_register_blocks' );

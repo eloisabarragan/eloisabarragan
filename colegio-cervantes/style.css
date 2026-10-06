@@ -2,15 +2,15 @@
 Theme Name: Colegio Cervantes
 Theme URI: https://cervantes.edu.uy
 Author: Colegio Español Cervantes
-Description: Tema de bloques a medida para el Colegio Español Cervantes (Montevideo). Todas las páginas están construidas con bloques nativos de WordPress: textos, fotos, botones, menú y pie de página se editan visualmente desde el editor. Incluye importador automático de páginas, noticias y formularios (Contact Form 7).
+Description: Tema de bloques del Colegio Español Cervantes (Montevideo) con el diseño original del sitio, sin cambios: mismas secciones, mismo orden, mismos estilos y tipografías. Todo el contenido (textos, fotos, botones, menú, pie y diapositivas de los banners) se edita visualmente con bloques nativos de WordPress. Incluye configuración automática de páginas y formularios (Contact Form 7).
 Requires at least: 6.6
 Tested up to: 6.9
 Requires PHP: 7.4
-Version: 1.0.0
+Version: 2.0.0
 License: GNU General Public License v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: colegio-cervantes
-Tags: block-patterns, full-site-editing, education, custom-colors, custom-logo, editor-style, wide-blocks
+Tags: full-site-editing, education, custom-logo, editor-style, block-patterns
 */
 
-/* Los estilos del tema están en assets/css/main.css (se cargan también en el editor). */
+/* El diseño está en assets/css/original.css (el CSS original del sitio, sin cambios). */

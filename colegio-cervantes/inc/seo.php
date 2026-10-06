@@ -23,7 +23,6 @@ function cervantes_school_data() {
 		'city'     => 'Montevideo',
 		'country'  => 'UY',
 		'hours'    => 'Lunes a viernes · 8:00 a 17:30',
-		'whatsapp' => '',
 	);
 	$saved = get_option( 'cervantes_school', array() );
 	return wp_parse_args( is_array( $saved ) ? $saved : array(), $defaults );

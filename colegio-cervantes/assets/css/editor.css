@@ -1,0 +1,104 @@
+/* Solo en el editor. Generado por _build/convert.py */
+/* Elementos que en el sitio aparecen con animación al hacer scroll: en el editor se ven siempre. */
+.ae-anim,
+.ali-card,
+.ali-footer,
+.bac-acento,
+.bac-etiqueta,
+.bac-subtitulo,
+.bac-titulo,
+.bi-anim,
+.bid-anim,
+.cal-card,
+.cde-anim,
+.cfa-anim,
+.cia-anim,
+.com-card,
+.cp-anim,
+.cra-anim,
+.dep-card,
+.dep-media,
+.enf-card,
+.enf-cinta,
+.enf-grid-2 .enf-card,
+.eq-card,
+.ext-card,
+.gal-photo,
+.ha-acento,
+.ha-botones,
+.ha-etiqueta,
+.ha-subtitulo,
+.ha-titulo,
+.hero-acento,
+.hero-botones,
+.hero-etiqueta,
+.hero-subtitulo,
+.hero-titulo,
+.his-aside-card,
+.his-item,
+.ins-card,
+.ins-gallery,
+.ins-note,
+.mapa-centro,
+.nc-anim,
+.nh-acento,
+.nh-buttons,
+.nh-dots,
+.nh-subtitle,
+.nh-tag,
+.nh-text,
+.nh-title,
+.niv-card,
+.niv-cta,
+.niv-info :is(p:not(:where([class*="cv-t-"])), :where(.cv-t-p)),
+.nodo,
+.nos-hito,
+.noti-card,
+.pe-ejes,
+.pe-hero,
+.pe-pilar,
+.ph-acento,
+.ph-etiqueta,
+.ph-subtitulo,
+.ph-titulo,
+.pi-stat,
+.pm-strip-item,
+.pm-tile,
+.po-item,
+.sal-card,
+.sal-media,
+.sd-anim,
+.sec-acento,
+.sec-etiqueta,
+.sec-subtitulo,
+.sec-titulo,
+.si-anim,
+.sm-anim,
+.tr-anim { opacity: 1 !important; transform: none !important; visibility: visible !important; }
+
+/* Diapositivas de los banners: tarjetas con su foto de fondo y sus textos editables. */
+:where(div):has(> .cv-slide) { position: relative !important; inset: auto !important; display: grid !important; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; padding: 14px !important; background: #F1F1F1; opacity: 1 !important; height: auto !important; z-index: 3; }
+:where(section, div):has(> :where(div):has(> .cv-slide)) { background-color: #1d2633 !important; }
+:where(div):has(> .cv-slide)::before { content: "Diapositivas del banner · foto: panel lateral › Estilos › Fondo · textos: clic en cada texto"; grid-column: 1 / -1; font: 600 13px/1.4 system-ui, sans-serif; color: #00325A; }
+.cv-slide { position: relative !important; inset: auto !important; opacity: 1 !important; transform: none !important; min-height: 200px; border-radius: 12px; overflow: hidden; display: flex !important; flex-direction: column; justify-content: flex-end; gap: 6px; padding: 10px !important; }
+.cv-slide > .cv-d { display: block !important; margin: 0; padding: 6px 8px; border-radius: 6px; background: rgba(255, 255, 255, 0.94); color: #00325A; font: 13px/1.4 system-ui, sans-serif; }
+.cv-slide > .cv-d::before { font-weight: 700; margin-right: 4px; }
+
+/* Fotos: la caja para cambiar el tamaño que agrega el editor no ocupa lugar (la foto se ve como en el sitio). */
+.cv-img .components-resizable-box__container { display: contents !important; }
+.logotipo img { height: 60px !important; width: auto !important; max-width: 100%; }
+
+/* Menú del encabezado: en el editor se parece al del sitio. */
+.cv-menu .wp-block-navigation__container { gap: 2rem; }
+.cv-menu .wp-block-navigation-item__content { color: #162a63; font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 1rem; }
+.cv-menu .wp-block-navigation__submenu-container .wp-block-navigation-item__content { font-weight: 400; font-size: 0.95rem; }
+.cv-menu .wp-block-navigation__submenu-icon { display: none; }
+.cv-slide > .cv-d-etiqueta::before { content: "Etiqueta:"; }
+.cv-slide > .cv-d-titulo::before { content: "Título:"; }
+.cv-slide > .cv-d-subtitulo::before { content: "Subtítulo:"; }
+.cv-slide > .cv-d-primary-text::before { content: "Botón 1:"; }
+.cv-slide > .cv-d-secondary-text::before { content: "Botón 2:"; }
+.cv-slide > .cv-d-tag::before { content: "Etiqueta:"; }
+.cv-slide > .cv-d-title::before { content: "Título:"; }
+.cv-slide > .cv-d-subtitle::before { content: "Subtítulo:"; }
+.cv-slide > .cv-d-text::before { content: "Texto:"; }

@@ -21,11 +21,12 @@ const path = require('path');
 	await page.click('#wp-submit');
 	await page.waitForLoadState('domcontentloaded');
 	await page.goto(base + '/wp-admin/post-new.php?post_type=page', { waitUntil: 'domcontentloaded' });
-	await page.waitForFunction(() => window.wp && wp.blocks && wp.blocks.getBlockType('core/paragraph') && wp.blocks.getBlockType('cervantes/icon'), null, { timeout: 120000 });
+	await page.waitForFunction(() => window.wp && wp.blocks && wp.blocks.getBlockType('core/paragraph'), null, { timeout: 120000 });
 
-	const result = { pages: [], patterns: [] };
+	const result = { pages: [], parts: [] };
+	drafts.parts = [{ slug: 'pie', title: 'Pie de página', tree: drafts.footer }];
 	let totalIssues = 0;
-	for (const kind of ['pages', 'patterns']) {
+	for (const kind of ['pages', 'parts']) {
 		for (const item of drafts[kind]) {
 			const r = await page.evaluate((tree) => {
 				const issues = [];

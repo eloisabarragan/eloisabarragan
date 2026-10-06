@@ -2,12 +2,10 @@
 /**
  * Formularios con Contact Form 7.
  *
- * - Crea automáticamente los 7 formularios del sitio (una sola vez) cuando
- *   Contact Form 7 está activo. Después se editan en "Contacto › Formularios".
- * - Las páginas los insertan con [contact-form-7 title="..."], así no dependen
- *   de un ID.
- * - Si el plugin no está instalado, se muestra un aviso a administradores y
- *   un texto de contacto alternativo a los visitantes (nunca un código roto).
+ * Son los MISMOS formularios del HTML original (mismos campos, textos y
+ * clases), convertidos a plantillas de Contact Form 7 para que los mensajes
+ * lleguen de verdad por correo. Están en inc/forms.json y se crean solos al
+ * activar Contact Form 7; después se editan en Contacto › Formularios.
  *
  * @package colegio-cervantes
  */
@@ -15,87 +13,23 @@
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Definición de los formularios del sitio.
+ * Definiciones de los formularios (generadas desde el HTML original).
  *
- * @return array<string, array{title:string, subject:string, form:string, attachments?:string}>
+ * @return array<int, array{title:string, form:string, subject:string, attachments?:string}>
  */
 function cervantes_forms_definitions() {
-	$privacy = '<div class="cv-form-foot"><p class="cv-form-note">[acceptance privacidad] Acepto que el Colegio Español Cervantes se comunique conmigo por este medio. [/acceptance]</p>[submit "Enviar consulta"]</div>';
-
-	$contact_basics = '<div class="cv-half"><label>Nombre y apellido [text* nombre autocomplete:name placeholder "Ej.: María Pérez"]</label></div>
-<div class="cv-half"><label>Correo electrónico [email* email autocomplete:email placeholder "tu@correo.com"]</label></div>
-<div class="cv-half"><label>Teléfono [tel telefono autocomplete:tel placeholder "Ej.: 099 123 456"]</label></div>';
-
-	return array(
-		'general'      => array(
-			'title'   => 'Cervantes · Contacto general',
-			'subject' => 'Nueva consulta web: [motivo]',
-			'form'    => $contact_basics . '
-<div class="cv-half"><label>Motivo [select* motivo first_as_label "Seleccioná un motivo" "Inscripciones" "Coordinar una visita" "Información general" "Administración" "Otro"]</label></div>
-<div><span class="cv-label">Nivel de interés</span>[checkbox nivel use_label_element "Jardín Maternal" "Nivel Inicial" "Primaria" "Secundaria" "Bachillerato Europeo"]</div>
-<div><label>Mensaje [textarea* mensaje minlength:10 placeholder "Contanos qué necesitás saber, la edad o el año del estudiante y cualquier detalle útil."]</label></div>
-' . $privacy,
-		),
-		'admisiones'   => array(
-			'title'   => 'Cervantes · Admisiones',
-			'subject' => 'Consulta de admisión: [nivel]',
-			'form'    => '<div class="cv-half"><label>Nombre y apellido [text* nombre autocomplete:name placeholder "Ej.: María Pérez"]</label></div>
-<div class="cv-half"><label>Teléfono [tel* telefono autocomplete:tel placeholder "Ej.: 099 123 456"]</label></div>
-<div class="cv-half"><label>Correo electrónico [email* email autocomplete:email placeholder "familia@correo.com"]</label></div>
-<div class="cv-half"><label>Edad o año del estudiante [text estudiante placeholder "Ej.: 4 años / 3.º de Primaria"]</label></div>
-<div><span class="cv-label">Nivel de interés</span>[checkbox* nivel use_label_element "Jardín Maternal" "Nivel Inicial" "Primaria" "Secundaria" "Bachillerato Europeo" "Información general"]</div>
-<div><label>Mensaje [textarea* mensaje minlength:10 placeholder "Contanos qué información necesitás."]</label></div>
-' . $privacy,
-		),
-		'inicial'      => array(
-			'title'   => 'Cervantes · Inicial y Maternal',
-			'subject' => 'Consulta Inicial / Maternal: [motivo]',
-			'form'    => $contact_basics . '
-<div class="cv-half"><label>Motivo [select* motivo first_as_label "Seleccioná un motivo" "Inscripciones" "Coordinar una visita" "Información general" "Administración"]</label></div>
-<div><span class="cv-label">Nivel</span>[radio nivel use_label_element default:1 "Jardín Maternal (0 a 3 años)" "Nivel Inicial (3 a 5 años)" "Todavía no sé"]</div>
-<div><label>Mensaje [textarea* mensaje minlength:10 placeholder "Contanos la edad del niño o niña y en qué te podemos ayudar."]</label></div>
-' . $privacy,
-		),
-		'primaria'     => array(
-			'title'   => 'Cervantes · Primaria',
-			'subject' => 'Consulta Primaria: [grado]',
-			'form'    => $contact_basics . '
-<div class="cv-half"><label>Grado de interés [select grado first_as_label "Seleccioná un grado" "1.º" "2.º" "3.º" "4.º" "5.º" "6.º" "No aplica"]</label></div>
-<div><span class="cv-label">Motivo de contacto</span>[checkbox* motivo use_label_element "Inscripciones" "Coordinar una visita" "Información general" "Otro"]</div>
-<div><label>Mensaje [textarea* mensaje minlength:10 placeholder "Escribí tu consulta…"]</label></div>
-' . $privacy,
-		),
-		'secundaria'   => array(
-			'title'   => 'Cervantes · Secundaria',
-			'subject' => 'Consulta Secundaria: [anio]',
-			'form'    => $contact_basics . '
-<div class="cv-half"><label>Nombre del estudiante (opcional) [text estudiante placeholder "Ej.: Juan Pérez"]</label></div>
-<div><span class="cv-label">Año de Secundaria</span>[checkbox* anio use_label_element "7.º (1.º de ciclo básico)" "8.º (2.º de ciclo básico)" "9.º (3.º de ciclo básico)"]</div>
-<div><label>Mensaje [textarea* mensaje minlength:10 placeholder "Contanos en qué podemos ayudarte…"]</label></div>
-' . $privacy,
-		),
-		'bachillerato' => array(
-			'title'   => 'Cervantes · Bachillerato',
-			'subject' => 'Consulta Bachillerato: [anio]',
-			'form'    => $contact_basics . '
-<div class="cv-half"><label>Nombre del estudiante (opcional) [text estudiante placeholder "Ej.: Juan Pérez"]</label></div>
-<div><span class="cv-label">Año de Educación Media Superior</span>[checkbox* anio use_label_element "1.º EMS" "2.º EMS" "3.º EMS"]</div>
-<div><label>Mensaje [textarea* mensaje minlength:10 placeholder "Contanos en qué podemos ayudarte…"]</label></div>
-' . $privacy,
-		),
-		'trabaja'      => array(
-			'title'       => 'Cervantes · Trabajá con nosotros',
-			'subject'     => 'Nueva postulación: [area]',
-			'attachments' => '[cv]',
-			'form'        => '<div class="cv-half"><label>Nombre y apellido [text* nombre autocomplete:name placeholder "Ej.: Ana García"]</label></div>
-<div class="cv-half"><label>Correo electrónico [email* email autocomplete:email placeholder "ana@correo.com"]</label></div>
-<div class="cv-half"><label>Teléfono [tel telefono autocomplete:tel placeholder "Ej.: 099 123 456"]</label></div>
-<div class="cv-half"><label>Área de interés [select* area first_as_label "Seleccioná un área" "Inicial (La Cigüeña)" "Primaria" "Secundaria / Bachillerato" "Administración" "Otro"]</label></div>
-<div><label>CV en PDF (máx. 5 MB) [file* cv limit:5mb filetypes:pdf]</label></div>
-<div><label>Mensaje (opcional) [textarea mensaje placeholder "Contanos brevemente tu perfil y experiencia."]</label></div>
-<div class="cv-form-foot"><p class="cv-form-note">[acceptance privacidad] Acepto que mis datos se usen únicamente para este proceso de selección. [/acceptance]</p>[submit "Enviar postulación"]</div>',
-		),
-	);
+	$json  = file_get_contents( CERVANTES_DIR . '/inc/forms.json' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+	$forms = json_decode( (string) $json, true );
+	if ( ! is_array( $forms ) ) {
+		return array();
+	}
+	foreach ( $forms as &$form ) {
+		$form['subject'] = 'Nuevo mensaje: ' . str_replace( 'Cervantes · ', '', $form['title'] );
+		if ( false !== strpos( $form['form'], '[file' ) ) {
+			$form['attachments'] = '[cv]';
+		}
+	}
+	return $forms;
 }
 
 /**
@@ -125,11 +59,17 @@ function cervantes_create_forms() {
 			)
 		);
 		if ( $existing ) {
+			// Ya existe: se actualiza solo el diseño del formulario (se respetan destinatario y mensajes).
+			$cf = WPCF7_ContactForm::get_instance( $existing[0] );
+			if ( $cf ) {
+				$cf->set_properties( array( 'form' => $form['form'] ) );
+				$cf->save();
+			}
 			continue;
 		}
 
 		$tags = array();
-		preg_match_all( '/\[(?:text|email|tel|select|checkbox|radio|textarea|file)\*?\s+([a-z_]+)/', $form['form'], $m );
+		preg_match_all( '/\[(?:text|email|tel|select|checkbox|radio|textarea|file)\*?\s+([a-z_-]+)/', $form['form'], $m );
 		foreach ( array_unique( $m[1] ) as $name ) {
 			if ( 'cv' === $name ) {
 				continue;
@@ -148,7 +88,7 @@ function cervantes_create_forms() {
 					'sender'             => '[_site_title] <wordpress@' . $host . '>',
 					'recipient'          => $recipient,
 					'body'               => "Llegó un mensaje desde el formulario \"" . $form['title'] . "\" del sitio web.\n\n" . implode( "\n", $tags ) . "\n\n--\nEnviado desde [_url]",
-					'additional_headers' => 'Reply-To: [email]',
+					'additional_headers' => false !== strpos( $form['form'], ' email ' ) ? 'Reply-To: [email]' : ( false !== strpos( $form['form'], 'correo-electronico' ) ? 'Reply-To: [correo-electronico]' : '' ),
 					'attachments'        => isset( $form['attachments'] ) ? $form['attachments'] : '',
 					'use_html'           => false,
 					'exclude_blank'      => true,

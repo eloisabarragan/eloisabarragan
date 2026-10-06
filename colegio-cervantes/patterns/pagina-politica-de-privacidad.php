@@ -3,68 +3,46 @@
  * Title: Página completa · Política de privacidad
  * Slug: colegio-cervantes/pagina-politica-de-privacidad
  * Categories: cervantes-paginas
- * Description: Cómo cuidamos los datos personales en el Colegio Español Cervantes.
- * Keywords: cervantes, página, política de privacidad
  * Post Types: page
  * Block Types: core/post-content
- * Viewport Width: 1440
+ * Inserter: no
  *
- * Generado automáticamente desde _build/ (no editar a mano).
+ * Texto modelo (Ley N.º 18.331 de Uruguay). Conviene que lo revise un asesor.
  *
  * @package colegio-cervantes
  */
 
 ?>
-<!-- wp:paragraph -->
-<p>En el Colegio Español Cervantes cuidamos los datos personales de las familias, estudiantes y postulantes, de acuerdo con la Ley N.º 18.331 de Protección de Datos Personales de Uruguay y su decreto reglamentario.</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:heading {"fontSize":"x-large"} -->
-<h2 class="wp-block-heading has-x-large-font-size">Qué datos recolectamos</h2>
+<!-- wp:group {"tagName":"main","className":"cv-simple","layout":{"type":"constrained","contentSize":"760px"}} -->
+<main class="wp-block-group cv-simple"><!-- wp:heading {"level":1} -->
+<h1 class="wp-block-heading">Política de privacidad</h1>
 <!-- /wp:heading -->
 
 <!-- wp:paragraph -->
-<p>Solo los que nos das voluntariamente en los formularios del sitio: nombre, correo electrónico, teléfono, nivel de interés, el mensaje que nos escribís y, en el caso de postulaciones laborales, tu CV.</p>
+<p>En el Colegio Español Cervantes cuidamos los datos personales de las familias, estudiantes y postulantes, de acuerdo con la Ley N.º 18.331 de Protección de Datos Personales de Uruguay.</p>
 <!-- /wp:paragraph -->
 
-<!-- wp:heading {"fontSize":"x-large"} -->
-<h2 class="wp-block-heading has-x-large-font-size">Para qué los usamos</h2>
-<!-- /wp:heading -->
-
-<!-- wp:list -->
-<ul class="wp-block-list"><!-- wp:list-item -->
-<li>Responder tus consultas y coordinar entrevistas o visitas.</li>
-<!-- /wp:list-item -->
-
-<!-- wp:list-item -->
-<li>Gestionar el proceso de admisión.</li>
-<!-- /wp:list-item -->
-
-<!-- wp:list-item -->
-<li>Gestionar procesos de selección de personal (solo para postulaciones).</li>
-<!-- /wp:list-item --></ul>
-<!-- /wp:list -->
-
-<!-- wp:paragraph -->
-<p>No vendemos ni cedemos tus datos a terceros, y no los usamos para fines distintos de los indicados.</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:heading {"fontSize":"x-large"} -->
-<h2 class="wp-block-heading has-x-large-font-size">Cuánto tiempo los guardamos</h2>
+<!-- wp:heading -->
+<h2 class="wp-block-heading">¿Qué datos recogemos?</h2>
 <!-- /wp:heading -->
 
 <!-- wp:paragraph -->
-<p>Mientras sean necesarios para la finalidad por la que nos los diste. Podés pedir que los eliminemos en cualquier momento.</p>
+<p>Solo los que nos enviás por los formularios del sitio: nombre, correo electrónico, teléfono, nivel de interés, tu mensaje y, en el caso de postulaciones laborales, tu currículum.</p>
 <!-- /wp:paragraph -->
 
-<!-- wp:heading {"fontSize":"x-large"} -->
-<h2 class="wp-block-heading has-x-large-font-size">Tus derechos</h2>
+<!-- wp:heading -->
+<h2 class="wp-block-heading">¿Para qué los usamos?</h2>
 <!-- /wp:heading -->
 
 <!-- wp:paragraph -->
-<p>Podés acceder, rectificar, actualizar o suprimir tus datos escribiendo a <a href="mailto:info@cervantes.edu.uy">info@cervantes.edu.uy</a>.</p>
+<p>Únicamente para responder tu consulta, coordinar visitas, informarte sobre el proceso de admisión o, en el caso de los currículums, para los procesos de selección del colegio. No los compartimos con terceros ni los usamos con fines comerciales.</p>
 <!-- /wp:paragraph -->
 
-<!-- wp:paragraph {"textColor":"gris","fontSize":"small"} -->
-<p class="has-gris-color has-text-color has-small-font-size"><em>Última actualización: 2026. Texto modelo: recomendamos que la institución lo revise con su asesoría legal antes de publicarlo.</em></p>
-<!-- /wp:paragraph -->
+<!-- wp:heading -->
+<h2 class="wp-block-heading">Tus derechos</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Podés pedir en cualquier momento acceder a tus datos, corregirlos o eliminarlos escribiendo a <a href="mailto:info@cervantes.edu.uy">info@cervantes.edu.uy</a>.</p>
+<!-- /wp:paragraph --></main>
+<!-- /wp:group -->

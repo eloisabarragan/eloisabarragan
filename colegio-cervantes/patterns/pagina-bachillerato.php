@@ -1,10 +1,10 @@
 <?php
 /**
- * Title: Página completa · Bachillerato Europeo
+ * Title: Página completa · Bachillerato
  * Slug: colegio-cervantes/pagina-bachillerato
  * Categories: cervantes-paginas
- * Description: Bachillerato Europeo con doble titulación Uruguay–España: el único centro en Uruguay homologado por el Ministerio de Educación de España.
- * Keywords: cervantes, página, bachillerato europeo
+ * Description: Diseño original completo de la página Bachillerato.
+ * Keywords: cervantes, página, bachillerato
  * Post Types: page
  * Block Types: core/post-content
  * Viewport Width: 1440
@@ -15,360 +15,402 @@
  */
 
 ?>
-<!-- wp:group {"metadata":{"name":"Banner principal"},"align":"full","className":"cv-hero","style":{"spacing":{"margin":{"top":"0","bottom":"0"}}},"layout":{"type":"default"}} -->
-<div class="wp-block-group alignfull cv-hero" style="margin-top:0;margin-bottom:0"><!-- wp:cover {<?php cv_idjson( '2026/03/IMG_5898-1-scaled.jpg' ); ?>"url":"<?php cv_src( '2026/03/IMG_5898-1-scaled.jpg' ); ?>","isUserOverlayColor":true,"minHeight":100,"minHeightUnit":"vh","customGradient":"linear-gradient(90deg,rgba(0,18,35,0.9) 0%,rgba(0,18,35,0.62) 42%,rgba(0,18,35,0.12) 78%,rgba(0,18,35,0) 100%)","contentPosition":"bottom left","align":"full","className":"cv-slide","layout":{"type":"constrained","contentSize":"1360px"}} -->
-<div class="wp-block-cover alignfull has-custom-content-position is-position-bottom-left cv-slide" style="min-height:100vh"><span aria-hidden="true" class="wp-block-cover__background has-background-dim-100 has-background-dim wp-block-cover__gradient-background has-background-gradient" style="background:linear-gradient(90deg,rgba(0,18,35,0.9) 0%,rgba(0,18,35,0.62) 42%,rgba(0,18,35,0.12) 78%,rgba(0,18,35,0) 100%)"></span><img class="wp-block-cover__image-background<?php cv_idclass( '2026/03/IMG_5898-1-scaled.jpg' ); ?>" alt="" src="<?php cv_src( '2026/03/IMG_5898-1-scaled.jpg' ); ?>" data-object-fit="cover"/><div class="wp-block-cover__inner-container"><!-- wp:paragraph {"className":"is-style-antetitulo"} -->
-<p class="is-style-antetitulo">Bachillerato Europeo</p>
+<!-- wp:group {"tagName":"section","layout":{"type":"default"}} -->
+<section id="cerv-bachillerato-hero" class="wp-block-group"><!-- wp:group {"className":"bac-slider","layout":{"type":"default"}} -->
+<div class="wp-block-group bac-slider"><!-- wp:group {"className":"bac-slide is-active cv-slide","style":{"background":{"backgroundImage":{"url":"<?php cv_src( '2026/03/IMG_5898-1-scaled.jpg' ); ?>","source":"file"}}},"layout":{"type":"default"}} -->
+<div class="wp-block-group bac-slide is-active cv-slide"><!-- wp:paragraph {"className":"cv-d cv-d-etiqueta"} -->
+<p class="cv-d cv-d-etiqueta">Bachillerato Europeo</p>
 <!-- /wp:paragraph -->
 
-<!-- wp:heading {"level":1,"fontSize":"display"} -->
-<h1 class="wp-block-heading has-display-font-size">Abrir puertas <em>al mundo</em></h1>
-<!-- /wp:heading -->
-
-<!-- wp:paragraph {"fontSize":"large"} -->
-<p class="has-large-font-size">Una propuesta integral que combina excelencia académica, dominio del inglés y acompañamiento cercano para proyectar el futuro con seguridad.</p>
+<!-- wp:paragraph {"className":"cv-d cv-d-titulo"} -->
+<p class="cv-d cv-d-titulo">Bachillerato Europeo: abrir puertas al mundo</p>
 <!-- /wp:paragraph -->
 
-<!-- wp:buttons -->
-<div class="wp-block-buttons"><!-- wp:button {"className":"is-style-oro"} -->
-<div class="wp-block-button is-style-oro"><a class="wp-block-button__link wp-element-button" href="#contacto">Hacer una consulta</a></div>
-<!-- /wp:button -->
-
-<!-- wp:button {"className":"is-style-outline"} -->
-<div class="wp-block-button is-style-outline"><a class="wp-block-button__link wp-element-button" href="#propuesta">Conocé la propuesta</a></div>
-<!-- /wp:button --></div>
-<!-- /wp:buttons --></div></div>
-<!-- /wp:cover -->
-
-<!-- wp:cover {<?php cv_idjson( '2026/01/IMG_0175-1-scaled.jpg' ); ?>"url":"<?php cv_src( '2026/01/IMG_0175-1-scaled.jpg' ); ?>","isUserOverlayColor":true,"minHeight":100,"minHeightUnit":"vh","customGradient":"linear-gradient(90deg,rgba(0,18,35,0.9) 0%,rgba(0,18,35,0.62) 42%,rgba(0,18,35,0.12) 78%,rgba(0,18,35,0) 100%)","contentPosition":"bottom left","align":"full","className":"cv-slide","layout":{"type":"constrained","contentSize":"1360px"}} -->
-<div class="wp-block-cover alignfull has-custom-content-position is-position-bottom-left cv-slide" style="min-height:100vh"><span aria-hidden="true" class="wp-block-cover__background has-background-dim-100 has-background-dim wp-block-cover__gradient-background has-background-gradient" style="background:linear-gradient(90deg,rgba(0,18,35,0.9) 0%,rgba(0,18,35,0.62) 42%,rgba(0,18,35,0.12) 78%,rgba(0,18,35,0) 100%)"></span><img class="wp-block-cover__image-background<?php cv_idclass( '2026/01/IMG_0175-1-scaled.jpg' ); ?>" alt="" src="<?php cv_src( '2026/01/IMG_0175-1-scaled.jpg' ); ?>" data-object-fit="cover"/><div class="wp-block-cover__inner-container"><!-- wp:paragraph {"className":"is-style-antetitulo"} -->
-<p class="is-style-antetitulo">Bachillerato Europeo</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:heading {"fontSize":"display"} -->
-<h2 class="wp-block-heading has-display-font-size">Rigor académico y <em>pensamiento crítico</em></h2>
-<!-- /wp:heading -->
-
-<!-- wp:paragraph {"fontSize":"large"} -->
-<p class="has-large-font-size">Impulsamos el estudio profundo, la argumentación y la autonomía, con docentes que guían y desafían en cada etapa.</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:buttons -->
-<div class="wp-block-buttons"><!-- wp:button {"className":"is-style-oro"} -->
-<div class="wp-block-button is-style-oro"><a class="wp-block-button__link wp-element-button" href="#contacto">Hacer una consulta</a></div>
-<!-- /wp:button --></div>
-<!-- /wp:buttons --></div></div>
-<!-- /wp:cover -->
-
-<!-- wp:cover {<?php cv_idjson( '2026/03/IMG_4334-scaled.jpg' ); ?>"url":"<?php cv_src( '2026/03/IMG_4334-scaled.jpg' ); ?>","isUserOverlayColor":true,"minHeight":100,"minHeightUnit":"vh","customGradient":"linear-gradient(90deg,rgba(0,18,35,0.9) 0%,rgba(0,18,35,0.62) 42%,rgba(0,18,35,0.12) 78%,rgba(0,18,35,0) 100%)","contentPosition":"bottom left","align":"full","className":"cv-slide","layout":{"type":"constrained","contentSize":"1360px"}} -->
-<div class="wp-block-cover alignfull has-custom-content-position is-position-bottom-left cv-slide" style="min-height:100vh"><span aria-hidden="true" class="wp-block-cover__background has-background-dim-100 has-background-dim wp-block-cover__gradient-background has-background-gradient" style="background:linear-gradient(90deg,rgba(0,18,35,0.9) 0%,rgba(0,18,35,0.62) 42%,rgba(0,18,35,0.12) 78%,rgba(0,18,35,0) 100%)"></span><img class="wp-block-cover__image-background<?php cv_idclass( '2026/03/IMG_4334-scaled.jpg' ); ?>" alt="" src="<?php cv_src( '2026/03/IMG_4334-scaled.jpg' ); ?>" data-object-fit="cover"/><div class="wp-block-cover__inner-container"><!-- wp:paragraph {"className":"is-style-antetitulo"} -->
-<p class="is-style-antetitulo">Bachillerato Europeo</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:heading {"fontSize":"display"} -->
-<h2 class="wp-block-heading has-display-font-size">Preparación global y <em>acompañamiento</em></h2>
-<!-- /wp:heading -->
-
-<!-- wp:paragraph {"fontSize":"large"} -->
-<p class="has-large-font-size">Certificaciones internacionales, formación continua y bienestar emocional para que cada estudiante avance con confianza.</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:buttons -->
-<div class="wp-block-buttons"><!-- wp:button {"className":"is-style-oro"} -->
-<div class="wp-block-button is-style-oro"><a class="wp-block-button__link wp-element-button" href="#contacto">Hacer una consulta</a></div>
-<!-- /wp:button --></div>
-<!-- /wp:buttons --></div></div>
-<!-- /wp:cover --></div>
+<!-- wp:paragraph {"className":"cv-d cv-d-subtitulo"} -->
+<p class="cv-d cv-d-subtitulo">Una propuesta integral que combina excelencia académica, dominio del inglés y acompañamiento cercano para proyectar el futuro con seguridad.</p>
+<!-- /wp:paragraph --></div>
 <!-- /wp:group -->
 
-<!-- wp:group {"metadata":{"name":"Bachillerato Europeo"},"align":"full","className":"cv-section","style":{"spacing":{"padding":{"top":"var:preset|spacing|80","bottom":"var:preset|spacing|80"},"margin":{"top":"0","bottom":"0"}}},"backgroundColor":"blanco","layout":{"type":"constrained"}} -->
-<div class="wp-block-group alignfull cv-section has-blanco-background-color has-background" id="propuesta" style="margin-top:0;margin-bottom:0;padding-top:var(--wp--preset--spacing--80);padding-bottom:var(--wp--preset--spacing--80)"><!-- wp:columns {"verticalAlignment":"center","style":{"spacing":{"blockGap":{"left":"var:preset|spacing|80","top":"var:preset|spacing|80"}}}} -->
-<div class="wp-block-columns are-vertically-aligned-center"><!-- wp:column {"width":"50%"} -->
-<div class="wp-block-column" style="flex-basis:50%"><!-- wp:group {"className":"cv-tall-first","style":{"spacing":{"blockGap":"var:preset|spacing|30"}},"layout":{"type":"grid","columnCount":2}} -->
-<div class="wp-block-group cv-tall-first"><!-- wp:image {<?php cv_idjson( '2026/03/IMG_9805-2-1-scaled.jpg' ); ?>"sizeSlug":"large","linkDestination":"none"} -->
-<figure class="wp-block-image size-large"><img src="<?php cv_src( '2026/03/IMG_9805-2-1-scaled.jpg' ); ?>" alt="Estudiantes de Bachillerato"<?php cv_idattr( '2026/03/IMG_9805-2-1-scaled.jpg' ); ?>/></figure>
-<!-- /wp:image -->
-
-<!-- wp:image {<?php cv_idjson( '2026/03/IMG_9778-1-scaled.jpg' ); ?>"aspectRatio":"4/3","scale":"cover","sizeSlug":"large","linkDestination":"none"} -->
-<figure class="wp-block-image size-large"><img src="<?php cv_src( '2026/03/IMG_9778-1-scaled.jpg' ); ?>" alt="Alumno de Bachillerato en clase" style="aspect-ratio:4/3;object-fit:cover"<?php cv_idattr( '2026/03/IMG_9778-1-scaled.jpg' ); ?>/></figure>
-<!-- /wp:image -->
-
-<!-- wp:image {<?php cv_idjson( '2026/03/IMG_4890-1-scaled.jpg' ); ?>"aspectRatio":"4/3","scale":"cover","sizeSlug":"large","linkDestination":"none"} -->
-<figure class="wp-block-image size-large"><img src="<?php cv_src( '2026/03/IMG_4890-1-scaled.jpg' ); ?>" alt="Alumnos de Bachillerato en actividad grupal" style="aspect-ratio:4/3;object-fit:cover"<?php cv_idattr( '2026/03/IMG_4890-1-scaled.jpg' ); ?>/></figure>
-<!-- /wp:image --></div>
-<!-- /wp:group --></div>
-<!-- /wp:column -->
-
-<!-- wp:column {"verticalAlignment":"center","width":"50%"} -->
-<div class="wp-block-column is-vertically-aligned-center" style="flex-basis:50%"><!-- wp:paragraph {"className":"is-style-antetitulo"} -->
-<p class="is-style-antetitulo">Educación Media Superior</p>
+<!-- wp:group {"className":"bac-slide cv-slide","style":{"background":{"backgroundImage":{"url":"<?php cv_src( '2026/01/IMG_0175-1-scaled.jpg' ); ?>","source":"file"}}},"layout":{"type":"default"}} -->
+<div class="wp-block-group bac-slide cv-slide"><!-- wp:paragraph {"className":"cv-d cv-d-etiqueta"} -->
+<p class="cv-d cv-d-etiqueta">Bachillerato Europeo</p>
 <!-- /wp:paragraph -->
 
-<!-- wp:heading -->
-<h2 class="wp-block-heading">Bachillerato <em>Europeo</em></h2>
-<!-- /wp:heading -->
-
-<!-- wp:paragraph -->
-<p>Una formación integral que prepara para los desafíos del futuro: dominio del inglés respaldado por certificaciones de Cambridge, formación física continua, foco en ciencias e informática con habilidades técnicas avanzadas y un acompañamiento psicológico integral que apoya el bienestar emocional y personal de cada estudiante.</p>
+<!-- wp:paragraph {"className":"cv-d cv-d-titulo"} -->
+<p class="cv-d cv-d-titulo">Rigor académico y pensamiento crítico</p>
 <!-- /wp:paragraph -->
 
-<!-- wp:list {"className":"is-style-chips"} -->
-<ul class="wp-block-list is-style-chips"><!-- wp:list-item -->
-<li>Inglés Cambridge</li>
-<!-- /wp:list-item -->
+<!-- wp:paragraph {"className":"cv-d cv-d-subtitulo"} -->
+<p class="cv-d cv-d-subtitulo">Impulsamos el estudio profundo, la argumentación y la autonomía, con docentes que guían y desafían en cada etapa.</p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:group -->
 
-<!-- wp:list-item -->
-<li>Formación física continua</li>
-<!-- /wp:list-item -->
+<!-- wp:group {"className":"bac-slide cv-slide","style":{"background":{"backgroundImage":{"url":"<?php cv_src( '2026/03/IMG_4334-scaled.jpg' ); ?>","source":"file"}}},"layout":{"type":"default"}} -->
+<div class="wp-block-group bac-slide cv-slide"><!-- wp:paragraph {"className":"cv-d cv-d-etiqueta"} -->
+<p class="cv-d cv-d-etiqueta">Bachillerato Europeo</p>
+<!-- /wp:paragraph -->
 
-<!-- wp:list-item -->
-<li>Ciencias e informática</li>
-<!-- /wp:list-item -->
+<!-- wp:paragraph {"className":"cv-d cv-d-titulo"} -->
+<p class="cv-d cv-d-titulo">Preparación global y acompañamiento</p>
+<!-- /wp:paragraph -->
 
-<!-- wp:list-item -->
-<li>Acompañamiento integral</li>
-<!-- /wp:list-item --></ul>
-<!-- /wp:list --></div>
-<!-- /wp:column --></div>
-<!-- /wp:columns -->
-
-<!-- wp:group {"align":"wide","className":"is-style-tarjeta-oscura cv-reveal","style":{"spacing":{"padding":{"top":"var:preset|spacing|60","bottom":"var:preset|spacing|60","left":"var:preset|spacing|60","right":"var:preset|spacing|60"},"margin":{"top":"var:preset|spacing|70"}}},"layout":{"type":"default"}} -->
-<div class="wp-block-group alignwide is-style-tarjeta-oscura cv-reveal" style="margin-top:var(--wp--preset--spacing--70);padding-top:var(--wp--preset--spacing--60);padding-right:var(--wp--preset--spacing--60);padding-bottom:var(--wp--preset--spacing--60);padding-left:var(--wp--preset--spacing--60)"><!-- wp:group {"style":{"spacing":{"blockGap":"var:preset|spacing|40"}},"layout":{"type":"flex","flexWrap":"wrap","verticalAlignment":"center"}} -->
-<div class="wp-block-group"><!-- wp:cervantes/icon {"icon":"medalla","variant":"oro","size":64} /-->
-
-<!-- wp:group {"style":{"spacing":{"blockGap":"0.4rem"}},"layout":{"type":"flex","orientation":"vertical","flexWrap":"wrap"}} -->
-<div class="wp-block-group"><!-- wp:heading {"level":3,"textColor":"blanco"} -->
-<h3 class="wp-block-heading has-blanco-color has-text-color">Doble titulación Uruguay – España</h3>
-<!-- /wp:heading -->
-
-<!-- wp:paragraph -->
-<p>Somos el único centro en Uruguay homologado por el Ministerio de Educación de España: nuestros egresados obtienen un título con validez internacional.</p>
+<!-- wp:paragraph {"className":"cv-d cv-d-subtitulo"} -->
+<p class="cv-d cv-d-subtitulo">Certificaciones internacionales, formación continua y bienestar emocional para que cada estudiante avance con confianza.</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group --></div>
-<!-- /wp:group --></div>
-<!-- /wp:group --></div>
 <!-- /wp:group -->
 
-<!-- wp:group {"metadata":{"name":"Pilares"},"align":"full","className":"cv-section","style":{"spacing":{"padding":{"top":"var:preset|spacing|80","bottom":"var:preset|spacing|80"},"margin":{"top":"0","bottom":"0"}}},"backgroundColor":"niebla","layout":{"type":"constrained"}} -->
-<div class="wp-block-group alignfull cv-section has-niebla-background-color has-background" style="margin-top:0;margin-bottom:0;padding-top:var(--wp--preset--spacing--80);padding-bottom:var(--wp--preset--spacing--80)"><!-- wp:group {"style":{"spacing":{"margin":{"bottom":"var:preset|spacing|60"},"blockGap":"1rem"}},"layout":{"type":"constrained","contentSize":"760px"}} -->
-<div class="wp-block-group" style="margin-bottom:var(--wp--preset--spacing--60)"><!-- wp:paragraph {"align":"center","className":"is-style-antetitulo"} -->
-<p class="has-text-align-center is-style-antetitulo">Bachillerato Europeo</p>
+<!-- wp:group {"className":"bac-content","layout":{"type":"default"}} -->
+<div id="bac-content" class="wp-block-group bac-content"><!-- wp:cervantes/html -->
+<span class="bac-acento"></span>
+<!-- /wp:cervantes/html -->
+
+<!-- wp:paragraph {"className":"bac-etiqueta cv-t-span"} -->
+<p class="bac-etiqueta cv-t-span" id="bac-etiqueta">Bachillerato Europeo</p>
 <!-- /wp:paragraph -->
 
-<!-- wp:heading {"textAlign":"center"} -->
-<h2 class="wp-block-heading has-text-align-center">Pilares de <em>nuestra formación</em></h2>
-<!-- /wp:heading --></div>
-<!-- /wp:group -->
-
-<!-- wp:columns {"align":"wide","className":"cv-reveal-children","style":{"spacing":{"blockGap":{"left":"var:preset|spacing|40","top":"var:preset|spacing|40"}}}} -->
-<div class="wp-block-columns alignwide cv-reveal-children"><!-- wp:column -->
-<div class="wp-block-column"><!-- wp:group {"className":"is-style-tarjeta cv-hover","style":{"spacing":{"padding":{"top":"var:preset|spacing|60","bottom":"var:preset|spacing|60","left":"var:preset|spacing|60","right":"var:preset|spacing|60"},"blockGap":"0.9rem"}},"layout":{"type":"default"}} -->
-<div class="wp-block-group is-style-tarjeta cv-hover" style="padding-top:var(--wp--preset--spacing--60);padding-right:var(--wp--preset--spacing--60);padding-bottom:var(--wp--preset--spacing--60);padding-left:var(--wp--preset--spacing--60)"><!-- wp:cervantes/icon {"icon":"globo","variant":"solido"} /-->
-
-<!-- wp:heading {"level":3,"fontSize":"large"} -->
-<h3 class="wp-block-heading has-large-font-size">Inglés en Cervantes</h3>
+<!-- wp:heading {"level":1,"className":"bac-titulo"} -->
+<h1 class="wp-block-heading bac-titulo" id="bac-titulo">Bachillerato Europeo: abrir puertas al mundo</h1>
 <!-- /wp:heading -->
 
-<!-- wp:paragraph {"textColor":"gris","fontSize":"small"} -->
-<p class="has-gris-color has-text-color has-small-font-size">El inglés es una prioridad. Reconocidos como Centro Examinador Oficial por la Universidad de Cambridge, formamos personas que se desenvuelven con facilidad en el idioma, escriben y hablan con naturalidad y obtienen diplomas CAE y C2 Proficiency.</p>
+<!-- wp:paragraph {"className":"bac-subtitulo"} -->
+<p class="bac-subtitulo" id="bac-subtitulo">Una propuesta integral que combina excelencia académica, dominio del inglés y acompañamiento cercano para proyectar el futuro con seguridad.</p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:group -->
+
+<!-- wp:cervantes/html -->
+<div aria-label="Cambiar banner" class="bac-nav" role="tablist">
+<button aria-label="Banner 1" aria-selected="true" class="bac-dot is-active" type="button"></button>
+<button aria-label="Banner 2" aria-selected="false" class="bac-dot" type="button"></button>
+<button aria-label="Banner 3" aria-selected="false" class="bac-dot" type="button"></button>
+</div>
+<!-- /wp:cervantes/html -->
+
+<!-- wp:cervantes/html -->
+<div class="bac-progress" id="bac-progress"></div>
+<!-- /wp:cervantes/html --></section>
+<!-- /wp:group -->
+
+<!-- wp:group {"tagName":"section","layout":{"type":"default"}} -->
+<section id="cerv-bach-intro" class="wp-block-group"><!-- wp:group {"className":"bi-inner","layout":{"type":"default"}} -->
+<div class="wp-block-group bi-inner"><!-- wp:group {"className":"bi-mosaic bi-anim bi-d1","layout":{"type":"default"}} -->
+<div class="wp-block-group bi-mosaic bi-anim bi-d1"><!-- wp:image {<?php cv_idjson( '2026/03/IMG_9805-2-1-scaled.jpg' ); ?>"sizeSlug":"full","linkDestination":"none","className":"bi-photo bi-photo\u002d\u002dtall"} -->
+<figure class="wp-block-image size-full bi-photo bi-photo--tall"><img src="<?php cv_src( '2026/03/IMG_9805-2-1-scaled.jpg' ); ?>" alt="Estudiantes de Bachillerato Cervantes"<?php cv_idattr( '2026/03/IMG_9805-2-1-scaled.jpg' ); ?>/></figure>
+<!-- /wp:image -->
+
+<!-- wp:image {<?php cv_idjson( '2026/03/IMG_9778-1-scaled.jpg' ); ?>"sizeSlug":"full","linkDestination":"none","className":"bi-photo"} -->
+<figure class="wp-block-image size-full bi-photo"><img src="<?php cv_src( '2026/03/IMG_9778-1-scaled.jpg' ); ?>" alt="Alumno de Bachillerato en clase"<?php cv_idattr( '2026/03/IMG_9778-1-scaled.jpg' ); ?>/></figure>
+<!-- /wp:image -->
+
+<!-- wp:image {<?php cv_idjson( '2026/03/IMG_4890-1-scaled.jpg' ); ?>"sizeSlug":"full","linkDestination":"none","className":"bi-photo"} -->
+<figure class="wp-block-image size-full bi-photo"><img src="<?php cv_src( '2026/03/IMG_4890-1-scaled.jpg' ); ?>" alt="Alumnos de Bachillerato en actividad grupal"<?php cv_idattr( '2026/03/IMG_4890-1-scaled.jpg' ); ?>/></figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph {"className":"bi-badge cv-t-div"} -->
+<p class="bi-badge cv-t-div"><span class="bi-badge-dot"></span>Bachillerato Europeo</p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:group -->
+
+<!-- wp:group {"className":"bi-text","layout":{"type":"default"}} -->
+<div class="wp-block-group bi-text"><!-- wp:paragraph {"className":"bi-eyebrow bi-anim bi-d2 cv-t-div"} -->
+<p class="bi-eyebrow bi-anim bi-d2 cv-t-div">Bachillerato Europeo</p>
 <!-- /wp:paragraph -->
 
-<!-- wp:list {"className":"is-style-chips"} -->
-<ul class="wp-block-list is-style-chips"><!-- wp:list-item -->
-<li>Centro Cambridge Oficial</li>
+<!-- wp:heading {"className":"bi-title bi-anim bi-d3"} -->
+<h2 class="wp-block-heading bi-title bi-anim bi-d3">Bachillerato <em>Europeo</em></h2>
+<!-- /wp:heading -->
+
+<!-- wp:cervantes/html -->
+<div class="bi-divider bi-anim bi-d3"></div>
+<!-- /wp:cervantes/html -->
+
+<!-- wp:paragraph {"className":"bi-body bi-anim bi-d4"} -->
+<p class="bi-body bi-anim bi-d4">Ofrecemos una formación integral que prepara a los estudiantes para los desafíos del futuro. Nuestros programas incluyen el dominio del inglés, respaldado por certificaciones de Cambridge, para garantizar una competencia lingüística global. Además, promovemos el desarrollo deportivo a través de la formación física continua, mientras que nuestro enfoque en ciencias e informática equipa a los alumnos con habilidades técnicas avanzadas. Todo esto se desarrolla en un entorno seguro, con un acompañamiento psicológico integral que apoya el bienestar emocional y personal de cada estudiante.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list {"className":"bi-chips bi-anim bi-d5"} -->
+<ul class="wp-block-list bi-chips bi-anim bi-d5"><!-- wp:list-item {"className":"bi-chip"} -->
+<li class="bi-chip"><span class="bi-chip-dot"></span>Inglés Cambridge</li>
 <!-- /wp:list-item -->
 
-<!-- wp:list-item -->
-<li>CAE</li>
+<!-- wp:list-item {"className":"bi-chip"} -->
+<li class="bi-chip"><span class="bi-chip-dot"></span>Formación física continua</li>
 <!-- /wp:list-item -->
 
-<!-- wp:list-item -->
-<li>C2 Proficiency</li>
+<!-- wp:list-item {"className":"bi-chip"} -->
+<li class="bi-chip"><span class="bi-chip-dot"></span>Ciencias e informática</li>
+<!-- /wp:list-item -->
+
+<!-- wp:list-item {"className":"bi-chip"} -->
+<li class="bi-chip"><span class="bi-chip-dot"></span>Acompañamiento integral</li>
 <!-- /wp:list-item --></ul>
 <!-- /wp:list --></div>
 <!-- /wp:group --></div>
-<!-- /wp:column -->
+<!-- /wp:group --></section>
+<!-- /wp:group -->
 
-<!-- wp:column -->
-<div class="wp-block-column"><!-- wp:group {"className":"is-style-tarjeta cv-hover","style":{"spacing":{"padding":{"top":"var:preset|spacing|60","bottom":"var:preset|spacing|60","left":"var:preset|spacing|60","right":"var:preset|spacing|60"},"blockGap":"0.9rem"}},"layout":{"type":"default"}} -->
-<div class="wp-block-group is-style-tarjeta cv-hover" style="padding-top:var(--wp--preset--spacing--60);padding-right:var(--wp--preset--spacing--60);padding-bottom:var(--wp--preset--spacing--60);padding-left:var(--wp--preset--spacing--60)"><!-- wp:cervantes/icon {"icon":"pelota","variant":"solido"} /-->
+<!-- wp:group {"tagName":"section","layout":{"type":"default"}} -->
+<section id="cerv-bach-id" class="wp-block-group"><!-- wp:group {"className":"bid-inner","layout":{"type":"default"}} -->
+<div class="wp-block-group bid-inner"><!-- wp:paragraph {"className":"bid-eyebrow bid-anim bid-d1 cv-t-div"} -->
+<p class="bid-eyebrow bid-anim bid-d1 cv-t-div">Bachillerato Europeo</p>
+<!-- /wp:paragraph -->
 
-<!-- wp:heading {"level":3,"fontSize":"large"} -->
-<h3 class="wp-block-heading has-large-font-size">Deportes</h3>
+<!-- wp:heading {"className":"bid-heading bid-anim bid-d1"} -->
+<h2 class="wp-block-heading bid-heading bid-anim bid-d1">Pilares de <em>nuestra formación</em></h2>
 <!-- /wp:heading -->
 
-<!-- wp:paragraph {"textColor":"gris","fontSize":"small"} -->
-<p class="has-gris-color has-text-color has-small-font-size">El deporte mejora la condición física, fortalece la mente y enseña trabajo en equipo y disciplina. Ofrecemos la Escuela de Fútbol Real Madrid, básquetbol, vóleibol y gimnasia aeróbica coreográfica para el bienestar integral.</p>
+<!-- wp:group {"className":"bid-grid","layout":{"type":"default"}} -->
+<div class="wp-block-group bid-grid"><!-- wp:group {"tagName":"article","className":"bid-card bid-anim bid-d2","layout":{"type":"default"}} -->
+<article class="wp-block-group bid-card bid-anim bid-d2"><!-- wp:cervantes/html -->
+<div class="bid-icon"><svg viewbox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"></path><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg></div>
+<!-- /wp:cervantes/html -->
+
+<!-- wp:heading {"level":3,"className":"bid-card-title"} -->
+<h3 class="wp-block-heading bid-card-title">Inglés en Cervantes</h3>
+<!-- /wp:heading -->
+
+<!-- wp:cervantes/html -->
+<div class="bid-divider"></div>
+<!-- /wp:cervantes/html -->
+
+<!-- wp:paragraph {"className":"bid-text"} -->
+<p class="bid-text">En el Colegio Español Cervantes, el inglés es una prioridad. Reconocidos como Centro Examinador Oficial por la Universidad de Cambridge, formamos individuos capaces de desenvolverse con facilidad en el idioma. Nuestros estudiantes logran escribir y hablar de manera natural, y obtienen diplomas CAE y C2 Proficiency, preparándolos para el éxito en un entorno global.</p>
 <!-- /wp:paragraph -->
 
-<!-- wp:list {"className":"is-style-chips"} -->
-<ul class="wp-block-list is-style-chips"><!-- wp:list-item -->
-<li>Escuela de Fútbol Real Madrid</li>
+<!-- wp:list {"className":"bid-chips"} -->
+<ul class="wp-block-list bid-chips"><!-- wp:list-item {"className":"bid-chip"} -->
+<li class="bid-chip"><span class="bid-chip-dot"></span>Centro Cambridge Oficial</li>
 <!-- /wp:list-item -->
 
-<!-- wp:list-item -->
-<li>Básquetbol</li>
+<!-- wp:list-item {"className":"bid-chip"} -->
+<li class="bid-chip"><span class="bid-chip-dot"></span>CAE</li>
 <!-- /wp:list-item -->
 
-<!-- wp:list-item -->
-<li>Vóleibol</li>
-<!-- /wp:list-item -->
-
-<!-- wp:list-item -->
-<li>Gimnasia aeróbica</li>
+<!-- wp:list-item {"className":"bid-chip"} -->
+<li class="bid-chip"><span class="bid-chip-dot"></span>C2 Proficiency</li>
 <!-- /wp:list-item --></ul>
-<!-- /wp:list --></div>
-<!-- /wp:group --></div>
-<!-- /wp:column --></div>
-<!-- /wp:columns --></div>
+<!-- /wp:list --></article>
 <!-- /wp:group -->
 
-<!-- wp:group {"metadata":{"name":"Novedades"},"align":"full","className":"cv-section","style":{"spacing":{"padding":{"top":"var:preset|spacing|80","bottom":"var:preset|spacing|80"},"margin":{"top":"0","bottom":"0"}}},"backgroundColor":"blanco","layout":{"type":"constrained"}} -->
-<div class="wp-block-group alignfull cv-section has-blanco-background-color has-background" style="margin-top:0;margin-bottom:0;padding-top:var(--wp--preset--spacing--80);padding-bottom:var(--wp--preset--spacing--80)"><!-- wp:columns {"verticalAlignment":"bottom","style":{"spacing":{"margin":{"bottom":"var:preset|spacing|50"}}}} -->
-<div class="wp-block-columns are-vertically-aligned-bottom" style="margin-bottom:var(--wp--preset--spacing--50)"><!-- wp:column {"width":"60%"} -->
-<div class="wp-block-column" style="flex-basis:60%"><!-- wp:paragraph {"className":"is-style-antetitulo"} -->
-<p class="is-style-antetitulo">Comunidad Cervantes</p>
+<!-- wp:group {"tagName":"article","className":"bid-card bid-anim bid-d3","layout":{"type":"default"}} -->
+<article class="wp-block-group bid-card bid-anim bid-d3"><!-- wp:cervantes/html -->
+<div class="bid-icon"><svg viewbox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20M12 2a14.5 14.5 0 0 1 0 20M2 12h20"></path></svg></div>
+<!-- /wp:cervantes/html -->
+
+<!-- wp:heading {"level":3,"className":"bid-card-title"} -->
+<h3 class="wp-block-heading bid-card-title">Deportes</h3>
+<!-- /wp:heading -->
+
+<!-- wp:cervantes/html -->
+<div class="bid-divider"></div>
+<!-- /wp:cervantes/html -->
+
+<!-- wp:paragraph {"className":"bid-text"} -->
+<p class="bid-text">El deporte es fundamental para la salud y el desarrollo personal. Mejorando tanto la condición física como fortaleciendo la mente, enseña valores esenciales como el trabajo en equipo y la disciplina. Ofrecemos una variedad de actividades, incluyendo la Escuela de Fútbol Real Madrid, básquetbol, vóleibol y gimnasia aeróbica coreográfica, para fomentar el bienestar integral de nuestros estudiantes.</p>
 <!-- /wp:paragraph -->
 
-<!-- wp:heading -->
-<h2 class="wp-block-heading">Novedades de <em>la comunidad</em></h2>
-<!-- /wp:heading --></div>
-<!-- /wp:column -->
+<!-- wp:list {"className":"bid-chips"} -->
+<ul class="wp-block-list bid-chips"><!-- wp:list-item {"className":"bid-chip"} -->
+<li class="bid-chip"><span class="bid-chip-dot"></span>Escuela de Fútbol Real Madrid</li>
+<!-- /wp:list-item -->
 
-<!-- wp:column {"verticalAlignment":"bottom","width":"40%"} -->
-<div class="wp-block-column is-vertically-aligned-bottom" style="flex-basis:40%"><!-- wp:buttons -->
-<div class="wp-block-buttons"><!-- wp:button {"className":"is-style-flecha"} -->
-<div class="wp-block-button is-style-flecha"><a class="wp-block-button__link wp-element-button" href="<?php cv_link( 'novedades' ); ?>">Ver todas las novedades</a></div>
-<!-- /wp:button --></div>
-<!-- /wp:buttons --></div>
-<!-- /wp:column --></div>
-<!-- /wp:columns -->
+<!-- wp:list-item {"className":"bid-chip"} -->
+<li class="bid-chip"><span class="bid-chip-dot"></span>Básquetbol</li>
+<!-- /wp:list-item -->
 
-<!-- wp:query {"queryId":31,"query":{"perPage":3,"pages":0,"offset":0,"postType":"post","order":"desc","orderBy":"date","author":"","search":"","exclude":[],"sticky":"","inherit":false,"taxQuery":{"category":[<?php cv_cat( 'noticias' ); ?>]}},"className":"cv-news","layout":{"type":"default"}} -->
-<div class="wp-block-query cv-news"><!-- wp:post-template {"style":{"spacing":{"blockGap":"var:preset|spacing|50"}},"layout":{"type":"grid","columnCount":3}} -->
-<!-- wp:group {"style":{"spacing":{"padding":{"bottom":"var:preset|spacing|40"},"blockGap":"0.8rem"}},"layout":{"type":"default"}} -->
-<div class="wp-block-group" style="padding-bottom:var(--wp--preset--spacing--40)"><!-- wp:post-featured-image {"aspectRatio":"16/11"} /-->
+<!-- wp:list-item {"className":"bid-chip"} -->
+<li class="bid-chip"><span class="bid-chip-dot"></span>Vóleibol</li>
+<!-- /wp:list-item -->
 
-<!-- wp:group {"style":{"spacing":{"padding":{"left":"var:preset|spacing|40","right":"var:preset|spacing|40"},"blockGap":"0.6rem"}},"layout":{"type":"default"}} -->
-<div class="wp-block-group" style="padding-right:var(--wp--preset--spacing--40);padding-left:var(--wp--preset--spacing--40)"><!-- wp:group {"style":{"spacing":{"blockGap":"0.75rem"}},"layout":{"type":"flex","flexWrap":"wrap","verticalAlignment":"center"}} -->
-<div class="wp-block-group"><!-- wp:post-terms {"term":"category"} /-->
-
-<!-- wp:post-date /--></div>
-<!-- /wp:group -->
-
-<!-- wp:post-title {"level":3,"isLink":true,"fontSize":"large"} /-->
-
-<!-- wp:post-excerpt {"excerptLength":22} /--></div>
+<!-- wp:list-item {"className":"bid-chip"} -->
+<li class="bid-chip"><span class="bid-chip-dot"></span>Gimnasia aeróbica coreográfica</li>
+<!-- /wp:list-item --></ul>
+<!-- /wp:list --></article>
 <!-- /wp:group --></div>
+<!-- /wp:group --></div>
+<!-- /wp:group --></section>
 <!-- /wp:group -->
-<!-- /wp:post-template -->
 
-<!-- wp:query-no-results -->
-<!-- wp:paragraph {"align":"center"} -->
-<p class="has-text-align-center">Muy pronto vas a encontrar novedades acá.</p>
+<!-- wp:group {"tagName":"section","layout":{"type":"default"}} -->
+<section id="cerv-noticias" class="wp-block-group"><!-- wp:group {"className":"nc-inner","layout":{"type":"default"}} -->
+<div class="wp-block-group nc-inner"><!-- wp:group {"className":"nc-header nc-anim nc-d1","layout":{"type":"default"}} -->
+<div class="wp-block-group nc-header nc-anim nc-d1"><!-- wp:group {"className":"nc-header-left","layout":{"type":"default"}} -->
+<div class="wp-block-group nc-header-left"><!-- wp:paragraph {"className":"nc-eyebrow cv-t-div"} -->
+<p class="nc-eyebrow cv-t-div">Comunidad Cervantes</p>
 <!-- /wp:paragraph -->
-<!-- /wp:query-no-results --></div>
-<!-- /wp:query --></div>
+
+<!-- wp:heading {"className":"nc-title"} -->
+<h2 class="wp-block-heading nc-title">Novedades de <em>la comunidad</em></h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph {"className":"nc-sub"} -->
+<p class="nc-sub">Actividades, eventos y momentos destacados que forman parte de la vida diaria del Colegio Español Cervantes.</p>
+<!-- /wp:paragraph --></div>
 <!-- /wp:group -->
 
-<!-- wp:group {"metadata":{"name":"Contacto Bachillerato"},"align":"full","className":"cv-section","style":{"spacing":{"padding":{"top":"var:preset|spacing|80","bottom":"var:preset|spacing|80"},"margin":{"top":"0","bottom":"0"}}},"backgroundColor":"crema","layout":{"type":"constrained"}} -->
-<div class="wp-block-group alignfull cv-section has-crema-background-color has-background" id="contacto" style="margin-top:0;margin-bottom:0;padding-top:var(--wp--preset--spacing--80);padding-bottom:var(--wp--preset--spacing--80)"><!-- wp:columns {"style":{"spacing":{"blockGap":{"left":"var:preset|spacing|70","top":"var:preset|spacing|70"}}}} -->
-<div class="wp-block-columns"><!-- wp:column {"width":"42%"} -->
-<div class="wp-block-column" style="flex-basis:42%"><!-- wp:paragraph {"className":"is-style-antetitulo"} -->
-<p class="is-style-antetitulo">Bachillerato · EMS</p>
+<!-- wp:paragraph {"className":"nc-all-btn cv-t-a cv-a cv-arrow cv-ico-2"} -->
+<p class="nc-all-btn cv-t-a cv-a cv-arrow cv-ico-2"><a href="#">Ver todas</a></p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:group -->
+
+<!-- wp:group {"className":"nc-grid","layout":{"type":"default"}} -->
+<div class="wp-block-group nc-grid"><!-- wp:group {"tagName":"article","className":"nc-card nc-anim nc-d2","layout":{"type":"default"}} -->
+<article class="wp-block-group nc-card nc-anim nc-d2"><!-- wp:group {"className":"nc-thumb","layout":{"type":"default"}} -->
+<div class="wp-block-group nc-thumb"><!-- wp:image {<?php cv_idjson( '2026/03/IMG_4911-1-scaled.jpg' ); ?>"sizeSlug":"full","linkDestination":"none","className":"cv-img cv-s9"} -->
+<figure class="wp-block-image size-full cv-img cv-s9"><img src="<?php cv_src( '2026/03/IMG_4911-1-scaled.jpg' ); ?>" alt="Día del Amigo"<?php cv_idattr( '2026/03/IMG_4911-1-scaled.jpg' ); ?>/></figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph {"className":"nc-badge cv-t-span"} -->
+<p class="nc-badge cv-t-span">Evento</p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:group -->
+
+<!-- wp:group {"className":"nc-body","layout":{"type":"default"}} -->
+<div class="wp-block-group nc-body"><!-- wp:paragraph {"className":"nc-meta cv-t-span"} -->
+<p class="nc-meta cv-t-span">12 de marzo · 2025</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3,"className":"nc-card-title"} -->
+<h3 class="wp-block-heading nc-card-title">Día del Amigo</h3>
+<!-- /wp:heading -->
+
+<!-- wp:cervantes/html -->
+<div class="nc-sep"></div>
+<!-- /wp:cervantes/html -->
+
+<!-- wp:paragraph {"className":"nc-text"} -->
+<p class="nc-text">Celebramos el Día del Amigo con una jornada especial de intercambio de regalos entre compañeros. Un momento lleno de sorpresas y afecto que fortaleció los lazos de nuestra comunidad.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph {"className":"nc-link cv-t-a cv-a cv-arrow cv-ico-2"} -->
+<p class="nc-link cv-t-a cv-a cv-arrow cv-ico-2"><a href="#">Leer más</a></p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:group --></article>
+<!-- /wp:group -->
+
+<!-- wp:group {"tagName":"article","className":"nc-card nc-anim nc-d3","layout":{"type":"default"}} -->
+<article class="wp-block-group nc-card nc-anim nc-d3"><!-- wp:group {"className":"nc-thumb","layout":{"type":"default"}} -->
+<div class="wp-block-group nc-thumb"><!-- wp:image {<?php cv_idjson( '2026/03/IMG_6725-1-scaled.jpg' ); ?>"sizeSlug":"full","linkDestination":"none","className":"cv-img cv-s10"} -->
+<figure class="wp-block-image size-full cv-img cv-s10"><img src="<?php cv_src( '2026/03/IMG_6725-1-scaled.jpg' ); ?>" alt="Entrega de indumentaria"<?php cv_idattr( '2026/03/IMG_6725-1-scaled.jpg' ); ?>/></figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph {"className":"nc-badge cv-t-span"} -->
+<p class="nc-badge cv-t-span">Institucional</p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:group -->
+
+<!-- wp:group {"className":"nc-body","layout":{"type":"default"}} -->
+<div class="wp-block-group nc-body"><!-- wp:paragraph {"className":"nc-meta cv-t-span"} -->
+<p class="nc-meta cv-t-span">5 de marzo · 2025</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3,"className":"nc-card-title"} -->
+<h3 class="wp-block-heading nc-card-title">Entrega de indumentaria institucional</h3>
+<!-- /wp:heading -->
+
+<!-- wp:cervantes/html -->
+<div class="nc-sep"></div>
+<!-- /wp:cervantes/html -->
+
+<!-- wp:paragraph {"className":"nc-text"} -->
+<p class="nc-text">Realizamos la entrega de la indumentaria institucional a nuestros alumnos. Un momento de pertenencia e identidad que marca el inicio del año escolar en Cervantes.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph {"className":"nc-link cv-t-a cv-a cv-arrow cv-ico-2"} -->
+<p class="nc-link cv-t-a cv-a cv-arrow cv-ico-2"><a href="#">Leer más</a></p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:group --></article>
+<!-- /wp:group -->
+
+<!-- wp:group {"tagName":"article","className":"nc-card nc-anim nc-d4","layout":{"type":"default"}} -->
+<article class="wp-block-group nc-card nc-anim nc-d4"><!-- wp:group {"className":"nc-thumb","layout":{"type":"default"}} -->
+<div class="wp-block-group nc-thumb"><!-- wp:image {<?php cv_idjson( '2026/03/IMG_9830-1-scaled.jpg' ); ?>"sizeSlug":"full","linkDestination":"none","className":"cv-img cv-s11"} -->
+<figure class="wp-block-image size-full cv-img cv-s11"><img src="<?php cv_src( '2026/03/IMG_9830-1-scaled.jpg' ); ?>" alt="Proyectos EMS"<?php cv_idattr( '2026/03/IMG_9830-1-scaled.jpg' ); ?>/></figure>
+<!-- /wp:image -->
+
+<!-- wp:paragraph {"className":"nc-badge cv-t-span"} -->
+<p class="nc-badge cv-t-span">Proyectos EMS</p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:group -->
+
+<!-- wp:group {"className":"nc-body","layout":{"type":"default"}} -->
+<div class="wp-block-group nc-body"><!-- wp:paragraph {"className":"nc-meta cv-t-span"} -->
+<p class="nc-meta cv-t-span">28 de febrero · 2025</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3,"className":"nc-card-title"} -->
+<h3 class="wp-block-heading nc-card-title">Presentaciones de proyectos EMS</h3>
+<!-- /wp:heading -->
+
+<!-- wp:cervantes/html -->
+<div class="nc-sep"></div>
+<!-- /wp:cervantes/html -->
+
+<!-- wp:paragraph {"className":"nc-text"} -->
+<p class="nc-text">Los alumnos de Educación Media Superior expusieron sus proyectos finales ante docentes y compañeros, demostrando el nivel académico y la creatividad que los caracteriza.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph {"className":"nc-link cv-t-a cv-a cv-arrow cv-ico-2"} -->
+<p class="nc-link cv-t-a cv-a cv-arrow cv-ico-2"><a href="#">Leer más</a></p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:group --></article>
+<!-- /wp:group --></div>
+<!-- /wp:group --></div>
+<!-- /wp:group --></section>
+<!-- /wp:group -->
+
+<!-- wp:group {"tagName":"section","layout":{"type":"default"}} -->
+<section id="cerv-form-ems" class="wp-block-group"><!-- wp:group {"className":"fe-split","layout":{"type":"default"}} -->
+<div class="wp-block-group fe-split"><!-- wp:group {"className":"fe-info","layout":{"type":"default"}} -->
+<div class="wp-block-group fe-info"><!-- wp:paragraph {"className":"fe-info-eyebrow cv-t-div"} -->
+<p class="fe-info-eyebrow cv-t-div">Bachillerato · EMS</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:heading -->
 <h2 class="wp-block-heading">¿Querés <em>saber más?</em></h2>
 <!-- /wp:heading -->
 
-<!-- wp:paragraph -->
-<p>Elegí el año de Educación Media Superior y dejanos tu consulta. Nos comunicamos a la brevedad.</p>
+<!-- wp:paragraph {"className":"fe-info-desc"} -->
+<p class="fe-info-desc">Seleccioná el año de EMS y dejanos tu consulta. Nos comunicamos a la brevedad.</p>
 <!-- /wp:paragraph -->
 
-<!-- wp:group {"style":{"spacing":{"margin":{"top":"var:preset|spacing|40"},"blockGap":"var:preset|spacing|30"}},"layout":{"type":"grid","columnCount":3}} -->
-<div class="wp-block-group" style="margin-top:var(--wp--preset--spacing--40)"><!-- wp:group {"className":"is-style-tarjeta","style":{"spacing":{"padding":{"top":"var:preset|spacing|40","bottom":"var:preset|spacing|40","left":"var:preset|spacing|40","right":"var:preset|spacing|40"},"blockGap":"0.2rem"}},"layout":{"type":"default"}} -->
-<div class="wp-block-group is-style-tarjeta" style="padding-top:var(--wp--preset--spacing--40);padding-right:var(--wp--preset--spacing--40);padding-bottom:var(--wp--preset--spacing--40);padding-left:var(--wp--preset--spacing--40)"><!-- wp:paragraph {"className":"cv-num"} -->
-<p class="cv-num">1.º</p>
+<!-- wp:group {"className":"fe-levels","layout":{"type":"default"}} -->
+<div class="wp-block-group fe-levels"><!-- wp:group {"className":"fe-level","layout":{"type":"default"}} -->
+<div class="wp-block-group fe-level"><!-- wp:paragraph {"className":"fe-level-num cv-t-div"} -->
+<p class="fe-level-num cv-t-div">1</p>
 <!-- /wp:paragraph -->
 
-<!-- wp:paragraph {"textColor":"gris","fontSize":"small"} -->
-<p class="has-gris-color has-text-color has-small-font-size">EMS</p>
+<!-- wp:paragraph {"className":"cv-t-span"} -->
+<p class="cv-t-span">Primer año EMS</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group -->
 
-<!-- wp:group {"className":"is-style-tarjeta","style":{"spacing":{"padding":{"top":"var:preset|spacing|40","bottom":"var:preset|spacing|40","left":"var:preset|spacing|40","right":"var:preset|spacing|40"},"blockGap":"0.2rem"}},"layout":{"type":"default"}} -->
-<div class="wp-block-group is-style-tarjeta" style="padding-top:var(--wp--preset--spacing--40);padding-right:var(--wp--preset--spacing--40);padding-bottom:var(--wp--preset--spacing--40);padding-left:var(--wp--preset--spacing--40)"><!-- wp:paragraph {"className":"cv-num"} -->
-<p class="cv-num">2.º</p>
+<!-- wp:group {"className":"fe-level","layout":{"type":"default"}} -->
+<div class="wp-block-group fe-level"><!-- wp:paragraph {"className":"fe-level-num cv-t-div"} -->
+<p class="fe-level-num cv-t-div">2</p>
 <!-- /wp:paragraph -->
 
-<!-- wp:paragraph {"textColor":"gris","fontSize":"small"} -->
-<p class="has-gris-color has-text-color has-small-font-size">EMS</p>
+<!-- wp:paragraph {"className":"cv-t-span"} -->
+<p class="cv-t-span">Segundo año EMS</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group -->
 
-<!-- wp:group {"className":"is-style-tarjeta","style":{"spacing":{"padding":{"top":"var:preset|spacing|40","bottom":"var:preset|spacing|40","left":"var:preset|spacing|40","right":"var:preset|spacing|40"},"blockGap":"0.2rem"}},"layout":{"type":"default"}} -->
-<div class="wp-block-group is-style-tarjeta" style="padding-top:var(--wp--preset--spacing--40);padding-right:var(--wp--preset--spacing--40);padding-bottom:var(--wp--preset--spacing--40);padding-left:var(--wp--preset--spacing--40)"><!-- wp:paragraph {"className":"cv-num"} -->
-<p class="cv-num">3.º</p>
+<!-- wp:group {"className":"fe-level","layout":{"type":"default"}} -->
+<div class="wp-block-group fe-level"><!-- wp:paragraph {"className":"fe-level-num cv-t-div"} -->
+<p class="fe-level-num cv-t-div">3</p>
 <!-- /wp:paragraph -->
 
-<!-- wp:paragraph {"textColor":"gris","fontSize":"small"} -->
-<p class="has-gris-color has-text-color has-small-font-size">EMS</p>
-<!-- /wp:paragraph --></div>
-<!-- /wp:group --></div>
-<!-- /wp:group -->
-
-<!-- wp:separator {"className":"is-style-corto-oro","style":{"spacing":{"margin":{"top":"var:preset|spacing|50","bottom":"var:preset|spacing|40"}}}} -->
-<hr class="wp-block-separator has-alpha-channel-opacity is-style-corto-oro" style="margin-top:var(--wp--preset--spacing--50);margin-bottom:var(--wp--preset--spacing--40)"/>
-<!-- /wp:separator -->
-
-<!-- wp:group {"style":{"spacing":{"blockGap":"1rem"}},"layout":{"type":"flex","orientation":"vertical","flexWrap":"wrap"}} -->
-<div class="wp-block-group"><!-- wp:group {"className":"cv-contact-row","style":{"spacing":{"blockGap":"1rem"}},"layout":{"type":"flex","flexWrap":"nowrap","verticalAlignment":"center"}} -->
-<div class="wp-block-group cv-contact-row"><!-- wp:cervantes/icon {"icon":"ubicacion","size":46} /-->
-
-<!-- wp:paragraph -->
-<p><strong>Dirección</strong>Bulevar España 2492, Montevideo</p>
-<!-- /wp:paragraph --></div>
-<!-- /wp:group -->
-
-<!-- wp:group {"className":"cv-contact-row","style":{"spacing":{"blockGap":"1rem"}},"layout":{"type":"flex","flexWrap":"nowrap","verticalAlignment":"center"}} -->
-<div class="wp-block-group cv-contact-row"><!-- wp:cervantes/icon {"icon":"telefono","size":46} /-->
-
-<!-- wp:paragraph -->
-<p><strong>Teléfono</strong><a href="tel:+59827071414">+598 2707 1414</a></p>
-<!-- /wp:paragraph --></div>
-<!-- /wp:group -->
-
-<!-- wp:group {"className":"cv-contact-row","style":{"spacing":{"blockGap":"1rem"}},"layout":{"type":"flex","flexWrap":"nowrap","verticalAlignment":"center"}} -->
-<div class="wp-block-group cv-contact-row"><!-- wp:cervantes/icon {"icon":"email","size":46} /-->
-
-<!-- wp:paragraph -->
-<p><strong>Email</strong><a href="mailto:info@cervantes.edu.uy">info@cervantes.edu.uy</a></p>
-<!-- /wp:paragraph --></div>
-<!-- /wp:group -->
-
-<!-- wp:group {"className":"cv-contact-row","style":{"spacing":{"blockGap":"1rem"}},"layout":{"type":"flex","flexWrap":"nowrap","verticalAlignment":"center"}} -->
-<div class="wp-block-group cv-contact-row"><!-- wp:cervantes/icon {"icon":"reloj","size":46} /-->
-
-<!-- wp:paragraph -->
-<p><strong>Horario</strong>Lunes a viernes · 8:00 a 17:30</p>
+<!-- wp:paragraph {"className":"cv-t-span"} -->
+<p class="cv-t-span">Tercer año EMS</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group --></div>
 <!-- /wp:group --></div>
-<!-- /wp:column -->
+<!-- /wp:group -->
 
-<!-- wp:column {"width":"58%"} -->
-<div class="wp-block-column" style="flex-basis:58%"><!-- wp:group {"className":"is-style-tarjeta","style":{"spacing":{"padding":{"top":"var:preset|spacing|60","bottom":"var:preset|spacing|60","left":"var:preset|spacing|60","right":"var:preset|spacing|60"},"blockGap":"var:preset|spacing|30"}},"layout":{"type":"default"}} -->
-<div class="wp-block-group is-style-tarjeta" style="padding-top:var(--wp--preset--spacing--60);padding-right:var(--wp--preset--spacing--60);padding-bottom:var(--wp--preset--spacing--60);padding-left:var(--wp--preset--spacing--60)"><!-- wp:heading {"level":3} -->
-<h3 class="wp-block-heading">Escribinos</h3>
-<!-- /wp:heading -->
-
-<!-- wp:group {"className":"cv-form","layout":{"type":"default"}} -->
-<div class="wp-block-group cv-form"><!-- wp:shortcode -->
-[contact-form-7 title="Cervantes · Bachillerato"]
+<!-- wp:group {"className":"fe-form-panel","layout":{"type":"default"}} -->
+<div class="wp-block-group fe-form-panel"><!-- wp:shortcode -->
+[contact-form-7 title="Cervantes · Bachillerato" html_id="feEms"]
 <!-- /wp:shortcode --></div>
 <!-- /wp:group --></div>
-<!-- /wp:group --></div>
-<!-- /wp:column --></div>
-<!-- /wp:columns --></div>
+<!-- /wp:group --></section>
 <!-- /wp:group -->

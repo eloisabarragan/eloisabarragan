@@ -1,0 +1,22 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "cervantes/html",
+	"title": "Elemento del diseño",
+	"category": "design",
+	"icon": "art",
+	"description": "Ícono o adorno del diseño original del colegio (se muestra igual que en el sitio). Su código se edita en el panel lateral.",
+	"keywords": [ "html", "icono", "svg", "adorno", "cervantes" ],
+	"textdomain": "colegio-cervantes",
+	"attributes": {
+		"content": { "type": "string", "source": "raw" }
+	},
+	"supports": {
+		"className": false,
+		"customClassName": false,
+		"html": false,
+		"reusable": false
+	},
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./editor.css"
+}

@@ -1,0 +1,2 @@
+/* En el editor el bloque no agrega una caja: el elemento se ve igual que en el sitio. */
+.cv-html-block { display: contents; }
