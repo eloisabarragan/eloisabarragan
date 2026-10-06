@@ -17,4 +17,5 @@ Fotos bajadas del Drive de Martino y optimizadas para la web (1100–1200 px de 
 | `buns-fila-2.jpg` | IMG_0252.JPG | Galería |
 | `buns-cenital.jpg` | IMG_0256.JPG | Galería |
 
-Si falta alguna foto, la web dibuja el pan en su lugar.
+Si falta alguna foto, su recuadro queda oculto (la web ya no usa dibujos).
+| `th-*.jpg` | recortes de las fotos de arriba | Miniaturas del carrusel |

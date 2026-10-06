@@ -86,9 +86,13 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:100;op
 .seal{display:grid;place-items:center;text-align:center;width:5.2rem;aspect-ratio:1;border-radius:50%;background:var(--green);color:var(--gold);border:2px solid var(--gold);box-shadow:0 0 0 3px var(--green);font-family:var(--cond);font-weight:800;text-transform:uppercase;line-height:.95;font-size:.7rem;padding:.5rem}
 .seal big{display:block;font-size:1.6rem;font-weight:900}
 
-.loaf-wrap{position:absolute;left:62%;top:50%;width:min(52vw,720px);transform:translate(-50%,-50%);z-index:2;text-align:center}
-.loaf-wrap svg{display:block;width:100%;height:auto;filter:drop-shadow(0 40px 36px rgba(0,0,0,.4))}
-.loaf-cap{display:inline-flex;align-items:baseline;gap:.7rem;margin-top:.4rem;font-family:var(--cond);text-transform:uppercase;color:var(--cream);background:color-mix(in srgb,var(--forest) 70%,transparent);border:1px solid color-mix(in srgb,var(--gold) 50%,transparent);padding:.45em 1.1em;border-radius:99px;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.stack{position:absolute;left:61%;top:50%;width:min(44vw,600px);transform:translate(-50%,-50%);z-index:2;text-align:center}
+.cards{position:relative;aspect-ratio:1200/714;max-width:100%}
+.card-ph{position:absolute;inset:0;margin:0;border-radius:24px;overflow:hidden;background:#fff;box-shadow:0 40px 60px rgba(0,0,0,.35);opacity:0;transform:translateY(40px) rotate(6deg) scale(.92);transition:opacity .6s,transform .8s cubic-bezier(.2,.9,.25,1.05)}
+.card-ph img{width:100%;height:100%;object-fit:cover;display:block}
+.card-ph.on{opacity:1;transform:rotate(-3deg)}
+.card-ph.out{opacity:0;transform:translateY(-40px) rotate(-10deg) scale(.92)}
+.loaf-cap{display:inline-flex;align-items:baseline;gap:.7rem;margin-top:1.6rem;font-family:var(--cond);text-transform:uppercase;color:var(--cream);background:color-mix(in srgb,var(--forest) 70%,transparent);border:1px solid color-mix(in srgb,var(--gold) 50%,transparent);padding:.45em 1.1em;border-radius:99px}
 .loaf-cap b{font-weight:900;font-size:clamp(1.2rem,2vw,1.8rem);color:var(--gold);letter-spacing:.02em}
 .loaf-cap span{font-weight:700;letter-spacing:.12em;font-size:clamp(.75rem,1vw,.9rem)}
 .forms{position:absolute;right:var(--gutter);top:50%;transform:translateY(-50%);list-style:none;margin:0;padding:0;z-index:3;display:grid;gap:1.2rem;text-align:right}
@@ -97,8 +101,6 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:100;op
 .forms li span{font-weight:700;letter-spacing:.12em;font-size:.78rem}
 .forms li i{font-style:normal;font-family:var(--script);text-transform:none;color:var(--gold);font-size:1.1rem;margin-right:.3rem}
 .forms li.on{opacity:1;color:var(--cream);transform:scale(1.08)}
-.crumb{position:absolute;z-index:4;will-change:transform;pointer-events:none}
-.crumb.blur{filter:blur(2.5px)}
 .scroll-hint{position:absolute;left:50%;bottom:calc(1.5rem + env(safe-area-inset-bottom,0px));transform:translateX(-50%);font-family:var(--cond);font-weight:800;letter-spacing:.2em;text-transform:uppercase;font-size:.75rem;color:var(--green);display:flex;flex-direction:column;align-items:center;gap:.4rem;z-index:3}
 .scroll-hint i{width:2px;height:34px;background:var(--green);animation:drop 1.6s ease-in-out infinite;transform-origin:top}
 @keyframes drop{50%{transform:scaleY(.4)}}
@@ -108,7 +110,7 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:100;op
   .hero-copy{top:5.5rem;transform:none;max-width:none;right:var(--gutter)}
   .hero-copy h1{font-size:clamp(3rem,14vw,5.5rem)}
   .hero-copy p,.seals{display:none}
-  .loaf-wrap{left:50%;top:auto;bottom:7%;transform:translateX(-50%);width:min(92vw,460px)}
+  .stack{left:50%;top:auto;bottom:7%;transform:translateX(-50%);width:min(88vw,440px)}
   .forms{display:none}
   .loaf-cap{flex-direction:column;align-items:center;gap:.1rem;border-radius:18px;white-space:nowrap}
   .scroll-hint{display:none}
@@ -147,7 +149,6 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:100;op
 .plate{position:relative;aspect-ratio:4/3;max-width:100%;border-radius:24px;background:#fff;box-shadow:0 30px 60px rgba(0,0,0,.22);display:grid;place-items:center;overflow:hidden;transform:rotate(-3deg)}
 .plate img{width:100%;height:100%;object-fit:contain;padding:4%}
 .plate img.cover{object-fit:cover;padding:0}
-.plate svg{width:80%;height:auto}
 .plate.spin{animation:plateIn .9s cubic-bezier(.2,.9,.25,1.05) both}
 @keyframes plateIn{from{transform:rotate(-24deg) scale(.7) translateX(-25%);opacity:.1}}
 .f-title .rank{font-family:var(--cond);font-weight:700;letter-spacing:.14em;text-transform:uppercase;font-size:.8rem;color:var(--ink-soft)}
@@ -182,7 +183,7 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:100;op
 .thumb:hover{transform:translateY(-3px)}
 .thumb[aria-pressed="true"]{background:color-mix(in srgb,#fff 70%,transparent)}
 .thumb .disc{width:72%;aspect-ratio:1;border-radius:50%;background:#fff;display:grid;place-items:center;box-shadow:0 10px 18px rgba(0,0,0,.14);overflow:hidden}
-.thumb .disc svg{width:86%}
+.thumb .disc img{width:100%;height:100%;object-fit:cover}
 .thumb b{font-family:var(--cond);font-weight:800;font-size:.85rem;text-transform:uppercase;line-height:1.05;text-align:center}
 .thumb small{font-size:.7rem;color:var(--ink-soft);font-family:var(--cond);font-weight:700;letter-spacing:.06em;text-transform:uppercase}
 .dock{display:flex;justify-content:center;gap:.6rem;margin-top:1.2rem}
@@ -197,11 +198,9 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:100;op
 .squish-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,6vw,6rem);align-items:center}
 .squish h2 .script{color:var(--gold-deep);font-size:.7em;display:block;margin-top:.05em}
 .squish p{font-size:clamp(1.1rem,1.4vw,1.3rem);max-width:40ch;color:color-mix(in srgb,var(--green) 85%,var(--cream))}
-.squish-btn{background:none;border:0;padding:0;cursor:grab;width:100%;max-width:520px;justify-self:center;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
-.squish-btn svg{width:100%;height:auto;transform-origin:50% 92%;transition:transform .7s cubic-bezier(.25,2.2,.45,.9)}
-.squish-btn.down svg{transform:scale(1.16,.62);transition:transform .25s cubic-bezier(.3,.7,.4,1)}
-.squish-count{font-family:var(--cond);font-weight:800;letter-spacing:.12em;text-transform:uppercase;font-size:.95rem;margin-top:1.2rem;color:var(--green);text-align:center}
-.squish-count b{font-size:1.6rem;font-variant-numeric:tabular-nums;color:var(--gold-deep)}
+.squish-photo{margin:0;border-radius:28px;overflow:hidden;max-width:520px;width:100%;justify-self:center;aspect-ratio:4/5;box-shadow:0 30px 60px rgba(14,38,24,.25)}
+.squish-photo img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 1.2s cubic-bezier(.2,.9,.2,1)}
+.squish-photo:hover img{transform:scale(1.05)}
 .facts{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;margin-top:2rem;border-top:2px solid var(--green);padding-top:1.4rem}
 .facts b{display:block;font-family:var(--cond);font-weight:900;font-size:1.5rem;text-transform:uppercase;line-height:1}
 .facts span{font-size:.95rem;color:color-mix(in srgb,var(--green) 80%,var(--cream))}
@@ -214,8 +213,8 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:100;op
 .use-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
 .use{display:flex;flex-direction:column;gap:.8rem;min-width:0;text-decoration:none;color:inherit}
 .use .pic{aspect-ratio:16/10;border-radius:22px;overflow:hidden;position:relative;background:var(--c);display:grid;place-items:center;max-width:100%}
-.use .pic svg{width:78%;transition:transform .6s cubic-bezier(.3,1.5,.5,1)}
-.use:hover .pic svg{transform:scale(1.08) rotate(-3deg)}
+.use .pic img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 1s cubic-bezier(.2,.9,.2,1)}
+.use:hover .pic img{transform:scale(1.06)}
 .use h3{font-size:clamp(2rem,3vw,2.8rem)}
 .use .meta{display:flex;align-items:center;gap:.5rem;font-family:var(--cond);font-weight:700;letter-spacing:.06em;text-transform:uppercase;font-size:.9rem;color:var(--gold)}
 .use .meta i{width:1.1rem;height:1.1rem;border-radius:50%;background:var(--gold);color:var(--green);display:grid;place-items:center;font-style:normal;font-size:.7rem}
@@ -231,7 +230,6 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:100;op
 .bento .tall{grid-row:span 2}
 .bento figure.wide img{object-fit:contain;background:#fff}
 .bento img,.bento svg{width:100%;height:100%;object-fit:cover;display:block;transition:transform 1.4s cubic-bezier(.2,.9,.2,1)}
-.bento svg{object-fit:contain;padding:10%;background:radial-gradient(circle at 50% 45%,var(--leaf),var(--green))}
 .bento figure:hover img,.bento figure:hover svg{transform:scale(1.06)}
 .bento figcaption{position:absolute;left:0;right:0;bottom:0;padding:2.4rem 1rem .9rem;background:linear-gradient(transparent,color-mix(in srgb,var(--forest) 88%,transparent));font-family:var(--cond);font-weight:800;text-transform:uppercase;letter-spacing:.06em;font-size:clamp(1rem,1.6vw,1.35rem)}
 @media (max-width:700px){.bento{grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:170px}}
@@ -292,7 +290,7 @@ footer{overflow:hidden;padding-top:2rem}
         <span class="w thin" style="--i:0">Pan de</span>
         <span class="w" style="--i:1">papa</span>
       </h1>
-      <p>Esponjoso y liviano. Una misma masa, tres formas: redondo, mediano y largo. <b>Bajá y mirá cómo se estira.</b></p>
+      <p>Esponjoso y liviano. Una misma masa, tres formas: redondo, mediano y largo. <b>Bajá y conocé las tres.</b></p>
       <div class="cta">
         <a class="btn dark" href="#productos">Ver la línea →</a>
         <a class="btn line" href="#contacto">Para comercios</a>
@@ -302,8 +300,12 @@ footer{overflow:hidden;padding-top:2rem}
         <div class="seal"><span>Industria<br>uruguaya</span></div>
       </div>
     </div>
-    <div class="loaf-wrap">
-      <div id="loaf" role="img" aria-label="Pan de papa Martino que pasa de Bun redondo a Brot y a Hoagie"></div>
+    <div class="stack">
+      <div class="cards" id="cards">
+        <figure class="card-ph on"><img src="img/pack-bun-sesamo.jpg" alt="Bolsa de Bun de papa con sésamo Martino, 6 unidades"></figure>
+        <figure class="card-ph"><img src="img/pack-brot-clasico.jpg" alt="Bolsa de Brot de papa clásico Martino, 4 unidades"></figure>
+        <figure class="card-ph"><img src="img/pack-hoagie-queso.jpg" alt="Bolsa de Hoagie de papa con queso Martino, 8 unidades"></figure>
+      </div>
       <div class="loaf-cap" aria-live="polite"><b id="capName">Bun de papa</b><span id="capInfo">Sésamo · 6 u · 450 g</span></div>
     </div>
     <ol class="forms" id="forms" aria-label="Las tres formas">
@@ -311,7 +313,6 @@ footer{overflow:hidden;padding-top:2rem}
       <li><i>02</i><b>Brot</b><span>Mediano · 4 u · 320 g</span></li>
       <li><i>03</i><b>Hoagie</b><span>Largo · 8 u · 510 g</span></li>
     </ol>
-    <div id="crumbs" aria-hidden="true"></div>
     <div class="scroll-hint" aria-hidden="true">Bajá<i></i></div>
   </div>
 </section>
@@ -357,7 +358,7 @@ footer{overflow:hidden;padding-top:2rem}
   <div class="wrap squish-grid">
     <div>
       <span class="label">Por qué papa</span>
-      <h2 id="sqtitle">Apretalo. <span class="script">Vuelve solo.</span></h2>
+      <h2 id="sqtitle">Tierno <span class="script">de verdad.</span></h2>
       <p>La papa en la masa guarda la humedad adentro del pan. Por eso la miga queda tierna y elástica, aguanta la salsa sin desarmarse y sigue suave varios días después de abrir la bolsa.</p>
       <div class="facts">
         <div><b>Más tierno</b><span>La miga se comprime y recupera la forma.</span></div>
@@ -365,10 +366,7 @@ footer{overflow:hidden;padding-top:2rem}
         <div><b>Más liviano</b><span>Esponjoso, sin sentirse pesado.</span></div>
       </div>
     </div>
-    <div style="display:grid;justify-items:center">
-      <button class="squish-btn" id="squish" type="button" aria-label="Apretar el pan"></button>
-      <div class="squish-count" id="sqCount">Mantené apretado el pan y soltalo</div>
-    </div>
+    <figure class="squish-photo"><img src="img/bun-queso-mano.jpg" alt="Mano sosteniendo un Bun de papa con queso Martino" loading="lazy"></figure>
   </div>
 </section>
 
@@ -431,92 +429,38 @@ footer{overflow:hidden;padding-top:2rem}
 const $ = s => document.querySelector(s);
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
-const rnd = seed => () => (seed = (seed * 16807) % 2147483647) / 2147483647;
-let uid = 0;
 
-/* ---------- Ilustración de pan de papa (se usa si falta una foto) ---------- */
-const SHAPES = {bun:{rx:112, ry:66, y:88}, brot:{rx:128, ry:52, y:96}, hoagie:{rx:142, ry:36, y:110}};
-function bread(top = 'clasico', shape = 'bun'){
-  const g = 'g'+uid++, s = 'k'+uid++, r = rnd(top.length * 97 + shape.length * 13);
-  const {rx, ry, y:domeY} = SHAPES[shape]; const cx = 150;
-  let deco = '';
-  if (top === 'clasico' && shape !== 'bun'){ for (let i = -1; i <= 1; i++) deco += `<path d="M${cx + i*rx*.55 - 14} ${domeY - ry*.55} q14 ${ry*.5} 30 ${ry*.9}" stroke="#a95a1f" stroke-width="3" fill="none" opacity=".45" stroke-linecap="round"/>`; }
-  if (top === 'sesamo'){ for (let i = 0; i < 90; i++){ const a = r()*6.283, d = Math.sqrt(r()); const x = cx + Math.cos(a)*d*rx*.86, yy = domeY + Math.sin(a)*d*ry*.78 - 4; const dark = r() < .12; deco += `<ellipse cx="${x.toFixed(1)}" cy="${yy.toFixed(1)}" rx="4" ry="2.1" fill="${dark ? '#2a1d14' : '#fff6dc'}" stroke="${dark ? '#000' : '#d9b679'}" stroke-width=".6" transform="rotate(${(r()*180)|0} ${x.toFixed(1)} ${yy.toFixed(1)})"/>`; } }
-  if (top === 'queso'){ for (let i = 0; i < 140; i++){ const a = r()*6.283, d = Math.sqrt(r()); const x = cx + Math.cos(a)*d*rx*.95, yy = domeY + 8 + Math.sin(a)*d*(ry+16)*.85; const c = ['#e38b2a','#c9661c','#f3b14a','#fbe2a0'][(r()*4)|0]; deco += `<rect x="${x.toFixed(1)}" y="${yy.toFixed(1)}" width="${(5+r()*7).toFixed(1)}" height="2.8" rx="1.2" fill="${c}" transform="rotate(${(r()*180)|0} ${x.toFixed(1)} ${yy.toFixed(1)})"/>`; } }
-  const crust = top === 'queso' ? ['#fbe9bd','#f0c47a','#c98b3c'] : ['#f7c47e','#e08d3c','#a2561d'];
-  return `<svg viewBox="0 0 300 200" role="img" aria-label="${shape} de papa">
-    <defs><radialGradient id="${g}" cx="40%" cy="22%" r="80%"><stop offset="0" stop-color="${crust[0]}"/><stop offset=".55" stop-color="${crust[1]}"/><stop offset="1" stop-color="${crust[2]}"/></radialGradient>
-    <linearGradient id="${s}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f8e2b0"/><stop offset="1" stop-color="#d9a660"/></linearGradient></defs>
-    <ellipse cx="150" cy="182" rx="${rx}" ry="11" fill="#000" opacity=".25"/>
-    <path d="M${cx-rx+6} ${domeY+8} Q${cx-rx} 176 ${cx-rx+30} 178 H${cx+rx-30} Q${cx+rx} 176 ${cx+rx-6} ${domeY+8} Z" fill="url(#${s})"/>
-    <ellipse cx="${cx}" cy="${domeY}" rx="${rx}" ry="${ry}" fill="url(#${g})"/>
-    <ellipse cx="${cx-rx*.3}" cy="${domeY-ry*.5}" rx="${rx*.3}" ry="${ry*.15}" fill="#fff" opacity=".22" transform="rotate(-10 ${cx-rx*.3} ${domeY-ry*.5})"/>
-    ${deco}</svg>`;
-}
+/* Si una foto no carga, se oculta su contenedor en vez de dejar un ícono roto */
 function guard(img){
-  const box = img.parentElement; const [top, shape] = (box.dataset.art || 'clasico:bun').split(':');
-  const fail = () => img.replaceWith(Object.assign(document.createElement('div'), {innerHTML: bread(top, shape)}).firstElementChild);
+  const fail = () => { const box = img.closest('figure, .plate, .pic, .disc') || img.parentElement; box.style.visibility = 'hidden'; };
   if (img.complete && !img.naturalWidth) fail(); else img.addEventListener('error', fail, {once:true});
 }
+document.querySelectorAll('img').forEach(guard);
 
-/* ---------- El pan que se estira: Bun → Brot → Hoagie ---------- */
+/* ---------- Hero: Bun → Brot → Hoagie con las bolsas reales ---------- */
 const FORMS = [
-  {rx:150, ry:96, y:132, name:'Bun de papa', info:'Sésamo · 6 u · 450 g'},
-  {rx:212, ry:74, y:150, name:'Brot de papa', info:'Clásico · 4 u · 320 g'},
-  {rx:272, ry:54, y:166, name:'Hoagie de papa', info:'Queso · 8 u · 510 g'},
+  {name:'Bun de papa', info:'Sésamo · 6 u · 450 g'},
+  {name:'Brot de papa', info:'Clásico · 4 u · 320 g'},
+  {name:'Hoagie de papa', info:'Queso · 8 u · 510 g'},
 ];
-const R = rnd(7);
-const seedPts = Array.from({length:120}, () => { const a = R()*Math.PI*2, d = Math.sqrt(R()); return [Math.cos(a)*d, Math.sin(a)*d, R()*180|0, R() < .14]; });
-const cheesePts = Array.from({length:170}, () => { const a = R()*Math.PI*2, d = Math.sqrt(R()); return [Math.cos(a)*d, Math.sin(a)*d, R()*180|0, ['#e38b2a','#c9661c','#f3b14a','#fbe2a0'][R()*4|0], 6 + R()*8]; });
-const lerp = (a, b, k) => a + (b - a) * k;
-const loafBox = $('#loaf');
-let lastT = -1;
-function drawLoaf(t){
-  if (Math.abs(t - lastT) < .002) return; lastT = t;
-  const i = Math.min(1, Math.floor(t)), k = t - i, A = FORMS[i], B = FORMS[i + 1];
-  const rx = lerp(A.rx, B.rx, k), ry = lerp(A.ry, B.ry, k), cy = lerp(A.y, B.y, k), cx = 300, base = 262;
-  const seedO = clamp(1 - t / .8), cheeseO = clamp((t - 1.25) / .6), scoreO = clamp(1 - Math.abs(t - 1) / .6);
-  const queso = cheeseO > .5;
-  const c0 = queso ? '#fbe9bd' : '#ffd08a', c1 = queso ? '#f0c47a' : '#e48d38', c2 = queso ? '#c98b3c' : '#a24f17';
-  let seeds = '', cheese = '', scores = '';
-  if (seedO > 0) seeds = `<g opacity="${seedO.toFixed(2)}">` + seedPts.map(([u,v,r,dark]) => { const x = (cx + u*rx*.86).toFixed(1), y = (cy + v*ry*.78 - 4).toFixed(1); return `<ellipse cx="${x}" cy="${y}" rx="5.5" ry="2.8" fill="${dark ? '#1d140d' : '#fff4d6'}" stroke="${dark ? '#000' : '#d6b06f'}" stroke-width=".7" transform="rotate(${r} ${x} ${y})"/>`; }).join('') + '</g>';
-  if (cheeseO > 0) cheese = `<g opacity="${cheeseO.toFixed(2)}">` + cheesePts.map(([u,v,r,c,w]) => { const x = (cx + u*rx*.94).toFixed(1), y = (cy + 6 + v*(ry+14)*.84).toFixed(1); return `<rect x="${x}" y="${y}" width="${w.toFixed(1)}" height="3" rx="1.4" fill="${c}" transform="rotate(${r} ${x} ${y})"/>`; }).join('') + '</g>';
-  if (scoreO > 0) for (let j = -1; j <= 1; j++) scores += `<path d="M${cx + j*rx*.5 - 18} ${cy - ry*.6} q16 ${ry*.55} 34 ${ry*.95}" stroke="#a95a1f" stroke-width="3.5" fill="none" stroke-linecap="round" opacity="${(scoreO*.5).toFixed(2)}"/>`;
-  loafBox.innerHTML = `<svg viewBox="0 0 600 300">
-    <defs><radialGradient id="lc" cx="40%" cy="22%" r="80%"><stop offset="0" stop-color="${c0}"/><stop offset=".55" stop-color="${c1}"/><stop offset="1" stop-color="${c2}"/></radialGradient>
-    <linearGradient id="ls" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f8e2b0"/><stop offset="1" stop-color="#d39a55"/></linearGradient></defs>
-    <ellipse cx="${cx}" cy="${base + 18}" rx="${rx * 1.02}" ry="13" fill="#000" opacity=".3"/>
-    <path d="M${cx-rx+6} ${cy+10} Q${cx-rx} ${base+12} ${cx-rx+34} ${base+14} H${cx+rx-34} Q${cx+rx} ${base+12} ${cx+rx-6} ${cy+10} Z" fill="url(#ls)"/>
-    <ellipse cx="${cx}" cy="${cy}" rx="${rx}" ry="${ry}" fill="url(#lc)"/>
-    <ellipse cx="${cx - rx*.3}" cy="${cy - ry*.5}" rx="${rx*.3}" ry="${ry*.15}" fill="#fff" opacity=".22" transform="rotate(-8 ${cx - rx*.3} ${cy - ry*.5})"/>
-    ${scores}${seeds}${cheese}</svg>`;
-  const n = Math.round(t);
+const cardEls = [...document.querySelectorAll('.card-ph')];
+let lastN = -1;
+function setForm(n){
+  if (n === lastN) return; lastN = n;
+  cardEls.forEach((c, j) => { c.classList.toggle('on', j === n); c.classList.toggle('out', j < n); });
   $('#capName').textContent = FORMS[n].name; $('#capInfo').textContent = FORMS[n].info;
   [...$('#forms').children].forEach((li, j) => li.classList.toggle('on', j === n));
 }
-
-/* sésamo y queso rallado que flotan alrededor */
-const crumbSpec = [[48,16,1.4,'s'],[84,20,1.9,'c','blur'],[50,78,1.2,'c'],[92,72,2.4,'s','blur'],[68,9,1.7,'s'],[74,88,2.1,'c'],[58,30,1,'s'],[96,44,1.6,'c'],[44,56,2.2,'s','blur'],[80,60,1.3,'s']];
-$('#crumbs').innerHTML = crumbSpec.map(([x,y,d,k,b], i) => `<div class="crumb ${b||''}" data-d="${d}" data-r="${i*47}" style="left:${x}%;top:${y}%">${k === 's'
-  ? `<svg width="${14*d}" height="${7*d}" viewBox="0 0 20 10"><ellipse cx="10" cy="5" rx="9" ry="4.2" fill="${i % 4 === 0 ? '#1d140d' : '#fff4d6'}" stroke="#c9a464" stroke-width=".8"/></svg>`
-  : `<svg width="${22*d}" height="${6*d}" viewBox="0 0 30 8"><rect x="1" y="1" width="28" height="6" rx="3" fill="#f2a83c"/></svg>`}</div>`).join('');
-const crumbs = [...document.querySelectorAll('.crumb')];
-
-let mx = 0, my = 0;
-$('#stick').addEventListener('pointermove', e => { mx = e.clientX / innerWidth - .5; my = e.clientY / innerHeight - .5; });
 const hero = $('#top'), nav = $('#nav'), hint = $('.scroll-hint');
-const hold = f => { const x = clamp((f - .15) / .7); return x * x * (3 - 2 * x); };
 function onScroll(){
   const r = hero.getBoundingClientRect();
   const p = clamp(-r.top / (r.height - innerHeight));
-  const raw = clamp(p / .9) * 2, seg = Math.min(1, Math.floor(raw));
-  drawLoaf(reduce ? Math.round(raw) : seg + hold(raw - seg));
-  crumbs.forEach(c => { const d = +c.dataset.d; c.style.transform = `translate(${mx*d*30}px, ${(my*d*30) - p*d*170}px) rotate(${+c.dataset.r + p*d*120}deg)`; });
+  setForm(Math.min(2, Math.floor(p * 3.2)));
   hint.style.opacity = 1 - clamp(p * 6);
   nav.classList.toggle('solid', r.bottom < 80);
 }
 addEventListener('scroll', onScroll, {passive:true}); addEventListener('resize', onScroll);
-(function loop(){ onScroll(); if (!reduce) requestAnimationFrame(loop); })();
+onScroll();
 
 /* ---------- Banda ---------- */
 const words = ['Calidad','Tradición','Pasión','Esponjoso y liviano','0% grasas trans','Industria uruguaya'];
@@ -524,16 +468,17 @@ $('#band').innerHTML = [...words, ...words].map(w => `<span>${w}</span>`).join('
 
 /* ---------- Productos (datos de las bolsas) ---------- */
 const products = [
-  {id:'bun-clasico', line:'Bun de papa', name:'Clásico', top:'clasico', shape:'bun', units:6, g:450, img:'img/pack-bun-clasico.jpg', color:'#f6d36b', desc:'Redondo, dorado y suave. La base de la hamburguesa casera y del sándwich de todos los días.', for:['Hamburguesa casera','Sándwich de milanesa','Tostado de jamón y queso']},
-  {id:'bun-sesamo', line:'Bun de papa', name:'Sésamo', top:'sesamo', shape:'bun', units:6, g:450, img:'img/pack-bun-sesamo.jpg', color:'#f3b9a6', desc:'El mismo bun esponjoso con la tapa cubierta de sésamo blanco y negro. Le suma un crocante tostado.', for:['Hamburguesa doble','Pulled pork','Burger de pollo crispy']},
-  {id:'bun-queso', line:'Bun de papa', name:'Queso', top:'queso', shape:'bun', units:6, g:450, img:'img/bun-queso-mano.jpg', cover:true, color:'#bfe0a8', desc:'Costra de queso gratinado por arriba y por los costados. Calentalo un minuto y se come solo.', for:['Cheeseburger','Sándwich de bondiola','Merienda tibia, solo']},
-  {id:'brot-clasico', line:'Brot de papa', name:'Clásico', top:'clasico', shape:'brot', units:4, g:320, img:'img/pack-brot-clasico.jpg', color:'#f6d36b', desc:'Más largo que un bun y más ancho que un pancho. Hecho para el chivito y los sándwiches abundantes.', for:['Chivito al pan','Sándwich de lomo','Choripán']},
-  {id:'brot-queso', line:'Brot de papa', name:'Queso', top:'queso', shape:'brot', units:4, g:320, img:'img/pack-brot-queso.jpg', color:'#bfe0a8', desc:'El Brot con costra de queso. Con un chorizo a la parrilla adentro, no necesita nada más.', for:['Choripán','Sándwich de pollo','Bondiola con morrones']},
-  {id:'hoagie-clasico', line:'Hoagie de papa', name:'Clásico', top:'clasico', shape:'hoagie', units:8, g:510, img:'img/pack-hoagie-clasico.jpg', color:'#f6d36b', desc:'Largo, angosto y tierno. El pan del pancho, del sub y de la merienda con fiambre.', for:['Pancho','Sub de fiambres','Sándwich de atún']},
-  {id:'hoagie-queso', line:'Hoagie de papa', name:'Queso', top:'queso', shape:'hoagie', units:8, g:510, img:'img/pack-hoagie-queso.jpg', color:'#bfe0a8', desc:'Ocho hoagies con queso rallado tostado por encima. El pancho deja de ser un pancho cualquiera.', for:['Pancho con queso','Sub de pollo','Picada caliente']},
+  {id:'bun-clasico', th:'img/th-bun-clasico.jpg', line:'Bun de papa', name:'Clásico', top:'clasico', shape:'bun', units:6, g:450, img:'img/pack-bun-clasico.jpg', color:'#f6d36b', desc:'Redondo, dorado y suave. La base de la hamburguesa casera y del sándwich de todos los días.', for:['Hamburguesa casera','Sándwich de milanesa','Tostado de jamón y queso']},
+  {id:'bun-sesamo', th:'img/th-bun-sesamo.jpg', line:'Bun de papa', name:'Sésamo', top:'sesamo', shape:'bun', units:6, g:450, img:'img/pack-bun-sesamo.jpg', color:'#f3b9a6', desc:'El mismo bun esponjoso con la tapa cubierta de sésamo blanco y negro. Le suma un crocante tostado.', for:['Hamburguesa doble','Pulled pork','Burger de pollo crispy']},
+  {id:'bun-queso', th:'img/th-bun-queso.jpg', line:'Bun de papa', name:'Queso', top:'queso', shape:'bun', units:6, g:450, img:'img/bun-queso-mano.jpg', cover:true, color:'#bfe0a8', desc:'Costra de queso gratinado por arriba y por los costados. Calentalo un minuto y se come solo.', for:['Cheeseburger','Sándwich de bondiola','Merienda tibia, solo']},
+  {id:'brot-clasico', th:'img/th-brot-clasico.jpg', line:'Brot de papa', name:'Clásico', top:'clasico', shape:'brot', units:4, g:320, img:'img/pack-brot-clasico.jpg', color:'#f6d36b', desc:'Más largo que un bun y más ancho que un pancho. Hecho para el chivito y los sándwiches abundantes.', for:['Chivito al pan','Sándwich de lomo','Choripán']},
+  {id:'brot-queso', th:'img/th-brot-queso.jpg', line:'Brot de papa', name:'Queso', top:'queso', shape:'brot', units:4, g:320, img:'img/pack-brot-queso.jpg', color:'#bfe0a8', desc:'El Brot con costra de queso. Con un chorizo a la parrilla adentro, no necesita nada más.', for:['Choripán','Sándwich de pollo','Bondiola con morrones']},
+  {id:'hoagie-clasico', th:'img/th-hoagie-clasico.jpg', line:'Hoagie de papa', name:'Clásico', top:'clasico', shape:'hoagie', units:8, g:510, img:'img/pack-hoagie-clasico.jpg', color:'#f6d36b', desc:'Largo, angosto y tierno. El pan del pancho, del sub y de la merienda con fiambre.', for:['Pancho','Sub de fiambres','Sándwich de atún']},
+  {id:'hoagie-queso', th:'img/th-hoagie-queso.jpg', line:'Hoagie de papa', name:'Queso', top:'queso', shape:'hoagie', units:8, g:510, img:'img/pack-hoagie-queso.jpg', color:'#bfe0a8', desc:'Ocho hoagies con queso rallado tostado por encima. El pancho deja de ser un pancho cualquiera.', for:['Pancho con queso','Sub de pollo','Picada caliente']},
 ];
 const thumbs = $('#thumbs');
-thumbs.innerHTML = products.map((p,i) => `<button class="thumb" type="button" data-i="${i}" aria-pressed="false"><span class="disc">${bread(p.top, p.shape)}</span><b>${p.line.replace(' de papa','')}<br>${p.name}</b><small>${p.units} u · ${p.g} g</small></button>`).join('');
+thumbs.innerHTML = products.map((p,i) => `<button class="thumb" type="button" data-i="${i}" aria-pressed="false"><span class="disc"><img src="${p.th}" alt="" loading="lazy"></span><b>${p.line.replace(' de papa','')}<br>${p.name}</b><small>${p.units} u · ${p.g} g</small></button>`).join('');
+thumbs.querySelectorAll('img').forEach(guard);
 $('#dots').innerHTML = products.map(() => '<i></i>').join('');
 let cur = 0, tab = 'a';
 const ranks = ['N.º 1 · el más pedido','N.º 2 · el de las burgers','N.º 3 · el que se come solo','N.º 4 · el del chivito','N.º 5 · el del chori','N.º 6 · el del pancho','N.º 7 · el pancho premium'];
@@ -571,34 +516,14 @@ if (!playing) $('#playBtn').textContent = '▶';
 show(0, 'init'); restart();
 document.addEventListener('click', e => { const a = e.target.closest('[data-go]'); if (a) show(products.findIndex(p => p.id === a.dataset.go)); });
 
-/* ---------- Apretalo ---------- */
-const sq = $('#squish'); sq.innerHTML = bread('sesamo','bun');
-let presses = 0;
-const down = e => { e.preventDefault?.(); sq.classList.add('down'); };
-const up = () => { if (!sq.classList.contains('down')) return; sq.classList.remove('down'); presses++; $('#sqCount').innerHTML = `Lo apretaste <b>${presses}</b> ${presses === 1 ? 'vez' : 'veces'} y volvió a su forma`; burst(); };
-sq.addEventListener('pointerdown', down); addEventListener('pointerup', up); addEventListener('pointercancel', up);
-sq.addEventListener('keydown', e => { if ((e.key === ' ' || e.key === 'Enter') && !e.repeat) down(e); });
-sq.addEventListener('keyup', e => { if (e.key === ' ' || e.key === 'Enter') up(); });
-sq.addEventListener('click', e => e.preventDefault());
-function burst(){
-  if (reduce) return;
-  const host = sq.getBoundingClientRect();
-  for (let i = 0; i < 16; i++){
-    const d = document.createElement('span'); const a = Math.random()*Math.PI - Math.PI, v = 60 + Math.random()*90;
-    d.style.cssText = `position:fixed;left:${host.left + host.width/2}px;top:${host.top + host.height*.4}px;width:9px;height:4px;border-radius:4px;background:${Math.random()<.5?'#c98d0e':'#f2a83c'};pointer-events:none;z-index:60;transition:transform .8s cubic-bezier(.2,.8,.3,1),opacity .8s`;
-    document.body.append(d);
-    requestAnimationFrame(() => { d.style.transform = `translate(${Math.cos(a)*v*1.6}px,${Math.sin(a)*v}px) rotate(${Math.random()*400}deg)`; d.style.opacity = '0'; });
-    setTimeout(() => d.remove(), 850);
-  }
-}
-
 /* ---------- Usos ---------- */
 const uses = [
-  {t:'Hamburguesa', d:'Carne a la parrilla, cheddar y el Bun tostado de un lado. Aguanta los jugos sin romperse.', p:'bun-sesamo', c:'#e9a514'},
-  {t:'Chivito', d:'Lomito, jamón, muzzarella, huevo y todo lo que entre. Un pan que abraza sin aplastar.', p:'brot-clasico', c:'#245c39'},
-  {t:'Pancho', d:'Salchicha, mostaza y papas pay. En un Hoagie con queso es otro pancho.', p:'hoagie-queso', c:'#7a2c1a'},
+  {t:'Hamburguesa', d:'Carne a la parrilla, cheddar y el Bun tostado de un lado. Aguanta los jugos sin romperse.', p:'bun-sesamo', c:'#e9a514', img:'img/buns-fila.jpg', pos:'50% 72%'},
+  {t:'Chivito', d:'Lomito, jamón, muzzarella, huevo y todo lo que entre. Un pan que abraza sin aplastar.', p:'brot-clasico', c:'#fff', img:'img/pack-brot-clasico.jpg'},
+  {t:'Pancho', d:'Salchicha, mostaza y papas pay. En un Hoagie con queso es otro pancho.', p:'hoagie-queso', c:'#fff', img:'img/pack-hoagie-queso.jpg'},
 ];
-$('#useGrid').innerHTML = uses.map(u => { const p = products.find(x => x.id === u.p); return `<a class="use" href="#productos" data-go="${p.id}"><div class="pic" style="--c:${u.c}">${bread(p.top, p.shape)}</div><h3>${u.t}</h3><span class="meta"><i>★</i>${p.line} ${p.name} · ${p.units} u · ${p.g} g</span><p>${u.d}</p></a>`; }).join('');
+$('#useGrid').innerHTML = uses.map(u => { const p = products.find(x => x.id === u.p); return `<a class="use" href="#productos" data-go="${p.id}"><div class="pic" style="--c:${u.c}"><img src="${u.img}" style="object-position:${u.pos||'50% 50%'}" alt="${p.line} ${p.name}" loading="lazy"></div><h3>${u.t}</h3><span class="meta"><i>★</i>${p.line} ${p.name} · ${p.units} u · ${p.g} g</span><p>${u.d}</p></a>`; }).join('');
+document.querySelectorAll('#useGrid img').forEach(guard);
 
 /* ---------- Galería ---------- */
 const shots = [
