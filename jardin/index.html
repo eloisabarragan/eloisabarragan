@@ -1,0 +1,473 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Semillita · Jardín de Infantes</title>
+  <meta name="description" content="Semillita, jardín de infantes. Grupos chicos, patio gigante, huerta, música y familias adentro. Agendá una visita.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&family=Gochi+Hand&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌱</text></svg>">
+</head>
+<body>
+
+<!-- Confetti layer -->
+<canvas id="confetti" aria-hidden="true"></canvas>
+
+<!-- ============ NAV ============ -->
+<header class="nav" id="top">
+  <a href="#top" class="logo" aria-label="Semillita, inicio">
+    <svg class="logo-mark" viewBox="0 0 60 60" aria-hidden="true">
+      <circle cx="30" cy="34" r="20" fill="var(--sun)"/>
+      <path d="M30 14 C30 4 40 2 46 6 C42 12 36 14 30 14Z" fill="var(--grass)"/>
+      <path d="M30 14 C30 6 22 2 16 5 C19 11 25 14 30 14Z" fill="var(--grass-dark)"/>
+      <circle cx="24" cy="33" r="2.6" fill="var(--ink)"/>
+      <circle cx="36" cy="33" r="2.6" fill="var(--ink)"/>
+      <path d="M24 40 Q30 46 36 40" stroke="var(--ink)" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+    </svg>
+    <span>Semillita</span>
+  </a>
+  <nav class="nav-links" aria-label="Principal">
+    <a href="#dia">Un día acá</a>
+    <a href="#salas">Salas</a>
+    <a href="#jugar">Jugá</a>
+    <a href="#familias">Familias</a>
+    <a href="#faq">Preguntas</a>
+  </nav>
+  <div class="nav-right">
+    <button class="duck-counter" id="duckCounter" title="Hay 5 patitos escondidos en la página. ¿Los encontrás?">
+      <svg viewBox="0 0 40 40" aria-hidden="true"><use href="#duck"/></svg>
+      <span><b id="duckCount">0</b>/5</span>
+    </button>
+    <a href="#visita" class="btn btn-small">Agendá una visita</a>
+  </div>
+</header>
+
+<!-- SVG sprites -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="duck" viewBox="0 0 40 40">
+      <ellipse cx="20" cy="27" rx="14" ry="9" fill="#FFC531"/>
+      <circle cx="26" cy="15" r="8" fill="#FFC531"/>
+      <path d="M33 15 L39 17 L33 19Z" fill="#FF7A1A"/>
+      <circle cx="28" cy="13" r="1.8" fill="#2B2140"/>
+      <path d="M10 25 Q16 21 20 27" stroke="#E5A800" stroke-width="2" fill="none" stroke-linecap="round"/>
+    </symbol>
+    <filter id="wobble">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="4"/>
+    </filter>
+  </defs>
+</svg>
+
+<main>
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="hero">
+  <div class="hero-sky">
+    <div class="cloud c1"></div><div class="cloud c2"></div><div class="cloud c3"></div>
+
+    <div class="sun" id="sun" aria-hidden="true">
+      <div class="sun-rays"></div>
+      <div class="sun-face">
+        <div class="eye"><div class="pupil"></div></div>
+        <div class="eye"><div class="pupil"></div></div>
+        <div class="cheek l"></div><div class="cheek r"></div>
+        <div class="mouth"></div>
+      </div>
+    </div>
+
+    <div class="hero-copy">
+      <p class="kicker">Jardín de infantes · Salas de 2 a 5 años</p>
+      <h1 class="hero-title" id="heroTitle">
+        <span class="line">Acá se aprende</span>
+        <span class="line"><em class="hl hl-sun">jugando,</em></span>
+        <span class="line"><em class="hl hl-grass">ensuciándose</em> y</span>
+        <span class="line">riéndose <em class="hl hl-tomato">fuerte.</em></span>
+      </h1>
+      <p class="hero-sub">Grupos chicos, un patio gigante con huerta, maestras que conocen a cada peque por su nombre y familias que entran, preguntan y se quedan.</p>
+      <div class="hero-ctas">
+        <a href="#visita" class="btn">Quiero conocerlo <span aria-hidden="true">→</span></a>
+        <a href="#dia" class="btn btn-ghost">Ver un día acá</a>
+      </div>
+    </div>
+
+    <svg class="duck hidden-duck" data-duck="1" style="right:9%; top:62%" viewBox="0 0 40 40" role="button" tabindex="0" aria-label="Patito escondido"><use href="#duck"/></svg>
+  </div>
+
+  <div class="hero-ground" id="ground" title="Tocá el pasto para plantar algo">
+    <svg class="hills" viewBox="0 0 1440 220" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M0 120 C200 40 380 60 560 110 C760 165 900 50 1100 70 C1260 85 1360 130 1440 110 L1440 220 L0 220Z" fill="var(--grass-light)"/>
+      <path d="M0 160 C220 110 420 130 640 160 C860 190 1040 110 1240 130 C1340 140 1400 160 1440 155 L1440 220 L0 220Z" fill="var(--grass)"/>
+    </svg>
+    <div class="garden" id="garden"></div>
+    <p class="ground-hint"><span>tocá el pasto y plantá algo</span> 🌱</p>
+  </div>
+</section>
+
+<!-- ============ MARQUEE ============ -->
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track">
+    <span>Huerta</span><i>✿</i><span>Música todos los días</span><i>✦</i><span>Inglés jugando</span><i>●</i><span>Cocina</span><i>✿</i><span>Arte con las manos</span><i>✦</i><span>Cuentos</span><i>●</i><span>Patio enorme</span><i>✿</i><span>Psicomotricidad</span><i>✦</i>
+    <span>Huerta</span><i>✿</i><span>Música todos los días</span><i>✦</i><span>Inglés jugando</span><i>●</i><span>Cocina</span><i>✿</i><span>Arte con las manos</span><i>✦</i><span>Cuentos</span><i>●</i><span>Patio enorme</span><i>✿</i><span>Psicomotricidad</span><i>✦</i>
+  </div>
+</div>
+
+<!-- ============ POR QUÉ ============ -->
+<section class="why section" id="por-que">
+  <div class="section-head reveal">
+    <p class="scribble">lo que vas a sentir cuando entres</p>
+    <h2>Un lugar donde tu peque <span class="underline">quiere</span> volver.</h2>
+  </div>
+
+  <div class="why-grid">
+    <article class="why-card reveal" style="--c: var(--sun); --r:-2deg">
+      <div class="why-num" data-count="12">0</div>
+      <h3>peques por sala, máximo</h3>
+      <p>Grupos chicos de verdad. Cada maestra sabe quién necesita un abrazo y quién un desafío.</p>
+    </article>
+    <article class="why-card reveal" style="--c: var(--grass-light); --r:1.5deg">
+      <div class="why-num" data-count="600" data-suffix=" m²">0</div>
+      <h3>de patio, árboles y huerta</h3>
+      <p>Barro, semillas, bichitos y tomates propios. Aprender afuera es parte del plan, no un recreo.</p>
+    </article>
+    <article class="why-card reveal" style="--c: var(--sky); --r:-1deg">
+      <div class="why-num" data-count="1" data-prefix="" data-suffix=" foto">0</div>
+      <h3>(mínimo) cada día, en tu celular</h3>
+      <p>Te contamos qué comió, cuánto durmió y qué descubrió. Sin quedarte con la intriga.</p>
+    </article>
+    <article class="why-card reveal" style="--c: var(--tomato-light); --r:2deg">
+      <div class="why-num" data-count="100" data-suffix="%">0</div>
+      <h3>puertas abiertas a las familias</h3>
+      <p>Adaptación con vos adentro, talleres juntos y una maestra que te responde.</p>
+    </article>
+  </div>
+
+  <svg class="duck hidden-duck" data-duck="2" style="left:3%; bottom:6%" viewBox="0 0 40 40" role="button" tabindex="0" aria-label="Patito escondido"><use href="#duck"/></svg>
+</section>
+
+<!-- ============ UN DÍA ============ -->
+<section class="day section" id="dia">
+  <div class="section-head reveal">
+    <p class="scribble">bajá despacito</p>
+    <h2>Un día en Semillita, de punta a punta.</h2>
+  </div>
+
+  <div class="day-wrap">
+    <div class="day-sky-wrap">
+      <div class="day-sky" id="daySky">
+        <div class="day-sun" id="daySun"></div>
+        <div class="day-moon" id="dayMoon"></div>
+        <div class="stars"></div>
+        <svg class="day-hills" viewBox="0 0 400 120" preserveAspectRatio="none" aria-hidden="true">
+          <path d="M0 60 C80 20 160 30 220 60 C280 90 340 40 400 50 L400 120 L0 120Z" fill="var(--grass-light)"/>
+          <path d="M0 90 C90 70 180 80 260 95 C320 105 370 85 400 88 L400 120 L0 120Z" fill="var(--grass)"/>
+        </svg>
+        <div class="day-house" aria-hidden="true">
+          <div class="roof"></div><div class="walls"><div class="door"></div><div class="win"></div></div>
+        </div>
+        <div class="day-clock" id="dayClock">8:00</div>
+      </div>
+    </div>
+
+    <ol class="day-steps">
+      <li class="day-step" data-time="8:00" data-sun="0">
+        <span class="step-emoji">👋</span>
+        <h3>Llegada sin apuro</h3>
+        <p>Te recibimos en la puerta, por nombre. Desayuno tranqui y un ratito libre para despegarse de a poco.</p>
+      </li>
+      <li class="day-step" data-time="9:00" data-sun="1">
+        <span class="step-emoji">🎶</span>
+        <h3>Ronda y canción</h3>
+        <p>Nos saludamos, vemos cómo está el clima (y cómo estamos nosotros), y cantamos. Fuerte.</p>
+      </li>
+      <li class="day-step" data-time="10:00" data-sun="2">
+        <span class="step-emoji">🎨</span>
+        <h3>Manos a la obra</h3>
+        <p>Proyectos que nacen de sus preguntas: ¿por qué flotan los barcos? ¿dónde duermen las hormigas?</p>
+      </li>
+      <li class="day-step" data-time="11:00" data-sun="3">
+        <span class="step-emoji">🌻</span>
+        <h3>Patio y huerta</h3>
+        <p>Regar, cavar, trepar, correr. Si llueve, botas y a saltar charcos (avisamos para que traigan muda).</p>
+      </li>
+      <li class="day-step" data-time="12:00" data-sun="4">
+        <span class="step-emoji">🥕</span>
+        <h3>Almuerzo casero</h3>
+        <p>Cocina propia, menú de nutricionista. Y a veces, con lo que cosechamos nosotros.</p>
+      </li>
+      <li class="day-step" data-time="13:30" data-sun="5">
+        <span class="step-emoji">📚</span>
+        <h3>Cuento y descanso</h3>
+        <p>Luz baja, almohadones y una historia. Quien duerme, duerme; quien no, descansa.</p>
+      </li>
+      <li class="day-step" data-time="16:00" data-sun="6">
+        <span class="step-emoji">🏡</span>
+        <h3>Hasta mañana</h3>
+        <p>Te contamos el día cara a cara (y en la app). Se van cansados, con barro y con ganas de volver.</p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- ============ SALAS ============ -->
+<section class="salas section" id="salas">
+  <div class="section-head reveal">
+    <p class="scribble">elegí la edad</p>
+    <h2>Cuatro salas, cuatro tribus.</h2>
+  </div>
+
+  <div class="sala-tabs" role="tablist" aria-label="Salas por edad">
+    <button role="tab" class="sala-tab is-active" aria-selected="true" data-sala="0" style="--c:var(--sun)">2 años</button>
+    <button role="tab" class="sala-tab" aria-selected="false" data-sala="1" style="--c:var(--tomato)">3 años</button>
+    <button role="tab" class="sala-tab" aria-selected="false" data-sala="2" style="--c:var(--sky)">4 años</button>
+    <button role="tab" class="sala-tab" aria-selected="false" data-sala="3" style="--c:var(--plum)">5 años</button>
+  </div>
+
+  <div class="sala-stage" id="salaStage" role="tabpanel" aria-live="polite">
+    <div class="sala-critter" id="salaCritter" aria-hidden="true">
+      <div class="critter-body">
+        <div class="critter-eye l"><i></i></div>
+        <div class="critter-eye r"><i></i></div>
+        <div class="critter-mouth"></div>
+        <div class="critter-extra"></div>
+      </div>
+    </div>
+    <div class="sala-info">
+      <p class="sala-tag" id="salaTag">Sala de 2</p>
+      <h3 id="salaName">Los Pollitos</h3>
+      <p id="salaDesc"></p>
+      <ul class="sala-facts" id="salaFacts"></ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ JUGÁ ============ -->
+<section class="play section" id="jugar">
+  <div class="section-head reveal">
+    <p class="scribble">sí, es en serio</p>
+    <h2>Pará un segundo y jugá.</h2>
+    <p class="lead">Lo que hacen tus peques acá adentro, en chiquito. Probalo con ellos.</p>
+  </div>
+
+  <div class="play-grid">
+    <!-- Xylophone -->
+    <div class="play-card reveal">
+      <h3>El xilofón de la sala</h3>
+      <p class="hint">Tocá las barras, o usá las teclas <kbd>A</kbd> a <kbd>K</kbd>.</p>
+      <div class="xylo" id="xylo">
+        <button class="bar" style="--c:#FF5A36;--h:100%" data-note="0" aria-label="Do">Do</button>
+        <button class="bar" style="--c:#FF8A1F;--h:93%" data-note="1" aria-label="Re">Re</button>
+        <button class="bar" style="--c:#FFC531;--h:86%" data-note="2" aria-label="Mi">Mi</button>
+        <button class="bar" style="--c:#3DBE7A;--h:79%" data-note="3" aria-label="Fa">Fa</button>
+        <button class="bar" style="--c:#2BB3C0;--h:72%" data-note="4" aria-label="Sol">Sol</button>
+        <button class="bar" style="--c:#5B8DEF;--h:65%" data-note="5" aria-label="La">La</button>
+        <button class="bar" style="--c:#7B4FD8;--h:58%" data-note="6" aria-label="Si">Si</button>
+        <button class="bar" style="--c:#E85AAE;--h:51%" data-note="7" aria-label="Do agudo">Do</button>
+      </div>
+      <button class="btn btn-small btn-ghost" id="playSong">▶ Tocá “Estrellita”</button>
+    </div>
+
+    <!-- Drawing -->
+    <div class="play-card reveal">
+      <h3>El pizarrón</h3>
+      <p class="hint">Dibujá lo que quieras. Nadie corrige acá.</p>
+      <div class="board">
+        <canvas id="board" aria-label="Pizarrón para dibujar"></canvas>
+        <div class="board-tools">
+          <div class="crayons" id="crayons">
+            <button class="crayon is-active" style="--c:#2B2140" data-color="#2B2140" aria-label="Negro"></button>
+            <button class="crayon" style="--c:#FF5A36" data-color="#FF5A36" aria-label="Rojo"></button>
+            <button class="crayon" style="--c:#FFC531" data-color="#FFC531" aria-label="Amarillo"></button>
+            <button class="crayon" style="--c:#3DBE7A" data-color="#3DBE7A" aria-label="Verde"></button>
+            <button class="crayon" style="--c:#5B8DEF" data-color="#5B8DEF" aria-label="Azul"></button>
+            <button class="crayon" style="--c:#7B4FD8" data-color="#7B4FD8" aria-label="Violeta"></button>
+            <button class="crayon rainbow" data-color="rainbow" aria-label="Arcoíris"></button>
+          </div>
+          <div class="board-actions">
+            <button class="btn btn-small btn-ghost" id="boardClear">Borrar</button>
+            <button class="btn btn-small" id="boardSave">Guardar 💾</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <svg class="duck hidden-duck" data-duck="3" style="right:4%; top:14%" viewBox="0 0 40 40" role="button" tabindex="0" aria-label="Patito escondido"><use href="#duck"/></svg>
+</section>
+
+<!-- ============ FAMILIAS ============ -->
+<section class="fridge section" id="familias">
+  <div class="section-head reveal">
+    <p class="scribble">la heladera de casa</p>
+    <h2>Lo que dicen las familias.</h2>
+    <p class="lead">Arrastrá las notas, como en la heladera de tu cocina.</p>
+  </div>
+
+  <div class="fridge-door" id="fridge">
+    <div class="fridge-handle" aria-hidden="true"></div>
+
+    <figure class="note" style="--x:4%; --y:6%; --r:-4deg; --bg:#FFF1A8">
+      <span class="magnet" style="--m:var(--tomato)"></span>
+      <blockquote>“El primer día lloré yo, no ella. Al tercero no quería irse a casa.”</blockquote>
+      <figcaption>— Mamá de Juana, sala de 3</figcaption>
+    </figure>
+    <figure class="note" style="--x:36%; --y:2%; --r:3deg; --bg:#D6F3FF">
+      <span class="magnet" style="--m:var(--grass)"></span>
+      <blockquote>“Volvió a casa explicándonos cómo crece un tomate. Ahora tenemos huerta en el balcón.”</blockquote>
+      <figcaption>— Papá de Benja, sala de 4</figcaption>
+    </figure>
+    <figure class="note" style="--x:68%; --y:8%; --r:-2deg; --bg:#FFD9CF">
+      <span class="magnet" style="--m:var(--plum)"></span>
+      <blockquote>“Las fotos del día son mi momento favorito en el trabajo.”</blockquote>
+      <figcaption>— Mamá de Lola, sala de 2</figcaption>
+    </figure>
+    <figure class="note drawing" style="--x:10%; --y:52%; --r:5deg; --bg:#fff">
+      <span class="magnet" style="--m:var(--sun)"></span>
+      <svg viewBox="0 0 160 110" aria-label="Dibujo de un niño: una casa, un sol y una familia" role="img">
+        <g fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="3.5">
+          <circle cx="130" cy="24" r="14" stroke="#FFC531"/>
+          <path d="M130 2v6M150 24h-6M144 10l-4 4M116 10l4 4" stroke="#FFC531"/>
+          <path d="M20 96 V58 L50 32 L80 58 V96Z" stroke="#FF5A36"/>
+          <path d="M42 96 V74 H58 V96" stroke="#7B4FD8"/>
+          <circle cx="104" cy="62" r="7" stroke="#2B2140"/><path d="M104 69 V86 M94 76 H114 M104 86 L97 98 M104 86 L111 98" stroke="#2B2140"/>
+          <circle cx="128" cy="72" r="5" stroke="#2B2140"/><path d="M128 77 V89 M121 82 H135 M128 89 L123 98 M128 89 L133 98" stroke="#2B2140"/>
+          <path d="M4 100 Q40 92 80 100 T156 100" stroke="#3DBE7A"/>
+        </g>
+      </svg>
+      <figcaption>— Mateo, 5 años (“mi jardín”)</figcaption>
+    </figure>
+    <figure class="note" style="--x:42%; --y:50%; --r:-3deg; --bg:#E1F7DF">
+      <span class="magnet" style="--m:var(--sky)"></span>
+      <blockquote>“Probamos tres jardines. En este nos sentimos en casa desde que tocamos timbre.”</blockquote>
+      <figcaption>— Familia Pérez</figcaption>
+    </figure>
+    <figure class="note" style="--x:72%; --y:54%; --r:4deg; --bg:#EEE3FF">
+      <span class="magnet" style="--m:var(--tomato)"></span>
+      <blockquote>“La adaptación fue a su ritmo. Nunca nos apuraron.”</blockquote>
+      <figcaption>— Mamá y papá de Tomi, sala de 2</figcaption>
+    </figure>
+
+    <svg class="duck hidden-duck" data-duck="4" style="right:2.5%; bottom:3%; width:30px" viewBox="0 0 40 40" role="button" tabindex="0" aria-label="Patito escondido"><use href="#duck"/></svg>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section class="faq section" id="faq">
+  <div class="section-head reveal">
+    <p class="scribble">lo que todos preguntan</p>
+    <h2>Preguntas de mamás y papás.</h2>
+  </div>
+
+  <div class="faq-list">
+    <details class="reveal">
+      <summary>¿Cómo es la adaptación?</summary>
+      <p>Gradual y con vos adentro. Empezamos con ratitos cortos y vamos sumando según cómo lo vemos a tu peque, no según un calendario fijo.</p>
+    </details>
+    <details class="reveal">
+      <summary>¿Qué horarios tienen?</summary>
+      <p>Medio horario (mañana o tarde) y horario completo de 8:00 a 16:00. Hay extensión hasta las 18:00 para las familias que lo necesitan.</p>
+    </details>
+    <details class="reveal">
+      <summary>¿Cómo me entero de lo que pasa en el día?</summary>
+      <p>Por la app de la sala: fotos, qué comió, cuánto durmió y novedades. Y además, la maestra te cuenta en la puerta.</p>
+    </details>
+    <details class="reveal">
+      <summary>¿Qué comen?</summary>
+      <p>Comida casera hecha en nuestra cocina, con menú pensado por nutricionista. Adaptamos para alergias, celiaquía y dietas especiales.</p>
+    </details>
+    <details class="reveal">
+      <summary>¿Puedo ir a conocerlo antes de inscribirlo?</summary>
+      <p>¡Obvio! Es lo que más recomendamos. Vení con tu peque, recorré las salas, el patio y conocé a las maestras. Agendalo acá abajo.</p>
+    </details>
+  </div>
+</section>
+
+<!-- ============ VISITA ============ -->
+<section class="visit section" id="visita">
+  <div class="visit-card reveal">
+    <div class="visit-copy">
+      <p class="scribble">el paso más lindo</p>
+      <h2>Vení a conocernos.<br>Traé a tu peque.</h2>
+      <p>Una visita de 30 minutos vale más que mil fotos. Contanos un poquito y te escribimos para coordinar.</p>
+
+      <ul class="visit-contact">
+        <li><span>📍</span> Calle de los Jacarandás 1234</li>
+        <li><span>🕗</span> Lunes a viernes, 8:00 a 18:00</li>
+        <li><span>💬</span> WhatsApp: 099 123 456</li>
+      </ul>
+    </div>
+
+    <form class="visit-form" id="visitForm" novalidate>
+      <label class="field">
+        <span>Tu nombre</span>
+        <input type="text" name="nombre" required autocomplete="name" placeholder="Ej: Carolina">
+      </label>
+      <label class="field">
+        <span>Nombre de tu peque</span>
+        <input type="text" name="peque" required placeholder="Ej: Simón">
+      </label>
+
+      <div class="field">
+        <span>¿Cuántos años tiene?</span>
+        <div class="age-picker">
+          <div class="age-kid" id="ageKid" aria-hidden="true">
+            <div class="kid-head"><i></i><i></i><b></b></div>
+            <div class="kid-body"></div>
+          </div>
+          <div class="age-control">
+            <input type="range" id="age" name="edad" min="2" max="5" step="1" value="3" aria-describedby="ageOut">
+            <output id="ageOut">3 años · Sala de 3</output>
+          </div>
+        </div>
+      </div>
+
+      <fieldset class="field">
+        <legend>¿Qué día te queda mejor?</legend>
+        <div class="chips" id="dayChips">
+          <label><input type="radio" name="dia" value="lunes"><span>Lun</span></label>
+          <label><input type="radio" name="dia" value="martes"><span>Mar</span></label>
+          <label><input type="radio" name="dia" value="miércoles" checked><span>Mié</span></label>
+          <label><input type="radio" name="dia" value="jueves"><span>Jue</span></label>
+          <label><input type="radio" name="dia" value="viernes"><span>Vie</span></label>
+        </div>
+      </fieldset>
+
+      <button type="submit" class="btn btn-big">Quiero agendar la visita 🎈</button>
+      <p class="form-msg" id="formMsg" role="status"></p>
+    </form>
+
+    <svg class="duck hidden-duck" data-duck="5" style="left:46%; bottom:-12px; width:28px" viewBox="0 0 40 40" role="button" tabindex="0" aria-label="Patito escondido"><use href="#duck"/></svg>
+  </div>
+</section>
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <svg class="footer-grass" viewBox="0 0 1440 80" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0 80 V40 Q20 0 40 40 Q60 10 80 40 Q100 4 120 40 Q140 14 160 40 Q180 0 200 40 Q220 12 240 40 Q260 2 280 40 Q300 16 320 40 Q340 0 360 40 Q380 10 400 40 Q420 4 440 40 Q460 14 480 40 Q500 0 520 40 Q540 12 560 40 Q580 2 600 40 Q620 16 640 40 Q660 0 680 40 Q700 10 720 40 Q740 4 760 40 Q780 14 800 40 Q820 0 840 40 Q860 12 880 40 Q900 2 920 40 Q940 16 960 40 Q980 0 1000 40 Q1020 10 1040 40 Q1060 4 1080 40 Q1100 14 1120 40 Q1140 0 1160 40 Q1180 12 1200 40 Q1220 2 1240 40 Q1260 16 1280 40 Q1300 0 1320 40 Q1340 10 1360 40 Q1380 4 1400 40 Q1420 14 1440 40 V80Z" fill="var(--grass)"/>
+  </svg>
+  <div class="footer-inner">
+    <div>
+      <p class="footer-logo">Semillita 🌱</p>
+      <p>Jardín de infantes. Habilitado por las autoridades de educación.</p>
+    </div>
+    <div class="footer-links">
+      <a href="#dia">Un día acá</a>
+      <a href="#salas">Salas</a>
+      <a href="#familias">Familias</a>
+      <a href="#visita">Visita</a>
+      <a href="#" aria-label="Instagram">Instagram</a>
+    </div>
+    <p class="footer-small">Hecho con crayones y mucho cariño · © <span id="year"></span></p>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="app.js"></script>
+</body>
+</html>
