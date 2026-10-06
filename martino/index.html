@@ -713,7 +713,7 @@ document.addEventListener('click', e => { const a = e.target.closest('[data-go]'
 const uses = [
   {t:'Hamburguesa', d:'Carne a la parrilla, cheddar y el Bun tostado de un lado. Aguanta los jugos sin romperse.', p:'bun-sesamo', c:'radial-gradient(circle at 50% 60%,#f6c94a,#c98d0e)', img:'img/cut-bun-sesamo.webp', cut:true},
   {t:'Chivito', d:'Lomito, jamón, muzzarella, huevo y todo lo que entre. Un pan que abraza sin aplastar.', p:'brot-clasico', c:'radial-gradient(circle at 50% 60%,#2f7448,#123a22)', img:'img/cut-largo-clasico.webp', cut:true},
-  {t:'Pancho', d:'Salchicha, mostaza y papas pay. En un Hoagie con queso es otro pancho.', p:'hoagie-queso', c:'#fff', img:'img/pack-hoagie-queso.jpg', cut:true, flat:true},
+  {t:'Pancho', d:'Salchicha, mostaza y papas pay. En un Hoagie con queso es otro pancho.', p:'hoagie-queso', c:'radial-gradient(circle at 50% 60%,#fbf3df,#e6cf9e)', img:'img/cut-largo-queso.webp', cut:true},
 ];
 $('#useGrid').innerHTML = uses.map(u => { const p = products.find(x => x.id === u.p); return `<a class="use" href="#productos" data-go="${p.id}"><div class="pic${u.cut ? ' cut' : ''}${u.flat ? ' flat' : ''}" style="--c:${u.c}"><img src="${u.img}" style="object-position:${u.pos||'50% 50%'}" alt="${p.line} ${p.name}" loading="lazy"></div><h3>${u.t}</h3><span class="meta"><i>★</i>${p.line} ${p.name} · ${p.units} u · ${p.g} g</span><p>${u.d}</p></a>`; }).join('');
 document.querySelectorAll('#useGrid img').forEach(guard);
