@@ -312,7 +312,7 @@ footer{overflow:hidden;padding-top:2rem}
 .air-stage:has(.fl:hover) .fl:not(:hover){opacity:.35;filter:blur(2px)}
 .intro-bun{display:block;width:clamp(120px,16vw,200px);margin:0 auto 1rem;filter:drop-shadow(0 20px 20px rgba(0,0,0,.4));animation:bunDrop 1s cubic-bezier(.3,1.6,.5,1) both}
 @keyframes bunDrop{from{transform:translateY(-60vh) rotate(-30deg)}}
-@media (max-width:700px){.air-stage{height:520px;margin-top:0}.fl{max-width:46%}.fl:nth-child(1){--x:6%!important;--y:4%!important}.fl:nth-child(2){--x:54%!important;--y:10%!important}.fl:nth-child(3){--x:26%!important;--y:38%!important}.fl:nth-child(4){--x:4%!important;--y:66%!important}.fl:nth-child(5){--x:50%!important;--y:74%!important}.fl span{opacity:1;transform:translate(-50%,0);font-size:.8rem}}
+@media (max-width:700px){.air-stage{height:640px;margin-top:0}.fl{max-width:46%}.fl:nth-child(1){--x:4%!important;--y:2%!important}.fl:nth-child(2){--x:52%!important;--y:6%!important}.fl:nth-child(3){--x:28%!important;--y:32%!important}.fl:nth-child(4){--x:2%!important;--y:58%!important}.fl:nth-child(5){--x:50%!important;--y:62%!important}.fl:nth-child(6){--x:26%!important;--y:84%!important}.fl span{opacity:1;transform:translate(-50%,0);font-size:.8rem}}
 @media (prefers-reduced-motion:reduce){.fl img{animation:none}}
 
 /* ---------- ENTRADA: el mordisco se come la pantalla ---------- */
@@ -474,6 +474,7 @@ footer{overflow:hidden;padding-top:2rem}
     <button class="fl" type="button" data-pi="3" data-d="2.2" style="--x:44%;--y:44%;--w:clamp(190px,30vw,470px);--r:-4deg;--t:8s"><img src="img/cut-largo-clasico.webp" alt="Pan largo clásico"><span>Largo · Clásico</span></button>
     <button class="fl" type="button" data-pi="4" data-d=".7" style="--x:6%;--y:62%;--w:clamp(170px,24vw,380px);--r:7deg;--t:7s"><img src="img/cut-largo-queso.webp" alt="Pan largo con queso"><span>Largo · Queso</span></button>
     <button class="fl" type="button" data-pi="5" data-d="1.3" style="--x:66%;--y:70%;--w:clamp(170px,24vw,380px);--r:-11deg;--t:9s"><img src="img/cut-largo-sesamo.webp" alt="Pan largo con sésamo"><span>Largo · Sésamo</span></button>
+    <button class="fl" type="button" data-pi="-1" data-d="1.9" style="--x:76%;--y:36%;--w:clamp(150px,19vw,300px);--r:9deg;--t:8.5s"><img src="img/cut-largo-harina.webp" alt="Pan largo enharinado"><span>Largo · Enharinado</span></button>
   </div>
 </section>
 
@@ -826,7 +827,7 @@ function airTick(){
   if (!reduce) requestAnimationFrame(airTick);
 }
 airTick();
-fls.forEach(f => f.addEventListener('click', () => { $('#productos').scrollIntoView({behavior: reduce ? 'auto' : 'smooth'}); show(+f.dataset.pi); }));
+fls.forEach(f => f.addEventListener('click', () => { if (+f.dataset.pi < 0) return; $('#productos').scrollIntoView({behavior: reduce ? 'auto' : 'smooth'}); show(+f.dataset.pi); }));
 
 /* ---------- Banda que se inclina con la velocidad del scroll ---------- */
 const band = $('.band'); let lastY = scrollY, skew = 0;
