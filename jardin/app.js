@@ -1,9 +1,9 @@
 /* =========================================================
-   Semillita · interacciones
+   I Love My Kinder · interacciones
    ========================================================= */
 
 // Número de WhatsApp del jardín (formato internacional, sin + ni espacios)
-const WHATSAPP = "59899123456";
+const WHATSAPP = "59892545120";
 
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const $ = (sel, ctx = document) => ctx.querySelector(sel);
@@ -153,7 +153,7 @@ const confetti = (() => {
   });
   $("#sun").addEventListener("click", () => {
     tone(523, { dur: 0.5, slideTo: 1046, vol: 0.15, type: "triangle" });
-    toast("¡Buen día! ☀️ El sol de Semillita sale todos los días.");
+    toast("¡Buen día! ☀️ En el Kinder abrimos a las 8:00.");
   });
 })();
 
@@ -277,24 +277,24 @@ $$("[data-count]").forEach((el) => countObs.observe(el));
 (function salas() {
   const data = [
     {
-      tag: "Sala de 2", name: "Los Pollitos", c: "var(--sun)",
-      desc: "El primer paso fuera de casa. Mucho upa, juego sensorial y rutinas que dan seguridad. Acá nadie apura a nadie.",
-      facts: ["Máx. 8 peques", "2 maestras por sala", "Adaptación con familia", "Siesta y cambiador"],
+      tag: "los más chiquitos", name: "Maternal", c: "var(--sun)",
+      desc: "Acá el apego es lo fundamental. Confianza, contención y cuidado como base de un desarrollo sano, respetando los hábitos y rutinas de cada peque.",
+      facts: ["Apego y confianza", "Rutinas de cada peque", "Estimulación oportuna", "Psicomotricidad semanal"],
     },
     {
-      tag: "Sala de 3", name: "Los Caracoles", c: "var(--tomato-light)",
-      desc: "Empiezan a llover los “¿por qué?”. Juego simbólico, primeros proyectos, huerta propia y música todos los días.",
-      facts: ["Máx. 12 peques", "Huerta propia", "Música diaria", "Control de esfínteres sin presión"],
+      tag: "primeros pasos solos", name: "Kinder 1", c: "var(--tomato-light)",
+      desc: "Llega el yoga, empieza el Método Vaz Ferreira y explorar se vuelve lo más importante del día.",
+      facts: ["Yoga semanal", "Psicomotricidad", "Método Vaz Ferreira", "Arte todos los días"],
     },
     {
-      tag: "Sala de 4", name: "Los Delfines", c: "var(--sky)",
-      desc: "Investigan, inventan y discuten (¡con argumentos!). Experimentos, inglés jugando y mucha expresión corporal.",
-      facts: ["Máx. 12 peques", "Inglés jugando", "Laboratorio de ciencia", "Salidas didácticas"],
+      tag: "hello!", name: "Kinder 2", c: "var(--sky)",
+      desc: "Se suma el inglés. Preguntan, investigan y construyen: son los protagonistas de lo que aprenden.",
+      facts: ["Inglés", "Yoga", "Psicomotricidad", "Huerta desde setiembre"],
     },
     {
-      tag: "Sala de 5", name: "Los Cohetes", c: "#C9B4FF",
-      desc: "Listos para despegar a primaria: letras, números y autonomía, sin perder ni un poquito de juego.",
-      facts: ["Máx. 12 peques", "Pasaje a primaria", "Proyecto de egreso", "Biblioteca circulante"],
+      tag: "listos para despegar", name: "Kinder 3", c: "#C9B4FF",
+      desc: "Más autonomía, más identidad, más proyectos propios. Crecen seguros y fortalecidos para lo que viene.",
+      facts: ["Inglés", "Yoga y mindfulness", "Proyectos de investigación", "Método Vaz Ferreira"],
     },
   ];
   const stage = $("#salaStage"), body = $(".critter-body");
@@ -425,12 +425,19 @@ $$("[data-count]").forEach((el) => countObs.observe(el));
     o.fillStyle = "#fff"; o.fillRect(0, 0, out.width, out.height);
     o.drawImage(canvas, 0, 0);
     const a = document.createElement("a");
-    a.download = "mi-dibujo-semillita.png";
+    a.download = "mi-dibujo-kinder.png";
     a.href = out.toDataURL("image/png");
     a.click();
     toast("¡Obra de arte guardada! Va directo a la heladera 🧲");
   });
 })();
+
+/* ---------- Pilares: cartas que se dan vuelta ---------- */
+$$(".pillar").forEach((card, i) => card.addEventListener("click", () => {
+  const flipped = card.classList.toggle("flipped");
+  card.setAttribute("aria-pressed", flipped);
+  tone([523, 587, 659, 698, 784, 880][i] * (flipped ? 1 : 0.75), { dur: 0.35, vol: 0.1, type: "triangle" });
+}));
 
 /* ---------- Heladera: notas arrastrables ---------- */
 (function fridge() {
@@ -501,7 +508,7 @@ $$("[data-count]").forEach((el) => countObs.observe(el));
   const form = $("#visitForm"), age = $("#age"), out = $("#ageOut"), kid = $("#ageKid"), msg = $("#formMsg");
   function updateAge() {
     const v = +age.value;
-    out.textContent = `${v} años · Sala de ${v}`;
+    out.textContent = v === 0 ? "Menos de 1 año" : v === 1 ? "1 año" : `${v} años`;
     kid.style.setProperty("--s", v);
   }
   age.addEventListener("input", () => { updateAge(); tone(300 + age.value * 120, { dur: 0.15, vol: 0.08, type: "triangle" }); });
@@ -522,7 +529,8 @@ $$("[data-count]").forEach((el) => countObs.observe(el));
       return;
     }
     const d = new FormData(form);
-    const text = `¡Hola Semillita! Soy ${d.get("nombre").trim()}. Me gustaría agendar una visita para conocer el jardín con ${d.get("peque").trim()} (${d.get("edad")} años). ¿Puede ser un ${d.get("dia")}? ¡Gracias!`;
+    const edad = $("#ageOut").textContent.toLowerCase();
+    const text = `¡Hola I Love My Kinder! Soy ${d.get("nombre").trim()}. Me gustaría agendar una visita para conocer el jardín con ${d.get("peque").trim()} (${edad}). ¿Puede ser un ${d.get("dia")}? ¡Gracias!`;
     const r = form.querySelector("button[type=submit]").getBoundingClientRect();
     confetti(r.left + r.width / 2, r.top);
     msg.textContent = "¡Listo! Te abrimos WhatsApp con el mensaje armado 🎈";
