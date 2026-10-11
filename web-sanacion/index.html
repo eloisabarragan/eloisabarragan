@@ -1,0 +1,421 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sanación y Despertar Espiritual</title>
+<meta name="description" content="Terapias holísticas, canalización y mediumnidad. Sanación y despertar espiritual.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Mono:wght@300;400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  /* ───────── Paleta (tomada de la referencia) ───────── */
+  :root {
+    --verde:      #5E6A31;   /* principal */
+    --verde-osc:  #434C22;
+    --crema:      #F1E7D6;
+    --mostaza:    #DFA84A;
+    --rosa:       #B86C5E;
+    --naranja:    #D0841F;
+    --borgona:    #6B1F22;
+
+    --fondo:      var(--crema);
+    --texto:      #3A3524;
+    --texto-suave:#6E664F;
+    --linea:      rgba(94,106,49,.25);
+
+    --serif: "Cormorant Garamond", Georgia, serif;
+    --sans:  "Jost", system-ui, sans-serif;
+    --mono:  "DM Mono", ui-monospace, monospace;
+
+    --ancho: 1120px;
+    --radio: 14px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--fondo);
+    color: var(--texto);
+    font-family: var(--sans);
+    font-weight: 300;
+    font-size: 17px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+  /* textura de grano suave, como las tarjetas de la referencia */
+  body::before {
+    content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 100; opacity: .07;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  img, svg { display: block; max-width: 100%; }
+  a { color: inherit; text-decoration: none; }
+
+  .contenedor { width: min(var(--ancho), 100% - 32px); margin-inline: auto; }
+
+  /* etiquetas tipo "THE COLORS ———— AETHER HOTEL" */
+  .etiqueta {
+    display: flex; align-items: center; gap: 18px;
+    font-family: var(--mono); font-size: 12px; letter-spacing: .18em; text-transform: uppercase;
+    color: var(--texto-suave);
+  }
+  .etiqueta::after { content: ""; flex: 1; height: 1px; background: currentColor; opacity: .5; }
+
+  h1, h2, h3 { font-family: var(--serif); font-weight: 400; line-height: 1.1; color: var(--verde-osc); }
+  h2 { font-size: clamp(34px, 5vw, 52px); margin: 18px 0 20px; }
+  h2 em, h1 em { font-style: italic; color: var(--rosa); }
+  .intro { max-width: 620px; color: var(--texto-suave); }
+
+  section { padding: clamp(72px, 10vw, 120px) 0; }
+
+  .sol { width: 100%; height: 100%; }
+  .sol line { stroke: currentColor; stroke-width: .45; stroke-linecap: round; }
+  .sol circle { fill: none; stroke: currentColor; stroke-width: .6; }
+
+  .boton {
+    display: inline-block; padding: 14px 30px; border-radius: 999px;
+    font-family: var(--mono); font-size: 12px; letter-spacing: .16em; text-transform: uppercase;
+    background: var(--verde); color: var(--crema); border: 1px solid var(--verde);
+    transition: background .3s, color .3s;
+  }
+  .boton:hover { background: transparent; color: var(--verde); }
+  .boton.claro { background: transparent; color: var(--crema); border-color: var(--crema); }
+  .boton.claro:hover { background: var(--crema); color: var(--verde); }
+
+  /* ───────── Header ───────── */
+  header {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(241,231,214,.88); backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--linea);
+  }
+  .nav { display: flex; align-items: center; justify-content: space-between; height: 72px; }
+  .logo { display: flex; align-items: center; gap: 10px; font-family: var(--serif); font-size: 22px; color: var(--verde-osc); }
+  .logo .sol { width: 30px; height: 30px; color: var(--naranja); }
+  .nav ul { display: flex; gap: 32px; list-style: none; font-family: var(--mono); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; }
+  .nav ul a { opacity: .75; transition: opacity .2s; }
+  .nav ul a:hover { opacity: 1; color: var(--verde); }
+  .menu-btn { display: none; background: none; border: 0; font-family: var(--mono); font-size: 12px; letter-spacing: .14em; color: var(--verde-osc); cursor: pointer; }
+
+  /* ───────── Hero ───────── */
+  .hero { background: var(--verde); color: var(--crema); padding: clamp(80px, 12vw, 150px) 0; position: relative; overflow: hidden; }
+  .hero .grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 48px; align-items: center; }
+  .hero .etiqueta { color: rgba(241,231,214,.7); }
+  .hero h1 { color: var(--crema); font-size: clamp(44px, 7.5vw, 88px); margin: 24px 0; }
+  .hero h1 em { color: var(--mostaza); }
+  .hero p { max-width: 480px; color: rgba(241,231,214,.85); margin-bottom: 36px; }
+  .hero .roles { font-family: var(--mono); font-size: 13px; letter-spacing: .14em; text-transform: uppercase; color: var(--mostaza); margin-bottom: 18px; }
+  .hero .sol-grande { width: min(420px, 80%); margin-inline: auto; color: var(--mostaza); animation: girar 120s linear infinite; }
+  @keyframes girar { to { transform: rotate(360deg); } }
+  @media (prefers-reduced-motion: reduce) { .hero .sol-grande { animation: none; } }
+
+  /* ───────── Sobre mí ───────── */
+  .sobre .grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: clamp(32px, 6vw, 80px); align-items: center; }
+  .foto {
+    aspect-ratio: 4/5; border-radius: var(--radio); background: var(--rosa);
+    display: grid; place-items: center; color: var(--crema); position: relative;
+  }
+  .foto .sol { width: 55%; height: auto; }
+  .foto small { position: absolute; bottom: 16px; font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; opacity: .8; }
+  .sobre p + p { margin-top: 16px; }
+  .firma { font-family: var(--serif); font-style: italic; font-size: 28px; color: var(--verde); margin-top: 24px; }
+
+  /* ───────── Servicios: las 6 tarjetas de la paleta ───────── */
+  .servicios { background: #E9DCC5; }
+  .tarjetas { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 56px; }
+  .tarjeta {
+    border-radius: var(--radio); padding: 36px 30px 32px; min-height: 420px;
+    display: flex; flex-direction: column; color: var(--crema);
+    transition: transform .4s ease, box-shadow .4s ease;
+  }
+  .tarjeta:hover { transform: translateY(-6px); box-shadow: 0 18px 40px -20px rgba(58,53,36,.55); }
+  .tarjeta .sol { width: 110px; height: 110px; margin: 8px auto 28px; }
+  .tarjeta .num { font-family: var(--mono); font-size: 11px; letter-spacing: .18em; opacity: .75; }
+  .tarjeta h3 { color: inherit; font-size: 30px; margin: 6px 0 12px; }
+  .tarjeta p { font-size: 15px; opacity: .9; flex: 1; }
+  .tarjeta .meta { display: flex; justify-content: space-between; border-top: 1px solid currentColor; padding-top: 14px; margin-top: 22px; font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; opacity: .85; }
+  /* mismo orden y combinación que la referencia */
+  .t1 { background: var(--crema);   color: var(--verde-osc); } .t1 .sol { color: var(--naranja); }
+  .t2 { background: var(--mostaza); color: #3E2C10; }          .t2 .sol { color: #B8761C; }
+  .t3 { background: var(--rosa); }                              .t3 .sol { color: var(--crema); }
+  .t4 { background: var(--naranja); color: #2F2A12; }           .t4 .sol { color: var(--verde); }
+  .t5 { background: var(--verde); }                             .t5 .sol { color: var(--crema); }
+  .t6 { background: var(--borgona); }                           .t6 .sol { color: var(--mostaza); }
+
+  /* ───────── Proceso ───────── */
+  .pasos { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; margin-top: 56px; counter-reset: paso; }
+  .paso { border-top: 1px solid var(--verde); padding-top: 22px; }
+  .paso::before { counter-increment: paso; content: "0" counter(paso); font-family: var(--mono); font-size: 12px; letter-spacing: .16em; color: var(--rosa); }
+  .paso h3 { font-size: 26px; margin: 10px 0 8px; }
+  .paso p { font-size: 15px; color: var(--texto-suave); }
+
+  /* ───────── Testimonios ───────── */
+  .testimonios { background: var(--borgona); color: var(--crema); text-align: center; }
+  .testimonios .etiqueta { color: rgba(241,231,214,.65); }
+  .cita { max-width: 760px; margin: 40px auto 0; }
+  .cita blockquote { font-family: var(--serif); font-style: italic; font-size: clamp(24px, 3.4vw, 36px); line-height: 1.35; }
+  .cita cite { display: block; margin-top: 22px; font-family: var(--mono); font-style: normal; font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--mostaza); }
+  .puntos { display: flex; justify-content: center; gap: 10px; margin-top: 36px; }
+  .puntos button { width: 9px; height: 9px; border-radius: 50%; border: 1px solid var(--crema); background: transparent; cursor: pointer; padding: 0; }
+  .puntos button[aria-current="true"] { background: var(--crema); }
+
+  /* ───────── Contacto ───────── */
+  .contacto .grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 6vw, 80px); }
+  .datos { list-style: none; margin-top: 32px; }
+  .datos li { display: flex; justify-content: space-between; gap: 16px; padding: 16px 0; border-bottom: 1px solid var(--linea); }
+  .datos li span:first-child { font-family: var(--mono); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--texto-suave); }
+  .datos a:hover { color: var(--verde); }
+  form { display: grid; gap: 18px; background: #E9DCC5; padding: clamp(24px, 4vw, 40px); border-radius: var(--radio); }
+  label { display: grid; gap: 6px; font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--texto-suave); }
+  input, select, textarea {
+    font: inherit; font-family: var(--sans); font-size: 16px; text-transform: none; letter-spacing: 0; color: var(--texto);
+    background: var(--crema); border: 1px solid var(--linea); border-radius: 8px; padding: 12px 14px; width: 100%;
+  }
+  input:focus, select:focus, textarea:focus { outline: 2px solid var(--verde); outline-offset: 1px; }
+  form .boton { justify-self: start; cursor: pointer; }
+
+  /* ───────── Footer ───────── */
+  footer { background: var(--verde-osc); color: rgba(241,231,214,.8); padding: 48px 0 32px; }
+  footer .fila { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 20px; }
+  footer .logo { color: var(--crema); }
+  footer nav { display: flex; gap: 24px; font-family: var(--mono); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; }
+  footer .legal { margin-top: 32px; font-size: 13px; opacity: .6; }
+
+  /* aparición suave al hacer scroll */
+  .revelar { opacity: 0; transform: translateY(18px); transition: opacity .9s ease, transform .9s ease; }
+  .revelar.visible { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) { .revelar { opacity: 1; transform: none; } }
+
+  /* ───────── Responsive ───────── */
+  @media (max-width: 900px) {
+    .tarjetas { grid-template-columns: repeat(2, 1fr); }
+    .pasos { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 760px) {
+    .menu-btn { display: block; }
+    .nav ul {
+      display: none; position: absolute; top: 72px; left: 0; right: 0; flex-direction: column; gap: 0;
+      background: var(--crema); border-bottom: 1px solid var(--linea);
+    }
+    .nav ul.abierto { display: flex; }
+    .nav ul a { display: block; padding: 16px; }
+    .hero .grid, .sobre .grid, .contacto .grid { grid-template-columns: 1fr; }
+    .hero .sol-grande { width: 60%; order: -1; }
+    .tarjetas, .pasos { grid-template-columns: 1fr; }
+    .tarjeta { min-height: 0; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Símbolo del sol, reutilizado en toda la web -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="sol" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-linecap="round">
+    <circle cx="50" cy="50" r="11" stroke-width=".9"/><g stroke-width=".55">
+    <line x1="67.00" y1="50.00" x2="94.00" y2="50.00"/><line x1="66.94" y1="51.48" x2="87.86" y2="53.31"/><line x1="66.74" y1="52.95" x2="93.33" y2="57.64"/><line x1="66.42" y1="54.40" x2="86.71" y2="59.84"/><line x1="65.97" y1="55.81" x2="91.35" y2="65.05"/><line x1="65.41" y1="57.18" x2="84.44" y2="66.06"/><line x1="64.72" y1="58.50" x2="88.11" y2="72.00"/><line x1="63.93" y1="59.75" x2="81.13" y2="71.80"/><line x1="63.02" y1="60.93" x2="83.71" y2="78.28"/><line x1="62.02" y1="62.02" x2="76.87" y2="76.87"/><line x1="60.93" y1="63.02" x2="78.28" y2="83.71"/><line x1="59.75" y1="63.93" x2="71.80" y2="81.13"/><line x1="58.50" y1="64.72" x2="72.00" y2="88.11"/><line x1="57.18" y1="65.41" x2="66.06" y2="84.44"/><line x1="55.81" y1="65.97" x2="65.05" y2="91.35"/><line x1="54.40" y1="66.42" x2="59.84" y2="86.71"/><line x1="52.95" y1="66.74" x2="57.64" y2="93.33"/><line x1="51.48" y1="66.94" x2="53.31" y2="87.86"/><line x1="50.00" y1="67.00" x2="50.00" y2="94.00"/><line x1="48.52" y1="66.94" x2="46.69" y2="87.86"/><line x1="47.05" y1="66.74" x2="42.36" y2="93.33"/><line x1="45.60" y1="66.42" x2="40.16" y2="86.71"/><line x1="44.19" y1="65.97" x2="34.95" y2="91.35"/><line x1="42.82" y1="65.41" x2="33.94" y2="84.44"/><line x1="41.50" y1="64.72" x2="28.00" y2="88.11"/><line x1="40.25" y1="63.93" x2="28.20" y2="81.13"/><line x1="39.07" y1="63.02" x2="21.72" y2="83.71"/><line x1="37.98" y1="62.02" x2="23.13" y2="76.87"/><line x1="36.98" y1="60.93" x2="16.29" y2="78.28"/><line x1="36.07" y1="59.75" x2="18.87" y2="71.80"/><line x1="35.28" y1="58.50" x2="11.89" y2="72.00"/><line x1="34.59" y1="57.18" x2="15.56" y2="66.06"/><line x1="34.03" y1="55.81" x2="8.65" y2="65.05"/><line x1="33.58" y1="54.40" x2="13.29" y2="59.84"/><line x1="33.26" y1="52.95" x2="6.67" y2="57.64"/><line x1="33.06" y1="51.48" x2="12.14" y2="53.31"/><line x1="33.00" y1="50.00" x2="6.00" y2="50.00"/><line x1="33.06" y1="48.52" x2="12.14" y2="46.69"/><line x1="33.26" y1="47.05" x2="6.67" y2="42.36"/><line x1="33.58" y1="45.60" x2="13.29" y2="40.16"/><line x1="34.03" y1="44.19" x2="8.65" y2="34.95"/><line x1="34.59" y1="42.82" x2="15.56" y2="33.94"/><line x1="35.28" y1="41.50" x2="11.89" y2="28.00"/><line x1="36.07" y1="40.25" x2="18.87" y2="28.20"/><line x1="36.98" y1="39.07" x2="16.29" y2="21.72"/><line x1="37.98" y1="37.98" x2="23.13" y2="23.13"/><line x1="39.07" y1="36.98" x2="21.72" y2="16.29"/><line x1="40.25" y1="36.07" x2="28.20" y2="18.87"/><line x1="41.50" y1="35.28" x2="28.00" y2="11.89"/><line x1="42.82" y1="34.59" x2="33.94" y2="15.56"/><line x1="44.19" y1="34.03" x2="34.95" y2="8.65"/><line x1="45.60" y1="33.58" x2="40.16" y2="13.29"/><line x1="47.05" y1="33.26" x2="42.36" y2="6.67"/><line x1="48.52" y1="33.06" x2="46.69" y2="12.14"/><line x1="50.00" y1="33.00" x2="50.00" y2="6.00"/><line x1="51.48" y1="33.06" x2="53.31" y2="12.14"/><line x1="52.95" y1="33.26" x2="57.64" y2="6.67"/><line x1="54.40" y1="33.58" x2="59.84" y2="13.29"/><line x1="55.81" y1="34.03" x2="65.05" y2="8.65"/><line x1="57.18" y1="34.59" x2="66.06" y2="15.56"/><line x1="58.50" y1="35.28" x2="72.00" y2="11.89"/><line x1="59.75" y1="36.07" x2="71.80" y2="18.87"/><line x1="60.93" y1="36.98" x2="78.28" y2="16.29"/><line x1="62.02" y1="37.98" x2="76.87" y2="23.13"/><line x1="63.02" y1="39.07" x2="83.71" y2="21.72"/><line x1="63.93" y1="40.25" x2="81.13" y2="28.20"/><line x1="64.72" y1="41.50" x2="88.11" y2="28.00"/><line x1="65.41" y1="42.82" x2="84.44" y2="33.94"/><line x1="65.97" y1="44.19" x2="91.35" y2="34.95"/><line x1="66.42" y1="45.60" x2="86.71" y2="40.16"/><line x1="66.74" y1="47.05" x2="93.33" y2="42.36"/><line x1="66.94" y1="48.52" x2="87.86" y2="46.69"/>
+  </g></symbol>
+</svg>
+
+<header>
+  <div class="contenedor nav">
+    <a href="#inicio" class="logo"><svg class="sol"><use href="#sol"/></svg>Nombre</a>
+    <button class="menu-btn" aria-expanded="false" aria-controls="menu">Menú</button>
+    <ul id="menu">
+      <li><a href="#sobre-mi">Sobre mí</a></li>
+      <li><a href="#servicios">Servicios</a></li>
+      <li><a href="#sesiones">Sesiones</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ul>
+  </div>
+</header>
+
+<main>
+  <!-- 1 · INICIO -->
+  <section class="hero" id="inicio">
+    <div class="contenedor grid">
+      <div>
+        <p class="etiqueta"><span>Bienvenida</span></p>
+        <h1>Sanación &amp;<br><em>despertar</em> espiritual</h1>
+        <p class="roles">Holística · Canalizadora · Médium</p>
+        <p>Un espacio sagrado para reencontrarte con tu esencia, liberar lo que ya no te pertenece y abrir el camino hacia tu propia luz.</p>
+        <a href="#contacto" class="boton claro">Reservar una sesión</a>
+      </div>
+      <svg class="sol sol-grande" aria-hidden="true"><use href="#sol"/></svg>
+    </div>
+  </section>
+
+  <!-- 2 · SOBRE MÍ -->
+  <section class="sobre" id="sobre-mi">
+    <div class="contenedor grid">
+      <div class="foto revelar">
+        <svg class="sol" aria-hidden="true"><use href="#sol"/></svg>
+        <small>Foto de la terapeuta</small>
+      </div>
+      <div class="revelar">
+        <p class="etiqueta"><span>Sobre mí</span></p>
+        <h2>Acompaño tu proceso de <em>sanar</em> y recordar quién sos</h2>
+        <p>Soy terapeuta holística, canalizadora y médium. Hace años trabajo acompañando a personas en sus procesos de sanación emocional, energética y espiritual.</p>
+        <p>Creo que cada ser trae consigo la sabiduría para sanar. Mi tarea es sostener el espacio, canalizar los mensajes que necesitás escuchar y ayudarte a reconectar con tu guía interior.</p>
+        <p class="firma">— Nombre</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 · SERVICIOS (textos provisorios: se reemplazan con los servicios reales) -->
+  <section class="servicios" id="servicios">
+    <div class="contenedor">
+      <p class="etiqueta"><span>Servicios</span></p>
+      <h2>Caminos de <em>sanación</em></h2>
+      <p class="intro">Cada sesión es única y se adapta a tu momento. Elegí el camino que más resuene con vos.</p>
+
+      <div class="tarjetas">
+        <article class="tarjeta t1 revelar">
+          <svg class="sol" aria-hidden="true"><use href="#sol"/></svg>
+          <span class="num">01</span>
+          <h3>Servicio uno</h3>
+          <p>Descripción breve del servicio. Qué es, cómo se trabaja y qué beneficios trae.</p>
+          <div class="meta"><span>60 min</span><span>Online / presencial</span></div>
+        </article>
+        <article class="tarjeta t2 revelar">
+          <svg class="sol" aria-hidden="true"><use href="#sol"/></svg>
+          <span class="num">02</span>
+          <h3>Servicio dos</h3>
+          <p>Descripción breve del servicio. Qué es, cómo se trabaja y qué beneficios trae.</p>
+          <div class="meta"><span>60 min</span><span>Online / presencial</span></div>
+        </article>
+        <article class="tarjeta t3 revelar">
+          <svg class="sol" aria-hidden="true"><use href="#sol"/></svg>
+          <span class="num">03</span>
+          <h3>Servicio tres</h3>
+          <p>Descripción breve del servicio. Qué es, cómo se trabaja y qué beneficios trae.</p>
+          <div class="meta"><span>60 min</span><span>Online / presencial</span></div>
+        </article>
+        <article class="tarjeta t4 revelar">
+          <svg class="sol" aria-hidden="true"><use href="#sol"/></svg>
+          <span class="num">04</span>
+          <h3>Servicio cuatro</h3>
+          <p>Descripción breve del servicio. Qué es, cómo se trabaja y qué beneficios trae.</p>
+          <div class="meta"><span>60 min</span><span>Online / presencial</span></div>
+        </article>
+        <article class="tarjeta t5 revelar">
+          <svg class="sol" aria-hidden="true"><use href="#sol"/></svg>
+          <span class="num">05</span>
+          <h3>Servicio cinco</h3>
+          <p>Descripción breve del servicio. Qué es, cómo se trabaja y qué beneficios trae.</p>
+          <div class="meta"><span>60 min</span><span>Online / presencial</span></div>
+        </article>
+        <article class="tarjeta t6 revelar">
+          <svg class="sol" aria-hidden="true"><use href="#sol"/></svg>
+          <span class="num">06</span>
+          <h3>Servicio seis</h3>
+          <p>Descripción breve del servicio. Qué es, cómo se trabaja y qué beneficios trae.</p>
+          <div class="meta"><span>60 min</span><span>Online / presencial</span></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 · CÓMO ES UNA SESIÓN -->
+  <section id="sesiones">
+    <div class="contenedor">
+      <p class="etiqueta"><span>Cómo trabajamos</span></p>
+      <h2>Tu sesión, <em>paso a paso</em></h2>
+      <div class="pasos">
+        <div class="paso revelar"><h3>Contacto</h3><p>Me escribís y elegimos juntas el servicio que mejor acompañe tu momento.</p></div>
+        <div class="paso revelar"><h3>Reserva</h3><p>Coordinamos día y horario, online o presencial.</p></div>
+        <div class="paso revelar"><h3>Encuentro</h3><p>Abrimos un espacio sagrado, de escucha, contención y canalización.</p></div>
+        <div class="paso revelar"><h3>Integración</h3><p>Te llevás recomendaciones para seguir tu proceso en casa.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 · TESTIMONIOS -->
+  <section class="testimonios">
+    <div class="contenedor">
+      <p class="etiqueta"><span>Testimonios</span></p>
+      <div class="cita" aria-live="polite">
+        <blockquote id="cita-texto">“Testimonio de ejemplo: salí de la sesión con una paz que hacía mucho no sentía.”</blockquote>
+        <cite id="cita-autor">Nombre · Ciudad</cite>
+      </div>
+      <div class="puntos" role="group" aria-label="Elegir testimonio"></div>
+    </div>
+  </section>
+
+  <!-- 6 · CONTACTO -->
+  <section class="contacto" id="contacto">
+    <div class="contenedor grid">
+      <div class="revelar">
+        <p class="etiqueta"><span>Contacto</span></p>
+        <h2>Reservá tu <em>encuentro</em></h2>
+        <p class="intro">Escribime y te respondo a la brevedad para coordinar tu sesión.</p>
+        <ul class="datos">
+          <li><span>WhatsApp</span><a href="https://wa.me/000000000">+00 000 000 000</a></li>
+          <li><span>Instagram</span><a href="https://instagram.com/">@usuario</a></li>
+          <li><span>Email</span><a href="mailto:hola@ejemplo.com">hola@ejemplo.com</a></li>
+          <li><span>Modalidad</span><span>Online y presencial</span></li>
+        </ul>
+      </div>
+      <form class="revelar" onsubmit="event.preventDefault(); this.querySelector('button').textContent='¡Gracias! Te escribo pronto ✨';">
+        <label>Nombre <input type="text" name="nombre" required></label>
+        <label>Email o WhatsApp <input type="text" name="contacto" required></label>
+        <label>Servicio
+          <select name="servicio">
+            <option>Servicio uno</option><option>Servicio dos</option><option>Servicio tres</option>
+            <option>Servicio cuatro</option><option>Servicio cinco</option><option>Servicio seis</option>
+            <option>No sé, quiero que me orientes</option>
+          </select>
+        </label>
+        <label>Mensaje <textarea name="mensaje" rows="4"></textarea></label>
+        <button type="submit" class="boton">Enviar mensaje</button>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="contenedor">
+    <div class="fila">
+      <a href="#inicio" class="logo"><svg class="sol" style="color:var(--mostaza)"><use href="#sol"/></svg>Nombre</a>
+      <nav><a href="#servicios">Servicios</a><a href="#contacto">Contacto</a><a href="https://instagram.com/">Instagram</a></nav>
+    </div>
+    <p class="legal">© 2026 · Sanación y despertar espiritual. Estas terapias son complementarias y no reemplazan un tratamiento médico.</p>
+  </div>
+</footer>
+
+<script>
+  // Menú móvil
+  const btn = document.querySelector('.menu-btn'), menu = document.getElementById('menu');
+  btn.addEventListener('click', () => {
+    const abierto = menu.classList.toggle('abierto');
+    btn.setAttribute('aria-expanded', abierto);
+  });
+  menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => menu.classList.remove('abierto')));
+
+  // Aparición al hacer scroll
+  const obs = new IntersectionObserver(es => es.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+  }), { threshold: .12 });
+  document.querySelectorAll('.revelar').forEach(el => obs.observe(el));
+
+  // Testimonios (reemplazar con los reales)
+  const testimonios = [
+    ['“Testimonio de ejemplo: salí de la sesión con una paz que hacía mucho no sentía.”', 'Nombre · Ciudad'],
+    ['“Testimonio de ejemplo: los mensajes canalizados me dieron la claridad que estaba buscando.”', 'Nombre · Ciudad'],
+    ['“Testimonio de ejemplo: un espacio cálido, amoroso y profundamente sanador.”', 'Nombre · Ciudad'],
+  ];
+  const puntos = document.querySelector('.puntos'), txt = document.getElementById('cita-texto'), aut = document.getElementById('cita-autor');
+  let actual = 0, timer;
+  function mostrar(i) {
+    actual = i; [txt.textContent, aut.textContent] = testimonios[i];
+    puntos.querySelectorAll('button').forEach((b, j) => b.setAttribute('aria-current', j === i));
+  }
+  testimonios.forEach((_, i) => {
+    const b = document.createElement('button');
+    b.setAttribute('aria-label', 'Testimonio ' + (i + 1));
+    b.addEventListener('click', () => { mostrar(i); clearInterval(timer); });
+    puntos.appendChild(b);
+  });
+  mostrar(0);
+  timer = setInterval(() => mostrar((actual + 1) % testimonios.length), 7000);
+</script>
+</body>
+</html>
