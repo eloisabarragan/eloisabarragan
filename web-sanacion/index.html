@@ -141,6 +141,50 @@
   .t5 { background: var(--verde); }                             .t5 .sol { color: var(--crema); }
   .t6 { background: var(--borgona); }                           .t6 .sol { color: var(--mostaza); }
 
+  /* submenú de Terapias */
+  .con-sub { position: relative; }
+  .nav .sub {
+    position: absolute; top: 100%; left: -18px; padding: 14px 0; margin-top: 10px; min-width: 210px;
+    background: var(--crema); border: 1px solid var(--linea); border-radius: 10px;
+    display: flex !important; flex-direction: column; gap: 0 !important;
+    opacity: 0; visibility: hidden; transform: translateY(-4px); transition: .25s;
+  }
+  .nav .sub::before { content: ""; position: absolute; top: -12px; left: 0; right: 0; height: 12px; }
+  .nav .sub a { display: block; padding: 8px 18px; }
+  .nav .con-sub:hover .sub, .nav .con-sub:focus-within .sub { opacity: 1; visibility: visible; transform: none; }
+
+  a.tarjeta { cursor: pointer; }
+  [id] { scroll-margin-top: 88px; }
+
+  /* ───────── Detalle de terapias ───────── */
+  .detalle { padding-top: clamp(40px, 6vw, 72px); }
+  .terapia { display: grid; grid-template-columns: 1fr 1.35fr; gap: clamp(28px, 5vw, 72px); align-items: center; padding: clamp(36px, 5vw, 60px) 0; border-bottom: 1px solid var(--linea); }
+  .terapia:last-child { border-bottom: 0; }
+  .terapia:nth-child(even) { grid-template-columns: 1.35fr 1fr; }
+  .terapia:nth-child(even) .panel { order: 2; justify-self: end; width: 100%; }
+  .panel { aspect-ratio: 1; max-height: 440px; border-radius: var(--radio); display: grid; place-items: center; position: relative; }
+  .panel .sol { width: 58%; height: auto; }
+  .panel.t1 { background: #E9DCC5; }
+  .panel .num { position: absolute; top: 20px; left: 22px; font-family: var(--mono); font-size: 12px; letter-spacing: .18em; opacity: .8; }
+  .frase { font-family: var(--mono); font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--rosa); }
+  .info h3 { font-size: clamp(32px, 4vw, 44px); margin: 8px 0 18px; }
+  .info h4 { font-family: var(--mono); font-weight: 400; font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--verde); margin: 26px 0 10px; }
+  .para { list-style: none; }
+  .para li { position: relative; padding-left: 26px; margin-bottom: 6px; }
+  .para li::before { content: "✦"; position: absolute; left: 0; color: var(--mostaza); font-size: 13px; top: 2px; }
+  .ficha { display: flex; flex-wrap: wrap; gap: 8px 24px; margin: 26px 0 28px; padding: 14px 0; border-block: 1px solid var(--linea); font-family: var(--mono); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--texto-suave); }
+
+  /* ───────── YouTube ───────── */
+  .youtube { background: #E9DCC5; }
+  .videos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin: 48px 0 40px; }
+  .miniatura { aspect-ratio: 16/9; border-radius: var(--radio); display: grid; place-items: center; transition: transform .4s; }
+  .video:hover .miniatura { transform: translateY(-4px); }
+  .v1 { background: var(--verde); } .v2 { background: var(--rosa); } .v3 { background: var(--mostaza); }
+  .play { width: 58px; height: 58px; border-radius: 50%; border: 1px solid var(--crema); display: grid; place-items: center; }
+  .play::after { content: ""; border-left: 14px solid var(--crema); border-block: 9px solid transparent; margin-left: 4px; }
+  .video .num { font-family: var(--mono); font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--rosa); margin-top: 16px; }
+  .video h3 { font-size: 22px; margin-top: 4px; }
+
   /* ───────── Proceso ───────── */
   .pasos { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; margin-top: 56px; counter-reset: paso; }
   .paso { border-top: 1px solid var(--verde); padding-top: 22px; }
@@ -188,6 +232,7 @@
   /* ───────── Responsive ───────── */
   @media (max-width: 900px) {
     .tarjetas { grid-template-columns: repeat(2, 1fr); }
+    .nav ul { gap: 22px; }
     .pasos { grid-template-columns: repeat(2, 1fr); }
   }
   @media (max-width: 760px) {
@@ -202,6 +247,13 @@
     .hero .sol-grande { width: 60%; order: -1; }
     .tarjetas, .pasos { grid-template-columns: 1fr; }
     .tarjeta { min-height: 0; }
+    .nav .sub { position: static; opacity: 1; visibility: visible; transform: none; border: 0; margin: 0; padding: 0 0 8px 16px; min-width: 0; background: none; }
+    .nav .sub a { padding: 8px 16px; font-size: 11px; }
+    .terapia, .terapia:nth-child(even) { grid-template-columns: 1fr; }
+    .terapia:nth-child(even) .panel { order: 0; }
+    .panel { aspect-ratio: 16/9; }
+    .panel .sol { width: 34%; }
+    .videos { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -221,8 +273,17 @@
     <button class="menu-btn" aria-expanded="false" aria-controls="menu">Menú</button>
     <ul id="menu">
       <li><a href="#sobre-mi">Sobre mí</a></li>
-      <li><a href="#servicios">Servicios</a></li>
-      <li><a href="#sesiones">Sesiones</a></li>
+      <li class="con-sub"><a href="#terapias">Terapias</a>
+        <ul class="sub">
+          <li><a href="#energetica">Terapia energética</a></li>
+          <li><a href="#tarot">Tarot</a></li>
+          <li><a href="#genealogia">Genealogía</a></li>
+          <li><a href="#mediumnica">Mediúmnica</a></li>
+          <li><a href="#hipnosis">Hipnosis</a></li>
+        </ul>
+      </li>
+      <li><a href="#testimonios">Testimonios</a></li>
+      <li><a href="#youtube">YouTube</a></li>
       <li><a href="#contacto">Contacto</a></li>
     </ul>
   </div>
@@ -260,57 +321,157 @@
     </div>
   </section>
 
-  <!-- 3 · SERVICIOS (textos provisorios: se reemplazan con los servicios reales) -->
-  <section class="servicios" id="servicios">
+  <!-- 3 · TERAPIAS: resumen en tarjetas -->
+  <section class="servicios" id="terapias">
     <div class="contenedor">
-      <p class="etiqueta"><span>Servicios</span></p>
+      <p class="etiqueta"><span>Terapias</span></p>
       <h2>Caminos de <em>sanación</em></h2>
       <p class="intro">Cada sesión es única y se adapta a tu momento. Elegí el camino que más resuene con vos.</p>
-
       <div class="tarjetas">
-        <article class="tarjeta t1 revelar">
+        <a href="#energetica" class="tarjeta t1 revelar">
           <svg class="sol" aria-hidden="true"><use href="#sol"/></svg>
           <span class="num">01</span>
-          <h3>Servicio uno</h3>
-          <p>Descripción breve del servicio. Qué es, cómo se trabaja y qué beneficios trae.</p>
-          <div class="meta"><span>60 min</span><span>Online / presencial</span></div>
-        </article>
-        <article class="tarjeta t2 revelar">
+          <h3>Terapia energética</h3>
+          <p>Limpieza y armonización de tu energía.</p>
+          <div class="meta"><span>60 min</span><span>Ver más →</span></div>
+        </a>
+        <a href="#tarot" class="tarjeta t2 revelar">
           <svg class="sol" aria-hidden="true"><use href="#sol"/></svg>
           <span class="num">02</span>
-          <h3>Servicio dos</h3>
-          <p>Descripción breve del servicio. Qué es, cómo se trabaja y qué beneficios trae.</p>
-          <div class="meta"><span>60 min</span><span>Online / presencial</span></div>
-        </article>
-        <article class="tarjeta t3 revelar">
+          <h3>Tarot</h3>
+          <p>Claridad para tu camino.</p>
+          <div class="meta"><span>60 min</span><span>Ver más →</span></div>
+        </a>
+        <a href="#genealogia" class="tarjeta t3 revelar">
           <svg class="sol" aria-hidden="true"><use href="#sol"/></svg>
           <span class="num">03</span>
-          <h3>Servicio tres</h3>
-          <p>Descripción breve del servicio. Qué es, cómo se trabaja y qué beneficios trae.</p>
-          <div class="meta"><span>60 min</span><span>Online / presencial</span></div>
-        </article>
-        <article class="tarjeta t4 revelar">
+          <h3>Genealogía</h3>
+          <p>Sanar tu árbol, liberar tu historia.</p>
+          <div class="meta"><span>90 min</span><span>Ver más →</span></div>
+        </a>
+        <a href="#mediumnica" class="tarjeta t4 revelar">
           <svg class="sol" aria-hidden="true"><use href="#sol"/></svg>
           <span class="num">04</span>
-          <h3>Servicio cuatro</h3>
-          <p>Descripción breve del servicio. Qué es, cómo se trabaja y qué beneficios trae.</p>
-          <div class="meta"><span>60 min</span><span>Online / presencial</span></div>
-        </article>
-        <article class="tarjeta t5 revelar">
+          <h3>Mediúmnica</h3>
+          <p>Un puente con quienes partieron.</p>
+          <div class="meta"><span>60 min</span><span>Ver más →</span></div>
+        </a>
+        <a href="#hipnosis" class="tarjeta t5 revelar">
           <svg class="sol" aria-hidden="true"><use href="#sol"/></svg>
           <span class="num">05</span>
-          <h3>Servicio cinco</h3>
-          <p>Descripción breve del servicio. Qué es, cómo se trabaja y qué beneficios trae.</p>
-          <div class="meta"><span>60 min</span><span>Online / presencial</span></div>
-        </article>
-        <article class="tarjeta t6 revelar">
+          <h3>Hipnosis</h3>
+          <p>Un viaje hacia tu interior.</p>
+          <div class="meta"><span>90 min</span><span>Ver más →</span></div>
+        </a>
+        <a href="#contacto" class="tarjeta t6 revelar">
           <svg class="sol" aria-hidden="true"><use href="#sol"/></svg>
-          <span class="num">06</span>
-          <h3>Servicio seis</h3>
-          <p>Descripción breve del servicio. Qué es, cómo se trabaja y qué beneficios trae.</p>
-          <div class="meta"><span>60 min</span><span>Online / presencial</span></div>
-        </article>
+          <span class="num">✦</span>
+          <h3>¿No sabés por dónde empezar?</h3>
+          <p>Contame qué estás atravesando y te oriento hacia la terapia que mejor te acompañe.</p>
+          <div class="meta"><span>Consulta</span><span>Escribime →</span></div>
+        </a>
       </div>
+    </div>
+  </section>
+
+  <!-- 3b · TERAPIAS: detalle de cada una -->
+  <section class="detalle">
+    <div class="contenedor">
+      <article class="terapia revelar" id="energetica">
+        <div class="panel t1">
+          <svg class="sol" aria-hidden="true"><use href="#sol"/></svg>
+          <span class="num">01</span>
+        </div>
+        <div class="info">
+          <p class="frase">Limpieza y armonización de tu energía</p>
+          <h3>Terapia energética</h3>
+          <p>Un trabajo sobre tu campo energético y tus chakras para liberar bloqueos, cargas emocionales y energías densas que se acumulan con el tiempo. A través de la imposición de manos y la canalización de energía, se restablece el equilibrio natural entre tu cuerpo, tu mente y tu espíritu.</p>
+          <h4>Es para vos si…</h4>
+          <ul class="para">
+            <li>Te sentís cansada o drenada sin un motivo claro.</li>
+            <li>Atravesás estrés, ansiedad o un momento de cambio.</li>
+            <li>Querés limpiar tu energía y volver a tu centro.</li>
+          </ul>
+          <div class="ficha"><span>Duración · 60 min</span><span>Presencial o a distancia</span></div>
+          <a href="#contacto" class="boton" data-servicio="Terapia energética">Reservar terapia energética</a>
+        </div>
+      </article>
+      <article class="terapia revelar" id="tarot">
+        <div class="panel t2">
+          <svg class="sol" aria-hidden="true"><use href="#sol"/></svg>
+          <span class="num">02</span>
+        </div>
+        <div class="info">
+          <p class="frase">Claridad para tu camino</p>
+          <h3>Tarot</h3>
+          <p>Una lectura de tarot terapéutico: no para predecir un destino fijo, sino para iluminar el momento que estás viviendo. Las cartas funcionan como un espejo que muestra lo que está en juego, lo que necesitás ver y las posibilidades que se abren frente a tus decisiones.</p>
+          <h4>Es para vos si…</h4>
+          <ul class="para">
+            <li>Estás frente a una decisión importante.</li>
+            <li>Querés entender un vínculo o una situación.</li>
+            <li>Buscás orientación y una mirada más profunda.</li>
+          </ul>
+          <div class="ficha"><span>Duración · 60 min</span><span>Online o presencial</span></div>
+          <a href="#contacto" class="boton" data-servicio="Tarot">Reservar lectura de tarot</a>
+        </div>
+      </article>
+      <article class="terapia revelar" id="genealogia">
+        <div class="panel t3">
+          <svg class="sol" aria-hidden="true"><use href="#sol"/></svg>
+          <span class="num">03</span>
+        </div>
+        <div class="info">
+          <p class="frase">Sanar tu árbol, liberar tu historia</p>
+          <h3>Genealogía</h3>
+          <p>Recorremos tu árbol genealógico para descubrir patrones, lealtades invisibles y memorias heredadas que se repiten de generación en generación. Al tomar conciencia de ellas, podés honrar a tu linaje y elegir tu propio camino con libertad.</p>
+          <h4>Es para vos si…</h4>
+          <ul class="para">
+            <li>Notás situaciones que se repiten en tu familia: vínculos, dinero, salud, separaciones.</li>
+            <li>Sentís que cargás con algo que no es tuyo.</li>
+            <li>Querés comprender tu historia desde la raíz.</li>
+          </ul>
+          <div class="ficha"><span>Duración · 90 min</span><span>Online o presencial</span></div>
+          <a href="#contacto" class="boton" data-servicio="Genealogía">Reservar genealogía</a>
+        </div>
+      </article>
+      <article class="terapia revelar" id="mediumnica">
+        <div class="panel t4">
+          <svg class="sol" aria-hidden="true"><use href="#sol"/></svg>
+          <span class="num">04</span>
+        </div>
+        <div class="info">
+          <p class="frase">Un puente con quienes partieron</p>
+          <h3>Mediúmnica</h3>
+          <p>Una sesión de conexión con seres queridos que trascendieron, en la que canalizo los mensajes que llegan para vos. Un espacio de amor y respeto para cerrar ciclos, despedirte y sentir que el vínculo continúa.</p>
+          <h4>Es para vos si…</h4>
+          <ul class="para">
+            <li>Estás atravesando un duelo.</li>
+            <li>Quedaron palabras sin decir.</li>
+            <li>Necesitás paz, consuelo y señales.</li>
+          </ul>
+          <div class="ficha"><span>Duración · 60 min</span><span>Online o presencial</span></div>
+          <a href="#contacto" class="boton" data-servicio="Mediúmnica">Reservar mediúmnica</a>
+        </div>
+      </article>
+      <article class="terapia revelar" id="hipnosis">
+        <div class="panel t5">
+          <svg class="sol" aria-hidden="true"><use href="#sol"/></svg>
+          <span class="num">05</span>
+        </div>
+        <div class="info">
+          <p class="frase">Un viaje hacia tu interior</p>
+          <h3>Hipnosis</h3>
+          <p>A través de un estado de relajación profunda accedés a tu mente subconsciente para trabajar emociones, creencias limitantes y memorias. Puede incluir regresiones, para comprender el origen de lo que hoy te pasa y transformarlo.</p>
+          <h4>Es para vos si…</h4>
+          <ul class="para">
+            <li>Querés trabajar miedos, bloqueos o hábitos.</li>
+            <li>Sentís curiosidad por explorar la historia de tu alma.</li>
+            <li>Buscás un cambio profundo, desde adentro.</li>
+          </ul>
+          <div class="ficha"><span>Duración · 90 min</span><span>Presencial u online</span></div>
+          <a href="#contacto" class="boton" data-servicio="Hipnosis">Reservar hipnosis</a>
+        </div>
+      </article>
     </div>
   </section>
 
@@ -329,7 +490,7 @@
   </section>
 
   <!-- 5 · TESTIMONIOS -->
-  <section class="testimonios">
+  <section class="testimonios" id="testimonios">
     <div class="contenedor">
       <p class="etiqueta"><span>Testimonios</span></p>
       <div class="cita" aria-live="polite">
@@ -340,7 +501,22 @@
     </div>
   </section>
 
-  <!-- 6 · CONTACTO -->
+  <!-- 6 · YOUTUBE (reemplazar cada .video por el <iframe> de YouTube) -->
+  <section class="youtube" id="youtube">
+    <div class="contenedor">
+      <p class="etiqueta"><span>YouTube</span></p>
+      <h2>Contenido para tu <em>despertar</em></h2>
+      <p class="intro">Meditaciones, mensajes canalizados y reflexiones para acompañarte en tu camino, gratis en mi canal.</p>
+      <div class="videos">
+        <a class="video revelar" href="https://youtube.com/" target="_blank" rel="noopener"><div class="miniatura v1"><span class="play"></span></div><p class="num">Meditación</p><h3>Meditación guiada para limpiar tu energía</h3></a>
+        <a class="video revelar" href="https://youtube.com/" target="_blank" rel="noopener"><div class="miniatura v2"><span class="play"></span></div><p class="num">Mensaje canalizado</p><h3>Mensaje de tus guías para esta semana</h3></a>
+        <a class="video revelar" href="https://youtube.com/" target="_blank" rel="noopener"><div class="miniatura v3"><span class="play"></span></div><p class="num">Reflexión</p><h3>Sanar el linaje: lo que heredamos</h3></a>
+      </div>
+      <a href="https://youtube.com/" class="boton" target="_blank" rel="noopener">Visitar el canal</a>
+    </div>
+  </section>
+
+  <!-- 7 · CONTACTO -->
   <section class="contacto" id="contacto">
     <div class="contenedor grid">
       <div class="revelar">
@@ -358,9 +534,12 @@
         <label>Nombre <input type="text" name="nombre" required></label>
         <label>Email o WhatsApp <input type="text" name="contacto" required></label>
         <label>Servicio
-          <select name="servicio">
-            <option>Servicio uno</option><option>Servicio dos</option><option>Servicio tres</option>
-            <option>Servicio cuatro</option><option>Servicio cinco</option><option>Servicio seis</option>
+          <select name="servicio" id="servicio">
+            <option>Terapia energética</option>
+            <option>Tarot</option>
+            <option>Genealogía</option>
+            <option>Mediúmnica</option>
+            <option>Hipnosis</option>
             <option>No sé, quiero que me orientes</option>
           </select>
         </label>
@@ -375,7 +554,7 @@
   <div class="contenedor">
     <div class="fila">
       <a href="#inicio" class="logo"><svg class="sol" style="color:var(--mostaza)"><use href="#sol"/></svg>Nombre</a>
-      <nav><a href="#servicios">Servicios</a><a href="#contacto">Contacto</a><a href="https://instagram.com/">Instagram</a></nav>
+      <nav><a href="#terapias">Terapias</a><a href="#youtube">YouTube</a><a href="#contacto">Contacto</a><a href="https://instagram.com/">Instagram</a></nav>
     </div>
     <p class="legal">© 2026 · Sanación y despertar espiritual. Estas terapias son complementarias y no reemplazan un tratamiento médico.</p>
   </div>
@@ -389,6 +568,11 @@
     btn.setAttribute('aria-expanded', abierto);
   });
   menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => menu.classList.remove('abierto')));
+
+  // Al tocar "Reservar ..." se preselecciona esa terapia en el formulario
+  document.querySelectorAll('[data-servicio]').forEach(a => a.addEventListener('click', () => {
+    document.getElementById('servicio').value = a.dataset.servicio;
+  }));
 
   // Aparición al hacer scroll
   const obs = new IntersectionObserver(es => es.forEach(e => {
