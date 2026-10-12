@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "description": "Sitio web: estudio contable, inversiones y real estate premium en Uruguay",
   "scripts": {
-    "build": "esbuild src/main.js --bundle --minify --format=iife --target=es2019 --outfile=assets/app.js && esbuild src/styles.css --bundle --minify --outfile=assets/styles.css",
+    "build": "esbuild src/main.js --bundle --minify --format=iife --target=es2019 --outfile=assets/app.js && esbuild src/styles.css --bundle --minify --external:fonts/* --outfile=assets/styles.css",
     "dev": "npm run build && npx --yes serve ."
   },
   "dependencies": {
@@ -13,6 +13,8 @@
     "three": "0.169.0"
   },
   "devDependencies": {
+    "@fontsource-variable/outfit": "^5.1.0",
+    "@fontsource/ibm-plex-mono": "^5.1.0",
     "esbuild": "0.24.0"
   }
 }
