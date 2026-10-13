@@ -99,6 +99,8 @@ function applyTexts() {
   const mq = t("mq").map((w) => `<span>${w}</span><i>✦</i>`).join("");
   $("#marquee").innerHTML = mq + mq;
   $$("[data-lang]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.lang === lang)));
+  // Puntos dorados entre las palabras del lema, como en la tarjeta de marca
+  $$(".manifesto__tag").forEach((el) => (el.innerHTML = el.innerHTML.split(" · ").join("<i>•</i>")));
 }
 function setLang(l) {
   if (!LANGS.includes(l) || l === lang) return;
@@ -163,6 +165,11 @@ ScrollTrigger.create({
   },
 });
 ScrollTrigger.create({ trigger: "#proyectos", start: "top 60px", end: "bottom 60px", toggleClass: { targets: nav, className: "on-light" } });
+ScrollTrigger.create({ trigger: "#sureste", start: "top 60px", end: "bottom 60px", toggleClass: { targets: nav, className: "on-light" } });
+if (!reduce) {
+  gsap.fromTo(".manifesto .compass", { rotate: -90 }, { rotate: 0, ease: "none", scrollTrigger: { trigger: ".manifesto", start: "top bottom", end: "bottom top", scrub: true } });
+  gsap.from(".manifesto__inner > *", { y: 40, opacity: 0, duration: 1.2, ease: "expo.out", stagger: 0.1, scrollTrigger: { trigger: ".manifesto", start: "top 70%" } });
+}
 
 burger.setAttribute("aria-label", t("nav.open"));
 onLang.push(() => burger.setAttribute("aria-label", t(menu.hidden ? "nav.open" : "nav.close")));
@@ -244,7 +251,7 @@ ScrollTrigger.create({
 });
 // La secuencia se desvanece al llegar a la sección siguiente
 ScrollTrigger.create({
-  trigger: ".paths", start: "top bottom", end: "top top",
+  trigger: ".manifesto", start: "top bottom", end: "top top",
   onUpdate: (self) => {
     const o = 1 - self.progress;
     $("#seq").style.opacity = o;

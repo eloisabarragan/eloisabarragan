@@ -13,6 +13,7 @@
   },
   "devDependencies": {
     "@fontsource-variable/outfit": "^5.1.0",
+    "@fontsource/cormorant-garamond": "^5.1.0",
     "@fontsource/ibm-plex-mono": "^5.1.0",
     "esbuild": "0.24.0"
   }

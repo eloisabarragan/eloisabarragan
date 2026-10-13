@@ -1,3 +1,5 @@
+@font-face { font-family: "Cormorant Garamond"; font-style: normal; font-display: swap; font-weight: 500; src: url("fonts/cormorant-garamond-latin-500-normal.woff2") format("woff2"); }
+@font-face { font-family: "Cormorant Garamond"; font-style: italic; font-display: swap; font-weight: 400; src: url("fonts/cormorant-garamond-latin-400-italic.woff2") format("woff2"); }
 @font-face { font-family: "Outfit"; font-style: normal; font-display: swap; font-weight: 100 900; src: url("fonts/outfit-latin-wght-normal.woff2") format("woff2-variations"), url("fonts/outfit-latin-wght-normal.woff2") format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
 @font-face { font-family: "Outfit"; font-style: normal; font-display: swap; font-weight: 100 900; src: url("fonts/outfit-latin-ext-wght-normal.woff2") format("woff2"); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; }
 @font-face { font-family: "IBM Plex Mono"; font-style: normal; font-display: swap; font-weight: 400; src: url("fonts/ibm-plex-mono-latin-400-normal.woff2") format("woff2"); }
@@ -20,6 +22,9 @@
 
   --f-display: "Outfit", "Futura", "Century Gothic", "Helvetica Neue", Arial, sans-serif;
   --f-body: "Outfit", "Helvetica Neue", Arial, sans-serif;
+  --f-brand: "Cormorant Garamond", "Cormorant", Garamond, Georgia, serif;
+  --navy: #16233f;
+  --linen: #eee8dd;
   --f-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
 
   --gutter: clamp(16px, 4vw, 56px);
@@ -134,8 +139,8 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .nav.on-light { color: var(--paper-ink); }
 .nav.on-light.is-scrolled { background: rgba(242, 240, 235, 0.7); border-bottom-color: rgba(18, 21, 28, 0.1); }
 .brand { display: flex; align-items: center; gap: 0.7rem; margin-right: auto; }
-.brand__mark { width: 26px; height: 26px; color: var(--gold); }
-.brand__name { font-family: var(--f-display); font-weight: 300; font-size: 1.25rem; letter-spacing: 0.32em; }
+.brand__mark { width: 30px; height: 30px; color: currentColor; }
+.brand__name { font-family: var(--f-brand); font-weight: 500; font-size: 1.55rem; letter-spacing: 0.1em; line-height: 1; }
 .brand__sub { color: var(--muted); font-size: 0.6rem; padding-left: 0.7rem; border-left: 1px solid var(--line-strong); }
 .nav__links { display: flex; gap: 2rem; font-size: 0.9rem; }
 .nav__links a { position: relative; display: inline-block; padding: 0.3rem 0; opacity: 0.8; transition: opacity 0.3s; }
@@ -479,7 +484,7 @@ input[type="range"]:active::-webkit-slider-thumb { transform: scale(1.25); }
 
 /* ---------- Footer ---------- */
 .footer { padding: 4rem var(--gutter) calc(2rem + env(safe-area-inset-bottom, 0px)); border-top: 1px solid var(--line); background: var(--night); overflow: hidden; }
-.footer__word { font-size: clamp(5rem, 24vw, 26rem); line-height: 0.8; letter-spacing: 0.04em; color: transparent; -webkit-text-stroke: 1px var(--line-strong); text-align: center; user-select: none; }
+.footer__word { font-family: var(--f-brand); font-weight: 500; font-size: clamp(5rem, 22vw, 24rem); line-height: 0.8; letter-spacing: 0.02em; color: transparent; -webkit-text-stroke: 1px var(--line-strong); text-align: center; user-select: none; }
 .footer__row { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; color: var(--muted); margin-top: 3rem; }
 .footer__row a:hover { color: var(--gold); }
 .footer__fine { margin-top: 1.4rem; }
@@ -493,3 +498,29 @@ input[type="range"]:active::-webkit-slider-thumb { transform: scale(1.25); }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
 }
+
+/* ---------- Marca: tarjeta de lino ---------- */
+.manifesto {
+  position: relative; z-index: 2; color: var(--navy); text-align: center;
+  padding: clamp(6rem, 13vw, 11rem) var(--gutter);
+  background-color: var(--linen);
+  background-image:
+    repeating-linear-gradient(0deg, rgba(110, 90, 60, 0.05) 0 1px, transparent 1px 3px),
+    repeating-linear-gradient(90deg, rgba(110, 90, 60, 0.045) 0 1px, transparent 1px 4px),
+    radial-gradient(ellipse at 50% 0%, rgba(255, 255, 255, 0.6), transparent 60%);
+}
+.manifesto__inner { max-width: 820px; margin: 0 auto; display: grid; justify-items: center; gap: clamp(1.4rem, 3vw, 2.2rem); }
+.manifesto__word { font-family: var(--f-brand); font-weight: 500; font-size: clamp(4.2rem, 15vw, 12rem); line-height: 0.85; letter-spacing: 0.02em; margin: 0; }
+.manifesto__tag { font-family: var(--f-brand); font-weight: 500; font-size: clamp(1.05rem, 2vw, 1.5rem); letter-spacing: 0.16em; margin: 0; }
+.manifesto__tag i, .footer__tag i { font-style: normal; color: var(--gold); padding: 0 0.5em; }
+.manifesto__body { max-width: 46ch; margin: 1rem 0 0; font-size: clamp(1.02rem, 1.4vw, 1.2rem); line-height: 1.7; color: rgba(22, 35, 63, 0.86); text-wrap: pretty; }
+.manifesto__body strong { font-weight: 500; color: var(--navy); }
+.manifesto__slogan { font-family: var(--f-brand); font-style: italic; font-weight: 400; font-size: clamp(1.9rem, 4vw, 3.2rem); line-height: 1.15; margin: 1.2rem 0 0; text-wrap: balance; }
+.compass { width: clamp(110px, 14vw, 150px); height: auto; color: var(--navy); margin-top: 1rem; overflow: visible; }
+.compass--footer { width: 96px; color: var(--ivory); margin: 0; }
+.footer__brand { display: grid; justify-items: center; gap: 1rem; margin-bottom: 3rem; }
+.footer__tag { font-family: var(--f-brand); font-style: italic; font-size: 1.4rem; color: var(--gold-hi); margin: 0; }
+.service--div .service__name { font-size: clamp(1.9rem, 4.4vw, 3.6rem); }
+.service--div .service__row { grid-template-columns: 120px minmax(0, 1fr) auto 40px; }
+@media (max-width: 760px) { .service--div .service__row { grid-template-columns: minmax(0, 1fr) 40px; } .service--div .service__for { white-space: normal; } }
+@media (max-width: 480px) { .manifesto__tag { font-size: 0.98rem; letter-spacing: 0.06em; } .manifesto__tag i { padding: 0 0.3em; } }
