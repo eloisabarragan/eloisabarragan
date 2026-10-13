@@ -388,7 +388,7 @@ input[type="range"]:active::-webkit-slider-thumb { transform: scale(1.25); }
 
 /* ---------- Uruguay ---------- */
 .uy { position: relative; padding: clamp(7rem, 14vw, 12rem) var(--gutter); overflow: hidden; background: var(--deep); min-height: 100svh; }
-.uy__art { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.9; }
+.uy__art { position: absolute; inset: 0; width: 100%; height: 100%; max-width: none; object-fit: cover; opacity: 0.9; }
 .uy::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(6,8,15,0.55) 0%, rgba(6,8,15,0.45) 40%, rgba(6,8,15,0.92) 72%, var(--night) 100%); }
 .uy__grid { position: absolute; inset: 0; z-index: 1; display: grid; grid-template-columns: repeat(6, 1fr); pointer-events: none; }
 .uy__grid i { border-right: 1px solid var(--line); transform-origin: top; }
@@ -461,6 +461,9 @@ input[type="range"]:active::-webkit-slider-thumb { transform: scale(1.25); }
 
 /* ---------- Contacto ---------- */
 .contact { padding: clamp(6rem, 12vw, 11rem) var(--gutter); display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 520px); gap: clamp(3rem, 7vw, 8rem); background: radial-gradient(ellipse at 80% 20%, rgba(201,165,107,0.12), transparent 55%), var(--night); border-top: 1px solid var(--line); }
+.contact { position: relative; overflow: hidden; }
+.contact > *:not(.contact__bg) { position: relative; z-index: 1; }
+.contact__bg { position: absolute; inset: 0; width: 100%; height: 100%; max-width: none; object-fit: cover; opacity: 0.32; z-index: 0; -webkit-mask-image: linear-gradient(90deg, #000 0%, rgba(0,0,0,0.6) 45%, transparent 85%); mask-image: linear-gradient(90deg, #000 0%, rgba(0,0,0,0.6) 45%, transparent 85%); }
 .contact h2 { font-size: clamp(3rem, 9vw, 8rem); margin: 0; }
 .contact__data { list-style: none; margin: 3rem 0 0; padding: 0; display: grid; border-top: 1px solid var(--line); }
 .contact__data li { display: flex; justify-content: space-between; gap: 1rem; padding: 1rem 0; border-bottom: 1px solid var(--line); flex-wrap: wrap; }

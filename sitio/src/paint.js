@@ -197,17 +197,29 @@ const PAINTERS = {
   },
 };
 
+const cache = new Map();
+function loadImage(src) {
+  if (!cache.has(src)) {
+    const im = new Image();
+    im.decoding = "async";
+    im.src = src;
+    cache.set(src, im);
+  }
+  return cache.get(src);
+}
+export function preload(srcs) { srcs.filter(Boolean).forEach(loadImage); }
+
+function drawCover(ctx, im, w, h) {
+  const s = Math.max(w / im.naturalWidth, h / im.naturalHeight);
+  ctx.drawImage(im, (w - im.naturalWidth * s) / 2, (h - im.naturalHeight * s) / 2, im.naturalWidth * s, im.naturalHeight * s);
+}
+
+// Dibuja la foto si existe; mientras carga (o si falla) muestra la ilustración generativa
 export function paint(canvas, type, seed = 7, img) {
   const { ctx, w, h } = fitCanvas(canvas);
+  const im = img ? loadImage(img) : null;
+  if (im && im.complete && im.naturalWidth) { drawCover(ctx, im, w, h); return; }
   ctx.clearRect(0, 0, w, h);
   (PAINTERS[type] || PAINTERS.tower)(ctx, w, h, rng(seed));
-  if (img) {
-    const im = new Image();
-    im.crossOrigin = "anonymous";
-    im.onload = () => {
-      const s = Math.max(w / im.width, h / im.height);
-      ctx.drawImage(im, (w - im.width * s) / 2, (h - im.height * s) / 2, im.width * s, im.height * s);
-    };
-    im.src = img;
-  }
+  if (im) im.addEventListener("load", () => drawCover(ctx, im, w, h), { once: true });
 }

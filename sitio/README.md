@@ -28,6 +28,7 @@ npm run dev     # compila y sirve en http://localhost:3000
 - **Marca**: la marca está como "Grupo Sureste" / "SURESTE" en `index.html`; falta el logo oficial.
 - **Contacto**: email y WhatsApp están en `index.html` (sección contacto y botón flotante) y en `CONTACT` dentro de `src/main.js`.
 - **Textos e idiomas**: se editan en `src/i18n.js` (misma clave en `es`, `en` y `pt`). El idioma se elige con el selector ES/EN/PT o según el idioma del navegador.
+- **Fotos**: los originales van en `assets/img/` en dos tamaños (`-1600.webp` y `-900.webp`).
 - **Proyectos**: son ejemplos. Los datos fijos están en `ESTATES` (`src/main.js`) y los textos en `estates` (`src/i18n.js`). Agregá `img: "ruta/foto.jpg"` a cada proyecto para usar renders o fotos reales en lugar de la ilustración.
 - **Rentabilidades del simulador**: `PROFILES` en `src/main.js`.
 - **Textos legales**: revisá los avisos de inversión y la información sobre beneficios fiscales con el estudio.

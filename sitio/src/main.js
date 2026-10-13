@@ -1,7 +1,7 @@
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lenis from "lenis";
-import { paint } from "./paint.js";
+import { paint, preload } from "./paint.js";
 import { T, LANGS, LOCALES } from "./i18n.js";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -365,11 +365,12 @@ ScrollTrigger.create({ trigger: ".sim", start: "top 75%", once: true, onEnter: (
 /* ---------------- Proyectos: carrusel circular ---------------- */
 // Datos fijos de cada proyecto; los textos salen del diccionario ("estates")
 const ESTATES = [
-  { name: "Torre Mirador", type: "tower", img: "assets/img/proyecto-punta-del-este-1600.webp", lat: [34, 57, 46], lng: [54, 56, 2] },
-  { name: "Chacra Laguna", type: "villa", lat: [34, 48, 21], lng: [54, 35, 40] },
-  { name: "Residencias Carrasco", type: "residences", lat: [34, 53, 9], lng: [56, 3, 18] },
-  { name: "Puerto Buceo", type: "promovida", lat: [34, 54, 32], lng: [56, 7, 44] },
+  { name: "Torre Mirador", type: "tower", img: "assets/img/proyecto-punta-del-este-900.webp", lat: [34, 57, 46], lng: [54, 56, 2] },
+  { name: "Chacra Laguna", type: "villa", img: "assets/img/proyecto-jose-ignacio-900.webp", lat: [34, 48, 21], lng: [54, 35, 40] },
+  { name: "Residencias Carrasco", type: "residences", img: "assets/img/proyecto-carrasco-900.webp", lat: [34, 53, 9], lng: [56, 3, 18] },
+  { name: "Puerto Buceo", type: "promovida", img: "assets/img/proyecto-buceo-900.webp", lat: [34, 54, 32], lng: [56, 7, 44] },
 ];
+preload(ESTATES.map((e) => e.img));
 const orbA = $("#orbA"), orbB = $("#orbB");
 let orbFront = orbA, curEstate = -1;
 $("#estTot").textContent = String(ESTATES.length).padStart(2, "0");
@@ -441,8 +442,6 @@ $("#estNext").addEventListener("click", () => goEstate(curEstate + 1));
 $("#estIndex").addEventListener("click", (e) => { const b = e.target.closest("button"); if (b) goEstate(+b.dataset.i); });
 
 /* ---------------- Uruguay ---------------- */
-function paintUy() { paint($("#uyArt"), "villa", 5); }
-paintUy();
 if (!reduce) {
   gsap.from(".uy__grid i", { scaleY: 0, duration: 1.6, ease: "expo.inOut", stagger: 0.08, scrollTrigger: { trigger: ".uy", start: "top 70%" } });
   gsap.fromTo("#uyArt", { scale: 1.15 }, { scale: 1, ease: "none", scrollTrigger: { trigger: ".uy", start: "top bottom", end: "bottom top", scrub: true } });
@@ -530,7 +529,7 @@ let rz;
 window.addEventListener("resize", () => {
   clearTimeout(rz);
   rz = setTimeout(() => {
-    paintPaths(); paintUy(); drawSim();
+    paintPaths(); drawSim();
     const e = ESTATES[curEstate]; paint(orbFront, e.type, 21 + curEstate, e.img);
     ScrollTrigger.refresh();
   }, 200);
