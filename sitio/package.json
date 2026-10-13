@@ -9,8 +9,7 @@
   },
   "dependencies": {
     "gsap": "3.12.5",
-    "lenis": "1.1.13",
-    "three": "0.169.0"
+    "lenis": "1.1.13"
   },
   "devDependencies": {
     "@fontsource-variable/outfit": "^5.1.0",

@@ -1,7 +1,6 @@
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lenis from "lenis";
-import { createScene } from "./scene.js";
 import { paint } from "./paint.js";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -40,8 +39,19 @@ $$('a[href^="#"]').forEach((a) => a.addEventListener("click", (e) => {
 }));
 
 /* ---------------- Escena 3D ---------------- */
-let scene = null;
-try { scene = createScene($("#scene")); } catch (err) { $("#scene").remove(); }
+/* ---------------- Secuencia de la torre ---------------- */
+// Cada imagen entra con un fundido y la cámara "empuja" hacia adelante con un zoom continuo,
+// como un video que avanza y retrocede con el scroll.
+const seqImgs = $$(".seq__img");
+const seqTl = gsap.timeline({ paused: true, defaults: { ease: "none" } });
+seqImgs.forEach((img, k) => {
+  const last = k === seqImgs.length - 1;
+  const start = k === 0 ? 0 : k - 0.45;
+  const end = last ? k : k + 1;
+  seqTl.fromTo(img, { scale: 1 }, { scale: last ? 1.08 : 1.24, duration: end - start }, start);
+  if (k > 0) seqTl.fromTo(img, { opacity: 0 }, { opacity: 1, duration: 0.45, ease: "power1.inOut" }, start);
+});
+gsap.set(seqImgs, { opacity: (k) => (k === 0 ? 1 : 0) });
 
 /* ---------------- Texto dividido en palabras ---------------- */
 function splitWords(el) {
@@ -85,11 +95,12 @@ else {
   const counter = { v: 0 };
   const fontsReady = document.fonts ? document.fonts.ready : Promise.resolve();
   const minTime = new Promise((r) => setTimeout(r, 1500));
+  const firstImg = seqImgs[0] && seqImgs[0].decode ? seqImgs[0].decode().catch(() => {}) : Promise.resolve();
   gsap.to(counter, {
     v: 92, duration: 1.4, ease: "power2.inOut",
     onUpdate: () => { $("#loaderCount").textContent = String(Math.round(counter.v)).padStart(3, "0"); $("#loaderBar").style.width = counter.v + "%"; },
   });
-  Promise.race([Promise.all([fontsReady, minTime]), new Promise((r) => setTimeout(r, 3500))]).then(() => {
+  Promise.race([Promise.all([fontsReady, minTime, firstImg]), new Promise((r) => setTimeout(r, 3500))]).then(() => {
     gsap.to(counter, {
       v: 100, duration: 0.4, ease: "power1.out",
       onUpdate: () => { $("#loaderCount").textContent = String(Math.round(counter.v)).padStart(3, "0"); $("#loaderBar").style.width = counter.v + "%"; },
@@ -151,7 +162,7 @@ if (fine && !reduce) {
 
 /* ---------------- Ascenso por la torre ---------------- */
 const floors = $$(".floor");
-const levels = floors.map((f) => +f.dataset.level);
+const levels = floors.map((f) => f.dataset.level);
 let activeFloor = 0;
 function showFloor(i) {
   if (i === activeFloor) return;
@@ -165,42 +176,45 @@ gsap.set(floors, { opacity: 0, yPercent: -50 });
 gsap.set(floors[0], { opacity: 1 });
 const levelNum = $("#levelNum"), railDot = $("#railDot");
 const lvl = { v: 0 };
-let lvlTarget = 0;
-function renderLevel() { const l = Math.round(lvl.v); levelNum.textContent = l === 0 ? "PB" : String(l).padStart(2, "0"); }
+let lvlTarget = levels[0];
 function setLevel(l) {
   if (l === lvlTarget) return;
+  const from = lvlTarget;
   lvlTarget = l;
-  if (reduce) { lvl.v = l; renderLevel(); return; }
-  gsap.to(lvl, { v: l, duration: 1.1, ease: "power3.out", onUpdate: renderLevel, overwrite: true });
+  const n = parseInt(l, 10), f = parseInt(from, 10);
+  // Entre dos pisos numéricos el contador corre; con PB o Sky cambia directo
+  if (reduce || isNaN(n)) { gsap.killTweensOf(lvl); levelNum.textContent = l; return; }
+  lvl.v = isNaN(f) ? 0 : f;
+  gsap.to(lvl, { v: n, duration: 1.1, ease: "power3.out", overwrite: true, onUpdate: () => (levelNum.textContent = String(Math.round(lvl.v)).padStart(2, "0")) });
 }
-renderLevel();
+levelNum.textContent = levels[0];
 ScrollTrigger.create({
   trigger: "#hero", start: "top top", endTrigger: "#ascend", end: "bottom bottom",
-  onUpdate: (self) => scene && scene.setProgress(self.progress),
+  animation: seqTl, scrub: reduce ? true : 0.8,
 });
 ScrollTrigger.create({
   trigger: "#ascend", start: "top top", end: "bottom bottom",
   onUpdate: (self) => {
     const p = self.progress;
     railDot.style.bottom = `calc(${p * 100}% - 4px)`;
-    const idx = Math.min(floors.length - 1, Math.floor(p * floors.length * 0.999));
+    const idx = Math.round(p * (floors.length - 1));
     showFloor(idx);
     setLevel(levels[idx]);
   },
 });
-// Apagar la escena cuando ya no se ve
+// La secuencia se desvanece al llegar a la sección siguiente
 ScrollTrigger.create({
   trigger: ".paths", start: "top bottom", end: "top top",
   onUpdate: (self) => {
     const o = 1 - self.progress;
-    $("#scene").style.opacity = o;
+    $("#seq").style.opacity = o;
     $(".scene-veil").style.opacity = o;
-    scene && scene.setVisible(o > 0.01);
+    $("#seq").style.visibility = o < 0.01 ? "hidden" : "visible";
   },
 });
 
 /* ---------------- Paneles de caminos ---------------- */
-function paintPaths() { $$(".path__art").forEach((c, i) => paint(c, c.dataset.art, 11 + i)); }
+function paintPaths() { $$(".path__art").forEach((c, i) => paint(c, c.dataset.art, 11 + i, c.dataset.img)); }
 paintPaths();
 
 /* ---------------- Servicios (acordeón) ---------------- */
@@ -309,7 +323,7 @@ ScrollTrigger.create({ trigger: ".sim", start: "top 75%", once: true, onEnter: (
 
 /* ---------------- Proyectos: carrusel circular ---------------- */
 const ESTATES = [
-  { name: "Torre Mirador", place: "Punta del Este · Playa Brava", type: "tower", lat: [34, 57, 46], lng: "54°56′02″O",
+  { name: "Torre Mirador", place: "Punta del Este · Playa Brava", type: "tower", img: "assets/img/proyecto-punta-del-este-1600.webp", lat: [34, 57, 46], lng: "54°56′02″O",
     desc: "Departamentos frente al mar con amenities de hotel. Alta demanda de alquiler en temporada y valorización sostenida.",
     facts: [["Desde", "USD 390.000"], ["Renta bruta est.", "5 – 6% anual"], ["Unidades", "2 a 4 dormitorios"], ["Entrega", "2028"]] },
   { name: "Chacra Laguna", place: "José Ignacio · Laguna Garzón", type: "villa", lat: [34, 48, 21], lng: "54°35′40″O",
@@ -447,7 +461,7 @@ gsap.to(track, {
 
 /* ---------------- Contacto ---------------- */
 const form = $("#contactForm");
-const CONTACT = { email: "hola@altura.uy", wa: "59899000000" };
+const CONTACT = { email: "hola@gruposureste.uy", wa: "59899000000" };
 form.addEventListener("submit", (e) => {
   e.preventDefault();
   const err = $("#formErr");

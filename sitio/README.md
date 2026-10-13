@@ -1,4 +1,4 @@
-# Altura · Estudio & Capital
+# Grupo Sureste
 
 Sitio web de una sola página: estudio contable, inversiones y real estate premium en Uruguay.
 
@@ -19,12 +19,12 @@ npm run dev     # compila y sirve en http://localhost:3000
 | `index.html` | Textos y estructura de todas las secciones |
 | `src/styles.css` | Paleta, tipografías y layout (tokens en `:root`) |
 | `src/main.js` | Scroll suave, animaciones, simulador, carrusel, calculadora, formulario |
-| `src/scene.js` | Torre 3D (Three.js) que se recorre con el scroll |
+| `assets/img/` | Fotos de la torre (`torre-01` a `torre-08`) y de los proyectos |
 | `src/paint.js` | Ilustraciones generativas de los proyectos |
 
 ## Antes de publicar
 
-- **Marca**: "Altura" es un nombre provisorio. Buscá `ALTURA` / `Altura` en `index.html`.
+- **Marca**: la marca está como "Grupo Sureste" / "SURESTE" en `index.html`; falta el logo oficial.
 - **Contacto**: email y WhatsApp están en `index.html` (sección contacto y botón flotante) y en `CONTACT` dentro de `src/main.js`.
 - **Proyectos**: son ejemplos. Editá `ESTATES` en `src/main.js`. Agregá `img: "ruta/foto.jpg"` a cada proyecto para usar renders o fotos reales en lugar de la ilustración.
 - **Rentabilidades del simulador**: `PROFILES` en `src/main.js`.
