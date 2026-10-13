@@ -3,8 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Sanación y Despertar Espiritual</title>
-<meta name="description" content="Terapias holísticas, canalización y mediumnidad. Sanación y despertar espiritual.">
+<title>Salvia · Terapias Holísticas</title>
+<link rel="icon" href="img/colibri-verde.png">
+<meta name="description" content="Salvia Terapias Holísticas: sanación y despertar espiritual con Silvia, terapeuta holística, canalizadora y médium. Neptunia Sur, Uruguay, y a distancia.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Mulish:wght@300;400;500&family=Courier+Prime&display=swap" rel="stylesheet">
@@ -49,6 +50,7 @@
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
   img, svg { display: block; max-width: 100%; }
+  img { height: auto; }
   a { color: inherit; text-decoration: none; }
 
   .contenedor { width: min(var(--ancho), 100% - 32px); margin-inline: auto; }
@@ -90,7 +92,7 @@
   }
   .nav { display: flex; align-items: center; justify-content: space-between; height: 72px; }
   .logo { display: flex; align-items: center; gap: 10px; font-family: var(--serif); font-size: 22px; color: var(--verde-osc); }
-  .logo .sol { width: 30px; height: 30px; color: var(--naranja); }
+  .nav .logo img { height: 50px; width: auto; }
   .nav ul { display: flex; gap: 32px; list-style: none; font-family: var(--mono); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; }
   .nav ul a { opacity: .75; transition: opacity .2s; }
   .nav ul a:hover { opacity: 1; color: var(--verde); }
@@ -114,23 +116,25 @@
     aspect-ratio: 4/5; border-radius: var(--radio); background: var(--rosa);
     display: grid; place-items: center; color: var(--crema); position: relative;
   }
-  .foto .sol { width: 55%; height: auto; }
+  .foto { overflow: hidden; }
+  .foto .sol { position: absolute; width: 96%; height: auto; aspect-ratio: 1; color: var(--mostaza); opacity: .9; animation: girar 160s linear infinite; }
+  .foto img { position: relative; width: 62%; border-radius: 50%; }
   .foto small { position: absolute; bottom: 16px; font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; opacity: .8; }
   .sobre p + p { margin-top: 16px; }
   .firma { font-family: var(--serif); font-size: 28px; color: var(--verde); margin-top: 24px; }
 
   /* ───────── Servicios: las 6 tarjetas de la paleta ───────── */
   .servicios { background: #E9DCC5; }
-  .tarjetas { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 56px; }
+  .tarjetas { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-top: 56px; }
   .tarjeta {
-    border-radius: var(--radio); padding: 36px 30px 32px; min-height: 420px;
+    border-radius: var(--radio); padding: 30px 24px 26px; min-height: 380px;
     display: flex; flex-direction: column; color: var(--crema);
     transition: transform .4s ease, box-shadow .4s ease;
   }
   .tarjeta:hover { transform: translateY(-6px); box-shadow: 0 18px 40px -20px rgba(58,53,36,.55); }
-  .tarjeta .sol { width: 110px; height: 110px; margin: 8px auto 28px; }
+  .tarjeta .sol { width: 92px; height: 92px; margin: 4px auto 22px; }
   .tarjeta .num { font-family: var(--mono); font-size: 11px; letter-spacing: .18em; opacity: .75; }
-  .tarjeta h3 { color: inherit; font-size: 26px; margin: 6px 0 12px; }
+  .tarjeta h3 { color: inherit; font-size: 23px; margin: 6px 0 12px; }
   .tarjeta p { font-size: 15px; opacity: .9; flex: 1; }
   .tarjeta .meta { display: flex; justify-content: space-between; border-top: 1px solid currentColor; padding-top: 14px; margin-top: 22px; font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; opacity: .85; }
   /* mismo orden y combinación que la referencia */
@@ -140,6 +144,7 @@
   .t4 { background: var(--naranja); color: #2F2A12; }           .t4 .sol { color: var(--verde); }
   .t5 { background: var(--verde); }                             .t5 .sol { color: var(--crema); }
   .t6 { background: var(--borgona); }                           .t6 .sol { color: var(--mostaza); }
+  .t7 { background: var(--verde-osc); color: var(--crema); }    .t7 .sol { color: var(--mostaza); }
 
   /* submenú de Terapias */
   .con-sub { position: relative; }
@@ -167,6 +172,7 @@
   .panel.t1 { background: #E9DCC5; }
   .panel .num { position: absolute; top: 20px; left: 22px; font-family: var(--mono); font-size: 12px; letter-spacing: .18em; opacity: .8; }
   .frase { font-family: var(--mono); font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--rosa); }
+  .info p + p { margin-top: 14px; }
   .info h3 { font-size: clamp(32px, 4vw, 44px); margin: 8px 0 18px; }
   .info h4 { font-family: var(--mono); font-weight: 400; font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--verde); margin: 26px 0 10px; }
   .para { list-style: none; }
@@ -176,7 +182,7 @@
 
   /* ───────── Escenas temáticas de cada terapia ───────── */
   .panel.t1 { --panel-fondo: #E9DCC5; color: var(--verde-osc); }
-  .panel.t3, .panel.t4, .panel.t5 { color: var(--crema); }
+  .panel.t3, .panel.t4, .panel.t5, .panel.t6, .panel.t7 { color: var(--crema); }
   .escena { position: absolute; top: 46px; bottom: 64px; left: 20px; right: 20px; width: calc(100% - 40px); height: calc(100% - 110px); overflow: visible; }
   .leyenda { position: absolute; left: 20px; right: 20px; bottom: 22px; text-align: center; font-family: var(--serif); font-size: 18px; line-height: 1.35; }
   .leyenda b { font-weight: 400; color: var(--rosa); }
@@ -193,9 +199,9 @@
   @keyframes halo { 0% { transform: scale(1); opacity: .55; } 100% { transform: scale(2.4); opacity: 0; } }
 
   /* árbol genealógico: se dibuja al llegar */
-  .arbol .rama { fill: none; stroke: var(--crema); stroke-width: 1; stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 1.1s ease; }
-  .arbol .nodo { fill: var(--rosa); stroke: var(--crema); stroke-width: 1; opacity: 0; transition: opacity .6s ease; }
-  .arbol .nodo.g0 { fill: var(--crema); }
+  .arbol .rama { fill: none; stroke: currentColor; stroke-width: 1; stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 1.1s ease; }
+  .arbol .nodo { fill: var(--panel-fondo); stroke: currentColor; stroke-width: 1; opacity: 0; transition: opacity .6s ease; }
+  .arbol .nodo.g0 { fill: currentColor; }
   .arbol .etiquetas { opacity: .75; }
   .arbol.dibujar .rama, .arbol.dibujar .nodo { stroke-dashoffset: 0; opacity: 1; }
   .arbol .g1 { transition-delay: .3s; } .arbol .rama.g2 { transition-delay: 1.1s; } .arbol .rama.g3 { transition-delay: 1.9s; }
@@ -258,14 +264,110 @@
 
   /* ───────── YouTube ───────── */
   .youtube { background: #E9DCC5; }
-  .videos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin: 48px 0 40px; }
-  .miniatura { aspect-ratio: 16/9; border-radius: var(--radio); display: grid; place-items: center; transition: transform .4s; }
+    .miniatura { aspect-ratio: 16/9; border-radius: var(--radio); display: grid; place-items: center; transition: transform .4s; }
   .video:hover .miniatura { transform: translateY(-4px); }
-  .v1 { background: var(--verde); } .v2 { background: var(--rosa); } .v3 { background: var(--mostaza); }
   .play { width: 58px; height: 58px; border-radius: 50%; border: 1px solid var(--crema); display: grid; place-items: center; }
   .play::after { content: ""; border-left: 14px solid var(--crema); border-block: 9px solid transparent; margin-left: 4px; }
-  .video .num { font-family: var(--mono); font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--rosa); margin-top: 16px; }
-  .video h3 { font-size: 22px; margin-top: 4px; }
+
+  /* ───────── Ajustes con el contenido real ───────── */
+  small { font-size: .75em; letter-spacing: .08em; }
+  .acciones { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 26px; }
+  .enlace { font-family: var(--mono); font-size: 12px; letter-spacing: .16em; text-transform: uppercase; border-bottom: 1px solid currentColor; padding-bottom: 2px; }
+  .hero .enlace { color: var(--crema); }
+  .credenciales { font-family: var(--mono); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--verde); margin-bottom: 18px; }
+  details { margin: 16px 0; }
+  summary { cursor: pointer; font-family: var(--mono); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--rosa); list-style: none; }
+  summary::-webkit-details-marker { display: none; }
+  summary::before { content: "+ "; }
+  details[open] summary::before { content: "− "; }
+  details p { margin-top: 14px; padding-left: 16px; border-left: 1px solid var(--linea); }
+  .ideal { margin-top: 20px; }
+  .ideal span, .masters-titulo, .modo { font-family: var(--mono); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--verde); }
+  .ideal span { display: block; margin-bottom: 2px; }
+  .nota { margin-top: 14px; font-size: 15px; color: var(--texto-suave); }
+  .ficha .precio { color: var(--verde-osc); font-weight: 700; }
+  .aclaracion { margin-top: 22px; font-size: 14px; color: var(--texto-suave); }
+
+  /* guía "¿qué estás necesitando?" */
+  .guia { margin-top: 44px; padding: clamp(24px, 4vw, 36px); border-radius: var(--radio); background: var(--verde); color: var(--crema); }
+  .guia-titulo { font-family: var(--serif); font-size: clamp(24px, 3vw, 30px); margin-bottom: 18px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 10px; }
+  .chip { font: inherit; font-size: 15px; color: var(--crema); background: transparent; border: 1px solid rgba(241,231,214,.55); border-radius: 999px; padding: 8px 16px; cursor: pointer; transition: background .25s, color .25s; }
+  .chip:hover, .chip[aria-pressed="true"] { background: var(--crema); color: var(--verde-osc); }
+  .guia-respuesta { margin-top: 20px; min-height: 1.7em; font-family: var(--serif); font-size: 19px; }
+  .guia-respuesta a { color: var(--mostaza); border-bottom: 1px solid currentColor; }
+
+  /* escenas nuevas */
+  .aura .anillo { fill: none; stroke: currentColor; stroke-width: .7; stroke-dasharray: 2 3; animation: aura 4s ease-in-out infinite alternate; animation-delay: var(--d); }
+  @keyframes aura { from { opacity: .25; } to { opacity: .8; } }
+  .aura .figura { fill: none; stroke: currentColor; stroke-width: 1; }
+  .aura .implante { fill: none; stroke: var(--mostaza); stroke-width: 1.1; transform-box: fill-box; transform-origin: center; opacity: 0; animation: extraer 8s ease-in-out infinite; animation-delay: var(--d); }
+  @keyframes extraer { 0% { opacity: 0; transform: scale(.4); } 8%, 45% { opacity: 1; transform: scale(1); } 60%, 100% { opacity: 0; transform: scale(.05) rotate(90deg); } }
+  .conste .trazo { fill: none; stroke: var(--crema); stroke-width: .6; stroke-dasharray: 1; stroke-dashoffset: 1; animation: unir 9s ease-in-out infinite; }
+  @keyframes unir { 0% { stroke-dashoffset: 1; opacity: .7; } 55%, 85% { stroke-dashoffset: 0; opacity: .7; } 100% { stroke-dashoffset: 0; opacity: 0; } }
+  .conste .astro { fill: var(--crema); animation: titilar 2.6s ease-in-out infinite alternate; animation-delay: var(--d); }
+  @keyframes titilar { from { opacity: .35; } to { opacity: 1; } }
+  .conste .central { color: var(--mostaza); }
+  .libro .pagina { fill: rgba(241,231,214,.14); stroke: currentColor; stroke-width: 1; }
+  .libro .renglon { fill: none; stroke: currentColor; stroke-width: .5; opacity: .6; }
+  .libro .rayo { stroke: var(--crema); stroke-width: .6; stroke-linecap: round; animation: titilar 2.4s ease-in-out infinite alternate; animation-delay: var(--d); }
+  .libro .resplandor { animation: resplandor 3s ease-in-out infinite alternate; }
+  .libro .orbe { fill: var(--crema); opacity: 0; animation: orbe 7s ease-in-out infinite; animation-delay: var(--d); }
+  @media (prefers-reduced-motion: reduce) {
+    .aura .anillo, .conste .astro, .libro .rayo, .libro .resplandor, .foto .sol { animation: none; }
+    .aura .implante { animation: none; opacity: 1; }
+    .conste .trazo { animation: none; stroke-dashoffset: 0; opacity: .7; }
+    .libro .orbe { animation: none; opacity: .6; }
+  }
+
+  /* ───────── Cursos ───────── */
+  .curso-destacado { display: grid; grid-template-columns: 1fr 1.4fr; margin-top: 48px; border-radius: var(--radio); overflow: hidden; background: #E9DCC5; }
+  .cd-arte { background: var(--verde); color: var(--mostaza); display: grid; place-items: center; align-content: center; gap: 22px; padding: 40px 24px; }
+  .cd-arte .sol { width: min(260px, 70%); height: auto; animation: girar 120s linear infinite; }
+  .elementos { font-family: var(--mono); font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--crema); text-align: center; }
+  .cd-info { padding: clamp(28px, 4vw, 48px); }
+  .cd-info h3, .curso h3, .video-destacado h3 { font-size: clamp(30px, 3.6vw, 40px); margin: 8px 0 10px; }
+  .lema { font-family: var(--serif); font-size: 20px; color: var(--rosa); margin-bottom: 14px; }
+  .cd-info .para { margin-top: 16px; }
+  .cursos-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 24px; }
+  .curso { border: 1px solid var(--linea); border-radius: var(--radio); padding: clamp(24px, 3vw, 36px); display: flex; flex-direction: column; }
+  .curso .frase { margin-bottom: 14px; }
+  .curso .ficha { margin-top: auto; padding-top: 14px; }
+  .curso > p:not(.frase) + .ficha, .curso > ul + p { margin-top: 14px; }
+  .para.compacta { margin-bottom: 12px; }
+  .modo { align-self: flex-start; border: 1px solid currentColor; border-radius: 999px; padding: 3px 12px; font-size: 11px; }
+  .modo.vivo { color: var(--rosa); }
+  .masters { margin-top: 56px; }
+  .masters-titulo { padding-bottom: 14px; border-bottom: 1px solid var(--verde); }
+  .master { display: grid; grid-template-columns: 1fr 2fr auto; gap: 12px 36px; align-items: baseline; padding: 24px 0; border-bottom: 1px solid var(--linea); }
+  .master h3 { font-size: 24px; }
+  .master p { font-size: 15px; color: var(--texto-suave); }
+  .master .enlace { white-space: nowrap; color: var(--verde); }
+
+  /* ───────── Productos ───────── */
+  .productos { background: #E9DCC5; }
+  .productos-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-top: 48px; }
+  .producto { background: var(--crema); border-radius: var(--radio); overflow: hidden; display: flex; flex-direction: column; }
+  .producto img { width: 100%; aspect-ratio: 1; object-fit: cover; }
+  .producto-info { padding: 20px 20px 22px; display: flex; flex-direction: column; flex: 1; }
+  .producto h3 { font-size: 21px; margin-bottom: 10px; }
+  .producto p { font-size: 14.5px; line-height: 1.6; color: var(--texto-suave); }
+  .producto .extra { margin-top: 10px; font-style: italic; }
+  .producto-pie { margin-top: auto; padding-top: 16px; display: flex; justify-content: space-between; align-items: center; }
+  .producto .precio { font-family: var(--serif); font-size: 22px; color: var(--verde-osc); }
+  .producto .enlace { color: var(--verde); }
+
+  /* ───────── YouTube destacado ───────── */
+  .video-destacado { display: grid; grid-template-columns: 1.2fr 1fr; gap: clamp(28px, 5vw, 64px); align-items: center; margin-top: 40px; }
+  .video-destacado .miniatura { position: relative; background: var(--verde); color: var(--mostaza); overflow: hidden; }
+  .video-destacado .miniatura .sol { position: absolute; width: 80%; height: auto; aspect-ratio: 1; opacity: .55; }
+  .video-destacado .play { position: relative; width: 72px; height: 72px; background: rgba(67,76,34,.5); }
+  .video-destacado .acciones { margin-top: 24px; }
+
+  /* formulario */
+  .nota-form { font-size: 13px; color: var(--texto-suave); margin-top: -6px; }
+  footer .logo img { height: 40px; width: auto; }
+  footer .logo small { display: block; font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; opacity: .7; }
 
   /* ───────── Proceso ───────── */
   .pasos { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; margin-top: 56px; counter-reset: paso; }
@@ -313,8 +415,10 @@
 
   /* ───────── Responsive ───────── */
   @media (max-width: 900px) {
-    .tarjetas { grid-template-columns: repeat(2, 1fr); }
-    .nav ul { gap: 22px; }
+    .tarjetas, .productos-grid { grid-template-columns: repeat(2, 1fr); }
+    .nav ul { gap: 20px; }
+    .curso-destacado, .video-destacado { grid-template-columns: 1fr; }
+    .master { grid-template-columns: 1fr; }
     .pasos { grid-template-columns: repeat(2, 1fr); }
   }
   @media (max-width: 760px) {
@@ -327,8 +431,13 @@
     .nav ul a { display: block; padding: 16px; }
     .hero .grid, .sobre .grid, .contacto .grid { grid-template-columns: 1fr; }
     .hero .sol-grande { width: 60%; order: -1; }
-    .tarjetas, .pasos { grid-template-columns: 1fr; }
-    .tarjeta { min-height: 0; }
+    .pasos { grid-template-columns: 1fr; }
+    .tarjetas { grid-template-columns: 1fr 1fr; gap: 12px; }
+    .tarjeta { min-height: 0; padding: 18px 14px 16px; }
+    .tarjeta .sol { width: 54px; height: 54px; margin: 0 auto 12px; }
+    .tarjeta h3 { font-size: 18px; }
+    .tarjeta p { font-size: 13px; line-height: 1.5; }
+    .tarjeta .meta { flex-direction: column; gap: 4px; font-size: 10px; margin-top: 14px; padding-top: 10px; }
     .nav .sub { position: static; opacity: 1; visibility: visible; transform: none; border: 0; margin: 0; padding: 0 0 8px 16px; min-width: 0; background: none; }
     .nav .sub a { padding: 8px 16px; font-size: 11px; }
     .terapia, .terapia:nth-child(even) { grid-template-columns: 1fr; }
@@ -341,7 +450,13 @@
     .panel.tirada { min-height: 0; padding: 52px 16px 28px; }
     .frente strong { font-size: 14px; }
     .frente { gap: 6px; }
-    .videos { grid-template-columns: 1fr; }
+    .cursos-grid { grid-template-columns: 1fr; }
+    .productos-grid { grid-template-columns: 1fr 1fr; gap: 14px; }
+    .producto-info { padding: 14px; }
+    .producto h3 { font-size: 18px; }
+    .producto p { font-size: 13.5px; }
+    .producto-pie { flex-direction: column; align-items: flex-start; gap: 8px; }
+    .nav .logo img { height: 44px; }
   }
 </style>
 </head>
@@ -363,20 +478,24 @@
 
 <header>
   <div class="contenedor nav">
-    <a href="#inicio" class="logo"><svg class="sol"><use href="#sol"/></svg>Nombre</a>
+    <a href="#inicio" class="logo"><img src="img/logo-salvia.png" alt="Salvia · Terapias Holísticas" width="640" height="372"></a>
     <button class="menu-btn" aria-expanded="false" aria-controls="menu">Menú</button>
     <ul id="menu">
       <li><a href="#sobre-mi">Sobre mí</a></li>
       <li class="con-sub"><a href="#terapias">Terapias</a>
         <ul class="sub">
-          <li><a href="#energetica">Terapia energética</a></li>
-          <li><a href="#tarot">Tarot</a></li>
-          <li><a href="#genealogia">Genealogía</a></li>
-          <li><a href="#mediumnica">Mediúmnica</a></li>
-          <li><a href="#hipnosis">Hipnosis</a></li>
+          <li><a href="#limpieza">Limpieza energética</a></li>
+          <li><a href="#implantes">Extracción de implantes</a></li>
+          <li><a href="#akashica">Canalización Akáshica</a></li>
+          <li><a href="#registros">Registros Akáshicos</a></li>
+          <li><a href="#mediumnica">Canalización Mediúmnica</a></li>
+          <li><a href="#tarot">Tarot Terapéutico</a></li>
+          <li><a href="#hipnosis">Hipnosis Regresiva</a></li>
+          <li><a href="#transgeneracional">Terapia Transgeneracional</a></li>
         </ul>
       </li>
-      <li><a href="#testimonios">Testimonios</a></li>
+      <li><a href="#cursos">Cursos</a></li>
+      <li><a href="#productos">Productos</a></li>
       <li><a href="#youtube">YouTube</a></li>
       <li><a href="#contacto">Contacto</a></li>
     </ul>
@@ -388,11 +507,14 @@
   <section class="hero" id="inicio">
     <div class="contenedor grid">
       <div>
-        <p class="etiqueta"><span>Bienvenida</span></p>
+        <p class="etiqueta"><span>Salvia · Terapias Holísticas</span></p>
         <h1>Sanación &amp;<br><em>despertar</em> espiritual</h1>
         <p class="roles">Holística · Canalizadora · Médium</p>
-        <p>Un espacio sagrado para reencontrarte con tu esencia, liberar lo que ya no te pertenece y abrir el camino hacia tu propia luz.</p>
-        <a href="#contacto" class="boton claro">Reservar una sesión</a>
+        <p>Un espacio sagrado para reencontrarte con tu esencia, liberar lo que ya no te pertenece y abrir el camino hacia tu propia luz. Sesiones presenciales en Neptunia Sur, Canelones (Uruguay), y a distancia para todo el mundo.</p>
+        <div class="acciones">
+          <a href="#contacto" class="boton claro">Reservar una sesión</a>
+          <a href="#terapias" class="enlace">Ver terapias →</a>
+        </div>
       </div>
       <svg class="sol sol-grande" aria-hidden="true"><use href="#sol"/></svg>
     </div>
@@ -403,75 +525,113 @@
     <div class="contenedor grid">
       <div class="foto revelar">
         <svg class="sol" aria-hidden="true"><use href="#sol"/></svg>
-        <small>Foto de la terapeuta</small>
+        <img src="img/silvia.png" alt="Silvia, terapeuta holística de Salvia Terapias" width="538" height="560" loading="lazy">
       </div>
       <div class="revelar">
         <p class="etiqueta"><span>Sobre mí</span></p>
-        <h2>Acompaño tu proceso de <em>sanar</em> y recordar quién sos</h2>
-        <p>Soy terapeuta holística, canalizadora y médium. Hace años trabajo acompañando a personas en sus procesos de sanación emocional, energética y espiritual.</p>
-        <p>Creo que cada ser trae consigo la sabiduría para sanar. Mi tarea es sostener el espacio, canalizar los mensajes que necesitás escuchar y ayudarte a reconectar con tu guía interior.</p>
-        <p class="firma">— Nombre</p>
+        <h2>Hola, soy <em>Silvia</em></h2>
+        <p class="credenciales">Docente · Educación emocional · Terapeuta holística · Canalizadora · Médium</p>
+        <p>Soy docente de primaria, con especializaciones en Educación emocional. Me dediqué casi 20 años a la docencia, trabajando la educación emocional en el aula además de lo curricular. Hoy soy terapeuta holística, canalizadora y médium.</p>
+        <p>Desde niña percibo la energía y las emociones de las personas y los lugares, lo cual era abrumador. Con el tiempo me fui dando cuenta de que veía, escuchaba y sentía cosas que las demás personas no.</p>
+        <details>
+          <summary>Leer mi historia completa</summary>
+          <p>Me sentía un poco juzgada de rara, loca o con algún trastorno mental, así que pronto aprendí a no contarle a nadie lo que sentía y percibía. También me agarré de la escritura para transcribir en metáforas todo lo que vivía.</p>
+          <p>A los 16 años, más o menos, mis percepciones se abrieron abruptamente después de hacer unas meditaciones que leí en una revista. Empecé a leerle las cartas a todo el mundo. No sabía nada de símbolos ni números, así que solo contaba todo lo que me llegaba. Los resultados eran sorprendentes.</p>
+          <p>Pero no era tan fabuloso como puede parecer: me atormentaban entidades de baja vibración y sentía que enloquecía. La vida me acercó a las personas indicadas para que recibiera los mensajes que necesitaba. Alguien de cierta religión me dijo: «es que sos médium». Eso no me gustaba y me asustaba, así que recién ahora me animo a nombrarme así. Otra persona, un vecino, me dijo que leyera la Biblia, me encomendara a Dios e hiciera lo que me dictara mi corazón. Así lo hice…</p>
+          <p>Por mucho tiempo me cerré a mis capacidades y traté de «ser normal». Hace unos cuantos años, después de varias crisis existenciales, decidí aceptarme como soy.</p>
+        </details>
+        <p>Aquí estoy hoy, después de una larga trayectoria y una formación constante, ofreciendo mis dones espirituales al servicio terapéutico de quienes se atreven a hacerse cargo de sí mismos y emprender el viaje de la sanación.</p>
+        <p class="firma">Abrazo de Luz ✨ Silvia</p>
       </div>
     </div>
   </section>
 
-  <!-- 3 · TERAPIAS: resumen en tarjetas -->
+  <!-- 3 · TERAPIAS: guía + resumen en tarjetas -->
   <section class="servicios" id="terapias">
     <div class="contenedor">
       <p class="etiqueta"><span>Terapias</span></p>
       <h2>Caminos de <em>sanación</em></h2>
-      <p class="intro">Cada sesión es única y se adapta a tu momento. Elegí el camino que más resuene con vos.</p>
+      <p class="intro">Cada sesión es única y se adapta a tu momento. Todas pueden ser presenciales en Neptunia Sur, Canelones, Uruguay, o a distancia desde cualquier lugar del mundo.</p>
+
+      <div class="guia revelar">
+        <p class="guia-titulo">¿Qué estás necesitando hoy?</p>
+        <div class="chips">
+          <button type="button" class="chip" data-recomienda="mediumnica">Sanar un duelo</button>
+          <button type="button" class="chip" data-recomienda="tarot">Claridad en una situación</button>
+          <button type="button" class="chip" data-recomienda="akashica,registros">Guía espiritual</button>
+          <button type="button" class="chip" data-recomienda="hipnosis">El origen profundo de algo que me pasa</button>
+          <button type="button" class="chip" data-recomienda="transgeneracional">Patrones que se repiten en mi familia</button>
+          <button type="button" class="chip" data-recomienda="limpieza,implantes">Limpiar y armonizar mi energía</button>
+        </div>
+        <p class="guia-respuesta" aria-live="polite">Elegí una opción y te sugiero por dónde empezar ✦</p>
+      </div>
+
       <div class="tarjetas">
-        <a href="#energetica" class="tarjeta t1 revelar">
+        <a href="#limpieza" class="tarjeta t1 revelar">
           <svg class="sol" aria-hidden="true"><use href="#sol"/></svg>
           <span class="num">01</span>
-          <h3>Terapia energética</h3>
-          <p>Limpieza y armonización de tu energía.</p>
-          <div class="meta"><span>60 min</span><span>Ver más →</span></div>
+          <h3>Limpieza y armonización energética</h3>
+          <p>Equilibrar tu campo energético y liberar bloqueos.</p>
+          <div class="meta"><span>$1900 UYU</span><span>Ver más →</span></div>
         </a>
-        <a href="#tarot" class="tarjeta t2 revelar">
+        <a href="#implantes" class="tarjeta t7 revelar">
           <svg class="sol" aria-hidden="true"><use href="#sol"/></svg>
           <span class="num">02</span>
-          <h3>Tarot</h3>
-          <p>Claridad para tu camino.</p>
-          <div class="meta"><span>60 min</span><span>Ver más →</span></div>
+          <h3>Extracción de implantes y estructura implantaria</h3>
+          <p>Detectar y extraer lo que distorsiona tu energía.</p>
+          <div class="meta"><span>$1900 UYU</span><span>Ver más →</span></div>
         </a>
-        <a href="#genealogia" class="tarjeta t3 revelar">
+        <a href="#akashica" class="tarjeta t6 revelar">
           <svg class="sol" aria-hidden="true"><use href="#sol"/></svg>
           <span class="num">03</span>
-          <h3>Genealogía</h3>
-          <p>Sanar tu árbol, liberar tu historia.</p>
-          <div class="meta"><span>90 min</span><span>Ver más →</span></div>
+          <h3>Canalización Akáshica</h3>
+          <p>Información de tu alma como bálsamo para sanar.</p>
+          <div class="meta"><span>$1900 UYU</span><span>Ver más →</span></div>
+        </a>
+        <a href="#registros" class="tarjeta t3 revelar">
+          <svg class="sol" aria-hidden="true"><use href="#sol"/></svg>
+          <span class="num">04</span>
+          <h3>Registros Akáshicos</h3>
+          <p>Descifrar los mensajes de tu parte más elevada.</p>
+          <div class="meta"><span>$1900 UYU</span><span>Ver más →</span></div>
         </a>
         <a href="#mediumnica" class="tarjeta t4 revelar">
           <svg class="sol" aria-hidden="true"><use href="#sol"/></svg>
-          <span class="num">04</span>
-          <h3>Mediúmnica</h3>
-          <p>Un puente con quienes partieron.</p>
-          <div class="meta"><span>60 min</span><span>Ver más →</span></div>
+          <span class="num">05</span>
+          <h3>Canalización Mediúmnica</h3>
+          <p>Un mensaje de tus seres queridos que trascendieron.</p>
+          <div class="meta"><span>$1900 UYU</span><span>Ver más →</span></div>
+        </a>
+        <a href="#tarot" class="tarjeta t2 revelar">
+          <svg class="sol" aria-hidden="true"><use href="#sol"/></svg>
+          <span class="num">06</span>
+          <h3>Tarot Terapéutico</h3>
+          <p>Claridad para decidir desde el presente.</p>
+          <div class="meta"><span>$1200 UYU</span><span>Ver más →</span></div>
         </a>
         <a href="#hipnosis" class="tarjeta t5 revelar">
           <svg class="sol" aria-hidden="true"><use href="#sol"/></svg>
-          <span class="num">05</span>
-          <h3>Hipnosis</h3>
-          <p>Un viaje hacia tu interior.</p>
-          <div class="meta"><span>90 min</span><span>Ver más →</span></div>
+          <span class="num">07</span>
+          <h3>Hipnosis Regresiva</h3>
+          <p>Encontrar el origen de lo que hoy te aqueja.</p>
+          <div class="meta"><span>$1900 UYU</span><span>Ver más →</span></div>
         </a>
-        <a href="#contacto" class="tarjeta t6 revelar">
+        <a href="#transgeneracional" class="tarjeta t1 revelar">
           <svg class="sol" aria-hidden="true"><use href="#sol"/></svg>
-          <span class="num">✦</span>
-          <h3>¿No sabés por dónde empezar?</h3>
-          <p>Contame qué estás atravesando y te oriento hacia la terapia que mejor te acompañe.</p>
-          <div class="meta"><span>Consulta</span><span>Escribime →</span></div>
+          <span class="num">08</span>
+          <h3>Terapia Transgeneracional</h3>
+          <p>Patrones que se repiten en tu familia.</p>
+          <div class="meta"><span>$1700 UYU · 1ª consulta</span><span>Ver más →</span></div>
         </a>
       </div>
+      <p class="aclaracion">Los valores son de intercambio por sesión, en pesos uruguayos (UYU) o su equivalente en dólares.</p>
     </div>
   </section>
 
   <!-- 3b · TERAPIAS: detalle de cada una -->
   <section class="detalle">
     <div class="contenedor">
-      <article class="terapia revelar" id="energetica">
+      <article class="terapia revelar" id="limpieza">
         <div class="panel t1 tema">
           <span class="num">01</span>
           <svg class="escena chakras" viewBox="0 0 200 300" role="group" aria-label="Los siete chakras">
@@ -487,22 +647,110 @@
           <p class="leyenda" aria-live="polite">Tocá un chakra ✦</p>
         </div>
         <div class="info">
-          <p class="frase">Limpieza y armonización de tu energía</p>
-          <h3>Terapia energética</h3>
-          <p>Un trabajo sobre tu campo energético y tus chakras para liberar bloqueos, cargas emocionales y energías densas que se acumulan con el tiempo. A través de la imposición de manos y la canalización de energía, se restablece el equilibrio natural entre tu cuerpo, tu mente y tu espíritu.</p>
-          <h4>Es para vos si…</h4>
-          <ul class="para">
-            <li>Te sentís cansada o drenada sin un motivo claro.</li>
-            <li>Atravesás estrés, ansiedad o un momento de cambio.</li>
-            <li>Querés limpiar tu energía y volver a tu centro.</li>
-          </ul>
-          <div class="ficha"><span>Duración · 60 min</span><span>Presencial o a distancia</span></div>
-          <a href="#contacto" class="boton" data-servicio="Terapia energética">Reservar terapia energética</a>
+          <p class="frase">Cirugía aural</p>
+          <h3>Limpieza y armonización energética</h3>
+          <p>Una técnica que equilibra el campo energético. Permite detectar y eliminar bloqueos que afectan el bienestar físico, emocional y espiritual, observando en los cuerpos bioplasmáticos las obstrucciones, desarmonías y energías densas, y testando el funcionamiento de los chakras.</p>
+          <p>A través de la canalización energética, la imposición de manos y el uso de péndulo y gemas como herramientas, se limpia la energía, se eliminan bloqueos con cirugía aural y se restablecen los flujos armónicos, promoviendo una sensación de paz y armonía.</p>
+          <div class="ficha"><span class="precio">$1900 <small>UYU</small> · US$47</span><span>Presencial en Neptunia Sur o a distancia</span></div>
+          <a href="#contacto" class="boton" data-servicio="Limpieza y armonización energética">Reservar sesión</a>
+        </div>
+      </article>
+      <article class="terapia revelar" id="implantes">
+        <div class="panel t7 tema">
+          <span class="num">02</span>
+          <svg class="escena aura" viewBox="0 0 200 220" aria-hidden="true">
+            <ellipse class="anillo" cx="100" cy="122" rx="88" ry="104" style="--d:0s"/>
+            <ellipse class="anillo" cx="100" cy="122" rx="70" ry="86" style="--d:.6s"/>
+            <ellipse class="anillo" cx="100" cy="122" rx="52" ry="68" style="--d:1.2s"/>
+            <circle class="figura" cx="100" cy="80" r="12"/>
+            <path class="figura" d="M100 96C80 96 71 110 69 132L56 170Q100 182 144 170L131 132C129 110 120 96 100 96Z"/>
+            <g transform="translate(58 74)"><g class="implante" style="--d:0s"><circle r="4.5"/><path d="M-3 -3L3 3M3 -3L-3 3"/></g></g><g transform="translate(146 96)"><g class="implante" style="--d:2s"><circle r="4.5"/><path d="M-3 -3L3 3M3 -3L-3 3"/></g></g><g transform="translate(66 150)"><g class="implante" style="--d:4s"><circle r="4.5"/><path d="M-3 -3L3 3M3 -3L-3 3"/></g></g><g transform="translate(138 158)"><g class="implante" style="--d:6s"><circle r="4.5"/><path d="M-3 -3L3 3M3 -3L-3 3"/></g></g>
+          </svg>
+          <p class="leyenda">Liberar lo que no es tuyo</p>
+        </div>
+        <div class="info">
+          <p class="frase">Liberar lo que no es tuyo</p>
+          <h3>Extracción de implantes y estructura implantaria</h3>
+          <p>Los implantes son objetos o dispositivos de distinta naturaleza, forma y función, en su mayoría bioplasmáticos, presentes en nuestros cuerpos energéticos, aunque también pueden estar a nivel físico.</p>
+          <p>Son de origen externo a nosotros, forman parte de la matrix de control y distorsionan el funcionamiento de nuestra energía, nuestro cuerpo físico y nuestra consciencia. Por eso es muy importante detectarlos y extraerlos mediante cirugía aural.</p>
+          <div class="ficha"><span class="precio">$1900 <small>UYU</small> · US$47</span><span>Presencial en Neptunia Sur o a distancia</span></div>
+          <a href="#contacto" class="boton" data-servicio="Extracción de implantes y estructura implantaria">Reservar sesión</a>
+        </div>
+      </article>
+      <article class="terapia revelar" id="akashica">
+        <div class="panel t6 tema">
+          <span class="num">03</span>
+          <svg class="escena conste" viewBox="0 0 200 210" aria-hidden="true">
+            <path class="trazo" pathLength="1" d="M40 60 L70 38 L100 66 L132 34 L166 58 L152 104 L172 150 L124 140 L100 178 L58 152 L32 110 L72 104 L100 66"/>
+            <circle class="astro" cx="40" cy="60" r="2.6" style="--d:0.00s"/><circle class="astro" cx="70" cy="38" r="1.8" style="--d:0.37s"/><circle class="astro" cx="100" cy="66" r="1.8" style="--d:0.74s"/><circle class="astro" cx="132" cy="34" r="2.6" style="--d:1.11s"/><circle class="astro" cx="166" cy="58" r="1.8" style="--d:1.48s"/><circle class="astro" cx="152" cy="104" r="1.8" style="--d:1.85s"/><circle class="astro" cx="172" cy="150" r="2.6" style="--d:2.22s"/><circle class="astro" cx="124" cy="140" r="1.8" style="--d:2.59s"/><circle class="astro" cx="100" cy="178" r="1.8" style="--d:2.96s"/><circle class="astro" cx="58" cy="152" r="2.6" style="--d:3.33s"/><circle class="astro" cx="32" cy="110" r="1.8" style="--d:3.70s"/><circle class="astro" cx="72" cy="104" r="1.8" style="--d:4.07s"/>
+            <use href="#estrella" x="80" y="104" width="40" height="40" class="central"/>
+          </svg>
+          <p class="leyenda">Conectar con la información de tu alma</p>
+        </div>
+        <div class="info">
+          <p class="frase">Todo tiene un origen</p>
+          <h3>Canalización Akáshica</h3>
+          <p>Todo tiene un origen, una razón de ser, un motivo… Tal vez no responda a nada conocido y debamos buscar más allá de lo que podemos percibir a simple vista. Muchas veces nuestras trabas o bloqueos se remiten a otras existencias, a contratos álmicos o a heridas emocionales de nuestra primera infancia, de las que no tenemos recuerdos.</p>
+          <p>El Akasha es un lugar etérico sagrado donde se guarda toda la información de nuestras vidas, de nuestro linaje y de la humanidad. Con la Canalización Akáshica accedemos a la información que estés list@ para recibir, como un bálsamo para las heridas que quedan por sanar.</p>
+          <p class="ideal"><span>Ideal para</span> Guía espiritual</p>
+          <p class="nota">✦ Es importante traer al menos un tema de consulta.</p>
+          <div class="ficha"><span class="precio">$1900 <small>UYU</small> · US$47</span><span>Presencial en Neptunia Sur o por videollamada</span></div>
+          <a href="#contacto" class="boton" data-servicio="Canalización Akáshica">Reservar sesión</a>
+        </div>
+      </article>
+      <article class="terapia revelar" id="registros">
+        <div class="panel t3 tema">
+          <span class="num">04</span>
+          <svg class="escena libro" viewBox="0 0 200 200" aria-hidden="true">
+            <circle class="resplandor" cx="100" cy="92" r="64" fill="url(#brillo)"/>
+            <line class="rayo" x1="90.6" y1="90.6" x2="39.9" y2="72.1" style="--d:0.00s"/><line class="rayo" x1="91.3" y1="89.0" x2="60.2" y2="71.0" style="--d:0.25s"/><line class="rayo" x1="92.3" y1="87.6" x2="51.0" y2="52.9" style="--d:0.50s"/><line class="rayo" x1="93.6" y1="86.3" x2="70.4" y2="58.8" style="--d:0.75s"/><line class="rayo" x1="95.0" y1="85.3" x2="68.0" y2="38.6" style="--d:1.00s"/><line class="rayo" x1="96.6" y1="84.6" x2="84.3" y2="50.8" style="--d:1.25s"/><line class="rayo" x1="98.3" y1="84.2" x2="88.9" y2="31.0" style="--d:1.50s"/><line class="rayo" x1="100.0" y1="84.0" x2="100.0" y2="48.0" style="--d:1.75s"/><line class="rayo" x1="101.7" y1="84.2" x2="111.1" y2="31.0" style="--d:2.00s"/><line class="rayo" x1="103.4" y1="84.6" x2="115.7" y2="50.8" style="--d:2.25s"/><line class="rayo" x1="105.0" y1="85.3" x2="132.0" y2="38.6" style="--d:2.50s"/><line class="rayo" x1="106.4" y1="86.3" x2="129.6" y2="58.8" style="--d:2.75s"/><line class="rayo" x1="107.7" y1="87.6" x2="149.0" y2="52.9" style="--d:3.00s"/><line class="rayo" x1="108.7" y1="89.0" x2="139.8" y2="71.0" style="--d:3.25s"/><line class="rayo" x1="109.4" y1="90.6" x2="160.1" y2="72.1" style="--d:3.50s"/>
+            <circle class="orbe" cx="84" cy="104" r="1.8" style="--d:0s;--x:-10px"/><circle class="orbe" cx="116" cy="104" r="1.4" style="--d:1.6s;--x:8px"/><circle class="orbe" cx="100" cy="104" r="2.2" style="--d:3.1s;--x:0px"/><circle class="orbe" cx="72" cy="104" r="1.2" style="--d:4.4s;--x:-14px"/><circle class="orbe" cx="128" cy="104" r="1.8" style="--d:5.6s;--x:12px"/>
+            <path class="pagina" d="M100 156C80 146 52 146 28 152V100C52 94 80 94 100 104Z"/>
+            <path class="pagina" d="M100 156C120 146 148 146 172 152V100C148 94 120 94 100 104Z"/>
+            <path class="renglon" d="M40 112C58 108 76 108 90 114M40 122C58 118 76 118 90 124M40 132C58 128 76 128 90 134M110 114C124 108 142 108 160 112M110 124C124 118 142 118 160 122M110 134C124 128 142 128 160 132"/>
+          </svg>
+          <p class="leyenda">Las memorias de tu alma, en tu templo interior</p>
+        </div>
+        <div class="info">
+          <p class="frase">Tu templo interior</p>
+          <h3>Registros Akáshicos</h3>
+          <p>En el corazón de cada ser humano hay un templo espiritual. En ese lugar sagrado se guardan las memorias del alma, que van más allá de esta existencia e incluyen todo tu trayecto en este y otros planos o formas de vida. Acceder a ellas puede ayudarte a transitar tu camino con mayor luz, comprensión y sabiduría.</p>
+          <p>Te acompaño a ingresar a tu templo interno y a descifrar los mensajes que tu parte espiritual más elevada te entregue.</p>
+          <p class="ideal"><span>Ideal para</span> Guía espiritual</p>
+          <div class="ficha"><span class="precio">$1900 <small>UYU</small> · US$47</span><span>Presencial en Neptunia Sur o por videollamada</span></div>
+          <a href="#contacto" class="boton" data-servicio="Registros Akáshicos">Reservar sesión</a>
+        </div>
+      </article>
+      <article class="terapia revelar" id="mediumnica">
+        <div class="panel t4 tema">
+          <span class="num">05</span>
+          <svg class="escena vela" viewBox="0 0 200 240" aria-hidden="true">
+            <defs><radialGradient id="brillo"><stop offset="0" stop-color="#F1E7D6" stop-opacity=".75"/><stop offset="1" stop-color="#F1E7D6" stop-opacity="0"/></radialGradient></defs>
+            <circle class="resplandor" cx="100" cy="96" r="70" fill="url(#brillo)"/>
+            <circle class="orbe" cx="70" cy="150" r="2.2" style="--d:0s;--x:-12px"/><circle class="orbe" cx="132" cy="150" r="1.6" style="--d:1.3s;--x:10px"/><circle class="orbe" cx="88" cy="150" r="1.2" style="--d:2.6s;--x:-6px"/><circle class="orbe" cx="118" cy="150" r="2.6" style="--d:3.6s;--x:14px"/><circle class="orbe" cx="60" cy="150" r="1.4" style="--d:4.4s;--x:-16px"/><circle class="orbe" cx="142" cy="150" r="2" style="--d:5.4s;--x:6px"/><circle class="orbe" cx="100" cy="150" r="1.4" style="--d:6.2s;--x:0px"/>
+            <ellipse cx="100" cy="212" rx="46" ry="7" fill="#3E2C10" opacity=".18"/>
+            <path d="M78 124h44v84a4 4 0 0 1-4 4H82a4 4 0 0 1-4-4z" fill="#F1E7D6"/>
+            <path d="M78 124h44v10c-6 0-6 12-11 12s-4-8-9-8-5 18-10 18-4-26-9-26-5 0-5 0z" fill="#E6D6BC"/>
+            <line x1="100" y1="124" x2="100" y2="113" stroke="#3E2C10" stroke-width="1.6" stroke-linecap="round"/>
+            <g class="llama">
+              <path d="M100 66C113 86 114 104 100 114C86 104 87 86 100 66Z" fill="#F1E7D6"/>
+              <path d="M100 86C106 96 106 106 100 111C94 106 94 96 100 86Z" fill="var(--mostaza)"/>
+            </g>
+          </svg>
+          <p class="leyenda">El amor no se va, cambia de forma</p>
+        </div>
+        <div class="info">
+          <p class="frase">Un puente con quienes partieron</p>
+          <h3>Canalización Mediúmnica</h3>
+          <p>Es una canalización con algún ser querido que haya trascendido. Es útil para cerrar duelos, aliviar el corazón por la pérdida, hacer alguna pregunta con la que puedan ayudarte u orientarte, o abrirte a recibir un mensaje.</p>
+          <p class="ideal"><span>Ideal para</span> Sanar duelos</p>
+          <div class="ficha"><span class="precio">$1900 <small>UYU</small> · US$47</span><span>Presencial en Neptunia Sur o por videollamada</span></div>
+          <a href="#contacto" class="boton" data-servicio="Canalización Mediúmnica">Reservar sesión</a>
         </div>
       </article>
       <article class="terapia revelar" id="tarot">
         <div class="panel t2 tirada">
-          <span class="num">02</span>
+          <span class="num">06</span>
           <p class="pista">Elegí una carta ✦</p>
           <div class="cartas">
             <button class="carta" type="button" aria-label="Dar vuelta una carta">
@@ -521,78 +769,18 @@
           <p class="mensaje" aria-live="polite">Respirá, conectá con tu pregunta y tocá la carta que te llame.</p>
         </div>
         <div class="info">
-          <p class="frase">Claridad para tu camino</p>
-          <h3>Tarot</h3>
-          <p>Una lectura de tarot terapéutico: no para predecir un destino fijo, sino para iluminar el momento que estás viviendo. Las cartas funcionan como un espejo que muestra lo que está en juego, lo que necesitás ver y las posibilidades que se abren frente a tus decisiones.</p>
-          <h4>Es para vos si…</h4>
-          <ul class="para">
-            <li>Estás frente a una decisión importante.</li>
-            <li>Querés entender un vínculo o una situación.</li>
-            <li>Buscás orientación y una mirada más profunda.</li>
-          </ul>
-          <div class="ficha"><span>Duración · 60 min</span><span>Online o presencial</span></div>
-          <a href="#contacto" class="boton" data-servicio="Tarot">Reservar lectura de tarot</a>
-        </div>
-      </article>
-      <article class="terapia revelar" id="genealogia">
-        <div class="panel t3 tema arbol">
-          <span class="num">03</span>
-          <svg class="escena" viewBox="-14 0 274 260" aria-hidden="true">
-            <g class="etiquetas"><text x="-12" y="54">Bisabuelos</text><text x="-12" y="114">Abuelos</text><text x="-12" y="174">Padres</text><text x="-12" y="234">Vos</text></g>
-            <g class="ramas"><path class="rama g1" pathLength="1" d="M155.0 232 C155.0 202.0 101.9 202.0 101.9 172"/><path class="rama g1" pathLength="1" d="M155.0 232 C155.0 202.0 208.2 202.0 208.2 172"/><path class="rama g2" pathLength="1" d="M101.9 172 C101.9 142.0 75.3 142.0 75.3 112"/><path class="rama g2" pathLength="1" d="M101.9 172 C101.9 142.0 128.4 142.0 128.4 112"/><path class="rama g2" pathLength="1" d="M208.2 172 C208.2 142.0 181.6 142.0 181.6 112"/><path class="rama g2" pathLength="1" d="M208.2 172 C208.2 142.0 234.7 142.0 234.7 112"/><path class="rama g3" pathLength="1" d="M75.3 112 C75.3 82.0 62.0 82.0 62.0 52"/><path class="rama g3" pathLength="1" d="M75.3 112 C75.3 82.0 88.6 82.0 88.6 52"/><path class="rama g3" pathLength="1" d="M128.4 112 C128.4 82.0 115.1 82.0 115.1 52"/><path class="rama g3" pathLength="1" d="M128.4 112 C128.4 82.0 141.7 82.0 141.7 52"/><path class="rama g3" pathLength="1" d="M181.6 112 C181.6 82.0 168.3 82.0 168.3 52"/><path class="rama g3" pathLength="1" d="M181.6 112 C181.6 82.0 194.8 82.0 194.8 52"/><path class="rama g3" pathLength="1" d="M234.7 112 C234.7 82.0 221.4 82.0 221.4 52"/><path class="rama g3" pathLength="1" d="M234.7 112 C234.7 82.0 248.0 82.0 248.0 52"/></g>
-            <g><circle class="nodo g0" cx="155.0" cy="232" r="7"/><circle class="nodo g1" cx="101.9" cy="172" r="5.5"/><circle class="nodo g1" cx="208.2" cy="172" r="5.5"/><circle class="nodo g2" cx="75.3" cy="112" r="4.5"/><circle class="nodo g2" cx="128.4" cy="112" r="4.5"/><circle class="nodo g2" cx="181.6" cy="112" r="4.5"/><circle class="nodo g2" cx="234.7" cy="112" r="4.5"/><circle class="nodo g3" cx="62.0" cy="52" r="3.5"/><circle class="nodo g3" cx="88.6" cy="52" r="3.5"/><circle class="nodo g3" cx="115.1" cy="52" r="3.5"/><circle class="nodo g3" cx="141.7" cy="52" r="3.5"/><circle class="nodo g3" cx="168.3" cy="52" r="3.5"/><circle class="nodo g3" cx="194.8" cy="52" r="3.5"/><circle class="nodo g3" cx="221.4" cy="52" r="3.5"/><circle class="nodo g3" cx="248.0" cy="52" r="3.5"/></g>
-          </svg>
-          <p class="leyenda">Tu historia empieza mucho antes que vos</p>
-        </div>
-        <div class="info">
-          <p class="frase">Sanar tu árbol, liberar tu historia</p>
-          <h3>Genealogía</h3>
-          <p>Recorremos tu árbol genealógico para descubrir patrones, lealtades invisibles y memorias heredadas que se repiten de generación en generación. Al tomar conciencia de ellas, podés honrar a tu linaje y elegir tu propio camino con libertad.</p>
-          <h4>Es para vos si…</h4>
-          <ul class="para">
-            <li>Notás situaciones que se repiten en tu familia: vínculos, dinero, salud, separaciones.</li>
-            <li>Sentís que cargás con algo que no es tuyo.</li>
-            <li>Querés comprender tu historia desde la raíz.</li>
-          </ul>
-          <div class="ficha"><span>Duración · 90 min</span><span>Online o presencial</span></div>
-          <a href="#contacto" class="boton" data-servicio="Genealogía">Reservar genealogía</a>
-        </div>
-      </article>
-      <article class="terapia revelar" id="mediumnica">
-        <div class="panel t4 tema">
-          <span class="num">04</span>
-          <svg class="escena vela" viewBox="0 0 200 240" aria-hidden="true">
-            <defs><radialGradient id="brillo"><stop offset="0" stop-color="#F1E7D6" stop-opacity=".75"/><stop offset="1" stop-color="#F1E7D6" stop-opacity="0"/></radialGradient></defs>
-            <circle class="resplandor" cx="100" cy="96" r="70" fill="url(#brillo)"/>
-            <circle class="orbe" cx="70" cy="150" r="2.2" style="--d:0s;--x:-12px"/><circle class="orbe" cx="132" cy="150" r="1.6" style="--d:1.3s;--x:10px"/><circle class="orbe" cx="88" cy="150" r="1.2" style="--d:2.6s;--x:-6px"/><circle class="orbe" cx="118" cy="150" r="2.6" style="--d:3.6s;--x:14px"/><circle class="orbe" cx="60" cy="150" r="1.4" style="--d:4.4s;--x:-16px"/><circle class="orbe" cx="142" cy="150" r="2" style="--d:5.4s;--x:6px"/><circle class="orbe" cx="100" cy="150" r="1.4" style="--d:6.2s;--x:0px"/>
-            <ellipse cx="100" cy="212" rx="46" ry="7" fill="#3E2C10" opacity=".18"/>
-            <path d="M78 124h44v84a4 4 0 0 1-4 4H82a4 4 0 0 1-4-4z" fill="#F1E7D6"/>
-            <path d="M78 124h44v10c-6 0-6 12-11 12s-4-8-9-8-5 18-10 18-4-26-9-26-5 0-5 0z" fill="#E6D6BC"/>
-            <line x1="100" y1="124" x2="100" y2="113" stroke="#3E2C10" stroke-width="1.6" stroke-linecap="round"/>
-            <g class="llama">
-              <path d="M100 66C113 86 114 104 100 114C86 104 87 86 100 66Z" fill="#F1E7D6"/>
-              <path d="M100 86C106 96 106 106 100 111C94 106 94 96 100 86Z" fill="var(--mostaza)"/>
-            </g>
-          </svg>
-          <p class="leyenda">El amor no se va, cambia de forma</p>
-        </div>
-        <div class="info">
-          <p class="frase">Un puente con quienes partieron</p>
-          <h3>Mediúmnica</h3>
-          <p>Una sesión de conexión con seres queridos que trascendieron, en la que canalizo los mensajes que llegan para vos. Un espacio de amor y respeto para cerrar ciclos, despedirte y sentir que el vínculo continúa.</p>
-          <h4>Es para vos si…</h4>
-          <ul class="para">
-            <li>Estás atravesando un duelo.</li>
-            <li>Quedaron palabras sin decir.</li>
-            <li>Necesitás paz, consuelo y señales.</li>
-          </ul>
-          <div class="ficha"><span>Duración · 60 min</span><span>Online o presencial</span></div>
-          <a href="#contacto" class="boton" data-servicio="Mediúmnica">Reservar mediúmnica</a>
+          <p class="frase">Una mirada transformadora</p>
+          <h3>Tarot Terapéutico</h3>
+          <p>Lecturas enfocadas en el despertar espiritual y el crecimiento personal, para conectar con tu Ser interno, visualizar trabas emocionales y mentales, y cómo superarlas.</p>
+          <p>Un enfoque puesto en el presente: desde la toma de consciencia, tomar las decisiones que te acerquen a la vida que querés tener. No son lecturas predictivas, es una mirada transformadora.</p>
+          <p class="ideal"><span>Ideal para</span> Claridad y orientación en una situación o proceso vital</p>
+          <div class="ficha"><span class="precio">$1200 <small>UYU</small> · US$30</span><span>Presencial en Neptunia Sur o por videollamada</span></div>
+          <a href="#contacto" class="boton" data-servicio="Tarot Terapéutico">Reservar sesión</a>
         </div>
       </article>
       <article class="terapia revelar" id="hipnosis">
         <div class="panel t5 tema">
-          <span class="num">05</span>
+          <span class="num">07</span>
           <svg class="escena hipno" viewBox="0 0 200 200" aria-hidden="true">
             <path class="espiral" d="M100.0 100.0 L100.2 100.0 L100.3 100.1 L100.5 100.2 L100.6 100.3 L100.7 100.5 L100.8 100.7 L100.8 100.9 L100.8 101.1 L100.7 101.3 L100.6 101.6 L100.5 101.8 L100.3 102.0 L100.0 102.2 L99.7 102.3 L99.4 102.5 L99.1 102.5 L98.7 102.5 L98.3 102.5 L97.9 102.4 L97.5 102.3 L97.1 102.1 L96.8 101.8 L96.4 101.4 L96.1 101.0 L95.8 100.6 L95.6 100.1 L95.5 99.6 L95.4 99.0 L95.4 98.4 L95.5 97.8 L95.6 97.2 L95.9 96.5 L96.2 96.0 L96.6 95.4 L97.1 94.9 L97.7 94.4 L98.3 94.0 L99.0 93.7 L99.8 93.5 L100.6 93.3 L101.4 93.3 L102.3 93.3 L103.1 93.5 L104.0 93.8 L104.8 94.2 L105.6 94.7 L106.3 95.3 L107.0 96.0 L107.6 96.8 L108.1 97.7 L108.5 98.6 L108.7 99.6 L108.9 100.7 L108.9 101.8 L108.8 102.9 L108.5 104.0 L108.1 105.1 L107.6 106.1 L106.9 107.1 L106.1 108.0 L105.2 108.8 L104.2 109.5 L103.1 110.1 L101.9 110.6 L100.6 110.9 L99.3 111.1 L97.9 111.1 L96.6 110.9 L95.2 110.6 L93.9 110.1 L92.6 109.4 L91.4 108.5 L90.3 107.6 L89.4 106.4 L88.5 105.2 L87.8 103.8 L87.3 102.4 L86.9 100.8 L86.7 99.3 L86.8 97.7 L87.0 96.0 L87.4 94.4 L88.0 92.9 L88.8 91.4 L89.8 90.0 L91.0 88.7 L92.3 87.6 L93.8 86.6 L95.4 85.8 L97.1 85.2 L98.8 84.8 L100.7 84.6 L102.6 84.6 L104.4 84.8 L106.3 85.3 L108.1 86.0 L109.8 87.0 L111.4 88.1 L112.9 89.5 L114.2 91.0 L115.3 92.7 L116.2 94.5 L116.9 96.5 L117.4 98.5 L117.6 100.6 L117.6 102.7 L117.3 104.9 L116.8 107.0 L115.9 109.0 L114.9 110.9 L113.6 112.8 L112.1 114.4 L110.4 115.9 L108.5 117.2 L106.4 118.2 L104.2 119.0 L101.9 119.6 L99.5 119.8 L97.2 119.8 L94.8 119.5 L92.4 118.9 L90.1 118.0 L87.9 116.8 L85.9 115.3 L84.0 113.7 L82.4 111.7 L81.0 109.6 L79.8 107.3 L78.9 104.9 L78.3 102.4 L78.0 99.7 L78.0 97.1 L78.4 94.4 L79.0 91.8 L80.0 89.3 L81.3 86.9 L82.9 84.6 L84.7 82.6 L86.8 80.7 L89.2 79.1 L91.7 77.8 L94.4 76.8 L97.2 76.1 L100.0 75.8 L102.9 75.8 L105.9 76.2 L108.7 76.9 L111.5 78.0 L114.2 79.4 L116.6 81.1 L118.9 83.1 L120.9 85.4 L122.7 87.9 L124.1 90.7 L125.2 93.6 L126.0 96.6 L126.4 99.7 L126.4 102.9 L126.0 106.1 L125.2 109.2 L124.1 112.3 L122.6 115.2 L120.8 117.9 L118.6 120.3 L116.1 122.6 L113.4 124.5 L110.4 126.1 L107.3 127.3 L104.0 128.1 L100.6 128.6 L97.1 128.6 L93.7 128.2 L90.3 127.4 L87.0 126.2 L83.9 124.6 L81.0 122.6 L78.3 120.3 L75.9 117.6 L73.8 114.7 L72.0 111.5 L70.7 108.1 L69.8 104.6 L69.3 101.0 L69.2 97.3 L69.6 93.6 L70.4 89.9 L71.7 86.4 L73.4 83.0 L75.5 79.8 L78.0 76.9 L80.8 74.3 L83.9 72.0 L87.3 70.2 L90.9 68.7 L94.7 67.7 L98.6 67.1 L102.6 67.0 L106.5 67.4 L110.5 68.2 L114.3 69.6 L117.9 71.4 L121.3 73.6 L124.4 76.2 L127.2 79.2 L129.7 82.5 L131.7 86.1 L133.3 90.0 L134.4 94.0 L135.1 98.1 L135.2 102.4 L134.8 106.6 L133.9 110.8 L132.6 114.8 L130.7 118.7 L128.4 122.4 L125.6 125.7 L122.5 128.7 L118.9 131.3 L115.1 133.5 L111.0 135.3 L106.8 136.5 L102.4 137.2 L97.9 137.4 L93.4 137.0 L89.0 136.2 L84.6 134.7 L80.5 132.8 L76.6 130.3 L73.0 127.4 L69.8 124.1 L67.0 120.4 L64.6 116.4 L62.8 112.1 L61.4 107.6 L60.6 102.9 L60.4 98.2 L60.7 93.4 L61.6 88.7 L63.1 84.2 L65.1 79.8 L67.7 75.6 L70.7 71.8 L74.2 68.4 L78.0 65.4 L82.3 62.9 L86.8 60.8 L91.5 59.4 L96.5 58.5 L101.5 58.2 L106.5 58.5 L111.4 59.4 L116.3 60.9 L120.9 63.0 L125.3 65.6 L129.4 68.8 L133.0 72.4 L136.2 76.5 L138.9 80.9 L141.1 85.7 L142.7 90.6 L143.6 95.8 L144.0 101.1 L143.7 106.3 L142.8 111.6 L141.3 116.7 L139.1 121.6 L136.4 126.2 L133.1 130.5 L129.3 134.4 L125.1 137.8 L120.5 140.7 L115.5 143.0 L110.3 144.7 L104.9 145.8 L99.4 146.2 L93.8 146.0 L88.3 145.1 L83.0 143.5 L77.8 141.3 L72.9 138.5 L68.4 135.1 L64.3 131.2 L60.7 126.7 L57.6 121.9 L55.1 116.8 L53.3 111.3 L52.1 105.7 L51.6 99.9 L51.8 94.1 L52.7 88.3 L54.3 82.7 L56.5 77.2 L59.4 72.1 L62.9 67.3 L67.0 63.0 L71.6 59.2 L76.6 55.9 L82.0 53.3 L87.7 51.3 L93.6 50.0 L99.6 49.4 L105.7 49.6 L111.7 50.5 L117.6 52.1 L123.3 54.4 L128.7 57.3 L133.7 60.9 L138.2 65.1 L142.3 69.9 L145.7 75.1 L148.5 80.7 L150.7 86.6 L152.1 92.7 L152.7 99.0 L152.7 105.3 L151.8 111.6 L150.2 117.8 L147.8 123.8 L144.8 129.4 L141.1 134.7 L136.8 139.5 L131.9 143.7 L126.5 147.4 L120.7 150.3 L114.6 152.6 L108.2 154.2 L101.6 154.9 L95.0 154.9 L88.5 154.1 L82.0 152.4 L75.8 150.1 L69.9 147.0 L64.4 143.1 L59.4 138.7 L54.9 133.6 L51.0 128.1 L47.9 122.1 L45.4 115.7 L43.8 109.1 L42.9 102.3 L42.9 95.5 L43.7 88.6 L45.3 81.9 L47.7 75.4 L50.9 69.2 L54.8 63.5 L59.4 58.2 L64.5 53.5 L70.3 49.5 L76.5 46.1 L83.1 43.5 L89.9 41.7 L96.9 40.8 L104.1 40.7 L111.2 41.4 L118.2 43.0 L124.9 45.4 L131.4 48.7 L137.4 52.7 L142.9 57.4 L147.8 62.7 L152.1 68.6 L155.6 75.0 L158.4 81.8 L160.3 88.9 L161.4 96.2 L161.6 103.6 L160.9 110.9 L159.3 118.2 L156.8 125.2 L153.5 131.9 L149.5 138.2 L144.6 144.0 L139.2 149.1 L133.1 153.6 L126.5 157.3 L119.5 160.3 L112.2 162.3 L104.6 163.5 L97.0 163.8 L89.4 163.1 L81.8 161.6 L74.5 159.1 L67.6 155.8 L61.0 151.6 L55.0 146.7 L49.6 141.1 L44.9 134.8 L41.0 128.1 L37.9 120.9 L35.7 113.3 L34.4 105.5 L34.0 97.6 L34.6 89.7 L36.2 81.9 L38.6 74.3 L42.0 67.1 L46.2 60.3 L51.2 54.0 L57.0 48.4 L63.4 43.5 L70.3 39.3 L77.8 36.1 L85.5 33.7 L93.6 32.3 L101.7 31.8 L109.9 32.3 L118.0 33.9 L125.8 36.3 L133.3 39.7 L140.4 44.0 L146.9 49.1 L152.8 55.0 L158.0 61.6 L162.3 68.7 L165.8 76.3 L168.3 84.3 L169.8 92.6 L170.4 101.0 L169.9 109.5 L168.4 117.8 L166.0 125.9 L162.6 133.7 L158.2 141.1 L153.0 147.9 L147.0 154.0 L140.3 159.4 L133.0 163.9 L125.1 167.5 L116.9 170.2 L108.4 171.9 L99.7 172.6 L91.0 172.2 L82.4 170.8 L74.0 168.3 L65.9 164.8 L58.3 160.4 L51.3 155.1 L44.9 149.0 L39.3 142.2 L34.5 134.7 L30.7 126.6 L27.8 118.2 L26.0 109.5 L25.2 100.5 L25.5 91.6 L26.9 82.7 L29.4 74.0 L32.8 65.6 L37.3 57.8 L42.7 50.4 L48.9 43.8 L55.9 38.0 L63.6 33.0 L71.8 29.0 L80.5 25.9 L89.4 24.0 L98.6 23.1 L107.9 23.3 L117.0 24.6 L126.0 27.0 L134.6 30.5 L142.8 35.0 L150.3 40.5 L157.2 46.8 L163.3 54.0 L168.5 61.8 L172.8 70.2 L176.0 79.1 L178.1 88.3 L179.1 97.7 L179.0 107.2 L177.7 116.7 L175.3 125.9 L171.8 134.8 L167.3 143.2 L161.7 151.1 L155.3 158.2 L148.0 164.6 L140.0 170.0 L131.4 174.4 L122.3 177.8 L112.9 180.1 L103.2 181.2 L93.4 181.2 L83.7 180.0 L74.2 177.6 L65.0 174.2 L56.3 169.6 L48.2 164.0 L40.8 157.4 L34.2 150.0 L28.5 141.9 L23.9 133.1 L20.3 123.8 L17.9 114.1 L16.6 104.2 L16.5 94.2 L17.7 84.2 L20.0 74.4 L23.5 64.9 L28.1 55.9 L33.8 47.5 L40.4 39.9 L47.9 33.0 L56.2 27.1 L65.2 22.3 L74.7 18.5 L84.6 15.9 L94.8 14.5 L105.1 14.3 L115.3 15.4 L125.4 17.6 L135.1 21.1 L144.4 25.7 L153.1 31.5 L161.0 38.2 L168.1 45.8 L174.2 54.3 L179.3 63.4 L183.3 73.1 L186.1 83.3 L187.6 93.7"/>
             <circle class="respira" cx="100" cy="100" r="24"/>
@@ -602,17 +790,34 @@
           <p class="leyenda">Respirá con el círculo</p>
         </div>
         <div class="info">
-          <p class="frase">Un viaje hacia tu interior</p>
-          <h3>Hipnosis</h3>
-          <p>A través de un estado de relajación profunda accedés a tu mente subconsciente para trabajar emociones, creencias limitantes y memorias. Puede incluir regresiones, para comprender el origen de lo que hoy te pasa y transformarlo.</p>
-          <h4>Es para vos si…</h4>
-          <ul class="para">
-            <li>Querés trabajar miedos, bloqueos o hábitos.</li>
-            <li>Sentís curiosidad por explorar la historia de tu alma.</li>
-            <li>Buscás un cambio profundo, desde adentro.</li>
-          </ul>
-          <div class="ficha"><span>Duración · 90 min</span><span>Presencial u online</span></div>
-          <a href="#contacto" class="boton" data-servicio="Hipnosis">Reservar hipnosis</a>
+          <p class="frase">Ir a la raíz</p>
+          <h3>Hipnosis Regresiva</h3>
+          <p>Es un recurso hipnótico que utiliza la regresión a los momentos en que los problemas o síntomas tuvieron origen. Esta búsqueda terapéutica puede llevarnos a la infancia, al vientre materno, o incluso a nuestros ancestros o vidas pasadas.</p>
+          <p>Conociendo las raíces de aquello que nos aqueja, podemos iniciar el cambio de consciencia que llevará a su reparación o resolución.</p>
+          <p class="ideal"><span>Ideal para</span> Comprender el origen profundo de situaciones complejas o conflictos</p>
+          <div class="ficha"><span class="precio">$1900 <small>UYU</small> · US$47</span><span>Presencial en Neptunia Sur o por videollamada</span></div>
+          <a href="#contacto" class="boton" data-servicio="Hipnosis Regresiva">Reservar sesión</a>
+        </div>
+      </article>
+      <article class="terapia revelar" id="transgeneracional">
+        <div class="panel t1 tema arbol">
+          <span class="num">08</span>
+          <svg class="escena" viewBox="-14 0 274 260" aria-hidden="true">
+            <g class="etiquetas"><text x="-12" y="54">Bisabuelos</text><text x="-12" y="114">Abuelos</text><text x="-12" y="174">Padres</text><text x="-12" y="234">Vos</text></g>
+            <g class="ramas"><path class="rama g1" pathLength="1" d="M155.0 232 C155.0 202.0 101.9 202.0 101.9 172"/><path class="rama g1" pathLength="1" d="M155.0 232 C155.0 202.0 208.2 202.0 208.2 172"/><path class="rama g2" pathLength="1" d="M101.9 172 C101.9 142.0 75.3 142.0 75.3 112"/><path class="rama g2" pathLength="1" d="M101.9 172 C101.9 142.0 128.4 142.0 128.4 112"/><path class="rama g2" pathLength="1" d="M208.2 172 C208.2 142.0 181.6 142.0 181.6 112"/><path class="rama g2" pathLength="1" d="M208.2 172 C208.2 142.0 234.7 142.0 234.7 112"/><path class="rama g3" pathLength="1" d="M75.3 112 C75.3 82.0 62.0 82.0 62.0 52"/><path class="rama g3" pathLength="1" d="M75.3 112 C75.3 82.0 88.6 82.0 88.6 52"/><path class="rama g3" pathLength="1" d="M128.4 112 C128.4 82.0 115.1 82.0 115.1 52"/><path class="rama g3" pathLength="1" d="M128.4 112 C128.4 82.0 141.7 82.0 141.7 52"/><path class="rama g3" pathLength="1" d="M181.6 112 C181.6 82.0 168.3 82.0 168.3 52"/><path class="rama g3" pathLength="1" d="M181.6 112 C181.6 82.0 194.8 82.0 194.8 52"/><path class="rama g3" pathLength="1" d="M234.7 112 C234.7 82.0 221.4 82.0 221.4 52"/><path class="rama g3" pathLength="1" d="M234.7 112 C234.7 82.0 248.0 82.0 248.0 52"/></g>
+            <g><circle class="nodo g0" cx="155.0" cy="232" r="7"/><circle class="nodo g1" cx="101.9" cy="172" r="5.5"/><circle class="nodo g1" cx="208.2" cy="172" r="5.5"/><circle class="nodo g2" cx="75.3" cy="112" r="4.5"/><circle class="nodo g2" cx="128.4" cy="112" r="4.5"/><circle class="nodo g2" cx="181.6" cy="112" r="4.5"/><circle class="nodo g2" cx="234.7" cy="112" r="4.5"/><circle class="nodo g3" cx="62.0" cy="52" r="3.5"/><circle class="nodo g3" cx="88.6" cy="52" r="3.5"/><circle class="nodo g3" cx="115.1" cy="52" r="3.5"/><circle class="nodo g3" cx="141.7" cy="52" r="3.5"/><circle class="nodo g3" cx="168.3" cy="52" r="3.5"/><circle class="nodo g3" cx="194.8" cy="52" r="3.5"/><circle class="nodo g3" cx="221.4" cy="52" r="3.5"/><circle class="nodo g3" cx="248.0" cy="52" r="3.5"/></g>
+          </svg>
+          <p class="leyenda">Tu historia empieza mucho antes que vos</p>
+        </div>
+        <div class="info">
+          <p class="frase">Sanar tu árbol, liberar tu historia</p>
+          <h3>Terapia Transgeneracional</h3>
+          <p>Es un estudio del árbol genealógico en el que rastreamos el origen del motivo de consulta, sea cual sea: una situación que no se puede resolver, un síntoma, un patrón repetitivo, un conflicto emocional…</p>
+          <p>Si querés hacer un estudio profundo, combino otras herramientas terapéuticas, como las Constelaciones familiares individuales, la Canalización y la Hipnosis Regresiva.</p>
+          <p class="ideal"><span>Ideal para</span> Comprender el origen transgeneracional de patrones repetitivos</p>
+          <p class="nota">✦ Las sesiones de seguimiento son cada 15 días o más, según cada proceso. Sugiero un acompañamiento de al menos 4 consultas.</p>
+          <div class="ficha"><span class="precio">Primera consulta $1700 <small>UYU</small> · US$42</span><span>Seguimiento $1200 <small>UYU</small> · US$30</span><span>Presencial en Neptunia Sur o por videollamada</span></div>
+          <a href="#contacto" class="boton" data-servicio="Terapia Transgeneracional">Reservar sesión</a>
         </div>
       </article>
     </div>
@@ -624,15 +829,15 @@
       <p class="etiqueta"><span>Cómo trabajamos</span></p>
       <h2>Tu sesión, <em>paso a paso</em></h2>
       <div class="pasos">
-        <div class="paso revelar"><h3>Contacto</h3><p>Me escribís y elegimos juntas el servicio que mejor acompañe tu momento.</p></div>
-        <div class="paso revelar"><h3>Reserva</h3><p>Coordinamos día y horario, online o presencial.</p></div>
-        <div class="paso revelar"><h3>Encuentro</h3><p>Abrimos un espacio sagrado, de escucha, contención y canalización.</p></div>
-        <div class="paso revelar"><h3>Integración</h3><p>Te llevás recomendaciones para seguir tu proceso en casa.</p></div>
+        <div class="paso revelar"><h3>Contacto</h3><p>Me escribís por Instagram, mail o el formulario, y elegimos la terapia que mejor te acompañe.</p></div>
+        <div class="paso revelar"><h3>Reserva</h3><p>Coordinamos día y horario: presencial en Neptunia Sur o a distancia, desde cualquier lugar del mundo.</p></div>
+        <div class="paso revelar"><h3>Encuentro</h3><p>Traé al menos un tema de consulta. Abrimos un espacio sagrado de escucha, contención y canalización.</p></div>
+        <div class="paso revelar"><h3>Integración</h3><p>Te llevás los mensajes y herramientas para seguir tu proceso de sanación.</p></div>
       </div>
     </div>
   </section>
 
-  <!-- 5 · TESTIMONIOS -->
+  <!-- TESTIMONIOS (reemplazar con los reales en el script) -->
   <section class="testimonios" id="testimonios">
     <div class="contenedor">
       <p class="etiqueta"><span>Testimonios</span></p>
@@ -644,50 +849,184 @@
     </div>
   </section>
 
-  <!-- 6 · YOUTUBE (reemplazar cada .video por el <iframe> de YouTube) -->
+  <!-- 6 · CURSOS -->
+  <section class="cursos" id="cursos">
+    <div class="contenedor">
+      <p class="etiqueta"><span>Cursos y talleres</span></p>
+      <h2>Aprender a <em>conectar</em></h2>
+      <p class="intro">Espiritualidad y Educación Emocional: cursos en vivo por Zoom y propuestas grabadas para hacer a tu ritmo.</p>
+
+      <article class="curso-destacado revelar">
+        <div class="cd-arte" aria-hidden="true">
+          <svg class="sol"><use href="#sol"/></svg>
+          <p class="elementos">Tierra · Agua · Aire · Fuego · Éter</p>
+        </div>
+        <div class="cd-info">
+          <p class="frase">Curso de introducción a la Canalización · 5 meses</p>
+          <h3>Conecta con tus dones</h3>
+          <p class="lema">«Es momento de recobrar nuestra soberanía espiritual»</p>
+          <p>Para cualquier persona que quiera iniciarse en el camino de la Canalización. Durante cinco meses vas a aprender a canalizar mientras conectás con tu propia naturaleza espiritual y con los 5 elementos que conforman la realidad: tierra, agua, aire, fuego y éter.</p>
+          <ul class="para">
+            <li>Encuentros quincenales en vivo por Zoom. Las clases quedan grabadas para que no te pierdas nada.</li>
+            <li>PDF de estudio en cada módulo.</li>
+            <li>Acompañamiento por grupo de WhatsApp.</li>
+          </ul>
+          <div class="ficha"><span class="precio">Un pago de $8500 <small>UYU</small> · US$210</span><span>o 5 pagos de $1900 · US$46</span></div>
+          <div class="acciones">
+            <a href="#contacto" class="boton" data-servicio="Conecta con tus dones">Quiero inscribirme</a>
+            <a href="mailto:salviaterapiasycursos@gmail.com?subject=Programa%20Conecta%20con%20tus%20dones" class="enlace">Pedir el programa →</a>
+          </div>
+        </div>
+      </article>
+
+      <div class="cursos-grid">
+        <article class="curso revelar">
+          <span class="modo vivo">En vivo por Zoom</span>
+          <h3>Escribe y sana</h3>
+          <p class="frase">Educación emocional y escritura terapéutica</p>
+          <p>Aprendé a reconocer tus emociones y a gestionarlas, usando la escritura como herramienta terapéutica. Son 6 talleres teóricos y prácticos en dos módulos: <b>Autoconocimiento</b> y <b>Gestión emocional</b>.</p>
+          <div class="ficha"><span class="precio">Un pago de $3500 <small>UYU</small> · US$87</span><span>o 2 pagos de $1900 · US$47</span></div>
+          <div class="acciones">
+            <a href="#contacto" class="boton" data-servicio="Escribe y sana">Quiero inscribirme</a>
+            <a href="mailto:salviaterapiasycursos@gmail.com?subject=Programa%20Escribe%20y%20sana" class="enlace">Pedir el temario →</a>
+          </div>
+        </article>
+        <article class="curso revelar">
+          <span class="modo">Grabado</span>
+          <h3>Tarot para principiantes</h3>
+          <p class="frase">Dos talleres para iniciarte en el Tarot</p>
+          <ul class="para compacta">
+            <li>Un poco de historia y el camino del héroe</li>
+            <li>Arquetipos y numerología básicos</li>
+            <li>Simbología de Arcanos mayores y menores</li>
+            <li>Tiradas comunes</li>
+          </ul>
+          <p>Al finalizar recibís un PDF con todo lo visto, material complementario y un tarot imprimible. No necesitás experiencia previa (no incluye mazo).</p>
+          <div class="ficha"><span class="precio">$1900 <small>UYU</small> · US$46</span></div>
+          <div class="acciones"><a href="#contacto" class="boton" data-servicio="Tarot para principiantes">Lo quiero</a></div>
+        </article>
+      </div>
+
+      <div class="masters">
+        <p class="masters-titulo">Master classes grabadas · $850 <small>UYU</small> · US$21 cada una</p>
+        <article class="master revelar">
+          <h3>Aprender a canalizar</h3>
+          <p>Estamos en momentos únicos de gran despertar espiritual. Nuestros dones van aflorando y nos invaden dudas y miedos. Para iniciar y comprender la conexión con los mundos sutiles: qué es y qué no es canalizar, los primeros pasos y cómo distinguir distintos tipos de energías.</p>
+          <a href="#contacto" class="enlace" data-servicio="Master class: Aprender a canalizar">Lo quiero →</a>
+        </article>
+        <article class="master revelar">
+          <h3>Desafíos en la Crianza Consciente</h3>
+          <p>Aspectos básicos de la crianza consciente y sus desafíos cotidianos, la teoría del apego de John Bowlby y las necesidades de la infancia desde la mirada de la Educación emocional y la espiritualidad. Una crianza basada en el respeto y el amor, con fundamentos científicos y un enfoque holístico.</p>
+          <a href="#contacto" class="enlace" data-servicio="Master class: Desafíos en la Crianza Consciente">Lo quiero →</a>
+        </article>
+        <article class="master revelar">
+          <h3>Educar desde el Ser</h3>
+          <p>Reflexiones, conceptos, ideas, estrategias y sugerencias para educar desde el Ser y para el Ser: miradas de educación y crianza más humanizadas, adaptadas a las nuevas generaciones y con foco en la educación de las emociones.</p>
+          <a href="#contacto" class="enlace" data-servicio="Master class: Educar desde el Ser">Lo quiero →</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7 · PRODUCTOS -->
+  <section class="productos" id="productos">
+    <div class="contenedor">
+      <p class="etiqueta"><span>Productos</span></p>
+      <h2>Herramientas <em>con intención</em></h2>
+      <p class="intro">Piezas artesanales elaboradas a mano. En los péndulos, el cobre actúa como un poderoso conductor energético, capaz de canalizar, amplificar y armonizar las vibraciones sutiles entre el cuerpo físico y los planos espirituales.</p>
+      <div class="productos-grid">
+        <article class="producto revelar">
+          <img src="img/spray-aurico.jpg" alt="Spray Áurico" width="800" height="800" loading="lazy">
+          <div class="producto-info">
+            <h3>Spray Áurico</h3>
+            <p>Poderosa mezcla de plantas en un rocío elaborado con intención para limpiar el campo energético propio o de los espacios. Remueve la densidad y las malas vibras, aportando armonía y calma.</p>
+            <p class="extra">Romero, ruda, artemisa, ajenjo, naranja, canela y clavo.</p>
+            <div class="producto-pie"><span class="precio">$280 <small>UYU</small></span><a href="#contacto" class="enlace" data-servicio="Spray Áurico">Encargar →</a></div>
+          </div>
+        </article>
+        <article class="producto revelar">
+          <img src="img/pendulo-amatista.jpg" alt="Péndulo de Amatista y cobre" width="800" height="800" loading="lazy">
+          <div class="producto-info">
+            <h3>Péndulo de Amatista y cobre</h3>
+            <p>La amatista es conocida por su poder transmutador: promueve la calma mental mientras protege y transforma las energías densas en sutiles. Asociada al chakra corona, facilita la conexión espiritual y el desarrollo de la intuición.</p>
+            
+            <div class="producto-pie"><span class="precio">$550 <small>UYU</small></span><a href="#contacto" class="enlace" data-servicio="Péndulo de Amatista y cobre">Encargar →</a></div>
+          </div>
+        </article>
+        <article class="producto revelar">
+          <img src="img/pendulo-cuarzo-cristal.jpg" alt="Péndulo de Cuarzo Cristal y cobre" width="800" height="800" loading="lazy">
+          <div class="producto-info">
+            <h3>Péndulo de Cuarzo Cristal y cobre</h3>
+            <p>Conocido como el maestro sanador, el Cuarzo Cristal purifica el aura a la vez que limpia y armoniza. Excelente para despejar los pensamientos y ver la verdad interior con claridad y calma.</p>
+            
+            <div class="producto-pie"><span class="precio">$650 <small>UYU</small></span><a href="#contacto" class="enlace" data-servicio="Péndulo de Cuarzo Cristal y cobre">Encargar →</a></div>
+          </div>
+        </article>
+        <article class="producto revelar">
+          <img src="img/pendulo-citrino.jpg" alt="Péndulo de Cuarzo Citrino y cobre" width="800" height="800" loading="lazy">
+          <div class="producto-info">
+            <h3>Péndulo de Cuarzo Citrino y cobre</h3>
+            <p>El Cuarzo Citrino despeja la mente y ayuda a abrir los canales de la abundancia. Asociado al sol, aporta alegría y optimismo, y conecta con el chakra del plexo solar, ayudando a mejorar la autoestima y la autoconfianza.</p>
+            
+            <div class="producto-pie"><span class="precio">$550 <small>UYU</small></span><a href="#contacto" class="enlace" data-servicio="Péndulo de Cuarzo Citrino y cobre">Encargar →</a></div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8 · YOUTUBE (cambiar los enlaces por el del canal y el del video) -->
   <section class="youtube" id="youtube">
     <div class="contenedor">
       <p class="etiqueta"><span>YouTube</span></p>
       <h2>Contenido para tu <em>despertar</em></h2>
-      <p class="intro">Meditaciones, mensajes canalizados y reflexiones para acompañarte en tu camino, gratis en mi canal.</p>
-      <div class="videos">
-        <a class="video revelar" href="https://youtube.com/" target="_blank" rel="noopener"><div class="miniatura v1"><span class="play"></span></div><p class="num">Meditación</p><h3>Meditación guiada para limpiar tu energía</h3></a>
-        <a class="video revelar" href="https://youtube.com/" target="_blank" rel="noopener"><div class="miniatura v2"><span class="play"></span></div><p class="num">Mensaje canalizado</p><h3>Mensaje de tus guías para esta semana</h3></a>
-        <a class="video revelar" href="https://youtube.com/" target="_blank" rel="noopener"><div class="miniatura v3"><span class="play"></span></div><p class="num">Reflexión</p><h3>Sanar el linaje: lo que heredamos</h3></a>
-      </div>
-      <a href="https://youtube.com/" class="boton" target="_blank" rel="noopener">Visitar el canal</a>
+      <article class="video-destacado revelar">
+        <a class="miniatura" href="https://www.youtube.com/" target="_blank" rel="noopener" aria-label="Ver la meditación Tu refugio seguro en YouTube">
+          <svg class="sol" aria-hidden="true"><use href="#sol"/></svg>
+          <span class="play"></span>
+        </a>
+        <div>
+          <p class="frase">Meditación</p>
+          <h3>Tu refugio seguro</h3>
+          <p class="lema">¡Es hora de recuperar nuestra soberanía energética!</p>
+          <p>En esta práctica meditativa te dejo un ejercicio para crear un refugio interno seguro. Allí podrás ir para sanar alguna dolencia, una situación o un vínculo; cerrar ciclos, o simplemente refugiarte para relajar tu sistema nervioso antes del descanso.</p>
+          <div class="acciones">
+            <a href="https://www.youtube.com/" class="boton" target="_blank" rel="noopener">Ver la meditación</a>
+            <a href="https://www.youtube.com/" class="enlace" target="_blank" rel="noopener">Visitar el canal →</a>
+          </div>
+        </div>
+      </article>
     </div>
   </section>
 
-  <!-- 7 · CONTACTO -->
+  <!-- 9 · CONTACTO -->
   <section class="contacto" id="contacto">
     <div class="contenedor grid">
       <div class="revelar">
         <p class="etiqueta"><span>Contacto</span></p>
         <h2>Reservá tu <em>encuentro</em></h2>
-        <p class="intro">Escribime y te respondo a la brevedad para coordinar tu sesión.</p>
+        <p class="intro">Escribime y te respondo a la brevedad para coordinar tu sesión, inscribirte a un curso o encargar un producto.</p>
         <ul class="datos">
-          <li><span>WhatsApp</span><a href="https://wa.me/000000000">+00 000 000 000</a></li>
-          <li><span>Instagram</span><a href="https://instagram.com/">@usuario</a></li>
-          <li><span>Email</span><a href="mailto:hola@ejemplo.com">hola@ejemplo.com</a></li>
-          <li><span>Modalidad</span><span>Online y presencial</span></li>
+          <li><span>Instagram</span><a href="https://instagram.com/salvia.terapias" target="_blank" rel="noopener">@salvia.terapias</a></li>
+          <li><span>Email</span><a href="mailto:salviaterapiasycursos@gmail.com">salviaterapiasycursos@gmail.com</a></li>
+          <li><span>Lugar</span><span>Neptunia Sur, Canelones, Uruguay</span></li>
+          <li><span>Modalidad</span><span>Presencial y a distancia</span></li>
         </ul>
       </div>
-      <form class="revelar" onsubmit="event.preventDefault(); this.querySelector('button').textContent='¡Gracias! Te escribo pronto ✨';">
+      <form class="revelar" id="form-contacto">
         <label>Nombre <input type="text" name="nombre" required></label>
         <label>Email o WhatsApp <input type="text" name="contacto" required></label>
-        <label>Servicio
+        <label>Me interesa
           <select name="servicio" id="servicio">
-            <option>Terapia energética</option>
-            <option>Tarot</option>
-            <option>Genealogía</option>
-            <option>Mediúmnica</option>
-            <option>Hipnosis</option>
+            <optgroup label="Terapias"><option>Limpieza y armonización energética</option><option>Extracción de implantes y estructura implantaria</option><option>Canalización Akáshica</option><option>Registros Akáshicos</option><option>Canalización Mediúmnica</option><option>Tarot Terapéutico</option><option>Hipnosis Regresiva</option><option>Terapia Transgeneracional</option></optgroup>
+            <optgroup label="Cursos"><option>Conecta con tus dones</option><option>Escribe y sana</option><option>Tarot para principiantes</option><option>Master class: Aprender a canalizar</option><option>Master class: Desafíos en la Crianza Consciente</option><option>Master class: Educar desde el Ser</option></optgroup>
+            <optgroup label="Productos"><option>Spray Áurico</option><option>Péndulo de Amatista y cobre</option><option>Péndulo de Cuarzo Cristal y cobre</option><option>Péndulo de Cuarzo Citrino y cobre</option></optgroup>
             <option>No sé, quiero que me orientes</option>
           </select>
         </label>
         <label>Mensaje <textarea name="mensaje" rows="4"></textarea></label>
         <button type="submit" class="boton">Enviar mensaje</button>
+        <p class="nota-form">Se abrirá tu correo con el mensaje listo para enviar a Silvia.</p>
       </form>
     </div>
   </section>
@@ -696,10 +1035,10 @@
 <footer>
   <div class="contenedor">
     <div class="fila">
-      <a href="#inicio" class="logo"><svg class="sol" style="color:var(--mostaza)"><use href="#sol"/></svg>Nombre</a>
-      <nav><a href="#terapias">Terapias</a><a href="#youtube">YouTube</a><a href="#contacto">Contacto</a><a href="https://instagram.com/">Instagram</a></nav>
+      <a href="#inicio" class="logo"><img src="img/colibri-blanco.png" alt="" width="240" height="196"><span>Salvia <small>Terapias Holísticas</small></span></a>
+      <nav><a href="#terapias">Terapias</a><a href="#cursos">Cursos</a><a href="#productos">Productos</a><a href="https://instagram.com/salvia.terapias" target="_blank" rel="noopener">Instagram</a></nav>
     </div>
-    <p class="legal">© 2026 · Sanación y despertar espiritual. Estas terapias son complementarias y no reemplazan un tratamiento médico.</p>
+    <p class="legal">© 2026 · Salvia Terapias Holísticas · Neptunia Sur, Canelones, Uruguay. Estas terapias son complementarias y no reemplazan un tratamiento médico ni psicológico.</p>
   </div>
 </footer>
 
@@ -712,7 +1051,17 @@
   });
   menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => menu.classList.remove('abierto')));
 
-  // Al tocar "Reservar ..." se preselecciona esa terapia en el formulario
+  // Guía: según lo que necesitás, sugiere terapias
+  const terapias = {"limpieza": "Limpieza y armonización energética", "implantes": "Extracción de implantes y estructura implantaria", "akashica": "Canalización Akáshica", "registros": "Registros Akáshicos", "mediumnica": "Canalización Mediúmnica", "tarot": "Tarot Terapéutico", "hipnosis": "Hipnosis Regresiva", "transgeneracional": "Terapia Transgeneracional"};
+  const respuesta = document.querySelector('.guia-respuesta');
+  document.querySelectorAll('.chip').forEach(ch => ch.addEventListener('click', () => {
+    document.querySelectorAll('.chip').forEach(o => o.setAttribute('aria-pressed', o === ch));
+    const links = ch.dataset.recomienda.split(',').map(id => '<a href="#' + id + '">' + terapias[id] + '</a>');
+    respuesta.innerHTML = 'Te recomiendo: ' + links.join(' o ');
+  }));
+  document.querySelectorAll('.chip').forEach(ch => ch.setAttribute('aria-pressed', 'false'));
+
+  // Al tocar "Reservar ..." se preselecciona esa opción en el formulario
   document.querySelectorAll('[data-servicio]').forEach(a => a.addEventListener('click', () => {
     document.getElementById('servicio').value = a.dataset.servicio;
   }));
@@ -751,6 +1100,15 @@
       if (vuelta) mensaje.innerHTML = '<b>' + a.t + '</b> · ' + a.m;
       c.setAttribute('aria-label', vuelta ? a.t + ': ' + a.m : 'Dar vuelta una carta');
     });
+  });
+
+  // El formulario arma un mail listo para enviar
+  document.getElementById('form-contacto').addEventListener('submit', e => {
+    e.preventDefault();
+    const f = e.target, d = new FormData(f);
+    const asunto = 'Consulta web: ' + d.get('servicio');
+    const cuerpo = 'Hola Silvia, soy ' + d.get('nombre') + '.\n\nMe interesa: ' + d.get('servicio') + '\n\n' + d.get('mensaje') + '\n\nMi contacto: ' + d.get('contacto');
+    location.href = 'mailto:salviaterapiasycursos@gmail.com?subject=' + encodeURIComponent(asunto) + '&body=' + encodeURIComponent(cuerpo);
   });
 
   // Aparición al hacer scroll
