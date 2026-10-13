@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Grupo Sureste · Estudio & Real Estate</title>
-<meta name="description" content="Estudio contable, gestión de inversiones y real estate premium en Uruguay.">
+<title>Grupo Sureste · Inmobiliaria, construcción y respaldo profesional en Uruguay</title>
+<meta name="description" content="Red integral de inmobiliarias y profesionales: arquitectura, ingeniería, construcción y respaldo jurídico, notarial, contable y administrativo en Uruguay.">
 <meta name="theme-color" content="#06080F">
 <link rel="preload" href="assets/fonts/outfit-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/img/torre-01-calle-1600.webp" as="image" media="(min-width: 761px)">
@@ -17,7 +17,7 @@
   <div class="loader__top mono"><span>GRUPO SURESTE</span><span>34°54′21″S · 56°09′53″W</span></div>
   <div class="loader__count display" id="loaderCount">000</div>
   <div class="loader__bar"><span id="loaderBar"></span></div>
-  <div class="loader__bottom mono"><span>Estudio contable</span><span>Inversiones</span><span>Real estate Uruguay</span></div>
+  <div class="loader__bottom mono"><span data-i18n="loader.b1">Inmobiliarias</span><span data-i18n="loader.b2">Construcción</span><span data-i18n="loader.b3">Respaldo legal y contable</span></div>
 </div>
 
 <div class="cursor" id="cursor" aria-hidden="true"><span class="cursor__label" id="cursorLabel"></span></div>
@@ -25,32 +25,44 @@
 <div class="progress" aria-hidden="true"><span id="progressBar"></span></div>
 
 <header class="nav" id="nav">
-  <a href="#inicio" class="brand" aria-label="Grupo Sureste, ir al inicio">
+  <a href="#inicio" class="brand" aria-label="Grupo Sureste, ir al inicio" data-i18n-attr="aria-label:nav.home">
     <svg class="brand__mark" viewBox="0 0 32 32" aria-hidden="true"><path d="M16 2 L28 30 H4 Z" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M16 10 V30 M10 22 H22" stroke="currentColor" stroke-width="1.4"/></svg>
     <span class="brand__name">SURESTE</span>
-    <span class="brand__sub mono">Grupo · Uruguay</span>
+    <span class="brand__sub mono" data-i18n="brand.sub">Grupo · Uruguay</span>
   </a>
   <nav class="nav__links" aria-label="Principal">
-    <a href="#estudio" data-magnetic>Estudio</a>
-    <a href="#inversiones" data-magnetic>Inversiones</a>
-    <a href="#proyectos" data-magnetic>Proyectos</a>
-    <a href="#uruguay" data-magnetic>Uruguay</a>
-    <a href="#proceso" data-magnetic>Proceso</a>
+    <a href="#red" data-magnetic data-i18n="nav.red">La red</a>
+    <a href="#proyectos" data-magnetic data-i18n="nav.projects">Proyectos</a>
+    <a href="#inversiones" data-magnetic data-i18n="nav.invest">Inversiones</a>
+    <a href="#uruguay" data-magnetic data-i18n="nav.uy">Uruguay</a>
+    <a href="#proceso" data-magnetic data-i18n="nav.process">Proceso</a>
   </nav>
-  <a href="#contacto" class="btn btn--gold nav__cta" data-magnetic data-cursor="Hablemos"><span>Agendar reunión</span></a>
+  <div class="lang" role="group" aria-label="Idioma" data-i18n-attr="aria-label:nav.lang">
+    <button type="button" data-lang="es" aria-pressed="true">ES</button>
+    <button type="button" data-lang="en" aria-pressed="false">EN</button>
+    <button type="button" data-lang="pt" aria-pressed="false">PT</button>
+  </div>
+  <a href="#contacto" class="btn btn--gold nav__cta" data-magnetic data-cursor="Hablemos" data-i18n-attr="data-cursor:nav.cursor"><span data-i18n="nav.cta">Agendar reunión</span></a>
   <button class="nav__burger" id="burger" aria-label="Abrir menú" aria-expanded="false" aria-controls="menu"><span></span><span></span></button>
 </header>
 
 <div class="menu" id="menu" hidden>
   <nav aria-label="Menú móvil">
-    <a href="#estudio"><span class="mono">A</span>Estudio contable</a>
-    <a href="#inversiones"><span class="mono">B</span>Inversiones</a>
-    <a href="#proyectos"><span class="mono">C</span>Proyectos</a>
-    <a href="#uruguay"><span class="mono">D</span>Por qué Uruguay</a>
-    <a href="#proceso"><span class="mono">E</span>Proceso</a>
-    <a href="#contacto"><span class="mono">F</span>Contacto</a>
+    <a href="#red"><span class="mono">A</span><span data-i18n="menu.red">La red</span></a>
+    <a href="#proyectos"><span class="mono">B</span><span data-i18n="menu.projects">Proyectos</span></a>
+    <a href="#inversiones"><span class="mono">C</span><span data-i18n="menu.invest">Inversiones</span></a>
+    <a href="#uruguay"><span class="mono">D</span><span data-i18n="menu.uy">Por qué Uruguay</span></a>
+    <a href="#proceso"><span class="mono">E</span><span data-i18n="menu.process">Proceso</span></a>
+    <a href="#contacto"><span class="mono">F</span><span data-i18n="menu.contact">Contacto</span></a>
   </nav>
-  <p class="mono menu__coords">Montevideo · Punta del Este · José Ignacio</p>
+  <div class="menu__foot">
+    <div class="lang lang--menu" role="group" aria-label="Idioma" data-i18n-attr="aria-label:nav.lang">
+      <button type="button" data-lang="es" aria-pressed="true">Español</button>
+      <button type="button" data-lang="en" aria-pressed="false">English</button>
+      <button type="button" data-lang="pt" aria-pressed="false">Português</button>
+    </div>
+    <p class="mono menu__coords">Montevideo · Punta del Este · José Ignacio</p>
+  </div>
 </div>
 
 <div class="seq" id="seq">
@@ -69,161 +81,185 @@
   <!-- HERO -->
   <section class="hero" id="hero">
     <div class="hero__meta mono">
-      <span>Est. Montevideo</span>
-      <span class="hero__live"><i></i>Mercado UY · abierto a inversión extranjera</span>
+      <span data-i18n="hero.meta1">Uruguay</span>
+      <span class="hero__live"><i></i><span data-i18n="hero.meta2">Inmobiliaria · Construcción · Respaldo profesional</span></span>
     </div>
     <h1 class="hero__title display">
-      <span class="line"><span class="word">Patrimonio,</span></span>
-      <span class="line line--indent"><em class="word">elevado.</em></span>
+      <span class="line"><span class="word" data-i18n="hero.t1">Tu proyecto,</span></span>
+      <span class="line line--indent"><em class="word" data-i18n="hero.t2">elevado.</em></span>
     </h1>
     <div class="hero__foot">
-      <p class="hero__lead">Contabilidad rigurosa, inversiones con criterio y acceso al real estate premium de Uruguay. Un solo equipo para cuidar y hacer crecer tu capital.</p>
+      <p class="hero__lead" data-i18n="hero.lead">Desde la propiedad de tus sueños hasta el terreno donde quieres construir, te acompañamos en cada etapa con una red de inmobiliarias y profesionales especializados.</p>
       <div class="hero__ctas">
-        <a href="#estudio" class="btn btn--line" data-magnetic data-cursor="Ver"><span>Estudio &amp; Inversiones</span></a>
-        <a href="#proyectos" class="btn btn--gold" data-magnetic data-cursor="Ver"><span>Real estate Uruguay</span></a>
+        <a href="#proyectos" class="btn btn--gold" data-magnetic data-cursor="Ver" data-i18n-attr="data-cursor:cursor.see"><span data-i18n="hero.cta1">Comprar una propiedad</span></a>
+        <a href="#red" class="btn btn--line" data-magnetic data-cursor="Ver" data-i18n-attr="data-cursor:cursor.see"><span data-i18n="hero.cta2">Construir en Uruguay</span></a>
       </div>
     </div>
-    <div class="hero__scroll mono" aria-hidden="true"><span>Subí</span><i></i></div>
+    <div class="hero__scroll mono" aria-hidden="true"><span data-i18n="hero.scroll">Sube</span><i></i></div>
   </section>
 
   <!-- ASCENSO: recorrido por la torre -->
-  <section class="ascend" id="ascend" aria-label="Recorrido por nuestros servicios">
+  <section class="ascend" id="ascend" aria-label="Recorrido por las etapas de tu proyecto" data-i18n-attr="aria-label:asc.aria">
     <div class="ascend__sticky">
       <div class="ascend__rail" aria-hidden="true">
         <span class="mono">Sky</span><div class="ascend__track"><i id="railDot"></i></div><span class="mono">PB</span>
       </div>
       <div class="ascend__floors">
         <article class="floor is-active" data-level="PB">
-          <p class="eyebrow mono">Planta baja · Fundamentos</p>
-          <h2 class="display">Todo empieza con números <em>en orden.</em></h2>
-          <p>Contabilidad, liquidación de impuestos, sueldos y cumplimiento ante DGI y BPS. La base sobre la que se construye cualquier decisión.</p>
+          <p class="eyebrow mono" data-i18n="f1.e">Planta baja · Encontrar</p>
+          <h2 class="display" data-i18n="f1.h">La propiedad de tus sueños, <em>o el terreno ideal.</em></h2>
+          <p data-i18n="f1.p">Una red de agencias inmobiliarias para encontrar casas, apartamentos y terrenos en todo Uruguay.</p>
         </article>
         <article class="floor" data-level="PB">
-          <p class="eyebrow mono">Lobby · Estructura</p>
-          <h2 class="display">Una estructura que <em>trabaja a favor.</em></h2>
-          <p>Planificación fiscal y societaria: SAS, SA, holdings familiares y la forma más eficiente de tener cada activo.</p>
+          <p class="eyebrow mono" data-i18n="f2.e">Lobby · Respaldo</p>
+          <h2 class="display" data-i18n="f2.h">Seguridad jurídica <em>desde el primer paso.</em></h2>
+          <p data-i18n="f2.p">Estudio de títulos, contratos y escrituración con abogados y escribanos de la red.</p>
         </article>
         <article class="floor" data-level="01">
-          <p class="eyebrow mono">Nivel 01 · Crecimiento</p>
-          <h2 class="display">Capital que se mueve <em>con propósito.</em></h2>
-          <p>Portafolios según tu perfil y horizonte, con reportes claros y revisiones periódicas.</p>
+          <p class="eyebrow mono" data-i18n="f3.e">Nivel 01 · Diseñar</p>
+          <h2 class="display" data-i18n="f3.h">Arquitectura e ingeniería <em>a tu medida.</em></h2>
+          <p data-i18n="f3.p">Proyecto, permisos y cálculo estructural con profesionales que conocen la normativa local.</p>
         </article>
         <article class="floor" data-level="33">
-          <p class="eyebrow mono">Nivel 33 · Activos reales</p>
-          <h2 class="display">Ladrillo premium <em>en Uruguay.</em></h2>
-          <p>Selección, due diligence y estructuración de inversiones inmobiliarias en Montevideo, Punta del Este y José Ignacio.</p>
+          <p class="eyebrow mono" data-i18n="f4.e">Nivel 33 · Construir</p>
+          <h2 class="display" data-i18n="f4.h">De los planos <em>a la llave en mano.</em></h2>
+          <p data-i18n="f4.p">Construcción y dirección de obra con plazos, presupuestos y avances claros.</p>
         </article>
         <article class="floor" data-level="40">
-          <p class="eyebrow mono">Nivel 40 · Residencia</p>
-          <h2 class="display">Vivir Uruguay, <em>no solo invertir.</em></h2>
-          <p>Te acompañamos en la residencia fiscal y en todo lo que implica instalarte y tributar en el país.</p>
+          <p class="eyebrow mono" data-i18n="f5.e">Nivel 40 · Ordenar</p>
+          <h2 class="display" data-i18n="f5.h">Números claros, <em>trámites resueltos.</em></h2>
+          <p data-i18n="f5.p">Gestión contable, impuestos y administración para que tu propiedad funcione sin preocupaciones.</p>
         </article>
         <article class="floor" data-level="48">
-          <p class="eyebrow mono">Nivel 48 · Legado</p>
-          <h2 class="display">Vista completa <em>de tu patrimonio.</em></h2>
-          <p>Sucesión, protección familiar y una mirada consolidada de todo lo que construiste.</p>
+          <p class="eyebrow mono" data-i18n="f6.e">Nivel 48 · Invertir</p>
+          <h2 class="display" data-i18n="f6.h">Un patrimonio <em>que crece en Uruguay.</em></h2>
+          <p data-i18n="f6.p">Inversión inmobiliaria con la estructura legal y fiscal resuelta, y acompañamiento en la residencia.</p>
         </article>
         <article class="floor" data-level="SKY">
-          <p class="eyebrow mono">Sky level</p>
-          <h2 class="display">Viví por encima <em>de lo común.</em></h2>
-          <p>Conocé los proyectos que seleccionamos en la costa y la capital.</p>
-          <a href="#proyectos" class="btn btn--gold floor__cta" data-magnetic data-cursor="Ver"><span>Ver proyectos</span></a>
+          <p class="eyebrow mono" data-i18n="f7.e">Sky level</p>
+          <h2 class="display" data-i18n="f7.h">Vive por encima <em>de lo común.</em></h2>
+          <p data-i18n="f7.p">Conoce los proyectos que seleccionamos en la costa y la capital.</p>
+          <a href="#proyectos" class="btn btn--gold floor__cta" data-magnetic data-cursor="Ver" data-i18n-attr="data-cursor:cursor.see"><span data-i18n="f7.cta">Ver proyectos</span></a>
         </article>
       </div>
       <div class="ascend__level" aria-hidden="true">
-        <span class="mono">Nivel</span>
+        <span class="mono" data-i18n="asc.level">Nivel</span>
         <span class="display ascend__num" id="levelNum">PB</span>
       </div>
     </div>
   </section>
 
   <!-- DOS CAMINOS -->
-  <section class="paths" aria-label="Elegí tu camino">
+  <section class="paths" aria-label="Elige tu camino" data-i18n-attr="aria-label:paths.aria">
     <div class="paths__head">
-      <p class="eyebrow mono">Dos caminos, un mismo criterio</p>
-      <h2 class="display reveal-lines">¿Por dónde querés <em>empezar?</em></h2>
+      <p class="eyebrow mono" data-i18n="paths.e">Dos caminos, un mismo grupo</p>
+      <h2 class="display reveal-lines" data-i18n="paths.h">¿Qué quieres <em>concretar?</em></h2>
     </div>
     <div class="paths__grid">
-      <a href="#estudio" class="path" data-cursor="Explorar">
-        <canvas class="path__art" data-art="ledger" aria-hidden="true"></canvas>
-        <div class="path__body">
-          <span class="mono path__tag">A · Estudio contable</span>
-          <h3 class="display">Estudio &amp; <em>Inversiones</em></h3>
-          <p>Contabilidad, impuestos y portafolios administrados para personas y empresas.</p>
-          <span class="path__go mono">Entrar <i>→</i></span>
-        </div>
-      </a>
-      <a href="#proyectos" class="path" data-cursor="Explorar">
+      <a href="#proyectos" class="path" data-cursor="Explorar" data-i18n-attr="data-cursor:path.cursor">
         <canvas class="path__art" data-art="skyline" data-img="assets/img/torre-08-noche-900.webp" aria-hidden="true"></canvas>
         <div class="path__body">
-          <span class="mono path__tag">B · Real estate premium</span>
-          <h3 class="display">Inversión <em>en Uruguay</em></h3>
-          <p>Proyectos seleccionados en la costa y la capital, con estructura legal y contable resuelta.</p>
-          <span class="path__go mono">Entrar <i>→</i></span>
+          <span class="mono path__tag" data-i18n="pathA.tag">A · Comprar</span>
+          <h3 class="display" data-i18n="pathA.h">Una propiedad <em>en Uruguay</em></h3>
+          <p data-i18n="pathA.p">Casas, apartamentos y proyectos seleccionados en la costa y la capital, con el respaldo legal resuelto.</p>
+          <span class="path__go mono"><span data-i18n="path.go">Entrar</span> <i>→</i></span>
+        </div>
+      </a>
+      <a href="#red" class="path" data-cursor="Explorar" data-i18n-attr="data-cursor:path.cursor">
+        <canvas class="path__art" data-art="villa" aria-hidden="true"></canvas>
+        <div class="path__body">
+          <span class="mono path__tag" data-i18n="pathB.tag">B · Construir</span>
+          <h3 class="display" data-i18n="pathB.h">Tu proyecto <em>desde el terreno</em></h3>
+          <p data-i18n="pathB.p">Terreno, arquitectura, ingeniería y obra coordinados por un solo equipo.</p>
+          <span class="path__go mono"><span data-i18n="path.go">Entrar</span> <i>→</i></span>
         </div>
       </a>
     </div>
   </section>
 
   <div class="marquee" aria-hidden="true">
-    <div class="marquee__track mono">
-      <span>Contabilidad</span><i>✦</i><span>Planificación fiscal</span><i>✦</i><span>Portafolios</span><i>✦</i><span>Punta del Este</span><i>✦</i><span>José Ignacio</span><i>✦</i><span>Carrasco</span><i>✦</i><span>Vivienda promovida</span><i>✦</i><span>Residencia fiscal</span><i>✦</i>
-      <span>Contabilidad</span><i>✦</i><span>Planificación fiscal</span><i>✦</i><span>Portafolios</span><i>✦</i><span>Punta del Este</span><i>✦</i><span>José Ignacio</span><i>✦</i><span>Carrasco</span><i>✦</i><span>Vivienda promovida</span><i>✦</i><span>Residencia fiscal</span><i>✦</i>
-    </div>
+    <div class="marquee__track mono" id="marquee"></div>
   </div>
 
-  <!-- ESTUDIO -->
-  <section class="studio" id="estudio">
+  <!-- LA RED -->
+  <section class="studio" id="red">
     <div class="section-head">
-      <p class="eyebrow mono">A · Estudio contable</p>
-      <h2 class="display reveal-lines">Precisión contable, <em>visión de inversor.</em></h2>
-      <p class="section-lead">Llevamos tus números con el rigor de un estudio y los leemos con la cabeza de un inversor. Cada servicio alimenta mejores decisiones sobre tu capital.</p>
+      <p class="eyebrow mono" data-i18n="red.e">La red Sureste</p>
+      <h2 class="display reveal-lines" data-i18n="red.h">Una red integral. <em>Un solo interlocutor.</em></h2>
+      <p class="section-lead" data-i18n="red.lead">Grupo Sureste reúne una red integral de agencias inmobiliarias y profesionales especializados para acompañarte en cada etapa: arquitectura, ingeniería y construcción, junto con el respaldo jurídico, notarial, contable y administrativo necesario para concretar tu proyecto en Uruguay.</p>
     </div>
     <ul class="services" role="list">
-      <li class="service" data-cursor="Ver más">
+      <li class="service" data-cursor="Ver más" data-i18n-attr="data-cursor:service.cursor">
         <button class="service__row" aria-expanded="false">
-          <span class="service__code mono">CONT</span>
-          <span class="service__name display">Contabilidad y balances</span>
-          <span class="service__for mono">Empresas · Profesionales</span>
+          <span class="service__code mono">INM</span>
+          <span class="service__name display" data-i18n="s1.n">Agencias inmobiliarias</span>
+          <span class="service__for mono" data-i18n="s1.f">Compra · Venta · Alquiler</span>
           <span class="service__plus" aria-hidden="true"></span>
         </button>
-        <div class="service__detail"><p>Registración mensual, estados contables, informes de compilación y revisión limitada. Tablero de indicadores para entender tu negocio cada mes.</p></div>
+        <div class="service__detail"><p data-i18n="s1.d">Casas, apartamentos y propiedades premium a través de las agencias de la red en Montevideo, Punta del Este y el interior.</p></div>
       </li>
-      <li class="service" data-cursor="Ver más">
+      <li class="service" data-cursor="Ver más" data-i18n-attr="data-cursor:service.cursor">
         <button class="service__row" aria-expanded="false">
-          <span class="service__code mono">IMP</span>
-          <span class="service__name display">Impuestos DGI y aportes BPS</span>
-          <span class="service__for mono">IRAE · IVA · IRPF · Patrimonio</span>
+          <span class="service__code mono">TER</span>
+          <span class="service__name display" data-i18n="s2.n">Terrenos</span>
+          <span class="service__for mono" data-i18n="s2.f">Costa · Ciudad · Chacras</span>
           <span class="service__plus" aria-hidden="true"></span>
         </button>
-        <div class="service__detail"><p>Liquidación y presentación de declaraciones juradas, anticipos y regímenes especiales. Calendario de vencimientos sin sorpresas.</p></div>
+        <div class="service__detail"><p data-i18n="s2.d">Búsqueda y evaluación de terrenos según lo que quieres construir: normativa, servicios y potencial.</p></div>
       </li>
-      <li class="service" data-cursor="Ver más">
+      <li class="service" data-cursor="Ver más" data-i18n-attr="data-cursor:service.cursor">
         <button class="service__row" aria-expanded="false">
-          <span class="service__code mono">SOC</span>
-          <span class="service__name display">Estructura societaria</span>
-          <span class="service__for mono">SAS · SA · Holdings</span>
+          <span class="service__code mono">ARQ</span>
+          <span class="service__name display" data-i18n="s3.n">Arquitectura</span>
+          <span class="service__for mono" data-i18n="s3.f">Proyecto · Permisos</span>
           <span class="service__plus" aria-hidden="true"></span>
         </button>
-        <div class="service__detail"><p>Constitución, reorganizaciones y elección del vehículo adecuado para operar o invertir, en coordinación con el área legal.</p></div>
+        <div class="service__detail"><p data-i18n="s3.d">Diseño a medida, anteproyecto, proyecto ejecutivo y gestión de permisos municipales.</p></div>
       </li>
-      <li class="service" data-cursor="Ver más">
+      <li class="service" data-cursor="Ver más" data-i18n-attr="data-cursor:service.cursor">
         <button class="service__row" aria-expanded="false">
-          <span class="service__code mono">SUE</span>
-          <span class="service__name display">Sueldos y personal</span>
-          <span class="service__for mono">Liquidaciones · Nómina</span>
+          <span class="service__code mono">ING</span>
+          <span class="service__name display" data-i18n="s4.n">Ingeniería</span>
+          <span class="service__for mono" data-i18n="s4.f">Estructuras · Instalaciones</span>
           <span class="service__plus" aria-hidden="true"></span>
         </button>
-        <div class="service__detail"><p>Liquidación de haberes, aguinaldos, licencias y egresos. Altas y bajas ante BPS y BSE.</p></div>
+        <div class="service__detail"><p data-i18n="s4.d">Cálculo estructural e instalaciones con profesionales habilitados.</p></div>
       </li>
-      <li class="service" data-cursor="Ver más">
+      <li class="service" data-cursor="Ver más" data-i18n-attr="data-cursor:service.cursor">
         <button class="service__row" aria-expanded="false">
-          <span class="service__code mono">PAT</span>
-          <span class="service__name display">Planificación patrimonial</span>
-          <span class="service__for mono">Familias · Sucesión</span>
+          <span class="service__code mono">OBR</span>
+          <span class="service__name display" data-i18n="s5.n">Construcción</span>
+          <span class="service__for mono" data-i18n="s5.f">Obra · Dirección</span>
           <span class="service__plus" aria-hidden="true"></span>
         </button>
-        <div class="service__detail"><p>Mapa consolidado de activos, escenarios de sucesión y estrategia para la residencia fiscal en Uruguay.</p></div>
+        <div class="service__detail"><p data-i18n="s5.d">Ejecución y dirección de obra con presupuestos, cronograma y reportes de avance.</p></div>
+      </li>
+      <li class="service" data-cursor="Ver más" data-i18n-attr="data-cursor:service.cursor">
+        <button class="service__row" aria-expanded="false">
+          <span class="service__code mono">JUR</span>
+          <span class="service__name display" data-i18n="s6.n">Respaldo jurídico</span>
+          <span class="service__for mono" data-i18n="s6.f">Contratos · Sociedades</span>
+          <span class="service__plus" aria-hidden="true"></span>
+        </button>
+        <div class="service__detail"><p data-i18n="s6.d">Asesoramiento legal en compraventas, contratos de obra y estructuras societarias.</p></div>
+      </li>
+      <li class="service" data-cursor="Ver más" data-i18n-attr="data-cursor:service.cursor">
+        <button class="service__row" aria-expanded="false">
+          <span class="service__code mono">NOT</span>
+          <span class="service__name display" data-i18n="s7.n">Escribanía</span>
+          <span class="service__for mono" data-i18n="s7.f">Títulos · Escrituras</span>
+          <span class="service__plus" aria-hidden="true"></span>
+        </button>
+        <div class="service__detail"><p data-i18n="s7.d">Estudio de títulos, promesas de compraventa y escrituración con escribanos de la red.</p></div>
+      </li>
+      <li class="service" data-cursor="Ver más" data-i18n-attr="data-cursor:service.cursor">
+        <button class="service__row" aria-expanded="false">
+          <span class="service__code mono">CTB</span>
+          <span class="service__name display" data-i18n="s8.n">Contable y administrativo</span>
+          <span class="service__for mono" data-i18n="s8.f">DGI · BPS · Gestión</span>
+          <span class="service__plus" aria-hidden="true"></span>
+        </button>
+        <div class="service__detail"><p data-i18n="s8.d">Impuestos, contabilidad, trámites y administración de propiedades para que todo esté en orden.</p></div>
       </li>
     </ul>
   </section>
@@ -231,55 +267,55 @@
   <!-- INVERSIONES -->
   <section class="invest" id="inversiones">
     <div class="section-head">
-      <p class="eyebrow mono">A · Inversiones del estudio</p>
-      <h2 class="display reveal-lines">Simulá tu <em>crecimiento.</em></h2>
-      <p class="section-lead">Elegí un perfil, un capital y un plazo. La proyección muestra el rango probable de resultados según el riesgo de cada estrategia.</p>
+      <p class="eyebrow mono" data-i18n="inv.e">Inversiones</p>
+      <h2 class="display reveal-lines" data-i18n="inv.h">Simula tu <em>crecimiento.</em></h2>
+      <p class="section-lead" data-i18n="inv.lead">Elige un perfil, un capital y un plazo. La proyección muestra el rango probable de resultados según el riesgo de cada estrategia.</p>
     </div>
     <div class="sim">
       <form class="sim__controls" id="simForm" onsubmit="return false">
         <fieldset class="seg" id="profileSeg">
-          <legend class="mono">Perfil</legend>
-          <label><input type="radio" name="profile" id="pf-c" value="c"><span>Conservador</span></label>
-          <label><input type="radio" name="profile" id="pf-m" value="m" checked><span>Moderado</span></label>
-          <label><input type="radio" name="profile" id="pf-d" value="d"><span>Dinámico</span></label>
+          <legend class="mono" data-i18n="sim.profile">Perfil</legend>
+          <label><input type="radio" name="profile" id="pf-c" value="c"><span data-i18n="sim.c">Conservador</span></label>
+          <label><input type="radio" name="profile" id="pf-m" value="m" checked><span data-i18n="sim.m">Moderado</span></label>
+          <label><input type="radio" name="profile" id="pf-d" value="d"><span data-i18n="sim.d">Dinámico</span></label>
         </fieldset>
         <div class="range">
-          <label for="simCap" class="mono">Capital inicial <output id="simCapOut">USD 100.000</output></label>
+          <label for="simCap" class="mono"><span data-i18n="sim.cap">Capital inicial</span> <output id="simCapOut">USD 100.000</output></label>
           <input type="range" id="simCap" min="10000" max="1000000" step="5000" value="100000">
         </div>
         <div class="range">
-          <label for="simMonthly" class="mono">Aporte mensual <output id="simMonthlyOut">USD 1.000</output></label>
+          <label for="simMonthly" class="mono"><span data-i18n="sim.monthly">Aporte mensual</span> <output id="simMonthlyOut">USD 1.000</output></label>
           <input type="range" id="simMonthly" min="0" max="20000" step="250" value="1000">
         </div>
         <div class="range">
-          <label for="simYears" class="mono">Plazo <output id="simYearsOut">10 años</output></label>
+          <label for="simYears" class="mono"><span data-i18n="sim.years">Plazo</span> <output id="simYearsOut">10 años</output></label>
           <input type="range" id="simYears" min="1" max="30" step="1" value="10">
         </div>
         <dl class="sim__mix" id="simMix"></dl>
       </form>
       <div class="sim__out">
         <div class="sim__kpis">
-          <div><dt class="mono">Capital proyectado</dt><dd class="display" id="kpiFinal">—</dd></div>
-          <div><dt class="mono">Total aportado</dt><dd id="kpiContrib">—</dd></div>
-          <div><dt class="mono">Rendimiento estimado</dt><dd id="kpiGain">—</dd></div>
+          <div><dt class="mono" data-i18n="sim.final">Capital proyectado</dt><dd class="display" id="kpiFinal">—</dd></div>
+          <div><dt class="mono" data-i18n="sim.contrib">Total aportado</dt><dd id="kpiContrib">—</dd></div>
+          <div><dt class="mono" data-i18n="sim.gain">Rendimiento estimado</dt><dd id="kpiGain">—</dd></div>
         </div>
-        <div class="sim__chart"><canvas id="simChart" aria-label="Gráfico de proyección del capital" role="img"></canvas></div>
-        <div class="sim__legend mono"><span><i class="lg lg--band"></i>Rango probable</span><span><i class="lg lg--line"></i>Escenario base</span><span><i class="lg lg--dash"></i>Aportes</span></div>
-        <p class="fine">Rentabilidades anuales de referencia: conservador 4%, moderado 6,5%, dinámico 9%. Valores ilustrativos, no garantizados. Rentabilidades pasadas no aseguran resultados futuros.</p>
+        <div class="sim__chart"><canvas id="simChart" aria-label="Gráfico de proyección del capital" data-i18n-attr="aria-label:sim.chart" role="img"></canvas></div>
+        <div class="sim__legend mono"><span><i class="lg lg--band"></i><span data-i18n="sim.band">Rango probable</span></span><span><i class="lg lg--line"></i><span data-i18n="sim.base">Escenario base</span></span><span><i class="lg lg--dash"></i><span data-i18n="sim.dash">Aportes</span></span></div>
+        <p class="fine" data-i18n="sim.fine">Rentabilidades anuales de referencia: conservador 4%, moderado 6,5%, dinámico 9%. Valores ilustrativos, no garantizados. Rentabilidades pasadas no aseguran resultados futuros.</p>
       </div>
     </div>
   </section>
 
   <!-- PROYECTOS (carrusel circular, fondo claro) -->
-  <section class="estates" id="proyectos" aria-label="Proyectos inmobiliarios en Uruguay">
+  <section class="estates" id="proyectos" aria-label="Proyectos inmobiliarios en Uruguay" data-i18n-attr="aria-label:est.aria">
     <div class="estates__sticky">
       <div class="estates__top mono">
-        <span>B · Real estate premium</span>
-        <span>Uruguay</span>
-        <span class="estates__note">Proyectos de ejemplo</span>
+        <span data-i18n="est.top1">B · Proyectos</span>
+        <span data-i18n="est.top2">Uruguay</span>
+        <span class="estates__note" data-i18n="est.note">Proyectos de ejemplo</span>
       </div>
       <div class="estates__stage">
-        <ol class="estates__index mono" id="estIndex" aria-label="Proyectos"></ol>
+        <ol class="estates__index mono" id="estIndex" aria-label="Proyectos" data-i18n-attr="aria-label:est.list"></ol>
         <div class="estates__orb">
           <div class="orb" id="orb">
             <canvas class="orb__img is-on" id="orbA"></canvas>
@@ -295,9 +331,9 @@
           <p class="estates__desc" id="estDesc"></p>
           <dl class="estates__facts" id="estFacts"></dl>
           <div class="estates__nav">
-            <button class="iconbtn" id="estPrev" aria-label="Proyecto anterior">←</button>
-            <button class="iconbtn" id="estNext" aria-label="Proyecto siguiente">→</button>
-            <a href="#contacto" class="btn btn--dark" data-magnetic data-cursor="Consultar"><span>Solicitar dossier</span></a>
+            <button class="iconbtn" id="estPrev" aria-label="Proyecto anterior" data-i18n-attr="aria-label:est.prev">←</button>
+            <button class="iconbtn" id="estNext" aria-label="Proyecto siguiente" data-i18n-attr="aria-label:est.next">→</button>
+            <a href="#contacto" class="btn btn--dark" data-magnetic data-cursor="Consultar" data-i18n-attr="data-cursor:est.cursor"><span data-i18n="est.cta">Solicitar dossier</span></a>
           </div>
         </div>
       </div>
@@ -311,42 +347,42 @@
     <div class="uy__grid" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
     <div class="uy__inner">
       <div class="section-head">
-        <p class="eyebrow mono">B · Por qué Uruguay</p>
-        <h2 class="display reveal-lines">Estabilidad que <em>se puede escriturar.</em></h2>
+        <p class="eyebrow mono" data-i18n="uy.e">Por qué Uruguay</p>
+        <h2 class="display reveal-lines" data-i18n="uy.h">Estabilidad que <em>se puede escriturar.</em></h2>
       </div>
       <div class="uy__cells">
-        <div class="cell"><span class="cell__num display" data-count="0">0</span><p class="cell__t">restricciones para que extranjeros compren inmuebles</p></div>
-        <div class="cell"><span class="cell__num display" data-count="100" data-suffix="%">0</span><p class="cell__t">libre movilidad de capitales, sin controles cambiarios</p></div>
-        <div class="cell"><span class="cell__num display" data-count="10" data-suffix=" años">0</span><p class="cell__t">de exoneraciones sobre rentas en vivienda promovida (Ley 18.795)</p></div>
-        <div class="cell"><span class="cell__num display" data-text="BBB">BBB</span><p class="cell__t">grado inversor sostenido por las principales calificadoras</p></div>
+        <div class="cell"><span class="cell__num display" data-count="0">0</span><p class="cell__t" data-i18n="uy.c1">restricciones para que extranjeros compren inmuebles</p></div>
+        <div class="cell"><span class="cell__num display" data-count="100" data-suffix="%">100%</span><p class="cell__t" data-i18n="uy.c2">libre movilidad de capitales, sin controles cambiarios</p></div>
+        <div class="cell"><span class="cell__num display" data-count="10" data-suffix-key="uy.c3s">10</span><p class="cell__t" data-i18n="uy.c3">de exoneraciones sobre rentas en vivienda promovida (Ley 18.795)</p></div>
+        <div class="cell"><span class="cell__num display">BBB</span><p class="cell__t" data-i18n="uy.c4">grado inversor sostenido por las principales calificadoras</p></div>
       </div>
-      <p class="fine uy__fine">Información general. Los beneficios fiscales y requisitos de residencia dependen de cada caso; los analizamos contigo antes de invertir.</p>
+      <p class="fine uy__fine" data-i18n="uy.fine">Información general. Los beneficios fiscales y requisitos de residencia dependen de cada caso; los analizamos contigo antes de invertir.</p>
     </div>
   </section>
 
   <!-- CALCULADORA INMOBILIARIA -->
   <section class="roi" id="roi">
     <div class="section-head">
-      <p class="eyebrow mono">B · Calculadora inmobiliaria</p>
-      <h2 class="display reveal-lines">Renta + plusvalía, <em>año a año.</em></h2>
+      <p class="eyebrow mono" data-i18n="roi.e">Calculadora inmobiliaria</p>
+      <h2 class="display reveal-lines" data-i18n="roi.h">Renta + plusvalía, <em>año a año.</em></h2>
     </div>
     <div class="roi__wrap">
       <form class="roi__form" id="roiForm" onsubmit="return false">
-        <div class="field"><label for="roiPrice" class="mono">Precio de compra (USD)</label><input id="roiPrice" type="number" inputmode="numeric" min="50000" step="5000" value="390000"></div>
-        <div class="field"><label for="roiRent" class="mono">Alquiler mensual estimado (USD)</label><input id="roiRent" type="number" inputmode="numeric" min="0" step="50" value="1900"></div>
-        <div class="field"><label for="roiCost" class="mono">Gastos e impuestos (% de la renta)</label><input id="roiCost" type="number" min="0" max="80" step="1" value="22"></div>
-        <div class="field"><label for="roiApp" class="mono">Valorización anual (%)</label><input id="roiApp" type="number" min="-5" max="15" step="0.5" value="3"></div>
-        <div class="field"><label for="roiYears" class="mono">Horizonte (años)</label><input id="roiYears" type="number" min="1" max="25" step="1" value="10"></div>
+        <div class="field"><label for="roiPrice" class="mono" data-i18n="roi.price">Precio de compra (USD)</label><input id="roiPrice" type="number" inputmode="numeric" min="50000" step="5000" value="390000"></div>
+        <div class="field"><label for="roiRent" class="mono" data-i18n="roi.rent">Alquiler mensual estimado (USD)</label><input id="roiRent" type="number" inputmode="numeric" min="0" step="50" value="1900"></div>
+        <div class="field"><label for="roiCost" class="mono" data-i18n="roi.cost">Gastos e impuestos (% de la renta)</label><input id="roiCost" type="number" min="0" max="80" step="1" value="22"></div>
+        <div class="field"><label for="roiApp" class="mono" data-i18n="roi.app">Valorización anual (%)</label><input id="roiApp" type="number" min="-5" max="15" step="0.5" value="3"></div>
+        <div class="field"><label for="roiYears" class="mono" data-i18n="roi.years">Horizonte (años)</label><input id="roiYears" type="number" min="1" max="25" step="1" value="10"></div>
       </form>
       <div class="roi__out">
         <div class="roi__kpis">
-          <div><span class="mono">Renta neta anual</span><strong id="roiNet">—</strong></div>
-          <div><span class="mono">Rentabilidad neta</span><strong id="roiCap">—</strong></div>
-          <div><span class="mono">Valor estimado final</span><strong id="roiFv">—</strong></div>
-          <div><span class="mono">Retorno total</span><strong id="roiTotal" class="gold">—</strong></div>
+          <div><span class="mono" data-i18n="roi.net">Renta neta anual</span><strong id="roiNet">—</strong></div>
+          <div><span class="mono" data-i18n="roi.cap">Rentabilidad neta</span><strong id="roiCap">—</strong></div>
+          <div><span class="mono" data-i18n="roi.fv">Valor estimado final</span><strong id="roiFv">—</strong></div>
+          <div><span class="mono" data-i18n="roi.total">Retorno total</span><strong id="roiTotal" class="gold">—</strong></div>
         </div>
-        <div class="roi__bars" id="roiBars" role="img" aria-label="Retorno acumulado por año"></div>
-        <div class="sim__legend mono"><span><i class="lg lg--gold"></i>Rentas acumuladas</span><span><i class="lg lg--ivory"></i>Plusvalía</span></div>
+        <div class="roi__bars" id="roiBars" role="img" aria-label="Retorno acumulado por año" data-i18n-attr="aria-label:roi.chart"></div>
+        <div class="sim__legend mono"><span><i class="lg lg--gold"></i><span data-i18n="roi.lr">Rentas acumuladas</span></span><span><i class="lg lg--ivory"></i><span data-i18n="roi.la">Plusvalía</span></span></div>
       </div>
     </div>
   </section>
@@ -355,15 +391,15 @@
   <section class="process" id="proceso">
     <div class="process__sticky">
       <div class="process__head">
-        <p class="eyebrow mono">Proceso</p>
-        <h2 class="display">Cinco pasos, <em>un interlocutor.</em></h2>
+        <p class="eyebrow mono" data-i18n="proc.e">Proceso</p>
+        <h2 class="display" data-i18n="proc.h">Cinco etapas, <em>un solo grupo.</em></h2>
       </div>
       <div class="process__track" id="processTrack">
-        <article class="step"><span class="step__n display">01</span><h3>Diagnóstico</h3><p>Relevamos tu situación contable, fiscal y patrimonial. Sabemos de dónde partimos.</p></article>
-        <article class="step"><span class="step__n display">02</span><h3>Estrategia</h3><p>Definimos objetivos, perfil de riesgo y horizonte. Proponemos la combinación de activos.</p></article>
-        <article class="step"><span class="step__n display">03</span><h3>Selección</h3><p>Due diligence de cada proyecto o instrumento: números, permisos, desarrollador y contratos.</p></article>
-        <article class="step"><span class="step__n display">04</span><h3>Estructura</h3><p>Elegimos el vehículo legal y contable más eficiente y gestionamos la operación.</p></article>
-        <article class="step"><span class="step__n display">05</span><h3>Seguimiento</h3><p>Reportes periódicos, impuestos al día y revisiones de la estrategia.</p></article>
+        <article class="step"><span class="step__n display">01</span><h3 data-i18n="p1.h">Búsqueda</h3><p data-i18n="p1.p">Encontramos la propiedad o el terreno que se ajusta a lo que buscas, a través de toda la red.</p></article>
+        <article class="step"><span class="step__n display">02</span><h3 data-i18n="p2.h">Respaldo legal</h3><p data-i18n="p2.p">Abogados y escribanos estudian títulos y contratos antes de que firmes.</p></article>
+        <article class="step"><span class="step__n display">03</span><h3 data-i18n="p3.h">Proyecto</h3><p data-i18n="p3.p">Si vas a construir, arquitectos e ingenieros diseñan y tramitan los permisos.</p></article>
+        <article class="step"><span class="step__n display">04</span><h3 data-i18n="p4.h">Concreción</h3><p data-i18n="p4.p">Escrituramos la compra o ejecutamos la obra con presupuesto y plazos claros.</p></article>
+        <article class="step"><span class="step__n display">05</span><h3 data-i18n="p5.h">Gestión</h3><p data-i18n="p5.p">Contabilidad, impuestos y administración para que tu propiedad siga en orden.</p></article>
       </div>
     </div>
   </section>
@@ -371,39 +407,41 @@
   <!-- CONTACTO -->
   <section class="contact" id="contacto">
     <div class="contact__left">
-      <p class="eyebrow mono">Contacto</p>
-      <h2 class="display reveal-lines">Subamos <em>juntos.</em></h2>
-      <p class="section-lead">Contanos qué necesitás. Respondemos en el día hábil con una propuesta de primera reunión.</p>
+      <p class="eyebrow mono" data-i18n="c.e">Contacto</p>
+      <h2 class="display reveal-lines" data-i18n="c.h">Hablemos de <em>tu proyecto.</em></h2>
+      <p class="section-lead" data-i18n="c.lead">Cuéntanos qué necesitas. Te respondemos en el día hábil con una propuesta de primera reunión.</p>
       <ul class="contact__data mono" role="list">
-        <li><span>Email</span><span class="sel">hola@gruposureste.uy</span></li>
-        <li><span>WhatsApp</span><span class="sel">+598 99 000 000</span></li>
-        <li><span>Oficina</span><span>Montevideo, Uruguay</span></li>
+        <li><span data-i18n="c.email">Email</span><span class="sel">hola@gruposureste.uy</span></li>
+        <li><span data-i18n="c.wa">WhatsApp</span><span class="sel">+598 99 000 000</span></li>
+        <li><span data-i18n="c.office">Oficina</span><span data-i18n="c.officeV">Uruguay</span></li>
       </ul>
     </div>
     <form class="contact__form" id="contactForm" novalidate>
       <fieldset class="chips">
-        <legend class="mono">Me interesa</legend>
-        <label><input type="checkbox" name="interes" id="ci-1" value="Estudio contable"><span>Estudio contable</span></label>
-        <label><input type="checkbox" name="interes" id="ci-2" value="Inversiones"><span>Inversiones</span></label>
-        <label><input type="checkbox" name="interes" id="ci-3" value="Real estate Uruguay" checked><span>Real estate Uruguay</span></label>
+        <legend class="mono" data-i18n="c.interest">Me interesa</legend>
+        <label><input type="checkbox" name="interes" id="ci-1" value="c.i1" checked><span data-i18n="c.i1">Comprar una propiedad</span></label>
+        <label><input type="checkbox" name="interes" id="ci-2" value="c.i2"><span data-i18n="c.i2">Un terreno</span></label>
+        <label><input type="checkbox" name="interes" id="ci-3" value="c.i3"><span data-i18n="c.i3">Construir</span></label>
+        <label><input type="checkbox" name="interes" id="ci-4" value="c.i4"><span data-i18n="c.i4">Invertir</span></label>
+        <label><input type="checkbox" name="interes" id="ci-5" value="c.i5"><span data-i18n="c.i5">Servicios legales y contables</span></label>
       </fieldset>
-      <div class="field"><label for="cName" class="mono">Nombre</label><input id="cName" name="nombre" autocomplete="name" required></div>
-      <div class="field"><label for="cEmail" class="mono">Email</label><input id="cEmail" name="email" type="email" autocomplete="email" required></div>
-      <div class="field"><label for="cTicket" class="mono">Capital a invertir</label>
+      <div class="field"><label for="cName" class="mono" data-i18n="c.name">Nombre</label><input id="cName" name="nombre" autocomplete="name" required></div>
+      <div class="field"><label for="cEmail" class="mono" data-i18n="c.mail">Email</label><input id="cEmail" name="email" type="email" autocomplete="email" required></div>
+      <div class="field"><label for="cTicket" class="mono" data-i18n="c.ticket">Presupuesto</label>
         <select id="cTicket" name="ticket">
-          <option>Hasta USD 150.000</option>
-          <option selected>USD 150.000 – 500.000</option>
-          <option>USD 500.000 – 1.500.000</option>
-          <option>Más de USD 1.500.000</option>
-          <option>Solo servicios contables</option>
+          <option value="c.t1" data-i18n="c.t1">Hasta USD 150.000</option>
+          <option value="c.t2" data-i18n="c.t2" selected>USD 150.000 – 500.000</option>
+          <option value="c.t3" data-i18n="c.t3">USD 500.000 – 1.500.000</option>
+          <option value="c.t4" data-i18n="c.t4">Más de USD 1.500.000</option>
+          <option value="c.t5" data-i18n="c.t5">Solo servicios profesionales</option>
         </select>
       </div>
-      <div class="field"><label for="cMsg" class="mono">Mensaje</label><textarea id="cMsg" name="mensaje" rows="3" placeholder="Ej.: quiero diversificar en real estate en Punta del Este"></textarea></div>
+      <div class="field"><label for="cMsg" class="mono" data-i18n="c.msg">Mensaje</label><textarea id="cMsg" name="mensaje" rows="3" placeholder="Ej.: busco un terreno en Punta del Este para construir una casa" data-i18n-attr="placeholder:c.ph"></textarea></div>
       <p class="form__err" id="formErr" role="alert"></p>
-      <button class="btn btn--gold btn--wide" type="submit" data-magnetic data-cursor="Enviar"><span>Preparar consulta</span></button>
+      <button class="btn btn--gold btn--wide" type="submit" data-magnetic data-cursor="Enviar" data-i18n-attr="data-cursor:c.cursor"><span data-i18n="c.submit">Preparar consulta</span></button>
       <div class="form__done" id="formDone" hidden>
-        <p class="display">Tu consulta está lista.</p>
-        <p>Elegí cómo enviarla:</p>
+        <p class="display" data-i18n="c.done">Tu consulta está lista.</p>
+        <p data-i18n="c.how">Elige cómo enviarla:</p>
         <div class="form__send">
           <a class="btn btn--line" id="sendWa" target="_blank" rel="noopener"><span>WhatsApp</span></a>
           <a class="btn btn--line" id="sendMail"><span>Email</span></a>
@@ -418,12 +456,12 @@
   <div class="footer__row mono">
     <span>© <span id="year">2026</span> Grupo Sureste</span>
     <span>34°54′21″S · 56°09′53″W</span>
-    <a href="#inicio">Volver arriba ↑</a>
+    <a href="#inicio" data-i18n="f.back">Volver arriba ↑</a>
   </div>
-  <p class="fine footer__fine">La información de este sitio es general y no constituye asesoramiento financiero, legal ni tributario personalizado. Toda inversión implica riesgos, incluida la pérdida de capital.</p>
+  <p class="fine footer__fine" data-i18n="f.fine">La información de este sitio es general y no constituye asesoramiento financiero, legal ni tributario personalizado. Toda inversión implica riesgos, incluida la pérdida de capital.</p>
 </footer>
 
-<a class="wa" href="https://wa.me/59899000000" target="_blank" rel="noopener" aria-label="Escribir por WhatsApp" data-cursor="WhatsApp">
+<a class="wa" href="https://wa.me/59899000000" target="_blank" rel="noopener" aria-label="Escribir por WhatsApp" data-i18n-attr="aria-label:wa.aria" data-cursor="WhatsApp">
   <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.6.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.3a.5.5 0 0 0 0-.5l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.1 5.1 0 0 0 1.1 2.7 11.7 11.7 0 0 0 4.5 4c1.7.7 2.3.8 3.1.6a2.7 2.7 0 0 0 1.8-1.2 2.2 2.2 0 0 0 .1-1.2c0-.1-.2-.2-.4-.3Z"/></svg>
 </a>
 <!--/CONTENT-->

@@ -2,6 +2,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lenis from "lenis";
 import { paint } from "./paint.js";
+import { T, LANGS, LOCALES } from "./i18n.js";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -9,9 +10,19 @@ const $ = (s, el = document) => el.querySelector(s);
 const $$ = (s, el = document) => [...el.querySelectorAll(s)];
 const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const fine = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
-const usd = (n) => "USD " + Math.round(n).toLocaleString("es-UY");
-const usdShort = (n) => n >= 1e6 ? `USD ${(n / 1e6).toLocaleString("es-UY", { maximumFractionDigits: 2 })} M` : usd(n);
-const pct = (n, d = 1) => n.toLocaleString("es-UY", { minimumFractionDigits: d, maximumFractionDigits: d }) + "%";
+/* ---------------- Idioma ---------------- */
+function detectLang() {
+  try { const saved = localStorage.getItem("sureste-lang"); if (LANGS.includes(saved)) return saved; } catch (e) {}
+  const nav = (navigator.languages || [navigator.language || "es"]).map((l) => l.slice(0, 2).toLowerCase());
+  return nav.find((l) => LANGS.includes(l)) || "es";
+}
+let lang = detectLang();
+const t = (k) => (T[lang][k] !== undefined ? T[lang][k] : T.es[k] !== undefined ? T.es[k] : k);
+const onLang = [];
+const loc = () => LOCALES[lang];
+const usd = (n) => "USD " + Math.round(n).toLocaleString(loc());
+const usdShort = (n) => n >= 1e6 ? `USD ${(n / 1e6).toLocaleString(loc(), { maximumFractionDigits: 2 })} M` : usd(n);
+const pct = (n, d = 1) => n.toLocaleString(loc(), { minimumFractionDigits: d, maximumFractionDigits: d }) + "%";
 
 /* ---------------- Scroll suave ---------------- */
 let lenis = null;
@@ -73,8 +84,35 @@ function splitWords(el) {
   walk(el);
   return $$(".rl > span", el);
 }
+// Vuelca los textos del idioma activo en todos los elementos marcados con data-i18n
+function applyTexts() {
+  document.documentElement.lang = lang;
+  document.title = t("meta.title");
+  const md = $('meta[name="description"]'); if (md) md.setAttribute("content", t("meta.desc"));
+  $$("[data-i18n]").forEach((el) => {
+    el.innerHTML = t(el.dataset.i18n);
+    if (el.classList.contains("reveal-lines")) splitWords(el);
+  });
+  $$("[data-i18n-attr]").forEach((el) => {
+    el.dataset.i18nAttr.split(",").forEach((pair) => { const [attr, key] = pair.split(":"); el.setAttribute(attr.trim(), t(key.trim())); });
+  });
+  const mq = t("mq").map((w) => `<span>${w}</span><i>✦</i>`).join("");
+  $("#marquee").innerHTML = mq + mq;
+  $$("[data-lang]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.lang === lang)));
+}
+function setLang(l) {
+  if (!LANGS.includes(l) || l === lang) return;
+  lang = l;
+  try { localStorage.setItem("sureste-lang", l); } catch (e) {}
+  applyTexts();
+  onLang.forEach((fn) => fn());
+  ScrollTrigger.refresh();
+}
+applyTexts();
+$$("[data-lang]").forEach((b) => b.addEventListener("click", () => setLang(b.dataset.lang)));
+
 $$(".reveal-lines").forEach((el) => {
-  const words = splitWords(el);
+  const words = $$(".rl > span", el);
   if (reduce) return;
   gsap.from(words, { yPercent: 115, rotate: 4, duration: 1.2, ease: "expo.out", stagger: 0.06, scrollTrigger: { trigger: el, start: "top 85%" } });
 });
@@ -126,14 +164,16 @@ ScrollTrigger.create({
 });
 ScrollTrigger.create({ trigger: "#proyectos", start: "top 60px", end: "bottom 60px", toggleClass: { targets: nav, className: "on-light" } });
 
-function closeMenu() { if (menu.hidden) return; menu.hidden = true; burger.setAttribute("aria-expanded", "false"); burger.setAttribute("aria-label", "Abrir menú"); lenis && lenis.start(); }
+burger.setAttribute("aria-label", t("nav.open"));
+onLang.push(() => burger.setAttribute("aria-label", t(menu.hidden ? "nav.open" : "nav.close")));
+function closeMenu() { if (menu.hidden) return; menu.hidden = true; burger.setAttribute("aria-expanded", "false"); burger.setAttribute("aria-label", t("nav.open")); lenis && lenis.start(); }
 burger.addEventListener("click", () => {
   if (!menu.hidden) return closeMenu();
   menu.hidden = false;
   burger.setAttribute("aria-expanded", "true");
-  burger.setAttribute("aria-label", "Cerrar menú");
+  burger.setAttribute("aria-label", t("nav.close"));
   lenis && lenis.stop();
-  if (!reduce) gsap.from("#menu a", { yPercent: 60, opacity: 0, duration: 0.8, ease: "expo.out", stagger: 0.05 });
+  if (!reduce) gsap.from("#menu nav a", { yPercent: 60, opacity: 0, duration: 0.8, ease: "expo.out", stagger: 0.05 });
 });
 document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeMenu(); });
 
@@ -231,9 +271,9 @@ if (!reduce) gsap.from(".service", { y: 40, opacity: 0, duration: 1, ease: "expo
 
 /* ---------------- Simulador de inversión ---------------- */
 const PROFILES = {
-  c: { r: 0.04, vol: 0.04, mix: [["Renta fija", 70], ["Acciones globales", 15], ["Real estate", 10], ["Liquidez", 5]] },
-  m: { r: 0.065, vol: 0.09, mix: [["Renta fija", 45], ["Acciones globales", 35], ["Real estate", 15], ["Liquidez", 5]] },
-  d: { r: 0.09, vol: 0.15, mix: [["Renta fija", 20], ["Acciones globales", 60], ["Real estate", 17], ["Liquidez", 3]] },
+  c: { r: 0.04, vol: 0.04, mix: [["mix.fixed", 70], ["mix.eq", 15], ["mix.re", 10], ["mix.cash", 5]] },
+  m: { r: 0.065, vol: 0.09, mix: [["mix.fixed", 45], ["mix.eq", 35], ["mix.re", 15], ["mix.cash", 5]] },
+  d: { r: 0.09, vol: 0.15, mix: [["mix.fixed", 20], ["mix.eq", 60], ["mix.re", 17], ["mix.cash", 3]] },
 };
 const sim = { cap: $("#simCap"), monthly: $("#simMonthly"), years: $("#simYears") };
 const simCanvas = $("#simChart");
@@ -260,12 +300,12 @@ function renderSim(animate = true) {
   Object.values(sim).forEach(fillRange);
   $("#simCapOut").textContent = usd(+sim.cap.value);
   $("#simMonthlyOut").textContent = usd(+sim.monthly.value);
-  $("#simYearsOut").textContent = sim.years.value + (sim.years.value === "1" ? " año" : " años");
+  $("#simYearsOut").textContent = sim.years.value + " " + t(sim.years.value === "1" ? "sim.year1" : "sim.yearN");
   simData = simulate();
   $("#kpiFinal").textContent = usdShort(simData.final);
   $("#kpiContrib").textContent = usdShort(simData.contrib);
   $("#kpiGain").textContent = "+" + usdShort(simData.final - simData.contrib);
-  $("#simMix").innerHTML = simData.p.mix.map(([k, v]) => `<div><dt>${k}</dt><dd>${v}%</dd><span class="bar"><i style="width:${v}%"></i></span></div>`).join("");
+  $("#simMix").innerHTML = simData.p.mix.map(([k, v]) => `<div><dt>${t(k)}</dt><dd>${v}%</dd><span class="bar"><i style="width:${v}%"></i></span></div>`).join("");
   if (animate && !reduce) { simDraw.t = 0; gsap.to(simDraw, { t: 1, duration: 1.1, ease: "expo.out", onUpdate: drawSim, overwrite: true }); }
   else drawSim();
 }
@@ -294,7 +334,7 @@ function drawSim() {
     ctx.fillText(v >= 1e6 ? (v / 1e6).toFixed(1) + "M" : Math.round(v / 1000) + "k", W - pad.r + 12, yy + 4);
   }
   const yStep = yrs <= 10 ? (yrs <= 5 ? 1 : 2) : 5;
-  for (let t = 0; t <= yrs; t += yStep) ctx.fillText((t === 0 ? "Hoy" : "A" + t), x(t) - (t === 0 ? 0 : 8), H - 6);
+  for (let t = 0; t <= yrs; t += yStep) ctx.fillText((t === 0 ? T[lang]["sim.today"] : T[lang]["sim.y"] + t), x(t) - (t === 0 ? 0 : 8), H - 6);
   // banda
   ctx.beginPath();
   vis.forEach((p, i) => (i ? ctx.lineTo(x(p.t), y(p.hi)) : ctx.moveTo(x(p.t), y(p.hi))));
@@ -319,32 +359,27 @@ function drawSim() {
 $("#simForm").addEventListener("input", () => renderSim(false));
 $$('input[name="profile"]').forEach((r) => r.addEventListener("change", () => renderSim(true)));
 renderSim(false);
+onLang.push(() => renderSim(false));
 ScrollTrigger.create({ trigger: ".sim", start: "top 75%", once: true, onEnter: () => renderSim(true) });
 
 /* ---------------- Proyectos: carrusel circular ---------------- */
+// Datos fijos de cada proyecto; los textos salen del diccionario ("estates")
 const ESTATES = [
-  { name: "Torre Mirador", place: "Punta del Este · Playa Brava", type: "tower", img: "assets/img/proyecto-punta-del-este-1600.webp", lat: [34, 57, 46], lng: "54°56′02″O",
-    desc: "Departamentos frente al mar con amenities de hotel. Alta demanda de alquiler en temporada y valorización sostenida.",
-    facts: [["Desde", "USD 390.000"], ["Renta bruta est.", "5 – 6% anual"], ["Unidades", "2 a 4 dormitorios"], ["Entrega", "2028"]] },
-  { name: "Chacra Laguna", place: "José Ignacio · Laguna Garzón", type: "villa", lat: [34, 48, 21], lng: "54°35′40″O",
-    desc: "Villas de autor sobre lotes de 5 hectáreas entre laguna y océano. Un activo escaso pensado para preservar capital.",
-    facts: [["Desde", "USD 1.200.000"], ["Perfil", "Plusvalía largo plazo"], ["Superficie", "Lotes de 5 ha"], ["Estado", "Preventa"]] },
-  { name: "Residencias Carrasco", place: "Montevideo · Carrasco", type: "residences", lat: [34, 53, 9], lng: "56°03′18″O",
-    desc: "Edificio boutique de baja altura a metros de la rambla, para vivir o alquilar a ejecutivos y familias.",
-    facts: [["Desde", "USD 520.000"], ["Renta bruta est.", "4,5 – 5,5% anual"], ["Unidades", "3 y 4 dormitorios"], ["Entrega", "2027"]] },
-  { name: "Puerto Buceo", place: "Montevideo · Vivienda promovida", type: "promovida", lat: [34, 54, 32], lng: "56°07′44″O",
-    desc: "Proyecto bajo la Ley 18.795 con exoneraciones tributarias sobre la renta. Ticket accesible y demanda de alquiler estable.",
-    facts: [["Desde", "USD 145.000"], ["Renta bruta est.", "6 – 7% anual"], ["Beneficio", "Exoneraciones 10 años"], ["Entrega", "Inmediata"]] },
+  { name: "Torre Mirador", type: "tower", img: "assets/img/proyecto-punta-del-este-1600.webp", lat: [34, 57, 46], lng: [54, 56, 2] },
+  { name: "Chacra Laguna", type: "villa", lat: [34, 48, 21], lng: [54, 35, 40] },
+  { name: "Residencias Carrasco", type: "residences", lat: [34, 53, 9], lng: [56, 3, 18] },
+  { name: "Puerto Buceo", type: "promovida", lat: [34, 54, 32], lng: [56, 7, 44] },
 ];
 const orbA = $("#orbA"), orbB = $("#orbB");
 let orbFront = orbA, curEstate = -1;
 $("#estTot").textContent = String(ESTATES.length).padStart(2, "0");
 $("#estIndex").innerHTML = ESTATES.map((e, i) => `<li><button type="button" data-i="${i}" aria-current="false">${String(i + 1).padStart(2, "0")} · ${e.name}</button></li>`).join("");
-const fmtLat = ([d, m, s]) => `${d}°${String(m).padStart(2, "0")}′${String(s).padStart(2, "0")}″S`;
+const dms = ([d, m, s]) => `${d}°${String(m).padStart(2, "0")}′${String(s).padStart(2, "0")}″`;
+const coordsOf = (e) => `${dms(e.lat)}S · ${dms(e.lng)}${lang === "en" ? "W" : "O"}`;
 let scrambleTween;
 function scrambleCoords(e) {
   const el = $("#estCoords");
-  const final = `${fmtLat(e.lat)} · ${e.lng}`;
+  const final = coordsOf(e);
   if (reduce) { el.textContent = final; return; }
   scrambleTween && scrambleTween.kill();
   const o = { p: 0 };
@@ -356,6 +391,14 @@ function scrambleCoords(e) {
     },
   });
 }
+function fillEstate(i) {
+  const e = ESTATES[i], tx = t("estates")[i];
+  $("#estPlace").textContent = tx.place;
+  $("#estName").textContent = e.name;
+  $("#estDesc").textContent = tx.desc;
+  $("#estFacts").innerHTML = tx.facts.map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join("");
+}
+onLang.push(() => { fillEstate(curEstate); $("#estCoords").textContent = coordsOf(ESTATES[curEstate]); });
 function setEstate(i) {
   if (i === curEstate) return;
   const dir = i > curEstate ? 1 : -1;
@@ -371,12 +414,7 @@ function setEstate(i) {
   if (!reduce) gsap.fromTo(back, { scale: 1.25, rotate: -8 * dir }, { scale: 1, rotate: 0, duration: 1.4, ease: "expo.out" });
 
   const info = [$("#estPlace"), $("#estName"), $("#estDesc"), $("#estFacts")];
-  const swap = () => {
-    $("#estPlace").textContent = e.place;
-    $("#estName").textContent = e.name;
-    $("#estDesc").textContent = e.desc;
-    $("#estFacts").innerHTML = e.facts.map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join("");
-  };
+  const swap = () => fillEstate(i);
   if (reduce) swap();
   else gsap.timeline().to(info, { y: -20 * dir, opacity: 0, duration: 0.3, ease: "power2.in", stagger: 0.03 })
     .add(swap).fromTo(info, { y: 26 * dir, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8, ease: "expo.out", stagger: 0.06 });
@@ -410,9 +448,11 @@ if (!reduce) {
   gsap.fromTo("#uyArt", { scale: 1.15 }, { scale: 1, ease: "none", scrollTrigger: { trigger: ".uy", start: "top bottom", end: "bottom top", scrub: true } });
 }
 $$("[data-count]").forEach((el) => {
-  const end = +el.dataset.count, suf = el.dataset.suffix || "";
-  const set = (v) => (el.innerHTML = Math.round(v) + (suf ? `<small>${suf}</small>` : ""));
+  const end = +el.dataset.count;
+  const suf = () => (el.dataset.suffixKey ? t(el.dataset.suffixKey) : el.dataset.suffix || "");
+  const set = (v) => (el.innerHTML = Math.round(v) + (suf() ? `<small>${suf()}</small>` : ""));
   set(end);
+  onLang.push(() => set(end));
   if (reduce || end === 0) return;
   const o = { v: 0 };
   ScrollTrigger.create({ trigger: el, start: "top 85%", once: true, onEnter: () => gsap.to(o, { v: end, duration: 2, ease: "expo.out", onUpdate: () => set(o.v) }) });
@@ -439,17 +479,18 @@ function renderRoi() {
   const max = Math.max(1, ...rows.map((d) => d.r + d.a));
   const bars = $("#roiBars");
   if (bars.children.length !== years) {
-    bars.innerHTML = rows.map((d) => `<div class="roi__bar"><i class="r" style="height:0"></i><i class="a" style="height:0"></i><b>A${d.y}</b><span class="tip"></span></div>`).join("");
+    bars.innerHTML = rows.map((d) => `<div class="roi__bar"><i class="r" style="height:0"></i><i class="a" style="height:0"></i><b>${t("sim.y")}${d.y}</b><span class="tip"></span></div>`).join("");
   }
   [...bars.children].forEach((bar, i) => {
     const d = rows[i];
     bar.children[0].style.height = (d.r / max) * 100 + "%";
     bar.children[1].style.height = (d.a / max) * 100 + "%";
-    bar.querySelector(".tip").textContent = `Año ${d.y}: ${usdShort(d.r + d.a)}`;
+    bar.querySelector(".tip").textContent = `${t("roi.year")} ${d.y}: ${usdShort(d.r + d.a)}`;
   });
 }
 $("#roiForm").addEventListener("input", renderRoi);
 renderRoi();
+onLang.push(() => { $("#roiBars").innerHTML = ""; renderRoi(); });
 
 /* ---------------- Proceso: scroll horizontal ---------------- */
 const track = $("#processTrack");
@@ -466,14 +507,15 @@ form.addEventListener("submit", (e) => {
   e.preventDefault();
   const err = $("#formErr");
   const name = $("#cName").value.trim(), email = $("#cEmail").value.trim();
-  const interests = $$('input[name="interes"]:checked').map((i) => i.value);
-  if (!name) { err.textContent = "Escribí tu nombre para que sepamos a quién responder."; $("#cName").focus(); return; }
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { err.textContent = "Revisá el email: parece incompleto."; $("#cEmail").focus(); return; }
-  if (!interests.length) { err.textContent = "Elegí al menos un área de interés."; return; }
+  const interests = $$('input[name="interes"]:checked').map((i) => t(i.value));
+  if (!name) { err.textContent = t("c.errName"); $("#cName").focus(); return; }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { err.textContent = t("c.errMail"); $("#cEmail").focus(); return; }
+  if (!interests.length) { err.textContent = t("c.errInt"); return; }
   err.textContent = "";
-  const body = `Hola, soy ${name} (${email}).\nMe interesa: ${interests.join(", ")}.\nCapital: ${$("#cTicket").value}.\n${$("#cMsg").value.trim()}`;
+  const fill = { name, email, interests: interests.join(", "), ticket: t($("#cTicket").value), msg: $("#cMsg").value.trim() };
+  const body = t("c.body").replace(/\{(\w+)\}/g, (_, k) => fill[k]);
   $("#sendWa").href = `https://wa.me/${CONTACT.wa}?text=${encodeURIComponent(body)}`;
-  $("#sendMail").href = `mailto:${CONTACT.email}?subject=${encodeURIComponent("Consulta desde la web")}&body=${encodeURIComponent(body)}`;
+  $("#sendMail").href = `mailto:${CONTACT.email}?subject=${encodeURIComponent(t("c.subject"))}&body=${encodeURIComponent(body)}`;
   const done = $("#formDone");
   done.hidden = false;
   if (!reduce) gsap.from(done, { y: 20, opacity: 0, duration: 0.8, ease: "expo.out" });
