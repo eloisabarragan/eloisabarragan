@@ -1,18 +1,24 @@
-/* Pétalo — catálogo y configuración de la tienda.
+/* FlorLatte — catálogo y configuración de la tienda.
    Editá este archivo para cambiar productos, precios, envíos y cupones. */
-window.PETALO = {
+window.FLORLATTE = {
   config: {
-    storeName: 'Pétalo',
+    storeName: 'FlorLatte',
+    fullName: 'FlorLatte Plantas y Flores',
+    tagline: 'Donde laten las flores',
     currency: 'UYU',
     locale: 'es-UY',
     freeShippingFrom: 3500,
     shipping: { standard: 290, express: 490, pickup: 0 },
     sameDayCutoffHour: 16,          // pedidos antes de esta hora se entregan hoy
-    whatsapp: '+598 99 123 456',
-    email: 'hola@petalo.uy',
-    address: 'Av. de las Flores 1234',
+    whatsapp: '',                   // número con código de país, ej. '+598 99 123 456' (vacío = se oculta el botón)
+    email: '',                      // opcional
+    instagram: 'florlatte.uy',
+    address: 'Av. Instrucciones del Año XVII 472, Las Piedras',
+    city: 'Las Piedras, Canelones, Uruguay',
+    hours: '',                      // ej. 'Lun a sáb 9:00–19:00' (vacío = no se muestra)
+    bank: { name: 'A completar', account: 'A completar', holder: 'FlorLatte Plantas y Flores' },
     coupons: {
-      PETALO10: { type: 'percent', value: 10, label: '10% de descuento' },
+      LATTE10: { type: 'percent', value: 10, label: '10% de descuento' },
       BIENVENIDA15: { type: 'percent', value: 15, label: '15% de bienvenida' },
       ENVIOGRATIS: { type: 'shipping', value: 0, label: 'Envío gratis' }
     }
@@ -20,6 +26,7 @@ window.PETALO = {
 
   categories: [
     { id: 'ramos', name: 'Ramos' },
+    { id: 'novias', name: 'Novias' },
     { id: 'rosas', name: 'Rosas' },
     { id: 'cajas', name: 'Cajas' },
     { id: 'floreros', name: 'En florero' },
@@ -27,6 +34,7 @@ window.PETALO = {
   ],
 
   occasions: [
+    { id: 'boda', name: 'Bodas', art: { flowers: ['peony', 'rose', 'orchid'], palette: ['#fbf6f0', '#f6dfe2', '#f0c9cf'], bg: '#f3ebe4', count: 7, seed: 23 } },
     { id: 'amor', name: 'Amor', art: { flowers: ['rose'], palette: ['#b3122e', '#c7365f'], bg: '#f7dfe4', count: 7, seed: 3 } },
     { id: 'cumpleanos', name: 'Cumpleaños', art: { flowers: ['sunflower', 'daisy'], palette: ['#f5c518', '#ffffff'], bg: '#fbefc9', count: 6, seed: 5 } },
     { id: 'aniversario', name: 'Aniversario', art: { flowers: ['peony', 'rose'], palette: ['#f4a6b8', '#e86a92'], bg: '#f9e3ea', count: 6, seed: 8 } },
@@ -63,6 +71,18 @@ window.PETALO = {
   ],
 
   products: [
+    { id: 'novia-rose', name: 'Ramo de Novia Rosé', cat: 'novias', occasions: ['boda'], color: 'rosa', price: 4900, rating: 5.0, reviews: 38, badge: 'A medida', stock: 99, sameDay: false,
+      desc: 'Rosas rosa pálido, lisianthus y eucalipto, atado a mano con cinta de raso. Lo diseñamos junto a vos según tu vestido y tu estilo.',
+      stems: 'rosas · lisianthus · eucalipto · cinta de raso',
+      art: { flowers: ['rose', 'peony', 'rose'], palette: ['#f6c9d1', '#f9dfe3', '#fbf3ee'], wrap: '#fbf6f0', ribbon: '#e9c9c3', bg: '#f3ebe4', count: 13, seed: 2101, eucalyptus: true } },
+    { id: 'novia-blanca', name: 'Ramo de Novia Lilium', cat: 'novias', occasions: ['boda'], color: 'blanco', price: 5200, rating: 5.0, reviews: 24, badge: null, stock: 99, sameDay: false,
+      desc: 'Lilium y rosas blancas con verdes de estación. Clásico, luminoso y con un perfume suave que acompaña todo el día.',
+      stems: 'lilium · rosas blancas · ruscus',
+      art: { flowers: ['lily', 'rose', 'rose'], palette: ['#fbf8f2', '#f4efe6', '#ffffff'], wrap: '#fbf6f0', ribbon: '#d8c6b8', bg: '#efe7df', count: 11, seed: 2202, eucalyptus: true } },
+    { id: 'novia-orquideas', name: 'Ramo de Novia Orquídeas', cat: 'novias', occasions: ['boda'], color: 'rosa', price: 5900, rating: 5.0, reviews: 17, badge: 'Nuevo', stock: 99, sameDay: false,
+      desc: 'Orquídeas, tulipanes y paniculata en tonos blush. Delicado y distinto, inspirado en nuestro logo.',
+      stems: 'orquídeas · tulipanes · paniculata · eucalipto',
+      art: { flowers: ['orchid', 'tulip', 'daisy'], palette: ['#f2c7d3', '#f6dfe2', '#fbf6f0'], wrap: '#fbf6f0', ribbon: '#6b2433', bg: '#f4e6e6', count: 11, seed: 2303, eucalyptus: true } },
     { id: 'rosas-eternas', name: 'Rosas Eternas', cat: 'rosas', occasions: ['amor', 'aniversario'], color: 'rojo', price: 2890, rating: 4.9, reviews: 412, badge: 'Más vendido', stock: 24, sameDay: true,
       desc: 'Doce rosas rojas de tallo largo, envueltas en papel kraft con lazo de raso verde botella. El clásico que nunca falla.',
       stems: '12 rosas Freedom · eucalipto · gypsophila',
@@ -189,6 +209,7 @@ window.PETALO = {
   ],
 
   faqs: [
+    { q: '¿Hacen ramos de novia?', a: 'Sí, es una de nuestras especialidades. Escribinos con al menos 3 semanas de anticipación: coordinamos una charla para conocer tu vestido, tu paleta y tu estilo, y diseñamos el ramo a medida. También hacemos boutonnieres y decoración floral.' },
     { q: '¿Hasta qué hora puedo pedir para que llegue hoy?', a: 'Los pedidos confirmados antes de las 16:00 se entregan el mismo día, de lunes a sábado. Con Envío Express llega en menos de 2 horas.' },
     { q: '¿Cuánto cuesta el envío?', a: 'El envío estándar cuesta $290 y es gratis en compras desde $3.500. El Envío Express cuesta $490. También podés retirar sin costo en nuestro local.' },
     { q: '¿Puedo elegir la fecha y el horario de entrega?', a: 'Sí. En el checkout elegís el día (hasta 10 días adelante) y una franja horaria de 3 horas.' },

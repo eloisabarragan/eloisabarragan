@@ -1,4 +1,4 @@
-/* Pétalo — ilustraciones botánicas generadas en SVG.
+/* FlorLatte — ilustraciones botánicas generadas en SVG.
    Cada producto describe su arreglo (tipo, flores, paleta) y este módulo lo dibuja.
    Si querés usar fotos reales, cargá `img: "img/archivo.jpg"` en el producto (ver data.js). */
 (function (global) {
@@ -219,7 +219,7 @@
       s += `<path d="M62 300 L 62 420 A 138 34 0 0 0 338 420 L 338 300 A 138 34 0 0 1 62 300 Z" fill="url(#${id}w)"/>` +
         `<path d="M62 300 A 138 34 0 0 0 338 300" fill="none" stroke="${shade(o.wrap, 0.25)}" stroke-width="5"/>` +
         `<rect x="62" y="356" width="276" height="16" fill="${o.ribbon}" opacity=".9"/>` +
-        `<text x="200" y="404" text-anchor="middle" font-family="Georgia, serif" font-style="italic" font-size="22" fill="${shade(o.wrap, 0.6)}" opacity=".9">Pétalo</text>`;
+        `<text x="200" y="404" text-anchor="middle" font-family="Georgia, serif" font-style="italic" font-size="22" fill="${shade(o.wrap, 0.6)}" opacity=".9">${o.brand || 'FlorLatte'}</text>`;
     } else if (o.kind === 'vase') {
       const hs = domeHeads(200, 170, 118, 90, count, R, pick);
       s += greenery(200, 175, 120, 95, R, o);
@@ -278,5 +278,5 @@
     return `<svg viewBox="-60 -60 120 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><g transform="rotate(${type === 'tulip' ? 0 : 20})">${fn(type === 'tulip' ? 58 : 52, color, rng(7))}</g></svg>`;
   }
 
-  global.PetaloArt = { art, flower, shade };
+  global.FlorArt = { art, flower, shade };
 })(window);

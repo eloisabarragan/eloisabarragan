@@ -1,14 +1,14 @@
-/* Pétalo — lógica de la tienda (sin dependencias). */
+/* FlorLatte — lógica de la tienda (sin dependencias). */
 (function () {
   'use strict';
-  const D = window.PETALO, C = D.config, A = window.PetaloArt;
+  const D = window.FLORLATTE, C = D.config, A = window.FlorArt;
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
 
   /* ---------- Utilidades ---------- */
   const store = {
-    get(k, d) { try { const v = localStorage.getItem('petalo:' + k); return v ? JSON.parse(v) : d; } catch (e) { return d; } },
-    set(k, v) { try { localStorage.setItem('petalo:' + k, JSON.stringify(v)); } catch (e) { /* almacenamiento no disponible */ } }
+    get(k, d) { try { const v = localStorage.getItem('florlatte:' + k); return v ? JSON.parse(v) : d; } catch (e) { return d; } },
+    set(k, v) { try { localStorage.setItem('florlatte:' + k, JSON.stringify(v)); } catch (e) { /* almacenamiento no disponible */ } }
   };
   const money = v => '$' + String(Math.round(v)).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
   const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -50,6 +50,7 @@
     store: '<path d="M4 9h16l-1-4H5L4 9Zm0 0v11h16V9M9 20v-6h6v6"/>',
     instagram: '<rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r=".8" fill="currentColor"/>',
     facebook: '<path d="M14 21v-8h3l.5-3.5H14V7.8c0-1 .3-1.8 1.8-1.8h1.8V3c-.3 0-1.4-.1-2.7-.1-2.7 0-4.4 1.6-4.4 4.6v2H7.5V13h3v8"/>',
+    threads: '<path d="M16.5 11.3c-.1-2.6-1.6-4.1-4.1-4.1-1.6 0-2.9.7-3.6 1.9M7 15.5c.8 2.3 2.8 3.5 5.2 3.5 3.3 0 5.5-2 5.5-4.8 0-2.6-2-4.1-5-4.1-2.2 0-3.6 1-3.6 2.5 0 1.3 1.1 2.2 2.6 2.2 2.4 0 3.6-1.8 3.6-4.6"/><circle cx="12" cy="12" r="9.5"/>',
     music: '<path d="M14 4v10.5a3.5 3.5 0 1 1-2-3.2V4h2Zm0 0c.5 2.4 2.2 4 5 4.3"/>',
     whatsapp: '!<path d="M12 2.2A9.7 9.7 0 0 0 3.6 16.8L2.3 21.7l5-1.3A9.7 9.7 0 1 0 12 2.2Zm0 17.7c-1.5 0-3-.4-4.2-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8 8 0 1 1 12 19.9Zm4.4-6c-.2-.1-1.4-.7-1.7-.8-.2-.1-.4-.1-.5.1l-.8 1c-.1.2-.3.2-.5.1a6.6 6.6 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.5-.4h-.5a1 1 0 0 0-.7.3 2.9 2.9 0 0 0-.9 2.2 5.1 5.1 0 0 0 1 2.7 11.6 11.6 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.4-.6 1.6-1.2.2-.6.2-1 .1-1.2l-.4-.2Z"/>'
   };
@@ -148,7 +149,7 @@
     const msgs = [
       `Envío gratis en compras desde <b>${money(C.freeShippingFrom)}</b>`,
       'Pedí antes de las 16:00 y <b>llega hoy</b>',
-      'Usá <b>PETALO10</b> y obtené 10% off',
+      'Usá <b>LATTE10</b> y obtené 10% off',
       'Tarjeta con dedicatoria <b>de regalo</b> en cada pedido'
     ];
     const track = $('#announce');
@@ -181,8 +182,8 @@
 
   /* ---------- Hero ---------- */
   function initHero() {
-    $('#heroArt').innerHTML = A.art({ flowers: ['peony', 'rose', 'rose', 'anemone'], palette: ['#f4a6b8', '#e86a92', '#c2335c', '#fbf3ee'], wrap: '#efe2d6', ribbon: '#1f3b2d', bg: '#f7dfe6', count: 14, seed: 77, eucalyptus: true, label: 'Ramo de peonías y rosas' });
-    const colors = ['#c2335c', '#f4a6b8', '#e86a92', '#f7c4cf'];
+    if ($('#heroArt')) $('#heroArt').innerHTML = A.art({ flowers: ['peony', 'rose', 'rose', 'anemone'], palette: ['#f4a6b8', '#e86a92', '#c2335c', '#fbf3ee'], wrap: '#efe2d6', ribbon: '#1f3b2d', bg: '#f7dfe6', count: 14, seed: 77, eucalyptus: true, label: 'Ramo de peonías y rosas' });
+    const colors = ['#e7b6c0', '#f4d3d8', '#c98a98', '#fbeef0'];
     $('#petals').innerHTML = Array.from({ length: 14 }, (_, i) =>
       `<span class="petal" style="left:${(i * 7.3 + 3) % 100}%;background:${colors[i % 4]};animation-duration:${7 + (i % 5) * 1.6}s;animation-delay:${-i * 1.1}s;--dx:${(i % 2 ? 1 : -1) * (40 + i * 6)}px;transform:scale(${0.6 + (i % 3) * 0.25})"></span>`).join('');
   }
@@ -499,7 +500,7 @@
       </div>
       <div class="pm__info">
         <div><p class="eyebrow">${catName(p.cat)} · ${p.occasions.map(occName).join(', ')}</p><h2 id="pmTitle">${esc(p.name)}</h2></div>
-        <div class="pm__rating"><span class="stars">${stars(p.rating)}</span>${p.rating.toFixed(1).replace('.', ',')} · ${p.reviews} reseñas verificadas</div>
+        <div class="pm__rating"><span class="stars">${stars(p.rating)}</span>${p.rating.toFixed(1).replace('.', ',')} · ${p.reviews} reseñas</div>
         <div class="pm__price" id="pmPrice"></div>
         <p class="pm__desc">${esc(p.desc)}</p>
         <p class="pm__stems">${esc(p.stems)}</p>
@@ -675,7 +676,7 @@
     $('#reviews').innerHTML = D.testimonials.map(t => `
       <figure class="review"><span class="stars" aria-label="${t.stars} estrellas">${stars(t.stars)}</span>
         <blockquote>“${esc(t.text)}”</blockquote>
-        <footer><span class="avatar">${t.name[0]}</span><div><strong>${esc(t.name)}</strong><span>Compró ${esc(t.product)}</span></div><span class="verified">${icon('check')}Verificada</span></footer>
+        <footer><span class="avatar">${t.name[0]}</span><div><strong>${esc(t.name)}</strong><span>Compró ${esc(t.product)}</span></div></footer>
       </figure>`).join('');
     const r = $('#reviews');
     const step = dir => { const w = r.querySelector('.review').offsetWidth + 20; const max = r.scrollWidth - r.clientWidth; r.scrollTo({ left: dir > 0 && r.scrollLeft >= max - 4 ? 0 : r.scrollLeft + dir * w }); };
@@ -693,13 +694,25 @@
   }
   function renderFooter() {
     const wa = C.whatsapp.replace(/\D/g, '');
-    $('#footerContact').innerHTML = `
-      <li>${icon('pin')}<span>${esc(C.address)}</span></li>
-      <li>${icon('clock')}<span>Lun a sáb 8:00–20:00</span></li>
-      <li>${icon('phone')}<span>${esc(C.whatsapp)}</span></li>
-      <li>${icon('mail')}<span>${esc(C.email)}</span></li>`;
-    $('#whatsapp').href = `https://wa.me/${wa}?text=${encodeURIComponent('¡Hola Pétalo! Quiero hacer un pedido 🌷')}`;
+    $('#footerContact').innerHTML = [
+      `<li>${icon('pin')}<span>${esc(C.address)}<br>${esc(C.city)}</span></li>`,
+      C.hours ? `<li>${icon('clock')}<span>${esc(C.hours)}</span></li>` : '',
+      C.whatsapp ? `<li>${icon('phone')}<span>${esc(C.whatsapp)}</span></li>` : '',
+      C.email ? `<li>${icon('mail')}<span>${esc(C.email)}</span></li>` : '',
+      `<li>${icon('instagram')}<a href="https://www.instagram.com/${esc(C.instagram)}/" target="_blank" rel="noopener">@${esc(C.instagram)}</a></li>`
+    ].join('');
+    if (wa) $('#whatsapp').href = `https://wa.me/${wa}?text=${encodeURIComponent(`¡Hola ${C.storeName}! Quiero hacer un pedido 🌷`)}`;
+    else $('#whatsapp').hidden = true;
     $('#year').textContent = new Date().getFullYear();
+  }
+  function renderAtelier() {
+    $('#atelierArt').innerHTML = A.art({ kind: 'vase', flowers: ['peony', 'tulip', 'orchid', 'rose'], palette: ['#f6c9d1', '#fbf3ee', '#f2c7d3', '#e7b6c0'], wrap: '#e6eef2', bg: '#efe4da', count: 10, seed: 515, label: 'Florero con peonías, tulipanes y orquídeas' });
+    $('#atelierInfo').innerHTML = [
+      `<li>${icon('pin')}<span><strong>${esc(C.address)}</strong>${esc(C.city)}</span></li>`,
+      C.hours ? `<li>${icon('clock')}<span><strong>Horario</strong>${esc(C.hours)}</span></li>` : '',
+      `<li>${icon('leaf')}<span><strong>Floristería &amp; vivero</strong>Plantas, flores de estación y ramos de novia a medida</span></li>`
+    ].join('');
+    $('#mapsLink').href = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(C.address + ', ' + C.city);
   }
   $('#newsForm').addEventListener('submit', e => {
     e.preventDefault();
@@ -805,7 +818,7 @@
         <p class="coupon-msg err" id="slotErr" hidden>Elegí una franja horaria para continuar.</p>
       </fieldset>` : ''}
       ${co.method !== 'pickup' ? `<fieldset class="fieldset"><legend>Dirección</legend>
-        <div class="row row--3">${field('address', 'Calle y número', { ac: 'street-address', ph: 'Av. Brasil 2540 apto 301' })}${field('barrio', 'Barrio', { ph: 'Pocitos' })}<div></div></div>
+        <div class="row row--3">${field('address', 'Calle y número', { ac: 'street-address', ph: 'Calle 1234, apto 2' })}${field('barrio', 'Barrio', { ph: 'Centro' })}<div></div></div>
         ${field('notes', 'Indicaciones para el repartidor', { req: false, textarea: true, max: 200, ph: 'Timbre 301, dejar en portería si no está…' })}
       </fieldset>` : ''}
       <p class="muted">Envío: <b>${t.shipping ? money(t.shipping) : 'Gratis'}</b></p>`;
@@ -854,9 +867,9 @@
           </div>
           <div class="field"><label for="cc-inst">Cuotas</label><select id="cc-inst"><option>1 pago de ${money(totals(co.method).total)}</option><option>3 cuotas sin recargo de ${money(totals(co.method).total / 3)}</option><option>6 cuotas de ${money(totals(co.method).total * 1.12 / 6)}</option></select></div>
         </div>` : co.pay === 'mp' ? `
-        <div class="pay-alt"><p>Al confirmar te llevamos a Mercado Pago para que pagues con tu cuenta, débito o crédito. Volvés automáticamente a Pétalo.</p></div>` : `
+        <div class="pay-alt"><p>Al confirmar te llevamos a Mercado Pago para que pagues con tu cuenta, débito o crédito. Volvés automáticamente a la tienda.</p></div>` : `
         <div class="pay-alt"><p>Transferí el total y mandanos el comprobante por WhatsApp. Reservamos tus flores por 2 horas.</p>
-          <dl><dt>Banco</dt><dd>Banco República</dd><dt>Cuenta</dt><dd>001234567-00001</dd><dt>Titular</dt><dd>Pétalo Florería</dd><dt>Importe</dt><dd>${money(totals(co.method).total)}</dd></dl></div>`}`;
+          <dl><dt>Banco</dt><dd>${esc(C.bank.name)}</dd><dt>Cuenta</dt><dd>${esc(C.bank.account)}</dd><dt>Titular</dt><dd>${esc(C.bank.holder)}</dd><dt>Importe</dt><dd>${money(totals(co.method).total)}</dd></dl></div>`}`;
     }
     return '';
   }
@@ -928,7 +941,7 @@
     const g = $('#giftCard'); if (!g) return;
     g.className = 'gift-card gift-card--' + co.cardStyle;
     $('#msgCount') && ($('#msgCount').textContent = `${co.message.length}/220`);
-    g.innerHTML = `<span class="gift-card__logo">Pétalo</span><p class="gift-card__msg">${esc(co.message || 'Tu mensaje aparece acá…')}</p><p class="gift-card__sign">${co.anon ? 'Alguien que te quiere' : esc(co.sign || (co.name ? 'De ' + co.name.split(' ')[0] : 'Tu firma'))}</p>`;
+    g.innerHTML = `<span class="gift-card__logo">${esc(C.storeName)}</span><p class="gift-card__msg">${esc(co.message || 'Tu mensaje aparece acá…')}</p><p class="gift-card__sign">${co.anon ? 'Alguien que te quiere' : esc(co.sign || (co.name ? 'De ' + co.name.split(' ')[0] : 'Tu firma'))}</p>`;
   }
 
   /* Tarjeta de crédito */
@@ -1084,6 +1097,7 @@
   renderReviews();
   renderFaq();
   renderFooter();
+  renderAtelier();
   renderCart();
   renderWish();
   updateCounts();

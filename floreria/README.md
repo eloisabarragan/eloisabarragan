@@ -1,14 +1,14 @@
-# Pétalo · Florería online
+# FlorLatte · Plantas y Flores
 
-Tienda online completa para una florería. Es un sitio estático (HTML, CSS y JavaScript puro): no usa frameworks ni necesita instalar nada. Abrí `index.html` en el navegador y funciona.
+Tienda online de **FlorLatte**, atelier botánico en Las Piedras (Uruguay). *Donde laten las flores.* Es un sitio estático (HTML, CSS y JavaScript puro): no usa frameworks ni necesita instalar nada. Abrí `index.html` en el navegador y funciona.
 
 ## Qué incluye
 
 **Tienda**
-- Catálogo de 20 productos: ramos, rosas, cajas, arreglos en florero y plantas.
+- Catálogo de 23 productos: ramos de novia, ramos, rosas, cajas, arreglos en florero y plantas.
 - Filtros por categoría, ocasión, color, precio máximo, "entrega hoy" y ofertas, con chips para quitar cada filtro.
 - Orden por destacados, precio, valoración o nombre.
-- Compra por ocasión: amor, cumpleaños, aniversario, nacimiento, agradecimiento, condolencias y "porque sí".
+- Compra por ocasión: bodas, amor, cumpleaños, aniversario, nacimiento, agradecimiento, condolencias y "porque sí".
 - Buscador en vivo que resalta lo que escribiste (atajo: `/` o `Ctrl+K`).
 - Ficha de producto con galería y zoom, tamaños (Clásico, Deluxe, Premium; la ilustración suma flores según el tamaño), extras para el regalo (florero, bombones, vela, globo, osito), cantidad, aviso de stock bajo y secciones de cuidados, envío y garantía.
 - Favoritos y "vistos recientemente", que se guardan en el navegador.
@@ -25,6 +25,7 @@ Tienda online completa para una florería. Es un sitio estático (HTML, CSS y Ja
 **Extras**
 - **Armá tu ramo**: elegís flor por flor, su color y el papel, y la ilustración se actualiza en el momento.
 - Suscripción de flores con 3 planes.
+- Sección "Visitá nuestro atelier" con dirección, link a Google Maps e Instagram.
 - Sección "¿Qué dice cada flor?", reseñas en carrusel, preguntas frecuentes, newsletter y pop-up de bienvenida con cupón.
 - Contador "pedí en las próximas X horas y llega hoy", barra de anuncios rotativa y botón de WhatsApp.
 - Modo claro y oscuro, diseño adaptado a celulares y accesible por teclado.
@@ -33,7 +34,7 @@ Tienda online completa para una florería. Es un sitio estático (HTML, CSS y Ja
 
 | Código | Beneficio |
 |---|---|
-| `PETALO10` | 10% de descuento |
+| `LATTE10` | 10% de descuento |
 | `BIENVENIDA15` | 15% de descuento |
 | `ENVIOGRATIS` | Envío estándar gratis |
 
@@ -41,11 +42,20 @@ Tarjeta de prueba: `4242 4242 4242 4242`, cualquier vencimiento futuro y CVV `12
 
 > **Importante:** el pago es una simulación. Para cobrar de verdad hay que conectar una pasarela de pago (Mercado Pago, dLocal, Stripe, etc.) y un servidor que registre los pedidos.
 
+## Datos a completar antes de publicar
+
+Estos datos están en `js/data.js` y hoy son **ejemplos**:
+
+- **WhatsApp** (`config.whatsapp`): mientras esté vacío, el botón flotante no aparece.
+- **Horario**, **email** y **datos bancarios** para transferencias.
+- **Precios, productos, costo de envío y hora de corte** para entregas en el día.
+- **Reseñas y valoraciones**: son de ejemplo. Reemplazalas por reseñas reales de clientes, o eliminalas.
+
 ## Cómo personalizarla
 
 Todo el contenido está en **`js/data.js`**:
 
-- `config`: nombre, moneda, monto para envío gratis, costos de envío, hora de corte para entregas en el día, WhatsApp, email, dirección y cupones.
+- `config`: nombre, dirección, Instagram, moneda, monto para envío gratis, costos de envío, hora de corte para entregas en el día, WhatsApp, email, dirección y cupones.
 - `products`: cada producto tiene nombre, categoría, ocasiones, color, precio, precio anterior (opcional, para mostrarlo en oferta), stock, descripción y su ilustración.
 - `addons`, `sizes`, `plans`, `testimonials`, `faqs`: extras, tamaños, planes de suscripción, reseñas y preguntas frecuentes.
 

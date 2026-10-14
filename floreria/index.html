@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Pétalo Florería</title>
-<meta name="description" content="Pétalo, florería de autor. Ramos, rosas, cajas y plantas con entrega en el día. Armá tu propio ramo o suscribite a flores de estación.">
-<meta name="theme-color" content="#1f3b2d">
+<title>FlorLatte Plantas y Flores</title>
+<meta name="description" content="FlorLatte, atelier botánico en Las Piedras. Ramos, ramos de novia, plantas y flores con entrega en el día. Donde laten las flores.">
+<meta name="theme-color" content="#6b2433">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=DM+Mono:wght@400;500&family=Figtree:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Pinyon+Script&family=DM+Mono:wght@400;500&family=Figtree:wght@400;500;600;700&display=swap">
 <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
@@ -23,15 +23,16 @@
 <header class="header" id="header">
   <div class="wrap header__inner">
     <button class="icon-btn header__menu" id="menuBtn" aria-label="Abrir menú" data-icon="menu"></button>
-    <a href="#inicio" class="logo" aria-label="Pétalo, inicio">
-      <span class="logo__mark" aria-hidden="true"></span>
-      <span class="logo__word">Pétalo</span>
+    <a href="#inicio" class="logo" aria-label="FlorLatte, inicio">
+      <img class="logo__img" src="img/logo-florlatte.jpg" alt="" width="40" height="40">
+      <span class="logo__word">FlorLatte</span>
     </a>
     <nav class="nav" aria-label="Principal">
       <a href="#tienda">Tienda</a>
       <a href="#ocasiones">Ocasiones</a>
       <a href="#arma-tu-ramo">Armá tu ramo</a>
       <a href="#suscripcion">Suscripción</a>
+      <a href="#atelier">Atelier</a>
       <a href="#preguntas">Ayuda</a>
     </nav>
     <div class="header__actions">
@@ -48,31 +49,24 @@
   <section class="hero">
     <div class="wrap hero__inner">
       <div class="hero__copy">
-        <p class="eyebrow">Florería de autor · Entrega en el día</p>
-        <h1 class="hero__title">Flores que dicen <em>lo que vos</em> no sabés cómo decir.</h1>
-        <p class="hero__lead">Ramos armados a mano cada mañana con flor fresca de estación. Elegí, escribí tu dedicatoria y lo llevamos hoy mismo.</p>
+        <p class="eyebrow">Atelier botánico · Las Piedras</p>
+        <h1 class="hero__title">Donde <em>laten</em> las flores.</h1>
+        <p class="hero__script">Nos encanta acompañarte</p>
+        <p class="hero__lead">Ramos, plantas y flores armados a mano en nuestro espacio. Elegí, escribí tu dedicatoria y lo llevamos a quien más querés.</p>
         <div class="hero__ctas">
           <a href="#tienda" class="btn btn--primary btn--lg">Comprar flores</a>
           <a href="#arma-tu-ramo" class="btn btn--ghost btn--lg">Armá tu ramo</a>
         </div>
         <div class="cutoff" id="cutoff" aria-live="polite"></div>
         <ul class="hero__stats">
-          <li><strong>4,9</strong><span>de 2.300 reseñas</span></li>
-          <li><strong>+18.000</strong><span>ramos entregados</span></li>
-          <li><strong>7 días</strong><span>de frescura garantizada</span></li>
+          <li><strong>Floristería</strong><span>&amp; vivero</span></li>
+          <li><strong>Novias</strong><span>ramos a medida</span></li>
+          <li><strong>Hecho a mano</strong><span>con amor en nuestro espacio</span></li>
         </ul>
       </div>
       <div class="hero__art">
-        <div class="hero__frame" id="heroArt"></div>
+        <div class="hero__frame"><img src="img/logo-florlatte.jpg" alt="FlorLatte, donde laten las flores. Nos encanta acompañarte." width="720" height="712"></div>
         <div class="petals" aria-hidden="true" id="petals"></div>
-        <div class="float-card float-card--a">
-          <span class="float-card__dot"></span>
-          <div><strong>Pedido en camino</strong><span>Llega 14:30 · Pocitos</span></div>
-        </div>
-        <div class="float-card float-card--b">
-          <span class="stars" aria-label="5 estrellas">★★★★★</span>
-          <span>“Llegaron perfectas”</span>
-        </div>
       </div>
     </div>
   </section>
@@ -233,7 +227,7 @@
     <div class="wrap">
       <div class="section__head">
         <div>
-          <p class="eyebrow">Reseñas verificadas</p>
+          <p class="eyebrow">Clientes</p>
           <h2 class="section__title">Lo que <em>nos dicen</em></h2>
         </div>
         <div class="carousel-ctrls">
@@ -242,6 +236,23 @@
         </div>
       </div>
       <div class="reviews" id="reviews"></div>
+    </div>
+  </section>
+
+  <!-- Atelier -->
+  <section class="section section--atelier" id="atelier">
+    <div class="wrap atelier">
+      <div class="atelier__art" id="atelierArt"></div>
+      <div class="atelier__copy">
+        <p class="eyebrow">Nuestro espacio</p>
+        <h2 class="section__title">Visitá nuestro <em>atelier</em></h2>
+        <p class="section__lead">Somos floristería y vivero. Vení a elegir tus plantas, encargar el ramo de tu boda o simplemente a oler las flores de la semana.</p>
+        <ul class="atelier__list" id="atelierInfo"></ul>
+        <div class="hero__ctas">
+          <a class="btn btn--primary" id="mapsLink" href="#" target="_blank" rel="noopener"><span data-icon="pin"></span>Cómo llegar</a>
+          <a class="btn btn--ghost" href="https://www.instagram.com/florlatte.uy/" target="_blank" rel="noopener"><span data-icon="instagram"></span>@florlatte.uy</a>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -262,7 +273,7 @@
     <div class="wrap newsletter__inner">
       <div>
         <h2 class="newsletter__title">15% off en tu primera compra</h2>
-        <p>Sumate al club Pétalo: novedades de temporada, cuidados y descuentos exclusivos.</p>
+        <p>Sumate al club FlorLatte: novedades de temporada, cuidados y descuentos exclusivos.</p>
       </div>
       <form class="newsletter__form" id="newsForm" novalidate>
         <label class="visually-hidden" for="newsEmail">Tu email</label>
@@ -276,18 +287,19 @@
 <footer class="footer">
   <div class="wrap footer__inner">
     <div class="footer__brand">
-      <a href="#inicio" class="logo logo--light"><span class="logo__mark" aria-hidden="true"></span><span class="logo__word">Pétalo</span></a>
-      <p>Florería de autor. Armamos cada ramo a mano, todos los días, con flor fresca de productores locales.</p>
+      <a href="#inicio" class="logo logo--light"><img class="logo__img" src="img/logo-florlatte.jpg" alt="" width="40" height="40"><span class="logo__word">FlorLatte</span></a>
+      <p>Atelier botánico. Floristería &amp; vivero en Las Piedras. Hecho con amor en nuestro espacio.</p>
+      <p class="footer__script">Nos encanta acompañarte</p>
       <div class="social">
-        <a href="https://instagram.com" target="_blank" rel="noopener" aria-label="Instagram" data-icon="instagram"></a>
-        <a href="https://facebook.com" target="_blank" rel="noopener" aria-label="Facebook" data-icon="facebook"></a>
-        <a href="https://tiktok.com" target="_blank" rel="noopener" aria-label="TikTok" data-icon="music"></a>
+        <a href="https://www.instagram.com/florlatte.uy/" target="_blank" rel="noopener" aria-label="Instagram de FlorLatte" data-icon="instagram"></a>
+        <a href="https://www.threads.net/@florlatte.uy" target="_blank" rel="noopener" aria-label="Threads de FlorLatte" data-icon="threads"></a>
       </div>
     </div>
     <div>
       <h4>Tienda</h4>
       <ul>
         <li><a href="#tienda" data-cat="ramos">Ramos</a></li>
+        <li><a href="#tienda" data-cat="novias">Novias</a></li>
         <li><a href="#tienda" data-cat="rosas">Rosas</a></li>
         <li><a href="#tienda" data-cat="cajas">Cajas</a></li>
         <li><a href="#tienda" data-cat="plantas">Plantas</a></li>
@@ -309,7 +321,7 @@
     </div>
   </div>
   <div class="wrap footer__bottom">
-    <p>© <span id="year"></span> Pétalo Florería. Todos los derechos reservados.</p>
+    <p>© <span id="year"></span> FlorLatte Plantas y Flores. Todos los derechos reservados.</p>
     <div class="pay-badges" aria-label="Medios de pago">
       <span>VISA</span><span>Mastercard</span><span>OCA</span><span>Mercado Pago</span><span>Transferencia</span>
     </div>
@@ -346,7 +358,7 @@
 <!-- Menú móvil -->
 <aside class="drawer drawer--left" id="mobileNav" aria-label="Menú" aria-hidden="true">
   <div class="drawer__head">
-    <a href="#inicio" class="logo"><span class="logo__mark" aria-hidden="true"></span><span class="logo__word">Pétalo</span></a>
+    <a href="#inicio" class="logo"><img class="logo__img" src="img/logo-florlatte.jpg" alt="" width="40" height="40"><span class="logo__word">FlorLatte</span></a>
     <button class="icon-btn" data-close aria-label="Cerrar menú" data-icon="close"></button>
   </div>
   <nav class="mobile-nav">
@@ -355,6 +367,7 @@
     <a href="#arma-tu-ramo">Armá tu ramo</a>
     <a href="#suscripcion">Suscripción</a>
     <a href="#significados">Lenguaje de las flores</a>
+    <a href="#atelier">Nuestro atelier</a>
     <a href="#preguntas">Ayuda</a>
   </nav>
 </aside>
@@ -379,7 +392,7 @@
 <div class="checkout" id="checkout" role="dialog" aria-modal="true" aria-label="Finalizar compra" hidden>
   <div class="checkout__top">
     <div class="wrap checkout__topin">
-      <a href="#inicio" class="logo"><span class="logo__mark" aria-hidden="true"></span><span class="logo__word">Pétalo</span></a>
+      <a href="#inicio" class="logo"><img class="logo__img" src="img/logo-florlatte.jpg" alt="" width="40" height="40"><span class="logo__word">FlorLatte</span></a>
       <ol class="steps" id="steps"></ol>
       <button class="icon-btn" id="checkoutClose" aria-label="Cerrar checkout" data-icon="close"></button>
     </div>
