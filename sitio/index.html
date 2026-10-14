@@ -14,7 +14,8 @@
 <body class="is-loading">
 <!--CONTENT-->
 <div class="loader" id="loader" aria-hidden="true">
-  <div class="loader__top mono"><span>SURESTE</span><span>34°54′21″S · 56°09′53″W</span></div>
+  <div class="loader__top mono"><span>Grupo Sureste</span><span>34°54′21″S · 56°09′53″W</span></div>
+  <img class="loader__compass" src="assets/img/logo-compass-520.webp" alt="" width="520" height="531">
   <div class="loader__count display" id="loaderCount">000</div>
   <div class="loader__bar"><span id="loaderBar"></span></div>
   <div class="loader__bottom mono"><span data-i18n="loader.b1">Inmobiliarias</span><span data-i18n="loader.b2">Construcción</span><span data-i18n="loader.b3">Respaldo legal y contable</span></div>
@@ -26,12 +27,11 @@
 
 <header class="nav" id="nav">
   <a href="#inicio" class="brand" aria-label="Grupo Sureste, ir al inicio" data-i18n-attr="aria-label:nav.home">
-    <svg class="brand__mark" viewBox="-6 -6 112 112" aria-hidden="true"><circle cx="50" cy="50" r="33" fill="none" stroke="var(--gold)" stroke-width="0.7"/><circle cx="50" cy="50" r="29" fill="none" stroke="var(--gold)" stroke-width="0.5" stroke-dasharray="0.6 1.6"/><polygon points="65.56,34.44 50,50 46.46,46.46" fill="currentColor"/><polygon points="65.56,34.44 50,50 53.54,53.54" fill="currentColor"/><polygon points="65.56,65.56 50,50 53.54,46.46" fill="currentColor"/><polygon points="65.56,65.56 50,50 46.46,53.54" fill="currentColor"/><polygon points="34.44,65.56 50,50 53.54,53.54" fill="currentColor"/><polygon points="34.44,65.56 50,50 46.46,46.46" fill="currentColor"/><polygon points="34.44,34.44 50,50 46.46,53.54" fill="currentColor"/><polygon points="34.44,34.44 50,50 53.54,46.46" fill="currentColor"/><polygon points="50.00,6.00 50,50 43.50,50.00" fill="var(--gold)"/><polygon points="50.00,6.00 50,50 56.50,50.00" fill="currentColor"/><polygon points="94.00,50.00 50,50 50.00,43.50" fill="var(--gold)"/><polygon points="94.00,50.00 50,50 50.00,56.50" fill="currentColor"/><polygon points="50.00,94.00 50,50 56.50,50.00" fill="var(--gold)"/><polygon points="50.00,94.00 50,50 43.50,50.00" fill="currentColor"/><polygon points="6.00,50.00 50,50 50.00,56.50" fill="var(--gold)"/><polygon points="6.00,50.00 50,50 50.00,43.50" fill="currentColor"/><circle cx="50" cy="50" r="1.6" fill="var(--gold)"/></svg>
-    <span class="brand__name">SURESTE</span>
-    <span class="brand__sub mono" data-i18n="brand.sub">Grupo · Uruguay</span>
+    <img class="brand__mark" src="assets/img/logo-mark-160.webp" alt="" width="160" height="160">
+    <span class="brand__lockup"><span class="brand__grupo">Grupo</span><span class="brand__name">Sureste</span></span>
   </a>
   <nav class="nav__links" aria-label="Principal">
-    <a href="#red" data-magnetic data-i18n="nav.red">La red</a>
+    <a href="#red" data-magnetic data-i18n="nav.red">Servicios</a>
     <a href="#proyectos" data-magnetic data-i18n="nav.projects">Proyectos</a>
     <a href="#inversiones" data-magnetic data-i18n="nav.invest">Inversiones</a>
     <a href="#uruguay" data-magnetic data-i18n="nav.uy">Uruguay</a>
@@ -48,7 +48,7 @@
 
 <div class="menu" id="menu" hidden>
   <nav aria-label="Menú móvil">
-    <a href="#red"><span class="mono">A</span><span data-i18n="menu.red">La red</span></a>
+    <a href="#red"><span class="mono">A</span><span data-i18n="menu.red">Servicios</span></a>
     <a href="#proyectos"><span class="mono">B</span><span data-i18n="menu.projects">Proyectos</span></a>
     <a href="#inversiones"><span class="mono">C</span><span data-i18n="menu.invest">Inversiones</span></a>
     <a href="#uruguay"><span class="mono">D</span><span data-i18n="menu.uy">Por qué Uruguay</span></a>
@@ -65,42 +65,51 @@
   </div>
 </div>
 
-<div class="seq" id="seq">
-  <img class="seq__img is-first" src="assets/img/torre-01-calle-1600.webp" srcset="assets/img/torre-01-calle-900.webp 900w, assets/img/torre-01-calle-1600.webp 1600w" sizes="100vw" alt="Torre frente al mar en Punta del Este, vista desde la calle al atardecer" style="object-position:50% 50%" fetchpriority="high">
-  <img class="seq__img" src="assets/img/torre-02-entrada-1600.webp" srcset="assets/img/torre-02-entrada-900.webp 900w, assets/img/torre-02-entrada-1600.webp 1600w" sizes="100vw" alt="Entrada principal iluminada de noche" style="object-position:45% 50%" loading="eager" decoding="async">
-  <img class="seq__img" src="assets/img/torre-03-lobby-1600.webp" srcset="assets/img/torre-03-lobby-900.webp 900w, assets/img/torre-03-lobby-1600.webp 1600w" sizes="100vw" alt="Lobby de mármol con lámparas esculturales" style="object-position:40% 50%" loading="eager" decoding="async">
-  <img class="seq__img" src="assets/img/torre-04-fachada-1600.webp" srcset="assets/img/torre-04-fachada-900.webp 900w, assets/img/torre-04-fachada-1600.webp 1600w" sizes="100vw" alt="Fachada con balcones curvos vista hacia arriba" style="object-position:50% 50%" loading="eager" decoding="async">
-  <img class="seq__img" src="assets/img/torre-05-living-1600.webp" srcset="assets/img/torre-05-living-900.webp 900w, assets/img/torre-05-living-1600.webp 1600w" sizes="100vw" alt="Living en el piso 33 visto a través del vidrio" style="object-position:35% 50%" loading="eager" decoding="async">
-  <img class="seq__img" src="assets/img/torre-06-dormitorio-1600.webp" srcset="assets/img/torre-06-dormitorio-900.webp 900w, assets/img/torre-06-dormitorio-1600.webp 1600w" sizes="100vw" alt="Dormitorio en el piso 40 con vista al mar al atardecer" style="object-position:60% 50%" loading="eager" decoding="async">
-  <img class="seq__img" src="assets/img/torre-07-terraza-1600.webp" srcset="assets/img/torre-07-terraza-900.webp 900w, assets/img/torre-07-terraza-1600.webp 1600w" sizes="100vw" alt="Terraza del piso 48 con piscina infinita" style="object-position:55% 50%" loading="eager" decoding="async">
-  <img class="seq__img" src="assets/img/torre-08-noche-1600.webp" srcset="assets/img/torre-08-noche-900.webp 900w, assets/img/torre-08-noche-1600.webp 1600w" sizes="100vw" alt="La torre de noche sobre la costa iluminada" style="object-position:35% 50%" loading="eager" decoding="async">
-</div>
-<div class="scene-veil" aria-hidden="true"></div>
+
 
 <main id="inicio">
-  <!-- HERO -->
+  <!-- HERO: presentación de marca -->
   <section class="hero" id="hero">
-    <div class="hero__meta mono">
-      <span data-i18n="hero.meta1">Uruguay</span>
-      <span class="hero__live"><i></i><span data-i18n="hero.meta2">Inmobiliaria · Construcción · Respaldo profesional</span></span>
-    </div>
-    <h1 class="hero__title display">
-      <span class="line"><span class="word" data-i18n="hero.t1">Tu proyecto,</span></span>
-      <span class="line line--indent"><em class="word" data-i18n="hero.t2">elevado.</em></span>
-    </h1>
-    <div class="hero__foot">
-      <p class="hero__lead" data-i18n="hero.lead">Desde la propiedad de tus sueños hasta el terreno donde quieres construir, te acompañamos en cada etapa con una red de inmobiliarias y profesionales especializados.</p>
+    <div class="hero__brand">
+      <img class="hero__compass" src="assets/img/logo-compass-520.webp" alt="" width="520" height="531">
+      <h1 class="hero__name"><span class="hero__grupo">Grupo</span><span class="hero__word">Sureste</span></h1>
+      <p class="hero__tag" data-i18n="tagline">Propiedades · Inversión · Estilo de vida</p>
+      <div class="hero__rule" aria-hidden="true"><i></i><svg viewBox="0 0 20 20"><path d="M10 0 L12 8 L20 10 L12 12 L10 20 L8 12 L0 10 L8 8 Z" fill="currentColor"/></svg><i></i></div>
+      <p class="hero__slogan" data-i18n="hero.slogan">Hacemos posible tu nueva vida en Uruguay.</p>
+      <p class="hero__lead" data-i18n="hero.lead">Referente local y global en servicios integrales para quienes eligen vivir, invertir o desarrollar en Uruguay.</p>
       <div class="hero__ctas">
-        <a href="#proyectos" class="btn btn--gold" data-magnetic data-cursor="Ver" data-i18n-attr="data-cursor:cursor.see"><span data-i18n="hero.cta1">Comprar una propiedad</span></a>
-        <a href="#red" class="btn btn--line" data-magnetic data-cursor="Ver" data-i18n-attr="data-cursor:cursor.see"><span data-i18n="hero.cta2">Construir en Uruguay</span></a>
+        <a href="#red" class="btn btn--gold" data-magnetic data-cursor="Ver" data-i18n-attr="data-cursor:cursor.see"><span data-i18n="hero.cta1">Servicios integrales</span></a>
+        <a href="#proyectos" class="btn btn--line" data-magnetic data-cursor="Ver" data-i18n-attr="data-cursor:cursor.see"><span data-i18n="hero.cta2">Descubrir propiedades</span></a>
       </div>
     </div>
-    <div class="hero__scroll mono" aria-hidden="true"><span data-i18n="hero.scroll">Sube</span><i></i></div>
+    <div class="hero__media">
+      <!-- Video de portada: completar data-src con la ruta del video (ej. assets/video/portada.mp4) y data-poster con una imagen. Mientras esté vacío se muestran las fotos. -->
+      <video class="hero__video" data-src="" data-poster="" muted loop playsinline preload="none" hidden></video>
+      <div class="hero__slides">
+        <img class="hero__slide is-on" src="assets/img/torre-01-calle-1600.webp" srcset="assets/img/torre-01-calle-900.webp 900w, assets/img/torre-01-calle-1600.webp 1600w" sizes="(max-width: 900px) 100vw, 58vw" alt="Torre frente al mar en Punta del Este al atardecer" fetchpriority="high">
+        <img class="hero__slide" src="assets/img/fondo-uruguay-1600.webp" srcset="assets/img/fondo-uruguay-900.webp 900w, assets/img/fondo-uruguay-1600.webp 1600w" sizes="(max-width: 900px) 100vw, 58vw" alt="Costa uruguaya al atardecer con una casa entre pinos" loading="lazy" decoding="async">
+        <img class="hero__slide" src="assets/img/proyecto-jose-ignacio-1600.webp" srcset="assets/img/proyecto-jose-ignacio-900.webp 900w, assets/img/proyecto-jose-ignacio-1600.webp 1600w" sizes="(max-width: 900px) 100vw, 58vw" alt="Casa con piscina entre pinos en José Ignacio" loading="lazy" decoding="async">
+        <img class="hero__slide" src="assets/img/torre-07-terraza-1600.webp" srcset="assets/img/torre-07-terraza-900.webp 900w, assets/img/torre-07-terraza-1600.webp 1600w" sizes="(max-width: 900px) 100vw, 58vw" alt="Terraza con piscina infinita frente al mar" loading="lazy" decoding="async">
+      </div>
+      <div class="hero__scroll" aria-hidden="true"><span data-i18n="hero.scroll">Sube</span><i></i></div>
+    </div>
   </section>
 
   <!-- ASCENSO: recorrido por la torre -->
   <section class="ascend" id="ascend" aria-label="Recorrido por las etapas de tu proyecto" data-i18n-attr="aria-label:asc.aria">
     <div class="ascend__sticky">
+      <div class="ascend__media">
+        <div class="seq" id="seq">
+          <img class="seq__img is-first" src="assets/img/torre-02-entrada-1600.webp" srcset="assets/img/torre-02-entrada-900.webp 900w, assets/img/torre-02-entrada-1600.webp 1600w" sizes="100vw" alt="Entrada principal iluminada de noche" style="object-position:45% 50%" loading="eager" decoding="async">
+          <img class="seq__img" src="assets/img/torre-03-lobby-1600.webp" srcset="assets/img/torre-03-lobby-900.webp 900w, assets/img/torre-03-lobby-1600.webp 1600w" sizes="100vw" alt="Lobby de mármol con lámparas esculturales" style="object-position:40% 50%" loading="eager" decoding="async">
+          <img class="seq__img" src="assets/img/torre-04-fachada-1600.webp" srcset="assets/img/torre-04-fachada-900.webp 900w, assets/img/torre-04-fachada-1600.webp 1600w" sizes="100vw" alt="Fachada con balcones curvos vista hacia arriba" style="object-position:50% 50%" loading="eager" decoding="async">
+          <img class="seq__img" src="assets/img/torre-05-living-1600.webp" srcset="assets/img/torre-05-living-900.webp 900w, assets/img/torre-05-living-1600.webp 1600w" sizes="100vw" alt="Living en el piso 33 visto a través del vidrio" style="object-position:35% 50%" loading="eager" decoding="async">
+          <img class="seq__img" src="assets/img/torre-06-dormitorio-1600.webp" srcset="assets/img/torre-06-dormitorio-900.webp 900w, assets/img/torre-06-dormitorio-1600.webp 1600w" sizes="100vw" alt="Dormitorio en el piso 40 con vista al mar al atardecer" style="object-position:60% 50%" loading="eager" decoding="async">
+          <img class="seq__img" src="assets/img/torre-07-terraza-1600.webp" srcset="assets/img/torre-07-terraza-900.webp 900w, assets/img/torre-07-terraza-1600.webp 1600w" sizes="100vw" alt="Terraza del piso 48 con piscina infinita" style="object-position:55% 50%" loading="eager" decoding="async">
+          <img class="seq__img" src="assets/img/torre-08-noche-1600.webp" srcset="assets/img/torre-08-noche-900.webp 900w, assets/img/torre-08-noche-1600.webp 1600w" sizes="100vw" alt="La torre de noche sobre la costa iluminada" style="object-position:35% 50%" loading="eager" decoding="async">
+        </div>
+      </div>
+      <div class="ascend__text">
       <div class="ascend__rail" aria-hidden="true">
         <span class="mono">Sky</span><div class="ascend__track"><i id="railDot"></i></div><span class="mono">PB</span>
       </div>
@@ -146,17 +155,16 @@
         <span class="mono" data-i18n="asc.level">Nivel</span>
         <span class="display ascend__num" id="levelNum">PB</span>
       </div>
+      </div>
     </div>
   </section>
 
   <!-- MARCA -->
   <section class="manifesto" id="sureste" aria-label="Quiénes somos" data-i18n-attr="aria-label:man.aria">
     <div class="manifesto__inner">
-      <h2 class="manifesto__word">SURESTE</h2>
-      <p class="manifesto__tag" data-i18n="tagline">Propiedades · Inversión · Estilo de vida</p>
+      <img class="compass" src="assets/img/logo-compass-520.webp" alt="" width="520" height="531" loading="lazy">
       <p class="manifesto__body" data-i18n="man.body">Desde la propiedad que imaginas hasta el lugar donde quieres construir, <strong>Grupo Sureste reúne una red integral de inmobiliarias y profesionales especializados</strong> para acompañarte en cada etapa: arquitectura, ingeniería y construcción, junto con el respaldo jurídico, notarial, contable y administrativo necesario para <strong>concretar tu proyecto en Uruguay.</strong></p>
       <p class="manifesto__slogan" data-i18n="man.slogan">Elige tu nueva vida.<br>Nosotros la hacemos posible.</p>
-      <svg class="compass" viewBox="-6 -6 112 112" aria-hidden="true"><circle cx="50" cy="50" r="33" fill="none" stroke="var(--gold)" stroke-width="0.7"/><circle cx="50" cy="50" r="29" fill="none" stroke="var(--gold)" stroke-width="0.5" stroke-dasharray="0.6 1.6"/><polygon points="65.56,34.44 50,50 46.46,46.46" fill="currentColor"/><polygon points="65.56,34.44 50,50 53.54,53.54" fill="currentColor"/><polygon points="65.56,65.56 50,50 53.54,46.46" fill="currentColor"/><polygon points="65.56,65.56 50,50 46.46,53.54" fill="currentColor"/><polygon points="34.44,65.56 50,50 53.54,53.54" fill="currentColor"/><polygon points="34.44,65.56 50,50 46.46,46.46" fill="currentColor"/><polygon points="34.44,34.44 50,50 46.46,53.54" fill="currentColor"/><polygon points="34.44,34.44 50,50 53.54,46.46" fill="currentColor"/><polygon points="50.00,6.00 50,50 43.50,50.00" fill="var(--gold)"/><polygon points="50.00,6.00 50,50 56.50,50.00" fill="currentColor"/><polygon points="94.00,50.00 50,50 50.00,43.50" fill="var(--gold)"/><polygon points="94.00,50.00 50,50 50.00,56.50" fill="currentColor"/><polygon points="50.00,94.00 50,50 56.50,50.00" fill="var(--gold)"/><polygon points="50.00,94.00 50,50 43.50,50.00" fill="currentColor"/><polygon points="6.00,50.00 50,50 50.00,56.50" fill="var(--gold)"/><polygon points="6.00,50.00 50,50 50.00,43.50" fill="currentColor"/><circle cx="50" cy="50" r="1.6" fill="var(--gold)"/><g class="compass__letters" font-family="var(--f-brand)" font-size="8" text-anchor="middle" fill="currentColor"><text x="50" y="-0.5">N</text><text x="105" y="52.8">E</text><text x="50" y="108.5">S</text><text x="-5" y="52.8">O</text></g></svg>
     </div>
   </section>
 
@@ -372,7 +380,6 @@
 
   <!-- CONTACTO -->
   <section class="contact" id="contacto">
-    <img class="contact__bg" src="assets/img/fondo-estudio-1600.webp" srcset="assets/img/fondo-estudio-900.webp 900w, assets/img/fondo-estudio-1600.webp 1600w" sizes="100vw" alt="" loading="lazy" decoding="async">
     <div class="contact__left">
       <p class="eyebrow mono" data-i18n="c.e">Contacto</p>
       <h2 class="display reveal-lines" data-i18n="c.h">Hablemos de <em>tu proyecto.</em></h2>
@@ -419,7 +426,7 @@
 </main>
 
 <footer class="footer">
-  <div class="footer__brand"><svg class="compass compass--footer" viewBox="-6 -6 112 112" aria-hidden="true"><circle cx="50" cy="50" r="33" fill="none" stroke="var(--gold)" stroke-width="0.7"/><circle cx="50" cy="50" r="29" fill="none" stroke="var(--gold)" stroke-width="0.5" stroke-dasharray="0.6 1.6"/><polygon points="65.56,34.44 50,50 46.46,46.46" fill="currentColor"/><polygon points="65.56,34.44 50,50 53.54,53.54" fill="currentColor"/><polygon points="65.56,65.56 50,50 53.54,46.46" fill="currentColor"/><polygon points="65.56,65.56 50,50 46.46,53.54" fill="currentColor"/><polygon points="34.44,65.56 50,50 53.54,53.54" fill="currentColor"/><polygon points="34.44,65.56 50,50 46.46,46.46" fill="currentColor"/><polygon points="34.44,34.44 50,50 46.46,53.54" fill="currentColor"/><polygon points="34.44,34.44 50,50 53.54,46.46" fill="currentColor"/><polygon points="50.00,6.00 50,50 43.50,50.00" fill="var(--gold)"/><polygon points="50.00,6.00 50,50 56.50,50.00" fill="currentColor"/><polygon points="94.00,50.00 50,50 50.00,43.50" fill="var(--gold)"/><polygon points="94.00,50.00 50,50 50.00,56.50" fill="currentColor"/><polygon points="50.00,94.00 50,50 56.50,50.00" fill="var(--gold)"/><polygon points="50.00,94.00 50,50 43.50,50.00" fill="currentColor"/><polygon points="6.00,50.00 50,50 50.00,56.50" fill="var(--gold)"/><polygon points="6.00,50.00 50,50 50.00,43.50" fill="currentColor"/><circle cx="50" cy="50" r="1.6" fill="var(--gold)"/><g class="compass__letters" font-family="var(--f-brand)" font-size="8" text-anchor="middle" fill="currentColor"><text x="50" y="-0.5">N</text><text x="105" y="52.8">E</text><text x="50" y="108.5">S</text><text x="-5" y="52.8">O</text></g></svg><p class="footer__tag" data-i18n="f.tag">Propiedades, Inversión &amp; Estilo de Vida</p></div>
+  <div class="footer__brand"><img class="compass compass--footer" src="assets/img/logo-compass-520.webp" alt="" width="520" height="531" loading="lazy"><p class="footer__name"><span>Grupo</span>Sureste</p><p class="footer__tag" data-i18n="f.tag">Propiedades, Inversión &amp; Estilo de Vida</p></div>
   <div class="footer__word" aria-hidden="true">SURESTE</div>
   <div class="footer__row mono">
     <span>© <span id="year">2026</span> Sureste</span>

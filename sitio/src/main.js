@@ -64,6 +64,28 @@ seqImgs.forEach((img, k) => {
 });
 gsap.set(seqImgs, { opacity: (k) => (k === 0 ? 1 : 0) });
 
+/* ---------------- Portada: video o fotos en fundido ---------------- */
+const heroVideo = $(".hero__video");
+const heroSlides = $$(".hero__slide");
+if (heroVideo && heroVideo.dataset.src) {
+  if (heroVideo.dataset.poster) heroVideo.poster = heroVideo.dataset.poster;
+  heroVideo.src = heroVideo.dataset.src;
+  heroVideo.hidden = false;
+  $(".hero__slides").hidden = true;
+  heroVideo.play().catch(() => {});
+} else if (heroSlides.length > 1) {
+  let cur = 0;
+  const kenBurns = (img) => !reduce && gsap.fromTo(img, { scale: 1.12 }, { scale: 1, duration: 7, ease: "none" });
+  kenBurns(heroSlides[0]);
+  setInterval(() => {
+    if (document.hidden) return;
+    heroSlides[cur].classList.remove("is-on");
+    cur = (cur + 1) % heroSlides.length;
+    heroSlides[cur].classList.add("is-on");
+    kenBurns(heroSlides[cur]);
+  }, 5000);
+}
+
 /* ---------------- Texto dividido en palabras ---------------- */
 function splitWords(el) {
   const walk = (node) => {
@@ -100,7 +122,7 @@ function applyTexts() {
   $("#marquee").innerHTML = mq + mq;
   $$("[data-lang]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.lang === lang)));
   // Puntos dorados entre las palabras del lema, como en la tarjeta de marca
-  $$(".manifesto__tag").forEach((el) => (el.innerHTML = el.innerHTML.split(" · ").join("<i>•</i>")));
+  $$(".hero__tag, .manifesto__tag").forEach((el) => (el.innerHTML = el.innerHTML.split(" · ").join("<i>•</i>")));
 }
 function setLang(l) {
   if (!LANGS.includes(l) || l === lang) return;
@@ -125,8 +147,9 @@ function intro() {
   const tl = gsap.timeline();
   tl.to(loader, { clipPath: "inset(0 0 100% 0)", duration: 1.1, ease: "expo.inOut" })
     .add(() => { loader.classList.add("is-done"); loader.hidden = true; document.body.classList.remove("is-loading"); ScrollTrigger.refresh(); })
-    .from(".hero__title .word", { yPercent: 110, duration: 1.4, ease: "expo.out", stagger: 0.12 }, "-=0.45")
-    .from(".hero__meta, .hero__lead, .hero__ctas, .hero__scroll", { y: 24, opacity: 0, duration: 1, ease: "expo.out", stagger: 0.08 }, "-=1.0")
+    .from(".hero__media", { clipPath: "inset(0 0 0 100%)", duration: 1.6, ease: "expo.inOut" }, "-=0.6")
+    .from(".hero__compass", { rotate: -120, scale: 0.6, opacity: 0, duration: 1.6, ease: "expo.out" }, "-=1.4")
+    .from(".hero__brand > *:not(.hero__compass)", { y: 24, opacity: 0, duration: 1.1, ease: "expo.out", stagger: 0.08 }, "-=1.3")
     .from("#nav", { yPercent: -100, opacity: 0, duration: 1, ease: "expo.out" }, "-=1.1");
 }
 if (reduce) { loader.hidden = true; document.body.classList.remove("is-loading"); }
@@ -135,7 +158,7 @@ else {
   const counter = { v: 0 };
   const fontsReady = document.fonts ? document.fonts.ready : Promise.resolve();
   const minTime = new Promise((r) => setTimeout(r, 1500));
-  const firstImg = seqImgs[0] && seqImgs[0].decode ? seqImgs[0].decode().catch(() => {}) : Promise.resolve();
+  const firstImg = heroSlides[0] && heroSlides[0].decode ? heroSlides[0].decode().catch(() => {}) : Promise.resolve();
   gsap.to(counter, {
     v: 92, duration: 1.4, ease: "power2.inOut",
     onUpdate: () => { $("#loaderCount").textContent = String(Math.round(counter.v)).padStart(3, "0"); $("#loaderBar").style.width = counter.v + "%"; },
@@ -164,8 +187,6 @@ ScrollTrigger.create({
     $("#progressBar").style.transform = `scaleX(${self.progress})`;
   },
 });
-ScrollTrigger.create({ trigger: "#proyectos", start: "top 60px", end: "bottom 60px", toggleClass: { targets: nav, className: "on-light" } });
-ScrollTrigger.create({ trigger: "#sureste", start: "top 60px", end: "bottom 60px", toggleClass: { targets: nav, className: "on-light" } });
 if (!reduce) {
   gsap.fromTo(".manifesto .compass", { rotate: -90 }, { rotate: 0, ease: "none", scrollTrigger: { trigger: ".manifesto", start: "top bottom", end: "bottom top", scrub: true } });
   gsap.from(".manifesto__inner > *", { y: 40, opacity: 0, duration: 1.2, ease: "expo.out", stagger: 0.1, scrollTrigger: { trigger: ".manifesto", start: "top 70%" } });
@@ -219,7 +240,9 @@ function showFloor(i) {
   gsap.fromTo(next, { opacity: 0, y: 50 * dir, filter: "blur(8px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 1, ease: "expo.out", overwrite: true });
   activeFloor = i;
 }
-gsap.set(floors, { opacity: 0, yPercent: -50 });
+// En celular el texto va debajo de la foto y arranca arriba; en escritorio se centra en la columna
+const floorShift = () => (window.matchMedia("(max-width: 900px)").matches ? 0 : -50);
+gsap.set(floors, { opacity: 0, yPercent: floorShift() });
 gsap.set(floors[0], { opacity: 1 });
 const levelNum = $("#levelNum"), railDot = $("#railDot");
 const lvl = { v: 0 };
@@ -236,7 +259,7 @@ function setLevel(l) {
 }
 levelNum.textContent = levels[0];
 ScrollTrigger.create({
-  trigger: "#hero", start: "top top", endTrigger: "#ascend", end: "bottom bottom",
+  trigger: "#ascend", start: "top top", end: "bottom bottom",
   animation: seqTl, scrub: reduce ? true : 0.8,
 });
 ScrollTrigger.create({
@@ -247,16 +270,6 @@ ScrollTrigger.create({
     const idx = Math.round(p * (floors.length - 1));
     showFloor(idx);
     setLevel(levels[idx]);
-  },
-});
-// La secuencia se desvanece al llegar a la sección siguiente
-ScrollTrigger.create({
-  trigger: ".manifesto", start: "top bottom", end: "top top",
-  onUpdate: (self) => {
-    const o = 1 - self.progress;
-    $("#seq").style.opacity = o;
-    $(".scene-veil").style.opacity = o;
-    $("#seq").style.visibility = o < 0.01 ? "hidden" : "visible";
   },
 });
 
@@ -332,8 +345,8 @@ function drawSim() {
   const n = Math.max(2, Math.ceil(pts.length * simDraw.t));
   const vis = pts.slice(0, n);
   // grilla
-  ctx.font = '11px "IBM Plex Mono", monospace';
-  ctx.fillStyle = "rgba(138,146,163,1)"; ctx.strokeStyle = "rgba(236,230,217,0.08)"; ctx.lineWidth = 1;
+  ctx.font = '500 11px "Outfit", sans-serif';
+  ctx.fillStyle = "rgba(20,33,61,0.6)"; ctx.strokeStyle = "rgba(20,33,61,0.1)"; ctx.lineWidth = 1;
   const ticks = 4;
   for (let i = 1; i <= ticks; i++) {
     const v = (maxV / ticks) * i, yy = Math.round(y(v)) + 0.5;
@@ -348,19 +361,19 @@ function drawSim() {
   [...vis].reverse().forEach((p) => ctx.lineTo(x(p.t), y(p.lo)));
   ctx.closePath();
   const g = ctx.createLinearGradient(0, pad.t, 0, H);
-  g.addColorStop(0, "rgba(201,165,107,0.38)"); g.addColorStop(1, "rgba(201,165,107,0.04)");
+  g.addColorStop(0, "rgba(168,136,79,0.34)"); g.addColorStop(1, "rgba(168,136,79,0.04)");
   ctx.fillStyle = g; ctx.fill();
   // aportes
-  ctx.setLineDash([4, 5]); ctx.strokeStyle = "rgba(138,146,163,0.9)"; ctx.lineWidth = 1.2;
+  ctx.setLineDash([4, 5]); ctx.strokeStyle = "rgba(20,33,61,0.55)"; ctx.lineWidth = 1.2;
   ctx.beginPath(); vis.forEach((p, i) => (i ? ctx.lineTo(x(p.t), y(p.c)) : ctx.moveTo(x(p.t), y(p.c)))); ctx.stroke();
   ctx.setLineDash([]);
   // base
-  ctx.strokeStyle = "#e6c88f"; ctx.lineWidth = 2;
+  ctx.strokeStyle = "#14213d"; ctx.lineWidth = 2;
   ctx.beginPath(); vis.forEach((p, i) => (i ? ctx.lineTo(x(p.t), y(p.v)) : ctx.moveTo(x(p.t), y(p.v)))); ctx.stroke();
   const last = vis[vis.length - 1];
-  ctx.fillStyle = "#06080f"; ctx.strokeStyle = "#e6c88f"; ctx.lineWidth = 2;
+  ctx.fillStyle = "#f7f3ec"; ctx.strokeStyle = "#a8884f"; ctx.lineWidth = 2;
   ctx.beginPath(); ctx.arc(x(last.t), y(last.v), 5, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
-  ctx.fillStyle = "rgba(230,200,143,0.25)";
+  ctx.fillStyle = "rgba(168,136,79,0.22)";
   ctx.beginPath(); ctx.arc(x(last.t), y(last.v), 11, 0, Math.PI * 2); ctx.fill();
 }
 $("#simForm").addEventListener("input", () => renderSim(false));
@@ -536,7 +549,7 @@ let rz;
 window.addEventListener("resize", () => {
   clearTimeout(rz);
   rz = setTimeout(() => {
-    paintPaths(); drawSim();
+    paintPaths(); drawSim(); gsap.set(floors, { yPercent: floorShift() });
     const e = ESTATES[curEstate]; paint(orbFront, e.type, 21 + curEstate, e.img);
     ScrollTrigger.refresh();
   }, 200);
