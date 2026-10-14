@@ -1,0 +1,411 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Pétalo Florería</title>
+<meta name="description" content="Pétalo, florería de autor. Ramos, rosas, cajas y plantas con entrega en el día. Armá tu propio ramo o suscribite a flores de estación.">
+<meta name="theme-color" content="#1f3b2d">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700;1,6..96,400..700&family=DM+Mono:wght@400;500&family=Figtree:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<a class="skip" href="#tienda">Saltar a la tienda</a>
+
+<!-- Barra de anuncios -->
+<div class="announce" role="region" aria-label="Novedades">
+  <div class="announce__track" id="announce"></div>
+</div>
+
+<!-- Header -->
+<header class="header" id="header">
+  <div class="wrap header__inner">
+    <button class="icon-btn header__menu" id="menuBtn" aria-label="Abrir menú" data-icon="menu"></button>
+    <a href="#inicio" class="logo" aria-label="Pétalo, inicio">
+      <span class="logo__mark" aria-hidden="true"></span>
+      <span class="logo__word">Pétalo</span>
+    </a>
+    <nav class="nav" aria-label="Principal">
+      <a href="#tienda">Tienda</a>
+      <a href="#ocasiones">Ocasiones</a>
+      <a href="#arma-tu-ramo">Armá tu ramo</a>
+      <a href="#suscripcion">Suscripción</a>
+      <a href="#preguntas">Ayuda</a>
+    </nav>
+    <div class="header__actions">
+      <button class="icon-btn" id="searchBtn" aria-label="Buscar" data-icon="search"></button>
+      <button class="icon-btn" id="themeBtn" aria-label="Cambiar tema" data-icon="moon"></button>
+      <button class="icon-btn has-count" id="wishBtn" aria-label="Favoritos" data-icon="heart"><span class="count" id="wishCount">0</span></button>
+      <button class="icon-btn has-count" id="cartBtn" aria-label="Carrito" data-icon="bag"><span class="count" id="cartCount">0</span></button>
+    </div>
+  </div>
+</header>
+
+<main id="inicio">
+  <!-- Hero -->
+  <section class="hero">
+    <div class="wrap hero__inner">
+      <div class="hero__copy">
+        <p class="eyebrow">Florería de autor · Entrega en el día</p>
+        <h1 class="hero__title">Flores que dicen <em>lo que vos</em> no sabés cómo decir.</h1>
+        <p class="hero__lead">Ramos armados a mano cada mañana con flor fresca de estación. Elegí, escribí tu dedicatoria y lo llevamos hoy mismo.</p>
+        <div class="hero__ctas">
+          <a href="#tienda" class="btn btn--primary btn--lg">Comprar flores</a>
+          <a href="#arma-tu-ramo" class="btn btn--ghost btn--lg">Armá tu ramo</a>
+        </div>
+        <div class="cutoff" id="cutoff" aria-live="polite"></div>
+        <ul class="hero__stats">
+          <li><strong>4,9</strong><span>de 2.300 reseñas</span></li>
+          <li><strong>+18.000</strong><span>ramos entregados</span></li>
+          <li><strong>7 días</strong><span>de frescura garantizada</span></li>
+        </ul>
+      </div>
+      <div class="hero__art">
+        <div class="hero__frame" id="heroArt"></div>
+        <div class="petals" aria-hidden="true" id="petals"></div>
+        <div class="float-card float-card--a">
+          <span class="float-card__dot"></span>
+          <div><strong>Pedido en camino</strong><span>Llega 14:30 · Pocitos</span></div>
+        </div>
+        <div class="float-card float-card--b">
+          <span class="stars" aria-label="5 estrellas">★★★★★</span>
+          <span>“Llegaron perfectas”</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Beneficios -->
+  <section class="perks" aria-label="Beneficios">
+    <div class="wrap perks__inner">
+      <div class="perk"><span data-icon="truck"></span><div><strong>Entrega en el día</strong><span>Pedí antes de las 16:00</span></div></div>
+      <div class="perk"><span data-icon="leaf"></span><div><strong>Frescura 7 días</strong><span>O te lo reponemos</span></div></div>
+      <div class="perk"><span data-icon="card"></span><div><strong>Tarjeta gratis</strong><span>Con tu dedicatoria</span></div></div>
+      <div class="perk"><span data-icon="shield"></span><div><strong>Pago seguro</strong><span>Tarjetas y Mercado Pago</span></div></div>
+    </div>
+  </section>
+
+  <!-- Ocasiones -->
+  <section class="section" id="ocasiones">
+    <div class="wrap">
+      <div class="section__head">
+        <div>
+          <p class="eyebrow">Para cada momento</p>
+          <h2 class="section__title">Comprá por <em>ocasión</em></h2>
+        </div>
+      </div>
+      <div class="occasions" id="occasions"></div>
+    </div>
+  </section>
+
+  <!-- Tienda -->
+  <section class="section section--shop" id="tienda">
+    <div class="wrap">
+      <div class="section__head">
+        <div>
+          <p class="eyebrow">Tienda</p>
+          <h2 class="section__title">Nuestra <em>colección</em></h2>
+        </div>
+        <div class="cats" id="cats" role="tablist" aria-label="Categorías"></div>
+      </div>
+
+      <div class="shop">
+        <aside class="filters" id="filters" aria-label="Filtros">
+          <div class="filters__head">
+            <h3>Filtros</h3>
+            <button class="icon-btn filters__close" id="filtersClose" aria-label="Cerrar filtros" data-icon="close"></button>
+          </div>
+          <div class="filter-group">
+            <h4>Ocasión</h4>
+            <div class="checks" id="fOccasions"></div>
+          </div>
+          <div class="filter-group">
+            <h4>Color</h4>
+            <div class="swatches" id="fColors"></div>
+          </div>
+          <div class="filter-group">
+            <h4>Precio máximo <output id="priceOut" class="mono"></output></h4>
+            <input type="range" id="fPrice" min="1000" max="6000" step="100" value="6000" aria-label="Precio máximo">
+            <div class="range-labels mono"><span>$1.000</span><span>$6.000</span></div>
+          </div>
+          <div class="filter-group">
+            <label class="switch"><input type="checkbox" id="fSameDay"><span class="switch__ui"></span>Solo entrega hoy</label>
+            <label class="switch"><input type="checkbox" id="fOffer"><span class="switch__ui"></span>Solo ofertas</label>
+          </div>
+          <button class="btn btn--ghost btn--block" id="clearFilters">Limpiar filtros</button>
+        </aside>
+
+        <div class="shop__main">
+          <div class="toolbar">
+            <button class="btn btn--ghost btn--sm toolbar__filters" id="filtersBtn"><span data-icon="filter"></span>Filtros</button>
+            <p class="toolbar__count" id="resultCount" aria-live="polite"></p>
+            <div class="active-filters" id="activeFilters"></div>
+            <label class="select">
+              <span class="visually-hidden">Ordenar</span>
+              <select id="sort">
+                <option value="featured">Destacados</option>
+                <option value="price-asc">Menor precio</option>
+                <option value="price-desc">Mayor precio</option>
+                <option value="rating">Mejor valorados</option>
+                <option value="name">A–Z</option>
+              </select>
+            </label>
+          </div>
+          <div class="grid" id="grid"></div>
+          <div class="empty" id="empty" hidden>
+            <p class="empty__title">No encontramos flores con esos filtros.</p>
+            <p>Probá quitar alguno o <button class="link" id="emptyClear">ver todo el catálogo</button>.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="recent" id="recentWrap" hidden>
+        <h3 class="recent__title">Vistos recientemente</h3>
+        <div class="recent__row" id="recent"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Armá tu ramo -->
+  <section class="section section--builder" id="arma-tu-ramo">
+    <div class="wrap builder">
+      <div class="builder__preview">
+        <div class="builder__art" id="builderArt"></div>
+        <p class="builder__hint" id="builderHint"></p>
+      </div>
+      <div class="builder__panel">
+        <p class="eyebrow">Diseñalo vos</p>
+        <h2 class="section__title">Armá tu <em>ramo</em></h2>
+        <p class="section__lead">Elegí tallo por tallo y mirá cómo queda en tiempo real. Nuestros floristas lo arman tal cual.</p>
+        <ol class="builder__steps">
+          <li>
+            <h3>Flores <span class="mono muted" id="stemCount">0 tallos</span></h3>
+            <div class="stems" id="stems"></div>
+          </li>
+          <li>
+            <h3>Papel</h3>
+            <div class="wraps" id="wraps"></div>
+          </li>
+        </ol>
+        <div class="builder__footer">
+          <div>
+            <span class="muted">Total</span>
+            <strong class="builder__total" id="builderTotal">$0</strong>
+          </div>
+          <div class="builder__btns">
+            <button class="btn btn--ghost" id="builderRandom"><span data-icon="sparkle"></span>Sorprendeme</button>
+            <button class="btn btn--primary" id="builderAdd">Agregar al carrito</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Suscripción -->
+  <section class="section section--band" id="suscripcion">
+    <div class="wrap">
+      <div class="section__head section__head--center">
+        <p class="eyebrow">Suscripción</p>
+        <h2 class="section__title">Flores frescas, <em>siempre</em></h2>
+        <p class="section__lead">Un ramo de estación diseñado por nuestros floristas, en tu puerta con la frecuencia que elijas. Sin permanencia.</p>
+      </div>
+      <div class="plans" id="plans"></div>
+    </div>
+  </section>
+
+  <!-- Significados -->
+  <section class="section" id="significados">
+    <div class="wrap meanings">
+      <div class="meanings__copy">
+        <p class="eyebrow">El lenguaje de las flores</p>
+        <h2 class="section__title">¿Qué <em>dice</em> cada flor?</h2>
+        <p class="section__lead">Desde la época victoriana, cada flor tiene un mensaje. Tocá una para descubrirlo.</p>
+        <div class="meaning-card" id="meaningCard" aria-live="polite"></div>
+      </div>
+      <div class="meanings__grid" id="meanings" role="list"></div>
+    </div>
+  </section>
+
+  <!-- Testimonios -->
+  <section class="section section--reviews">
+    <div class="wrap">
+      <div class="section__head">
+        <div>
+          <p class="eyebrow">Reseñas verificadas</p>
+          <h2 class="section__title">Lo que <em>nos dicen</em></h2>
+        </div>
+        <div class="carousel-ctrls">
+          <button class="icon-btn icon-btn--line" id="revPrev" aria-label="Anterior" data-icon="left"></button>
+          <button class="icon-btn icon-btn--line" id="revNext" aria-label="Siguiente" data-icon="right"></button>
+        </div>
+      </div>
+      <div class="reviews" id="reviews"></div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section" id="preguntas">
+    <div class="wrap faq">
+      <div>
+        <p class="eyebrow">Ayuda</p>
+        <h2 class="section__title">Preguntas <em>frecuentes</em></h2>
+        <p class="section__lead">¿No encontrás lo que buscás? Escribinos por WhatsApp y te respondemos en minutos.</p>
+      </div>
+      <div class="faq__list" id="faq"></div>
+    </div>
+  </section>
+
+  <!-- Newsletter -->
+  <section class="newsletter">
+    <div class="wrap newsletter__inner">
+      <div>
+        <h2 class="newsletter__title">15% off en tu primera compra</h2>
+        <p>Sumate al club Pétalo: novedades de temporada, cuidados y descuentos exclusivos.</p>
+      </div>
+      <form class="newsletter__form" id="newsForm" novalidate>
+        <label class="visually-hidden" for="newsEmail">Tu email</label>
+        <input type="email" id="newsEmail" placeholder="tu@email.com" autocomplete="email" required>
+        <button class="btn btn--accent" type="submit">Quiero mi 15%</button>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="wrap footer__inner">
+    <div class="footer__brand">
+      <a href="#inicio" class="logo logo--light"><span class="logo__mark" aria-hidden="true"></span><span class="logo__word">Pétalo</span></a>
+      <p>Florería de autor. Armamos cada ramo a mano, todos los días, con flor fresca de productores locales.</p>
+      <div class="social">
+        <a href="https://instagram.com" target="_blank" rel="noopener" aria-label="Instagram" data-icon="instagram"></a>
+        <a href="https://facebook.com" target="_blank" rel="noopener" aria-label="Facebook" data-icon="facebook"></a>
+        <a href="https://tiktok.com" target="_blank" rel="noopener" aria-label="TikTok" data-icon="music"></a>
+      </div>
+    </div>
+    <div>
+      <h4>Tienda</h4>
+      <ul>
+        <li><a href="#tienda" data-cat="ramos">Ramos</a></li>
+        <li><a href="#tienda" data-cat="rosas">Rosas</a></li>
+        <li><a href="#tienda" data-cat="cajas">Cajas</a></li>
+        <li><a href="#tienda" data-cat="plantas">Plantas</a></li>
+        <li><a href="#suscripcion">Suscripción</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Ayuda</h4>
+      <ul>
+        <li><a href="#preguntas">Envíos y entregas</a></li>
+        <li><a href="#preguntas">Cuidado de tus flores</a></li>
+        <li><a href="#preguntas">Cambios y garantía</a></li>
+        <li><a href="#preguntas">Preguntas frecuentes</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Visitanos</h4>
+      <ul class="footer__contact" id="footerContact"></ul>
+    </div>
+  </div>
+  <div class="wrap footer__bottom">
+    <p>© <span id="year"></span> Pétalo Florería. Todos los derechos reservados.</p>
+    <div class="pay-badges" aria-label="Medios de pago">
+      <span>VISA</span><span>Mastercard</span><span>OCA</span><span>Mercado Pago</span><span>Transferencia</span>
+    </div>
+  </div>
+</footer>
+
+<!-- Botones flotantes -->
+<a class="whatsapp" id="whatsapp" href="#" target="_blank" rel="noopener" aria-label="Escribinos por WhatsApp" data-icon="whatsapp"></a>
+<button class="to-top" id="toTop" aria-label="Volver arriba" data-icon="up"></button>
+
+<!-- Overlay compartido -->
+<div class="scrim" id="scrim" hidden></div>
+
+<!-- Carrito -->
+<aside class="drawer" id="cart" aria-label="Carrito" aria-hidden="true">
+  <div class="drawer__head">
+    <h3>Tu carrito <span class="muted" id="cartHeadCount"></span></h3>
+    <button class="icon-btn" data-close aria-label="Cerrar carrito" data-icon="close"></button>
+  </div>
+  <div class="ship-progress" id="shipProgress"></div>
+  <div class="drawer__body" id="cartBody"></div>
+  <div class="drawer__foot" id="cartFoot"></div>
+</aside>
+
+<!-- Favoritos -->
+<aside class="drawer" id="wishlist" aria-label="Favoritos" aria-hidden="true">
+  <div class="drawer__head">
+    <h3>Favoritos</h3>
+    <button class="icon-btn" data-close aria-label="Cerrar favoritos" data-icon="close"></button>
+  </div>
+  <div class="drawer__body" id="wishBody"></div>
+</aside>
+
+<!-- Menú móvil -->
+<aside class="drawer drawer--left" id="mobileNav" aria-label="Menú" aria-hidden="true">
+  <div class="drawer__head">
+    <a href="#inicio" class="logo"><span class="logo__mark" aria-hidden="true"></span><span class="logo__word">Pétalo</span></a>
+    <button class="icon-btn" data-close aria-label="Cerrar menú" data-icon="close"></button>
+  </div>
+  <nav class="mobile-nav">
+    <a href="#tienda">Tienda</a>
+    <a href="#ocasiones">Ocasiones</a>
+    <a href="#arma-tu-ramo">Armá tu ramo</a>
+    <a href="#suscripcion">Suscripción</a>
+    <a href="#significados">Lenguaje de las flores</a>
+    <a href="#preguntas">Ayuda</a>
+  </nav>
+</aside>
+
+<!-- Búsqueda -->
+<div class="search" id="search" role="dialog" aria-modal="true" aria-label="Buscar" hidden>
+  <div class="search__box">
+    <span data-icon="search"></span>
+    <input type="search" id="searchInput" placeholder="Buscá rosas, girasoles, cumpleaños…" autocomplete="off">
+    <button class="icon-btn" data-close aria-label="Cerrar búsqueda" data-icon="close"></button>
+  </div>
+  <div class="search__suggest" id="searchSuggest"></div>
+  <div class="search__results" id="searchResults"></div>
+</div>
+
+<!-- Producto -->
+<div class="modal" id="productModal" role="dialog" aria-modal="true" aria-labelledby="pmTitle" hidden>
+  <div class="modal__panel modal__panel--product" id="pmPanel"></div>
+</div>
+
+<!-- Checkout -->
+<div class="checkout" id="checkout" role="dialog" aria-modal="true" aria-label="Finalizar compra" hidden>
+  <div class="checkout__top">
+    <div class="wrap checkout__topin">
+      <a href="#inicio" class="logo"><span class="logo__mark" aria-hidden="true"></span><span class="logo__word">Pétalo</span></a>
+      <ol class="steps" id="steps"></ol>
+      <button class="icon-btn" id="checkoutClose" aria-label="Cerrar checkout" data-icon="close"></button>
+    </div>
+  </div>
+  <div class="wrap checkout__inner" id="checkoutInner"></div>
+</div>
+
+<!-- Pop-up de bienvenida -->
+<div class="modal" id="welcome" role="dialog" aria-modal="true" aria-labelledby="welcomeTitle" hidden>
+  <div class="modal__panel modal__panel--welcome">
+    <button class="icon-btn modal__x" data-close aria-label="Cerrar" data-icon="close"></button>
+    <div class="welcome__art" id="welcomeArt"></div>
+    <div class="welcome__copy">
+      <p class="eyebrow">Bienvenida</p>
+      <h3 id="welcomeTitle">Tu primer ramo con <em>15% off</em></h3>
+      <p>Usá este código en el checkout. Vale para toda la tienda.</p>
+      <button class="coupon-code" id="welcomeCode" type="button">BIENVENIDA15 <span data-icon="copy"></span></button>
+      <button class="btn btn--primary btn--block" data-close>Empezar a comprar</button>
+    </div>
+  </div>
+</div>
+
+<div class="toasts" id="toasts" aria-live="polite"></div>
+
+<script src="js/data.js"></script>
+<script src="js/flowers.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
