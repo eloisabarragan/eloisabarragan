@@ -1,34 +1,33 @@
-# Grupo Sureste
+# Grupo Sureste — sitio web
 
-Sitio web de una sola página: estudio contable, inversiones y real estate premium en Uruguay.
+Sitio de una sola página en español, inglés y portugués:
+**Inicio · Quiénes somos · Nuestra selección · Servicios · Contacto**.
 
-## Ver el sitio
+## Publicar
 
-`assets/app.js` y `assets/styles.css` ya están compilados. Abrí `index.html` en el navegador o publicá la carpeta tal cual (GitHub Pages, Netlify, Vercel).
+Subir a Netlify el contenido de esta carpeta con `index.html` y `assets/` (por ejemplo, arrastrándolo a https://app.netlify.com/drop).
+`src/`, `node_modules/` y `material-anterior/` no hace falta subirlos.
 
 ## Editar
 
 ```bash
 npm install
-npm run build   # recompila src/ → assets/
+npm run build   # compila src/ → assets/
 npm run dev     # compila y sirve en http://localhost:3000
 ```
 
 | Archivo | Qué contiene |
 |---|---|
-| `index.html` | Textos y estructura de todas las secciones |
-| `src/styles.css` | Paleta, tipografías y layout (tokens en `:root`) |
+| `index.html` | Estructura de las secciones y los cuatro formularios |
 | `src/i18n.js` | Todos los textos en español, inglés y portugués |
-| `src/main.js` | Scroll suave, animaciones, simulador, carrusel, calculadora, formulario |
-| `assets/img/` | Fotos de la torre (`torre-01` a `torre-08`) y de los proyectos |
-| `src/paint.js` | Ilustraciones generativas de los proyectos |
+| `src/styles.css` | Paleta, tipografías y diseño |
+| `src/main.js` | Animaciones, idiomas, ventanas de formulario, envío y datos de contacto (`CONTACT`) |
+| `assets/img/` | Logo, fotos de categorías, Quiénes somos, Servicios y Contacto |
+| `material-anterior/` | Fotos y código que ya no se usan (archivados, no se publican) |
 
-## Antes de publicar
+## Pendientes
 
-- **Marca**: la marca está como "Grupo Sureste" / "SURESTE" en `index.html`; falta el logo oficial.
-- **Contacto**: email y WhatsApp están en `index.html` (sección contacto y botón flotante) y en `CONTACT` dentro de `src/main.js`.
-- **Textos e idiomas**: se editan en `src/i18n.js` (misma clave en `es`, `en` y `pt`). El idioma se elige con el selector ES/EN/PT o según el idioma del navegador.
-- **Fotos**: los originales van en `assets/img/` en dos tamaños (`-1600.webp` y `-900.webp`).
-- **Proyectos**: son ejemplos. Los datos fijos están en `ESTATES` (`src/main.js`) y los textos en `estates` (`src/i18n.js`). Agregá `img: "ruta/foto.jpg"` a cada proyecto para usar renders o fotos reales en lugar de la ilustración.
-- **Rentabilidades del simulador**: `PROFILES` en `src/main.js`.
-- **Textos legales**: revisá los avisos de inversión y la información sobre beneficios fiscales con el estudio.
+- **Datos de contacto**: completar `CONTACT` en `src/main.js` (email, WhatsApp, dirección fiscal) y ejecutar `npm run build`. Mientras estén vacíos se muestra "A confirmar".
+- **Video institucional**: copiar el archivo a `assets/video/` y poner su ruta en `data-src` del `<video class="about__video">` en `index.html`.
+- **Formularios**: usan Netlify Forms. Después de publicar, en Netlify ir a *Site configuration → Forms*, activar la detección de formularios y, en *Form notifications*, agregar el email que recibirá las consultas. Fuera de Netlify el envío muestra un aviso de error (no simula un envío).
+- **Descripciones de Servicios**: las claves `srv.d1`–`srv.d4` de `src/i18n.js` están vacías; si se completan, aparecen debajo de cada título.
