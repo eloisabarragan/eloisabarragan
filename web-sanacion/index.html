@@ -15,7 +15,7 @@
     --verde:      #5E6A31;   /* principal */
     --verde-osc:  #434C22;
     --crema:      #F1E7D6;
-    --mostaza:    #DFA84A;
+    --rosa-claro: #E8BFB0;   /* reemplaza al mostaza */
     --rosa:       #B86C5E;
     --naranja:    #D0841F;
     --borgona:    #6B1F22;
@@ -103,10 +103,10 @@
   .hero .grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 48px; align-items: center; }
   .hero .etiqueta { color: rgba(241,231,214,.7); }
   .hero h1 { color: var(--crema); font-size: clamp(40px, 6.5vw, 78px); margin: 24px 0; }
-  .hero h1 em { color: var(--mostaza); }
+  .hero h1 em { color: var(--rosa-claro); }
   .hero p { max-width: 480px; color: rgba(241,231,214,.85); margin-bottom: 36px; }
-  .hero .roles { font-family: var(--mono); font-size: 13px; letter-spacing: .14em; text-transform: uppercase; color: var(--mostaza); margin-bottom: 18px; }
-  .hero .sol-grande { width: min(420px, 80%); margin-inline: auto; color: var(--mostaza); animation: girar 120s linear infinite; }
+  .hero .roles { font-family: var(--mono); font-size: 13px; letter-spacing: .14em; text-transform: uppercase; color: var(--rosa-claro); margin-bottom: 18px; }
+  .hero .sol-grande { width: min(420px, 80%); margin-inline: auto; color: var(--rosa-claro); animation: girar 120s linear infinite; }
   @keyframes girar { to { transform: rotate(360deg); } }
   @media (prefers-reduced-motion: reduce) { .hero .sol-grande { animation: none; } }
 
@@ -117,7 +117,7 @@
     display: grid; place-items: center; color: var(--crema); position: relative;
   }
   .foto { overflow: hidden; }
-  .foto .sol { position: absolute; width: 96%; height: auto; aspect-ratio: 1; color: var(--mostaza); opacity: .9; animation: girar 160s linear infinite; }
+  .foto .sol { position: absolute; width: 96%; height: auto; aspect-ratio: 1; color: var(--rosa-claro); opacity: .9; animation: girar 160s linear infinite; }
   .foto img { position: relative; width: 62%; border-radius: 50%; }
   .foto small { position: absolute; bottom: 16px; font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; opacity: .8; }
   .sobre p + p { margin-top: 16px; }
@@ -138,13 +138,13 @@
   .tarjeta p { font-size: 15px; opacity: .9; flex: 1; }
   .tarjeta .meta { display: flex; justify-content: space-between; border-top: 1px solid currentColor; padding-top: 14px; margin-top: 22px; font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; opacity: .85; }
   /* mismo orden y combinación que la referencia */
-  .t1 { background: var(--crema);   color: var(--verde-osc); } .t1 .sol { color: var(--naranja); }
-  .t2 { background: var(--mostaza); color: #3E2C10; }          .t2 .sol { color: #B8761C; }
+  .t1 { background: var(--crema);   color: var(--verde-osc); } .t1 .sol { color: var(--rosa); }
+  .t2 { background: var(--rosa-claro); color: var(--borgona); } .t2 .sol { color: var(--rosa); }
   .t3 { background: var(--rosa); }                              .t3 .sol { color: var(--crema); }
   .t4 { background: var(--naranja); color: #2F2A12; }           .t4 .sol { color: var(--verde); }
   .t5 { background: var(--verde); }                             .t5 .sol { color: var(--crema); }
-  .t6 { background: var(--borgona); }                           .t6 .sol { color: var(--mostaza); }
-  .t7 { background: var(--verde-osc); color: var(--crema); }    .t7 .sol { color: var(--mostaza); }
+  .t6 { background: var(--borgona); }                           .t6 .sol { color: var(--rosa-claro); }
+  .t7 { background: var(--verde-osc); color: var(--crema); }    .t7 .sol { color: var(--rosa-claro); }
 
   /* submenú de Terapias */
   .con-sub { position: relative; }
@@ -177,7 +177,7 @@
   .info h4 { font-family: var(--mono); font-weight: 400; font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--verde); margin: 26px 0 10px; }
   .para { list-style: none; }
   .para li { position: relative; padding-left: 26px; margin-bottom: 6px; }
-  .para li::before { content: "✦"; position: absolute; left: 0; color: var(--mostaza); font-size: 13px; top: 2px; }
+  .para li::before { content: "✦"; position: absolute; left: 0; color: var(--rosa-claro); font-size: 13px; top: 2px; }
   .ficha { display: flex; flex-wrap: wrap; gap: 8px 24px; margin: 26px 0 28px; padding: 14px 0; border-block: 1px solid var(--linea); font-family: var(--mono); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--texto-suave); }
 
   /* ───────── Escenas temáticas de cada terapia ───────── */
@@ -232,7 +232,7 @@
   }
 
   /* ───────── Tirada de tarot ───────── */
-  .panel.tirada { aspect-ratio: auto; max-height: none; min-height: 460px; padding: 56px 24px 36px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 26px; color: #3E2C10; }
+  .panel.tirada { aspect-ratio: auto; max-height: none; min-height: 460px; padding: 56px 24px 36px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 26px; color: var(--borgona); }
   .pista { font-family: var(--mono); font-size: 12px; letter-spacing: .18em; text-transform: uppercase; }
   .cartas { display: flex; justify-content: center; width: 100%; perspective: 1200px; }
   .carta {
@@ -252,10 +252,10 @@
     display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px;
     box-shadow: 0 14px 28px -14px rgba(40,20,10,.6);
   }
-  .dorso { background: var(--borgona); color: var(--mostaza); box-shadow: inset 0 0 0 7px var(--borgona), inset 0 0 0 8px rgba(223,168,74,.55), 0 14px 28px -14px rgba(40,20,10,.6); }
+  .dorso { background: var(--borgona); color: var(--rosa-claro); box-shadow: inset 0 0 0 7px var(--borgona), inset 0 0 0 8px rgba(232,191,176,.6), 0 14px 28px -14px rgba(40,20,10,.6); }
   .dorso .icono { width: 64%; height: auto; }
   .frente { transform: rotateY(180deg); background: var(--crema); color: var(--verde-osc); box-shadow: inset 0 0 0 7px var(--crema), inset 0 0 0 8px rgba(94,106,49,.4), 0 14px 28px -14px rgba(40,20,10,.6); }
-  .frente .icono { width: 56%; height: auto; color: var(--naranja); }
+  .frente .icono { width: 56%; height: auto; color: var(--rosa); }
   .romano { font-family: var(--mono); font-size: 11px; letter-spacing: .2em; }
   .frente strong { font-family: var(--serif); font-weight: 400; font-size: 17px; }
   .mensaje { max-width: 340px; min-height: 3.2em; text-align: center; font-family: var(--serif); font-size: 19px; line-height: 1.4; }
@@ -295,19 +295,19 @@
   .chip { font: inherit; font-size: 15px; color: var(--crema); background: transparent; border: 1px solid rgba(241,231,214,.55); border-radius: 999px; padding: 8px 16px; cursor: pointer; transition: background .25s, color .25s; }
   .chip:hover, .chip[aria-pressed="true"] { background: var(--crema); color: var(--verde-osc); }
   .guia-respuesta { margin-top: 20px; min-height: 1.7em; font-family: var(--serif); font-size: 19px; }
-  .guia-respuesta a { color: var(--mostaza); border-bottom: 1px solid currentColor; }
+  .guia-respuesta a { color: var(--rosa-claro); border-bottom: 1px solid currentColor; }
 
   /* escenas nuevas */
   .aura .anillo { fill: none; stroke: currentColor; stroke-width: .7; stroke-dasharray: 2 3; animation: aura 4s ease-in-out infinite alternate; animation-delay: var(--d); }
   @keyframes aura { from { opacity: .25; } to { opacity: .8; } }
   .aura .figura { fill: none; stroke: currentColor; stroke-width: 1; }
-  .aura .implante { fill: none; stroke: var(--mostaza); stroke-width: 1.1; transform-box: fill-box; transform-origin: center; opacity: 0; animation: extraer 8s ease-in-out infinite; animation-delay: var(--d); }
+  .aura .implante { fill: none; stroke: var(--rosa-claro); stroke-width: 1.1; transform-box: fill-box; transform-origin: center; opacity: 0; animation: extraer 8s ease-in-out infinite; animation-delay: var(--d); }
   @keyframes extraer { 0% { opacity: 0; transform: scale(.4); } 8%, 45% { opacity: 1; transform: scale(1); } 60%, 100% { opacity: 0; transform: scale(.05) rotate(90deg); } }
   .conste .trazo { fill: none; stroke: var(--crema); stroke-width: .6; stroke-dasharray: 1; stroke-dashoffset: 1; animation: unir 9s ease-in-out infinite; }
   @keyframes unir { 0% { stroke-dashoffset: 1; opacity: .7; } 55%, 85% { stroke-dashoffset: 0; opacity: .7; } 100% { stroke-dashoffset: 0; opacity: 0; } }
   .conste .astro { fill: var(--crema); animation: titilar 2.6s ease-in-out infinite alternate; animation-delay: var(--d); }
   @keyframes titilar { from { opacity: .35; } to { opacity: 1; } }
-  .conste .central { color: var(--mostaza); }
+  .conste .central { color: var(--rosa-claro); }
   .libro .pagina { fill: rgba(241,231,214,.14); stroke: currentColor; stroke-width: 1; }
   .libro .renglon { fill: none; stroke: currentColor; stroke-width: .5; opacity: .6; }
   .libro .rayo { stroke: var(--crema); stroke-width: .6; stroke-linecap: round; animation: titilar 2.4s ease-in-out infinite alternate; animation-delay: var(--d); }
@@ -322,7 +322,7 @@
 
   /* ───────── Cursos ───────── */
   .curso-destacado { display: grid; grid-template-columns: 1fr 1.4fr; margin-top: 48px; border-radius: var(--radio); overflow: hidden; background: #E9DCC5; }
-  .cd-arte { background: var(--verde); color: var(--mostaza); display: grid; place-items: center; align-content: center; gap: 22px; padding: 40px 24px; }
+  .cd-arte { background: var(--verde); color: var(--rosa-claro); display: grid; place-items: center; align-content: center; gap: 22px; padding: 40px 24px; }
   .cd-arte .sol { width: min(260px, 70%); height: auto; animation: girar 120s linear infinite; }
   .elementos { font-family: var(--mono); font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--crema); text-align: center; }
   .cd-info { padding: clamp(28px, 4vw, 48px); }
@@ -359,7 +359,7 @@
 
   /* ───────── YouTube destacado ───────── */
   .video-destacado { display: grid; grid-template-columns: 1.2fr 1fr; gap: clamp(28px, 5vw, 64px); align-items: center; margin-top: 40px; }
-  .video-destacado .miniatura { position: relative; background: var(--verde); color: var(--mostaza); overflow: hidden; }
+  .video-destacado .miniatura { position: relative; background: var(--verde); color: var(--rosa-claro); overflow: hidden; }
   .video-destacado .miniatura .sol { position: absolute; width: 80%; height: auto; aspect-ratio: 1; opacity: .55; }
   .video-destacado .play { position: relative; width: 72px; height: 72px; background: rgba(67,76,34,.5); }
   .video-destacado .acciones { margin-top: 24px; }
@@ -381,7 +381,7 @@
   .testimonios .etiqueta { color: rgba(241,231,214,.65); }
   .cita { max-width: 760px; margin: 40px auto 0; }
   .cita blockquote { font-family: var(--serif); font-size: clamp(22px, 3vw, 32px); line-height: 1.4; }
-  .cita cite { display: block; margin-top: 22px; font-family: var(--mono); font-style: normal; font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--mostaza); }
+  .cita cite { display: block; margin-top: 22px; font-family: var(--mono); font-style: normal; font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--rosa-claro); }
   .puntos { display: flex; justify-content: center; gap: 10px; margin-top: 36px; }
   .puntos button { width: 9px; height: 9px; border-radius: 50%; border: 1px solid var(--crema); background: transparent; cursor: pointer; padding: 0; }
   .puntos button[aria-current="true"] { background: var(--crema); }
@@ -638,11 +638,11 @@
             <line x1="70" y1="14" x2="70" y2="290" class="eje"/>
             <g class="chakra" style="--i:0" tabindex="0" role="button" aria-label="Raíz: Seguridad, arraigo y confianza en la vida." data-nombre="Raíz" data-texto="Seguridad, arraigo y confianza en la vida."><circle class="halo" cx="70" cy="272" r="10" fill="var(--borgona)"/><circle cx="70" cy="272" r="10" fill="var(--borgona)"/><text x="96" y="275">Raíz</text></g>
             <g class="chakra" style="--i:1" tabindex="0" role="button" aria-label="Sacro: Creatividad, placer y emociones que fluyen." data-nombre="Sacro" data-texto="Creatividad, placer y emociones que fluyen."><circle class="halo" cx="70" cy="232" r="10" fill="var(--naranja)"/><circle cx="70" cy="232" r="10" fill="var(--naranja)"/><text x="96" y="235">Sacro</text></g>
-            <g class="chakra" style="--i:2" tabindex="0" role="button" aria-label="Plexo solar: Poder personal, voluntad y autoestima." data-nombre="Plexo solar" data-texto="Poder personal, voluntad y autoestima."><circle class="halo" cx="70" cy="192" r="10" fill="var(--mostaza)"/><circle cx="70" cy="192" r="10" fill="var(--mostaza)"/><text x="96" y="195">Plexo solar</text></g>
+            <g class="chakra" style="--i:2" tabindex="0" role="button" aria-label="Plexo solar: Poder personal, voluntad y autoestima." data-nombre="Plexo solar" data-texto="Poder personal, voluntad y autoestima."><circle class="halo" cx="70" cy="192" r="10" fill="var(--rosa-claro)"/><circle cx="70" cy="192" r="10" fill="var(--rosa-claro)"/><text x="96" y="195">Plexo solar</text></g>
             <g class="chakra" style="--i:3" tabindex="0" role="button" aria-label="Corazón: Amor, compasión y perdón." data-nombre="Corazón" data-texto="Amor, compasión y perdón."><circle class="halo" cx="70" cy="152" r="10" fill="var(--verde)"/><circle cx="70" cy="152" r="10" fill="var(--verde)"/><text x="96" y="155">Corazón</text></g>
             <g class="chakra" style="--i:4" tabindex="0" role="button" aria-label="Garganta: Expresar tu verdad con libertad." data-nombre="Garganta" data-texto="Expresar tu verdad con libertad."><circle class="halo" cx="70" cy="112" r="10" fill="var(--rosa)"/><circle cx="70" cy="112" r="10" fill="var(--rosa)"/><text x="96" y="115">Garganta</text></g>
             <g class="chakra" style="--i:5" tabindex="0" role="button" aria-label="Tercer ojo: Intuición y claridad interior." data-nombre="Tercer ojo" data-texto="Intuición y claridad interior."><circle class="halo" cx="70" cy="72" r="10" fill="var(--verde-osc)"/><circle cx="70" cy="72" r="10" fill="var(--verde-osc)"/><text x="96" y="75">Tercer ojo</text></g>
-            <g class="chakra" style="--i:6" tabindex="0" role="button" aria-label="Corona: Conexión con lo sagrado y tu propósito." data-nombre="Corona" data-texto="Conexión con lo sagrado y tu propósito."><circle class="halo" cx="70" cy="32" r="10" fill="var(--naranja)"/><circle cx="70" cy="32" r="10" fill="var(--panel-fondo)"/><use href="#sol" x="48" y="10" width="44" height="44" style="color:var(--naranja)"/><text x="96" y="35">Corona</text></g>
+            <g class="chakra" style="--i:6" tabindex="0" role="button" aria-label="Corona: Conexión con lo sagrado y tu propósito." data-nombre="Corona" data-texto="Conexión con lo sagrado y tu propósito."><circle class="halo" cx="70" cy="32" r="10" fill="var(--rosa)"/><circle cx="70" cy="32" r="10" fill="var(--panel-fondo)"/><use href="#sol" x="48" y="10" width="44" height="44" style="color:var(--rosa)"/><text x="96" y="35">Corona</text></g>
           </svg>
           <p class="leyenda" aria-live="polite">Tocá un chakra ✦</p>
         </div>
@@ -734,7 +734,7 @@
             <line x1="100" y1="124" x2="100" y2="113" stroke="#3E2C10" stroke-width="1.6" stroke-linecap="round"/>
             <g class="llama">
               <path d="M100 66C113 86 114 104 100 114C86 104 87 86 100 66Z" fill="#F1E7D6"/>
-              <path d="M100 86C106 96 106 106 100 111C94 106 94 96 100 86Z" fill="var(--mostaza)"/>
+              <path d="M100 86C106 96 106 106 100 111C94 106 94 96 100 86Z" fill="var(--naranja)"/>
             </g>
           </svg>
           <p class="leyenda">El amor no se va, cambia de forma</p>
