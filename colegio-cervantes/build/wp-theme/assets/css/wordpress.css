@@ -1,0 +1,73 @@
+/* Estilos propios de la versión WordPress (noticias, páginas de texto, accesibilidad). */
+
+.cerv-saltar {
+  position: absolute;
+  left: -9999px;
+  top: 8px;
+  z-index: 3000;
+  background: #00325A;
+  color: #fff;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+}
+.cerv-saltar:focus { left: 8px; }
+
+/* ---------- Páginas de texto y noticias ---------- */
+.cerv-entrada {
+  max-width: 820px;
+  margin: 0 auto;
+  padding: clamp(48px, 7vw, 96px) 20px;
+  font-family: 'Poppins', system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  color: #374151;
+}
+.cerv-entrada-meta { display: flex; gap: 12px; align-items: center; margin-bottom: 12px; font-size: 13px; color: #6b7280; }
+.cerv-entrada-cat {
+  background: rgba(211, 154, 71, .14);
+  color: #b07a2e;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  padding: 5px 10px;
+  border-radius: 50px;
+}
+.cerv-entrada-titulo { color: #00325A; font-size: clamp(28px, 4vw, 42px); line-height: 1.15; margin-bottom: 26px; }
+.cerv-entrada-imagen { margin: 0 0 30px; }
+.cerv-entrada-imagen img { width: 100%; height: auto; max-height: 560px; object-fit: cover; border-radius: 20px; display: block; }
+.cerv-entrada-contenido > * + * { margin-top: 1em; }
+.cerv-entrada-contenido p, .cerv-entrada-contenido li { line-height: 1.8; font-size: 16px; }
+.cerv-entrada-contenido ul, .cerv-entrada-contenido ol { padding-left: 1.3em; }
+.cerv-entrada-contenido h2, .cerv-entrada-contenido h3 { color: #00325A; margin-top: 1.6em; }
+.cerv-entrada-contenido a { color: #00325A; font-weight: 600; }
+.cerv-entrada-contenido img { max-width: 100%; height: auto; border-radius: 14px; }
+.cerv-entrada-volver { margin-top: 40px; }
+.cerv-entrada-volver a { color: #00325A; font-weight: 700; text-decoration: none; }
+
+/* ---------- Tarjetas de noticias hechas con entradas ---------- */
+#cerv-noticias .noti-card-title a { color: inherit; text-decoration: none; }
+#cerv-noticias .noti-card-title a:hover { color: #D39A47; }
+#cerv-noticias .noti-img-wrap { display: block; }
+#cerv-noticias .noti-mas {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 14px;
+  color: #00325A;
+  font-weight: 700;
+  font-size: 13px;
+  text-decoration: none;
+}
+#cerv-noticias .noti-mas svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+#cerv-noticias .noti-mas:hover { color: #D39A47; }
+#cerv-noticias .noti-vacio { text-align: center; color: #6b7280; padding: 30px 0; }
+#cerv-noticias.cerv-archivo { padding-top: clamp(48px, 7vw, 96px); }
+.cerv-paginacion { margin-top: 36px; text-align: center; }
+.cerv-paginacion .page-numbers { display: inline-block; padding: 8px 14px; margin: 0 3px; border-radius: 10px; background: #fff; color: #00325A; text-decoration: none; font-weight: 600; box-shadow: 0 4px 14px rgba(0, 50, 90, .08); }
+.cerv-paginacion .page-numbers.current { background: #00325A; color: #fff; }
+.cerv-paginacion .screen-reader-text { position: absolute; left: -9999px; }
+
+/* Logo subido en Personalizar */
+.logotipo .custom-logo-link { display: inline-block; }
+.logotipo .custom-logo { height: 60px; width: auto; max-width: 240px; display: block; }
+@media (max-width: 768px) { .logotipo .custom-logo { height: 48px; } }

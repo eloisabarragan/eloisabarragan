@@ -1,0 +1,28 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "cervantes/seccion",
+	"title": "Sección Cervantes",
+	"category": "cervantes",
+	"icon": "align-wide",
+	"description": "Una sección de la web del Colegio Cervantes. Hacé clic en un texto para cambiarlo y en una foto para reemplazarla.",
+	"keywords": [ "cervantes", "sección", "colegio" ],
+	"textdomain": "cervantes",
+	"attributes": {
+		"content": {
+			"type": "string",
+			"source": "raw"
+		},
+		"nombre": {
+			"type": "string",
+			"default": ""
+		}
+	},
+	"supports": {
+		"html": false,
+		"className": false,
+		"customClassName": false,
+		"reusable": true
+	},
+	"editorScript": "cervantes-seccion-editor"
+}
