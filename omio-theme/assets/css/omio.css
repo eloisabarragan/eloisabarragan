@@ -1,0 +1,992 @@
+/* ==========================================================================
+   Omio Iluminación — estilos
+   Concepto: la página es un espacio oscuro y cada sección se "enciende".
+   Los colores y fuentes de marca llegan desde el Personalizador como
+   --luz, --noche, --papel, --f-display, --f-body, --f-mono.
+   ========================================================================== */
+
+:root {
+	/* Marca (sobrescritas por el Personalizador) */
+	--luz: #FFC72C;
+	--noche: #0B0C10;
+	--papel: #F2F0EA;
+	--f-display: 'Archivo', system-ui, sans-serif;
+	--f-body: 'Archivo', system-ui, sans-serif;
+	--f-mono: 'IBM Plex Mono', ui-monospace, monospace;
+
+	/* Derivados */
+	--noche-2: color-mix(in oklab, var(--noche) 88%, var(--papel));
+	--noche-3: color-mix(in oklab, var(--noche) 78%, var(--papel));
+	--linea: color-mix(in oklab, var(--papel) 14%, transparent);
+	--texto: var(--papel);
+	--texto-2: color-mix(in oklab, var(--papel) 66%, var(--noche));
+	--sobre-luz: var(--noche);
+	--beam: #FFE3B0;
+
+	/* Escala tipográfica */
+	--t-xs: .75rem;
+	--t-sm: .875rem;
+	--t-md: 1.0625rem;
+	--t-lg: clamp(1.25rem, 1.1rem + .6vw, 1.5rem);
+	--t-xl: clamp(1.75rem, 1.3rem + 2vw, 2.75rem);
+	--t-2xl: clamp(2.5rem, 1.6rem + 4.4vw, 5rem);
+	--t-hero: clamp(3.4rem, 1rem + 11vw, 11.5rem);
+
+	--gutter: max(16px, env(safe-area-inset-left, 0px));
+	--gutter-r: max(16px, env(safe-area-inset-right, 0px));
+	--max: 1320px;
+	--radio: 14px;
+	--ease: cubic-bezier(.2, .7, .1, 1);
+
+	color-scheme: dark;
+}
+
+/* Temperatura de color del haz */
+[data-k="3000"] { --beam: #FFB867; }
+[data-k="4000"] { --beam: #FFE3B0; }
+[data-k="6500"] { --beam: #D9E9FF; }
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+body {
+	margin: 0;
+	background: var(--noche);
+	color: var(--texto);
+	font-family: var(--f-body);
+	font-size: var(--t-md);
+	line-height: 1.6;
+	-webkit-font-smoothing: antialiased;
+	overflow-x: hidden;
+}
+
+img, svg, iframe { max-width: 100%; }
+img { height: auto; }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--luz); outline-offset: 3px; border-radius: 4px; }
+
+.screen-reader-text {
+	position: absolute !important; width: 1px; height: 1px; overflow: hidden;
+	clip: rect(1px, 1px, 1px, 1px); white-space: nowrap;
+}
+.omio-skip {
+	position: absolute; left: 1rem; top: -4rem; z-index: 100;
+	background: var(--luz); color: var(--sobre-luz); padding: .6rem 1rem; border-radius: 8px;
+	font-weight: 700; text-decoration: none;
+}
+.omio-skip:focus { top: 1rem; }
+
+.omio-wrap {
+	width: 100%;
+	max-width: calc(var(--max) + 2 * 48px);
+	margin-inline: auto;
+	padding-left: max(var(--gutter), min(48px, 4vw));
+	padding-right: max(var(--gutter-r), min(48px, 4vw));
+}
+
+/* --------------------------------------------------------------------------
+   Tipografía utilitaria
+   ----------------------------------------------------------------------- */
+.omio-label {
+	font-family: var(--f-mono);
+	font-size: var(--t-xs);
+	font-weight: 500;
+	letter-spacing: .14em;
+	text-transform: uppercase;
+	color: var(--texto-2);
+	margin: 0;
+}
+.omio-mono { font-family: var(--f-mono); letter-spacing: .02em; }
+.omio-h2 {
+	font-family: var(--f-display);
+	font-size: var(--t-2xl);
+	font-weight: 800;
+	font-stretch: 112%;
+	line-height: .98;
+	letter-spacing: -.03em;
+	margin: .5rem 0 0;
+	text-wrap: balance;
+}
+.omio-h3 {
+	font-family: var(--f-display);
+	font-size: var(--t-lg);
+	font-weight: 700;
+	line-height: 1.15;
+	letter-spacing: -.01em;
+	margin: 0;
+	text-wrap: balance;
+}
+.omio-note { font-size: var(--t-xs); color: var(--texto-2); margin: 0; max-width: 46ch; }
+
+.omio-icon { width: 1.25em; height: 1.25em; flex: none; }
+
+/* --------------------------------------------------------------------------
+   Botones y enlaces
+   ----------------------------------------------------------------------- */
+.omio-btn {
+	--bg: transparent;
+	display: inline-flex; align-items: center; gap: .6rem;
+	padding: .95rem 1.4rem;
+	border-radius: 999px;
+	font-family: var(--f-body);
+	font-weight: 700;
+	font-size: var(--t-sm);
+	letter-spacing: .01em;
+	text-decoration: none;
+	background: var(--bg);
+	border: 1.5px solid transparent;
+	transition: transform .3s var(--ease), box-shadow .3s var(--ease), background .3s;
+	cursor: pointer;
+}
+.omio-btn .omio-icon { transition: transform .3s var(--ease); }
+.omio-btn:hover .omio-icon { transform: translateX(4px); }
+.omio-btn--luz {
+	--bg: var(--luz);
+	color: var(--sobre-luz);
+	box-shadow: 0 0 0 0 color-mix(in oklab, var(--luz) 60%, transparent);
+}
+.omio-btn--luz:hover {
+	transform: translateY(-2px);
+	box-shadow: 0 10px 40px -6px color-mix(in oklab, var(--luz) 70%, transparent);
+}
+.omio-btn--ghost { color: var(--texto); border-color: var(--linea); }
+.omio-btn--ghost:hover { border-color: var(--texto); }
+
+.omio-link {
+	display: inline-flex; align-items: center; gap: .5rem;
+	font-weight: 700; text-decoration: none;
+	color: var(--luz);
+	border-bottom: 1.5px solid color-mix(in oklab, var(--luz) 35%, transparent);
+	padding-bottom: 2px;
+	transition: border-color .3s, gap .3s var(--ease);
+}
+.omio-link:hover { border-color: var(--luz); gap: .8rem; }
+
+/* --------------------------------------------------------------------------
+   Ticker de beneficios
+   ----------------------------------------------------------------------- */
+.omio-ticker {
+	background: var(--luz);
+	color: var(--sobre-luz);
+	font-size: var(--t-xs);
+	font-weight: 700;
+	letter-spacing: .04em;
+	overflow: hidden;
+	white-space: nowrap;
+	padding-block: .55rem;
+}
+.omio-ticker__track { display: inline-flex; animation: omio-ticker 38s linear infinite; }
+.omio-ticker__track > span { display: inline-flex; align-items: center; gap: .55rem; padding-right: .55rem; }
+.omio-ticker__dot { width: 4px; height: 4px; border-radius: 50%; background: currentColor; margin-inline: 1.2rem; }
+.omio-ticker:hover .omio-ticker__track { animation-play-state: paused; }
+@keyframes omio-ticker { to { transform: translateX(-50%); } }
+@media (prefers-reduced-motion: reduce) {
+	.omio-ticker__track { animation: none; }
+}
+
+/* --------------------------------------------------------------------------
+   Header
+   ----------------------------------------------------------------------- */
+.omio-header {
+	position: sticky;
+	top: env(safe-area-inset-top, 0px);
+	z-index: 50;
+	background: color-mix(in oklab, var(--noche) 78%, transparent);
+	backdrop-filter: blur(14px) saturate(140%);
+	-webkit-backdrop-filter: blur(14px) saturate(140%);
+	border-bottom: 1px solid transparent;
+	transition: border-color .3s, background .3s;
+}
+.admin-bar .omio-header { top: 32px; }
+@media (max-width: 782px) { .admin-bar .omio-header { top: 46px; } }
+.omio-header.is-scrolled { border-color: var(--linea); background: color-mix(in oklab, var(--noche) 90%, transparent); }
+
+.omio-header__inner {
+	max-width: calc(var(--max) + 2 * 48px);
+	margin-inline: auto;
+	padding-left: max(var(--gutter), min(48px, 4vw));
+	padding-right: max(var(--gutter-r), min(48px, 4vw));
+	padding-block: .9rem;
+	display: flex; align-items: center; gap: 2rem;
+}
+
+.omio-logo { display: inline-flex; align-items: baseline; gap: .5rem; text-decoration: none; margin-right: auto; }
+.omio-logo__img { max-height: 44px; width: auto; }
+.omio-logo__mark {
+	width: .8rem; height: .8rem; border-radius: 50%;
+	background: var(--luz);
+	box-shadow: 0 0 18px 4px color-mix(in oklab, var(--luz) 55%, transparent);
+	align-self: center;
+}
+.omio-logo__word {
+	font-family: var(--f-display); font-weight: 900; font-stretch: 125%;
+	font-size: 1.6rem; letter-spacing: -.04em; line-height: 1;
+}
+.omio-logo__tag { font-family: var(--f-mono); font-size: var(--t-xs); color: var(--texto-2); letter-spacing: .1em; }
+
+.omio-menu { list-style: none; margin: 0; padding: 0; display: flex; gap: .35rem; }
+.omio-menu a {
+	display: block; padding: .5rem .85rem; border-radius: 999px;
+	text-decoration: none; font-weight: 600; font-size: var(--t-sm);
+	color: var(--texto-2);
+	transition: color .2s, background .2s;
+}
+.omio-menu a:hover,
+.omio-menu .current-menu-item > a { color: var(--texto); background: var(--noche-3); }
+.omio-menu .sub-menu {
+	display: none; position: absolute; list-style: none; margin: .4rem 0 0; padding: .5rem;
+	background: var(--noche-2); border: 1px solid var(--linea); border-radius: var(--radio); min-width: 14rem;
+}
+.omio-menu li { position: relative; }
+.omio-menu li:hover > .sub-menu,
+.omio-menu li:focus-within > .sub-menu { display: block; }
+
+.omio-header__actions { display: flex; align-items: center; gap: .35rem; }
+.omio-iconbtn {
+	position: relative;
+	display: inline-grid; place-items: center;
+	width: 2.75rem; height: 2.75rem; border-radius: 50%;
+	color: var(--texto); background: transparent; border: 1px solid var(--linea);
+	text-decoration: none; cursor: pointer;
+	transition: border-color .2s, background .2s;
+}
+.omio-iconbtn:hover { border-color: var(--texto); }
+.omio-cart-count {
+	position: absolute; top: -4px; right: -4px;
+	min-width: 1.25rem; height: 1.25rem; padding-inline: .3rem; border-radius: 999px;
+	background: var(--luz); color: var(--sobre-luz);
+	font-size: .7rem; font-weight: 800; line-height: 1.25rem; text-align: center;
+}
+.omio-burger { display: none; }
+
+@media (max-width: 960px) {
+	.omio-burger { display: inline-grid; }
+	.omio-nav {
+		position: fixed; inset: 0; z-index: -1;
+		background: var(--noche);
+		padding: 7rem max(var(--gutter-r), 24px) 2rem max(var(--gutter), 24px);
+		opacity: 0; visibility: hidden;
+		transition: opacity .3s, visibility .3s;
+	}
+	.omio-nav.is-open { opacity: 1; visibility: visible; }
+	.omio-nav .omio-menu { flex-direction: column; gap: 0; }
+	.omio-nav .omio-menu a {
+		font-family: var(--f-display); font-stretch: 115%; font-weight: 800;
+		font-size: clamp(2rem, 9vw, 3rem); color: var(--texto); padding: .4rem 0;
+		border-radius: 0; background: none; letter-spacing: -.03em;
+	}
+	.omio-nav .omio-menu .sub-menu { position: static; display: block; border: 0; background: none; padding: 0 0 0 .5rem; }
+	.omio-nav .omio-menu .sub-menu a { font-size: 1.1rem; font-family: var(--f-body); color: var(--texto-2); }
+	body.omio-nav-open { overflow: hidden; }
+}
+
+/* --------------------------------------------------------------------------
+   HERO
+   ----------------------------------------------------------------------- */
+.omio-hero {
+	--x: 30%; --y: 52%;           /* punto iluminado relativo al hero */
+	position: relative;
+	isolation: isolate;
+	overflow: hidden;
+	background: var(--noche);
+	padding-block: clamp(4rem, 9vw, 8rem) clamp(3rem, 6vw, 5rem);
+	cursor: crosshair;
+}
+/* charco de luz en el piso */
+.omio-hero::before {
+	content: "";
+	position: absolute; inset: 0; z-index: -1;
+	background:
+		radial-gradient(circle 38vmax at var(--x) var(--y),
+			color-mix(in oklab, var(--beam) 26%, transparent) 0%,
+			color-mix(in oklab, var(--beam) 8%, transparent) 40%,
+			transparent 70%);
+	transition: background .6s;
+}
+/* grilla fotométrica: se revela donde cae la luz */
+.omio-hero__grid {
+	position: absolute; inset: 0; z-index: -1;
+	background-image:
+		radial-gradient(circle, color-mix(in oklab, var(--beam) 70%, transparent) 1px, transparent 1.5px);
+	background-size: 28px 28px;
+	-webkit-mask: radial-gradient(circle 30vmax at var(--x) var(--y), #000 0%, transparent 75%);
+	        mask: radial-gradient(circle 30vmax at var(--x) var(--y), #000 0%, transparent 75%);
+	opacity: .55;
+}
+
+.omio-hero__fixture {
+	position: absolute; top: 0; right: clamp(1rem, 9vw, 9rem);
+	width: clamp(84px, 11vw, 150px);
+	z-index: -1;
+	pointer-events: none;
+}
+.omio-hero__lamp {
+	display: block; width: 100%; height: auto;
+	color: color-mix(in oklab, var(--papel) 55%, var(--noche));
+	transform: rotate(var(--lamp-rot, 28deg));
+	transform-origin: 50% 20%;
+	transition: transform .25s var(--ease);
+}
+.omio-hero__lamp .omio-fx__beam { display: none; }
+.omio-hero__cone {
+	position: absolute;
+	left: 50%; top: 52%;
+	width: var(--cone-w, 70vmin);
+	height: var(--cone-h, 80vmin);
+	transform: translateX(-50%) rotate(var(--lamp-rot, 28deg));
+	transform-origin: 50% 0;
+	background: linear-gradient(to bottom,
+		color-mix(in oklab, var(--beam) 34%, transparent),
+		color-mix(in oklab, var(--beam) 10%, transparent) 55%,
+		transparent 100%);
+	clip-path: polygon(47% 0, 53% 0, 100% 100%, 0 100%);
+	-webkit-mask: radial-gradient(ellipse 50% 100% at 50% 0, #000 40%, transparent 100%);
+	        mask: radial-gradient(ellipse 50% 100% at 50% 0, #000 40%, transparent 100%);
+	filter: blur(14px);
+	mix-blend-mode: screen;
+	transition: transform .25s var(--ease), height .25s var(--ease), background .6s;
+}
+
+.omio-hero__content { position: relative; display: grid; gap: 1.25rem; }
+.omio-hero__kicker { display: inline-flex; align-items: center; gap: .6rem; }
+.omio-led {
+	width: .55rem; height: .55rem; border-radius: 50%; background: var(--luz);
+	box-shadow: 0 0 12px 2px var(--luz);
+	animation: omio-blink 2.6s ease-in-out infinite;
+}
+@keyframes omio-blink { 50% { opacity: .35; box-shadow: none; } }
+
+.omio-hero__title {
+	--tx: 30%; --ty: 50%;          /* mismo punto, relativo al título */
+	position: relative;
+	margin: 0;
+	font-family: var(--f-display);
+	font-size: var(--t-hero);
+	font-weight: 900;
+	font-stretch: 125%;
+	line-height: .86;
+	letter-spacing: -.055em;
+	max-width: 11ch;
+	text-wrap: balance;
+}
+.omio-hero__dim {
+	display: block;
+	color: color-mix(in oklab, var(--papel) 16%, var(--noche));
+	-webkit-text-stroke: 1px color-mix(in oklab, var(--papel) 34%, transparent);
+}
+.omio-hero__lit {
+	position: absolute; inset: 0;
+	display: block;
+	background: radial-gradient(circle 26vmax at var(--tx) var(--ty),
+		#fff 0%, var(--beam) 22%, color-mix(in oklab, var(--beam) 40%, transparent) 48%, transparent 72%);
+	-webkit-background-clip: text;
+	        background-clip: text;
+	color: transparent;
+	pointer-events: none;
+}
+.omio-hero__sub {
+	margin: 0;
+	font-family: var(--f-display);
+	font-size: var(--t-xl);
+	font-weight: 300;
+	font-stretch: 100%;
+	font-style: italic;
+	letter-spacing: -.02em;
+	color: var(--luz);
+}
+.omio-hero__bottom {
+	display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between;
+	gap: 1.5rem 3rem; margin-top: clamp(1rem, 3vw, 2.5rem);
+}
+.omio-hero__text { margin: 0; max-width: 44ch; color: var(--texto-2); font-size: var(--t-lg); line-height: 1.45; }
+.omio-hero__ctas { display: flex; flex-wrap: wrap; gap: .75rem; }
+
+.omio-kelvin {
+	display: inline-flex; flex-wrap: wrap; align-items: center; gap: .4rem;
+	margin-top: clamp(1.5rem, 4vw, 3rem);
+	padding: .4rem .4rem .4rem 1rem;
+	border: 1px solid var(--linea); border-radius: 999px;
+	justify-self: start;
+	background: color-mix(in oklab, var(--noche) 70%, transparent);
+}
+.omio-kelvin .omio-label { margin-right: .4rem; }
+.omio-kelvin button {
+	display: inline-flex; align-items: baseline; gap: .4rem;
+	padding: .5rem .9rem; border-radius: 999px; border: 0;
+	background: transparent; color: var(--texto-2);
+	font: inherit; font-size: var(--t-sm); cursor: pointer;
+	transition: background .2s, color .2s;
+}
+.omio-kelvin button b { font-family: var(--f-mono); font-weight: 500; }
+.omio-kelvin button small { font-size: var(--t-xs); }
+.omio-kelvin button::before {
+	content: ""; width: .5rem; height: .5rem; border-radius: 50%; align-self: center;
+	background: var(--k);
+}
+.omio-kelvin [data-k="3000"] { --k: #FFB867; }
+.omio-kelvin [data-k="4000"] { --k: #FFE3B0; }
+.omio-kelvin [data-k="6500"] { --k: #D9E9FF; }
+.omio-kelvin button[aria-pressed="true"] { background: var(--papel); color: var(--noche); }
+
+.omio-hero__hint {
+	position: absolute; right: max(var(--gutter-r), min(48px, 4vw)); bottom: 1.25rem;
+	margin: 0; font-size: var(--t-xs); color: var(--texto-2); opacity: .7;
+}
+@media (hover: none) { .omio-hero__hint { display: none; } .omio-hero { cursor: auto; } }
+
+/* --------------------------------------------------------------------------
+   Secciones
+   ----------------------------------------------------------------------- */
+.omio-section { padding-block: clamp(4.5rem, 10vw, 9rem); position: relative; }
+.omio-head { display: grid; gap: .25rem; margin-bottom: clamp(2.5rem, 5vw, 4rem); }
+.omio-head .omio-h2 { max-width: 15ch; }
+.omio-head--split {
+	max-width: none;
+	display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 1.5rem;
+}
+
+/* ---------- Mundos ---------- */
+.omio-mundos { border-top: 1px solid var(--linea); }
+.omio-mundos__list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--linea); }
+.omio-mundo { border-bottom: 1px solid var(--linea); }
+.omio-mundo__link {
+	position: relative;
+	display: grid;
+	grid-template-columns: clamp(56px, 7vw, 96px) minmax(0, 1fr) minmax(0, 1.1fr) auto;
+	align-items: center;
+	gap: clamp(1rem, 3vw, 2.5rem);
+	padding-block: clamp(1.25rem, 2.6vw, 2rem);
+	text-decoration: none;
+	isolation: isolate;
+}
+.omio-mundo__link::before {
+	content: ""; position: absolute; inset: 0 calc(-1 * min(48px, 4vw)); z-index: -1;
+	background: radial-gradient(ellipse 60% 140% at 8% 50%, color-mix(in oklab, var(--luz) 20%, transparent), transparent 70%);
+	opacity: 0; transition: opacity .5s var(--ease);
+}
+.omio-mundo__fx { color: var(--texto-2); transition: color .4s; }
+.omio-mundo__fx .omio-fx { width: 100%; height: auto; display: block; }
+.omio-mundo__name {
+	font-family: var(--f-display);
+	font-size: clamp(2.2rem, 1rem + 5vw, 5.5rem);
+	font-weight: 900; font-stretch: 125%;
+	letter-spacing: -.05em; line-height: .95;
+	color: color-mix(in oklab, var(--papel) 30%, var(--noche));
+	transition: color .4s var(--ease), letter-spacing .5s var(--ease);
+}
+.omio-mundo__body { display: grid; gap: .3rem; min-width: 0; }
+.omio-mundo__spec { font-size: var(--t-xs); color: var(--luz); text-transform: uppercase; letter-spacing: .1em; }
+.omio-mundo__text { color: var(--texto-2); max-width: 46ch; }
+.omio-mundo__go {
+	display: grid; place-items: center; width: 3.25rem; height: 3.25rem; border-radius: 50%;
+	border: 1px solid var(--linea); transition: background .3s, color .3s, transform .4s var(--ease);
+}
+.omio-mundo__link:hover::before,
+.omio-mundo__link:focus-visible::before { opacity: 1; }
+.omio-mundo__link:hover .omio-mundo__name,
+.omio-mundo__link:focus-visible .omio-mundo__name { color: var(--texto); letter-spacing: -.035em; }
+.omio-mundo__link:hover .omio-mundo__fx,
+.omio-mundo__link:focus-visible .omio-mundo__fx { color: var(--texto); }
+.omio-mundo__link:hover .omio-mundo__go { background: var(--luz); color: var(--sobre-luz); border-color: var(--luz); transform: rotate(-45deg); }
+
+@media (max-width: 760px) {
+	.omio-mundo__link { grid-template-columns: 56px minmax(0, 1fr) auto; }
+	.omio-mundo__body { grid-column: 1 / -1; }
+	.omio-mundo__go { grid-row: 1; grid-column: 3; width: 2.75rem; height: 2.75rem; }
+}
+
+/* Ilustraciones SVG de luminarias */
+.omio-fx { overflow: visible; }
+.omio-fx__glow { fill: var(--luz); stroke: none; opacity: .18; transition: opacity .4s, filter .4s; }
+.omio-fx__beam { fill: var(--luz); stroke: none; opacity: 0; transition: opacity .5s var(--ease); }
+.omio-mundo__link:hover .omio-fx__glow,
+.omio-mundo__link:focus-visible .omio-fx__glow,
+.omio-spec:hover .omio-fx__glow,
+.product:hover .omio-fx__glow { opacity: 1; filter: drop-shadow(0 0 6px var(--luz)); }
+.omio-mundo__link:hover .omio-fx__beam,
+.omio-mundo__link:focus-visible .omio-fx__beam,
+.omio-spec:hover .omio-fx__beam,
+.product:hover .omio-fx__beam { opacity: .16; }
+
+/* ---------- Líneas ---------- */
+.omio-lineas { background: var(--noche-2); }
+.omio-tabs {
+	display: flex; flex-wrap: wrap; gap: .4rem;
+	padding: .35rem; border-radius: 999px; border: 1px solid var(--linea);
+	max-width: 100%;
+}
+.omio-tabs button {
+	padding: .65rem 1.1rem; border-radius: 999px; border: 0; cursor: pointer;
+	background: transparent; color: var(--texto-2);
+	font: inherit; font-weight: 700; font-size: var(--t-sm);
+	transition: background .25s, color .25s;
+}
+.omio-tabs button:hover { color: var(--texto); }
+.omio-tabs button[aria-selected="true"] { background: var(--luz); color: var(--sobre-luz); }
+@media (max-width: 640px) { .omio-tabs { border-radius: var(--radio); } }
+
+.omio-panel[hidden] { display: none; }
+.omio-panel {
+	display: grid;
+	grid-template-columns: minmax(0, .8fr) minmax(0, 1.6fr);
+	gap: clamp(2rem, 5vw, 5rem);
+	animation: omio-in .5s var(--ease);
+}
+@keyframes omio-in { from { opacity: .2; transform: translateY(8px); } }
+@media (prefers-reduced-motion: reduce) { .omio-panel { animation: none; } }
+.omio-panel__intro { display: grid; gap: 1rem; align-content: start; }
+.omio-panel__intro p { margin: 0; color: var(--texto-2); max-width: 40ch; }
+.omio-panel__intro .omio-link { justify-self: start; }
+
+.omio-specs {
+	list-style: none; margin: 0; padding: 0;
+	display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr));
+	gap: .75rem;
+}
+.omio-spec {
+	border: 1px solid var(--linea); border-radius: var(--radio);
+	display: grid; gap: .9rem; align-content: start;
+	padding: 1.4rem;
+	background: var(--noche-2);
+	transition: background .3s;
+}
+.omio-spec:hover { background: var(--noche-3); }
+.omio-spec__fx { width: 64px; color: var(--texto); }
+.omio-spec__fx .omio-fx { width: 100%; height: auto; display: block; }
+.omio-spec__name { font-weight: 700; font-size: var(--t-md); line-height: 1.3; }
+.omio-spec__chips { display: flex; flex-wrap: wrap; gap: .35rem; }
+.omio-chip {
+	font-family: var(--f-mono); font-size: .72rem; letter-spacing: .02em;
+	padding: .2rem .55rem; border-radius: 6px;
+	border: 1px solid var(--linea); color: var(--texto-2);
+}
+@media (max-width: 860px) { .omio-panel { grid-template-columns: minmax(0, 1fr); } }
+
+/* ---------- Potencia ---------- */
+.omio-watt { --pw: .5; overflow: hidden; }
+.omio-watt__grid {
+	display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+	gap: clamp(2rem, 6vw, 6rem); align-items: center;
+}
+.omio-watt__stage {
+	position: relative;
+	aspect-ratio: 1 / 1.05;
+	max-width: 100%;
+	border-radius: var(--radio);
+	background:
+		linear-gradient(to bottom, transparent 0 78%, var(--noche-2) 78%),
+		var(--noche);
+	border: 1px solid var(--linea);
+	overflow: hidden;
+}
+.omio-watt__lamp {
+	position: absolute; left: 50%; top: 8%;
+	width: 30%; height: auto;
+	transform: translateX(-50%);
+	color: var(--texto);
+}
+.omio-watt__lamp .omio-fx__beam { display: none; }
+.omio-watt__lamp .omio-fx__glow { opacity: calc(.35 + var(--pw) * .65); filter: drop-shadow(0 0 calc(4px + var(--pw) * 16px) var(--luz)); }
+.omio-watt__beam {
+	position: absolute; left: 50%; top: 26%;
+	width: calc(30% + var(--pw) * 110%); height: 54%;
+	transform: translateX(-50%);
+	background: linear-gradient(to bottom,
+		color-mix(in oklab, var(--luz) calc(18% + var(--pw) * 45%), transparent),
+		color-mix(in oklab, var(--luz) calc(4% + var(--pw) * 14%), transparent));
+	clip-path: polygon(38% 0, 62% 0, 100% 100%, 0 100%);
+	filter: blur(4px);
+	transition: width .5s var(--ease), background .5s;
+}
+.omio-watt__floor {
+	position: absolute; left: 50%; top: 78%;
+	width: calc(40% + var(--pw) * 120%); height: 18%;
+	transform: translate(-50%, -50%);
+	background: radial-gradient(ellipse at center, color-mix(in oklab, var(--luz) calc(20% + var(--pw) * 50%), transparent), transparent 65%);
+	transition: width .5s var(--ease);
+}
+.omio-watt__panel { display: grid; gap: 1rem; min-width: 0; }
+.omio-watt__readout { margin: .5rem 0 0; display: flex; align-items: baseline; gap: .4rem; line-height: .85; }
+.omio-watt__num {
+	font-family: var(--f-display); font-weight: 900; font-stretch: 125%;
+	font-size: clamp(5rem, 3rem + 9vw, 10rem); letter-spacing: -.06em;
+	color: var(--luz);
+	font-variant-numeric: tabular-nums;
+}
+.omio-watt__unit { font-family: var(--f-mono); font-size: var(--t-xl); color: var(--texto-2); }
+.omio-watt__use { margin: 0; font-size: var(--t-lg); min-height: 1.6em; }
+.omio-range {
+	-webkit-appearance: none; appearance: none;
+	width: 100%; height: 6px; margin-top: 1rem; border-radius: 999px;
+	background: linear-gradient(to right, var(--luz) calc(var(--pw) * 100%), var(--noche-3) 0);
+	cursor: pointer;
+}
+.omio-range::-webkit-slider-thumb {
+	-webkit-appearance: none; appearance: none;
+	width: 28px; height: 28px; border-radius: 50%;
+	background: var(--papel); border: 6px solid var(--luz);
+	box-shadow: 0 0 0 6px color-mix(in oklab, var(--luz) 20%, transparent);
+}
+.omio-range::-moz-range-thumb {
+	width: 18px; height: 18px; border-radius: 50%;
+	background: var(--papel); border: 6px solid var(--luz);
+}
+.omio-watt__ticks {
+	list-style: none; margin: 0; padding: 0;
+	display: flex; justify-content: space-between;
+	font-size: var(--t-xs); color: var(--texto-2);
+}
+.omio-watt__foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem; margin-top: 1rem; padding-top: 1.25rem; border-top: 1px solid var(--linea); }
+.omio-watt__price { margin: 0; font-weight: 700; font-size: var(--t-lg); }
+@media (max-width: 860px) {
+	.omio-watt__grid { grid-template-columns: minmax(0, 1fr); }
+	.omio-watt__stage { aspect-ratio: 4 / 3; }
+}
+
+/* ---------- Tecnología (sección clara) ---------- */
+.omio-tech {
+	background: var(--papel);
+	color: var(--noche);
+	--linea: color-mix(in oklab, var(--noche) 14%, transparent);
+	--texto-2: color-mix(in oklab, var(--noche) 64%, var(--papel));
+}
+.omio-tech .omio-label { color: var(--texto-2); }
+.omio-tech__grid {
+	display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 1px; background: var(--linea);
+	border: 1px solid var(--linea); border-radius: var(--radio); overflow: hidden;
+}
+.omio-tech__card {
+	background: var(--papel);
+	padding: clamp(1.5rem, 3vw, 2.5rem);
+	display: grid; gap: .75rem; align-content: start;
+}
+.omio-tech__card p { margin: 0; color: var(--texto-2); }
+.omio-tech__card--big { grid-row: span 2; background: var(--noche); color: var(--papel); --texto-2: color-mix(in oklab, var(--papel) 66%, var(--noche)); --linea: color-mix(in oklab, var(--papel) 14%, transparent); }
+.omio-tech__code {
+	font-family: var(--f-display); font-weight: 900; font-stretch: 125%;
+	font-size: clamp(2.6rem, 1.6rem + 3vw, 4rem); letter-spacing: -.05em; line-height: 1;
+	margin: 0 0 .75rem !important; color: inherit !important;
+}
+.omio-tech__code span { color: var(--luz); }
+.omio-tech .omio-tech__card:not(.omio-tech__card--big) .omio-tech__code span { color: color-mix(in oklab, var(--luz) 70%, var(--noche)); }
+.omio-tech__card--big .omio-tech__code { font-size: clamp(4rem, 2rem + 5vw, 7rem); text-shadow: 0 0 60px color-mix(in oklab, var(--luz) 30%, transparent); }
+.omio-tech__ip { display: grid; gap: .5rem; margin: 1rem 0 0; }
+.omio-tech__ip div { display: flex; gap: 1rem; align-items: center; padding-top: .5rem; border-top: 1px solid var(--linea); }
+.omio-tech__ip dt { font-size: 1.5rem; color: var(--luz); width: 1.5rem; }
+.omio-tech__ip dd { margin: 0; font-size: var(--t-sm); color: var(--texto-2); }
+@media (max-width: 960px) {
+	.omio-tech__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+	.omio-tech__card--big { grid-row: auto; grid-column: 1 / -1; }
+}
+@media (max-width: 560px) { .omio-tech__grid { grid-template-columns: minmax(0, 1fr); } }
+
+/* ---------- Productos (WooCommerce) ---------- */
+.woocommerce ul.products,
+ul.products {
+	list-style: none; margin: 0; padding: 0;
+	display: grid !important;
+	grid-template-columns: repeat(auto-fit, minmax(min(100%, 15.5rem), 1fr));
+	gap: 1.25rem;
+}
+.woocommerce ul.products::before,
+.woocommerce ul.products::after { display: none !important; }
+ul.products li.product {
+	position: relative;
+	width: auto !important; margin: 0 !important; float: none !important;
+	display: grid; grid-template-rows: 1fr auto; gap: .9rem;
+	padding: 1rem 1rem 1.25rem;
+	border-radius: var(--radio);
+	background: var(--noche-2);
+	border: 1px solid var(--linea);
+	transition: border-color .3s, transform .4s var(--ease), box-shadow .4s var(--ease);
+}
+ul.products li.product:hover {
+	border-color: color-mix(in oklab, var(--luz) 55%, transparent);
+	transform: translateY(-4px);
+	box-shadow: 0 30px 60px -30px color-mix(in oklab, var(--luz) 45%, transparent);
+}
+ul.products li.product a.woocommerce-LoopProduct-link { display: grid; gap: .6rem; text-decoration: none; align-content: start; }
+ul.products li.product img,
+.omio-product__fx {
+	display: block; width: 100%; aspect-ratio: 1; object-fit: contain;
+	border-radius: calc(var(--radio) - 4px);
+	background: radial-gradient(circle at 50% 35%, var(--noche-3), var(--noche) 75%);
+	margin: 0 !important;
+}
+.omio-product__fx { display: grid; place-items: center; padding: 18%; color: var(--texto); }
+.omio-product__fx .omio-fx { width: 100%; height: auto; }
+ul.products li.product .woocommerce-loop-product__title {
+	font-family: var(--f-body); font-size: var(--t-md) !important; font-weight: 700;
+	line-height: 1.3; margin: .4rem 0 0; padding: 0 !important;
+}
+ul.products li.product .price {
+	display: block; font-family: var(--f-mono); font-size: var(--t-md); color: var(--luz) !important;
+}
+ul.products li.product .price del { color: var(--texto-2); opacity: .7; margin-right: .4rem; }
+ul.products li.product .price ins { text-decoration: none; }
+ul.products li.product .onsale {
+	position: absolute; top: 1.4rem; left: 1.4rem; z-index: 2; margin: 0 !important;
+	background: var(--luz); color: var(--sobre-luz); border-radius: 999px;
+	padding: .2rem .7rem; min-height: 0; min-width: 0; line-height: 1.4; font-size: var(--t-xs); font-weight: 800;
+}
+ul.products li.product .button,
+.woocommerce a.button, .woocommerce button.button, .woocommerce input.button,
+.woocommerce #respond input#submit {
+	display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
+	margin: 0 !important;
+	padding: .8rem 1.2rem !important;
+	border-radius: 999px !important;
+	border: 1.5px solid var(--linea) !important;
+	background: transparent !important;
+	color: var(--texto) !important;
+	font-family: var(--f-body) !important; font-weight: 700 !important; font-size: var(--t-sm) !important;
+	text-decoration: none;
+	transition: background .25s, color .25s, border-color .25s;
+}
+ul.products li.product .button:hover,
+.woocommerce a.button:hover, .woocommerce button.button:hover { background: var(--luz) !important; color: var(--sobre-luz) !important; border-color: var(--luz) !important; }
+.woocommerce a.button.alt, .woocommerce button.button.alt,
+.woocommerce .single_add_to_cart_button, .woocommerce .checkout-button, .woocommerce #place_order {
+	background: var(--luz) !important; color: var(--sobre-luz) !important; border-color: var(--luz) !important;
+}
+ul.products li.product .added_to_cart { font-size: var(--t-sm); color: var(--luz); text-align: center; }
+.omio-destacados .woocommerce { width: 100%; }
+
+/* ---------- Profesionales ---------- */
+.omio-pro {
+	background: var(--luz);
+	color: var(--sobre-luz);
+	--linea: color-mix(in oklab, var(--noche) 18%, transparent);
+	--texto-2: color-mix(in oklab, var(--noche) 72%, var(--luz));
+	overflow: hidden;
+}
+.omio-pro::before {
+	content: ""; position: absolute; inset: 0; pointer-events: none;
+	background-image:
+		linear-gradient(var(--linea) 1px, transparent 1px),
+		linear-gradient(90deg, var(--linea) 1px, transparent 1px);
+	background-size: 48px 48px;
+	-webkit-mask: linear-gradient(115deg, transparent 30%, #000 85%);
+	        mask: linear-gradient(115deg, transparent 30%, #000 85%);
+}
+.omio-pro .omio-label { color: var(--texto-2); }
+.omio-pro__inner {
+	position: relative;
+	display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+	gap: clamp(2rem, 6vw, 6rem); align-items: center;
+}
+.omio-pro__copy { display: grid; gap: 1.25rem; }
+.omio-pro__copy p:not(.omio-label) { margin: 0; max-width: 50ch; font-size: var(--t-lg); line-height: 1.45; }
+.omio-pro .omio-btn--luz { --bg: var(--noche); color: var(--papel); }
+.omio-pro .omio-btn--luz:hover { box-shadow: 0 14px 40px -12px color-mix(in oklab, var(--noche) 70%, transparent); }
+.omio-pro .omio-btn--ghost { color: var(--noche); border-color: var(--noche); }
+.omio-pro .omio-btn--ghost:hover { background: var(--noche); color: var(--luz); }
+.omio-pro__list { list-style: none; margin: 0; padding: 0; display: grid; }
+.omio-pro__list li {
+	display: flex; align-items: baseline; gap: 1.25rem;
+	padding-block: 1.1rem; border-bottom: 1.5px solid var(--noche);
+	font-family: var(--f-display); font-weight: 800; font-stretch: 110%;
+	font-size: clamp(1.25rem, 1rem + 1vw, 1.75rem); letter-spacing: -.02em; line-height: 1.15;
+}
+.omio-pro__list li:first-child { border-top: 1.5px solid var(--noche); }
+.omio-pro__list .omio-mono { font-size: var(--t-xs); font-weight: 500; }
+@media (max-width: 860px) { .omio-pro__inner { grid-template-columns: minmax(0, 1fr); } }
+
+/* ---------- Paraguay ---------- */
+.omio-py__inner {
+	display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
+	gap: clamp(2rem, 6vw, 6rem); align-items: center;
+}
+.omio-py__copy { display: grid; gap: 1.25rem; }
+.omio-py__copy p:not(.omio-label) { margin: 0; max-width: 46ch; color: var(--texto-2); font-size: var(--t-lg); line-height: 1.5; }
+.omio-py__map { width: 100%; height: auto; max-width: 440px; justify-self: center; overflow: visible; }
+.omio-py__map text { fill: var(--texto); font-family: var(--f-mono); font-size: 13px; letter-spacing: .04em; }
+.omio-py__route {
+	fill: none; stroke: var(--luz); stroke-width: 2; stroke-dasharray: 6 8;
+	animation: omio-dash 1.2s linear infinite;
+}
+@keyframes omio-dash { to { stroke-dashoffset: -28; } }
+.omio-py__dot { fill: var(--luz); }
+.omio-py__ring { fill: none; stroke: var(--luz); stroke-width: 1.5; transform-box: fill-box; transform-origin: center; animation: omio-ring 2.4s var(--ease) infinite; }
+.omio-py__ring--2 { animation-delay: 1.2s; }
+@keyframes omio-ring { from { transform: scale(1); opacity: .9; } to { transform: scale(4.5); opacity: 0; } }
+@media (prefers-reduced-motion: reduce) {
+	.omio-py__route, .omio-py__ring, .omio-led { animation: none; }
+}
+@media (max-width: 760px) { .omio-py__inner { grid-template-columns: minmax(0, 1fr); } .omio-py__map { max-width: 300px; } }
+
+/* ---------- Beneficios ---------- */
+.omio-perks { border-block: 1px solid var(--linea); }
+.omio-perks__grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.omio-perk {
+	display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: 1rem; align-items: start;
+	padding: 2rem clamp(1rem, 3vw, 2.5rem);
+	border-left: 1px solid var(--linea);
+}
+.omio-perk:first-child { border-left: 0; padding-left: 0; }
+.omio-perk .omio-icon { width: 2rem; height: 2rem; color: var(--luz); grid-row: span 2; }
+.omio-perk h3 { margin: 0; font-size: var(--t-md); font-weight: 800; }
+.omio-perk p { margin: .2rem 0 0; color: var(--texto-2); font-size: var(--t-sm); }
+@media (max-width: 760px) {
+	.omio-perks__grid { grid-template-columns: minmax(0, 1fr); }
+	.omio-perk { border-left: 0; border-top: 1px solid var(--linea); padding-inline: 0; }
+	.omio-perk:first-child { border-top: 0; }
+}
+
+/* ---------- Contacto ---------- */
+.omio-contacto__grid {
+	display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+	gap: clamp(2rem, 6vw, 5rem); align-items: stretch;
+}
+.omio-contacto__copy { display: grid; gap: 1rem; align-content: start; justify-items: start; }
+.omio-contacto__copy .omio-h2 { margin-bottom: 1rem; }
+.omio-contacto__big {
+	font-family: var(--f-display); font-weight: 800; font-stretch: 112%;
+	font-size: clamp(1.6rem, 1rem + 2.6vw, 3rem); letter-spacing: -.035em; line-height: 1.05;
+	text-decoration: none; overflow-wrap: anywhere;
+	background: linear-gradient(var(--luz), var(--luz)) 0 100% / 0 2px no-repeat;
+	transition: background-size .5s var(--ease), color .3s;
+}
+.omio-contacto__big:hover { color: var(--luz); background-size: 100% 2px; }
+.omio-contacto__data { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.5rem; margin: 1.5rem 0; width: 100%; }
+.omio-contacto__data div { display: grid; gap: .3rem; padding-top: 1rem; border-top: 1px solid var(--linea); }
+.omio-contacto__data dd { margin: 0; }
+.omio-contacto__map {
+	min-height: 380px; border-radius: var(--radio); overflow: hidden;
+	border: 1px solid var(--linea); background: var(--noche-2);
+}
+.omio-contacto__map iframe {
+	display: block; width: 100%; height: 100%; min-height: 380px; border: 0;
+	filter: invert(.92) hue-rotate(180deg) saturate(.4) brightness(.95);
+}
+@media (max-width: 860px) {
+	.omio-contacto__grid { grid-template-columns: minmax(0, 1fr); }
+	.omio-contacto__data { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* --------------------------------------------------------------------------
+   Footer
+   ----------------------------------------------------------------------- */
+.omio-footer { position: relative; overflow: hidden; border-top: 1px solid var(--linea); padding-top: clamp(4rem, 8vw, 7rem); }
+.omio-footer__glow {
+	position: absolute; left: 50%; bottom: -40vmax; width: 120vmax; height: 60vmax; transform: translateX(-50%);
+	background: radial-gradient(ellipse at center, color-mix(in oklab, var(--luz) 16%, transparent), transparent 60%);
+	pointer-events: none;
+}
+.omio-footer__grid {
+	position: relative;
+	display: grid; grid-template-columns: minmax(0, 1.6fr) repeat(3, minmax(0, 1fr));
+	gap: 2.5rem;
+}
+.omio-footer__word {
+	margin: 0; font-family: var(--f-display); font-weight: 900; font-stretch: 125%;
+	font-size: clamp(4rem, 2rem + 6vw, 8rem); line-height: .8; letter-spacing: -.07em;
+	color: var(--luz);
+	text-shadow: 0 0 80px color-mix(in oklab, var(--luz) 40%, transparent);
+}
+.omio-footer__claim { margin: 1rem 0 0; color: var(--texto-2); max-width: 26ch; }
+.omio-footer__col { display: grid; gap: 1rem; align-content: start; min-width: 0; }
+.omio-footer__col ul { list-style: none; margin: 0; padding: 0; display: grid; gap: .55rem; }
+.omio-footer__col a { text-decoration: none; color: var(--texto-2); transition: color .2s; }
+.omio-footer__col a:hover { color: var(--luz); }
+.omio-footer__contact li { display: flex; gap: .6rem; align-items: flex-start; color: var(--texto-2); font-size: var(--t-sm); overflow-wrap: anywhere; }
+.omio-footer__contact .omio-icon { margin-top: .15rem; color: var(--luz); }
+.omio-footer__social { display: flex; flex-wrap: wrap; gap: .5rem; }
+.omio-footer__social a {
+	padding: .4rem .85rem; border: 1px solid var(--linea); border-radius: 999px;
+	font-size: var(--t-xs); font-weight: 700; color: var(--texto);
+}
+.omio-footer__legal {
+	position: relative;
+	display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem;
+	margin-top: clamp(3rem, 6vw, 5rem); padding-block: 1.5rem;
+	border-top: 1px solid var(--linea);
+	font-size: var(--t-xs); color: var(--texto-2);
+}
+@media (max-width: 960px) {
+	.omio-footer__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+	.omio-footer__brand { grid-column: 1 / -1; }
+}
+@media (max-width: 600px) { .omio-footer__grid { grid-template-columns: minmax(0, 1fr); } }
+
+.omio-wa {
+	position: fixed; z-index: 40;
+	right: calc(1.25rem + env(safe-area-inset-right, 0px));
+	bottom: calc(1.25rem + env(safe-area-inset-bottom, 0px));
+	display: grid; place-items: center;
+	width: 3.5rem; height: 3.5rem; border-radius: 50%;
+	background: var(--luz); color: var(--sobre-luz);
+	box-shadow: 0 12px 30px -8px color-mix(in oklab, var(--luz) 70%, transparent);
+	transition: transform .3s var(--ease);
+}
+.omio-wa .omio-icon { width: 1.6rem; height: 1.6rem; }
+.omio-wa:hover { transform: scale(1.08); }
+
+/* --------------------------------------------------------------------------
+   Páginas internas y WooCommerce general
+   ----------------------------------------------------------------------- */
+.omio-page { padding-block: clamp(3rem, 7vw, 6rem); }
+.omio-page__head { margin-bottom: clamp(2rem, 4vw, 3rem); display: grid; gap: .5rem; }
+.omio-page__title {
+	font-family: var(--f-display); font-weight: 900; font-stretch: 120%;
+	font-size: var(--t-2xl); letter-spacing: -.045em; line-height: .95; margin: 0; text-wrap: balance;
+}
+.omio-prose { max-width: 72ch; }
+.omio-prose a { color: var(--luz); }
+.omio-prose h2, .omio-prose h3 { font-family: var(--f-display); letter-spacing: -.02em; line-height: 1.15; }
+
+.woocommerce .woocommerce-breadcrumb { font-family: var(--f-mono); font-size: var(--t-xs); color: var(--texto-2); margin-bottom: 1.5rem; }
+.woocommerce .woocommerce-breadcrumb a { color: var(--texto-2); }
+.woocommerce .woocommerce-products-header__title,
+.woocommerce div.product .product_title {
+	font-family: var(--f-display); font-weight: 900; font-stretch: 120%;
+	font-size: var(--t-2xl); letter-spacing: -.045em; line-height: .95; margin: 0 0 1rem;
+}
+.woocommerce div.product p.price, .woocommerce div.product span.price { color: var(--luz); font-family: var(--f-mono); font-size: var(--t-xl); }
+.woocommerce div.product .woocommerce-tabs ul.tabs li { background: var(--noche-2); border-color: var(--linea); }
+.woocommerce div.product .woocommerce-tabs ul.tabs li.active { background: var(--luz); }
+.woocommerce div.product .woocommerce-tabs ul.tabs li.active a { color: var(--sobre-luz); }
+.woocommerce div.product .woocommerce-tabs ul.tabs::before,
+.woocommerce div.product .woocommerce-tabs ul.tabs li::before,
+.woocommerce div.product .woocommerce-tabs ul.tabs li::after { display: none; }
+.woocommerce .quantity .qty,
+.woocommerce form .form-row input.input-text,
+.woocommerce form .form-row textarea,
+.woocommerce select,
+.woocommerce-ordering select {
+	background: var(--noche-2); color: var(--texto); border: 1px solid var(--linea);
+	border-radius: 10px; padding: .7rem .9rem; font: inherit;
+}
+.woocommerce table.shop_table { border-color: var(--linea); border-radius: var(--radio); }
+.woocommerce table.shop_table td, .woocommerce table.shop_table th { border-color: var(--linea); }
+.woocommerce-message, .woocommerce-info, .woocommerce-error {
+	background: var(--noche-2) !important; color: var(--texto) !important;
+	border-top-color: var(--luz) !important; border-radius: 0 0 var(--radio) var(--radio);
+}
+.woocommerce-message::before, .woocommerce-info::before { color: var(--luz) !important; }
+.woocommerce nav.woocommerce-pagination ul, .woocommerce nav.woocommerce-pagination ul li { border-color: var(--linea); }
+.woocommerce nav.woocommerce-pagination ul li span.current { background: var(--luz); color: var(--sobre-luz); }
+.woocommerce .woocommerce-result-count { color: var(--texto-2); font-size: var(--t-sm); }
+.woocommerce .star-rating span::before { color: var(--luz); }
+.omio-prose--wide { max-width: none; }
+.omio-404 .omio-wrap { display: grid; gap: 1rem; justify-items: start; }
+
+/* Lámpara colgada del techo en el hero */
+.omio-hero__fixture::before {
+	content: ""; position: absolute; left: 50%; top: -100vh; height: calc(100vh + 18%);
+	border-left: 1px solid var(--linea);
+}
+.omio-hero__lamp { transform: rotate(var(--lamp-rot, 28deg)) scaleY(-1); }
+
+/* Ajustes móviles */
+.omio-hero__content > * { min-width: 0; }
+@media (max-width: 640px) {
+	.omio-hero__title { font-size: 14.5vw; font-stretch: 100%; letter-spacing: -.045em; }
+	.omio-logo__tag { display: none; }
+	.omio-kelvin { border-radius: var(--radio); padding: .6rem; }
+	.omio-kelvin .omio-label { width: 100%; margin: 0 0 .2rem .4rem; }
+	.omio-hero__fixture { right: 4vw; }
+}

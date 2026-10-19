@@ -1,0 +1,16 @@
+/*
+Theme Name: Omio Iluminación
+Theme URI: https://omio.uy
+Author: Omio
+Description: Tema a medida para Omio Iluminación. Portada interactiva (el reflector sigue al cursor), líneas de producto, selector de potencia, sección para profesionales y compatibilidad total con WooCommerce. Colores, tipografías, textos y contacto se editan desde Apariencia → Personalizar → Omio.
+Version: 1.0.0
+Requires at least: 6.0
+Requires PHP: 7.4
+License: GNU General Public License v2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: omio
+Tags: e-commerce, woocommerce, custom-colors, custom-logo, custom-menu, one-column
+WC requires at least: 7.0
+*/
+
+/* Los estilos del tema están en assets/css/omio.css */
