@@ -1,7 +1,8 @@
 # Grupo Sureste — sitio web
 
-Sitio de una sola página en español, inglés y portugués:
-**Inicio · Quiénes somos · Nuestra selección · Servicios · Contacto**.
+Sitio de una sola página en español, inglés y portugués. Menú: **Inicio · Quiénes somos · Nuestra selección · Servicios · Contacto**.
+
+Orden de la página: portada con el logo → recorrido con scroll (7 etapas) → Quiénes somos → dos caminos → divisiones → Nuestra selección (carrusel circular de 5 categorías) → Por qué Uruguay → proceso → Servicios (4 formularios) → Contacto.
 
 ## Publicar
 
@@ -21,8 +22,9 @@ npm run dev     # compila y sirve en http://localhost:3000
 | `index.html` | Estructura de las secciones y los cuatro formularios |
 | `src/i18n.js` | Todos los textos en español, inglés y portugués |
 | `src/styles.css` | Paleta, tipografías y diseño |
-| `src/main.js` | Animaciones, idiomas, ventanas de formulario, envío y datos de contacto (`CONTACT`) |
-| `assets/img/` | Logo, fotos de categorías, Quiénes somos, Servicios y Contacto |
+| `src/main.js` | Animaciones, recorrido, carrusel (`CATS`), idiomas, ventanas de formulario, envío y datos de contacto (`CONTACT`) |
+| `src/paint.js` | Dibuja las fotos del carrusel y de los dos caminos en canvas |
+| `assets/img/` | Logo completo, fotos del recorrido, categorías y demás secciones |
 | `material-anterior/` | Fotos y código que ya no se usan (archivados, no se publican) |
 
 ## Pendientes

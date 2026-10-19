@@ -7,7 +7,7 @@
 <meta name="description" content="Grupo Sureste: referente local y global en servicios integrales para quienes eligen vivir, invertir o desarrollar en Uruguay.">
 <meta name="theme-color" content="#f7f3ec">
 <link rel="preload" href="assets/fonts/outfit-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="assets/img/logo-texto-1000.webp" as="image">
+<link rel="preload" href="assets/img/logo-grupo-sureste-900.webp" as="image">
 <link rel="stylesheet" href="assets/styles.css">
 </head>
 <body class="is-loading">
@@ -41,6 +41,7 @@
     <button type="button" data-lang="en" aria-pressed="false">EN</button>
     <button type="button" data-lang="pt" aria-pressed="false">PT</button>
   </div>
+  <button type="button" class="btn btn--gold nav__cta" data-open="cotizacion" data-magnetic data-cursor="Abrir" data-i18n-attr="data-cursor:cursor.open"><span data-i18n="nav.cta">Cotizá tu proyecto</span></button>
   <button class="nav__burger" id="burger" aria-label="Abrir menú" aria-expanded="false" aria-controls="menu"><span></span><span></span></button>
 </header>
 
@@ -63,18 +64,81 @@
 </div>
 
 <main>
-  <!-- 1. INICIO: logo oficial centrado (brújula y textos son el mismo archivo, separados para que la brújula gire) -->
+  <!-- 1. INICIO: logo oficial completo, centrado, en su proporción original -->
   <section class="hero" id="inicio">
     <h1 class="visually-hidden" data-i18n="hero.h1">Grupo Sureste · Inversión, Propiedades y Estilo de vida. Hacemos posible tu nueva vida en Uruguay.</h1>
     <div class="hero__logo">
-      <img class="hero__compass" src="assets/img/logo-compass-520.webp" alt="" width="520" height="531">
-      <img class="hero__wordmark" src="assets/img/logo-texto-1000.webp" alt="Grupo Sureste. Inversión, Propiedades, Estilo de vida. Hacemos posible tu nueva vida en Uruguay." width="1000" height="505">
+      <img class="hero__logoimg" src="assets/img/logo-grupo-sureste-900.webp" alt="Grupo Sureste. Inversión, Propiedades, Estilo de vida. Hacemos posible tu nueva vida en Uruguay." width="900" height="1238">
     </div>
     <div class="hero__ctas">
       <a href="#seleccion" class="btn btn--gold" data-magnetic data-cursor="Ver" data-i18n-attr="data-cursor:cursor.see"><span data-i18n="hero.cta1">Nuestra selección</span></a>
       <a href="#servicios" class="btn btn--line" data-magnetic data-cursor="Ver" data-i18n-attr="data-cursor:cursor.see"><span data-i18n="hero.cta2">Servicios</span></a>
     </div>
     <a href="#nosotros" class="hero__scroll" aria-label="Ir a Quiénes somos" data-i18n-attr="aria-label:hero.scrollAria"><span data-i18n="hero.scroll">Descubrí</span><i></i></a>
+  </section>
+
+  <!-- RECORRIDO: misma animación con scroll, con fotos del material del cliente -->
+  <section class="ascend" id="ascend" aria-label="Recorrido por las etapas de tu proyecto" data-i18n-attr="aria-label:asc.aria">
+    <div class="ascend__sticky">
+      <div class="ascend__media">
+        <div class="seq" id="seq">
+          <img class="seq__img is-first" src="assets/img/fondo-uruguay-1600.webp" srcset="assets/img/fondo-uruguay-900.webp 900w, assets/img/fondo-uruguay-1600.webp 1600w" sizes="(max-width: 900px) 100vw, 56vw" alt="Costa uruguaya al atardecer con una casa entre pinos" style="object-position:50% 50%" loading="lazy" decoding="async">
+          <img class="seq__img" src="assets/img/servicios-llaves-1600.webp" srcset="assets/img/servicios-llaves-900.webp 900w, assets/img/servicios-llaves-1600.webp 1600w" sizes="(max-width: 900px) 100vw, 56vw" alt="Entrega de llaves con llavero de Grupo Sureste" style="object-position:50% 50%" loading="lazy" decoding="async">
+          <img class="seq__img" src="assets/img/cat-terrenos-1000.webp" srcset="assets/img/cat-terrenos-600.webp 600w, assets/img/cat-terrenos-1000.webp 1000w" sizes="(max-width: 900px) 100vw, 56vw" alt="Campos con olivares vistos desde el aire" style="object-position:50% 55%" loading="lazy" decoding="async">
+          <img class="seq__img" src="assets/img/proyecto-jose-ignacio-1600.webp" srcset="assets/img/proyecto-jose-ignacio-900.webp 900w, assets/img/proyecto-jose-ignacio-1600.webp 1600w" sizes="(max-width: 900px) 100vw, 56vw" alt="Casa de arquitectura contemporánea con piscina entre pinos" style="object-position:50% 50%" loading="lazy" decoding="async">
+          <img class="seq__img" src="assets/img/fondo-estudio-1600.webp" srcset="assets/img/fondo-estudio-900.webp 900w, assets/img/fondo-estudio-1600.webp 1600w" sizes="(max-width: 900px) 100vw, 56vw" alt="Escritorio de estudio profesional con vista a la ciudad" style="object-position:45% 50%" loading="lazy" decoding="async">
+          <img class="seq__img" src="assets/img/nosotros-vinedo-1000.webp" srcset="assets/img/nosotros-vinedo-600.webp 600w, assets/img/nosotros-vinedo-1000.webp 1000w" sizes="(max-width: 900px) 100vw, 56vw" alt="Viñedo al atardecer en Uruguay" style="object-position:50% 60%" loading="lazy" decoding="async">
+          <img class="seq__img" src="assets/img/cat-casas-1600.webp" srcset="assets/img/cat-casas-900.webp 900w, assets/img/cat-casas-1600.webp 1600w" sizes="(max-width: 900px) 100vw, 56vw" alt="Casa frente al mar con piscina al atardecer" style="object-position:50% 50%" loading="lazy" decoding="async">
+        </div>
+      </div>
+      <div class="ascend__text">
+      <div class="ascend__rail" aria-hidden="true">
+        <span class="mono">07</span><div class="ascend__track"><i id="railDot"></i></div><span class="mono">01</span>
+      </div>
+      <div class="ascend__floors">
+        <article class="floor is-active" data-level="01">
+          <p class="eyebrow mono" data-i18n="rec.e1"></p>
+          <h2 class="display" data-i18n="rec.h1"></h2>
+          <p data-i18n="rec.p1"></p>
+        </article>
+        <article class="floor" data-level="02">
+          <p class="eyebrow mono" data-i18n="rec.e2"></p>
+          <h2 class="display" data-i18n="rec.h2"></h2>
+          <p data-i18n="rec.p2"></p>
+        </article>
+        <article class="floor" data-level="03">
+          <p class="eyebrow mono" data-i18n="rec.e3"></p>
+          <h2 class="display" data-i18n="rec.h3"></h2>
+          <p data-i18n="rec.p3"></p>
+        </article>
+        <article class="floor" data-level="04">
+          <p class="eyebrow mono" data-i18n="rec.e4"></p>
+          <h2 class="display" data-i18n="rec.h4"></h2>
+          <p data-i18n="rec.p4"></p>
+        </article>
+        <article class="floor" data-level="05">
+          <p class="eyebrow mono" data-i18n="rec.e5"></p>
+          <h2 class="display" data-i18n="rec.h5"></h2>
+          <p data-i18n="rec.p5"></p>
+        </article>
+        <article class="floor" data-level="06">
+          <p class="eyebrow mono" data-i18n="rec.e6"></p>
+          <h2 class="display" data-i18n="rec.h6"></h2>
+          <p data-i18n="rec.p6"></p>
+        </article>
+        <article class="floor" data-level="07">
+          <p class="eyebrow mono" data-i18n="rec.e7"></p>
+          <h2 class="display" data-i18n="rec.h7"></h2>
+          <p data-i18n="rec.p7"></p>
+          <a href="#seleccion" class="btn btn--gold floor__cta" data-magnetic data-cursor="Ver" data-i18n-attr="data-cursor:cursor.see"><span data-i18n="rec.cta">Nuestra selección</span></a>
+        </article>
+      </div>
+      <div class="ascend__level" aria-hidden="true">
+        <span class="mono" data-i18n="asc.level">Etapa</span>
+        <span class="display ascend__num" id="levelNum">01</span>
+      </div>
+      </div>
+    </div>
   </section>
 
   <!-- 2. QUIÉNES SOMOS: video institucional + texto -->
@@ -90,11 +154,34 @@
       <img class="compass" src="assets/img/logo-compass-520.webp" alt="" width="520" height="531" loading="lazy">
       <p class="about__body" data-i18n="about.body">Desde la propiedad que imaginas hasta el lugar donde quieres construir, Grupo Sureste reúne una red integral de inmobiliarias y profesionales especializados para acompañarte en cada etapa: arquitectura, ingeniería y construcción, junto con el respaldo jurídico, notarial, contable y administrativo necesario para concretar tu proyecto en Uruguay.</p>
       <p class="about__slogan display" data-i18n="about.slogan">Elige tu nueva vida.<br>Nosotros la hacemos posible.</p>
-      <dl class="about__divs">
-        <div><dt class="mono" data-i18n="d1.n">Sureste Propiedades</dt><dd data-i18n="d1.f">Encontrar · Comprar · Invertir</dd></div>
-        <div><dt class="mono" data-i18n="d2.n">Sureste Proyectos</dt><dd data-i18n="d2.f">Terreno · Arquitectura · Construcción · Diseño</dd></div>
-        <div><dt class="mono" data-i18n="d3.n">Sureste Servicios</dt><dd data-i18n="d3.f">Legal · Notarial · Contable · Gestoría · Administración</dd></div>
-      </dl>
+    </div>
+  </section>
+
+  <!-- DOS CAMINOS -->
+  <section class="paths" aria-label="Elige tu camino" data-i18n-attr="aria-label:paths.aria">
+    <div class="paths__head">
+      <p class="eyebrow mono" data-i18n="paths.e">Dos caminos, un mismo grupo</p>
+      <h2 class="display reveal-lines" data-i18n="paths.h">¿Qué quieres <em>concretar?</em></h2>
+    </div>
+    <div class="paths__grid">
+      <a href="#seleccion" class="path" data-cursor="Explorar" data-i18n-attr="data-cursor:path.cursor">
+        <canvas class="path__art" data-art="tower" data-img="assets/img/cat-apartamentos-1000.webp" aria-hidden="true"></canvas>
+        <div class="path__body">
+          <span class="mono path__tag" data-i18n="pathA.tag">A · Comprar</span>
+          <h3 class="display" data-i18n="pathA.h">Una propiedad <em>en Uruguay</em></h3>
+          <p data-i18n="pathA.p">Casas, apartamentos y proyectos seleccionados en la costa y la capital, con el respaldo legal resuelto.</p>
+          <span class="path__go mono"><span data-i18n="path.go">Entrar</span> <i>→</i></span>
+        </div>
+      </a>
+      <a href="#servicios" class="path" data-cursor="Explorar" data-i18n-attr="data-cursor:path.cursor">
+        <canvas class="path__art" data-art="villa" data-img="assets/img/fondo-uruguay-900.webp" aria-hidden="true"></canvas>
+        <div class="path__body">
+          <span class="mono path__tag" data-i18n="pathB.tag">B · Construir</span>
+          <h3 class="display" data-i18n="pathB.h">Tu proyecto <em>desde el terreno</em></h3>
+          <p data-i18n="pathB.p">Terreno, arquitectura, ingeniería y obra coordinados por un solo equipo.</p>
+          <span class="path__go mono"><span data-i18n="path.go">Entrar</span> <i>→</i></span>
+        </div>
+      </a>
     </div>
   </section>
 
@@ -102,33 +189,108 @@
     <div class="marquee__track mono" id="marquee"></div>
   </div>
 
-  <!-- 3. NUESTRA SELECCIÓN: cinco categorías; cada tarjeta abre "Cotizá tu proyecto" con la categoría elegida -->
-  <section class="selection" id="seleccion">
+  <!-- LA RED -->
+  <section class="studio" id="divisiones">
     <div class="section-head">
-      <p class="eyebrow mono" data-i18n="sel.e">Nuestra selección</p>
-      <h2 class="display reveal-lines" data-i18n="sel.h">Nuestra selección</h2>
+      <p class="eyebrow mono" data-i18n="red.e">Las divisiones</p>
+      <h2 class="display reveal-lines" data-i18n="red.h">Tres divisiones. <em>Una misma idea.</em></h2>
+      <p class="section-lead" data-i18n="red.lead">Grupo Sureste reúne una red integral de agencias inmobiliarias y profesionales especializados para acompañarte en cada etapa: arquitectura, ingeniería y construcción, junto con el respaldo jurídico, notarial, contable y administrativo necesario para concretar tu proyecto en Uruguay.</p>
     </div>
-    <div class="cats">
-      <a href="#servicios" class="cat cat--wide" data-type="casa" data-cursor="Cotizar" data-i18n-attr="data-cursor:cursor.quote">
-        <img src="assets/img/cat-casas-1600.webp" srcset="assets/img/cat-casas-900.webp 900w, assets/img/cat-casas-1600.webp 1600w" sizes="(max-width: 760px) 92vw, 58vw" alt="" width="1600" height="1067" loading="lazy">
-        <span class="cat__body"><span class="cat__n mono">01</span><span class="cat__t display" data-i18n="cat.casa">Casas</span><span class="cat__go" aria-hidden="true">→</span></span>
-      </a>
-      <a href="#servicios" class="cat" data-type="apartamento" data-cursor="Cotizar" data-i18n-attr="data-cursor:cursor.quote">
-        <img src="assets/img/cat-apartamentos-1000.webp" srcset="assets/img/cat-apartamentos-600.webp 600w, assets/img/cat-apartamentos-1000.webp 1000w" sizes="(max-width: 760px) 92vw, 34vw" alt="" width="1000" height="1500" loading="lazy">
-        <span class="cat__body"><span class="cat__n mono">02</span><span class="cat__t display" data-i18n="cat.apartamento">Apartamentos y edificios</span><span class="cat__go" aria-hidden="true">→</span></span>
-      </a>
-      <a href="#servicios" class="cat" data-type="campo" data-cursor="Cotizar" data-i18n-attr="data-cursor:cursor.quote">
-        <img src="assets/img/cat-campos-1000.webp" srcset="assets/img/cat-campos-600.webp 600w, assets/img/cat-campos-1000.webp 1000w" sizes="(max-width: 760px) 92vw, 30vw" alt="" width="1000" height="1778" loading="lazy">
-        <span class="cat__body"><span class="cat__n mono">03</span><span class="cat__t display" data-i18n="cat.campo">Campos y chacras</span><span class="cat__go" aria-hidden="true">→</span></span>
-      </a>
-      <a href="#servicios" class="cat" data-type="terreno" data-cursor="Cotizar" data-i18n-attr="data-cursor:cursor.quote">
-        <img src="assets/img/cat-terrenos-1000.webp" srcset="assets/img/cat-terrenos-600.webp 600w, assets/img/cat-terrenos-1000.webp 1000w" sizes="(max-width: 760px) 92vw, 30vw" alt="" width="1000" height="1778" loading="lazy">
-        <span class="cat__body"><span class="cat__n mono">04</span><span class="cat__t display" data-i18n="cat.terreno">Terrenos y lotes</span><span class="cat__go" aria-hidden="true">→</span></span>
-      </a>
-      <a href="#servicios" class="cat" data-type="proyecto" data-cursor="Cotizar" data-i18n-attr="data-cursor:cursor.quote">
-        <img src="assets/img/cat-proyectos-1000.webp" srcset="assets/img/cat-proyectos-600.webp 600w, assets/img/cat-proyectos-1000.webp 1000w" sizes="(max-width: 760px) 92vw, 30vw" alt="" width="1000" height="1500" loading="lazy">
-        <span class="cat__body"><span class="cat__n mono">05</span><span class="cat__t display" data-i18n="cat.proyecto">Proyectos inmobiliarios</span><span class="cat__go" aria-hidden="true">→</span></span>
-      </a>
+    <ul class="services" role="list">
+      <li class="service service--div" data-cursor="Ver más" data-i18n-attr="data-cursor:service.cursor">
+        <button class="service__row" aria-expanded="false">
+          <span class="service__code mono">01 · PROP</span>
+          <span class="service__name display" data-i18n="d1.n">Sureste Propiedades</span>
+          <span class="service__for mono" data-i18n="d1.f">Encontrar · Comprar · Invertir</span>
+          <span class="service__plus" aria-hidden="true"></span>
+        </button>
+        <div class="service__detail"><p data-i18n="d1.d">Una red de inmobiliarias para encontrar la propiedad que imaginas, comprarla con seguridad o invertir en Montevideo, Punta del Este, José Ignacio y el interior.</p></div>
+      </li>
+      <li class="service service--div" data-cursor="Ver más" data-i18n-attr="data-cursor:service.cursor">
+        <button class="service__row" aria-expanded="false">
+          <span class="service__code mono">02 · PROY</span>
+          <span class="service__name display" data-i18n="d2.n">Sureste Proyectos</span>
+          <span class="service__for mono" data-i18n="d2.f">Terreno · Arquitectura · Construcción · Diseño</span>
+          <span class="service__plus" aria-hidden="true"></span>
+        </button>
+        <div class="service__detail"><p data-i18n="d2.d">Del terreno a la llave en mano: búsqueda del lote, arquitectura, ingeniería, diseño interior y construcción coordinados por un mismo equipo.</p></div>
+      </li>
+      <li class="service service--div" data-cursor="Ver más" data-i18n-attr="data-cursor:service.cursor">
+        <button class="service__row" aria-expanded="false">
+          <span class="service__code mono">03 · SERV</span>
+          <span class="service__name display" data-i18n="d3.n">Sureste Servicios</span>
+          <span class="service__for mono" data-i18n="d3.f">Legal · Notarial · Contable · Gestoría · Administración</span>
+          <span class="service__plus" aria-hidden="true"></span>
+        </button>
+        <div class="service__detail"><p data-i18n="d3.d">El respaldo jurídico, notarial, contable y de gestoría para que cada operación sea segura y tu propiedad esté siempre en orden.</p></div>
+      </li>
+    </ul>
+  </section>
+
+  <!-- 3. NUESTRA SELECCIÓN: carrusel circular con las cinco categorías -->
+  <section class="estates" id="seleccion" aria-label="Nuestra selección" data-i18n-attr="aria-label:sel.h">
+    <div class="estates__sticky">
+      <div class="estates__top mono">
+        <span data-i18n="sel.h">Nuestra selección</span>
+        <span data-i18n="est.top2">Uruguay</span>
+      </div>
+      <div class="estates__stage">
+        <ol class="estates__index mono" id="estIndex" aria-label="Categorías" data-i18n-attr="aria-label:est.list"></ol>
+        <div class="estates__orb">
+          <div class="orb" id="orb">
+            <canvas class="orb__img is-on" id="orbA"></canvas>
+            <canvas class="orb__img" id="orbB"></canvas>
+          </div>
+          <svg class="orb__ring" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="49" /></svg>
+          <span class="orb__diag" aria-hidden="true"></span>
+        </div>
+        <div class="estates__info">
+          <p class="mono estates__place" data-i18n="sel.e">Propiedades</p>
+          <h2 class="display estates__name" id="estName">Casas</h2>
+          <div class="estates__nav">
+            <button class="iconbtn" id="estPrev" aria-label="Anterior" data-i18n-attr="aria-label:est.prev">←</button>
+            <button class="iconbtn" id="estNext" aria-label="Siguiente" data-i18n-attr="aria-label:est.next">→</button>
+            <button type="button" class="btn btn--dark" id="estQuote" data-magnetic data-cursor="Cotizar" data-i18n-attr="data-cursor:est.cursor"><span data-i18n="est.cta">Cotizá tu proyecto</span></button>
+          </div>
+        </div>
+      </div>
+      <div class="estates__count mono"><span id="estCur">01</span> / <span id="estTot">05</span></div>
+    </div>
+  </section>
+
+  <!-- POR QUE URUGUAY -->
+  <section class="uy" id="uruguay">
+    <img class="uy__art" id="uyArt" src="assets/img/cat-campos-1000.webp" srcset="assets/img/cat-campos-600.webp 600w, assets/img/cat-campos-1000.webp 1000w" sizes="100vw" alt="" loading="lazy" decoding="async">
+    <div class="uy__grid" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="uy__inner">
+      <div class="section-head">
+        <p class="eyebrow mono" data-i18n="uy.e">Por qué Uruguay</p>
+        <h2 class="display reveal-lines" data-i18n="uy.h">Estabilidad que <em>se puede escriturar.</em></h2>
+      </div>
+      <div class="uy__cells">
+        <div class="cell"><span class="cell__num display" data-count="0">0</span><p class="cell__t" data-i18n="uy.c1">restricciones para que extranjeros compren inmuebles</p></div>
+        <div class="cell"><span class="cell__num display" data-count="100" data-suffix="%">100%</span><p class="cell__t" data-i18n="uy.c2">libre movilidad de capitales, sin controles cambiarios</p></div>
+        <div class="cell"><span class="cell__num display" data-count="10" data-suffix-key="uy.c3s">10</span><p class="cell__t" data-i18n="uy.c3">de exoneraciones sobre rentas en vivienda promovida (Ley 18.795)</p></div>
+        <div class="cell"><span class="cell__num display">BBB</span><p class="cell__t" data-i18n="uy.c4">grado inversor sostenido por las principales calificadoras</p></div>
+      </div>
+      <p class="fine uy__fine" data-i18n="uy.fine">Información general. Los beneficios fiscales y requisitos de residencia dependen de cada caso; los analizamos contigo antes de invertir.</p>
+    </div>
+  </section>
+
+  <!-- PROCESO -->
+  <section class="process" id="proceso">
+    <div class="process__sticky">
+      <div class="process__head">
+        <p class="eyebrow mono" data-i18n="proc.e">Proceso</p>
+        <h2 class="display" data-i18n="proc.h">Cinco etapas, <em>un solo grupo.</em></h2>
+      </div>
+      <div class="process__track" id="processTrack">
+        <article class="step"><span class="step__n display">01</span><h3 data-i18n="p1.h">Búsqueda</h3><p data-i18n="p1.p">Encontramos la propiedad o el terreno que se ajusta a lo que buscas, a través de toda la red.</p></article>
+        <article class="step"><span class="step__n display">02</span><h3 data-i18n="p2.h">Respaldo legal</h3><p data-i18n="p2.p">Abogados y escribanos estudian títulos y contratos antes de que firmes.</p></article>
+        <article class="step"><span class="step__n display">03</span><h3 data-i18n="p3.h">Proyecto</h3><p data-i18n="p3.p">Si vas a construir, arquitectos e ingenieros diseñan y tramitan los permisos.</p></article>
+        <article class="step"><span class="step__n display">04</span><h3 data-i18n="p4.h">Concreción</h3><p data-i18n="p4.p">Escrituramos la compra o ejecutamos la obra con presupuesto y plazos claros.</p></article>
+        <article class="step"><span class="step__n display">05</span><h3 data-i18n="p5.h">Gestión</h3><p data-i18n="p5.p">Contabilidad, impuestos y administración para que tu propiedad siga en orden.</p></article>
+      </div>
     </div>
   </section>
 
@@ -139,7 +301,6 @@
         <p class="eyebrow mono" data-i18n="srv.e">Servicios</p>
         <h2 class="display reveal-lines" data-i18n="srv.h">Servicios</h2>
       </div>
-      <img class="services-sec__img" src="assets/img/servicios-llaves-1600.webp" srcset="assets/img/servicios-llaves-900.webp 900w, assets/img/servicios-llaves-1600.webp 1600w" sizes="(max-width: 900px) 92vw, 44vw" alt="Entrega de llaves con llavero de Grupo Sureste" width="1600" height="1067" loading="lazy">
     </div>
     <ul class="srv" role="list">
       <li><button type="button" class="srv__card" data-open="cotizacion" data-cursor="Abrir" data-i18n-attr="data-cursor:cursor.open">
@@ -174,7 +335,6 @@
     <div class="contact__head">
       <p class="eyebrow mono" data-i18n="c.e">Contacto</p>
       <h2 class="display reveal-lines" data-i18n="c.h">Contacto</h2>
-      <img class="contact__img" src="assets/img/fondo-uruguay-1600.webp" srcset="assets/img/fondo-uruguay-900.webp 900w, assets/img/fondo-uruguay-1600.webp 1600w" sizes="(max-width: 900px) 92vw, 42vw" alt="Costa uruguaya al atardecer" width="1600" height="900" loading="lazy">
     </div>
     <ul class="contact__data" role="list">
       <li><span class="mono" data-i18n="c.email">Correo electrónico</span><span class="contact__v" data-contact="email"></span></li>
