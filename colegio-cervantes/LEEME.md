@@ -80,7 +80,7 @@ Los enlaces viejos del tipo `…netlify.app/#inicial` siguen funcionando: llevan
 
 - [ ] **Email** de contacto. Se usa `info@colegiocervantes.edu.uy`.
 - [ ] **Teléfono**. Se usa `+598 2707 1414`, el que estaba en la página de Primaria.
-- [ ] **Dirección**. Se usa `Bulevar España 2492, Montevideo`, la que estaba en Primaria.
+- [x] **Dirección**: `Maipú 1751, Montevideo` (confirmada).
 - [ ] **WhatsApp, Instagram y Facebook.** Están vacíos, así que no se muestran.
 - [ ] **Logo** en buena calidad (PNG con fondo transparente).
 - [ ] **Calendario académico** con las fechas reales (está oculto).
