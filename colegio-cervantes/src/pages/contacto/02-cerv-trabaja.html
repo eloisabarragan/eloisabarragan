@@ -1,0 +1,129 @@
+<section id="cerv-trabaja">
+
+  <div class="tr-inner">
+
+    <div class="tr-header tr-anim tr-d1">
+      <div class="tr-eyebrow">Colegio Español Cervantes</div>
+      <h1 class="tr-title">Trabajá <em>con nosotros</em></h1>
+      <p class="tr-intro">Somos un equipo comprometido con la educación y el desarrollo de cada estudiante. Si querés sumarte, completá el formulario con tu CV y te contactamos.</p>
+    </div>
+
+    <div class="tr-form-wrap tr-anim tr-d2">
+      <div class="tr-card">
+        <h2 class="tr-form-title">Enviá tu postulación</h2>
+        <p class="tr-form-sub">Completá el formulario y adjuntá tu CV en formato PDF. Nos pondremos en contacto si hay una oportunidad acorde a tu perfil.</p>
+                <form id="trForm" name="trabaja-con-nosotros" class="tr-form" action="/gracias/" data-netlify="true" netlify-honeypot="bot-field" method="post" enctype="multipart/form-data" novalidate>
+<input type="hidden" name="form-name" value="trabaja-con-nosotros"><p class="cerv-hp" hidden><label>No completar: <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+          <div class="tr-field">
+            <label for="trNombre">Nombre y apellido</label>
+            <input id="trNombre" name="nombre" type="text" placeholder="Ej.: Ana García" required minlength="3">
+          </div>
+          <div class="tr-field">
+            <label for="trEmail">Correo electrónico</label>
+            <input id="trEmail" name="email" type="email" placeholder="Ej.: ana@email.com" required>
+          </div>
+          <div class="tr-field">
+            <label for="trTel">Teléfono</label>
+            <input id="trTel" name="telefono" type="tel" placeholder="Ej.: 09 123 456">
+          </div>
+          <div class="tr-field">
+            <label for="trArea">Área de interés</label>
+            <select id="trArea" name="area" required>
+              <option value="" selected disabled>Seleccioná un área…</option>
+              <option value="inicial">Inicial (La Cigüeña)</option>
+              <option value="primaria">Primaria</option>
+              <option value="secundaria">Secundaria / Bachillerato</option>
+              <option value="administracion">Administración</option>
+              <option value="otro">Otro</option>
+            </select>
+          </div>
+          <div class="tr-field full">
+            <label>CV en PDF</label>
+            <label class="tr-upload-label" for="trCvInput">
+              <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+              <span>Hacé clic para subir tu CV</span>
+              <small>Solo PDF · Máx. 5 MB</small>
+            </label>
+            <input id="trCvInput" name="cv" type="file" accept=".pdf" required>
+            <span id="trFileName">Ningún archivo seleccionado</span>
+          </div>
+          <div class="tr-field full">
+            <label for="trMensaje">Mensaje (opcional)</label>
+            <textarea id="trMensaje" name="mensaje" placeholder="Contanos brevemente tu perfil, experiencia o cualquier detalle que quieras agregar."></textarea>
+          </div>
+          <div id="trOk"  class="tr-msg ok">✅ ¡Postulación enviada! Nos comunicamos a la brevedad.</div>
+          <div id="trErr" class="tr-msg err"></div>
+          <div class="tr-actions">
+            <p class="tr-privacy">Tu información será tratada de forma confidencial y utilizada únicamente para el proceso de selección.</p>
+            <button type="submit" class="tr-btn">Enviar postulación <svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="tr-anim tr-d3 cerv-oculto">
+      <div class="tr-llamados-head">
+        <h2 class="tr-llamados-title">Llamados abiertos</h2>
+        <p class="tr-llamados-sub">Cargos con convocatoria activa. Si te interesa alguno, postulate con el formulario de arriba.</p>
+      </div>
+      <div class="tr-carousel">
+        <div class="tr-track" id="trTrack">
+
+          <!-- 📌 CARD LLAMADO — duplicá este bloque para agregar más llamados -->
+          <!-- Reemplazá el href del botón de descarga con la URL del PDF real en WordPress -->
+
+          <article class="tr-llamado">
+            <div class="tr-ll-area">Primaria</div>
+            <h3 class="tr-ll-title">Maestro/a de Primaria</h3>
+            <div class="tr-ll-divider"></div>
+            <p class="tr-ll-desc">Se busca docente para el nivel primario con experiencia en metodologías activas y acompañamiento integral del estudiante.</p>
+            <div class="tr-ll-meta"><span class="tr-ll-pill">Tiempo completo</span><span class="tr-ll-pill">Presencial</span></div>
+            <a class="tr-ll-dl" href="#trForm">
+              <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Postularme
+            </a>
+          </article>
+
+          <article class="tr-llamado">
+            <div class="tr-ll-area">Secundaria / Bachillerato</div>
+            <h3 class="tr-ll-title">Profesor/a de Matemática</h3>
+            <div class="tr-ll-divider"></div>
+            <p class="tr-ll-desc">Docente para el área de matemática en secundaria, con capacidad para trabajar en equipo y acompañar trayectorias estudiantiles.</p>
+            <div class="tr-ll-meta"><span class="tr-ll-pill">Horas cátedra</span><span class="tr-ll-pill">Presencial</span></div>
+            <a class="tr-ll-dl" href="#trForm">
+              <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Postularme
+            </a>
+          </article>
+
+          <article class="tr-llamado">
+            <div class="tr-ll-area">Inicial (La Cigüeña)</div>
+            <h3 class="tr-ll-title">Auxiliar de sala Inicial</h3>
+            <div class="tr-ll-divider"></div>
+            <p class="tr-ll-desc">Apoyo al equipo docente en sala de nivel inicial, con vocación de servicio, calidez y disposición para el trabajo con niños.</p>
+            <div class="tr-ll-meta"><span class="tr-ll-pill">Tiempo completo</span><span class="tr-ll-pill">Presencial</span></div>
+            <a class="tr-ll-dl" href="#trForm">
+              <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Postularme
+            </a>
+          </article>
+
+          <article class="tr-llamado">
+            <div class="tr-ll-area">Administración</div>
+            <h3 class="tr-ll-title">Administrativo/a</h3>
+            <div class="tr-ll-divider"></div>
+            <p class="tr-ll-desc">Gestión administrativa del colegio, atención a familias y coordinación interna. Se valora experiencia en instituciones educativas.</p>
+            <div class="tr-ll-meta"><span class="tr-ll-pill">Medio tiempo</span><span class="tr-ll-pill">Presencial</span></div>
+            <a class="tr-ll-dl" href="#trForm">
+              <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Postularme
+            </a>
+          </article>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</section>

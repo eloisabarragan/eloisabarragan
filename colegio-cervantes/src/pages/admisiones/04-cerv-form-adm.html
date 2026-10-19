@@ -1,0 +1,115 @@
+<section id="cerv-form-adm">
+
+  <div class="cfa-inner">
+
+    <!-- Header -->
+    <div class="cfa-header cfa-anim cfa-d1">
+      <div class="cfa-eyebrow">Admisiones</div>
+      <h2 class="cfa-title">¿Querés <em>más información?</em></h2>
+      <p class="cfa-intro">
+        Completá el formulario y nuestro equipo se pondrá en contacto a la brevedad
+        para acompañarte en el proceso de admisión.
+      </p>
+    </div>
+
+    <div class="cfa-split">
+
+      <!-- Formulario -->
+      <div class="cfa-card cfa-anim cfa-d2">
+        <form id="cfaForm" name="admisiones" class="cfa-form" action="/gracias/" data-netlify="true" netlify-honeypot="bot-field" method="post" novalidate>
+<input type="hidden" name="form-name" value="admisiones"><p class="cerv-hp" hidden><label>No completar: <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+
+          <div class="cfa-field">
+            <label for="cfaNombre">Nombre y apellido</label>
+            <input id="cfaNombre" name="nombre" type="text" placeholder="Ej.: María Pérez" required minlength="3">
+          </div>
+
+          <div class="cfa-field">
+            <label for="cfaTel">Teléfono</label>
+            <input id="cfaTel" name="telefono" type="tel" placeholder="Ej.: 09 123 456" required>
+          </div>
+
+          <div class="cfa-field full">
+            <label for="cfaEmail">Correo electrónico</label>
+            <input id="cfaEmail" name="email" type="email" placeholder="Ej.: familia@email.com" required>
+          </div>
+
+          <div class="cfa-field full">
+            <div class="cfa-group-label">Nivel de interés</div>
+            <div class="cfa-checkgroup" role="group" aria-label="Nivel de interés">
+              <label class="cfa-check">
+                <input type="checkbox" name="nivel[]" value="Nivel Inicial">
+                <span>Nivel Inicial</span>
+              </label>
+              <label class="cfa-check">
+                <input type="checkbox" name="nivel[]" value="Primaria">
+                <span>Primaria</span>
+              </label>
+              <label class="cfa-check">
+                <input type="checkbox" name="nivel[]" value="Secundaria">
+                <span>Secundaria</span>
+              </label>
+              <label class="cfa-check">
+                <input type="checkbox" name="nivel[]" value="Todos los niveles">
+                <span>Información general (todos los niveles)</span>
+              </label>
+            </div>
+            <p class="cfa-help">Podés seleccionar una o varias opciones.</p>
+          </div>
+
+          <div class="cfa-field full">
+            <label for="cfaMensaje">Mensaje</label>
+            <textarea id="cfaMensaje" name="mensaje" placeholder="Contanos qué información necesitás, edad/año del estudiante, y cualquier detalle relevante." required minlength="10"></textarea>
+          </div>
+
+          <div id="cfaOk"  class="cfa-msg ok">✅ ¡Consulta enviada! Nos comunicamos a la brevedad.</div>
+          <div id="cfaErr" class="cfa-msg err"></div>
+
+          <div class="cfa-actions">
+            <p class="cfa-privacy">
+              Al enviar aceptás que el colegio se comunique contigo.
+              <a href="/politica-de-privacidad/">Política de privacidad</a>
+            </p>
+            <button type="submit" class="cfa-btn">
+              Enviar consulta
+              <svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+            </button>
+          </div>
+
+        </form>
+      </div>
+
+      <!-- Aside -->
+      <aside class="cfa-card cfa-anim cfa-d3">
+        <h3 class="cfa-aside-title">Admisiones</h3>
+        <p class="cfa-aside-sub">
+          Si preferís, también podés comunicarte por nuestros canales habituales.
+          Te acompañamos en cada etapa del proceso.
+        </p>
+        <div class="cfa-divider"></div>
+        <ul class="cfa-list">
+          <li class="cfa-li">
+            <div class="cfa-li-ico" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M9 16.2 4.8 12l1.4-1.4L9 13.4l8.8-8.8L19.2 6z"/></svg>
+            </div>
+            <span><strong>Respuesta orientativa:</strong> dentro de 24 a 48 horas hábiles.</span>
+          </li>
+          <li class="cfa-li">
+            <div class="cfa-li-ico" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M9 16.2 4.8 12l1.4-1.4L9 13.4l8.8-8.8L19.2 6z"/></svg>
+            </div>
+            <span><strong>Recomendación:</strong> indicá nivel y edad/año del estudiante.</span>
+          </li>
+          <li class="cfa-li">
+            <div class="cfa-li-ico" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M9 16.2 4.8 12l1.4-1.4L9 13.4l8.8-8.8L19.2 6z"/></svg>
+            </div>
+            <span><strong>Información general:</strong> seleccioná "todos los niveles".</span>
+          </li>
+        </ul>
+      </aside>
+
+    </div>
+  </div>
+
+</section>

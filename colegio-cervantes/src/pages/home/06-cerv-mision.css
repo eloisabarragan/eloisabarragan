@@ -1,0 +1,37 @@
+#cerv-mision {
+  --azul:#00325A; --oro:#D39A47; --rojo:#BB0923; --gris:#5B667A; --calido:#faf7f2;
+  width:100vw; margin-left:calc(50% - 50vw);
+  font-family:"Lama Sans","LamaSans",system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  color:var(--azul); overflow:hidden; background:var(--calido);
+  padding:clamp(56px,7vw,96px) clamp(16px,5vw,64px);
+}
+.mis-wrap{ max-width:1200px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:clamp(40px,5vw,80px); align-items:center; }
+.mis-media{ position:relative; height:clamp(420px,50vw,560px); }
+.mis-foto-main{ position:absolute; top:0; left:0; width:76%; height:82%; border-radius:24px; overflow:hidden; box-shadow:0 20px 50px rgba(0,0,0,.14); border:4px solid #fff; z-index:1; }
+.mis-foto-main img{ width:100%; height:100%; object-fit:cover; object-position:center 20%; display:block; }
+.mis-foto-sec{ position:absolute; bottom:0; right:0; width:52%; height:50%; border-radius:20px; overflow:hidden; box-shadow:0 16px 40px rgba(0,0,0,.18); border:4px solid #fff; z-index:2; }
+.mis-foto-sec img{ width:100%; height:100%; object-fit:cover; object-position:center 30%; display:block; }
+.mis-deco-ring{ position:absolute; bottom:12%; left:-18px; width:72px; height:72px; border-radius:50%; border:8px solid rgba(211,154,71,.5); z-index:0; }
+.mis-deco-dot{ position:absolute; top:8%; right:22%; width:14px; height:14px; border-radius:50%; background:var(--rojo); opacity:.6; z-index:3; }
+.mis-badge{ position:absolute; top:18px; right:14px; z-index:3; background:var(--azul); color:#fff; border-radius:16px; padding:12px 16px; text-align:center; box-shadow:0 8px 24px rgba(0,0,0,.22); }
+.mis-badge strong{ display:block; font-size:28px; font-weight:900; color:var(--oro); line-height:1; letter-spacing:-.02em; }
+.mis-badge span{ font-size:10px; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:rgba(255,255,255,.65); margin-top:2px; display:block; }
+.mis-eyebrow{ display:inline-flex; align-items:center; gap:8px; font-size:11px; font-weight:700; letter-spacing:.16em; text-transform:uppercase; color:var(--oro); margin-bottom:16px; }
+.mis-eyebrow::before{ content:""; display:block; width:24px; height:2px; background:var(--oro); border-radius:2px; }
+.mis-content h2{ font-size:clamp(28px,3.5vw,44px); font-weight:800; color:var(--azul); line-height:1.1; margin:0 0 18px; letter-spacing:-.02em; }
+.mis-content h2 em{ font-style:normal; color:var(--oro); }
+.mis-lead{ font-size:clamp(14px,1.3vw,16px); line-height:1.75; color:var(--gris); margin:0 0 14px; }
+.mis-stats{ display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin:28px 0; padding:20px 0; border-top:1px solid rgba(211,154,71,.2); border-bottom:1px solid rgba(211,154,71,.2); }
+.mis-stat{ text-align:center; }
+.mis-stat strong{ display:block; font-size:clamp(26px,3vw,36px); font-weight:900; color:var(--azul); line-height:1; letter-spacing:-.02em; }
+.mis-stat strong span{ color:var(--oro); }
+.mis-stat p{ font-size:12px; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:var(--gris); margin:5px 0 0; }
+.mis-grid{ display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.mis-item{ background:#fff; border:1px solid rgba(211,154,71,.15); border-radius:18px; padding:16px; display:flex; gap:12px; align-items:flex-start; transition:transform .25s ease, box-shadow .25s ease; }
+.mis-item:hover{ transform:translateY(-3px); box-shadow:0 12px 28px rgba(0,0,0,.08); }
+.mis-ico{ width:40px; height:40px; border-radius:12px; display:grid; place-items:center; background:rgba(211,154,71,.12); border:1px solid rgba(211,154,71,.3); flex-shrink:0; }
+.mis-ico svg{ width:20px; height:20px; stroke:var(--azul); stroke-width:1.8; fill:none; stroke-linecap:round; stroke-linejoin:round; }
+.mis-item h3{ margin:0 0 4px; font-size:clamp(14px,1.3vw,16px); font-weight:700; color:var(--azul); line-height:1.2; }
+.mis-item p{ margin:0; font-size:13px; line-height:1.5; color:var(--gris); }
+@media(max-width:900px){ .mis-wrap{ grid-template-columns:1fr; } .mis-media{ height:380px; } }
+@media(max-width:480px){ .mis-grid{ grid-template-columns:1fr; } }

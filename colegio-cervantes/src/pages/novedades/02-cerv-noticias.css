@@ -1,0 +1,215 @@
+#cerv-noticias {
+  --azul: #00325A;
+  --oro:  #D39A47;
+  --gris: #5B667A;
+  --calido: #faf7f2;
+
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  background: var(--calido);
+  font-family: "Lama Sans","LamaSans",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  color: var(--azul);
+  overflow: hidden;
+}
+
+.noti-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: clamp(64px,8vw,100px) clamp(20px,4vw,48px);
+}
+
+/* ── Header ── */
+.noti-header {
+  max-width: 820px;
+  margin: 0 auto clamp(40px,5vw,60px);
+  text-align: center;
+}
+
+.noti-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--oro);
+  margin-bottom: 14px;
+}
+
+.noti-eyebrow::before,
+.noti-eyebrow::after {
+  content: "";
+  display: block;
+  width: 28px; height: 2px;
+  background: var(--oro);
+  border-radius: 2px;
+}
+
+.noti-title {
+  font-size: clamp(28px,3.6vw,46px);
+  font-weight: 800;
+  line-height: 1.06;
+  letter-spacing: -.03em;
+  color: var(--azul);
+  margin: 0 0 14px;
+}
+
+.noti-title em { font-style: normal; color: var(--oro); }
+
+.noti-intro {
+  font-size: 16px;
+  line-height: 1.72;
+  color: var(--gris);
+  margin: 0;
+}
+
+/* ── Grid ── */
+.noti-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 22px;
+}
+
+/* ── Card ── */
+.noti-card {
+  background: #fff;
+  border-radius: 20px;
+  border: 1.5px solid rgba(0,50,90,.07);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity .55s ease, transform .55s ease, box-shadow .2s ease;
+}
+
+.noti-card.visible { opacity: 1; transform: none; }
+.noti-card:nth-child(1) { transition-delay: .05s; }
+.noti-card:nth-child(2) { transition-delay: .15s; }
+.noti-card:nth-child(3) { transition-delay: .25s; }
+.noti-card:nth-child(4) { transition-delay: .35s; }
+
+.noti-card:hover {
+  box-shadow: 0 20px 44px rgba(0,50,90,.10);
+}
+
+/* Barra dorada top */
+.noti-card::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--oro), rgba(211,154,71,.15));
+  border-radius: 20px 20px 0 0;
+  z-index: 1;
+}
+
+/* ── Imagen ── */
+.noti-img-wrap {
+  overflow: hidden;
+  aspect-ratio: 16/9;
+  flex-shrink: 0;
+}
+
+.noti-img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  transition: transform .55s cubic-bezier(.25,.46,.45,.94);
+}
+
+.noti-card:hover .noti-img { transform: scale(1.05); }
+
+/* ── Contenido ── */
+.noti-body {
+  padding: 28px 28px 32px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+/* Categoría */
+.noti-cat {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--oro);
+  margin-bottom: 10px;
+}
+
+.noti-cat::before {
+  content: "";
+  display: block;
+  width: 16px; height: 2px;
+  background: var(--oro);
+  border-radius: 2px;
+}
+
+.noti-card-title {
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--azul);
+  margin: 0 0 12px;
+}
+
+.noti-divider {
+  width: 28px; height: 2px;
+  background: var(--oro);
+  border-radius: 2px;
+  margin-bottom: 14px;
+}
+
+.noti-body p {
+  font-size: 15px;
+  line-height: 1.72;
+  color: var(--gris);
+  margin: 0 0 12px;
+}
+
+.noti-body p:last-of-type { margin-bottom: 0; }
+
+.noti-body ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.noti-body li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--gris);
+}
+
+.noti-body li::before {
+  content: "";
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--oro);
+  flex-shrink: 0;
+  margin-top: 7px;
+}
+
+/* ── Responsive ── */
+@media (max-width: 740px) {
+  .noti-grid { grid-template-columns: 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .noti-card { transition: none; opacity: 1; transform: none; }
+  .noti-img { transition: none; }
+}

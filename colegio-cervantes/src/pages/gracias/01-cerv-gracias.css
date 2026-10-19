@@ -1,0 +1,14 @@
+#cerv-gracias {
+  --azul: #00325A; --oro: #D39A47;
+  min-height: 60vh; display: flex; align-items: center; justify-content: center;
+  padding: 80px 20px; background: linear-gradient(180deg, #f7f9fc 0%, #ffffff 100%);
+  font-family: 'Poppins', system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+}
+.gr-card { max-width: 560px; text-align: center; background: #fff; border-radius: 24px; padding: 48px 32px; box-shadow: 0 18px 50px rgba(0, 50, 90, .08); }
+.gr-ico { width: 64px; height: 64px; border-radius: 50%; background: rgba(211, 154, 71, .15); display: flex; align-items: center; justify-content: center; margin: 0 auto 18px; }
+.gr-ico svg { width: 30px; height: 30px; fill: none; stroke: var(--oro); stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
+.gr-title { color: var(--azul); font-size: clamp(26px, 3.4vw, 36px); }
+.gr-title em { color: var(--oro); font-style: normal; }
+.gr-text { color: #4a5568; margin: 14px 0 26px; line-height: 1.7; }
+.gr-btn { display: inline-block; background: var(--azul); color: #fff; text-decoration: none; font-weight: 700; padding: 13px 26px; border-radius: 50px; }
+.gr-btn:hover { background: #00243f; }

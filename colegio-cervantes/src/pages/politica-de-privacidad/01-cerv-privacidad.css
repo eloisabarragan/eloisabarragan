@@ -1,0 +1,18 @@
+#cerv-privacidad {
+  --azul: #00325A; --oro: #D39A47;
+  background: linear-gradient(180deg, #f7f9fc 0%, #ffffff 100%);
+  padding: clamp(56px, 8vw, 110px) 20px;
+  font-family: 'Poppins', system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+}
+.priv-inner { max-width: 860px; margin: 0 auto; }
+.priv-header { text-align: center; margin-bottom: 36px; }
+.priv-eyebrow { color: var(--oro); font-weight: 700; letter-spacing: .14em; text-transform: uppercase; font-size: 12px; margin-bottom: 12px; }
+.priv-title { color: var(--azul); font-size: clamp(30px, 4vw, 44px); line-height: 1.15; }
+.priv-title em { color: var(--oro); font-style: normal; }
+.priv-intro { color: #4a5568; margin-top: 14px; font-size: 16px; line-height: 1.7; }
+.priv-card { background: #fff; border-radius: 22px; padding: clamp(24px, 4vw, 44px); box-shadow: 0 18px 50px rgba(0, 50, 90, .08); border: 1px solid rgba(0, 50, 90, .06); }
+.priv-card h2 { color: var(--azul); font-size: 18px; margin: 26px 0 8px; }
+.priv-card h2:first-child { margin-top: 0; }
+.priv-card p { color: #374151; line-height: 1.75; font-size: 15px; }
+.priv-card a { color: var(--azul); font-weight: 600; }
+.priv-update { margin-top: 26px; font-size: 13px !important; color: #6b7280 !important; }

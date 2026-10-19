@@ -1,0 +1,58 @@
+<section id="cerv-form">
+
+  <div class="form-split">
+    <div class="form-left">
+      <div class="form-left-top">
+        <div class="form-eyebrow">Escribinos</div>
+        <h2>Estamos para <em>acompañarte</em></h2>
+        <p class="form-left-desc">Completá el formulario y te responderemos a la brevedad. También podés contactarnos directamente por cualquiera de estos medios.</p>
+        <div class="form-divider"></div>
+      </div>
+      <div class="form-contactos">
+        <div class="form-contacto-item">
+          <div class="form-contacto-icon"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3 3h12a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M2 4.5l7 5 7-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+          <div class="form-contacto-text"><span class="form-contacto-label">Email</span><span class="form-contacto-val"><a href="mailto:{{email}}">{{email}}</a></span></div>
+        </div>
+        <div class="form-contacto-item">
+          <div class="form-contacto-icon"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3.5 2h3l1.5 4-2 1.5a11 11 0 0 0 4.5 4.5L12 10l4 1.5V15a1.5 1.5 0 0 1-1.5 1.5C6.5 16.5 1.5 11.5 1.5 3.5A1.5 1.5 0 0 1 3.5 2z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></div>
+          <div class="form-contacto-text"><span class="form-contacto-label">Teléfono</span><span class="form-contacto-val"><a href="tel:{{telefono_link}}">{{telefono}}</a></span></div>
+        </div>
+        <div class="form-contacto-item">
+          <div class="form-contacto-icon"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 1.5a6 6 0 0 1 6 6c0 4-6 9-6 9s-6-5-6-9a6 6 0 0 1 6-6z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><circle cx="9" cy="7.5" r="1.5" stroke="currentColor" stroke-width="1.5"/></svg></div>
+          <div class="form-contacto-text"><span class="form-contacto-label">Dirección</span><span class="form-contacto-val">{{direccion}}</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-right">
+      <p class="form-right-title">Envianos tu consulta</p>
+      <form id="formCervantes" name="contacto-inicio" action="/gracias/" data-netlify="true" netlify-honeypot="bot-field" method="post" novalidate>
+<input type="hidden" name="form-name" value="contacto-inicio"><p class="cerv-hp" hidden><label>No completar: <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+        <div class="form-row">
+          <div class="form-field"><label for="nombre">Nombre y apellido</label><input id="nombre" name="nombre" type="text" placeholder="Ej. Ana Pérez" required minlength="3"></div>
+          <div class="form-field"><label for="email">Correo electrónico</label><input id="email" name="email" type="email" placeholder="tu@correo.com" required></div>
+        </div>
+        <div class="form-row">
+          <div class="form-field"><label for="telefono">Teléfono (opcional)</label><input id="telefono" name="telefono" type="tel" placeholder="+598 ..."></div>
+          <div class="form-field"><label for="asunto">Asunto</label><input id="asunto" name="asunto" type="text" placeholder="Ej. Consulta sobre inscripciones" required></div>
+        </div>
+        <div class="form-field">
+          <p class="checkgroup-label">Nivel de interés</p>
+          <div class="checkgrid" role="group" aria-label="Nivel de interés">
+            <label class="checkitem"><input type="checkbox" name="nivel[]" value="Jardín Maternal"><span>Jardín Maternal</span></label>
+            <label class="checkitem"><input type="checkbox" name="nivel[]" value="Nivel Inicial"><span>Nivel Inicial</span></label>
+            <label class="checkitem"><input type="checkbox" name="nivel[]" value="Primaria"><span>Primaria</span></label>
+            <label class="checkitem"><input type="checkbox" name="nivel[]" value="Secundaria"><span>Secundaria</span></label>
+            <label class="checkitem"><input type="checkbox" name="nivel[]" value="Bachillerato Europeo"><span>Bachillerato</span></label>
+            <label class="checkitem"><input type="checkbox" name="nivel[]" value="Otro"><span>Otro</span></label>
+          </div>
+        </div>
+        <div class="form-field"><label for="mensaje">Mensaje</label><textarea id="mensaje" name="mensaje" placeholder="Escribí tu consulta..." required minlength="10"></textarea></div>
+        <button type="submit" class="btn-send">Enviar mensaje <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3 9h12M11 5l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <div id="msg-ok" class="msg ok">✅ ¡Mensaje enviado correctamente!</div>
+        <div id="msg-err" class="msg err">❌ Ocurrió un error. Intentá nuevamente.</div>
+      </form>
+    </div>
+  </div>
+
+</section>

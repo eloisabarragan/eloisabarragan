@@ -1,0 +1,61 @@
+<section id="cerv-primaria-form">
+
+  <div class="pf-split">
+    <div class="pf-info">
+      <div class="pf-info-eyebrow">Nivel Primaria</div>
+      <h2>¿Querés <em>conocernos?</em></h2>
+      <p class="pf-info-desc">Coordiná una visita o escribinos con tu consulta. Nos ponemos en contacto a la brevedad.</p>
+      <div class="pf-contact-items">
+        <div class="pf-contact-item">
+          <div class="pf-contact-ico"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+          <div><strong>Dirección</strong><span>{{direccion}}</span></div>
+        </div>
+        <div class="pf-contact-item">
+          <div class="pf-contact-ico"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+          <div><strong>Teléfono</strong><span><a href="tel:{{telefono_link}}">{{telefono}}</a></span></div>
+        </div>
+        <div class="pf-contact-item">
+          <div class="pf-contact-ico"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+          <div><strong>Email</strong><span><a href="mailto:{{email}}">{{email}}</a></span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pf-form-panel">
+      <form id="pfPrimaria" name="contacto-primaria" action="/gracias/" data-netlify="true" netlify-honeypot="bot-field" method="post" novalidate>
+<input type="hidden" name="form-name" value="contacto-primaria"><p class="cerv-hp" hidden><label>No completar: <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+        <div class="pf-grid">
+          <div class="pf-field"><label for="pfNombre">Nombre y apellido</label><input id="pfNombre" name="nombre" type="text" placeholder="Ej. Ana Pérez" required minlength="3"></div>
+          <div class="pf-field"><label for="pfEmail">Correo electrónico</label><input id="pfEmail" name="email" type="email" placeholder="tu@correo.com" required></div>
+          <div class="pf-field"><label for="pfTel">Teléfono (opcional)</label><input id="pfTel" name="telefono" type="tel" placeholder="+598 ..."></div>
+          <div class="pf-field">
+            <label for="pfGrado">Grado de interés</label>
+            <select id="pfGrado" name="grado">
+              <option value="">Seleccioná un grado</option>
+              <option>1.º</option><option>2.º</option><option>3.º</option>
+              <option>4.º</option><option>5.º</option><option>6.º</option>
+              <option>No aplica</option>
+            </select>
+          </div>
+          <div class="pf-field full">
+            <div class="pf-group-label">Motivo de contacto</div>
+            <div class="pf-checkgroup">
+              <label class="pf-check"><input type="checkbox" name="motivo[]" value="Inscripciones"><span>Inscripciones</span></label>
+              <label class="pf-check"><input type="checkbox" name="motivo[]" value="Coordinación de visita"><span>Coordinación de visita</span></label>
+              <label class="pf-check"><input type="checkbox" name="motivo[]" value="Información general"><span>Información general</span></label>
+              <label class="pf-check"><input type="checkbox" name="motivo[]" value="Otro"><span>Otro</span></label>
+            </div>
+          </div>
+          <div class="pf-field full"><label for="pfMensaje">Mensaje</label><textarea id="pfMensaje" name="mensaje" placeholder="Escribí tu consulta..." required minlength="10"></textarea></div>
+        </div>
+        <div class="pf-actions">
+          <button type="reset" class="pf-btn pf-secondary">Limpiar</button>
+          <button type="submit" class="pf-btn pf-primary">Enviar consulta <svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>
+        </div>
+        <div id="pfOk" class="pf-msg ok">✅ ¡Mensaje enviado! Nos comunicamos a la brevedad.</div>
+        <div id="pfErr" class="pf-msg err"></div>
+      </form>
+    </div>
+  </div>
+
+</section>

@@ -1,0 +1,13 @@
+{
+  "_LEEME": "Datos del colegio. Al cambiarlos aca, se actualizan en TODA la web (Netlify). En WordPress se editan en Apariencia > Personalizar > Datos del colegio. Si un campo queda vacio, el elemento correspondiente no se muestra.",
+  "nombre": "Colegio Español Cervantes",
+  "email": "info@colegiocervantes.edu.uy",
+  "telefono": "+598 2707 1414",
+  "direccion": "Bulevar España 2492, Montevideo",
+  "horario": "Lunes a viernes · 8:00 a 17:30",
+  "whatsapp": "",
+  "instagram": "",
+  "facebook": "",
+  "inscripciones": "Inscripciones 2027",
+  "url_sitio": "https://extraordinary-paletas-49ea40.netlify.app"
+}

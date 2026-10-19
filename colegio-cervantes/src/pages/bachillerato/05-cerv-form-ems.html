@@ -1,0 +1,43 @@
+<section id="cerv-form-ems">
+
+  <div class="fe-split">
+    <div class="fe-info">
+      <div class="fe-info-eyebrow">Bachillerato · EMS</div>
+      <h2>¿Querés <em>saber más?</em></h2>
+      <p class="fe-info-desc">Seleccioná el año de EMS y dejanos tu consulta. Nos comunicamos a la brevedad.</p>
+      <div class="fe-levels">
+        <div class="fe-level"><div class="fe-level-num">1</div><span>Primer año EMS</span></div>
+        <div class="fe-level"><div class="fe-level-num">2</div><span>Segundo año EMS</span></div>
+        <div class="fe-level"><div class="fe-level-num">3</div><span>Tercer año EMS</span></div>
+      </div>
+    </div>
+
+    <div class="fe-form-panel">
+      <form id="feEms" name="contacto-bachillerato" action="/gracias/" data-netlify="true" netlify-honeypot="bot-field" method="post" novalidate>
+<input type="hidden" name="form-name" value="contacto-bachillerato"><p class="cerv-hp" hidden><label>No completar: <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+        <div class="fe-grid">
+          <div class="fe-field"><label for="feNombre">Nombre</label><input id="feNombre" name="nombre" type="text" placeholder="Ej. Ana" required minlength="2"></div>
+          <div class="fe-field"><label for="feApellido">Apellido</label><input id="feApellido" name="apellido" type="text" placeholder="Ej. Pérez" required minlength="2"></div>
+          <div class="fe-field"><label for="feEmail">Correo electrónico</label><input id="feEmail" name="email" type="email" placeholder="tu@correo.com" required></div>
+          <div class="fe-field"><label for="feTel">Teléfono (opcional)</label><input id="feTel" name="telefono" type="tel" placeholder="+598 ..."></div>
+          <div class="fe-field full">
+            <div class="fe-group-label">Año de EMS</div>
+            <div class="fe-checkgroup" role="group" aria-label="Año EMS">
+              <label class="fe-check"><input type="checkbox" name="ems[]" value="1 EMS"><span>1.º EMS</span></label>
+              <label class="fe-check"><input type="checkbox" name="ems[]" value="2 EMS"><span>2.º EMS</span></label>
+              <label class="fe-check"><input type="checkbox" name="ems[]" value="3 EMS"><span>3.º EMS</span></label>
+            </div>
+          </div>
+          <div class="fe-field full"><label for="feMensaje">Mensaje</label><textarea id="feMensaje" name="mensaje" placeholder="Contanos en qué podemos ayudarte..." required minlength="10"></textarea></div>
+          <div id="feOk" class="fe-msg ok">✅ ¡Mensaje enviado! Nos comunicamos a la brevedad.</div>
+          <div id="feErr" class="fe-msg err"></div>
+        </div>
+        <div class="fe-actions">
+          <p class="fe-note">Al enviar este formulario aceptás que nos contactemos contigo por este medio.</p>
+          <button type="submit" class="fe-btn">Enviar consulta <svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+</section>

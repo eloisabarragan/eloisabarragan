@@ -1,0 +1,233 @@
+#cerv-requisitos-adm {
+  --azul: #00325A;
+  --oro:  #D39A47;
+  --gris: #5B667A;
+  --calido: #faf7f2;
+
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  background: var(--calido);
+  font-family: "Lama Sans","LamaSans",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  color: var(--azul);
+  overflow: hidden;
+}
+
+.cra-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: clamp(64px, 8vw, 100px) clamp(20px, 4vw, 48px);
+  display: grid;
+  grid-template-columns: 380px 1fr;
+  gap: 36px;
+  align-items: start;
+}
+
+/* ════════════════════
+   ASIDE IZQUIERDA
+════════════════════ */
+.cra-aside {
+  position: sticky;
+  top: 32px;
+  background: #fff;
+  border-radius: 20px;
+  border: 1.5px solid rgba(0,50,90,.07);
+  padding: 36px 32px;
+  box-shadow: 0 16px 36px rgba(0,50,90,.07);
+}
+
+.cra-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--oro);
+  margin-bottom: 14px;
+}
+
+.cra-eyebrow::before {
+  content: "";
+  display: block;
+  width: 20px; height: 2px;
+  background: var(--oro);
+  border-radius: 2px;
+}
+
+.cra-title {
+  font-size: clamp(24px, 2.8vw, 36px);
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -.02em;
+  color: var(--azul);
+  margin: 0 0 14px;
+}
+
+.cra-title em { font-style: normal; color: var(--oro); }
+
+.cra-divider {
+  width: 36px; height: 3px;
+  background: linear-gradient(90deg, var(--oro), rgba(211,154,71,.2));
+  border-radius: 2px;
+  margin-bottom: 16px;
+}
+
+.cra-intro {
+  font-size: 15px;
+  line-height: 1.72;
+  color: var(--gris);
+  margin: 0 0 20px;
+}
+
+.cra-note {
+  padding: 16px;
+  border-radius: 12px;
+  background: rgba(211,154,71,.06);
+  border: 1px solid rgba(211,154,71,.18);
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--gris);
+}
+
+.cra-note strong { color: var(--azul); font-weight: 700; }
+
+/* ════════════════════
+   CARD CHECKLIST
+════════════════════ */
+.cra-card {
+  background: #fff;
+  border-radius: 20px;
+  border: 1.5px solid rgba(0,50,90,.07);
+  padding: 36px 32px;
+  box-shadow: 0 16px 36px rgba(0,50,90,.07);
+  position: relative;
+  overflow: hidden;
+}
+
+.cra-card::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--oro), rgba(211,154,71,.15));
+  border-radius: 20px 20px 0 0;
+}
+
+.cra-card-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--azul);
+  margin: 0 0 6px;
+}
+
+.cra-card-sub {
+  font-size: 14px;
+  color: var(--gris);
+  margin: 0 0 24px;
+  line-height: 1.5;
+}
+
+/* Lista */
+.cra-list {
+  list-style: none;
+  padding: 0; margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.cra-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 16px 0;
+  border-bottom: 1px solid rgba(0,50,90,.06);
+}
+
+.cra-item:last-child { border-bottom: none; }
+
+/* Bullet check */
+.cra-bullet {
+  width: 28px; height: 28px;
+  border-radius: 8px;
+  background: rgba(211,154,71,.12);
+  border: 1px solid rgba(211,154,71,.25);
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.cra-bullet svg {
+  width: 14px; height: 14px;
+  fill: var(--oro);
+}
+
+.cra-item-body {
+  flex: 1;
+}
+
+.cra-item-text {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--gris);
+  margin: 0;
+}
+
+.cra-item-text strong {
+  font-weight: 700;
+  color: var(--azul);
+}
+
+/* Tag */
+.cra-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .04em;
+  white-space: nowrap;
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+
+.cra-tag-oblig {
+  background: rgba(0,50,90,.07);
+  color: var(--azul);
+  border: 1px solid rgba(0,50,90,.12);
+}
+
+.cra-tag-nivel {
+  background: rgba(211,154,71,.10);
+  color: #8a6020;
+  border: 1px solid rgba(211,154,71,.25);
+}
+
+/* ── Animaciones ── */
+.cra-anim {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity .6s ease, transform .6s ease;
+}
+
+.cra-anim.visible { opacity: 1; transform: none; }
+.cra-d1 { transition-delay: .05s; }
+.cra-d2 { transition-delay: .18s; }
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  .cra-inner { grid-template-columns: 1fr; }
+  .cra-aside { position: relative; top: auto; }
+}
+
+@media (max-width: 520px) {
+  .cra-item { flex-wrap: wrap; }
+  .cra-tag { margin-left: 42px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cra-anim { transition: none; opacity: 1; transform: none; }
+}

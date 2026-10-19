@@ -1,0 +1,171 @@
+[
+ {
+  "id": "home",
+  "slug": "",
+  "nombre": "Inicio",
+  "titulo": "Colegio Español Cervantes · Montevideo",
+  "descripcion": "Colegio Español Cervantes en Montevideo: Jardín Maternal, Inicial, Primaria, Secundaria y Bachillerato Europeo con doble titulación Uruguay–España.",
+  "secciones": [
+   "01-hero-cervantes",
+   "02-cerv-unicos",
+   "03-niveles-cervantes",
+   "04-cerv-mapa",
+   "05-cerv-nosotros",
+   "06-cerv-mision",
+   "07-cerv-vision",
+   "08-cerv-enfoque",
+   "09-cerv-alianzas",
+   "10-cerv-galeria",
+   "11-cerv-form"
+  ]
+ },
+ {
+  "id": "inicial",
+  "slug": "inicial",
+  "nombre": "Inicial",
+  "titulo": "Jardín Maternal e Inicial · Colegio Español Cervantes",
+  "descripcion": "La Cigüeña: Jardín Maternal e Inicial con pedagogía Pikler y Montessori, áreas verdes, natación y horarios flexibles.",
+  "secciones": [
+   "01-inicial-hero",
+   "02-maternal-inicial",
+   "03-pikler-montessori-bloque",
+   "05-jardin-maternal",
+   "06-jm-horarios",
+   "07-cerv-montessori",
+   "08-cerv-inicial-mas-alla",
+   "09-inicial-mas-alla",
+   "10-cerv-inicial-horarios",
+   "11-cerv-inicial-natacion",
+   "12-cerv-contacto-split"
+  ]
+ },
+ {
+  "id": "primaria",
+  "slug": "primaria",
+  "nombre": "Primaria",
+  "titulo": "Primaria · Colegio Español Cervantes",
+  "descripcion": "Primaria con aprendizaje personalizado, inglés Cambridge, robótica, deportes y actividades opcionales.",
+  "secciones": [
+   "01-cerv-primaria-hero",
+   "02-cerv-primaria-enfoque",
+   "03-cerv-primaria-mosaico",
+   "04-cerv-primaria-ingles",
+   "05-cerv-primaria-opcionales",
+   "06-cerv-primaria-testimonio",
+   "07-cerv-primaria-form"
+  ]
+ },
+ {
+  "id": "secundaria",
+  "slug": "secundaria",
+  "nombre": "Secundaria",
+  "titulo": "Secundaria · Colegio Español Cervantes",
+  "descripcion": "Secundaria con inglés Cambridge (CAE y C2 Proficiency), ciencias, deportes y acompañamiento integral.",
+  "secciones": [
+   "01-cerv-secundaria-hero",
+   "02-cerv-sec-ingles",
+   "03-cerv-sec-deportes",
+   "04-cerv-sec-mosaico",
+   "05-cerv-sec-extracurriculares",
+   "07-cerv-form-sec"
+  ]
+ },
+ {
+  "id": "bachillerato",
+  "slug": "bachillerato",
+  "nombre": "Bachillerato Europeo",
+  "titulo": "Bachillerato Europeo · Colegio Español Cervantes",
+  "descripcion": "Bachillerato Europeo con doble titulación Uruguay–España, homologado por el Ministerio de Educación de España.",
+  "secciones": [
+   "01-cerv-bachillerato-hero",
+   "02-cerv-bach-intro",
+   "03-cerv-bach-id",
+   "04-cerv-bach-noticias",
+   "05-cerv-form-ems"
+  ]
+ },
+ {
+  "id": "vida-escolar",
+  "slug": "vida-escolar",
+  "nombre": "Vida escolar",
+  "titulo": "Vida escolar · Colegio Español Cervantes",
+  "descripcion": "Actividades extracurriculares, talleres, salidas didácticas, deportes y celebraciones del Colegio Español Cervantes.",
+  "secciones": [
+   "01-cerv-extracurriculares",
+   "02-cerv-talleres",
+   "03-cerv-salidas-didacticas",
+   "04-cerv-deportes",
+   "05-cerv-celebraciones"
+  ]
+ },
+ {
+  "id": "sobre-nosotros",
+  "slug": "sobre-nosotros",
+  "nombre": "Sobre nosotros",
+  "titulo": "Sobre nosotros · Colegio Español Cervantes",
+  "descripcion": "Historia, proyecto educativo, equipo directivo e instalaciones del Colegio Español Cervantes.",
+  "secciones": [
+   "01-cerv-historia",
+   "02-cerv-proyecto-educativo",
+   "03-cerv-equipo-directivo",
+   "04-cerv-instalaciones"
+  ]
+ },
+ {
+  "id": "admisiones",
+  "slug": "admisiones",
+  "nombre": "Admisiones",
+  "titulo": "Admisiones · Colegio Español Cervantes",
+  "descripcion": "Proceso de admisión, requisitos y formulario de consulta para inscripciones en el Colegio Español Cervantes.",
+  "secciones": [
+   "01-cerv-hero-adm",
+   "02-cerv-info-adm",
+   "03-cerv-requisitos-adm",
+   "04-cerv-form-adm"
+  ]
+ },
+ {
+  "id": "novedades",
+  "slug": "novedades",
+  "nombre": "Novedades",
+  "titulo": "Novedades · Colegio Español Cervantes",
+  "descripcion": "Noticias y actividades recientes de la comunidad del Colegio Español Cervantes.",
+  "secciones": [
+   "01-novedades-hero",
+   "02-cerv-noticias",
+   "03-cerv-calendario",
+   "04-cerv-comunicados"
+  ]
+ },
+ {
+  "id": "contacto",
+  "slug": "contacto",
+  "nombre": "Contacto",
+  "titulo": "Contacto · Colegio Español Cervantes",
+  "descripcion": "Contacto, ubicación y formulario de consulta. Trabajá con nosotros: enviá tu postulación.",
+  "secciones": [
+   "01-cerv-contacto-page",
+   "02-cerv-trabaja"
+  ]
+ },
+ {
+  "id": "politica-de-privacidad",
+  "slug": "politica-de-privacidad",
+  "nombre": "Política de privacidad",
+  "titulo": "Política de privacidad · Colegio Español Cervantes",
+  "descripcion": "Cómo el Colegio Español Cervantes cuida los datos personales que recibe a través de su sitio web.",
+  "secciones": [
+   "01-cerv-privacidad"
+  ]
+ },
+ {
+  "id": "gracias",
+  "slug": "gracias",
+  "nombre": "Gracias",
+  "titulo": "¡Gracias! · Colegio Español Cervantes",
+  "descripcion": "Recibimos tu mensaje.",
+  "secciones": [
+   "01-cerv-gracias"
+  ]
+ }
+]

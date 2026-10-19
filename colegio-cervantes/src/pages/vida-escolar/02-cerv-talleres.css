@@ -1,0 +1,36 @@
+#cerv-talleres {
+  background: #ffffff;
+  padding: clamp(60px,8vw,100px) 0;
+  font-family: "Lama Sans","LamaSans",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  color: #00325A;
+}
+
+.tal-wrap { max-width: 1200px; margin: 0 auto; padding: 0 16px; }
+
+.tal-header { display: flex; flex-direction: column; gap: 16px; margin-bottom: 48px; max-width: 980px; }
+.tal-title { margin: 0; font-size: 48px; font-weight: 600; line-height: 1.1; color: #00325A; }
+.tal-intro { margin: 0; font-size: 16px; font-weight: 400; line-height: 1.7; color: #5B667A; }
+.tal-rule { height: 1px; background: rgba(0,0,0,.08); width: 100%; max-width: 560px; }
+
+.tal-grid { display: grid; grid-template-columns: repeat(12,1fr); gap: 32px; align-items: start; }
+.tal-col-left { grid-column: span 12; }
+.tal-col-right { grid-column: span 12; }
+
+@media(min-width:980px){ .tal-col-left { grid-column: span 5; } .tal-col-right { grid-column: span 7; } }
+
+.tal-card { background: #F6F7FA; border-radius: 26px; padding: 36px; box-shadow: 0 18px 40px rgba(0,0,0,.08); border: 1px solid rgba(0,0,0,.05); }
+.tal-card h3 { margin: 0 0 14px; font-size: 28px; font-weight: 500; line-height: 1.25; color: #00325A; }
+.tal-card p { margin: 0; font-size: 16px; font-weight: 400; line-height: 1.7; color: #5B667A; }
+
+.tal-list { display: grid; gap: 18px; }
+
+.tal-item { background: #F6F7FA; border-radius: 26px; padding: 26px 28px; box-shadow: 0 18px 40px rgba(0,0,0,.08); border: 1px solid rgba(0,0,0,.05); display: flex; flex-direction: column; gap: 12px; }
+.tal-item h4 { margin: 0; font-size: 28px; font-weight: 500; line-height: 1.25; color: #00325A; }
+.tal-item p { margin: 0; font-size: 16px; font-weight: 400; line-height: 1.7; color: #5B667A; }
+
+.tal-meta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 4px; }
+.tal-pill { display: inline-flex; align-items: center; justify-content: center; padding: 8px 12px; border-radius: 999px; border: 1px solid rgba(0,50,90,.18); background: rgba(255,255,255,.65); font-size: 16px; font-weight: 400; line-height: 1; color: #00325A; white-space: nowrap; }
+.tal-pill.accent { border-color: rgba(211,154,71,.35); background: rgba(211,154,71,.10); }
+
+.tal-note { margin-top: 18px; padding-top: 18px; border-top: 1px solid rgba(0,0,0,.08); font-size: 16px; font-weight: 400; line-height: 1.7; color: #5B667A; }
+.tal-note strong { font-weight: 500; color: #00325A; }

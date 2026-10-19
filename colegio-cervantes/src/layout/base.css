@@ -1,0 +1,230 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  overflow-x: hidden;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #ffffff;
+  color: #1a1a1a;
+}
+
+/* ===================== HEADER ===================== */
+header {
+  background-color: white;
+  border-bottom: 1px solid #ccc;
+  transition: box-shadow 0.3s ease;
+  position: relative;
+  z-index: 1000;
+}
+
+header.sticky {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.encabezado {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.logotipo img {
+  height: 60px;
+  max-width: 100%;
+}
+
+/* ===================== NAV ===================== */
+ul.menu {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+}
+
+ul.menu > li {
+  position: relative;
+}
+
+ul.menu a {
+  text-decoration: none;
+  color: #162a63;
+  font-weight: 600;
+  font-size: 1rem;
+  position: relative;
+  padding-bottom: 4px;
+  transition: color 0.3s ease;
+}
+
+ul.menu > li > a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 2px;
+  width: 0;
+  background-color: #162a63;
+  transition: width 0.3s ease;
+}
+
+ul.menu > li > a:hover::after { width: 100%; }
+ul.menu a:hover { color: #0d1b40; }
+
+/* ===================== SUBMENU ===================== */
+ul.submenu {
+  display: none;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: white;
+  padding: 0.5rem 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  list-style: none;
+  min-width: 240px;
+  z-index: 999;
+  border-radius: 0 0 12px 12px;
+}
+
+ul.menu li:hover > ul.submenu {
+  display: block;
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+ul.submenu li a {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  font-weight: 400;
+  font-size: 0.95rem;
+  transition: background-color 0.3s ease;
+}
+
+ul.menu > li:last-child > ul.submenu { left: auto; right: 0; }
+ul.submenu li a::after { display: none !important; }
+ul.submenu li a:hover { background-color: #f3f6ff; }
+
+.submenu a.activo {
+  font-weight: 700;
+  color: #0d1b40;
+  background-color: #f3f6ff;
+}
+
+/* ===================== HAMBURGUESA ===================== */
+.menu-toggle {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+  gap: 5px;
+  padding: 4px;
+}
+
+.menu-toggle span {
+  width: 25px;
+  height: 3px;
+  background-color: #162a63;
+  border-radius: 3px;
+  transition: all 0.3s ease;
+}
+
+/* ===================== RESPONSIVE HEADER ===================== */
+@media (max-width: 768px) {
+  ul.menu {
+    display: none;
+    flex-direction: column;
+    background-color: white;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    padding: 1rem;
+    z-index: 999;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+    border-top: 1px solid #e2e8f0;
+  }
+  ul.menu.active { display: flex; }
+  .menu-toggle { display: flex; }
+  ul.menu li { margin-bottom: 0.75rem; }
+  ul.submenu {
+    position: static;
+    box-shadow: none;
+    background: transparent;
+    padding-left: 1rem;
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+    border-radius: 0;
+  }
+  ul.menu li:hover > ul.submenu { display: none; }
+  ul.menu li.show-submenu > ul.submenu { display: block; }
+}
+
+/* ===================== AGREGADOS (revisión 2026) ===================== */
+.cerv-oculto { display: none !important; }
+
+.logotipo-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: #00325A;
+}
+.logotipo-link img { height: 60px; width: auto; max-width: 220px; display: block; }
+.logotipo-escudo { width: 46px; height: 46px; flex-shrink: 0; }
+.logotipo-texto { display: flex; flex-direction: column; line-height: 1.05; }
+.logotipo-texto small {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: #D39A47;
+}
+.logotipo-texto strong { font-size: 24px; font-weight: 700; color: #00325A; letter-spacing: .01em; }
+
+button.menu-toggle { background: none; border: 0; }
+
+ul.menu > li > a.actual::after { width: 100%; }
+
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+  outline: 3px solid #D39A47;
+  outline-offset: 2px;
+}
+
+#cerv-footer .cf-bottom a { color: inherit; text-decoration: underline; }
+
+.cerv-whatsapp {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 1500;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: #25D366;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, .22);
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.cerv-whatsapp:hover { transform: translateY(-3px); box-shadow: 0 14px 30px rgba(0, 0, 0, .28); }
+.cerv-whatsapp svg { width: 30px; height: 30px; fill: currentColor; }
+
+@media (max-width: 768px) {
+  .logotipo-escudo { width: 38px; height: 38px; }
+  .logotipo-texto strong { font-size: 20px; }
+  .logotipo-link img { height: 48px; }
+}
+
+/* Enlaces de email y teléfono: mismo color que el texto que los rodea */
+a[href^="mailto:"], a[href^="tel:"] { color: inherit; text-decoration: none; }
+a[href^="mailto:"]:hover, a[href^="tel:"]:hover { text-decoration: underline; }

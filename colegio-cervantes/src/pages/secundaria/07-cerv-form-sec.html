@@ -1,0 +1,43 @@
+<section id="cerv-form-sec">
+
+  <div class="cfs-split">
+    <div class="cfs-info">
+      <div class="cfs-info-eyebrow">Secundaria</div>
+      <h2>¿Querés <em>saber más?</em></h2>
+      <p class="cfs-info-desc">Seleccioná el año de Secundaria y escribinos tu consulta. Nos comunicamos a la brevedad.</p>
+      <div class="cfs-levels">
+        <div class="cfs-level"><div class="cfs-level-num">7.º</div><span>Séptimo año</span></div>
+        <div class="cfs-level"><div class="cfs-level-num">8.º</div><span>Octavo año</span></div>
+        <div class="cfs-level"><div class="cfs-level-num">9.º</div><span>Noveno año</span></div>
+      </div>
+    </div>
+
+    <div class="cfs-form-panel">
+      <form id="cfsForm" name="contacto-secundaria" action="/gracias/" data-netlify="true" netlify-honeypot="bot-field" method="post" novalidate>
+<input type="hidden" name="form-name" value="contacto-secundaria"><p class="cerv-hp" hidden><label>No completar: <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+        <div class="cfs-grid">
+          <div class="cfs-field"><label for="cfsNombre">Nombre</label><input id="cfsNombre" name="nombre" type="text" placeholder="Ej. Ana" required minlength="2"></div>
+          <div class="cfs-field"><label for="cfsApellido">Apellido</label><input id="cfsApellido" name="apellido" type="text" placeholder="Ej. Pérez" required minlength="2"></div>
+          <div class="cfs-field"><label for="cfsEmail">Correo electrónico</label><input id="cfsEmail" name="email" type="email" placeholder="tu@correo.com" required></div>
+          <div class="cfs-field"><label for="cfsTel">Teléfono (opcional)</label><input id="cfsTel" name="telefono" type="tel" placeholder="+598 ..."></div>
+          <div class="cfs-field full">
+            <div class="cfs-group-label">Año de Secundaria</div>
+            <div class="cfs-checkgroup" role="group" aria-label="Año de secundaria">
+              <label class="cfs-check"><input type="checkbox" name="secundaria[]" value="Séptimo"><span>Séptimo</span></label>
+              <label class="cfs-check"><input type="checkbox" name="secundaria[]" value="Octavo"><span>Octavo</span></label>
+              <label class="cfs-check"><input type="checkbox" name="secundaria[]" value="Noveno"><span>Noveno</span></label>
+            </div>
+          </div>
+          <div class="cfs-field full"><label for="cfsMensaje">Mensaje</label><textarea id="cfsMensaje" name="mensaje" placeholder="Contanos en qué podemos ayudarte..." required minlength="10"></textarea></div>
+          <div id="cfsOk" class="cfs-msg ok">✅ ¡Mensaje enviado! Nos comunicamos a la brevedad.</div>
+          <div id="cfsErr" class="cfs-msg err"></div>
+        </div>
+        <div class="cfs-actions">
+          <p class="cfs-note">Al enviar este formulario aceptás que nos contactemos contigo por este medio.</p>
+          <button type="submit" class="cfs-btn">Enviar consulta <svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+</section>

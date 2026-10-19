@@ -1,0 +1,31 @@
+#cerv-vision {
+  --azul:#00325A; --oro:#D39A47; --rojo:#BB0923; --gris:#5B667A; --calido:#faf7f2;
+  width:100vw; margin-left:calc(50% - 50vw);
+  font-family:"Lama Sans","LamaSans",system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  color:var(--azul); overflow:hidden; background:#fff;
+}
+.vision-split{ display:grid; grid-template-columns:1fr 1fr; min-height:580px; }
+.vision-img{ position:relative; overflow:hidden; }
+.vision-img img{ width:100%; height:100%; object-fit:cover; object-position:center 25%; display:block; transition:transform 6s ease; }
+.vision-img:hover img{ transform:scale(1.04); }
+.vision-img::after{ content:""; position:absolute; inset:0; background:linear-gradient(to right,rgba(0,18,35,0) 60%,rgba(255,255,255,.18) 100%); }
+.vision-cita-foto{ position:absolute; bottom:36px; left:28px; right:28px; z-index:2; background:rgba(255,255,255,.92); backdrop-filter:blur(10px); border-radius:18px; padding:20px 22px; border-left:4px solid var(--oro); box-shadow:0 10px 32px rgba(0,0,0,.14); }
+.vision-cita-foto::before{ content:"\201C"; position:absolute; top:-14px; left:18px; font-size:52px; line-height:1; color:var(--oro); font-family:Georgia,serif; }
+.vision-cita-foto p{ margin:0; font-size:clamp(15px,1.5vw,18px); font-weight:700; color:var(--azul); line-height:1.4; font-style:italic; }
+.vision-text{ background:var(--calido); padding:clamp(48px,6vw,88px) clamp(36px,5vw,72px); display:flex; flex-direction:column; justify-content:center; position:relative; overflow:hidden; }
+.vision-text::before{ content:""; position:absolute; bottom:-100px; right:-100px; width:380px; height:380px; border-radius:50%; background:radial-gradient(circle,rgba(211,154,71,.11) 0%,transparent 65%); pointer-events:none; }
+.vision-eyebrow{ display:inline-flex; align-items:center; gap:8px; font-size:11px; font-weight:700; letter-spacing:.16em; text-transform:uppercase; color:var(--oro); margin-bottom:18px; position:relative; z-index:1; }
+.vision-eyebrow::before{ content:""; display:block; width:24px; height:2px; background:var(--oro); border-radius:2px; }
+.vision-text h2{ font-size:clamp(28px,3.5vw,44px); font-weight:800; color:var(--azul); line-height:1.1; margin:0 0 24px; letter-spacing:-.02em; position:relative; z-index:1; }
+.vision-text h2 em{ font-style:normal; color:var(--oro); }
+.vision-parrafos{ display:flex; flex-direction:column; gap:14px; position:relative; z-index:1; }
+.vision-parrafos p{ margin:0; font-size:clamp(14px,1.3vw,16px); line-height:1.75; color:var(--gris); }
+.vision-divider{ width:48px; height:3px; background:linear-gradient(to right,var(--oro),var(--rojo)); border-radius:3px; }
+.vision-pillars{ display:flex; flex-direction:column; gap:12px; margin-top:28px; position:relative; z-index:1; }
+.vision-pillar{ display:flex; align-items:center; gap:14px; padding:14px 16px; background:#fff; border-radius:14px; border:1px solid rgba(211,154,71,.18); transition:transform .2s ease, box-shadow .2s ease; }
+.vision-pillar:hover{ transform:translateX(4px); box-shadow:0 6px 20px rgba(0,0,0,.07); }
+.vision-pillar-ico{ width:38px; height:38px; border-radius:10px; background:rgba(211,154,71,.12); border:1px solid rgba(211,154,71,.28); display:grid; place-items:center; flex-shrink:0; }
+.vision-pillar-ico svg{ width:18px; height:18px; stroke:var(--azul); stroke-width:1.8; fill:none; stroke-linecap:round; stroke-linejoin:round; }
+.vision-pillar span{ font-size:clamp(13px,1.2vw,15px); font-weight:600; color:var(--azul); line-height:1.3; }
+@media(max-width:860px){ .vision-split{ grid-template-columns:1fr; min-height:auto; } .vision-img{ height:360px; } .vision-cita-foto{ bottom:20px; left:16px; right:16px; } }
+@media(prefers-reduced-motion:reduce){ .vision-img img,.vision-pillar{ transition:none; } }

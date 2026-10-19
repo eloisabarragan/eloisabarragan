@@ -1,0 +1,77 @@
+#niveles-cervantes {
+  width:100vw; margin-left:calc(50% - 50vw);
+  position:relative; overflow:hidden;
+  font-family:"Lama Sans","LamaSans",system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  background:#f0f5fa;
+  padding:clamp(56px,7vw,96px) clamp(16px,5vw,64px);
+  color:#0f172a;
+}
+
+.niv-head{ text-align:center; max-width:640px; margin:0 auto clamp(40px,5vw,64px); }
+
+.niv-eyebrow{
+  display:inline-flex; align-items:center; gap:10px;
+  font-size:12px; font-weight:600; letter-spacing:.16em; text-transform:uppercase;
+  color:#D39A47; margin-bottom:14px;
+}
+.niv-eyebrow::before,.niv-eyebrow::after{ content:""; display:block; width:28px; height:2px; background:#D39A47; border-radius:2px; }
+
+.niv-head h2{ font-size:clamp(28px,4vw,44px); font-weight:800; color:#00325A; line-height:1.1; margin:0 0 14px; letter-spacing:-.02em; }
+.niv-head p{ font-size:clamp(15px,1.5vw,17px); color:#5b6b7c; line-height:1.6; margin:0; }
+
+.niv-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(14px,2vw,24px); max-width:1320px; margin:0 auto; align-items:end; }
+
+.niv-card{
+  position:relative; border-radius:20px; overflow:hidden;
+  text-decoration:none; color:inherit; display:block;
+  height:340px;
+  box-shadow:0 12px 40px rgba(0,0,0,.13);
+  transition:transform .35s ease, box-shadow .35s ease;
+  opacity:0; transform:translateY(36px);
+}
+.niv-card.is-visible{ opacity:1; transform:translateY(0); transition:opacity .6s ease, transform .6s ease, box-shadow .35s ease; }
+.niv-card:nth-child(1).is-visible{ transition-delay:0s; }
+.niv-card:nth-child(2).is-visible{ transition-delay:.12s; }
+.niv-card:nth-child(3).is-visible{ transition-delay:.24s; }
+.niv-card:nth-child(2){ height:420px; }
+.niv-card:hover{ transform:translateY(-6px); box-shadow:0 24px 56px rgba(0,0,0,.18); }
+
+.niv-img{ width:100%; height:100%; object-fit:cover; display:block; transition:transform .6s ease; }
+.niv-card:hover .niv-img{ transform:scale(1.06); }
+
+.niv-overlay{
+  position:absolute; inset:0;
+  background:linear-gradient(to top, rgba(0,18,40,.92) 0%, rgba(0,18,40,.45) 50%, rgba(0,18,40,.08) 100%);
+  display:flex; flex-direction:column; justify-content:flex-end;
+  padding:clamp(18px,3vw,28px);
+  transition:background .35s ease;
+}
+.niv-card:hover .niv-overlay{ background:linear-gradient(to top, rgba(0,18,40,.96) 0%, rgba(0,18,40,.55) 55%, rgba(0,18,40,.12) 100%); }
+
+.niv-num{ position:absolute; top:14px; right:18px; font-size:clamp(64px,9vw,100px); font-weight:900; color:rgba(255,255,255,.06); line-height:1; pointer-events:none; user-select:none; letter-spacing:-.04em; transition:color .35s ease; }
+.niv-card:hover .niv-num{ color:rgba(255,255,255,.10); }
+
+.niv-sub{ display:inline-block; font-size:11px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:#D39A47; margin-bottom:6px; }
+.niv-info h3{ margin:0 0 8px; font-size:clamp(20px,2.2vw,26px); font-weight:800; color:#fff; line-height:1.1; letter-spacing:-.01em; }
+.niv-info p{ margin:0 0 16px; font-size:clamp(13px,1.2vw,15px); color:rgba(255,255,255,.78); line-height:1.5; max-height:0; overflow:hidden; opacity:0; transition:max-height .4s ease, opacity .4s ease, margin .4s ease; }
+.niv-card:hover .niv-info p{ max-height:80px; opacity:1; }
+
+.niv-cta{ display:inline-flex; align-items:center; gap:6px; font-size:13px; font-weight:700; color:#FFD200; letter-spacing:.04em; text-transform:uppercase; transform:translateY(4px); opacity:0; transition:opacity .35s ease, transform .35s ease; }
+.niv-card:hover .niv-cta{ opacity:1; transform:translateY(0); }
+.niv-cta svg{ transition:transform .25s ease; }
+.niv-card:hover .niv-cta svg{ transform:translateX(4px); }
+
+@media(max-width:860px){
+  .niv-grid{ grid-template-columns:1fr; align-items:stretch; }
+  .niv-card,.niv-card:nth-child(2){ height:280px; }
+  .niv-info p{ max-height:80px; opacity:1; margin-bottom:16px; }
+  .niv-cta{ opacity:1; transform:none; }
+}
+@media(min-width:861px) and (max-width:1100px){
+  .niv-card{ height:300px; }
+  .niv-card:nth-child(2){ height:370px; }
+}
+@media(prefers-reduced-motion:reduce){
+  .niv-card,.niv-img,.niv-info p,.niv-cta{ transition:none !important; }
+  .niv-card{ opacity:1; transform:none; }
+}

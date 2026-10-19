@@ -1,0 +1,33 @@
+[
+  {"texto": "Niveles educativos", "url": "#", "hijos": [
+    {"texto": "Inicial", "url": "/inicial/", "icono": "fas fa-child"},
+    {"texto": "Primaria", "url": "/primaria/", "icono": "fas fa-book"},
+    {"texto": "Secundaria", "url": "/secundaria/", "icono": "fas fa-user-graduate"},
+    {"texto": "Bachillerato Europeo", "url": "/bachillerato/", "icono": "fas fa-graduation-cap"}
+  ]},
+  {"texto": "Vida escolar", "url": "/vida-escolar/", "hijos": [
+    {"texto": "Actividades extracurriculares", "url": "/vida-escolar/#cerv-extracurriculares", "icono": "fas fa-paint-brush"},
+    {"texto": "Talleres", "url": "/vida-escolar/#cerv-talleres", "icono": "fas fa-tools"},
+    {"texto": "Salidas didácticas", "url": "/vida-escolar/#cerv-salidas-didacticas", "icono": "fas fa-bus"},
+    {"texto": "Deportes", "url": "/vida-escolar/#cerv-deportes", "icono": "fas fa-futbol"},
+    {"texto": "Celebraciones", "url": "/vida-escolar/#cerv-celebraciones", "icono": "fas fa-birthday-cake"}
+  ]},
+  {"texto": "Sobre nosotros", "url": "/sobre-nosotros/", "hijos": [
+    {"texto": "Historia del colegio", "url": "/sobre-nosotros/#cerv-historia", "icono": "fas fa-landmark"},
+    {"texto": "Proyecto educativo", "url": "/sobre-nosotros/#cerv-proyecto-educativo", "icono": "fas fa-lightbulb"},
+    {"texto": "Equipo docente y directivo", "url": "/sobre-nosotros/#cerv-equipo-directivo", "icono": "fas fa-chalkboard-teacher"},
+    {"texto": "Instalaciones", "url": "/sobre-nosotros/#cerv-instalaciones", "icono": "fas fa-school"}
+  ]},
+  {"texto": "Admisiones", "url": "/admisiones/", "hijos": [
+    {"texto": "Info general del proceso", "url": "/admisiones/#cerv-info-adm", "icono": "fas fa-info-circle"},
+    {"texto": "Requisitos", "url": "/admisiones/#cerv-requisitos-adm", "icono": "fas fa-list-check"},
+    {"texto": "Formulario de contacto", "url": "/admisiones/#cerv-form-adm", "icono": "fas fa-envelope"}
+  ]},
+  {"texto": "Novedades", "url": "/novedades/", "hijos": [
+    {"texto": "Noticias y actividades recientes", "url": "/novedades/#cerv-noticias", "icono": "fas fa-newspaper"}
+  ]},
+  {"texto": "Contacto", "url": "/contacto/", "hijos": [
+    {"texto": "Formulario de contacto", "url": "/contacto/#cerv-contacto-page", "icono": "fas fa-envelope"},
+    {"texto": "Trabajá con nosotros", "url": "/contacto/#cerv-trabaja", "icono": "fas fa-briefcase"}
+  ]}
+]

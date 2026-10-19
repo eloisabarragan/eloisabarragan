@@ -1,0 +1,56 @@
+<section id="cerv-contacto-split">
+
+  <div class="cc-bleed">
+    <div class="cc-wrap">
+      <div class="cc-split">
+        <aside class="cc-left">
+          <img src="{{img}}/swim_0731.jpg" alt="">
+          <div class="cc-left-content">
+            <p class="cc-eyebrow">Colegio Español Cervantes</p>
+            <h2 class="cc-title">Inscripciones abiertas</h2>
+            <p class="cc-text">Si querés conocer nuestra propuesta educativa o iniciar el proceso de inscripción, escribinos y nos pondremos en contacto con vos a la brevedad.</p>
+          </div>
+        </aside>
+        <div class="cc-right">
+          <h3 class="cc-form-title">Enviá tu mensaje</h3>
+          <p class="cc-form-sub">Campos obligatorios: nombre, email, motivo y mensaje. Si tu consulta es sobre un alumno/a, agregá nivel y grupo.</p>
+          <form id="ccForm" name="contacto-inicial" action="/gracias/" method="post" data-netlify="true" netlify-honeypot="bot-field" novalidate>
+<input type="hidden" name="form-name" value="contacto-inicial"><p class="cerv-hp" hidden><label>No completar: <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+            <div class="cc-grid">
+              <div class="cc-field half"><label for="ccNombre">Nombre y apellido</label><input id="ccNombre" name="nombre" type="text" required></div>
+              <div class="cc-field half"><label for="ccEmail">Correo electrónico</label><input id="ccEmail" name="email" type="email" required></div>
+              <div class="cc-field third"><label for="ccTel">Teléfono</label><input id="ccTel" name="telefono" type="tel"></div>
+              <div class="cc-field third">
+                <label for="ccMotivo">Motivo</label>
+                <select id="ccMotivo" name="motivo" required>
+                  <option value="">Seleccioná</option>
+                  <option>Inscripciones</option>
+                  <option>Información general</option>
+                  <option>Administración</option>
+                </select>
+              </div>
+              <div class="cc-field third">
+                <label for="ccNivel">Nivel</label>
+                <select id="ccNivel" name="nivel">
+                  <option>No aplica</option>
+                  <option>Jardín Maternal</option>
+                  <option>Nivel Inicial</option>
+                  <option>Primaria</option>
+                  <option>Secundaria</option>
+                  <option>Bachillerato Europeo</option>
+                </select>
+              </div>
+              <div class="cc-field"><label for="ccMensaje">Mensaje</label><textarea id="ccMensaje" name="mensaje" required></textarea></div>
+            </div>
+            <div id="ccOk" class="cc-msg ok">✅ ¡Mensaje enviado! Nos comunicamos a la brevedad.</div>
+            <div id="ccErr" class="cc-msg err"></div>
+            <div class="cc-actions">
+              <button type="reset" class="cc-btn cc-secondary">Limpiar</button>
+              <button type="submit" class="cc-btn cc-primary">Enviar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

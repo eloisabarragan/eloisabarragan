@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admisiones · Colegio Español Cervantes</title>
+  <meta name="description" content="Proceso de admisión, requisitos y formulario de consulta para inscripciones en el Colegio Español Cervantes.">
+  <link rel="canonical" href="https://extraordinary-paletas-49ea40.netlify.app/admisiones/">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="es_UY">
+  <meta property="og:site_name" content="Colegio Español Cervantes">
+  <meta property="og:title" content="Admisiones · Colegio Español Cervantes">
+  <meta property="og:description" content="Proceso de admisión, requisitos y formulario de consulta para inscripciones en el Colegio Español Cervantes.">
+  <meta property="og:url" content="https://extraordinary-paletas-49ea40.netlify.app/admisiones/">
+  <meta property="og:image" content="https://extraordinary-paletas-49ea40.netlify.app/img/og-imagen.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="/assets/cervantes.css">
+</head>
+<body class="pagina-admisiones">
+
+<header id="site-header">
+  <div class="encabezado">
+    <div class="logotipo">
+      <a href="/" class="logotipo-link" aria-label="Colegio Español Cervantes · Inicio"><svg class="logotipo-escudo" viewBox="0 0 28 28" fill="none" aria-hidden="true"><path d="M14 3L4 7v8c0 5.5 4.3 10.6 10 12 5.7-1.4 10-6.5 10-12V7L14 3z" fill="#00325A" stroke="#D39A47" stroke-width="1.5"/><path d="M10 14l2.5 2.5L18 11" stroke="#FFD200" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="logotipo-texto"><small>Colegio Español</small><strong>Cervantes</strong></span></a>
+    </div>
+
+    <button class="menu-toggle" id="toggle" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="menu">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav aria-label="Navegación principal">
+      <ul class="menu" id="menu">
+<li><a href="#">Niveles educativos</a>
+  <ul class="submenu">
+    <li><a href="/inicial/"><i class="fas fa-child" aria-hidden="true"></i> Inicial</a></li>
+    <li><a href="/primaria/"><i class="fas fa-book" aria-hidden="true"></i> Primaria</a></li>
+    <li><a href="/secundaria/"><i class="fas fa-user-graduate" aria-hidden="true"></i> Secundaria</a></li>
+    <li><a href="/bachillerato/"><i class="fas fa-graduation-cap" aria-hidden="true"></i> Bachillerato Europeo</a></li>
+  </ul>
+</li>
+<li><a href="/vida-escolar/">Vida escolar</a>
+  <ul class="submenu">
+    <li><a href="/vida-escolar/#cerv-extracurriculares"><i class="fas fa-paint-brush" aria-hidden="true"></i> Actividades extracurriculares</a></li>
+    <li><a href="/vida-escolar/#cerv-talleres"><i class="fas fa-tools" aria-hidden="true"></i> Talleres</a></li>
+    <li><a href="/vida-escolar/#cerv-salidas-didacticas"><i class="fas fa-bus" aria-hidden="true"></i> Salidas didácticas</a></li>
+    <li><a href="/vida-escolar/#cerv-deportes"><i class="fas fa-futbol" aria-hidden="true"></i> Deportes</a></li>
+    <li><a href="/vida-escolar/#cerv-celebraciones"><i class="fas fa-birthday-cake" aria-hidden="true"></i> Celebraciones</a></li>
+  </ul>
+</li>
+<li><a href="/sobre-nosotros/">Sobre nosotros</a>
+  <ul class="submenu">
+    <li><a href="/sobre-nosotros/#cerv-historia"><i class="fas fa-landmark" aria-hidden="true"></i> Historia del colegio</a></li>
+    <li><a href="/sobre-nosotros/#cerv-proyecto-educativo"><i class="fas fa-lightbulb" aria-hidden="true"></i> Proyecto educativo</a></li>
+    <li><a href="/sobre-nosotros/#cerv-equipo-directivo"><i class="fas fa-chalkboard-teacher" aria-hidden="true"></i> Equipo docente y directivo</a></li>
+    <li><a href="/sobre-nosotros/#cerv-instalaciones"><i class="fas fa-school" aria-hidden="true"></i> Instalaciones</a></li>
+  </ul>
+</li>
+<li><a href="/admisiones/" class="actual">Admisiones</a>
+  <ul class="submenu">
+    <li><a href="/admisiones/#cerv-info-adm"><i class="fas fa-info-circle" aria-hidden="true"></i> Info general del proceso</a></li>
+    <li><a href="/admisiones/#cerv-requisitos-adm"><i class="fas fa-list-check" aria-hidden="true"></i> Requisitos</a></li>
+    <li><a href="/admisiones/#cerv-form-adm"><i class="fas fa-envelope" aria-hidden="true"></i> Formulario de contacto</a></li>
+  </ul>
+</li>
+<li><a href="/novedades/">Novedades</a>
+  <ul class="submenu">
+    <li><a href="/novedades/#cerv-noticias"><i class="fas fa-newspaper" aria-hidden="true"></i> Noticias y actividades recientes</a></li>
+  </ul>
+</li>
+<li><a href="/contacto/">Contacto</a>
+  <ul class="submenu">
+    <li><a href="/contacto/#cerv-contacto-page"><i class="fas fa-envelope" aria-hidden="true"></i> Formulario de contacto</a></li>
+    <li><a href="/contacto/#cerv-trabaja"><i class="fas fa-briefcase" aria-hidden="true"></i> Trabajá con nosotros</a></li>
+  </ul>
+</li>
+</ul>
+    </nav>
+  </div>
+</header>
+
+
+<main id="contenido">
+<section id="cerv-hero-adm" aria-label="Hero Admisiones">
+
+  <div class="ha-slider" aria-hidden="true">
+
+    <div class="ha-slide is-active"
+      data-etiqueta="Admisiones · Información"
+      data-titulo="Acompañamiento desde el primer contacto"
+      data-subtitulo="Te guiamos paso a paso para que puedas postularte con claridad. Coordiná una entrevista y conocé el colegio."
+      data-primary-href="#cerv-info-adm"
+      data-primary-text="Ver proceso"
+      data-secondary-href="#cerv-form-adm"
+      data-secondary-text="Hacer una consulta"
+      style="background-image:url('/img/img_5818.jpg')">
+    </div>
+
+    <div class="ha-slide"
+      data-etiqueta="Admisiones · Requisitos"
+      data-titulo="Requisitos y documentación"
+      data-subtitulo="Encontrá la lista de documentos y pasos para completar la inscripción según el nivel."
+      data-primary-href="#cerv-requisitos-adm"
+      data-primary-text="Ver requisitos"
+      data-secondary-href="#cerv-form-adm"
+      data-secondary-text="Consultar"
+      style="background-image:url('/img/pri_8883.jpg')">
+    </div>
+
+    <div class="ha-slide"
+      data-etiqueta="Admisiones · Contacto"
+      data-titulo="Contactanos para iniciar el proceso"
+      data-subtitulo="Completá el formulario y nos comunicaremos contigo para coordinar los próximos pasos."
+      data-primary-href="#cerv-form-adm"
+      data-primary-text="Ir al formulario"
+      data-secondary-href="/contacto/"
+      data-secondary-text="Contacto general"
+      style="background-image:url('/img/ban_8211.jpg')">
+    </div>
+
+  </div>
+
+  <!-- Contenido izquierda -->
+  <div class="ha-content" id="ha-content">
+    <span class="ha-acento"></span>
+    <span class="ha-etiqueta" id="ha-etiqueta">Admisiones · Información</span>
+    <h1 class="ha-titulo" id="ha-titulo">Acompañamiento desde el primer contacto</h1>
+    <p class="ha-subtitulo" id="ha-subtitulo">
+      Te guiamos paso a paso para que puedas postularte con claridad. Coordiná una entrevista y conocé el colegio.
+    </p>
+    <div class="ha-botones" id="ha-botones">
+      <a id="ha-btn-p" href="#cerv-info-adm" class="ha-btn ha-btn-primary">
+        Ver proceso
+        <svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </a>
+      <a id="ha-btn-s" href="#cerv-form-adm" class="ha-btn ha-btn-ghost">
+        Hacer una consulta
+        <svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </a>
+    </div>
+  </div>
+
+  <!-- Nav barras -->
+  <div class="ha-nav" role="tablist" aria-label="Cambiar banner">
+    <button class="ha-dot is-active" type="button" aria-label="Banner 1" aria-selected="true"></button>
+    <button class="ha-dot"           type="button" aria-label="Banner 2" aria-selected="false"></button>
+    <button class="ha-dot"           type="button" aria-label="Banner 3" aria-selected="false"></button>
+  </div>
+
+  <div class="ha-progress" id="ha-progress"></div>
+
+</section>
+
+<section id="cerv-info-adm">
+
+  <div class="cia-inner">
+
+    <div class="cia-header cia-anim cia-d1">
+      <div class="cia-eyebrow">Admisiones</div>
+      <h2 class="cia-title">Información <em>general</em></h2>
+      <p class="cia-intro">
+        El proceso de admisión del Colegio Español Cervantes está pensado para acompañar
+        a las familias desde el primer contacto, brindando claridad, cercanía y un espacio
+        de diálogo para conocer nuestra propuesta educativa.
+      </p>
+    </div>
+
+    <div class="cia-grid">
+
+      <article class="cia-card cia-anim cia-d2">
+        <span class="cia-num">01</span>
+        <div class="cia-badge">1</div>
+        <h3 class="cia-card-title">Primer contacto</h3>
+        <div class="cia-divider"></div>
+        <p class="cia-card-text">
+          Las familias interesadas pueden comunicarse con el colegio para solicitar información,
+          coordinar una entrevista y conocer en profundidad la propuesta educativa correspondiente
+          al nivel al que aspiran ingresar.
+        </p>
+      </article>
+
+      <article class="cia-card cia-anim cia-d3">
+        <span class="cia-num">02</span>
+        <div class="cia-badge">2</div>
+        <h3 class="cia-card-title">Entrevista y acompañamiento</h3>
+        <div class="cia-divider"></div>
+        <p class="cia-card-text">
+          El proceso incluye una entrevista personalizada, donde se intercambian expectativas,
+          se responde a las inquietudes de la familia y se acompaña de manera cercana cada etapa
+          del proceso de admisión.
+        </p>
+      </article>
+
+      <article class="cia-card cia-anim cia-d4">
+        <span class="cia-num">03</span>
+        <div class="cia-badge">3</div>
+        <h3 class="cia-card-title">Ingreso al colegio</h3>
+        <div class="cia-divider"></div>
+        <p class="cia-card-text">
+          Una vez completados los pasos correspondientes, el equipo del colegio acompaña
+          la incorporación del alumno o alumna, facilitando una integración cuidada
+          y acorde a los valores de la institución.
+        </p>
+      </article>
+
+    </div>
+  </div>
+
+</section>
+
+<section id="cerv-requisitos-adm">
+
+  <div class="cra-inner">
+
+    <!-- Aside izquierda -->
+    <aside class="cra-aside cra-anim cra-d1">
+      <div class="cra-eyebrow">Admisiones</div>
+      <h2 class="cra-title">Requisitos de <em>admisión</em></h2>
+      <div class="cra-divider"></div>
+      <p class="cra-intro">
+        Para iniciar el proceso, solicitamos la siguiente documentación e instancias.
+        Nuestro equipo acompaña cada paso para que sea claro y ágil.
+      </p>
+      <div class="cra-note">
+        <strong>Importante:</strong> algunos requisitos pueden variar según el nivel (Inicial, Primaria o Secundaria)
+        y la disponibilidad de cupos.
+      </div>
+    </aside>
+
+    <!-- Checklist derecha -->
+    <div class="cra-card cra-anim cra-d2">
+      <h3 class="cra-card-title">Checklist de admisión</h3>
+      <p class="cra-card-sub">Documentos e instancias requeridas para confirmar la inscripción.</p>
+
+      <ul class="cra-list">
+
+        <li class="cra-item">
+          <div class="cra-bullet" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M9 16.2 4.8 12l1.4-1.4L9 13.4l8.8-8.8L19.2 6z"/></svg>
+          </div>
+          <div class="cra-item-body">
+            <p class="cra-item-text"><strong>Formulario de solicitud completo.</strong> Datos del estudiante y de la familia (formato digital o presencial).</p>
+          </div>
+          <span class="cra-tag cra-tag-oblig">Obligatorio</span>
+        </li>
+
+        <li class="cra-item">
+          <div class="cra-bullet" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M9 16.2 4.8 12l1.4-1.4L9 13.4l8.8-8.8L19.2 6z"/></svg>
+          </div>
+          <div class="cra-item-body">
+            <p class="cra-item-text"><strong>Escolaridad / pase del centro educativo anterior.</strong> Informe o constancia de estudios previos.</p>
+          </div>
+          <span class="cra-tag cra-tag-oblig">Obligatorio</span>
+        </li>
+
+        <li class="cra-item">
+          <div class="cra-bullet" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M9 16.2 4.8 12l1.4-1.4L9 13.4l8.8-8.8L19.2 6z"/></svg>
+          </div>
+          <div class="cra-item-body">
+            <p class="cra-item-text"><strong>Documentación de identidad.</strong> Cédula/pasaporte del estudiante y responsables.</p>
+          </div>
+          <span class="cra-tag cra-tag-oblig">Obligatorio</span>
+        </li>
+
+        <li class="cra-item">
+          <div class="cra-bullet" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M9 16.2 4.8 12l1.4-1.4L9 13.4l8.8-8.8L19.2 6z"/></svg>
+          </div>
+          <div class="cra-item-body">
+            <p class="cra-item-text"><strong>Certificado de salud y/o carné de vacunas.</strong> Según normativa vigente e indicaciones del colegio.</p>
+          </div>
+          <span class="cra-tag cra-tag-nivel">Según nivel</span>
+        </li>
+
+        <li class="cra-item">
+          <div class="cra-bullet" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M9 16.2 4.8 12l1.4-1.4L9 13.4l8.8-8.8L19.2 6z"/></svg>
+          </div>
+          <div class="cra-item-body">
+            <p class="cra-item-text"><strong>Entrevista con el equipo de admisiones.</strong> Instancia de intercambio para acompañar el ingreso y evacuar dudas.</p>
+          </div>
+          <span class="cra-tag cra-tag-oblig">Obligatorio</span>
+        </li>
+
+        <li class="cra-item">
+          <div class="cra-bullet" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M9 16.2 4.8 12l1.4-1.4L9 13.4l8.8-8.8L19.2 6z"/></svg>
+          </div>
+          <div class="cra-item-body">
+            <p class="cra-item-text"><strong>Evaluación diagnóstica (si corresponde).</strong> En determinados casos para acompañar la adaptación académica.</p>
+          </div>
+          <span class="cra-tag cra-tag-nivel">Según nivel</span>
+        </li>
+
+      </ul>
+    </div>
+
+  </div>
+
+</section>
+
+<section id="cerv-form-adm">
+
+  <div class="cfa-inner">
+
+    <!-- Header -->
+    <div class="cfa-header cfa-anim cfa-d1">
+      <div class="cfa-eyebrow">Admisiones</div>
+      <h2 class="cfa-title">¿Querés <em>más información?</em></h2>
+      <p class="cfa-intro">
+        Completá el formulario y nuestro equipo se pondrá en contacto a la brevedad
+        para acompañarte en el proceso de admisión.
+      </p>
+    </div>
+
+    <div class="cfa-split">
+
+      <!-- Formulario -->
+      <div class="cfa-card cfa-anim cfa-d2">
+        <form id="cfaForm" name="admisiones" class="cfa-form" action="/gracias/" data-netlify="true" netlify-honeypot="bot-field" method="post" novalidate>
+<input type="hidden" name="form-name" value="admisiones"><p class="cerv-hp" hidden><label>No completar: <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+
+          <div class="cfa-field">
+            <label for="cfaNombre">Nombre y apellido</label>
+            <input id="cfaNombre" name="nombre" type="text" placeholder="Ej.: María Pérez" required minlength="3">
+          </div>
+
+          <div class="cfa-field">
+            <label for="cfaTel">Teléfono</label>
+            <input id="cfaTel" name="telefono" type="tel" placeholder="Ej.: 09 123 456" required>
+          </div>
+
+          <div class="cfa-field full">
+            <label for="cfaEmail">Correo electrónico</label>
+            <input id="cfaEmail" name="email" type="email" placeholder="Ej.: familia@email.com" required>
+          </div>
+
+          <div class="cfa-field full">
+            <div class="cfa-group-label">Nivel de interés</div>
+            <div class="cfa-checkgroup" role="group" aria-label="Nivel de interés">
+              <label class="cfa-check">
+                <input type="checkbox" name="nivel[]" value="Nivel Inicial">
+                <span>Nivel Inicial</span>
+              </label>
+              <label class="cfa-check">
+                <input type="checkbox" name="nivel[]" value="Primaria">
+                <span>Primaria</span>
+              </label>
+              <label class="cfa-check">
+                <input type="checkbox" name="nivel[]" value="Secundaria">
+                <span>Secundaria</span>
+              </label>
+              <label class="cfa-check">
+                <input type="checkbox" name="nivel[]" value="Todos los niveles">
+                <span>Información general (todos los niveles)</span>
+              </label>
+            </div>
+            <p class="cfa-help">Podés seleccionar una o varias opciones.</p>
+          </div>
+
+          <div class="cfa-field full">
+            <label for="cfaMensaje">Mensaje</label>
+            <textarea id="cfaMensaje" name="mensaje" placeholder="Contanos qué información necesitás, edad/año del estudiante, y cualquier detalle relevante." required minlength="10"></textarea>
+          </div>
+
+          <div id="cfaOk"  class="cfa-msg ok">✅ ¡Consulta enviada! Nos comunicamos a la brevedad.</div>
+          <div id="cfaErr" class="cfa-msg err"></div>
+
+          <div class="cfa-actions">
+            <p class="cfa-privacy">
+              Al enviar aceptás que el colegio se comunique contigo.
+              <a href="/politica-de-privacidad/">Política de privacidad</a>
+            </p>
+            <button type="submit" class="cfa-btn">
+              Enviar consulta
+              <svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+            </button>
+          </div>
+
+        </form>
+      </div>
+
+      <!-- Aside -->
+      <aside class="cfa-card cfa-anim cfa-d3">
+        <h3 class="cfa-aside-title">Admisiones</h3>
+        <p class="cfa-aside-sub">
+          Si preferís, también podés comunicarte por nuestros canales habituales.
+          Te acompañamos en cada etapa del proceso.
+        </p>
+        <div class="cfa-divider"></div>
+        <ul class="cfa-list">
+          <li class="cfa-li">
+            <div class="cfa-li-ico" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M9 16.2 4.8 12l1.4-1.4L9 13.4l8.8-8.8L19.2 6z"/></svg>
+            </div>
+            <span><strong>Respuesta orientativa:</strong> dentro de 24 a 48 horas hábiles.</span>
+          </li>
+          <li class="cfa-li">
+            <div class="cfa-li-ico" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M9 16.2 4.8 12l1.4-1.4L9 13.4l8.8-8.8L19.2 6z"/></svg>
+            </div>
+            <span><strong>Recomendación:</strong> indicá nivel y edad/año del estudiante.</span>
+          </li>
+          <li class="cfa-li">
+            <div class="cfa-li-ico" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M9 16.2 4.8 12l1.4-1.4L9 13.4l8.8-8.8L19.2 6z"/></svg>
+            </div>
+            <span><strong>Información general:</strong> seleccioná "todos los niveles".</span>
+          </li>
+        </ul>
+      </aside>
+
+    </div>
+  </div>
+
+</section>
+</main>
+
+<footer id="cerv-footer">
+
+  <div class="cf-inner">
+    <div class="cf-grid">
+      <div>
+        <div class="cf-brand-eyebrow">Colegio Español</div>
+        <h3 class="cf-brand-name">Colegio <em>Cervantes</em></h3>
+        <p class="cf-brand-text">Acompañamos a nuestros alumnos desde sus primeros años, promoviendo una educación integral basada en valores, conocimiento y compromiso con la comunidad.</p>
+      </div>
+      <div>
+        <h4 class="cf-col-title">Niveles</h4>
+        <ul class="cf-nav"><li><a href="/inicial/#jardin-maternal">Jardín Maternal</a></li><li><a href="/inicial/">Inicial</a></li><li><a href="/primaria/">Primaria</a></li><li><a href="/secundaria/">Secundaria</a></li><li><a href="/bachillerato/">Bachillerato Europeo</a></li></ul>
+      </div>
+      <div>
+        <h4 class="cf-col-title">Institucional</h4>
+        <ul class="cf-nav"><li><a href="/sobre-nosotros/">Quiénes somos</a></li><li><a href="/#cerv-mision">Misión y visión</a></li><li><a href="/#cerv-alianzas">Alianzas</a></li><li><a href="/novedades/">Novedades</a></li><li><a href="/contacto/#cerv-trabaja">Trabajá con nosotros</a></li><li><a href="/contacto/">Contacto</a></li></ul>
+      </div>
+      <div>
+        <h4 class="cf-col-title">Contacto</h4>
+        <ul class="cf-contact-list">
+          <li class="cf-contact-item">
+            <div class="cf-contact-ico"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+            <div class="cf-contact-txt"><strong>Dirección</strong><span>Bulevar España 2492, Montevideo</span></div>
+          </li>
+          <li class="cf-contact-item">
+            <div class="cf-contact-ico"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+            <div class="cf-contact-txt"><strong>Teléfono</strong><span><a href="tel:+59827071414">+598 2707 1414</a></span></div>
+          </li>
+          <li class="cf-contact-item">
+            <div class="cf-contact-ico"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+            <div class="cf-contact-txt"><strong>Email</strong><span><a href="mailto:info@colegiocervantes.edu.uy">info@colegiocervantes.edu.uy</a></span></div>
+          </li>
+          <li class="cf-contact-item">
+            <div class="cf-contact-ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+            <div class="cf-contact-txt"><strong>Horario</strong><span>Lunes a viernes · 8:00 a 17:30</span></div>
+          </li>
+        </ul>
+        <div class="cf-cta">
+          <a href="/contacto/" class="cf-btn cf-btn-primary">Contacto <svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
+          <a href="/admisiones/" class="cf-btn cf-btn-secondary">Inscripciones <svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
+        </div>
+      </div>
+    </div>
+    <div class="cf-bottom">
+      <span class="cf-bottom-left">© 2026 Colegio Español Cervantes · Todos los derechos reservados · <a href="/politica-de-privacidad/">Política de privacidad</a></span>
+      <span class="cf-bottom-right">Diseño y comunicación institucional</span>
+    </div>
+  </div>
+</footer>
+
+
+<script src="/assets/cervantes.js"></script>
+</body>
+</html>

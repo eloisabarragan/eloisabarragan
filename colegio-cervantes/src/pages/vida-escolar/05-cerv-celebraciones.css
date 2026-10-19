@@ -1,0 +1,55 @@
+#cerv-celebraciones {
+  background: #ffffff;
+  padding: clamp(60px,8vw,100px) 0;
+  font-family: "Lama Sans","LamaSans",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  color: #00325A;
+}
+
+.cel-wrap { max-width: 1200px; margin: 0 auto; padding: 0 16px; }
+
+.cel-header { max-width: 900px; margin: 0 auto 64px; text-align: center; }
+.cel-title { margin: 0 0 16px; font-size: 48px; font-weight: 600; line-height: 1.1; color: #00325A; }
+.cel-intro { margin: 0; font-size: 16px; font-weight: 400; line-height: 1.7; color: #5B667A; }
+
+.cel-grid { display: grid; grid-template-columns: repeat(12,1fr); gap: 32px; align-items: start; }
+
+.cel-panel { grid-column: 1/-1; background: #F6F7FA; border-radius: 26px; padding: 36px; box-shadow: 0 18px 40px rgba(0,0,0,.08); border: 1px solid rgba(0,0,0,.05); position: relative; overflow: hidden; }
+.cel-panel::before { content: ""; position: absolute; inset: -40px -40px auto auto; width: 220px; height: 220px; border-radius: 999px; background: rgba(211,154,71,.10); filter: blur(1px); }
+.cel-panel h3 { margin: 0 0 14px; font-size: 28px; font-weight: 500; line-height: 1.25; color: #00325A; position: relative; }
+.cel-panel p { margin: 0; font-size: 16px; font-weight: 400; line-height: 1.7; color: #5B667A; position: relative; max-width: 920px; }
+
+.cel-pills { margin-top: 18px; display: flex; flex-wrap: wrap; gap: 10px; position: relative; }
+.cel-pill { padding: 8px 12px; border-radius: 999px; font-size: 16px; line-height: 1; border: 1px solid rgba(0,50,90,.18); color: #00325A; background: rgba(255,255,255,.65); white-space: nowrap; }
+.cel-pill.accent { border-color: rgba(211,154,71,.35); background: rgba(211,154,71,.10); }
+
+.cel-card { grid-column: span 12; background: #F6F7FA; border-radius: 26px; padding: 30px; box-shadow: 0 18px 40px rgba(0,0,0,.08); border: 1px solid rgba(0,0,0,.05); display: flex; flex-direction: column; gap: 12px; position: relative; overflow: hidden; }
+@media(min-width:900px){ .cel-card { grid-column: span 4; } }
+.cel-card h4 { margin: 0; font-size: 28px; font-weight: 500; line-height: 1.25; color: #00325A; }
+.cel-card p { margin: 0; font-size: 16px; font-weight: 400; line-height: 1.7; color: #5B667A; }
+.cel-tag { margin-top: 6px; align-self: flex-start; padding: 6px 12px; border-radius: 999px; font-size: 16px; line-height: 1; border: 1px solid rgba(0,50,90,.18); color: #00325A; background: rgba(255,255,255,.7); }
+
+.cel-gallery { grid-column: 1/-1; background: #F6F7FA; border-radius: 26px; padding: 36px; box-shadow: 0 18px 40px rgba(0,0,0,.08); border: 1px solid rgba(0,0,0,.05); margin-top: 4px; }
+.cel-gallery-head { display: flex; flex-direction: column; gap: 10px; margin-bottom: 18px; max-width: 900px; }
+.cel-gallery-head h3 { margin: 0; font-size: 28px; font-weight: 500; line-height: 1.25; color: #00325A; }
+.cel-gallery-head p { margin: 0; font-size: 16px; font-weight: 400; line-height: 1.7; color: #5B667A; }
+
+.cel-track { display: flex; gap: 16px; overflow: auto; scroll-snap-type: x mandatory; padding: 6px 2px 2px; -webkit-overflow-scrolling: touch; }
+.cel-track::-webkit-scrollbar { height: 10px; }
+.cel-track::-webkit-scrollbar-thumb { background: rgba(0,0,0,.12); border-radius: 999px; }
+.cel-track::-webkit-scrollbar-track { background: rgba(0,0,0,.05); border-radius: 999px; }
+
+.cel-shot { flex: 0 0 auto; width: min(360px,85vw); border-radius: 22px; overflow: hidden; scroll-snap-align: start; border: 1px solid rgba(0,0,0,.06); background: rgba(255,255,255,.6); box-shadow: 0 12px 28px rgba(0,0,0,.08); cursor: pointer; position: relative; }
+.cel-shot img { width: 100%; height: 240px; object-fit: cover; display: block; }
+.cel-shot figcaption { padding: 12px 14px 14px; font-size: 16px; font-weight: 400; line-height: 1.7; color: #5B667A; }
+.cel-shot figcaption strong { font-weight: 500; color: #00325A; }
+
+.cel-modal { position: fixed; inset: 0; background: rgba(0,0,0,.55); display: none; align-items: center; justify-content: center; padding: 18px; z-index: 9999; }
+.cel-modal.is-open { display: flex; }
+.cel-modal-dialog { width: min(980px,100%); background: #fff; border-radius: 26px; overflow: hidden; box-shadow: 0 30px 70px rgba(0,0,0,.25); }
+.cel-modal-media { background: #111; }
+.cel-modal-media img { width: 100%; height: min(70vh,560px); object-fit: contain; display: block; background: #111; }
+.cel-modal-bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 16px; background: linear-gradient(180deg,#fff 0%,#f7f9fb 100%); border-top: 1px solid rgba(0,0,0,.08); }
+.cel-modal-caption { margin: 0; font-size: 16px; font-weight: 400; line-height: 1.7; color: #5B667A; }
+.cel-modal-caption strong { font-weight: 500; color: #00325A; }
+.cel-close { appearance: none; border: 1px solid rgba(0,50,90,.25); background: transparent; color: #00325A; font-size: 16px; font-weight: 500; line-height: 1; padding: 10px 14px; border-radius: 999px; cursor: pointer; }
+.cel-close:hover { background: rgba(0,50,90,.04); }

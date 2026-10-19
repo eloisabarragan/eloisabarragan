@@ -1,0 +1,18 @@
+{
+  "niveles": [
+    {"texto": "Jardín Maternal", "url": "/inicial/#jardin-maternal"},
+    {"texto": "Inicial", "url": "/inicial/"},
+    {"texto": "Primaria", "url": "/primaria/"},
+    {"texto": "Secundaria", "url": "/secundaria/"},
+    {"texto": "Bachillerato Europeo", "url": "/bachillerato/"}
+  ],
+  "institucional": [
+    {"texto": "Quiénes somos", "url": "/sobre-nosotros/"},
+    {"texto": "Misión y visión", "url": "/#cerv-mision"},
+    {"texto": "Alianzas", "url": "/#cerv-alianzas"},
+    {"texto": "Novedades", "url": "/novedades/"},
+    {"texto": "Trabajá con nosotros", "url": "/contacto/#cerv-trabaja"},
+    {"texto": "Contacto", "url": "/contacto/"}
+  ],
+  "pie_texto": "Acompañamos a nuestros alumnos desde sus primeros años, promoviendo una educación integral basada en valores, conocimiento y compromiso con la comunidad."
+}

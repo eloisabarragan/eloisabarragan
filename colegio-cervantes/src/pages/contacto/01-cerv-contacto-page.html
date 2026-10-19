@@ -1,0 +1,107 @@
+<section id="cerv-contacto-page">
+
+  <div class="cp-inner">
+
+    <div class="cp-header cp-anim cp-d1">
+      <div class="cp-eyebrow">Colegio Español Cervantes</div>
+      <h1 class="cp-title">Contacto</h1>
+      <p class="cp-intro">
+        Estamos disponibles para acompañarte y responder tus consultas sobre el Colegio Español Cervantes,
+        su propuesta educativa y el proceso de admisión.
+      </p>
+    </div>
+
+    <div class="cp-chips-card cp-anim cp-d2">
+      <div class="cp-chips-head">
+        <h2 class="cp-chips-title">¿Sobre qué te gustaría consultar?</h2>
+        <p class="cp-chips-sub">Podés seleccionar el nivel de interés en el formulario para orientar la información.</p>
+      </div>
+      <div class="cp-chips">
+        <span class="cp-chip"><span class="cp-chip-dot"></span>Información general</span>
+        <span class="cp-chip"><span class="cp-chip-dot"></span>Nivel Inicial</span>
+        <span class="cp-chip"><span class="cp-chip-dot"></span>Primaria</span>
+        <span class="cp-chip"><span class="cp-chip-dot"></span>Secundaria / Bachillerato</span>
+      </div>
+    </div>
+
+    <div class="cp-split">
+
+      <div class="cp-card cp-anim cp-d3">
+        <h2 class="cp-card-title">Formulario de contacto</h2>
+        <p class="cp-card-sub">Completá los datos y te responderemos a la brevedad.</p>
+        <form id="cpForm" name="contacto" class="cp-form" action="/gracias/" data-netlify="true" netlify-honeypot="bot-field" method="post" novalidate>
+<input type="hidden" name="form-name" value="contacto"><p class="cerv-hp" hidden><label>No completar: <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+          <div class="cp-field">
+            <label for="cpNombre">Nombre y apellido</label>
+            <input id="cpNombre" name="nombre" type="text" placeholder="Ej.: María Pérez" required minlength="3">
+          </div>
+          <div class="cp-field">
+            <label for="cpTel">Teléfono</label>
+            <input id="cpTel" name="telefono" type="tel" placeholder="Ej.: 09 123 456" required>
+          </div>
+          <div class="cp-field">
+            <label for="cpEmail">Correo electrónico</label>
+            <input id="cpEmail" name="email" type="email" placeholder="Ej.: familia@email.com" required>
+          </div>
+          <div class="cp-field">
+            <label for="cpNivel">Nivel de interés</label>
+            <select id="cpNivel" name="nivel" required>
+              <option value="" selected disabled>Seleccionar…</option>
+              <option value="todo">Información general (todos los niveles)</option>
+              <option value="inicial">Nivel Inicial</option>
+              <option value="primaria">Primaria</option>
+              <option value="secundaria">Secundaria / Bachillerato</option>
+            </select>
+            <p class="cp-help">Elegí una opción para orientar la información que necesitás.</p>
+          </div>
+          <div class="cp-field full">
+            <label for="cpMensaje">Mensaje</label>
+            <textarea id="cpMensaje" name="mensaje" placeholder="Contanos qué información necesitás, edad/año del estudiante, y cualquier detalle relevante." required minlength="10"></textarea>
+          </div>
+          <div id="cpOk"  class="cp-msg ok">✅ ¡Consulta enviada! Nos comunicamos a la brevedad.</div>
+          <div id="cpErr" class="cp-msg err"></div>
+          <div class="cp-actions">
+            <p class="cp-privacy">Al enviar aceptás que el colegio se comunique contigo. <a href="/politica-de-privacidad/">Política de privacidad</a></p>
+            <button type="submit" class="cp-btn">Enviar consulta <svg viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>
+          </div>
+        </form>
+      </div>
+
+      <aside class="cp-anim cp-d4">
+        <div class="cp-card">
+          <h2 class="cp-card-title">Contacto directo</h2>
+          <p class="cp-card-sub">Si preferís, también podés comunicarte por nuestros canales habituales.</p>
+          <ul class="cp-contact-list">
+            <li class="cp-li">
+              <div class="cp-li-ico" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M8 1.5C5.5 1.5 3.5 3.5 3.5 6c0 3.5 4.5 8.5 4.5 8.5s4.5-5 4.5-8.5c0-2.5-2-4.5-4.5-4.5z"/><circle cx="8" cy="6" r="1.5"/></svg></div>
+              <div class="cp-li-body"><span class="cp-li-label">Dirección</span><span class="cp-li-val">{{direccion}}</span></div>
+            </li>
+            <li class="cp-li">
+              <div class="cp-li-ico" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M2.5 3.5a1 1 0 011-1h2l1 3-1.5 1a9 9 0 004 4l1-1.5 3 1v2a1 1 0 01-1 1A11 11 0 012.5 4.5V3.5z"/></svg></div>
+              <div class="cp-li-body"><span class="cp-li-label">Teléfono</span><span class="cp-li-val"><a href="tel:{{telefono_link}}">{{telefono}}</a></span></div>
+            </li>
+            <li class="cp-li">
+              <div class="cp-li-ico" aria-hidden="true"><svg viewBox="0 0 16 16"><rect x="2" y="4" width="12" height="9" rx="1.5"/><path d="M2 5l6 4.5L14 5"/></svg></div>
+              <div class="cp-li-body"><span class="cp-li-label">Email</span><span class="cp-li-val"><a href="mailto:{{email}}">{{email}}</a></span></div>
+            </li>
+            <li class="cp-li">
+              <div class="cp-li-ico" aria-hidden="true"><svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 1.5"/></svg></div>
+              <div class="cp-li-body"><span class="cp-li-label">Horario</span><span class="cp-li-val">{{horario}}</span></div>
+            </li>
+          </ul>
+          <div class="cp-cta">
+            <a class="cp-linkbtn primary" href="/admisiones/#cerv-form-adm">Agendar entrevista</a>
+            <a class="cp-linkbtn secondary" href="/admisiones/">Ver admisiones</a>
+          </div>
+        </div>
+      </aside>
+
+    </div>
+
+    <div class="cp-map-wrap cp-anim cp-d5">
+      <iframe class="cp-mapframe" src="https://maps.google.com/maps?q={{direccion_url}}&amp;z=16&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Ubicación del Colegio Español Cervantes"></iframe>
+    </div>
+
+  </div>
+
+</section>
