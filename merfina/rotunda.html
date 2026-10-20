@@ -1,0 +1,586 @@
+<title>Merfina Store</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..800&display=swap">
+<style>
+/* Layout: fast-fashion storefront — black/white, edge-to-edge photography, condensed uppercase headlines, shop-first. Gold only lives in the monogram. */
+:root{
+  --bg:#FFFFFF;
+  --bg-2:#F3F3F1;
+  --ink:#111111;
+  --muted:#6B6B6B;
+  --line:#E2E2E0;
+  --sale:#C4122F;
+  --inv-bg:#111111;
+  --inv-ink:#FFFFFF;
+  --shade:rgba(0,0,0,.45);
+  --sans:"Archivo","Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0E0E0E;--bg-2:#1A1A1A;--ink:#F4F4F2;--muted:#A3A3A0;--line:#2A2A2A;--sale:#FF5470;--inv-bg:#F4F4F2;--inv-ink:#0E0E0E;--shade:rgba(0,0,0,.7);color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0E0E0E;--bg-2:#1A1A1A;--ink:#F4F4F2;--muted:#A3A3A0;--line:#2A2A2A;--sale:#FF5470;--inv-bg:#F4F4F2;--inv-ink:#0E0E0E;--shade:rgba(0,0,0,.7);color-scheme:dark}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:.875rem;line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--bg)}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+button,select{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.gut{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+@media (min-width:900px){.gut{padding-left:max(32px,env(safe-area-inset-left,0px));padding-right:max(32px,env(safe-area-inset-right,0px))}}
+.up{text-transform:uppercase;letter-spacing:.06em}
+.display{font-stretch:68%;font-weight:800;text-transform:uppercase;line-height:.88;letter-spacing:-.01em;margin:0;text-wrap:balance}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5em;min-height:44px;padding:0 1.8em;font-size:.75rem;font-weight:600;text-transform:uppercase;letter-spacing:.1em;background:var(--ink);color:var(--bg);border:1px solid var(--ink);transition:background .2s,color .2s}
+.btn:hover{background:transparent;color:var(--ink)}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn.ghost:hover{background:var(--ink);color:var(--bg)}
+.btn.light{background:#FFFFFF;color:#111111;border-color:#FFFFFF}
+.btn.light:hover{background:transparent;color:#FFFFFF}
+.ulink{font-size:.75rem;font-weight:600;text-transform:uppercase;letter-spacing:.1em;border-bottom:1px solid currentColor;padding-bottom:2px}
+
+/* Announcement ticker */
+.ticker{background:var(--inv-bg);color:var(--inv-ink);overflow:hidden;white-space:nowrap;font-size:.7rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase}
+.ticker-track{display:inline-flex;animation:tick 30s linear infinite;padding-block:.65em}
+.ticker-track span{padding:0 2.4em}
+@keyframes tick{to{transform:translateX(-50%)}}
+
+/* Header */
+header.site{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:var(--bg);border-bottom:1px solid var(--line)}
+.bar{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;height:64px}
+.bar-l,.bar-r{display:flex;align-items:center;gap:2px}
+.bar-r{justify-content:flex-end}
+.ib{position:relative;width:42px;height:42px;display:grid;place-items:center}
+.ib svg{width:21px;height:21px;stroke:currentColor;fill:none;stroke-width:1.5}
+.count{position:absolute;top:5px;right:3px;min-width:17px;height:17px;padding:0 4px;border-radius:9px;background:var(--ink);color:var(--bg);font-size:.62rem;font-weight:700;display:grid;place-items:center;font-variant-numeric:tabular-nums}
+.count[data-n="0"]{display:none}
+.logo{display:flex;align-items:center;gap:10px}
+.logo img{width:30px;height:auto}
+.logo b{font-stretch:72%;font-weight:800;font-size:1.65rem;letter-spacing:.14em;margin-right:-.14em}
+.cats-nav{display:flex;gap:28px;justify-content:center;overflow-x:auto;scrollbar-width:none;border-top:1px solid var(--line);height:44px;align-items:center}
+.cats-nav::-webkit-scrollbar{display:none}
+.cats-nav a{font-size:.72rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;white-space:nowrap;padding-block:12px;border-bottom:2px solid transparent}
+.cats-nav a:hover,.cats-nav a.on{border-color:var(--ink)}
+.cats-nav a.sale{color:var(--sale)}
+@media (max-width:700px){.cats-nav{justify-content:flex-start;gap:22px}.hide-sm{display:none}}
+
+/* Search panel */
+.search{border-top:1px solid var(--line);background:var(--bg)}
+.search .in{display:flex;align-items:center;gap:12px;padding-block:14px}
+.search input{flex:1;min-width:0;border:0;border-bottom:1px solid var(--ink);background:transparent;font:inherit;font-size:1.3rem;font-stretch:80%;font-weight:600;text-transform:uppercase;padding:.4em 0;color:var(--ink)}
+.search input:focus{outline:none}
+.search .hint{display:flex;gap:8px;flex-wrap:wrap;padding-bottom:16px}
+.pill{padding:.5em 1em;border:1px solid var(--line);font-size:.72rem;font-weight:500;text-transform:uppercase;letter-spacing:.06em}
+.pill:hover{border-color:var(--ink)}
+
+/* Hero: split campaign */
+.hero{position:relative;display:grid;grid-template-columns:1fr 1fr;background:var(--bg-2)}
+.hero figure{margin:0;position:relative;overflow:hidden;aspect-ratio:3/4;max-width:100%}
+.hero img{width:100%;height:100%;object-fit:cover}
+.hero .ov{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;text-align:center;padding:0 16px clamp(28px,5vw,64px);background:linear-gradient(180deg,transparent 50%,rgba(0,0,0,.45));color:#FFFFFF;gap:16px}
+.hero .ov small{font-size:.75rem;font-weight:600;letter-spacing:.24em;text-transform:uppercase}
+.hero h1{font-size:clamp(3.2rem,11vw,10.5rem);color:#FFFFFF}
+.hero .ctas{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+@media (min-width:900px){.hero figure{aspect-ratio:4/5;max-height:88vh}}
+@media (max-width:700px){.hero{grid-template-columns:1fr}.hero figure.b{display:none}}
+
+/* Section heads */
+.sh{display:flex;justify-content:space-between;align-items:end;gap:16px;flex-wrap:wrap;padding-block:clamp(40px,6vw,72px) 20px}
+.sh h2{font-size:clamp(2.2rem,5.4vw,4.4rem)}
+.sh p{margin:.5em 0 0;color:var(--muted);max-width:52ch}
+
+/* Category tiles */
+.tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px}
+@media (max-width:900px){.tiles{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.tile{position:relative;display:block;overflow:hidden;aspect-ratio:3/4;max-width:100%;background:var(--bg-2)}
+.tile img{width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.2,.7,.2,1)}
+.tile:hover img{transform:scale(1.05)}
+.tile span{position:absolute;left:12px;bottom:12px;background:#FFFFFF;color:#111111;font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.6em .9em}
+
+/* Product cards (shared by rail + grid) */
+.card{position:relative;display:flex;flex-direction:column;gap:6px;min-width:0}
+.card .ph{position:relative;aspect-ratio:3/4;max-width:100%;overflow:hidden;background:var(--bg-2);cursor:pointer}
+.card .ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:opacity .4s}
+.card .ph img.alt{opacity:0}
+@media (hover:hover){.card .ph:hover img.alt{opacity:1}}
+.flag{position:absolute;left:8px;top:8px;z-index:2;font-size:.62rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.35em .6em;background:#FFFFFF;color:#111111}
+.flag.sale{background:var(--sale);color:#FFFFFF}
+.fav{position:absolute;right:4px;top:4px;z-index:2;width:38px;height:38px;display:grid;place-items:center}
+.fav svg{width:19px;height:19px;stroke:#111111;fill:none;stroke-width:1.5}
+.fav[aria-pressed="true"] svg{fill:#111111}
+.qa{position:absolute;right:8px;bottom:8px;z-index:2;width:36px;height:36px;background:#FFFFFF;color:#111111;display:grid;place-items:center;transition:transform .2s}
+.qa:hover{transform:scale(1.08)}
+.qa svg{width:16px;height:16px;stroke:currentColor;stroke-width:1.6;fill:none}
+.sizes{position:absolute;left:0;right:0;bottom:0;z-index:3;background:color-mix(in srgb,#FFFFFF 94%,transparent);color:#111111;padding:10px;display:flex;flex-wrap:wrap;gap:6px;transform:translateY(101%);transition:transform .3s}
+.sizes.on{transform:none}
+.sizes b{width:100%;font-size:.66rem;letter-spacing:.1em;text-transform:uppercase}
+.sizes button{flex:1 1 auto;border:1px solid #111111;padding:.5em .4em;font-size:.7rem;font-weight:600;text-transform:uppercase}
+.sizes button:hover{background:#111111;color:#FFFFFF}
+.card .nm{font-size:.76rem;font-weight:500;text-transform:uppercase;letter-spacing:.04em;margin:4px 0 0}
+.pr{display:flex;gap:8px;font-size:.8rem;font-variant-numeric:tabular-nums;font-weight:600}
+.pr s{color:var(--muted);font-weight:400}
+.pr .now.sale{color:var(--sale)}
+.dots{display:flex;gap:5px}
+.dots i{width:10px;height:10px;border-radius:50%;border:1px solid var(--line)}
+
+/* Rail */
+.rail{display:grid;grid-auto-flow:column;grid-auto-columns:calc((100% - 3*4px)/4.4);gap:4px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding-bottom:4px}
+.rail::-webkit-scrollbar{display:none}
+.rail .card{scroll-snap-align:start}
+.rail .card .nm,.rail .card .pr,.rail .card .dots{padding-inline:8px}
+@media (max-width:900px){.rail{grid-auto-columns:calc((100% - 4px)/2.3)}}
+.rail-ctl{display:flex;gap:6px}
+.rail-ctl button{width:40px;height:40px;border:1px solid var(--ink);display:grid;place-items:center}
+.rail-ctl button:hover{background:var(--ink);color:var(--bg)}
+.rail-ctl svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.6}
+
+/* Campaign banner */
+.banner{position:relative;margin-top:clamp(40px,6vw,72px);background:var(--inv-bg);color:var(--inv-ink);display:grid}
+@media (min-width:900px){.banner{grid-template-columns:1fr 1fr}}
+.banner figure{margin:0;max-width:100%;overflow:hidden}
+.banner img{width:100%;height:100%;aspect-ratio:4/5;object-fit:cover}
+.banner .txt{display:flex;flex-direction:column;justify-content:center;gap:22px;padding-block:clamp(40px,6vw,80px);min-width:0}
+.banner h2{font-size:clamp(3rem,8vw,7.5rem)}
+.banner p{max-width:44ch;opacity:.8;margin:0;font-size:1rem}
+.banner .btn{align-self:flex-start;background:var(--inv-ink);color:var(--inv-bg);border-color:var(--inv-ink)}
+.banner .btn:hover{background:transparent;color:var(--inv-ink)}
+.banner .how{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;border-top:1px solid color-mix(in srgb,var(--inv-ink) 25%,transparent);padding-top:20px;max-width:560px}
+.banner .how b{display:block;font-stretch:70%;font-weight:800;font-size:1.6rem;line-height:1}
+.banner .how span{font-size:.8rem;opacity:.75}
+
+/* Shop grid */
+.toolbar{position:sticky;top:calc(env(safe-area-inset-top,0px) + 108px);z-index:20;background:var(--bg);display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;border-block:1px solid var(--line);padding-block:8px}
+@media (max-width:700px){.toolbar{top:calc(env(safe-area-inset-top,0px) + 108px)}}
+.chips{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;min-width:0}
+.chip{white-space:nowrap;padding:.55em 1em;border:1px solid var(--line);font-size:.7rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.tb-r{display:flex;align-items:center;gap:14px;font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;font-weight:600}
+.tb-r select{text-transform:uppercase;letter-spacing:.08em;font-weight:600;font-size:.72rem;padding:.4em 0}
+.cols{display:flex;gap:4px}
+.cols button{width:30px;height:30px;display:grid;place-items:center;opacity:.4}
+.cols button[aria-pressed="true"]{opacity:1}
+.cols svg{width:16px;height:16px;fill:currentColor}
+.cnt{color:var(--muted);font-variant-numeric:tabular-nums}
+.grid{display:grid;gap:28px 4px;grid-template-columns:repeat(var(--c,4),minmax(0,1fr));padding-top:4px}
+.grid .card .nm,.grid .card .pr,.grid .card .dots{padding-inline:8px}
+@media (max-width:900px){.grid{--c:2!important}.cols{display:none}}
+.noresults{grid-column:1/-1;padding:60px 0;text-align:center;color:var(--muted)}
+
+/* Brand block */
+.about{display:grid;gap:clamp(24px,4vw,64px);padding-block:clamp(56px,8vw,112px);align-items:start}
+@media (min-width:900px){.about{grid-template-columns:1.1fr 1fr}}
+.about h2{font-size:clamp(2.6rem,6.5vw,6rem)}
+.about .copy{min-width:0;max-width:58ch;font-size:1rem;display:grid;gap:1em}
+.about .copy p{margin:0}
+.about .copy .big{font-size:1.25rem;font-weight:500;line-height:1.4}
+.about .sig{font-stretch:70%;font-weight:800;font-size:1.4rem;letter-spacing:.2em;text-transform:uppercase}
+
+/* Insta grid */
+.insta{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:4px}
+@media (max-width:900px){.insta{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.insta a{position:relative;display:block;aspect-ratio:1;max-width:100%;overflow:hidden;background:var(--bg-2)}
+.insta img{width:100%;height:100%;object-fit:cover;transition:transform .6s}
+.insta a:hover img{transform:scale(1.06)}
+
+/* Benefits */
+.perks{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-block:1px solid var(--line);margin-top:clamp(48px,6vw,80px)}
+@media (max-width:900px){.perks{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.perks div{padding:24px 16px;display:grid;gap:4px;justify-items:center;text-align:center;border-right:1px solid var(--line)}
+.perks div:last-child{border-right:0}
+@media (max-width:900px){.perks div:nth-child(2){border-right:0}.perks div:nth-child(-n+2){border-bottom:1px solid var(--line)}}
+.perks svg{width:26px;height:26px;stroke:currentColor;fill:none;stroke-width:1.3}
+.perks b{font-size:.74rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em}
+.perks span{font-size:.78rem;color:var(--muted)}
+
+/* Newsletter + footer */
+.news{background:var(--inv-bg);color:var(--inv-ink);padding-block:clamp(48px,7vw,88px);display:grid;gap:18px;justify-items:center;text-align:center}
+.news h2{font-size:clamp(2.4rem,6vw,5rem)}
+.news p{margin:0;opacity:.8}
+.news form{display:flex;width:min(560px,100%);border:1px solid var(--inv-ink)}
+.news input{flex:1;min-width:0;background:transparent;border:0;padding:0 14px;min-height:48px;font:inherit;color:var(--inv-ink)}
+.news input::placeholder{color:color-mix(in srgb,var(--inv-ink) 60%,transparent)}
+.news input:focus{outline:none}
+.news form button{background:var(--inv-ink);color:var(--inv-bg);padding:0 22px;font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+.news .msg{min-height:1.5em;font-size:.85rem}
+footer{padding-block:48px 28px}
+.fcols{display:grid;gap:28px;grid-template-columns:repeat(auto-fit,minmax(160px,1fr))}
+.fcols h4{margin:0 0 12px;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em}
+.fcols ul{list-style:none;margin:0;padding:0;display:grid;gap:8px;color:var(--muted)}
+.fcols a:hover{color:var(--ink)}
+.giant{font-stretch:62%;font-weight:800;font-size:clamp(4rem,24vw,22rem);line-height:.8;letter-spacing:-.02em;text-transform:uppercase;margin-top:40px;white-space:nowrap;overflow:hidden;text-align:center}
+.legal{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:20px;font-size:.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+
+/* Drawer, modal, toast */
+.scrim{position:fixed;inset:0;background:var(--shade);z-index:80;opacity:0;pointer-events:none;transition:opacity .3s}
+.scrim.on{opacity:1;pointer-events:auto}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(420px,100%);z-index:90;background:var(--bg);display:flex;flex-direction:column;transform:translateX(102%);transition:transform .4s cubic-bezier(.2,.7,.2,1);padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);padding-right:env(safe-area-inset-right,0px)}
+.drawer.on{transform:none}
+.dh{display:flex;justify-content:space-between;align-items:center;padding:16px 20px;border-bottom:1px solid var(--line)}
+.dh h3{margin:0;font-stretch:72%;font-weight:800;font-size:1.6rem;text-transform:uppercase}
+.ship{padding:14px 20px;font-size:.78rem;border-bottom:1px solid var(--line)}
+.prog{height:4px;background:var(--line);margin-top:8px}
+.prog i{display:block;height:100%;background:var(--ink);transition:width .5s}
+.lines{flex:1;overflow:auto;padding:0 20px}
+.ln{display:grid;grid-template-columns:72px 1fr auto;gap:12px;padding:14px 0;border-bottom:1px solid var(--line)}
+.ln img,.ln .gm{width:72px;height:96px;object-fit:cover;background:var(--bg-2)}
+.ln .gm{background:#111111;display:grid;place-items:center}
+.ln .gm img{width:30px;height:auto;background:none}
+.ln h4{margin:0;font-size:.76rem;font-weight:600;text-transform:uppercase;letter-spacing:.04em}
+.ln small{color:var(--muted);text-transform:uppercase;font-size:.7rem}
+.qty{display:inline-flex;border:1px solid var(--line);margin-top:8px}
+.qty button{width:30px;height:30px}
+.qty span{min-width:22px;display:grid;place-items:center;font-variant-numeric:tabular-nums}
+.rm{display:block;margin-top:6px;font-size:.66rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);text-decoration:underline}
+.empty{padding:56px 0;text-align:center;color:var(--muted)}
+.empty b{display:block;color:var(--ink);font-stretch:72%;font-weight:800;font-size:1.6rem;text-transform:uppercase;margin-bottom:6px}
+.df{padding:16px 20px 20px;border-top:1px solid var(--line);display:grid;gap:10px}
+.tot{display:flex;justify-content:space-between;font-weight:700;text-transform:uppercase;font-size:.85rem;font-variant-numeric:tabular-nums}
+.df .note{margin:0;font-size:.74rem;color:var(--muted)}
+.chk{display:flex;gap:8px;align-items:center;font-size:.78rem;cursor:pointer}
+.chk input{accent-color:var(--ink);width:16px;height:16px}
+.msgbox{background:var(--bg-2);padding:12px;font-size:.78rem;white-space:pre-wrap;max-height:160px;overflow:auto}
+
+.modal{position:fixed;z-index:95;left:50%;top:50%;width:min(1000px,calc(100% - 24px));max-height:calc(100% - 40px - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px));overflow:auto;background:var(--bg);transform:translate(-50%,-47%);opacity:0;pointer-events:none;transition:all .3s}
+.modal.on{opacity:1;transform:translate(-50%,-50%);pointer-events:auto}
+.mg{display:grid}
+@media (min-width:760px){.mg{grid-template-columns:1.1fr 1fr}}
+.mm{display:grid;grid-auto-flow:column;grid-auto-columns:100%;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;background:var(--bg-2);min-width:0}
+.mm img,.mm .gbox{width:100%;aspect-ratio:3/4;object-fit:cover;scroll-snap-align:start}
+.gbox{display:grid;place-items:center;background:var(--bg-2)}
+.giftc{width:70%;aspect-ratio:1.6;background:#111111;color:#FFFFFF;display:flex;flex-direction:column;justify-content:space-between;padding:8%;box-shadow:0 20px 40px -20px rgba(0,0,0,.5)}
+.giftc img,.card .ph .giftc img{position:static;width:24%;height:auto;inset:auto}
+.giftc span{font-stretch:72%;font-weight:800;letter-spacing:.2em;font-size:clamp(.8rem,1.8vw,1.2rem)}
+.mi{padding:clamp(20px,3.5vw,40px);display:flex;flex-direction:column;gap:14px;min-width:0}
+.mi h3{margin:0;font-stretch:72%;font-weight:800;font-size:clamp(1.8rem,3.4vw,2.6rem);text-transform:uppercase;line-height:.95}
+.mi .pr{font-size:1rem}
+.mi p{margin:0;color:var(--muted)}
+.ol{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em}
+.opts{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:6px}
+.opt{border:1px solid var(--line);padding:.8em .4em;font-size:.74rem;font-weight:600;text-transform:uppercase;font-variant-numeric:tabular-nums}
+.opt[aria-pressed="true"]{border-color:var(--ink);background:var(--ink);color:var(--bg)}
+.specs{display:grid;grid-template-columns:auto 1fr;gap:6px 18px;margin:0;border-top:1px solid var(--line);padding-top:14px;font-size:.8rem}
+.specs dt{color:var(--muted);text-transform:uppercase;font-size:.7rem;letter-spacing:.06em}
+.specs dd{margin:0}
+.x{position:absolute;right:8px;top:8px;z-index:3;width:40px;height:40px;background:var(--bg);display:grid;place-items:center}
+.x svg,.dh svg{width:18px;height:18px;stroke:currentColor;stroke-width:1.6;fill:none}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));z-index:120;transform:translate(-50%,170%);visibility:hidden;background:var(--ink);color:var(--bg);padding:.95em 1.3em;font-size:.76rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;transition:transform .35s,visibility .35s;max-width:calc(100% - 32px)}
+.toast.on{transform:translate(-50%,0);visibility:visible}
+</style>
+
+<div class="ticker" aria-label="Novedades">
+  <div class="ticker-track">
+    <span>Envío gratis desde $U 3.000</span><span>Nueva colección primavera</span><span>3 cuotas sin recargo</span><span>Cambios gratis 30 días</span><span>Estuche de regalo en cada pedido</span>
+    <span aria-hidden="true">Envío gratis desde $U 3.000</span><span aria-hidden="true">Nueva colección primavera</span><span aria-hidden="true">3 cuotas sin recargo</span><span aria-hidden="true">Cambios gratis 30 días</span><span aria-hidden="true">Estuche de regalo en cada pedido</span>
+  </div>
+</div>
+
+<header class="site">
+  <div class="gut bar">
+    <div class="bar-l">
+      <button class="ib" id="searchBtn" aria-label="Buscar" aria-expanded="false"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg></button>
+    </div>
+    <a class="logo" href="#top" aria-label="Merfina, inicio"><img src="img/monograma.png" alt=""><b>MERFINA</b></a>
+    <div class="bar-r">
+      <button class="ib hide-sm" id="favBtn" aria-label="Favoritos"><svg viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg><span class="count" id="favCount" data-n="0">0</span></button>
+      <button class="ib" id="bagBtn" aria-label="Abrir bolsa"><svg viewBox="0 0 24 24"><path d="M5 8h14l-1 12H6L5 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span class="count" id="bagCount" data-n="0">0</span></button>
+    </div>
+  </div>
+  <nav class="gut cats-nav" aria-label="Categorías">
+    <a href="#nuevo">New in</a>
+    <a href="#tienda" data-go="botones">Cubre botones</a>
+    <a href="#tienda" data-go="corbatas">Corbatas</a>
+    <a href="#tienda" data-go="sets">Sets</a>
+    <a href="#tienda" data-go="gift">Gift card</a>
+    <a href="#tienda" data-go="sale" class="sale">Sale</a>
+    <a href="#nosotros">Nosotros</a>
+  </nav>
+  <div class="search gut" id="search" hidden>
+    <div class="in">
+      <label for="q" style="position:absolute;left:-9999px">Buscar productos</label>
+      <input id="q" type="search" placeholder="Buscar: camelia, perla, corbata…" autocomplete="off">
+      <button class="ib" id="closeSearch" aria-label="Cerrar búsqueda"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    </div>
+    <div class="hint"><button class="pill" data-q="camelia">Camelia</button><button class="pill" data-q="perla">Perla</button><button class="pill" data-q="flor">Flor</button><button class="pill" data-q="corbata">Corbata</button></div>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero" aria-label="Campaña">
+    <figure class="a"><img src="img/look-calas.jpg" alt="Modelo con blusa blanca, botones Merfina y calas" fetchpriority="high"></figure>
+    <figure class="b"><img src="img/look-rosa-corbata.jpg" alt="Modelo con camisa rosa, corbata a rayas y camelias rosé"></figure>
+    <div class="ov">
+      <small>Colección primavera 2026</small>
+      <h1 class="display">Detalles<br>que cambian todo</h1>
+      <div class="ctas"><a class="btn light" href="#tienda">Comprar ahora</a><a class="btn light" style="background:transparent;color:#FFFFFF" href="#nuevo">Ver new in</a></div>
+    </div>
+  </section>
+
+  <div class="gut">
+    <div class="sh"><h2 class="display">Comprá por categoría</h2></div>
+  </div>
+  <div class="tiles gut">
+    <a class="tile" href="#tienda" data-go="botones"><img src="img/look-azul.jpg" alt="" loading="lazy"><span>Cubre botones</span></a>
+    <a class="tile" href="#tienda" data-go="corbatas"><img src="img/p-corbata-rayas.jpg" alt="" loading="lazy"><span>Corbatas</span></a>
+    <a class="tile" href="#tienda" data-go="sets"><img src="img/look-blusa.jpg" alt="" loading="lazy"><span>Sets</span></a>
+    <a class="tile" href="#tienda" data-go="gift"><img src="img/look-rosa-blanca.jpg" alt="" loading="lazy"><span>Para regalar</span></a>
+  </div>
+
+  <section id="nuevo" aria-labelledby="new-h">
+    <div class="gut sh">
+      <div><h2 class="display" id="new-h">New in</h2><p>Lo último que llegó. Series cortas, cuando se terminan no vuelven.</p></div>
+      <div class="rail-ctl"><button id="rp" aria-label="Anterior"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button><button id="rn" aria-label="Siguiente"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button></div>
+    </div>
+    <div class="rail gut" id="rail"></div>
+  </section>
+
+  <section class="banner" aria-labelledby="ban-h">
+    <figure><img src="img/look-azul.jpg" alt="Camelias azules en puños de camisa blanca" loading="lazy"></figure>
+    <div class="txt gut">
+      <small class="up" style="font-weight:600;font-size:.75rem;letter-spacing:.2em">Cómo se usan</small>
+      <h2 class="display" id="ban-h">Sin coser.<br>Sin agujas.</h2>
+      <p>Los cubre botones se colocan sobre el botón de cualquier camisa y la transforman en diez segundos. Se sacan igual de fácil.</p>
+      <div class="how">
+        <div><b>01</b><span>Abrochá tu camisa</span></div>
+        <div><b>02</b><span>Colocá la pieza y trabala</span></div>
+        <div><b>03</b><span>Cambiala cuando quieras</span></div>
+      </div>
+      <a class="btn" href="#tienda" data-go="botones">Ver cubre botones</a>
+    </div>
+  </section>
+
+  <section id="tienda" aria-labelledby="shop-h">
+    <div class="gut sh"><div><h2 class="display" id="shop-h">Toda la tienda</h2></div></div>
+    <div class="toolbar gut">
+      <div class="chips" role="group" aria-label="Filtrar">
+        <button class="chip" data-f="todo" aria-pressed="true">Todo</button>
+        <button class="chip" data-f="botones" aria-pressed="false">Cubre botones</button>
+        <button class="chip" data-f="corbatas" aria-pressed="false">Corbatas</button>
+        <button class="chip" data-f="sets" aria-pressed="false">Sets</button>
+        <button class="chip" data-f="gift" aria-pressed="false">Gift card</button>
+        <button class="chip" data-f="sale" aria-pressed="false">Sale</button>
+      </div>
+      <div class="tb-r">
+        <span class="cnt" id="cnt"></span>
+        <label for="sort" style="position:absolute;left:-9999px">Ordenar</label>
+        <select id="sort"><option value="rel">Destacados</option><option value="asc">Menor precio</option><option value="desc">Mayor precio</option><option value="az">A – Z</option></select>
+        <div class="cols" role="group" aria-label="Columnas">
+          <button data-c="2" aria-pressed="false" aria-label="2 columnas"><svg viewBox="0 0 16 16"><rect x="1" y="1" width="6" height="14"/><rect x="9" y="1" width="6" height="14"/></svg></button>
+          <button data-c="4" aria-pressed="true" aria-label="4 columnas"><svg viewBox="0 0 16 16"><rect x="0" y="1" width="3" height="14"/><rect x="4.3" y="1" width="3" height="14"/><rect x="8.6" y="1" width="3" height="14"/><rect x="13" y="1" width="3" height="14"/></svg></button>
+        </div>
+      </div>
+    </div>
+    <div class="grid gut" id="grid"></div>
+  </section>
+
+  <section class="about gut" id="nosotros" aria-labelledby="ab-h">
+    <h2 class="display" id="ab-h">Una joya que hace la diferencia</h2>
+    <div class="copy">
+      <p class="big">Merfina nace con la idea de transformar los pequeños detalles en una expresión de elegancia y distinción.</p>
+      <p>Creamos piezas pensadas para quienes entienden que el verdadero estilo está en los detalles. Nuestros cubre botones y corbatas combinan diseño, sofisticación y personalidad, acompañando cada look de una manera única y atemporal.</p>
+      <p>En Merfina cuidamos cada detalle, desde la elección de nuestras piezas hasta la forma en que llegan a tus manos. Bienvenidos al mundo Merfina.</p>
+      <div class="sig">— Mercedes</div>
+    </div>
+  </section>
+
+  <section aria-labelledby="ig-h">
+    <div class="gut sh"><h2 class="display" id="ig-h">@merfinajoyas</h2><a class="ulink" href="https://www.instagram.com/merfinajoyas/" target="_blank" rel="noopener">Seguinos en Instagram</a></div>
+    <div class="insta gut">
+      <a href="https://www.instagram.com/merfinajoyas/" target="_blank" rel="noopener" aria-label="Instagram"><img src="img/look-calas.jpg" alt="" loading="lazy"></a>
+      <a href="https://www.instagram.com/merfinajoyas/" target="_blank" rel="noopener" aria-label="Instagram"><img src="img/p-camelia-azul.jpg" alt="" loading="lazy"></a>
+      <a href="https://www.instagram.com/merfinajoyas/" target="_blank" rel="noopener" aria-label="Instagram"><img src="img/look-rosa-blanca.jpg" alt="" loading="lazy"></a>
+      <a href="https://www.instagram.com/merfinajoyas/" target="_blank" rel="noopener" aria-label="Instagram"><img src="img/p-camelia-rosa.jpg" alt="" loading="lazy"></a>
+      <a href="https://www.instagram.com/merfinajoyas/" target="_blank" rel="noopener" aria-label="Instagram"><img src="img/look-blusa.jpg" alt="" loading="lazy"></a>
+      <a href="https://www.instagram.com/merfinajoyas/" target="_blank" rel="noopener" aria-label="Instagram"><img src="img/p-flor-nacar.jpg" alt="" loading="lazy"></a>
+    </div>
+  </section>
+
+  <div class="perks gut">
+    <div><svg viewBox="0 0 32 32"><path d="M3 10h17v12H3zM20 14h5l4 4v4h-9z"/><circle cx="9" cy="24" r="2.4"/><circle cx="24" cy="24" r="2.4"/></svg><b>Envíos a todo Uruguay</b><span>Montevideo 24 h · Interior 48–72 h</span></div>
+    <div><svg viewBox="0 0 32 32"><rect x="4" y="8" width="24" height="17"/><path d="M4 13h24M8 20h6"/></svg><b>3 cuotas sin recargo</b><span>Tarjetas y Mercado Pago</span></div>
+    <div><svg viewBox="0 0 32 32"><path d="M6 16a10 10 0 0 1 17-7l3 3M26 16a10 10 0 0 1-17 7l-3-3"/><path d="M26 6v6h-6M6 26v-6h6"/></svg><b>Cambios gratis</b><span>Tenés 30 días</span></div>
+    <div><svg viewBox="0 0 32 32"><rect x="5" y="12" width="22" height="15"/><path d="M5 17h22M16 12v15M16 12c-3-6-9-4-6 0M16 12c3-6 9-4 6 0"/></svg><b>Listo para regalar</b><span>Estuche en cada pedido</span></div>
+  </div>
+
+  <section class="news gut" aria-labelledby="nw-h">
+    <h2 class="display" id="nw-h">10% off en tu primera compra</h2>
+    <p>Suscribite y enterate antes que nadie de cada lanzamiento.</p>
+    <form id="nf" novalidate><label for="ne" style="position:absolute;left:-9999px">Email</label><input id="ne" type="email" placeholder="Tu email" autocomplete="email"><button type="submit">Suscribirme</button></form>
+    <div class="msg" id="nm" aria-live="polite"></div>
+  </section>
+</main>
+
+<footer class="gut">
+  <div class="fcols">
+    <div><h4>Tienda</h4><ul><li><a href="#nuevo">New in</a></li><li><a href="#tienda" data-go="botones">Cubre botones</a></li><li><a href="#tienda" data-go="corbatas">Corbatas</a></li><li><a href="#tienda" data-go="gift">Gift card</a></li></ul></div>
+    <div><h4>Ayuda</h4><ul><li>Envíos y entregas</li><li>Cambios y devoluciones</li><li>Medios de pago</li><li>Cuidado de las piezas</li></ul></div>
+    <div><h4>Merfina</h4><ul><li><a href="#nosotros">Nosotros</a></li><li><a href="https://www.instagram.com/merfinajoyas/" target="_blank" rel="noopener">Instagram</a></li><li>WhatsApp · a confirmar</li></ul></div>
+  </div>
+  <div class="giant" aria-hidden="true">Merfina</div>
+  <div class="legal"><span>© 2026 Merfina Joyas · Montevideo</span><span>Una joya que hace la diferencia</span></div>
+</footer>
+
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" aria-label="Bolsa" aria-hidden="true">
+  <div class="dh"><h3>Tu bolsa <span id="dn" style="font-weight:400;font-size:1rem"></span></h3><button class="ib" id="cb" aria-label="Cerrar bolsa"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+  <div class="ship" id="ship"></div>
+  <div class="lines" id="lines"></div>
+  <div class="df" id="df">
+    <label class="chk" for="gw"><input type="checkbox" id="gw"> Envolver para regalo (+ $U 150)</label>
+    <div class="tot"><span>Subtotal</span><span id="sub">$U 0</span></div>
+    <p class="note">O 3 cuotas de <b id="cuota">$U 0</b> sin recargo. Envío calculado al finalizar.</p>
+    <button class="btn" id="go" style="width:100%">Finalizar compra</button>
+    <div id="ok" hidden><p class="note" style="margin-bottom:6px">Tu pedido está listo. Copiá el resumen y envialo por WhatsApp o Instagram para coordinar pago y envío:</p><div class="msgbox" id="mb"></div><button class="btn ghost" id="cp" style="width:100%;margin-top:8px">Copiar resumen</button></div>
+  </div>
+</aside>
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="mt" aria-hidden="true">
+  <button class="x" id="mx" aria-label="Cerrar"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+  <div class="mg">
+    <div class="mm" id="mm"></div>
+    <div class="mi">
+      <small class="up" id="mk" style="font-size:.7rem;color:var(--muted);font-weight:600"></small>
+      <h3 id="mt"></h3>
+      <div class="pr" id="mp"></div>
+      <p id="md"></p>
+      <div class="ol" id="ml">Presentación</div>
+      <div class="opts" id="mo"></div>
+      <button class="btn" id="ma">Agregar a la bolsa</button>
+      <dl class="specs" id="ms"></dl>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+const P=[
+ {id:"camelia-azul",n:"Camelia Azul Noche",c:"botones",k:"Cubre botones",flag:"Best seller",img:["img/p-camelia-azul.jpg","img/look-azul.jpg","img/p-camelia-azul-2.jpg"],col:["#3E5671","#8FA6BE","#B8955A"],
+  d:"Camelia de pétalos esmaltados en dos tonos de azul, con cristal central y borde dorado. Ideal para puños y camisas blancas.",o:[["Par",1490],["Set x4",2690],["Set x6",3790]],s:[["Medida","28 mm"],["Terminación","Baño de oro 18k"],["Detalle","Esmalte y cristal"]],nw:1},
+ {id:"camelia-rose",n:"Camelia Rosé",c:"botones",k:"Cubre botones",flag:"Nuevo",img:["img/p-camelia-rosa.jpg","img/look-rosa-corbata.jpg"],col:["#E8A69A","#F4D3CB","#C9A063"],
+  d:"Pétalos calados en dorado con esmalte coral translúcido y un brillante al centro.",o:[["Par",1490],["Set x4",2690],["Set x6",3790]],s:[["Medida","26 mm"],["Terminación","Baño de oro 18k"],["Detalle","Esmalte translúcido"]],nw:1},
+ {id:"flor-nacar",n:"Flor de Nácar",c:"botones",k:"Cubre botones",flag:"Nuevo",img:["img/p-flor-nacar.jpg","img/look-rosa-blanca.jpg"],col:["#F6EEE6","#E9C46A"],
+  d:"Cinco pétalos de nácar con centro de granulado dorado. Delicada y luminosa, para cuellos y puños.",o:[["Par",1290],["Set x4",2390],["Set x6",3390]],s:[["Medida","20 mm"],["Terminación","Baño de oro 18k"],["Detalle","Nácar"]],nw:1},
+ {id:"corazon-perla",n:"Corazón de Perla",c:"botones",k:"Cubre botones",img:["img/p-corazon-perla.jpg","img/look-blusa.jpg"],col:["#F3EFEA","#1E1B1A","#C9A063"],
+  d:"Corazón de perla sobre marco festoneado en esmalte negro y dorado.",o:[["Par",1190],["Set x4",2190],["Set x6",3090]],s:[["Medida","18 mm"],["Terminación","Baño de oro 18k"],["Detalle","Perla sintética"]],nw:1},
+ {id:"flor-onix",n:"Flor Ónix",c:"botones",k:"Cubre botones",was:1390,img:["img/p-flor-negra.jpg","img/look-blusa.jpg"],col:["#1E1B1A","#C9A063"],
+  d:"Flor de cinco pétalos en esmalte negro brillante con estambres dorados.",o:[["Par",1090],["Set x4",1990],["Set x6",2890]],s:[["Medida","18 mm"],["Terminación","Baño de oro 18k"],["Detalle","Esmalte negro"]]},
+ {id:"set-paris",n:"Set Blusa París",c:"sets",k:"Set 4 piezas",flag:"Edición limitada",img:["img/p-blusa-botones.jpg","img/look-calas.jpg","img/look-blusa.jpg"],col:["#F3EFEA","#1E1B1A","#C9A063"],
+  d:"Dos Corazones de Perla y dos Flores Ónix para alternar en la tapeta. El look de la campaña, en su estuche.",o:[["Set x4",2290],["Set x6",3290]],s:[["Incluye","2 corazones + 2 flores"],["Terminación","Baño de oro 18k"],["Estuche","Incluido"]],nw:1},
+ {id:"corbata-rayas",n:"Corbata Rayas Rosé",c:"corbatas",k:"Corbata",was:2290,img:["img/p-corbata-rayas.jpg","img/look-rosa-corbata.jpg"],col:["#D9B8A8","#F6E8E0"],
+  d:"Corbata de seda a rayas diagonales en rosé y crudo. Combinala con la Camelia Rosé.",o:[["Clásica 7 cm",1890],["Slim 5,5 cm",1890]],ol:"Ancho",s:[["Material","Seda"],["Largo","148 cm"],["Cuidado","Limpieza en seco"]]},
+ {id:"gift",n:"Gift Card Merfina",c:"gift",k:"Tarjeta de regalo",gift:1,img:[],col:["#111111","#A3804F"],
+  d:"Para que elijan su propia pieza. Llega en sobre con una nota escrita a mano, o por email.",o:[["$U 1.500",1500],["$U 3.000",3000],["$U 5.000",5000]],ol:"Monto",s:[["Validez","12 meses"],["Entrega","Física o digital"]]}
+];
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const fmt=n=>"$U "+n.toLocaleString("es-UY");
+const FREE=3000,WRAP=150;
+const st={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+let bag=st.get("mf-r-bag",[]),favs=new Set(st.get("mf-r-favs",[])),f="todo",q="",sort="rel",cols=st.get("mf-r-cols",4);
+const by=id=>P.find(p=>p.id===id);
+const heart='<svg viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg>';
+const plus='<svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>';
+const giftArt='<div class="gbox" style="position:absolute;inset:0"><div class="giftc"><img src="img/monograma.png" alt=""><span>MERFINA</span></div></div>';
+function card(p){
+  const sale=!!p.was,off=sale?Math.round((1-p.o[0][1]/p.was)*100):0;
+  return `<article class="card">
+   <div class="ph" data-open="${p.id}" role="button" tabindex="0" aria-label="Ver ${p.n}">
+     ${sale?`<span class="flag sale">-${off}%</span>`:p.flag?`<span class="flag">${p.flag}</span>`:""}
+     <button class="fav" data-fav="${p.id}" aria-pressed="${favs.has(p.id)}" aria-label="Favorito ${p.n}">${heart}</button>
+     ${p.gift?giftArt:`<img src="${p.img[0]}" alt="${p.n}" loading="lazy">${p.img[1]?`<img class="alt" src="${p.img[1]}" alt="" loading="lazy">`:""}`}
+     <button class="qa" data-qa="${p.id}" aria-label="Agregar rápido ${p.n}">${plus}</button>
+     <div class="sizes" data-sz="${p.id}"><b>Elegí ${(p.ol||"presentación").toLowerCase()}</b>${p.o.map((o,i)=>`<button data-add="${p.id}" data-i="${i}">${o[0]}</button>`).join("")}</div>
+   </div>
+   <h3 class="nm">${p.n}</h3>
+   <div class="pr">${sale?`<s>${fmt(p.was)}</s><span class="now sale">${fmt(p.o[0][1])}</span>`:`<span class="now">${fmt(p.o[0][1])}</span>`}</div>
+   <div class="dots">${p.col.map(c=>`<i style="background:${c}"></i>`).join("")}</div>
+  </article>`;
+}
+function renderRail(){$("#rail").innerHTML=P.filter(p=>p.nw).map(card).join("")}
+function renderGrid(){
+  let L=P.filter(p=>(f==="todo"||(f==="sale"?p.was:p.c===f))&&(!q||(p.n+" "+p.k+" "+p.d).toLowerCase().includes(q)));
+  if(sort==="asc")L.sort((a,b)=>a.o[0][1]-b.o[0][1]);if(sort==="desc")L.sort((a,b)=>b.o[0][1]-a.o[0][1]);if(sort==="az")L.sort((a,b)=>a.n.localeCompare(b.n));
+  $("#grid").style.setProperty("--c",cols);
+  $("#grid").innerHTML=L.length?L.map(card).join(""):`<div class="noresults">No encontramos piezas para “${q}”. Probá con “flor” o “perla”.</div>`;
+  $("#cnt").textContent=L.length+(L.length===1?" producto":" productos");
+}
+function setF(x){f=x;$$(".chip").forEach(c=>c.setAttribute("aria-pressed",c.dataset.f===x));$$(".cats-nav a").forEach(a=>a.classList.toggle("on",a.dataset.go===x));renderGrid()}
+$$(".chip").forEach(c=>c.addEventListener("click",()=>setF(c.dataset.f)));
+$$("[data-go]").forEach(a=>a.addEventListener("click",()=>{q="";$("#q").value="";setF(a.dataset.go)}));
+$("#sort").addEventListener("change",e=>{sort=e.target.value;renderGrid()});
+$$(".cols button").forEach(b=>{b.setAttribute("aria-pressed",+b.dataset.c===cols);b.addEventListener("click",()=>{cols=+b.dataset.c;st.set("mf-r-cols",cols);$$(".cols button").forEach(x=>x.setAttribute("aria-pressed",x===b));renderGrid()})});
+
+/* search */
+function openSearch(on){$("#search").hidden=!on;$("#searchBtn").setAttribute("aria-expanded",on);if(on)$("#q").focus()}
+$("#searchBtn").addEventListener("click",()=>openSearch($("#search").hidden));
+$("#closeSearch").addEventListener("click",()=>openSearch(false));
+let qt;$("#q").addEventListener("input",e=>{clearTimeout(qt);qt=setTimeout(()=>{q=e.target.value.trim().toLowerCase();setF("todo");document.getElementById("tienda").scrollIntoView({behavior:"smooth"})},250)});
+$$("[data-q]").forEach(b=>b.addEventListener("click",()=>{$("#q").value=b.dataset.q;$("#q").dispatchEvent(new Event("input"))}));
+
+/* bag */
+function cnt(el,n){el.textContent=n;el.dataset.n=n}
+function save(){st.set("mf-r-bag",bag);st.set("mf-r-favs",[...favs])}
+function add(id,i=0){const p=by(id),k=id+"|"+i,l=bag.find(x=>x.k===k);l?l.q++:bag.push({k,id,i,q:1});save();renderBag();toast(`Agregado: ${p.n} · ${p.o[i][0]}`)}
+function renderBag(){
+  const n=bag.reduce((s,l)=>s+l.q,0);cnt($("#bagCount"),n);$("#dn").textContent=n?`(${n})`:"";
+  const sub=bag.reduce((s,l)=>s+by(l.id).o[l.i][1]*l.q,0)+($("#gw").checked&&n?WRAP:0);
+  $("#sub").textContent=fmt(sub);$("#cuota").textContent=fmt(Math.ceil(sub/3));
+  const left=FREE-sub;
+  $("#ship").innerHTML=(left>0?`Te faltan <b>${fmt(left)}</b> para el envío gratis`:`<b>¡Tenés envío gratis!</b>`)+`<div class="prog"><i style="width:${Math.min(100,sub/FREE*100)}%"></i></div>`;
+  $("#df").hidden=!n;
+  $("#lines").innerHTML=n?bag.map(l=>{const p=by(l.id);return `<div class="ln">${p.gift?`<div class="gm"><img src="img/monograma.png" alt=""></div>`:`<img src="${p.img[0]}" alt="">`}
+    <div><h4>${p.n}</h4><small>${p.o[l.i][0]}</small><br><span class="qty"><button data-dec="${l.k}" aria-label="Quitar uno">−</button><span>${l.q}</span><button data-inc="${l.k}" aria-label="Agregar uno">+</button></span><button class="rm" data-rm="${l.k}">Eliminar</button></div>
+    <b style="font-variant-numeric:tabular-nums;font-size:.8rem">${fmt(p.o[l.i][1]*l.q)}</b></div>`}).join(""):`<div class="empty"><b>Tu bolsa está vacía</b>Sumá tu primera pieza.</div>`;
+  $("#ok").hidden=true;$("#go").hidden=false;
+}
+$("#gw").addEventListener("change",renderBag);
+$("#lines").addEventListener("click",e=>{const t=e.target.closest("button");if(!t)return;const k=t.dataset.inc||t.dataset.dec||t.dataset.rm,l=bag.find(x=>x.k===k);if(!l)return;
+  t.dataset.inc?l.q++:t.dataset.dec?l.q--:l.q=0;bag=bag.filter(x=>x.q>0);save();renderBag()});
+$("#go").addEventListener("click",()=>{const L=bag.map(l=>{const p=by(l.id);return `• ${l.q} × ${p.n} (${p.o[l.i][0]}) — ${fmt(p.o[l.i][1]*l.q)}`});if($("#gw").checked)L.push(`• Envoltorio de regalo — ${fmt(WRAP)}`);
+  $("#mb").textContent=`¡Hola Merfina! Quiero hacer este pedido:\n${L.join("\n")}\nSubtotal: ${$("#sub").textContent}`;$("#ok").hidden=false;$("#go").hidden=true});
+$("#cp").addEventListener("click",()=>{const t=$("#mb").textContent,sel=()=>{const r=document.createRange();r.selectNodeContents($("#mb"));const s=getSelection();s.removeAllRanges();s.addRange(r);toast("Resumen seleccionado: copialo con el teclado")};
+  try{navigator.clipboard.writeText(t).then(()=>toast("Resumen copiado"),sel)}catch(e){sel()}});
+
+/* card interactions (rail + grid) */
+function onCards(e){
+  const fv=e.target.closest("[data-fav]");if(fv){const id=fv.dataset.fav;favs.has(id)?favs.delete(id):favs.add(id);$$(`[data-fav="${id}"]`).forEach(b=>b.setAttribute("aria-pressed",favs.has(id)));cnt($("#favCount"),favs.size);save();toast(favs.has(id)?"Guardado en favoritos":"Quitado de favoritos");return}
+  const qa=e.target.closest("[data-qa]");if(qa){const sz=qa.parentElement.querySelector(".sizes");$$(".sizes.on").forEach(s=>s!==sz&&s.classList.remove("on"));sz.classList.toggle("on");return}
+  const ad=e.target.closest("[data-add]");if(ad){add(ad.dataset.add,+ad.dataset.i);ad.closest(".sizes").classList.remove("on");return}
+  if(e.target.closest(".sizes"))return;
+  const op=e.target.closest("[data-open]");if(op)openM(op.dataset.open);
+}
+["#rail","#grid"].forEach(s=>{$(s).addEventListener("click",onCards);$(s).addEventListener("keydown",e=>{if(e.key==="Enter"&&e.target.matches(".ph"))openM(e.target.dataset.open)})});
+$("#favBtn").addEventListener("click",()=>{if(!favs.size){toast("Tocá el corazón para guardar piezas");return}q="";f="todo";renderGrid();
+  $("#grid").innerHTML=[...favs].map(id=>card(by(id))).join("");$("#cnt").textContent=`${favs.size} en favoritos`;$$(".chip").forEach(c=>c.setAttribute("aria-pressed","false"));document.getElementById("tienda").scrollIntoView({behavior:"smooth"})});
+
+/* modal */
+let cur,ci=0,last;
+function openM(id){const p=by(id);cur=p;ci=0;last=document.activeElement;
+  $("#mk").textContent=p.k;$("#mt").textContent=p.n;$("#md").textContent=p.d;$("#ml").textContent=p.ol||"Presentación";
+  $("#mm").innerHTML=p.gift?`<div class="gbox"><div class="giftc"><img src="img/monograma.png" alt=""><span>MERFINA</span></div></div>`:p.img.map(s=>`<img src="${s}" alt="${p.n}">`).join("");
+  $("#ms").innerHTML=p.s.map(([a,b])=>`<dt>${a}</dt><dd>${b}</dd>`).join("");ro();show("modal",true);$("#mx").focus()}
+function ro(){$("#mo").innerHTML=cur.o.map(([l],i)=>`<button class="opt" data-o="${i}" aria-pressed="${i===ci}">${l}</button>`).join("");
+  const now=cur.o[ci][1];$("#mp").innerHTML=cur.was&&ci===0?`<s>${fmt(cur.was)}</s><span class="now sale">${fmt(now)}</span>`:`<span class="now">${fmt(now)}</span><span style="color:var(--muted);font-weight:400">· 3 cuotas de ${fmt(Math.ceil(now/3))}</span>`}
+$("#mo").addEventListener("click",e=>{const b=e.target.closest("[data-o]");if(b){ci=+b.dataset.o;ro()}});
+$("#ma").addEventListener("click",()=>{add(cur.id,ci);show("modal",false);setTimeout(()=>show("drawer",true),200)});
+$("#mx").addEventListener("click",()=>show("modal",false));
+function show(w,on){const el=$("#"+w);el.classList.toggle("on",on);el.setAttribute("aria-hidden",!on);
+  const any=$("#modal").classList.contains("on")||$("#drawer").classList.contains("on");$("#scrim").classList.toggle("on",any);document.body.style.overflow=any?"hidden":"";if(!any&&last)last.focus?.()}
+$("#bagBtn").addEventListener("click",()=>{last=$("#bagBtn");show("drawer",true);$("#cb").focus()});
+$("#cb").addEventListener("click",()=>show("drawer",false));
+$("#scrim").addEventListener("click",()=>{show("modal",false);show("drawer",false)});
+addEventListener("keydown",e=>{if(e.key==="Escape"){show("modal",false);show("drawer",false);openSearch(false)}});
+
+/* rail controls */
+const step=()=>$("#rail").firstElementChild.getBoundingClientRect().width+4;
+$("#rp").addEventListener("click",()=>$("#rail").scrollBy({left:-step()*2,behavior:"smooth"}));
+$("#rn").addEventListener("click",()=>$("#rail").scrollBy({left:step()*2,behavior:"smooth"}));
+
+/* newsletter */
+$("#nf").addEventListener("submit",e=>{e.preventDefault();const v=$("#ne").value.trim();
+  $("#nm").textContent=/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v)?"¡Listo! Tu código MERFINA10 ya está activo.":"Revisá el email: parece incompleto.";if(/@/.test(v))$("#ne").value=""});
+
+let tt;function toast(m){$("#toast").textContent=m;$("#toast").classList.add("on");clearTimeout(tt);tt=setTimeout(()=>$("#toast").classList.remove("on"),2400)}
+renderRail();renderGrid();renderBag();cnt($("#favCount"),favs.size);
+</script>
