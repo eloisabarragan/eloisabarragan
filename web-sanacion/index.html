@@ -361,6 +361,10 @@
   .video-destacado { display: grid; grid-template-columns: 1.2fr 1fr; gap: clamp(28px, 5vw, 64px); align-items: center; margin-top: 40px; }
   .video-destacado .miniatura { position: relative; background: var(--verde); color: var(--rosa-claro); overflow: hidden; }
   .video-destacado .miniatura .sol { position: absolute; width: 80%; height: auto; aspect-ratio: 1; opacity: .55; }
+  .video-destacado button.miniatura { width: 100%; border: 0; cursor: pointer; font: inherit; }
+  .video-destacado button.miniatura:hover .play { background: rgba(67,76,34,.8); }
+  .video-destacado button.miniatura:focus-visible { outline: 2px solid var(--verde-osc); outline-offset: 3px; }
+  .video-iframe { width: 100%; aspect-ratio: 16/9; border: 0; border-radius: var(--radio); }
   .video-destacado .play { position: relative; width: 72px; height: 72px; background: rgba(67,76,34,.5); }
   .video-destacado .acciones { margin-top: 24px; }
 
@@ -379,6 +383,17 @@
   /* ───────── Testimonios ───────── */
   .testimonios { background: var(--borgona); color: var(--crema); text-align: center; }
   .testimonios .etiqueta { color: rgba(241,231,214,.65); }
+  .testimonios h2 { color: var(--crema); }
+  .testimonios h2 em { color: var(--rosa-claro); }
+  .lista-testimonios { max-width: 760px; margin: 24px auto 0; }
+  .testimonio { display: none; }
+  .testimonio.activo { display: block; animation: aparecer .8s ease; }
+  @keyframes aparecer { from { opacity: 0; } to { opacity: 1; } }
+  .testimonio p { font-family: var(--serif); font-size: clamp(22px, 3vw, 32px); line-height: 1.4; }
+  .testimonio cite { display: block; margin-top: 22px; font-family: var(--mono); font-style: normal; font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--rosa-claro); }
+  .sin-testimonios { max-width: 560px; margin: 0 auto 28px; color: rgba(241,231,214,.85); }
+  .testimonios .puntos { margin: 32px 0 36px; }
+  .testimonios .puntos:empty { display: none; }
   .cita { max-width: 760px; margin: 40px auto 0; }
   .cita blockquote { font-family: var(--serif); font-size: clamp(22px, 3vw, 32px); line-height: 1.4; }
   .cita cite { display: block; margin-top: 22px; font-family: var(--mono); font-style: normal; font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--rosa-claro); }
@@ -837,15 +852,27 @@
     </div>
   </section>
 
-  <!-- TESTIMONIOS (reemplazar con los reales en el script) -->
+  <!-- TESTIMONIOS -->
   <section class="testimonios" id="testimonios">
     <div class="contenedor">
       <p class="etiqueta"><span>Testimonios</span></p>
-      <div class="cita" aria-live="polite">
-        <blockquote id="cita-texto">“Testimonio de ejemplo: salí de la sesión con una paz que hacía mucho no sentía.”</blockquote>
-        <cite id="cita-autor">Nombre · Ciudad</cite>
+      <h2>Lo que <em>comparten</em></h2>
+      <div class="lista-testimonios" aria-live="polite">
+        <!--
+          CÓMO AGREGAR UN TESTIMONIO
+          Copiá este bloque (sin las marcas de comentario), pegalo debajo de esta nota
+          y cambiá el texto y el nombre. Se muestran solos, de a uno, cambiando cada 7 segundos.
+          Mientras no haya ninguno, la sección muestra solo el botón a Instagram.
+
+          <blockquote class="testimonio">
+            <p>“Acá va el texto del testimonio.”</p>
+            <cite>Nombre · Terapia que hizo</cite>
+          </blockquote>
+        -->
       </div>
       <div class="puntos" role="group" aria-label="Elegir testimonio"></div>
+      <p class="sin-testimonios">Personas que transitaron su proceso de sanación con Salvia comparten su experiencia.</p>
+      <a class="boton claro" href="https://www.instagram.com/stories/highlights/18022163684634699/" target="_blank" rel="noopener">Ver testimonios en Instagram</a>
     </div>
   </section>
 
@@ -975,24 +1002,24 @@
     </div>
   </section>
 
-  <!-- 8 · YOUTUBE (cambiar los enlaces por el del canal y el del video) -->
+  <!-- 8 · YOUTUBE -->
   <section class="youtube" id="youtube">
     <div class="contenedor">
       <p class="etiqueta"><span>YouTube</span></p>
       <h2>Contenido para tu <em>despertar</em></h2>
       <article class="video-destacado revelar">
-        <a class="miniatura" href="https://www.youtube.com/" target="_blank" rel="noopener" aria-label="Ver la meditación Tu refugio seguro en YouTube">
+        <button type="button" class="miniatura" data-video="s30Emwj28LI" aria-label="Reproducir la meditación Tu refugio seguro">
           <svg class="sol" aria-hidden="true"><use href="#sol"/></svg>
           <span class="play"></span>
-        </a>
+        </button>
         <div>
           <p class="frase">Meditación</p>
           <h3>Tu refugio seguro</h3>
           <p class="lema">¡Es hora de recuperar nuestra soberanía energética!</p>
           <p>En esta práctica meditativa te dejo un ejercicio para crear un refugio interno seguro. Allí podrás ir para sanar alguna dolencia, una situación o un vínculo; cerrar ciclos, o simplemente refugiarte para relajar tu sistema nervioso antes del descanso.</p>
           <div class="acciones">
-            <a href="https://www.youtube.com/" class="boton" target="_blank" rel="noopener">Ver la meditación</a>
-            <a href="https://www.youtube.com/" class="enlace" target="_blank" rel="noopener">Visitar el canal →</a>
+            <a href="https://youtu.be/s30Emwj28LI" class="boton" target="_blank" rel="noopener">Ver en YouTube</a>
+            <a href="https://www.youtube.com/@salvia-canal" class="enlace" target="_blank" rel="noopener">Visitar el canal →</a>
           </div>
         </div>
       </article>
@@ -1036,7 +1063,7 @@
   <div class="contenedor">
     <div class="fila">
       <a href="#inicio" class="logo"><img src="img/colibri-blanco.png" alt="" width="240" height="196"><span>Salvia <small>Terapias Holísticas</small></span></a>
-      <nav><a href="#terapias">Terapias</a><a href="#cursos">Cursos</a><a href="#productos">Productos</a><a href="https://instagram.com/salvia.terapias" target="_blank" rel="noopener">Instagram</a></nav>
+      <nav><a href="#terapias">Terapias</a><a href="#cursos">Cursos</a><a href="#productos">Productos</a><a href="https://instagram.com/salvia.terapias" target="_blank" rel="noopener">Instagram</a><a href="https://www.youtube.com/@salvia-canal" target="_blank" rel="noopener">YouTube</a></nav>
     </div>
     <p class="legal">© 2026 · Salvia Terapias Holísticas · Neptunia Sur, Canelones, Uruguay. Estas terapias son complementarias y no reemplazan un tratamiento médico ni psicológico.</p>
   </div>
@@ -1117,26 +1144,38 @@
   }), { threshold: .12 });
   document.querySelectorAll('.revelar').forEach(el => obs.observe(el));
 
-  // Testimonios (reemplazar con los reales)
-  const testimonios = [
-    ['“Testimonio de ejemplo: salí de la sesión con una paz que hacía mucho no sentía.”', 'Nombre · Ciudad'],
-    ['“Testimonio de ejemplo: los mensajes canalizados me dieron la claridad que estaba buscando.”', 'Nombre · Ciudad'],
-    ['“Testimonio de ejemplo: un espacio cálido, amoroso y profundamente sanador.”', 'Nombre · Ciudad'],
-  ];
-  const puntos = document.querySelector('.puntos'), txt = document.getElementById('cita-texto'), aut = document.getElementById('cita-autor');
-  let actual = 0, timer;
-  function mostrar(i) {
-    actual = i; [txt.textContent, aut.textContent] = testimonios[i];
-    puntos.querySelectorAll('button').forEach((b, j) => b.setAttribute('aria-current', j === i));
+  // Testimonios: se arma un carrusel con los bloques .testimonio que haya en la sección
+  const testimonios = [...document.querySelectorAll('.testimonio')];
+  if (testimonios.length) {
+    document.querySelector('.sin-testimonios').hidden = true;
+    const puntos = document.querySelector('.puntos');
+    let actual = 0, timer;
+    const mostrar = i => {
+      actual = i;
+      testimonios.forEach((t, j) => t.classList.toggle('activo', j === i));
+      puntos.querySelectorAll('button').forEach((b, j) => b.setAttribute('aria-current', j === i));
+    };
+    if (testimonios.length > 1) testimonios.forEach((_, i) => {
+      const b = document.createElement('button');
+      b.setAttribute('aria-label', 'Testimonio ' + (i + 1));
+      b.addEventListener('click', () => { mostrar(i); clearInterval(timer); });
+      puntos.appendChild(b);
+    });
+    mostrar(0);
+    if (testimonios.length > 1) timer = setInterval(() => mostrar((actual + 1) % testimonios.length), 7000);
   }
-  testimonios.forEach((_, i) => {
-    const b = document.createElement('button');
-    b.setAttribute('aria-label', 'Testimonio ' + (i + 1));
-    b.addEventListener('click', () => { mostrar(i); clearInterval(timer); });
-    puntos.appendChild(b);
+
+  // Meditación: el video de YouTube se carga recién al tocar play
+  const mini = document.querySelector('.miniatura[data-video]');
+  mini.addEventListener('click', () => {
+    const f = document.createElement('iframe');
+    f.src = 'https://www.youtube-nocookie.com/embed/' + mini.dataset.video + '?autoplay=1&rel=0';
+    f.title = 'Meditación Tu refugio seguro';
+    f.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
+    f.allowFullscreen = true;
+    f.className = 'video-iframe';
+    mini.replaceWith(f);
   });
-  mostrar(0);
-  timer = setInterval(() => mostrar((actual + 1) % testimonios.length), 7000);
 </script>
 </body>
 </html>
