@@ -46,7 +46,7 @@ Reglas:
 - Los textos van entre comillas simples `' '`. Si el texto tiene un apóstrofo, escribilo como `\'`.
 - `terapia`, `texto` y `captura` son opcionales, pero tiene que haber al menos texto o captura.
 
-Los testimonios aparecen solos en la sección "Lo que comparten" y van rotando cada 7 segundos.
+Los testimonios aparecen solos en la sección "Lo que comparten" y van rotando (los más largos quedan más tiempo).
 Mientras la lista esté vacía, la sección muestra solo el botón a los testimonios de Instagram.
 
 Para **quitar** un testimonio, borrá su línea completa.

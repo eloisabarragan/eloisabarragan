@@ -32,7 +32,9 @@ window.SALVIA = {
      // { iniciales: 'L. P.', terapia: 'Terapia Transgeneracional', captura: 'img/testimonios/lp.jpg' },
   */
   testimonios: [
-
+    { iniciales: 'M. R. D.', terapia: 'Canalización Mediúmnica', texto: 'Mi experiencia contigo fue Maravillosa, cuando comenzastes a canalizar me describistes tal cual la energía de mi abuela “La tía”, así le decía todo el mundo menos tú que ni idea tenías y lo más lindo fue que a los días de tú consulta soñé con ella que me daba un par de medias rosadas para regalarte a tí porque sos de tener los pies fríos y yo no lo sabía. Super recomiendo tus consultas.' },
+    { iniciales: 'C. C.', terapia: 'Canalización Mediúmnica', texto: 'Permítanme soltar la mano y escribir estas breves líneas que intentan describir lo importante que fue contar con el don de Silvi, mediante la canalización pude encontrar bálsamo para el dolor tan fuerte que estaba viviendo por haber perdido a mi papá, dadas las circunstancias de su partida estaba confundida y buscando respuestas. Necesité saber si estaba bien, con una entrega absolutamente respetuosa Silvi me ayudó y pude entender que él estaba en un bello lugar, que lo estaban ayudando a “curarse” y que estaba bien. Pude saber que era él por gestos, movimientos con las manos, los silbidos. Mi viejito amado, encontró siempre la manera de comunicarle a Silvi que necesitaba darme tranquilidad. Gracias por formar parte muy importante de mi proceso de sanación. Hoy estoy más segura que nunca que está pero de otra manera, en cada ave que visita mi patio. Gracias.' },
+    { iniciales: 'L. M.', terapia: 'Varias terapias', texto: 'Las sesiones de Salvia Terapias son excepcionales, muy cercanas e intuitivas y sacando lo mejor de cada uno sin coartar nuestro libre albedrío. Tiene mucha intuición y trabaja desde la luz, me gustó mucho trabajar con ella.' },
   ],
 
 };
