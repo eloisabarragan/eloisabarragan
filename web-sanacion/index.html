@@ -5,6 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Salvia · Terapias Holísticas</title>
 <link rel="icon" href="img/colibri-verde.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Salvia · Terapias Holísticas">
+<meta property="og:title" content="Salvia · Terapias Holísticas">
+<meta property="og:description" content="Sanación y despertar espiritual con Silvia: terapeuta holística, canalizadora y médium. Presencial en Neptunia Sur, Uruguay, y a distancia.">
+<!-- DOMINIO: cuando salviaterapias.com esté comprado y conectado, quitá las marcas de comentario de estas 3 líneas:
+<link rel="canonical" href="https://salviaterapias.com/">
+<meta property="og:url" content="https://salviaterapias.com/">
+<meta property="og:image" content="https://salviaterapias.com/img/logo-salvia.png">
+-->
 <meta name="description" content="Salvia Terapias Holísticas: sanación y despertar espiritual con Silvia, terapeuta holística, canalizadora y médium. Neptunia Sur, Uruguay, y a distancia.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -368,6 +377,12 @@
   .video-destacado .play { position: relative; width: 72px; height: 72px; background: rgba(67,76,34,.5); }
   .video-destacado .acciones { margin-top: 24px; }
 
+  /* WhatsApp */
+  .wa-flotante { position: fixed; right: 18px; bottom: 18px; z-index: 90; width: 56px; height: 56px; border-radius: 50%; display: grid; place-items: center; background: var(--verde-osc); color: var(--crema); border: 2px solid var(--crema); box-shadow: 0 10px 24px -8px rgba(40,40,20,.55); transition: transform .3s, background .3s; }
+  .wa-flotante:hover { transform: scale(1.07); background: var(--verde); }
+  .wa-flotante svg { width: 28px; height: 28px; }
+  .boton-texto { background: none; border: 0; border-bottom: 1px solid currentColor; cursor: pointer; color: var(--verde-osc); }
+
   /* formulario */
   .nota-form { font-size: 13px; color: var(--texto-suave); margin-top: -6px; }
   footer .logo img { height: 40px; width: auto; }
@@ -389,6 +404,7 @@
   .testimonio { display: none; }
   .testimonio.activo { display: block; animation: aparecer .8s ease; }
   @keyframes aparecer { from { opacity: 0; } to { opacity: 1; } }
+  .testimonio img { max-width: min(380px, 100%); margin: 0 auto 8px; border-radius: 12px; box-shadow: 0 18px 40px -18px rgba(0,0,0,.6); }
   .testimonio p { font-family: var(--serif); font-size: clamp(22px, 3vw, 32px); line-height: 1.4; }
   .testimonio cite { display: block; margin-top: 22px; font-family: var(--mono); font-style: normal; font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--rosa-claro); }
   .sin-testimonios { max-width: 560px; margin: 0 auto 28px; color: rgba(241,231,214,.85); }
@@ -844,7 +860,7 @@
       <p class="etiqueta"><span>Cómo trabajamos</span></p>
       <h2>Tu sesión, <em>paso a paso</em></h2>
       <div class="pasos">
-        <div class="paso revelar"><h3>Contacto</h3><p>Me escribís por Instagram, mail o el formulario, y elegimos la terapia que mejor te acompañe.</p></div>
+        <div class="paso revelar"><h3>Contacto</h3><p>Me escribís por WhatsApp, Instagram, mail o el formulario, y elegimos la terapia que mejor te acompañe.</p></div>
         <div class="paso revelar"><h3>Reserva</h3><p>Coordinamos día y horario: presencial en Neptunia Sur o a distancia, desde cualquier lugar del mundo.</p></div>
         <div class="paso revelar"><h3>Encuentro</h3><p>Traé al menos un tema de consulta. Abrimos un espacio sagrado de escucha, contención y canalización.</p></div>
         <div class="paso revelar"><h3>Integración</h3><p>Te llevás los mensajes y herramientas para seguir tu proceso de sanación.</p></div>
@@ -857,19 +873,7 @@
     <div class="contenedor">
       <p class="etiqueta"><span>Testimonios</span></p>
       <h2>Lo que <em>comparten</em></h2>
-      <div class="lista-testimonios" aria-live="polite">
-        <!--
-          CÓMO AGREGAR UN TESTIMONIO
-          Copiá este bloque (sin las marcas de comentario), pegalo debajo de esta nota
-          y cambiá el texto y el nombre. Se muestran solos, de a uno, cambiando cada 7 segundos.
-          Mientras no haya ninguno, la sección muestra solo el botón a Instagram.
-
-          <blockquote class="testimonio">
-            <p>“Acá va el texto del testimonio.”</p>
-            <cite>Nombre · Terapia que hizo</cite>
-          </blockquote>
-        -->
-      </div>
+      <div class="lista-testimonios" aria-live="polite"><!-- Los testimonios se cargan desde datos.js --></div>
       <div class="puntos" role="group" aria-label="Elegir testimonio"></div>
       <p class="sin-testimonios">Personas que transitaron su proceso de sanación con Salvia comparten su experiencia.</p>
       <a class="boton claro" href="https://www.instagram.com/stories/highlights/18022163684634699/" target="_blank" rel="noopener">Ver testimonios en Instagram</a>
@@ -1034,6 +1038,7 @@
         <h2>Reservá tu <em>encuentro</em></h2>
         <p class="intro">Escribime y te respondo a la brevedad para coordinar tu sesión, inscribirte a un curso o encargar un producto.</p>
         <ul class="datos">
+          <li><span>WhatsApp</span><a href="https://wa.me/59899161748" data-whatsapp="Hola Silvia, vengo de la web de Salvia Terapias" data-whatsapp-visible target="_blank" rel="noopener">+598 99 161 748</a></li>
           <li><span>Instagram</span><a href="https://instagram.com/salvia.terapias" target="_blank" rel="noopener">@salvia.terapias</a></li>
           <li><span>Email</span><a href="mailto:salviaterapiasycursos@gmail.com">salviaterapiasycursos@gmail.com</a></li>
           <li><span>Lugar</span><span>Neptunia Sur, Canelones, Uruguay</span></li>
@@ -1052,24 +1057,40 @@
           </select>
         </label>
         <label>Mensaje <textarea name="mensaje" rows="4"></textarea></label>
-        <button type="submit" class="boton">Enviar mensaje</button>
-        <p class="nota-form">Se abrirá tu correo con el mensaje listo para enviar a Silvia.</p>
+        <div class="acciones">
+          <button type="submit" class="boton" name="via" value="whatsapp">Enviar por WhatsApp</button>
+          <button type="submit" class="enlace boton-texto" name="via" value="email">Enviar por mail →</button>
+        </div>
+        <p class="nota-form">Se abre WhatsApp o tu correo con el mensaje listo para enviar a Silvia.</p>
       </form>
     </div>
   </section>
 </main>
 
+<a class="wa-flotante" href="https://wa.me/59899161748" data-whatsapp="Hola Silvia, vengo de la web de Salvia Terapias" target="_blank" rel="noopener" aria-label="Escribir a Silvia por WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2.2A9.8 9.8 0 0 0 3.6 17l-1.3 4.8 4.9-1.3A9.8 9.8 0 1 0 12 2.2zm0 17.9c-1.5 0-3-.4-4.3-1.2l-.3-.2-2.9.8.8-2.8-.2-.3A8.1 8.1 0 1 1 12 20.1zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.6 6.6 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s1 2.6 1.1 2.7c.1.2 1.9 2.9 4.6 4 1.7.7 2.4.8 3.2.6.5-.1 1.5-.6 1.8-1.2.2-.6.2-1.1.1-1.2l-.4-.2z"/></svg></a>
+
 <footer>
   <div class="contenedor">
     <div class="fila">
       <a href="#inicio" class="logo"><img src="img/colibri-blanco.png" alt="" width="240" height="196"><span>Salvia <small>Terapias Holísticas</small></span></a>
-      <nav><a href="#terapias">Terapias</a><a href="#cursos">Cursos</a><a href="#productos">Productos</a><a href="https://instagram.com/salvia.terapias" target="_blank" rel="noopener">Instagram</a><a href="https://www.youtube.com/@salvia-canal" target="_blank" rel="noopener">YouTube</a></nav>
+      <nav><a href="#terapias">Terapias</a><a href="#cursos">Cursos</a><a href="#productos">Productos</a><a href="https://wa.me/59899161748" data-whatsapp="Hola Silvia, vengo de la web de Salvia Terapias" target="_blank" rel="noopener">WhatsApp</a><a href="https://instagram.com/salvia.terapias" target="_blank" rel="noopener">Instagram</a><a href="https://www.youtube.com/@salvia-canal" target="_blank" rel="noopener">YouTube</a></nav>
     </div>
     <p class="legal">© 2026 · Salvia Terapias Holísticas · Neptunia Sur, Canelones, Uruguay. Estas terapias son complementarias y no reemplazan un tratamiento médico ni psicológico.</p>
   </div>
 </footer>
 
+<script src="datos.js"></script>
 <script>
+  const DATOS = window.SALVIA || {};
+  const WA_NUM = (DATOS.whatsapp && DATOS.whatsapp.numero) || '59899161748';
+  const waLink = texto => 'https://wa.me/' + WA_NUM + (texto ? '?text=' + encodeURIComponent(texto) : '');
+
+  // WhatsApp: todos los enlaces toman el número de datos.js
+  document.querySelectorAll('[data-whatsapp]').forEach(a => { a.href = waLink(a.dataset.whatsapp); });
+  document.querySelectorAll('[data-whatsapp-visible]').forEach(el => {
+    if (DATOS.whatsapp && DATOS.whatsapp.visible) el.textContent = DATOS.whatsapp.visible;
+  });
+
   // Menú móvil
   const btn = document.querySelector('.menu-btn'), menu = document.getElementById('menu');
   btn.addEventListener('click', () => {
@@ -1129,13 +1150,13 @@
     });
   });
 
-  // El formulario arma un mail listo para enviar
+  // El formulario arma el mensaje y lo abre en WhatsApp o en el correo
   document.getElementById('form-contacto').addEventListener('submit', e => {
     e.preventDefault();
-    const f = e.target, d = new FormData(f);
-    const asunto = 'Consulta web: ' + d.get('servicio');
-    const cuerpo = 'Hola Silvia, soy ' + d.get('nombre') + '.\n\nMe interesa: ' + d.get('servicio') + '\n\n' + d.get('mensaje') + '\n\nMi contacto: ' + d.get('contacto');
-    location.href = 'mailto:salviaterapiasycursos@gmail.com?subject=' + encodeURIComponent(asunto) + '&body=' + encodeURIComponent(cuerpo);
+    const d = new FormData(e.target), via = e.submitter ? e.submitter.value : 'whatsapp';
+    const cuerpo = 'Hola Silvia, soy ' + d.get('nombre') + '.\n\nMe interesa: ' + d.get('servicio') + (d.get('mensaje') ? '\n\n' + d.get('mensaje') : '') + '\n\nMi contacto: ' + d.get('contacto');
+    if (via === 'email') location.href = 'mailto:salviaterapiasycursos@gmail.com?subject=' + encodeURIComponent('Consulta web: ' + d.get('servicio')) + '&body=' + encodeURIComponent(cuerpo);
+    else window.open(waLink(cuerpo), '_blank', 'noopener');
   });
 
   // Aparición al hacer scroll
@@ -1144,8 +1165,19 @@
   }), { threshold: .12 });
   document.querySelectorAll('.revelar').forEach(el => obs.observe(el));
 
-  // Testimonios: se arma un carrusel con los bloques .testimonio que haya en la sección
-  const testimonios = [...document.querySelectorAll('.testimonio')];
+  // Testimonios: se arman desde datos.js (solo iniciales) y rotan cada 7 segundos
+  const lista = document.querySelector('.lista-testimonios');
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  (DATOS.testimonios || []).filter(t => t && (t.texto || t.captura)).forEach(t => {
+    const q = document.createElement('blockquote');
+    q.className = 'testimonio';
+    const quien = [t.iniciales, t.terapia].filter(Boolean).map(esc).join(' · ');
+    q.innerHTML = (t.captura ? '<img src="' + esc(t.captura) + '" alt="Testimonio de ' + esc(t.iniciales || 'una consultante') + '" loading="lazy">' : '')
+                + (t.texto ? '<p>“' + esc(t.texto) + '”</p>' : '')
+                + (quien ? '<cite>' + quien + '</cite>' : '');
+    lista.appendChild(q);
+  });
+  const testimonios = [...lista.querySelectorAll('.testimonio')];
   if (testimonios.length) {
     document.querySelector('.sin-testimonios').hidden = true;
     const puntos = document.querySelector('.puntos');
