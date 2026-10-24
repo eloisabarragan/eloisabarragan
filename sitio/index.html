@@ -74,6 +74,15 @@
       <a href="#seleccion" class="btn btn--gold" data-magnetic data-cursor="Ver" data-i18n-attr="data-cursor:cursor.see"><span data-i18n="hero.cta1">Nuestra selección</span></a>
       <a href="#servicios" class="btn btn--line" data-magnetic data-cursor="Ver" data-i18n-attr="data-cursor:cursor.see"><span data-i18n="hero.cta2">Servicios</span></a>
     </div>
+    <div class="hero__sub">
+      <div class="lang lang--hero" role="group" aria-label="Idioma" data-i18n-attr="aria-label:nav.lang">
+        <button type="button" data-lang="es" aria-pressed="true">ES</button>
+        <button type="button" data-lang="en" aria-pressed="false">EN</button>
+        <button type="button" data-lang="pt" aria-pressed="false">PT</button>
+      </div>
+      <span class="hero__sep" aria-hidden="true"></span>
+      <a href="#nosotros" class="hero__about mono" data-i18n="nav.about">Quiénes somos</a>
+    </div>
     <a href="#nosotros" class="hero__scroll" aria-label="Ir a Quiénes somos" data-i18n-attr="aria-label:hero.scrollAria"><span data-i18n="hero.scroll">Descubrí</span><i></i></a>
   </section>
 
@@ -294,7 +303,7 @@
     </div>
   </section>
 
-  <!-- 4. SERVICIOS: cuatro accesos, cada uno abre su formulario. Los textos srv.d1–d4 quedan vacíos hasta que el cliente los apruebe. -->
+  <!-- 4. SERVICIOS: ocho accesos, cada uno abre su formulario. Los textos srv.d1–d4 quedan vacíos hasta que el cliente los apruebe. -->
   <section class="services-sec" id="servicios">
     <div class="services-sec__head">
       <div class="section-head">
@@ -308,25 +317,65 @@
         <span class="srv__t display" data-i18n="f.cot.t">Cotizá tu proyecto</span>
         <span class="srv__d" data-i18n="srv.d1"></span>
         <span class="srv__go" aria-hidden="true">+</span>
-      </button></li>
+      </button>
+        <a class="srv__wa" data-wa="f.cot.t" target="_blank" rel="noopener" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#wa-icon"/></svg><span data-i18n="wa.short">WhatsApp</span></a>
+      </li>
       <li><button type="button" class="srv__card" data-open="contable" data-cursor="Abrir" data-i18n-attr="data-cursor:cursor.open">
         <span class="srv__n mono">02</span>
         <span class="srv__t display" data-i18n="f.con.t">Consulta contable</span>
         <span class="srv__d" data-i18n="srv.d2"></span>
         <span class="srv__go" aria-hidden="true">+</span>
-      </button></li>
+      </button>
+        <a class="srv__wa" data-wa="f.con.t" target="_blank" rel="noopener" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#wa-icon"/></svg><span data-i18n="wa.short">WhatsApp</span></a>
+      </li>
       <li><button type="button" class="srv__card" data-open="notarial" data-cursor="Abrir" data-i18n-attr="data-cursor:cursor.open">
         <span class="srv__n mono">03</span>
         <span class="srv__t display" data-i18n="f.not.t">Consulta notarial</span>
         <span class="srv__d" data-i18n="srv.d3"></span>
         <span class="srv__go" aria-hidden="true">+</span>
-      </button></li>
+      </button>
+        <a class="srv__wa" data-wa="f.not.t" target="_blank" rel="noopener" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#wa-icon"/></svg><span data-i18n="wa.short">WhatsApp</span></a>
+      </li>
       <li><button type="button" class="srv__card" data-open="juridica" data-cursor="Abrir" data-i18n-attr="data-cursor:cursor.open">
         <span class="srv__n mono">04</span>
         <span class="srv__t display" data-i18n="f.jur.t">Consulta jurídica</span>
         <span class="srv__d" data-i18n="srv.d4"></span>
         <span class="srv__go" aria-hidden="true">+</span>
-      </button></li>
+      </button>
+        <a class="srv__wa" data-wa="f.jur.t" target="_blank" rel="noopener" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#wa-icon"/></svg><span data-i18n="wa.short">WhatsApp</span></a>
+      </li>
+      <li><button type="button" class="srv__card" data-open="gestoria" data-cursor="Abrir" data-i18n-attr="data-cursor:cursor.open">
+        <span class="srv__n mono">05</span>
+        <span class="srv__t display" data-i18n="f.ges.t">Gestoría</span>
+        <span class="srv__d" data-i18n="srv.d5"></span>
+        <span class="srv__go" aria-hidden="true">+</span>
+      </button>
+        <a class="srv__wa" data-wa="f.ges.t" target="_blank" rel="noopener" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#wa-icon"/></svg><span data-i18n="wa.short">WhatsApp</span></a>
+      </li>
+      <li><button type="button" class="srv__card" data-open="rurales" data-cursor="Abrir" data-i18n-attr="data-cursor:cursor.open">
+        <span class="srv__n mono">06</span>
+        <span class="srv__t display" data-i18n="f.rur.t">Trámites Rurales</span>
+        <span class="srv__d" data-i18n="srv.d6"></span>
+        <span class="srv__go" aria-hidden="true">+</span>
+      </button>
+        <a class="srv__wa" data-wa="f.rur.t" target="_blank" rel="noopener" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#wa-icon"/></svg><span data-i18n="wa.short">WhatsApp</span></a>
+      </li>
+      <li><button type="button" class="srv__card" data-open="construccion" data-cursor="Abrir" data-i18n-attr="data-cursor:cursor.open">
+        <span class="srv__n mono">07</span>
+        <span class="srv__t display" data-i18n="f.cons.t">Construcción</span>
+        <span class="srv__d" data-i18n="srv.d7"></span>
+        <span class="srv__go" aria-hidden="true">+</span>
+      </button>
+        <a class="srv__wa" data-wa="f.cons.t" target="_blank" rel="noopener" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#wa-icon"/></svg><span data-i18n="wa.short">WhatsApp</span></a>
+      </li>
+      <li><button type="button" class="srv__card" data-open="arquitectos" data-cursor="Abrir" data-i18n-attr="data-cursor:cursor.open">
+        <span class="srv__n mono">08</span>
+        <span class="srv__t display" data-i18n="f.arq.t">Arquitectos asociados</span>
+        <span class="srv__d" data-i18n="srv.d8"></span>
+        <span class="srv__go" aria-hidden="true">+</span>
+      </button>
+        <a class="srv__wa" data-wa="f.arq.t" target="_blank" rel="noopener" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#wa-icon"/></svg><span data-i18n="wa.short">WhatsApp</span></a>
+      </li>
     </ul>
   </section>
 
@@ -389,6 +438,7 @@
     </div>
     <p class="form__status" role="status" aria-live="polite"></p>
     <button class="btn btn--gold btn--wide" type="submit"><span data-i18n="f.cot.submit">Solicitar cotización</span></button>
+    <a class="modal__wa" data-wa="f.cot.t" target="_blank" rel="noopener" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#wa-icon"/></svg><span data-i18n="wa.alt">O escribinos directamente por WhatsApp</span></a>
   </form>
 </dialog>
 
@@ -406,6 +456,7 @@
     <div class="field"><label for="con-desc" class="mono" data-i18n="f.desc">Descripción de la consulta</label><textarea id="con-desc" name="consulta" rows="6" required></textarea></div>
     <p class="form__status" role="status" aria-live="polite"></p>
     <button class="btn btn--gold btn--wide" type="submit"><span data-i18n="f.send">Enviar consulta</span></button>
+    <a class="modal__wa" data-wa="f.con.t" target="_blank" rel="noopener" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#wa-icon"/></svg><span data-i18n="wa.alt">O escribinos directamente por WhatsApp</span></a>
   </form>
 </dialog>
 
@@ -423,6 +474,7 @@
     <div class="field"><label for="not-desc" class="mono" data-i18n="f.desc">Descripción de la consulta</label><textarea id="not-desc" name="consulta" rows="6" required></textarea></div>
     <p class="form__status" role="status" aria-live="polite"></p>
     <button class="btn btn--gold btn--wide" type="submit"><span data-i18n="f.send">Enviar consulta</span></button>
+    <a class="modal__wa" data-wa="f.not.t" target="_blank" rel="noopener" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#wa-icon"/></svg><span data-i18n="wa.alt">O escribinos directamente por WhatsApp</span></a>
   </form>
 </dialog>
 
@@ -440,11 +492,86 @@
     <div class="field"><label for="jur-desc" class="mono" data-i18n="f.desc">Descripción de la consulta</label><textarea id="jur-desc" name="consulta" rows="6" required></textarea></div>
     <p class="form__status" role="status" aria-live="polite"></p>
     <button class="btn btn--gold btn--wide" type="submit"><span data-i18n="f.send">Enviar consulta</span></button>
+    <a class="modal__wa" data-wa="f.jur.t" target="_blank" rel="noopener" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#wa-icon"/></svg><span data-i18n="wa.alt">O escribinos directamente por WhatsApp</span></a>
   </form>
 </dialog>
 
-<a class="wa" id="waFloat" target="_blank" rel="noopener" aria-label="Escribir por WhatsApp" data-i18n-attr="aria-label:wa.aria" data-cursor="WhatsApp" hidden>
-  <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.6.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.3a.5.5 0 0 0 0-.5l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.1 5.1 0 0 0 1.1 2.7 11.7 11.7 0 0 0 4.5 4c1.7.7 2.3.8 3.1.6a2.7 2.7 0 0 0 1.8-1.2 2.2 2.2 0 0 0 .1-1.2c0-.1-.2-.2-.4-.3Z"/></svg>
+<dialog class="modal" id="modal-gestoria" aria-labelledby="t-gestoria">
+  <form class="modal__form" name="consulta-gestoria" method="POST" data-netlify="true" netlify-honeypot="bot-field" novalidate>
+    <input type="hidden" name="form-name" value="consulta-gestoria">
+    <input type="hidden" name="servicio" value="Gestoría">
+    <p class="visually-hidden"><label>No completar <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+    <header class="modal__head">
+      <p class="mono modal__k">05</p>
+      <h3 class="display" id="t-gestoria" data-i18n="f.ges.t">Gestoría</h3>
+      <button type="button" class="modal__close" data-close aria-label="Cerrar" data-i18n-attr="aria-label:f.close">×</button>
+    </header>
+    <div class="field"><label for="gest-nombre" class="mono" data-i18n="f.name">Nombre</label><input id="gest-nombre" name="nombre" autocomplete="name" required></div>
+    <div class="field"><label for="gest-desc" class="mono" data-i18n="f.desc">Descripción de la consulta</label><textarea id="gest-desc" name="consulta" rows="6" required></textarea></div>
+    <p class="form__status" role="status" aria-live="polite"></p>
+    <button class="btn btn--gold btn--wide" type="submit"><span data-i18n="f.send">Enviar consulta</span></button>
+    <a class="modal__wa" data-wa="f.ges.t" target="_blank" rel="noopener" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#wa-icon"/></svg><span data-i18n="wa.alt">O escribinos directamente por WhatsApp</span></a>
+  </form>
+</dialog>
+
+<dialog class="modal" id="modal-rurales" aria-labelledby="t-rurales">
+  <form class="modal__form" name="consulta-rurales" method="POST" data-netlify="true" netlify-honeypot="bot-field" novalidate>
+    <input type="hidden" name="form-name" value="consulta-rurales">
+    <input type="hidden" name="servicio" value="Trámites Rurales">
+    <p class="visually-hidden"><label>No completar <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+    <header class="modal__head">
+      <p class="mono modal__k">06</p>
+      <h3 class="display" id="t-rurales" data-i18n="f.rur.t">Trámites Rurales</h3>
+      <button type="button" class="modal__close" data-close aria-label="Cerrar" data-i18n-attr="aria-label:f.close">×</button>
+    </header>
+    <div class="field"><label for="rura-nombre" class="mono" data-i18n="f.name">Nombre</label><input id="rura-nombre" name="nombre" autocomplete="name" required></div>
+    <div class="field"><label for="rura-desc" class="mono" data-i18n="f.desc">Descripción de la consulta</label><textarea id="rura-desc" name="consulta" rows="6" required></textarea></div>
+    <p class="form__status" role="status" aria-live="polite"></p>
+    <button class="btn btn--gold btn--wide" type="submit"><span data-i18n="f.send">Enviar consulta</span></button>
+    <a class="modal__wa" data-wa="f.rur.t" target="_blank" rel="noopener" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#wa-icon"/></svg><span data-i18n="wa.alt">O escribinos directamente por WhatsApp</span></a>
+  </form>
+</dialog>
+
+<dialog class="modal" id="modal-construccion" aria-labelledby="t-construccion">
+  <form class="modal__form" name="consulta-construccion" method="POST" data-netlify="true" netlify-honeypot="bot-field" novalidate>
+    <input type="hidden" name="form-name" value="consulta-construccion">
+    <input type="hidden" name="servicio" value="Construcción">
+    <p class="visually-hidden"><label>No completar <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+    <header class="modal__head">
+      <p class="mono modal__k">07</p>
+      <h3 class="display" id="t-construccion" data-i18n="f.cons.t">Construcción</h3>
+      <button type="button" class="modal__close" data-close aria-label="Cerrar" data-i18n-attr="aria-label:f.close">×</button>
+    </header>
+    <div class="field"><label for="cons-nombre" class="mono" data-i18n="f.name">Nombre</label><input id="cons-nombre" name="nombre" autocomplete="name" required></div>
+    <div class="field"><label for="cons-desc" class="mono" data-i18n="f.desc">Descripción de la consulta</label><textarea id="cons-desc" name="consulta" rows="6" required></textarea></div>
+    <p class="form__status" role="status" aria-live="polite"></p>
+    <button class="btn btn--gold btn--wide" type="submit"><span data-i18n="f.send">Enviar consulta</span></button>
+    <a class="modal__wa" data-wa="f.cons.t" target="_blank" rel="noopener" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#wa-icon"/></svg><span data-i18n="wa.alt">O escribinos directamente por WhatsApp</span></a>
+  </form>
+</dialog>
+
+<dialog class="modal" id="modal-arquitectos" aria-labelledby="t-arquitectos">
+  <form class="modal__form" name="consulta-arquitectos" method="POST" data-netlify="true" netlify-honeypot="bot-field" novalidate>
+    <input type="hidden" name="form-name" value="consulta-arquitectos">
+    <input type="hidden" name="servicio" value="Arquitectos asociados">
+    <p class="visually-hidden"><label>No completar <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+    <header class="modal__head">
+      <p class="mono modal__k">08</p>
+      <h3 class="display" id="t-arquitectos" data-i18n="f.arq.t">Arquitectos asociados</h3>
+      <button type="button" class="modal__close" data-close aria-label="Cerrar" data-i18n-attr="aria-label:f.close">×</button>
+    </header>
+    <div class="field"><label for="arqu-nombre" class="mono" data-i18n="f.name">Nombre</label><input id="arqu-nombre" name="nombre" autocomplete="name" required></div>
+    <div class="field"><label for="arqu-desc" class="mono" data-i18n="f.desc">Descripción de la consulta</label><textarea id="arqu-desc" name="consulta" rows="6" required></textarea></div>
+    <p class="form__status" role="status" aria-live="polite"></p>
+    <button class="btn btn--gold btn--wide" type="submit"><span data-i18n="f.send">Enviar consulta</span></button>
+    <a class="modal__wa" data-wa="f.arq.t" target="_blank" rel="noopener" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#wa-icon"/></svg><span data-i18n="wa.alt">O escribinos directamente por WhatsApp</span></a>
+  </form>
+</dialog>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="wa-icon" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.6.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.3a.5.5 0 0 0 0-.5l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.1 5.1 0 0 0 1.1 2.7 11.7 11.7 0 0 0 4.5 4c1.7.7 2.3.8 3.1.6a2.7 2.7 0 0 0 1.8-1.2 2.2 2.2 0 0 0 .1-1.2c0-.1-.2-.2-.4-.3Z"/></symbol></svg>
+<!-- Botón flotante de WhatsApp: abre la conversación con CONTACT.whatsapp (src/main.js). Sin número, lleva a Contacto. -->
+<a class="wa" id="waFloat" href="#contacto" aria-label="Escribir por WhatsApp" data-i18n-attr="aria-label:wa.aria" data-cursor="WhatsApp">
+  <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#wa-icon"/></svg>
 </a>
 <!--/CONTENT-->
 <script src="assets/app.js"></script>

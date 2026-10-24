@@ -8,7 +8,8 @@ gsap.registerPlugin(ScrollTrigger);
 
 /* ---------------- Datos de contacto institucionales ----------------
    Completar con los datos aprobados por el cliente. Mientras un campo esté vacío,
-   la web muestra "A confirmar" y el botón flotante de WhatsApp queda oculto. */
+   la web muestra "A confirmar". Sin número de WhatsApp, el botón flotante lleva a
+   Contacto y los accesos de WhatsApp de cada servicio quedan ocultos. */
 const CONTACT = {
   email: "",      // ej. "contacto@gruposureste.uy"
   whatsapp: "",   // solo números con código de país, ej. "59899123456"
@@ -47,6 +48,7 @@ function scrollToTarget(target) {
 }
 $$('a[href^="#"]').forEach((a) => a.addEventListener("click", (e) => {
   const id = a.getAttribute("href");
+  if (!id.startsWith("#")) return;
   const el = id.length > 1 && $(id);
   if (!el) return;
   e.preventDefault();
@@ -144,7 +146,6 @@ ScrollTrigger.create({
   onUpdate: (self) => {
     const y = self.scroll();
     nav.classList.toggle("is-scrolled", y > 40);
-    wa.classList.toggle("is-on", y > window.innerHeight * 0.7);
     nav.classList.toggle("is-hidden", y > lastY && y > 400 && menu.hidden);
     lastY = y;
     $("#progressBar").style.transform = `scaleX(${self.progress})`;
@@ -438,7 +439,21 @@ function renderContact() {
 }
 renderContact();
 onLang.push(renderContact);
-if (CONTACT.whatsapp) { wa.href = `https://wa.me/${CONTACT.whatsapp}`; wa.hidden = false; }
+
+/* ---------------- WhatsApp ---------------- */
+function renderWhatsApp() {
+  if (!CONTACT.whatsapp) return;
+  const base = `https://wa.me/${CONTACT.whatsapp}`;
+  wa.href = base;
+  wa.target = "_blank";
+  wa.rel = "noopener";
+  $$("[data-wa]").forEach((el) => {
+    el.href = `${base}?text=${encodeURIComponent(t("wa.msg").replace("{s}", t(el.dataset.wa)))}`;
+    el.hidden = false;
+  });
+}
+renderWhatsApp();
+onLang.push(renderWhatsApp);
 
 /* ---------------- Footer ---------------- */
 $("#year").textContent = new Date().getFullYear();

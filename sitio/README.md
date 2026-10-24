@@ -2,7 +2,9 @@
 
 Sitio de una sola página en español, inglés y portugués. Menú: **Inicio · Quiénes somos · Nuestra selección · Servicios · Contacto**.
 
-Orden de la página: portada con el logo → recorrido con scroll (7 etapas) → Quiénes somos → dos caminos → divisiones → Nuestra selección (carrusel circular de 5 categorías) → Por qué Uruguay → proceso → Servicios (4 formularios) → Contacto.
+La portada tiene, debajo de los botones, el selector de idioma (ES · EN · PT) y un acceso a Quiénes somos. En Quiénes somos, en escritorio, el texto va a la izquierda y el video a la derecha; en celular van uno debajo del otro.
+
+Orden de la página: portada con el logo → recorrido con scroll (7 etapas) → Quiénes somos → dos caminos → divisiones → Nuestra selección (carrusel circular de 5 categorías) → Por qué Uruguay → proceso → Servicios (8 formularios, cada uno con acceso a WhatsApp) → Contacto.
 
 ## Publicar
 
@@ -19,7 +21,7 @@ npm run dev     # compila y sirve en http://localhost:3000
 
 | Archivo | Qué contiene |
 |---|---|
-| `index.html` | Estructura de las secciones y los cuatro formularios |
+| `index.html` | Estructura de las secciones y los ocho formularios |
 | `src/i18n.js` | Todos los textos en español, inglés y portugués |
 | `src/styles.css` | Paleta, tipografías y diseño |
 | `src/main.js` | Animaciones, recorrido, carrusel (`CATS`), idiomas, ventanas de formulario, envío y datos de contacto (`CONTACT`) |
@@ -30,6 +32,8 @@ npm run dev     # compila y sirve en http://localhost:3000
 ## Pendientes
 
 - **Datos de contacto**: completar `CONTACT` en `src/main.js` (email, WhatsApp, dirección fiscal) y ejecutar `npm run build`. Mientras estén vacíos se muestra "A confirmar".
+- **WhatsApp**: el botón flotante (abajo a la derecha) se ve siempre. Sin número lleva a Contacto. Al cargar el número en `CONTACT.whatsapp` (solo dígitos con código de país, ej. `598…`), abre `wa.me` y aparecen los accesos de WhatsApp de cada servicio y de cada formulario, con un mensaje inicial que nombra el servicio en el idioma elegido.
 - **Video institucional**: copiar el archivo a `assets/video/` y poner su ruta en `data-src` del `<video class="about__video">` en `index.html`.
 - **Formularios**: usan Netlify Forms. Después de publicar, en Netlify ir a *Site configuration → Forms*, activar la detección de formularios y, en *Form notifications*, agregar el email que recibirá las consultas. Fuera de Netlify el envío muestra un aviso de error (no simula un envío).
-- **Descripciones de Servicios**: las claves `srv.d1`–`srv.d4` de `src/i18n.js` están vacías; si se completan, aparecen debajo de cada título.
+- **Descripciones de Servicios**: las claves `srv.d1`–`srv.d8` de `src/i18n.js` están vacías; si se completan, aparecen debajo de cada título.
+- **Panel de administración**: el sitio es estático y no tiene panel. Los servicios y textos se editan en `index.html` y `src/i18n.js`; después hay que ejecutar `npm run build` y volver a publicar.
