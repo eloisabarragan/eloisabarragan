@@ -9,7 +9,7 @@ get_header();
 	<?php
 	while ( have_posts() ) :
 		the_post();
-		get_template_part( 'parts/contact' );
+		get_template_part( 'parts/contact', null, array( 'h1' => true ) );
 		if ( trim( get_the_content() ) ) :
 			?>
 			<section class="su-section"><div class="su-wrap su-prose"><?php the_content(); ?></div></section>

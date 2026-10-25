@@ -9,7 +9,8 @@
 			<?php if ( su_mod( 'contact_kicker' ) ) : ?>
 				<p class="su-kicker su-kicker--light" data-su-reveal><?php echo esc_html( su_mod( 'contact_kicker' ) ); ?></p>
 			<?php endif; ?>
-			<h2 class="su-contact__title" data-su-reveal><?php echo esc_html( su_mod( 'contact_title' ) ); ?></h2>
+			<?php $su_tag = empty( $args['h1'] ) ? 'h2' : 'h1'; ?>
+			<<?php echo $su_tag; // phpcs:ignore WordPress.Security.EscapeOutput ?> class="su-contact__title" data-su-reveal><?php echo esc_html( su_mod( 'contact_title' ) ); ?></<?php echo $su_tag; // phpcs:ignore WordPress.Security.EscapeOutput ?>>
 			<?php if ( su_mod( 'contact_text' ) ) : ?>
 				<p class="su-contact__text" data-su-reveal><?php echo wp_kses_post( su_mod( 'contact_text' ) ); ?></p>
 			<?php endif; ?>
@@ -29,7 +30,15 @@
 			</ul>
 		</div>
 		<div class="su-contact__form" data-su-reveal>
-			<?php su_contact_form(); ?>
+			<?php
+			if ( su_mod( 'form_shortcode' ) ) {
+				echo '<div class="su-form su-form--external">' . do_shortcode( su_mod( 'form_shortcode' ) ) . '</div>'; // phpcs:ignore WordPress.Security.EscapeOutput
+			} elseif ( function_exists( 'su_contact_form' ) ) {
+				su_contact_form();
+			} else {
+				echo '<p>' . esc_html__( 'Escribinos por WhatsApp o llamanos.', 'saraviaubilla' ) . '</p>';
+			}
+			?>
 		</div>
 	</div>
 </section>

@@ -131,15 +131,14 @@ function su_customize_register( $wp_customize ) {
 		'contact_title'   => array( 'su_contact', __( 'Título', 'saraviaubilla' ), 'text' ),
 		'contact_text'    => array( 'su_contact', __( 'Bajada', 'saraviaubilla' ), 'textarea' ),
 		'phone'           => array( 'su_contact', __( 'Teléfono (como se muestra)', 'saraviaubilla' ), 'text' ),
-		'whatsapp'        => array( 'su_contact', __( 'WhatsApp (formato 598XXXXXXXX)', 'saraviaubilla' ), 'text' ),
+		'whatsapp'        => array( 'su_contact', __( 'WhatsApp', 'saraviaubilla' ), 'text', __( 'Con código de país y sin el 0 inicial. Ej.: 59899069369', 'saraviaubilla' ) ),
 		'email'           => array( 'su_contact', __( 'Email', 'saraviaubilla' ), 'text' ),
 		'address'         => array( 'su_contact', __( 'Dirección', 'saraviaubilla' ), 'text' ),
 		'hours'           => array( 'su_contact', __( 'Horario', 'saraviaubilla' ), 'text' ),
 		'instagram'       => array( 'su_contact', __( 'URL de Instagram', 'saraviaubilla' ), 'url' ),
 		'facebook'        => array( 'su_contact', __( 'URL de Facebook', 'saraviaubilla' ), 'url' ),
 		'linkedin'        => array( 'su_contact', __( 'URL de LinkedIn', 'saraviaubilla' ), 'url' ),
-		'form_email'      => array( 'su_contact', __( 'Email que recibe las consultas del formulario', 'saraviaubilla' ), 'text', __( 'Si lo dejás vacío se usa el email de administración de WordPress.', 'saraviaubilla' ) ),
-		'form_shortcode'  => array( 'su_contact', __( 'Shortcode de formulario externo (opcional)', 'saraviaubilla' ), 'text', __( 'Ej. de Contact Form 7. Si lo completás, reemplaza al formulario del tema.', 'saraviaubilla' ) ),
+		'form_shortcode'  => array( 'su_contact', __( 'Shortcode de formulario externo (opcional)', 'saraviaubilla' ), 'text', __( 'Solo si se quiere reemplazar el formulario propio por el de otro plugin.', 'saraviaubilla' ) ),
 		'footer_text'     => array( 'su_contact', __( 'Texto del pie', 'saraviaubilla' ), 'textarea' ),
 	);
 
@@ -153,11 +152,22 @@ function su_customize_register( $wp_customize ) {
 		} elseif ( 'number' === $type ) {
 			$sanitize = 'absint';
 		}
-		$wp_customize->add_setting( 'su_' . $key, array(
-			'default'           => $d[ $key ],
-			'sanitize_callback' => $sanitize,
-		) );
-		$wp_customize->add_control( 'su_' . $key, array(
+		// Los datos de contacto los guarda el plugin (Ajustes → Saravia Ubilla): se editan igual desde acá.
+		$setting_id = 'su_' . $key;
+		if ( su_has_gestion() && in_array( $key, su_contact_keys(), true ) ) {
+			$setting_id = 'su_gestion[' . $key . ']';
+			$wp_customize->add_setting( $setting_id, array(
+				'type'              => 'option',
+				'default'           => su_gestion_option( $key ),
+				'sanitize_callback' => $sanitize,
+			) );
+		} else {
+			$wp_customize->add_setting( $setting_id, array(
+				'default'           => isset( $d[ $key ] ) ? $d[ $key ] : '',
+				'sanitize_callback' => $sanitize,
+			) );
+		}
+		$wp_customize->add_control( $setting_id, array(
 			'label'       => $conf[1],
 			'description' => isset( $conf[3] ) ? $conf[3] : '',
 			'section'     => $conf[0],

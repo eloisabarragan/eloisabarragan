@@ -29,13 +29,13 @@ $su_side  = $su_full && $su_creds;
 				<div class="su-mv">
 					<?php if ( su_mod( 'mission' ) ) : ?>
 						<div class="su-mv__item" data-su-reveal>
-							<h3><?php esc_html_e( 'Misión', 'saraviaubilla' ); ?></h3>
+							<h2 class="su-mv__title"><?php esc_html_e( 'Misión', 'saraviaubilla' ); ?></h2>
 							<p><?php echo wp_kses_post( su_mod( 'mission' ) ); ?></p>
 						</div>
 					<?php endif; ?>
 					<?php if ( su_mod( 'vision' ) ) : ?>
 						<div class="su-mv__item su-mv__item--dark" data-su-reveal>
-							<h3><?php esc_html_e( 'Visión', 'saraviaubilla' ); ?></h3>
+							<h2 class="su-mv__title"><?php esc_html_e( 'Visión', 'saraviaubilla' ); ?></h2>
 							<p><?php echo wp_kses_post( su_mod( 'vision' ) ); ?></p>
 						</div>
 					<?php endif; ?>

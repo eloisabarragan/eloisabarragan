@@ -1,7 +1,7 @@
 /* Estilos del editor de bloques: que se parezca a la web publicada. */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap');
+@import url('fonts.css');
 body { font-family: 'Inter', system-ui, sans-serif; font-size: 17px; line-height: 1.65; color: #2B3138; }
 h1, h2, h3, h4 { font-family: 'Plus Jakarta Sans', system-ui, sans-serif; color: #1E3246; letter-spacing: -.02em; line-height: 1.12; }
 a { color: #3a77a3; }
-.wp-block-button__link { background: #559FCF; border-radius: 999px; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 600; }
+.wp-block-button__link { background: #559FCF; color: #1E3246; border-radius: 999px; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 600; }
 blockquote { border-left: 3px solid #559FCF; padding-left: 24px; }

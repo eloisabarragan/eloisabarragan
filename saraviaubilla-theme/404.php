@@ -10,7 +10,9 @@ get_header();
 	<section class="su-section">
 		<div class="su-wrap su-center">
 			<a class="su-btn su-btn--primary" href="<?php echo esc_url( home_url( '/' ) ); ?>"><?php esc_html_e( 'Volver al inicio', 'saraviaubilla' ); ?></a>
-			<a class="su-btn su-btn--outline" href="<?php echo esc_url( get_post_type_archive_link( 'propiedad' ) ); ?>"><?php esc_html_e( 'Ver propiedades', 'saraviaubilla' ); ?></a>
+			<?php if ( post_type_exists( 'propiedad' ) ) : ?>
+				<a class="su-btn su-btn--outline" href="<?php echo esc_url( get_post_type_archive_link( 'propiedad' ) ); ?>"><?php esc_html_e( 'Ver propiedades', 'saraviaubilla' ); ?></a>
+			<?php endif; ?>
 		</div>
 	</section>
 </main>

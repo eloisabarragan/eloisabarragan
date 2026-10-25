@@ -6,6 +6,17 @@
 	doc.classList.add('su-js');
 	var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+	/* Mantiene el foco del teclado dentro de un contenedor (menú móvil, visor de fotos). */
+	var focusables = 'a[href], button:not([disabled]), input:not([disabled]), select, textarea, [tabindex]:not([tabindex="-1"])';
+	var trapFocus = function (container, e) {
+		if (e.key !== 'Tab') { return; }
+		var els = Array.prototype.filter.call(container.querySelectorAll(focusables), function (el) { return el.offsetParent !== null; });
+		if (!els.length) { return; }
+		var first = els[0], last = els[els.length - 1];
+		if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+		else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+	};
+
 	/* ---------- Cabecera: sombra al hacer scroll + menú móvil ---------- */
 	var header = document.querySelector('[data-su-header]');
 	var hero = document.querySelector('[data-su-hero]');
@@ -35,7 +46,18 @@
 		};
 		burger.addEventListener('click', function () { setOpen(!nav.classList.contains('is-open')); });
 		nav.addEventListener('click', function (e) { if (e.target.closest('a')) { setOpen(false); } });
-		document.addEventListener('keydown', function (e) { if (e.key === 'Escape') { setOpen(false); } });
+		document.addEventListener('keydown', function (e) {
+			if (!nav.classList.contains('is-open')) { return; }
+			if (e.key === 'Escape') { setOpen(false); burger.focus(); return; }
+			// El menú y su botón forman un ciclo: botón → enlaces → botón (el Tab no se escapa).
+			if (e.key !== 'Tab') { return; }
+			var links = Array.prototype.filter.call(nav.querySelectorAll(focusables), function (el) { return el.offsetParent !== null; });
+			if (!links.length) { return; }
+			var first = links[0], last = links[links.length - 1], active = document.activeElement;
+			if (!e.shiftKey && (active === burger || active === last)) { e.preventDefault(); (active === burger ? first : burger).focus(); }
+			else if (e.shiftKey && (active === burger || active === first)) { e.preventDefault(); (active === burger ? last : burger).focus(); }
+			else if (!nav.contains(active) && active !== burger) { e.preventDefault(); first.focus(); }
+		});
 	}
 
 	/* ---------- Aparición al hacer scroll (escalonada por grupo) ---------- */
@@ -78,11 +100,15 @@
 	document.querySelectorAll('[data-su-filter]').forEach(function (group) {
 		var target = document.querySelector('[data-su-filter-target]');
 		if (!target) { return; }
+		group.querySelectorAll('button').forEach(function (b) { b.setAttribute('aria-pressed', b.classList.contains('is-active') ? 'true' : 'false'); });
 		group.addEventListener('click', function (e) {
 			var btn = e.target.closest('button');
 			if (!btn) { return; }
 			var value = btn.getAttribute('data-filter');
-			group.querySelectorAll('button').forEach(function (b) { b.classList.toggle('is-active', b === btn); });
+			group.querySelectorAll('button').forEach(function (b) {
+				b.classList.toggle('is-active', b === btn);
+				b.setAttribute('aria-pressed', b === btn ? 'true' : 'false');
+			});
 			target.querySelectorAll('.su-card').forEach(function (card) {
 				card.classList.toggle('is-hidden', !!value && card.getAttribute('data-operacion') !== value);
 			});
@@ -128,6 +154,7 @@
 			if (e.key === 'Escape') { close(); }
 			if (e.key === 'ArrowLeft') { show(index - 1); }
 			if (e.key === 'ArrowRight') { show(index + 1); }
+			trapFocus(box, e);
 		});
 	}
 
@@ -141,8 +168,91 @@
 				navigator.clipboard.writeText(location.href).then(function () {
 					btn.classList.add('is-copied');
 					btn.setAttribute('aria-label', 'Enlace copiado');
+					btn.setAttribute('title', 'Enlace copiado');
 				});
 			}
 		});
 	});
+
+	/* ---------- Galería deslizable con miniaturas ---------- */
+	document.querySelectorAll('[data-su-gallery]').forEach(function (gal) {
+		var track = gal.querySelector('[data-su-track]');
+		if (!track) { return; }
+		var slides = track.children;
+		var thumbs = gal.querySelectorAll('[data-su-thumb]');
+		var prev = gal.querySelector('[data-su-prev]');
+		var next = gal.querySelector('[data-su-next]');
+		var counter = gal.querySelector('[data-su-count]');
+		var current = 0;
+		var go = function (i) {
+			i = Math.max(0, Math.min(slides.length - 1, i));
+			track.scrollTo({ left: slides[i].offsetLeft, behavior: reduced ? 'auto' : 'smooth' });
+		};
+		var update = function () {
+			var i = Math.round(track.scrollLeft / Math.max(1, track.clientWidth));
+			if (i === current && counter && counter.dataset.ready) { return; }
+			current = i;
+			if (counter) { counter.textContent = (i + 1) + ' / ' + slides.length; counter.dataset.ready = '1'; }
+			thumbs.forEach(function (t, n) {
+				t.classList.toggle('is-active', n === i);
+				if (n === i) {
+					t.setAttribute('aria-current', 'true');
+					// Mueve solo la tira de miniaturas (nunca la página).
+					var strip = t.parentNode;
+					if (t.offsetLeft < strip.scrollLeft || t.offsetLeft + t.offsetWidth > strip.scrollLeft + strip.clientWidth) {
+						strip.scrollLeft = t.offsetLeft - 8;
+					}
+				} else { t.removeAttribute('aria-current'); }
+			});
+			if (prev) { prev.disabled = i === 0; }
+			if (next) { next.disabled = i === slides.length - 1; }
+		};
+		var raf = 0;
+		track.addEventListener('scroll', function () { cancelAnimationFrame(raf); raf = requestAnimationFrame(update); }, { passive: true });
+		thumbs.forEach(function (t) { t.addEventListener('click', function () { go(parseInt(t.getAttribute('data-su-thumb'), 10)); }); });
+		if (prev) { prev.addEventListener('click', function () { go(current - 1); }); }
+		if (next) { next.addEventListener('click', function () { go(current + 1); }); }
+		track.addEventListener('keydown', function (e) {
+			if (e.key === 'ArrowLeft') { e.preventDefault(); go(current - 1); }
+			if (e.key === 'ArrowRight') { e.preventDefault(); go(current + 1); }
+		});
+		update();
+	});
+
+	/* ---------- Mapa: se carga al tocar "Ver mapa" ---------- */
+	document.querySelectorAll('[data-su-map]').forEach(function (map) {
+		var btn = map.querySelector('.su-map__load');
+		if (!btn) { return; }
+		btn.addEventListener('click', function () {
+			var frame = document.createElement('iframe');
+			frame.src = map.getAttribute('data-su-map');
+			frame.title = 'Mapa de la ubicación';
+			frame.loading = 'lazy';
+			frame.referrerPolicy = 'no-referrer-when-downgrade';
+			map.classList.add('is-loaded');
+			map.innerHTML = '';
+			map.appendChild(frame);
+			frame.focus();
+		});
+	});
+
+	/* ---------- Buscador: miles con punto y orden sin botón ---------- */
+	document.querySelectorAll('[data-su-number]').forEach(function (input) {
+		input.addEventListener('blur', function () {
+			var digits = String(input.value).replace(/,\d{1,2}\s*$/, '').replace(/\D/g, '');
+			input.value = digits ? digits.replace(/\B(?=(\d{3})+(?!\d))/g, '.') : '';
+		});
+	});
+	document.querySelectorAll('[data-su-autosubmit]').forEach(function (sel) {
+		sel.addEventListener('change', function () { sel.form.submit(); });
+	});
+
+	/* ---------- Formulario: lleva la vista y el foco al aviso del resultado ---------- */
+	var notice = document.querySelector('[data-su-notice]');
+	if (notice) {
+		setTimeout(function () {
+			notice.scrollIntoView({ block: 'center', behavior: reduced ? 'auto' : 'smooth' });
+			notice.focus({ preventScroll: true });
+		}, 60);
+	}
 })();

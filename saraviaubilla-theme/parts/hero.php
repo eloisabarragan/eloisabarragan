@@ -3,7 +3,7 @@
  * Portada: título, bajada, próximo remate y sellos de confianza.
  */
 
-$su_remate   = su_next_remate();
+$su_remate   = su_has_gestion() ? su_next_remate() : null;
 $su_hero_img = (int) su_mod( 'hero_image' );
 $su_stats    = su_pairs( su_mod( 'stats' ) );
 ?>

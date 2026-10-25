@@ -3,12 +3,19 @@
  * Propiedades destacadas / recientes en la portada.
  */
 
+if ( ! su_has_gestion() ) {
+	return;
+}
+
 $su_props = new WP_Query( array(
 	'post_type'      => 'propiedad',
 	'posts_per_page' => max( 1, (int) su_mod( 'props_count' ) ),
 	'no_found_rows'  => true,
 	'su_destacadas'  => true,
 ) );
+if ( ! $su_props->have_posts() ) {
+	return; // Sin propiedades publicadas, la sección no se muestra.
+}
 $su_ops = get_terms( array( 'taxonomy' => 'operacion', 'hide_empty' => true ) );
 ?>
 <section class="su-section su-section--tint su-props" id="propiedades">
@@ -36,12 +43,6 @@ $su_ops = get_terms( array( 'taxonomy' => 'operacion', 'hide_empty' => true ) );
 				?>
 			</div>
 			<p class="su-center"><a class="su-btn su-btn--outline" href="<?php echo esc_url( get_post_type_archive_link( 'propiedad' ) ); ?>"><?php esc_html_e( 'Ver todas las propiedades', 'saraviaubilla' ); ?><?php echo su_icon( 'flecha' ); // phpcs:ignore WordPress.Security.EscapeOutput ?></a></p>
-		<?php else : ?>
-			<div class="su-empty" data-su-reveal>
-				<?php echo su_icon( 'casa' ); // phpcs:ignore WordPress.Security.EscapeOutput ?>
-				<p><?php esc_html_e( 'Estamos actualizando nuestra cartera. ¿Buscás algo en particular o querés publicar tu propiedad?', 'saraviaubilla' ); ?></p>
-				<a class="su-btn su-btn--primary" href="#contacto"><?php esc_html_e( 'Contanos', 'saraviaubilla' ); ?></a>
-			</div>
 		<?php endif; ?>
 	</div>
 </section>

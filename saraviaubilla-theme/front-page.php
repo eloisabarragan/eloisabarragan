@@ -9,6 +9,7 @@ get_header();
 	<?php
 	get_template_part( 'parts/hero' );
 	get_template_part( 'parts/services' );
+	get_template_part( 'parts/remates-home' );
 	if ( su_mod( 'steps_show' ) ) {
 		get_template_part( 'parts/steps' );
 	}
