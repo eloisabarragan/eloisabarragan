@@ -89,6 +89,8 @@ p { margin: 0 0 1em; }
 .su-btn--outline { --bg: transparent; --fg: var(--marino); --bd: var(--linea); }
 .su-btn--outline:hover { --bd: var(--marino); --fg: var(--marino); }
 .su-btn--wa { --bg: var(--wa); --fg: #fff; }
+.su-btn .su-icon--whatsapp { width: 19px; height: 19px; }
+.su-btn:hover .su-icon--whatsapp { transform: none; }
 .su-btn--wa:hover { --bg: #1eb858; }
 .su-btn--sm { min-height: 42px; padding: 0 18px; font-size: 14px; }
 .su-btn--block { width: 100%; }
@@ -176,7 +178,8 @@ p { margin: 0 0 1em; }
 	:root { --header-h: 72px; }
 	.su-burger { display: block; }
 	.su-header__cta span { display: none; }
-	.su-header__cta { width: 46px; padding: 0; }
+	.su-header__cta { width: 46px; height: 46px; min-height: 46px; padding: 0; border-radius: 50%; }
+	.su-header__cta .su-icon--whatsapp { width: 22px; height: 22px; }
 	.su-nav {
 		position: fixed; inset: var(--header-h) 0 0 0; z-index: 49;
 		background: #fff; padding: 24px var(--gutter) 40px;
@@ -492,7 +495,8 @@ p { margin: 0 0 1em; }
 .su-contact__ways { list-style: none; margin: 36px 0 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
 .su-contact__ways a, .su-contact__static { display: flex; align-items: center; gap: 14px; padding: 16px 18px; border-radius: var(--r); background: rgba(255, 255, 255, .06); border: 1px solid rgba(255, 255, 255, .1); color: #fff; text-decoration: none; font: 600 16px/1.3 var(--f-display); transition: background-color .25s, transform .25s var(--ease); }
 .su-contact__ways a:hover { background: rgba(255, 255, 255, .12); transform: translateY(-2px); color: #fff; }
-.su-contact__ways .su-icon { width: 42px; height: 42px; padding: 10px; border-radius: 12px; background: var(--celeste); color: #fff; }
+.su-contact__ways .su-icon { width: 42px; height: 42px; padding: 10px; border-radius: 12px; background: var(--celeste); color: #fff; flex: none; }
+.su-contact__ways .su-icon--whatsapp { background: var(--wa); padding: 9px; }
 .su-contact__ways small { display: block; font: 500 12px var(--f-body); color: rgba(255, 255, 255, .6); letter-spacing: .04em; margin-bottom: 2px; }
 .su-contact__form { background: #fff; color: var(--texto); border-radius: var(--r-lg); padding: clamp(24px, 3.4vw, 44px); box-shadow: 0 40px 80px -40px rgba(0, 0, 0, .6); }
 
@@ -662,7 +666,7 @@ p { margin: 0 0 1em; }
 	background: var(--wa); color: #fff; box-shadow: 0 14px 30px -10px rgba(37, 211, 102, .7);
 	transition: transform .3s var(--ease);
 }
-.su-wa-float .su-icon { width: 30px; height: 30px; stroke-width: 1.8; }
+.su-wa-float .su-icon { width: 32px; height: 32px; }
 .su-wa-float:hover { transform: scale(1.08); color: #fff; }
 .su-wa-float::before { content: ""; position: absolute; inset: 0; border-radius: 50%; border: 2px solid var(--wa); animation: su-ring 2.6s infinite; }
 @keyframes su-ring { 0% { transform: scale(1); opacity: .8; } 100% { transform: scale(1.6); opacity: 0; } }
