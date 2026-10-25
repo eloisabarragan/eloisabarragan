@@ -168,7 +168,7 @@ function su_property_card( $post_id = null ) {
 	$specs     = su_specs( $post_id );
 	$slug = $operacion ? $operacion->slug : '';
 	?>
-	<article class="su-card" data-su-reveal data-operacion="<?php echo esc_attr( $slug ); ?>">
+	<article class="su-card" data-su-reveal data-operacion="<?php echo esc_attr( $slug ); ?>" data-tipo="<?php echo esc_attr( $tipo ? $tipo->slug : '' ); ?>" data-zona="<?php echo esc_attr( $zona ? $zona->slug : '' ); ?>" data-dormitorios="<?php echo esc_attr( su_meta( 'dormitorios', $post_id ) ); ?>" data-precio="<?php echo esc_attr( su_meta( 'precio', $post_id ) ); ?>" data-fecha="<?php echo esc_attr( get_post_time( 'U', true, $post_id ) ); ?>">
 		<a class="su-card__media" href="<?php echo esc_url( get_permalink( $post_id ) ); ?>" tabindex="-1" aria-hidden="true">
 			<?php
 			if ( has_post_thumbnail( $post_id ) ) {
