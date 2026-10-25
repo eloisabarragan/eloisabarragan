@@ -38,6 +38,14 @@ add_filter( 'wp_robots', function ( $robots ) {
 	if ( is_search() ) {
 		$robots['noindex'] = true;
 	}
+	// Páginas de operación, tipo o ubicación sin propiedades (o de ubicaciones desactivadas/por revisar): no se indexan.
+	if ( is_tax( array( 'operacion', 'tipo_propiedad', 'zona' ) ) ) {
+		$term = get_queried_object();
+		if ( ! have_posts() || ( 'zona' === $term->taxonomy && ( su_location_is_inactive( $term->term_id ) || su_location_is_pending( $term->term_id ) ) ) ) {
+			$robots['noindex'] = true;
+			$robots['follow']  = true;
+		}
+	}
 	return $robots;
 } );
 
@@ -59,14 +67,7 @@ function su_seo_description() {
 	}
 	if ( is_singular( 'propiedad' ) ) {
 		$id    = get_queried_object_id();
-		$parts = array();
-		$tipo  = su_term( 'tipo_propiedad', $id );
-		$op    = su_term( 'operacion', $id );
-		$ubic  = su_location_label( $id, 'completa' );
-		$head  = trim( ( $tipo ? $tipo->name : '' ) . ( $op ? ' en ' . mb_strtolower( $op->name ) : '' ) . ( $ubic ? ', ' . $ubic : '' ) );
-		if ( $head ) {
-			$parts[] = $head;
-		}
+		$parts = array_filter( array( su_property_seo_phrase( $id ) ) );
 		foreach ( su_specs( $id ) as $spec ) {
 			$parts[] = $spec[1];
 		}
@@ -79,7 +80,8 @@ function su_seo_description() {
 	}
 	if ( is_singular( 'remate' ) ) {
 		$id   = get_queried_object_id();
-		$head = su_remate_date( $id ) . ( su_meta( 'lugar', $id ) ? ' · ' . su_meta( 'lugar', $id ) : '' );
+		$est  = su_remate_estado( $id );
+		$head = ( in_array( $est, array( 'suspendido', 'cancelado' ), true ) ? su_remate_estado_label( $id ) . ' · ' : '' ) . su_remate_date_public( $id ) . ( su_meta( 'lugar', $id ) ? ' · ' . su_meta( 'lugar', $id ) : '' );
 		$text = has_excerpt( $id ) ? get_the_excerpt( $id ) : get_post_field( 'post_content', $id );
 		return su_seo_trim( $head . ( $text ? '. ' . $text : '' ) );
 	}
@@ -94,6 +96,24 @@ function su_seo_description() {
 		return su_seo_trim( term_description() );
 	}
 	return '';
+}
+
+/**
+ * Frase con la ubicación real: "Apartamento en venta en Pocitos, Montevideo, Uruguay".
+ * Usa el mismo texto de ubicación que tarjetas y fichas.
+ */
+function su_property_seo_phrase( $id ) {
+	$tipo = su_term( 'tipo_propiedad', $id );
+	$op   = su_term( 'operacion', $id );
+	$ubic = su_location_label( $id );
+	$out  = $tipo ? $tipo->name : __( 'Propiedad', 'saraviaubilla-gestion' );
+	if ( $op ) {
+		$out .= ' ' . __( 'en', 'saraviaubilla-gestion' ) . ' ' . mb_strtolower( $op->name );
+	}
+	if ( $ubic ) {
+		$out .= ' ' . __( 'en', 'saraviaubilla-gestion' ) . ' ' . $ubic;
+	}
+	return ( $tipo || $op || $ubic ) ? $out : '';
 }
 
 /** Imagen para compartir. */
@@ -243,13 +263,14 @@ add_action( 'wp_head', function () {
 			if ( isset( $chain[2] ) ) {
 				$address['addressLocality'] = $chain[2]->name;
 			}
-			$street = trim( implode( ', ', array_filter( array( su_meta( 'direccion', $id ), isset( $chain[3] ) ? $chain[3]->name : '' ) ) ) );
+			// La dirección solo si la propiedad no eligió mostrar la ubicación aproximada.
+			$street = su_location_address( $id );
 			if ( '' !== $street ) {
 				$address['streetAddress'] = $street;
 			}
 			$listing['contentLocation'] = array(
 				'@type'   => 'Place',
-				'name'    => su_location_label( $id, 'completa' ),
+				'name'    => su_location_label( $id ),
 				'address' => $address,
 			);
 		}
@@ -258,7 +279,7 @@ add_action( 'wp_head', function () {
 			$listing['offers'] = array(
 				'@type'         => 'Offer',
 				'price'         => (int) su_meta( 'precio', $id ),
-				'priceCurrency' => '$' === su_moneda( $id ) ? 'UYU' : 'USD',
+				'priceCurrency' => su_moneda_iso( su_moneda( $id ) ),
 				'availability'  => in_array( $estado, array( 'vendida', 'alquilada' ), true ) ? 'https://schema.org/SoldOut' : ( 'reservada' === $estado ? 'https://schema.org/LimitedAvailability' : 'https://schema.org/InStock' ),
 				'seller'        => array( '@id' => home_url( '/#organizacion' ) ),
 			);
@@ -272,7 +293,7 @@ add_action( 'wp_head', function () {
 	}
 	if ( is_singular( 'remate' ) ) {
 		$id  = get_queried_object_id();
-		$iso = su_remate_iso( $id );
+		$iso = 'a_confirmar' === su_remate_estado( $id ) ? '' : su_remate_iso( $id );
 		if ( $iso ) {
 			$modal = su_meta( 'modalidad', $id );
 			$event = array(
@@ -280,7 +301,7 @@ add_action( 'wp_head', function () {
 				'name'                => get_the_title( $id ),
 				'url'                 => get_permalink( $id ),
 				'startDate'           => $iso,
-				'eventStatus'         => 'https://schema.org/EventScheduled',
+				'eventStatus'         => 'cancelado' === su_remate_estado( $id ) ? 'https://schema.org/EventCancelled' : ( 'suspendido' === su_remate_estado( $id ) ? 'https://schema.org/EventPostponed' : 'https://schema.org/EventScheduled' ),
 				'eventAttendanceMode' => 'online' === $modal ? 'https://schema.org/OnlineEventAttendanceMode' : ( 'mixto' === $modal ? 'https://schema.org/MixedEventAttendanceMode' : 'https://schema.org/OfflineEventAttendanceMode' ),
 				'description'         => su_seo_description(),
 				'organizer'           => array(

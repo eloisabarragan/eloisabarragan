@@ -661,7 +661,7 @@ p { margin: 0 0 1em; }
 /* Visor de fotos */
 .su-lightbox { position: fixed; inset: 0; z-index: 100; background: rgba(10, 18, 28, .94); display: grid; place-items: center; padding: 60px 16px; }
 .su-lightbox[hidden] { display: none; }
-.su-lightbox img { max-height: 84vh; max-width: min(1400px, 100%); width: auto; border-radius: 12px; }
+.su-lightbox img { max-height: 84vh; max-width: min(1400px, 100%); width: auto; height: auto; object-fit: contain; border-radius: 12px; }
 .su-lightbox button { position: absolute; width: 52px; height: 52px; border-radius: 50%; border: 0; background: rgba(255, 255, 255, .12); color: #fff; display: grid; place-items: center; cursor: pointer; }
 .su-lightbox button:hover { background: rgba(255, 255, 255, .24); }
 .su-lightbox__close { top: 16px; right: 16px; }
@@ -913,3 +913,110 @@ p { margin: 0 0 1em; }
 	.su-search { grid-template-columns: repeat(auto-fill, minmax(176px, 1fr)); }
 	.su-field--price { grid-column: span 2; }
 }
+
+/* =========================================================================
+ * v1.2
+ * ====================================================================== */
+
+/* Buscador en dos filas: Operación · Tipo · País · Departamento / Ciudad · Dormitorios · Moneda · Mín. · Máx. · Buscar */
+.su-search.su-search--v2 { display: grid; grid-template-columns: repeat(24, minmax(0, 1fr)); gap: 14px 12px; align-items: end; }
+.su-search--v2 > .su-field { grid-column: span 6; min-width: 0; }
+.su-search--v2 .su-search__more, .su-search--v2 .su-search__actions { display: contents; }
+.su-search--v2 .su-field--loc2 { grid-column: span 5; }
+.su-search--v2 .su-field--dorm { grid-column: span 4; }
+.su-search--v2 .su-field--moneda { grid-column: span 3; }
+.su-search--v2 .su-field--min, .su-search--v2 .su-field--max { grid-column: span 4; }
+.su-search--v2 .su-search__submit { grid-column: span 4; min-height: 50px; }
+.su-search--v2 select:disabled { opacity: .55; cursor: not-allowed; }
+.su-search__toggle { display: none; }
+@media (max-width: 1099px) {
+	.su-search.su-search--v2 { grid-template-columns: repeat(12, minmax(0, 1fr)); }
+	.su-search--v2 > .su-field { grid-column: span 3; }
+	.su-search--v2 .su-field--loc2, .su-search--v2 .su-field--dorm, .su-search--v2 .su-field--moneda { grid-column: span 4; }
+	.su-search--v2 .su-field--min, .su-search--v2 .su-field--max, .su-search--v2 .su-search__submit { grid-column: span 4; }
+}
+@media (max-width: 759px) {
+	.su-search.su-search--v2 { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 10px; padding: 16px; }
+	.su-search--v2 > .su-field, .su-search--v2 .su-field--loc2, .su-search--v2 .su-field--dorm, .su-search--v2 .su-field--moneda,
+	.su-search--v2 .su-field--min, .su-search--v2 .su-field--max { grid-column: span 1; }
+	.su-search--v2 .su-field--loc0, .su-search--v2 .su-field--loc1, .su-search--v2 .su-field--loc2 { grid-column: 1 / -1; }
+	.su-search--v2 select { padding-left: 14px; padding-right: 34px; background-position: right 14px center; }
+	.su-search--v2.is-collapsible:not(.is-open) .su-search__more { display: none; }
+	.su-search--v2 .su-search__more { display: contents; }
+	.su-search--v2 .su-search__actions { display: grid; grid-template-columns: auto 1fr; gap: 10px; grid-column: 1 / -1; }
+	.su-search--v2 .su-search__submit { grid-column: auto; width: 100%; }
+	.su-search__toggle {
+		display: inline-flex; align-items: center; gap: 8px; min-height: 50px; padding: 0 16px;
+		border-radius: 999px; border: 1.5px solid var(--linea); background: #fff; color: var(--marino);
+		font: 600 14.5px var(--f-display); cursor: pointer;
+	}
+	.su-search__toggle[hidden] { display: none; }
+	.su-search__toggle .su-icon { width: 18px; height: 18px; }
+	.su-search__toggle:focus-visible { outline: 3px solid var(--celeste); outline-offset: 2px; }
+	.su-search--v2.is-open .su-search__toggle { border-color: var(--marino); }
+	.su-search__badge { display: inline-grid; place-items: center; min-width: 22px; height: 22px; padding: 0 6px; border-radius: 999px; background: var(--celeste); color: var(--marino); font-size: 12px; }
+	.su-field input, .su-field select { font-size: 16px; } /* sin zoom automático en iOS */
+}
+@media (max-width: 380px) {
+	.su-search--v2 > .su-field, .su-search--v2 .su-field--dorm, .su-search--v2 .su-field--moneda { grid-column: 1 / -1; }
+}
+
+/* Tarjetas de propiedad */
+.su-card__place { display: flex; gap: 6px; align-items: flex-start; margin: -6px 0 14px; font-size: 14.5px; color: var(--grafito); }
+.su-card__place .su-icon { width: 17px; height: 17px; flex: none; margin-top: 2px; color: var(--celeste-700); }
+.su-card__foot { flex-wrap: wrap; }
+.su-card__cta { pointer-events: none; }
+.su-card:hover .su-card__cta { --bd: var(--marino); }
+.su-card.is-featured { box-shadow: 0 0 0 1.5px rgba(var(--celeste-rgb), .55), var(--sombra); }
+.su-card__foot .su-price { min-width: 0; }
+
+/* Ficha: compartir, notas de ubicación */
+.su-share { display: inline-flex; align-items: center; gap: 8px; position: relative; }
+.su-share .su-iconbtn { width: 42px; height: 42px; }
+.su-share .su-iconbtn .su-icon { width: 19px; height: 19px; }
+.su-share a.su-iconbtn { color: var(--marino); }
+.su-share__msg { position: absolute; right: 0; top: calc(100% + 6px); white-space: nowrap; font: 600 12.5px var(--f-display); color: var(--celeste-700); }
+.su-block__note { display: flex; gap: 6px; align-items: flex-start; margin: -4px 0 12px; color: var(--grafito); }
+.su-block__note .su-icon { width: 18px; height: 18px; flex: none; margin-top: 3px; color: var(--celeste-700); }
+.su-block__hint { margin: -6px 0 14px; font-size: 14px; color: var(--suave); }
+
+/* Remates: estados y próximo remate destacado */
+.su-status--suspendido { background: #fff5e0; color: #7a4b00; }
+.su-status--cancelado { background: #fdecec; color: #8a1f1f; }
+.su-rcard.is-suspendido .su-rcard__media img, .su-rcard.is-cancelado .su-rcard__media img { filter: grayscale(.5); }
+.su-note--suspendido, .su-note--cancelado { background: #fff8ea; }
+.su-rcard--featured { margin-bottom: clamp(16px, 2vw, 28px); }
+@media (min-width: 900px) {
+	.su-rcard--featured { flex-direction: row; }
+	.su-rcard--featured .su-rcard__media { flex: 0 0 52%; aspect-ratio: auto; min-height: 340px; }
+	.su-rcard--featured .su-rcard__body { padding: clamp(28px, 3vw, 44px); justify-content: center; }
+	.su-rcard--featured .su-card__title { font-size: clamp(24px, 2.4vw, 32px); }
+}
+.su-rcard--featured .su-countdown { margin: 4px 0 22px; }
+.su-rcard--featured .su-countdown span { background: var(--niebla); border-color: var(--linea); color: var(--suave); }
+.su-rcard--featured .su-countdown b { color: var(--marino); }
+.su-rcard--featured .su-rcard__cta { align-self: flex-start; }
+
+/* Inicio: accesos a Inmobiliaria y Remates */
+.su-access { padding: clamp(28px, 4vw, 48px) 0 0; }
+.su-access__grid { display: grid; gap: clamp(14px, 2vw, 24px); }
+@media (min-width: 760px) { .su-access__grid { grid-template-columns: 1fr 1fr; } }
+.su-access__item {
+	position: relative; display: flex; gap: 18px; align-items: flex-start; padding: clamp(22px, 2.6vw, 32px);
+	background: #fff; border: 1px solid var(--linea); border-radius: var(--r-lg); color: inherit; text-decoration: none;
+	transition: border-color .2s, box-shadow .2s;
+}
+.su-access__item:hover { border-color: var(--celeste); box-shadow: var(--sombra); }
+.su-access__item:focus-visible { outline: 3px solid var(--celeste); outline-offset: 3px; }
+.su-access__icon { flex: none; display: grid; place-items: center; width: 56px; height: 56px; border-radius: 16px; background: var(--celeste-50); color: var(--celeste-700); }
+.su-access__icon .su-icon { width: 28px; height: 28px; }
+.su-access__title { margin: 2px 0 6px; font: 700 clamp(20px, 2vw, 24px)/1.2 var(--f-display); color: var(--marino); }
+.su-access__text { margin: 0 0 12px; color: var(--grafito); }
+.su-access__go { display: inline-flex; align-items: center; gap: 6px; font: 600 15px var(--f-display); color: var(--celeste-700); }
+.su-access__go .su-icon { width: 18px; height: 18px; transition: transform .2s; }
+.su-access__item:hover .su-access__go .su-icon { transform: translateX(3px); }
+
+/* Historial de propiedades vendidas/alquiladas */
+.su-history-link { margin: clamp(24px, 3vw, 36px) 0 0; text-align: center; }
+.su-access__title, .su-access__text, .su-access__go { display: block; }
+.su-access__go { display: inline-flex; }

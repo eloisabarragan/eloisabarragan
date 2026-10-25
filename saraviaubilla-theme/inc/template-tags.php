@@ -38,6 +38,8 @@ function su_icon( $name, $class = '' ) {
 		'facebook'  => '<path d="M14 21v-8h3l.5-3.5H14V7.8c0-1 .3-1.8 1.8-1.8h1.8V3a24 24 0 0 0-2.6-.2c-2.6 0-4.3 1.6-4.3 4.5v2.2H7.7V13h3V21"/>',
 		'linkedin'  => '<rect x="3.5" y="3.5" width="17" height="17" rx="2.5"/><path d="M8 10.5V16M8 7.8v.1M11.5 16v-5.5M11.5 13c0-1.7 1-2.6 2.3-2.6s2.2.9 2.2 2.6v3"/>',
 		'flecha-izq' => '<path d="M19 12H5M11 6l-6 6 6 6"/>',
+		'filtros'   => '<path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/>',
+		'enlace'    => '<path d="M10 14a4.5 4.5 0 0 0 6.4 0l3-3a4.5 4.5 0 0 0-6.4-6.4l-1 1"/><path d="M14 10a4.5 4.5 0 0 0-6.4 0l-3 3a4.5 4.5 0 0 0 6.4 6.4l1-1"/>',
 		'compartir' => '<circle cx="18" cy="5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="19" r="2.5"/><path d="m8.2 10.8 7.6-4.4M8.2 13.2l7.6 4.4"/>',
 	);
 	if ( ! isset( $icons[ $name ] ) ) {
@@ -105,18 +107,20 @@ function su_price_html( $post_id = null ) {
 	return $out . '</span>';
 }
 
-/** Tarjeta de propiedad. */
+/** Tarjeta de propiedad: foto, operación, tipo, ubicación, datos clave, estado, precio y "Ver propiedad". */
 function su_property_card( $post_id = null, $heading = 'h3' ) {
-	$post_id   = $post_id ? $post_id : get_the_ID();
-	$operacion = su_term( 'operacion', $post_id );
-	$tipo      = su_term( 'tipo_propiedad', $post_id );
-	$lugar     = su_location_label( $post_id, 'corta' );
+	$post_id    = $post_id ? $post_id : get_the_ID();
+	$operacion  = su_term( 'operacion', $post_id );
+	$tipo       = su_term( 'tipo_propiedad', $post_id );
+	$lugar      = su_location_label( $post_id );
 	$ubic_slugs = implode( ' ', wp_list_pluck( su_location_chain( $post_id ), 'slug' ) );
-	$estado    = su_meta( 'estado', $post_id );
-	$cerrada   = in_array( $estado, array( 'vendida', 'alquilada' ), true );
-	$heading   = in_array( $heading, array( 'h2', 'h3' ), true ) ? $heading : 'h3';
+	$estado     = su_meta( 'estado', $post_id );
+	$cerrada    = in_array( $estado, array( 'vendida', 'alquilada' ), true );
+	$destacada  = su_meta( 'destacada', $post_id ) && ! $cerrada;
+	$heading    = in_array( $heading, array( 'h2', 'h3' ), true ) ? $heading : 'h3';
+	$url        = get_permalink( $post_id );
 	?>
-	<article class="su-card<?php echo $cerrada ? ' is-closed' : ''; ?>" data-su-reveal data-operacion="<?php echo esc_attr( $operacion ? $operacion->slug : '' ); ?>" data-tipo="<?php echo esc_attr( $tipo ? $tipo->slug : '' ); ?>" data-ubicaciones="<?php echo esc_attr( $ubic_slugs ); ?>" data-dormitorios="<?php echo esc_attr( su_meta( 'dormitorios', $post_id ) ); ?>" data-precio="<?php echo esc_attr( su_meta( 'precio', $post_id ) ); ?>" data-moneda="<?php echo esc_attr( su_moneda( $post_id ) ); ?>" data-estado="<?php echo esc_attr( $estado ); ?>" data-destacada="<?php echo su_meta( 'destacada', $post_id ) ? '1' : ''; ?>" data-fecha="<?php echo esc_attr( get_post_time( 'U', true, $post_id ) ); ?>">
+	<article class="su-card<?php echo $cerrada ? ' is-closed' : ''; ?><?php echo $destacada ? ' is-featured' : ''; ?>" data-su-reveal data-operacion="<?php echo esc_attr( $operacion ? $operacion->slug : '' ); ?>" data-tipo="<?php echo esc_attr( $tipo ? $tipo->slug : '' ); ?>" data-ubicaciones="<?php echo esc_attr( $ubic_slugs ); ?>" data-dormitorios="<?php echo esc_attr( su_meta( 'dormitorios', $post_id ) ); ?>" data-precio="<?php echo esc_attr( su_meta( 'precio', $post_id ) ); ?>" data-moneda="<?php echo esc_attr( su_moneda( $post_id ) ); ?>" data-estado="<?php echo esc_attr( $estado ); ?>" data-destacada="<?php echo $destacada ? '1' : ''; ?>" data-fecha="<?php echo esc_attr( get_post_time( 'U', true, $post_id ) ); ?>">
 		<div class="su-card__media">
 			<?php
 			if ( has_post_thumbnail( $post_id ) ) {
@@ -131,17 +135,20 @@ function su_property_card( $post_id = null, $heading = 'h3' ) {
 			?>
 			<span class="su-card__badges">
 				<?php if ( $operacion ) : ?><span class="su-badge"><?php echo esc_html( $operacion->name ); ?></span><?php endif; ?>
-				<?php if ( su_meta( 'destacada', $post_id ) && ! $cerrada ) : ?><span class="su-badge su-badge--alt"><?php esc_html_e( 'Destacada', 'saraviaubilla' ); ?></span><?php endif; ?>
+				<?php if ( $destacada ) : ?><span class="su-badge su-badge--alt"><?php esc_html_e( 'Destacada', 'saraviaubilla' ); ?></span><?php endif; ?>
 			</span>
 			<?php if ( $estado ) : ?>
 				<span class="su-status su-status--<?php echo esc_attr( $estado ); ?>"><?php echo esc_html( su_estado_label( $post_id ) ); ?></span>
 			<?php endif; ?>
 		</div>
 		<div class="su-card__body">
-			<?php if ( $tipo || $lugar ) : ?>
-				<p class="su-card__meta"><?php echo esc_html( implode( ' · ', array_filter( array( $tipo ? $tipo->name : '', $lugar ) ) ) ); ?></p>
+			<?php if ( $tipo ) : ?>
+				<p class="su-card__meta"><?php echo esc_html( $tipo->name ); ?></p>
 			<?php endif; ?>
-			<<?php echo $heading; // phpcs:ignore WordPress.Security.EscapeOutput ?> class="su-card__title"><a href="<?php echo esc_url( get_permalink( $post_id ) ); ?>"><?php echo esc_html( get_the_title( $post_id ) ); ?></a></<?php echo $heading; // phpcs:ignore WordPress.Security.EscapeOutput ?>>
+			<<?php echo $heading; // phpcs:ignore WordPress.Security.EscapeOutput ?> class="su-card__title"><a href="<?php echo esc_url( $url ); ?>"><?php echo esc_html( get_the_title( $post_id ) ); ?></a></<?php echo $heading; // phpcs:ignore WordPress.Security.EscapeOutput ?>>
+			<?php if ( $lugar ) : ?>
+				<p class="su-card__place"><?php echo su_icon( 'pin' ); // phpcs:ignore WordPress.Security.EscapeOutput ?><span><?php echo esc_html( $lugar ); ?></span></p>
+			<?php endif; ?>
 			<?php $su_specs = su_specs( $post_id ); ?>
 			<?php if ( $su_specs ) : ?>
 				<ul class="su-specs">
@@ -152,17 +159,34 @@ function su_property_card( $post_id = null, $heading = 'h3' ) {
 			<?php endif; ?>
 			<div class="su-card__foot">
 				<?php echo su_price_html( $post_id ); // phpcs:ignore WordPress.Security.EscapeOutput ?>
-				<span class="su-card__go" aria-hidden="true"><?php echo su_icon( 'flecha' ); // phpcs:ignore WordPress.Security.EscapeOutput ?></span>
+				<span class="su-btn su-btn--outline su-btn--sm su-card__cta" aria-hidden="true"><?php esc_html_e( 'Ver propiedad', 'saraviaubilla' ); ?></span>
 			</div>
 		</div>
 	</article>
 	<?php
 }
 
-/** Tarjeta de remate (listado, historial y bloque del inicio). */
-function su_remate_card( $post_id = null, $heading = 'h3' ) {
+/** Clase de color de cada estado de remate. */
+function su_remate_status_class( $estado ) {
+	$map = array(
+		'proximo'     => 'su-status--proximo',
+		'a_confirmar' => 'su-status--reservada',
+		'realizado'   => 'su-status--vendida',
+		'suspendido'  => 'su-status--suspendido',
+		'cancelado'   => 'su-status--cancelado',
+	);
+	return isset( $map[ $estado ] ) ? $map[ $estado ] : '';
+}
+
+/**
+ * Tarjeta de remate (listado, historial y bloque del inicio).
+ *
+ * @param bool $featured Versión destacada (horizontal, con cuenta regresiva): el próximo remate.
+ */
+function su_remate_card( $post_id = null, $heading = 'h3', $featured = false ) {
 	$post_id = $post_id ? $post_id : get_the_ID();
-	$dt      = su_remate_datetime( $post_id );
+	$estado  = su_remate_estado( $post_id );
+	$dt      = 'a_confirmar' === $estado ? null : su_remate_datetime( $post_id );
 	$past    = su_remate_past( $post_id );
 	$heading = in_array( $heading, array( 'h2', 'h3' ), true ) ? $heading : 'h3';
 	$img     = get_post_thumbnail_id( $post_id );
@@ -171,18 +195,18 @@ function su_remate_card( $post_id = null, $heading = 'h3' ) {
 		$img = $ids ? $ids[0] : 0;
 	}
 	$info = array_filter( array(
-		array( 'calendario', $dt ? su_remate_date( $post_id ) : __( 'Fecha a confirmar', 'saraviaubilla' ) ),
+		array( 'calendario', su_remate_date_public( $post_id ) ),
 		su_meta( 'lugar', $post_id ) ? array( 'pin', su_meta( 'lugar', $post_id ) ) : null,
 		su_remate_modalidad( $post_id ) ? array( 'martillo', su_remate_modalidad( $post_id ) ) : null,
 	) );
 	?>
-	<article class="su-rcard<?php echo $past ? ' is-past' : ''; ?>" data-su-reveal>
+	<article class="su-rcard<?php echo $past ? ' is-past' : ''; ?><?php echo $featured ? ' su-rcard--featured' : ''; ?><?php echo in_array( $estado, array( 'suspendido', 'cancelado' ), true ) ? ' is-' . esc_attr( $estado ) : ''; ?>" data-su-reveal>
 		<div class="su-rcard__media">
 			<?php
 			if ( $img ) {
-				echo wp_get_attachment_image( $img, 'su-card', false, array(
+				echo wp_get_attachment_image( $img, $featured ? 'su-hero-md' : 'su-card', false, array(
 					'loading' => 'lazy',
-					'sizes'   => '(min-width: 1240px) 400px, (min-width: 760px) 50vw, 100vw',
+					'sizes'   => $featured ? '(min-width: 1000px) 560px, 100vw' : '(min-width: 1240px) 400px, (min-width: 760px) 50vw, 100vw',
 					'alt'     => '',
 				) );
 			} else {
@@ -192,9 +216,7 @@ function su_remate_card( $post_id = null, $heading = 'h3' ) {
 			<?php if ( $dt ) : ?>
 				<span class="su-rcard__date" aria-hidden="true"><b><?php echo esc_html( su_fecha_es( $dt, 'dia' ) ); ?></b><?php echo esc_html( su_fecha_es( $dt, 'mes_anio' ) ); ?></span>
 			<?php endif; ?>
-			<span class="su-status <?php echo $past ? 'su-status--vendida' : ( $dt ? 'su-status--proximo' : 'su-status--reservada' ); ?>">
-				<?php echo esc_html( $past ? __( 'Realizado', 'saraviaubilla' ) : ( $dt ? __( 'Próximo', 'saraviaubilla' ) : __( 'Fecha a confirmar', 'saraviaubilla' ) ) ); ?>
-			</span>
+			<span class="su-status <?php echo esc_attr( su_remate_status_class( $estado ) ); ?>"><?php echo esc_html( su_remate_estado_label( $post_id ) ); ?></span>
 		</div>
 		<div class="su-rcard__body">
 			<?php if ( su_meta( 'tipo', $post_id ) ) : ?>
@@ -206,10 +228,13 @@ function su_remate_card( $post_id = null, $heading = 'h3' ) {
 					<li><?php echo su_icon( $row[0] ); // phpcs:ignore WordPress.Security.EscapeOutput ?><span><?php echo esc_html( $row[1] ); ?></span></li>
 				<?php endforeach; ?>
 			</ul>
+			<?php if ( $featured && 'proximo' === $estado ) : ?>
+				<?php su_countdown( su_remate_iso( $post_id ) ); ?>
+			<?php endif; ?>
 			<?php if ( $past && su_meta( 'resultado', $post_id ) ) : ?>
 				<p class="su-rcard__result"><?php echo esc_html( wp_trim_words( su_meta( 'resultado', $post_id ), 28 ) ); ?></p>
 			<?php endif; ?>
-			<span class="su-btn su-btn--outline su-btn--sm su-rcard__cta" aria-hidden="true"><?php esc_html_e( 'Ver detalles', 'saraviaubilla' ); ?><?php echo su_icon( 'flecha' ); // phpcs:ignore WordPress.Security.EscapeOutput ?></span>
+			<span class="su-btn <?php echo $featured ? 'su-btn--primary' : 'su-btn--outline su-btn--sm'; ?> su-rcard__cta" aria-hidden="true"><?php esc_html_e( 'Ver detalles', 'saraviaubilla' ); ?><?php echo su_icon( 'flecha' ); // phpcs:ignore WordPress.Security.EscapeOutput ?></span>
 		</div>
 	</article>
 	<?php
@@ -234,11 +259,11 @@ function su_countdown( $iso ) {
  * Mapa de Google que se carga recién al tocarlo: no suma peso ni cookies
  * de terceros hasta que el visitante lo pide.
  */
-function su_map( $query ) {
+function su_map( $query, $zoom = 15 ) {
 	if ( ! $query ) {
 		return '';
 	}
-	$embed = 'https://maps.google.com/maps?q=' . rawurlencode( $query ) . '&z=15&output=embed';
+	$embed = 'https://maps.google.com/maps?q=' . rawurlencode( $query ) . '&z=' . (int) $zoom . '&output=embed';
 	$link  = 'https://www.google.com/maps/search/?api=1&query=' . rawurlencode( $query );
 	return '<div class="su-map" data-su-map="' . esc_url( $embed ) . '">'
 		. '<button type="button" class="su-btn su-btn--light su-map__load">' . su_icon( 'pin' ) . esc_html__( 'Ver mapa', 'saraviaubilla' ) . '</button>'

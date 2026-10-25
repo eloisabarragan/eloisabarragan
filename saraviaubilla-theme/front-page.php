@@ -7,14 +7,16 @@ get_header();
 ?>
 <main id="contenido">
 	<?php
+	// Inmobiliaria y Remates primero; después la empresa.
 	get_template_part( 'parts/hero' );
-	get_template_part( 'parts/services' );
+	get_template_part( 'parts/access' );
 	get_template_part( 'parts/remates-home' );
+	get_template_part( 'parts/properties' );
+	get_template_part( 'parts/services' );
 	if ( su_mod( 'steps_show' ) ) {
 		get_template_part( 'parts/steps' );
 	}
 	get_template_part( 'parts/about' );
-	get_template_part( 'parts/properties' );
 	get_template_part( 'parts/contact' );
 
 	// Si la página de inicio tiene contenido propio (bloques), se muestra al final.

@@ -1,46 +1,52 @@
-/* Buscador: los desplegables de ubicación se completan según el nivel anterior. */
+/* Buscador: País → Departamento / Estado → Ciudad / Zona, cada campo según el anterior. */
 (function () {
 	'use strict';
-	document.querySelectorAll('[data-su-locfilter]').forEach(function (box) {
-		var treeEl = box.querySelector('[data-su-loctree]');
-		if (!treeEl) { return; }
-		var tree = JSON.parse(treeEl.textContent || '[]'); // [slug, nombre, slug superior, cantidad]
-		var wraps = {};
-		box.querySelectorAll('[data-level-wrap]').forEach(function (w) { wraps[w.getAttribute('data-level-wrap')] = w; });
-		var hiddenCountry = box.querySelector('input[name="u0"]');
+	document.querySelectorAll('[data-su-loctree]').forEach(function (treeEl) {
+		var form = treeEl.closest('form');
+		if (!form) { return; }
+		var tree = JSON.parse(treeEl.textContent || '[]'); // [slug, nombre, slug superior, cantidad] (ya ordenadas)
+		var field = function (level) { return form.querySelector('select[data-su-loc="' + level + '"]'); };
+		var children = function (parent) { return tree.filter(function (t) { return t[2] === parent; }); };
 
-		var valueOf = function (level) {
-			if (level === 0 && hiddenCountry) { return hiddenCountry.value; }
-			var w = wraps[level];
-			return w && !w.hidden ? w.querySelector('select').value : '';
-		};
-		var setLevel = function (level, parentSlug) {
-			var w = wraps[level];
-			if (!w) { return; }
-			var select = w.querySelector('select');
-			var opts = tree.filter(function (t) { return t[2] === parentSlug; });
-			var keep = select.value;
+		var fill = function (select, items) {
+			if (!select) { return; }
 			while (select.options.length > 1) { select.remove(1); }
-			opts.forEach(function (t) {
+			items.forEach(function (it) {
 				var o = document.createElement('option');
-				o.value = t[0];
-				o.textContent = t[1];
+				o.value = it[0];
+				o.textContent = it[1];
 				select.appendChild(o);
 			});
-			var visible = !!parentSlug && opts.length > 0;
-			w.hidden = !visible;
-			select.disabled = !visible;
-			select.value = visible && opts.some(function (t) { return t[0] === keep; }) ? keep : '';
+			select.value = '';
+			select.disabled = items.length === 0;
 		};
-		var cascade = function (from) {
-			for (var level = from + 1; level <= 3; level++) {
-				setLevel(level, valueOf(level - 1));
-			}
+		// Ciudades del departamento, cada una seguida de sus barrios.
+		var localItems = function (depto) {
+			var out = [];
+			if (!depto) { return out; }
+			children(depto).forEach(function (city) {
+				out.push([city[0], city[1]]);
+				children(city[0]).forEach(function (zone) { out.push([zone[0], '— ' + zone[1]]); });
+			});
+			return out;
 		};
-		Object.keys(wraps).forEach(function (k) {
-			var level = parseInt(k, 10);
-			wraps[k].querySelector('select').addEventListener('change', function () { cascade(level); });
-		});
-		cascade(hiddenCountry ? 0 : (wraps[0] ? 0 : -1));
+
+		var pais = field(0);
+		var depto = field(1);
+		var local = field(2);
+		if (pais) {
+			pais.addEventListener('change', function () {
+				// Cambiar de país limpia solo los campos geográficos.
+				fill(depto, pais.value ? children(pais.value).map(function (t) { return [t[0], t[1]]; }) : []);
+				fill(local, []);
+				form.dispatchEvent(new CustomEvent('su:locchange'));
+			});
+		}
+		if (depto) {
+			depto.addEventListener('change', function () {
+				fill(local, localItems(depto.value));
+				form.dispatchEvent(new CustomEvent('su:locchange'));
+			});
+		}
 	});
 })();

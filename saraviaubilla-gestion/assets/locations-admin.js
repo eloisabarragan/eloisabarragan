@@ -4,14 +4,14 @@
 	var box = document.querySelector('[data-su-loc]');
 	var dataEl = document.getElementById('su-loc-data');
 	if (!box || !dataEl) { return; }
-	var terms = JSON.parse(dataEl.textContent || '[]'); // [id, nombre, superior]
+	var terms = JSON.parse(dataEl.textContent || '[]'); // [id, nombre, superior, oculta] (ya ordenadas)
 	var selected = JSON.parse(box.getAttribute('data-selected') || '[]');
 	var levels = Array.prototype.slice.call(box.querySelectorAll('[data-level]'));
 	var NEW = 'new';
 
 	var childrenOf = function (parent) {
-		return terms.filter(function (t) { return t[2] === parent; })
-			.sort(function (a, b) { return a[1].localeCompare(b[1], 'es'); });
+		// Las desactivadas o pendientes de revisar solo aparecen si ya son la ubicación de la propiedad.
+		return terms.filter(function (t) { return t[2] === parent && (!t[3] || selected.indexOf(t[0]) !== -1); });
 	};
 	var fill = function (i, parent, value) {
 		var wrap = levels[i];

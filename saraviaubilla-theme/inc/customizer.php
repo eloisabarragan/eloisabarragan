@@ -175,6 +175,17 @@ function su_customize_register( $wp_customize ) {
 		) );
 	}
 
+	$wp_customize->add_setting( 'su_access_show', array(
+		'default'           => $d['access_show'],
+		'sanitize_callback' => 'su_sanitize_checkbox',
+	) );
+	$wp_customize->add_control( 'su_access_show', array(
+		'label'       => __( 'Mostrar accesos a Inmobiliaria y Remates debajo de la portada', 'saraviaubilla' ),
+		'description' => __( 'Muestran la cantidad de propiedades publicadas y el próximo remate; se completan solos.', 'saraviaubilla' ),
+		'section'     => 'su_props',
+		'type'        => 'checkbox',
+	) );
+
 	$wp_customize->add_setting( 'su_steps_show', array(
 		'default'           => $d['steps_show'],
 		'sanitize_callback' => 'su_sanitize_checkbox',

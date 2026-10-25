@@ -32,18 +32,55 @@ function su_number( $n ) {
 	return number_format( (float) $n, 0, ',', '.' );
 }
 
-/** Monedas admitidas. */
-function su_monedas() {
-	return array(
-		'U$S' => 'U$S',
-		'$'   => '$',
-	);
+/**
+ * Monedas configuradas en Ajustes → Saravia Ubilla, en orden.
+ *
+ * @return array símbolo => array( nombre, código ISO )
+ */
+function su_monedas_info() {
+	$out = array();
+	foreach ( preg_split( '/\r\n|\r|\n/', (string) su_gestion_option( 'monedas' ) ) as $line ) {
+		$parts = array_map( 'trim', explode( '|', $line ) );
+		if ( '' !== $parts[0] ) {
+			$out[ $parts[0] ] = array( isset( $parts[1] ) ? $parts[1] : '', isset( $parts[2] ) ? $parts[2] : '' );
+		}
+	}
+	return $out ? $out : array( 'U$S' => array( 'Dólares', 'USD' ) );
 }
 
-/** Moneda de una propiedad (las antiguas sin moneda se toman como dólares). */
+/** Monedas admitidas: símbolo => símbolo. */
+function su_monedas() {
+	$keys = array_keys( su_monedas_info() );
+	return array_combine( $keys, $keys );
+}
+
+/** Moneda de una propiedad (las antiguas sin moneda, la primera de la lista). */
 function su_moneda( $post_id = null ) {
 	$m = su_meta( 'moneda', $post_id );
-	return array_key_exists( $m, su_monedas() ) ? $m : 'U$S';
+	if ( '' !== (string) $m ) {
+		return $m; // se conserva aunque se haya quitado de la lista.
+	}
+	$keys = array_keys( su_monedas_info() );
+	return $keys[0];
+}
+
+/** Opciones de moneda para el panel: "U$S (Dólares)". */
+function su_moneda_options() {
+	$out = array();
+	foreach ( su_monedas_info() as $sym => $info ) {
+		$out[ $sym ] = $info[0] ? $sym . ' (' . $info[0] . ')' : $sym;
+	}
+	return $out;
+}
+
+/** Código internacional de una moneda (para datos estructurados). */
+function su_moneda_iso( $symbol ) {
+	$info = su_monedas_info();
+	if ( ! empty( $info[ $symbol ][1] ) ) {
+		return $info[ $symbol ][1];
+	}
+	$known = array( 'U$S' => 'USD', 'US$' => 'USD', '$' => 'UYU', '€' => 'EUR' );
+	return isset( $known[ $symbol ] ) ? $known[ $symbol ] : '';
 }
 
 /** Precio formateado o "Consultar". */
@@ -171,19 +208,97 @@ function su_remate_date( $post_id = null, $formato = 'larga' ) {
 	return $dt ? su_fecha_es( $dt, $formato ) : __( 'Fecha a confirmar', 'saraviaubilla-gestion' );
 }
 
+/** Fecha para mostrar: con estado "Fecha a confirmar" no se publica la fecha cargada. */
+function su_remate_date_public( $post_id = null, $formato = 'larga' ) {
+	return 'a_confirmar' === su_remate_estado( $post_id ) ? __( 'Fecha a confirmar', 'saraviaubilla-gestion' ) : su_remate_date( $post_id, $formato );
+}
+
 /** Fecha ISO 8601 con zona horaria (cuenta regresiva y datos estructurados). */
 function su_remate_iso( $post_id = null ) {
 	$dt = su_remate_datetime( $post_id );
 	return $dt ? $dt->format( DATE_ATOM ) : '';
 }
 
-/** ¿El remate ya se realizó? (marcado a mano o con fecha pasada) */
-function su_remate_past( $post_id = null ) {
+/** Estados de un remate. */
+function su_remate_estados() {
+	return array(
+		'proximo'     => __( 'Próximo', 'saraviaubilla-gestion' ),
+		'a_confirmar' => __( 'Fecha a confirmar', 'saraviaubilla-gestion' ),
+		'realizado'   => __( 'Realizado', 'saraviaubilla-gestion' ),
+		'suspendido'  => __( 'Suspendido', 'saraviaubilla-gestion' ),
+		'cancelado'   => __( 'Cancelado', 'saraviaubilla-gestion' ),
+	);
+}
+
+/** Estado elegido en el panel (o el que corresponde a la fecha, si todavía no se eligió). */
+function su_remate_estado_guardado( $post_id = null ) {
+	$e = su_meta( 'estado_remate', $post_id );
+	if ( array_key_exists( $e, su_remate_estados() ) ) {
+		return $e;
+	}
 	if ( '1' === su_meta( 'realizado', $post_id ) ) {
+		return 'realizado'; // casilla de la versión anterior.
+	}
+	return su_remate_datetime( $post_id ) ? 'proximo' : 'a_confirmar';
+}
+
+/**
+ * Estado que se muestra. La fecha nunca se modifica; solo se interpreta:
+ * - "Próximo" sin fecha se muestra como "Fecha a confirmar";
+ * - "Próximo" o "Fecha a confirmar" con una fecha ya pasada se muestran como "Realizado".
+ */
+function su_remate_estado( $post_id = null ) {
+	$e  = su_remate_estado_guardado( $post_id );
+	$dt = su_remate_datetime( $post_id );
+	if ( in_array( $e, array( 'proximo', 'a_confirmar' ), true ) ) {
+		if ( $dt && $dt->getTimestamp() < time() ) {
+			return 'realizado';
+		}
+		if ( ! $dt ) {
+			return 'a_confirmar';
+		}
+	}
+	return $e;
+}
+
+function su_remate_estado_label( $post_id = null ) {
+	$map = su_remate_estados();
+	return $map[ su_remate_estado( $post_id ) ];
+}
+
+/** ¿El remate va al historial? (realizado, cancelado o suspendido con la fecha ya pasada) */
+function su_remate_past( $post_id = null ) {
+	$e = su_remate_estado( $post_id );
+	if ( in_array( $e, array( 'realizado', 'cancelado' ), true ) ) {
 		return true;
 	}
 	$dt = su_remate_datetime( $post_id );
-	return $dt && $dt->getTimestamp() < time();
+	return 'suspendido' === $e && $dt && $dt->getTimestamp() < time();
+}
+
+/**
+ * Avisos de coherencia entre fecha y estado (se muestran en el panel; nada se cambia solo).
+ *
+ * @return string[]
+ */
+function su_remate_warnings( $post_id ) {
+	$e   = su_remate_estado_guardado( $post_id );
+	$dt  = su_remate_datetime( $post_id );
+	$fut = $dt && $dt->getTimestamp() >= time();
+	$out = array();
+	if ( 'realizado' === $e && $fut ) {
+		$out[] = __( 'Está marcado como realizado pero su fecha todavía no llegó.', 'saraviaubilla-gestion' );
+	}
+	if ( 'proximo' === $e && ! $dt ) {
+		$out[] = __( 'Está marcado como próximo pero no tiene fecha: se muestra como "Fecha a confirmar".', 'saraviaubilla-gestion' );
+	}
+	if ( in_array( $e, array( 'proximo', 'a_confirmar' ), true ) && $dt && ! $fut ) {
+		$out[] = __( 'Su fecha ya pasó: se muestra en el historial como realizado. Si no se realizó, marcalo como suspendido o cancelado.', 'saraviaubilla-gestion' );
+	}
+	if ( 'a_confirmar' === $e && $fut ) {
+		$out[] = __( 'Tiene fecha cargada pero el estado es "Fecha a confirmar": la fecha no se publica hasta que lo marques como próximo.', 'saraviaubilla-gestion' );
+	}
+	return $out;
 }
 
 /** Momento actual en el formato en que se guarda la fecha (para comparar). */
@@ -191,84 +306,106 @@ function su_now_meta() {
 	return current_time( 'Y-m-d\TH:i' );
 }
 
-/** Condición "no marcado como realizado". */
-function su_not_done_clause() {
-	return array(
-		'relation' => 'OR',
-		array( 'key' => '_su_realizado', 'compare' => 'NOT EXISTS' ),
-		array( 'key' => '_su_realizado', 'value' => '1', 'compare' => '!=' ),
-	);
+/** El próximo remate con fecha (el más cercano), sin suspendidos. */
+function su_next_remate() {
+	$q = su_remates_query( 'activos', 1 );
+	return $q->have_posts() ? $q->posts[0] : null;
 }
 
-/** El próximo remate con fecha (el más cercano). */
-function su_next_remate() {
-	$q = su_remates_query( 'proximos', 1 );
-	return $q->have_posts() ? $q->posts[0] : null;
+/** Remates publicados agrupados por estado (una vez por página). */
+function su_remates_groups() {
+	static $groups = null;
+	if ( null !== $groups ) {
+		return $groups;
+	}
+	$groups = array( 'activos' => array(), 'proximos' => array(), 'sin_fecha' => array(), 'realizados' => array() );
+	$ids    = get_posts( array(
+		'post_type'      => 'remate',
+		'post_status'    => 'publish',
+		'posts_per_page' => -1,
+		'fields'         => 'ids',
+		'orderby'        => 'date',
+		'order'          => 'DESC',
+		'no_found_rows'  => true,
+	) );
+	$ts = function ( $id ) {
+		$dt = su_remate_datetime( $id );
+		return $dt ? $dt->getTimestamp() : 0;
+	};
+	foreach ( $ids as $id ) {
+		$e = su_remate_estado( $id );
+		if ( su_remate_past( $id ) ) {
+			$groups['realizados'][] = $id;
+		} elseif ( 'proximo' === $e ) {
+			$groups['activos'][]  = $id;
+			$groups['proximos'][] = $id;
+		} elseif ( 'suspendido' === $e ) {
+			$groups['proximos'][] = $id;
+		} else {
+			$groups['sin_fecha'][] = $id;
+		}
+	}
+	// Próximos: el más cercano primero (los suspendidos sin fecha, al final).
+	foreach ( array( 'activos', 'proximos' ) as $g ) {
+		usort( $groups[ $g ], function ( $a, $b ) use ( $ts ) {
+			$ta = $ts( $a ) ? $ts( $a ) : PHP_INT_MAX;
+			$tb = $ts( $b ) ? $ts( $b ) : PHP_INT_MAX;
+			return $ta <=> $tb;
+		} );
+	}
+	// Historial: el más reciente primero (sin fecha, por publicación).
+	usort( $groups['realizados'], function ( $a, $b ) use ( $ts ) {
+		$ta = $ts( $a ) ? $ts( $a ) : (int) get_post_time( 'U', true, $a );
+		$tb = $ts( $b ) ? $ts( $b ) : (int) get_post_time( 'U', true, $b );
+		return $tb <=> $ta;
+	} );
+	return $groups;
 }
 
 /**
  * Remates para los listados.
  *
- * @param string $grupo 'proximos'   con fecha futura y no realizados, el más cercano primero;
- *                      'sin_fecha'  sin fecha y no realizados;
- *                      'realizados' marcados como realizados o con fecha pasada, el más reciente primero.
+ * @param string $grupo 'activos'    próximos con fecha (sin suspendidos), el más cercano primero;
+ *                      'proximos'   próximos con fecha y suspendidos que todavía no pasaron;
+ *                      'sin_fecha'  fecha a confirmar;
+ *                      'realizados' realizados, cancelados y suspendidos ya pasados, el más reciente primero.
  * @param int    $cantidad -1 para todos.
  * @param int    $pagina   página (para el historial).
  */
 function su_remates_query( $grupo, $cantidad = 12, $pagina = 1 ) {
-	$args = array(
+	$groups = su_remates_groups();
+	$ids    = isset( $groups[ $grupo ] ) ? $groups[ $grupo ] : array();
+	return new WP_Query( array(
 		'post_type'      => 'remate',
+		'post__in'       => $ids ? $ids : array( 0 ),
+		'orderby'        => 'post__in',
 		'posts_per_page' => $cantidad,
 		'paged'          => max( 1, (int) $pagina ),
 		'no_found_rows'  => 'realizados' !== $grupo,
-	);
-	$now = su_now_meta();
-	if ( 'proximos' === $grupo ) {
-		$args['meta_key']   = '_su_fecha';
-		$args['orderby']    = 'meta_value';
-		$args['order']      = 'ASC';
-		$args['meta_query'] = array(
-			'relation' => 'AND',
-			array( 'key' => '_su_fecha', 'value' => $now, 'compare' => '>=' ),
-			su_not_done_clause(),
-		);
-	} elseif ( 'sin_fecha' === $grupo ) {
-		$args['orderby']    = 'date';
-		$args['order']      = 'DESC';
-		$args['meta_query'] = array(
-			'relation' => 'AND',
-			array(
-				'relation' => 'OR',
-				array( 'key' => '_su_fecha', 'compare' => 'NOT EXISTS' ),
-				array( 'key' => '_su_fecha', 'value' => '' ),
-			),
-			su_not_done_clause(),
-		);
-	} else {
-		$args['meta_query'] = array(
-			'relation' => 'OR',
-			array( 'key' => '_su_realizado', 'value' => '1' ),
-			array(
-				'relation' => 'AND',
-				array( 'key' => '_su_fecha', 'value' => $now, 'compare' => '<' ),
-				array( 'key' => '_su_fecha', 'value' => '', 'compare' => '!=' ),
-			),
-		);
-		$args['su_remate_historial'] = true;
-	}
-	return new WP_Query( $args );
+		'ignore_sticky_posts' => true,
+	) );
 }
 
-/* El historial se ordena por fecha del remate (los que no tienen fecha, por publicación). */
-add_filter( 'posts_clauses', function ( $clauses, $q ) {
-	if ( ! $q->get( 'su_remate_historial' ) ) {
-		return $clauses;
+/** Pasa la casilla "Remate realizado" de la versión anterior al nuevo campo de estado (una vez). */
+function su_remates_migrate() {
+	if ( (int) get_option( 'su_remates_version' ) >= 1 ) {
+		return;
 	}
-	global $wpdb;
-	$clauses['join']   .= " LEFT JOIN {$wpdb->postmeta} AS su_fe ON (su_fe.post_id = {$wpdb->posts}.ID AND su_fe.meta_key = '_su_fecha')";
-	$clauses['orderby'] = "COALESCE(NULLIF(su_fe.meta_value, ''), {$wpdb->posts}.post_date) DESC";
-	return $clauses;
-}, 10, 2 );
+	$ids = get_posts( array(
+		'post_type'      => 'remate',
+		'post_status'    => 'any',
+		'posts_per_page' => -1,
+		'fields'         => 'ids',
+		'meta_query'     => array( // phpcs:ignore WordPress.DB.SlowDBQuery
+			array( 'key' => '_su_realizado', 'value' => '1' ),
+			array( 'key' => '_su_estado_remate', 'compare' => 'NOT EXISTS' ),
+		),
+	) );
+	foreach ( $ids as $id ) {
+		update_post_meta( $id, '_su_estado_remate', 'realizado' );
+	}
+	update_option( 'su_remates_version', 1 );
+}
 
 /** Enlace de WhatsApp con el número configurado. */
 function su_gestion_whatsapp_url( $text = '' ) {
@@ -288,18 +425,32 @@ function su_remates_faq() {
 	return is_array( $faq ) ? $faq : array();
 }
 
-/** Documentos descargables de un remate: array( url, título, extensión ). */
-function su_remate_docs( $post_id = null ) {
-	$out = array();
-	foreach ( array_filter( array_map( 'absint', explode( ',', (string) su_meta( 'documentos', $post_id ) ) ) ) as $id ) {
-		$url = wp_get_attachment_url( $id );
-		if ( $url ) {
-			$out[] = array( $url, get_the_title( $id ), strtoupper( pathinfo( $url, PATHINFO_EXTENSION ) ) );
-		}
+/** Catálogo del remate: el PDF subido o, si no hay, el enlace externo. array( url, título, extensión ) o null. */
+function su_remate_catalogo( $post_id = null ) {
+	$id  = absint( su_meta( 'catalogo_pdf', $post_id ) );
+	$url = $id ? wp_get_attachment_url( $id ) : '';
+	if ( $url ) {
+		return array( $url, __( 'Catálogo', 'saraviaubilla-gestion' ), strtoupper( pathinfo( $url, PATHINFO_EXTENSION ) ) );
 	}
 	$ext = su_meta( 'catalogo', $post_id );
 	if ( $ext ) {
-		$out[] = array( $ext, __( 'Catálogo', 'saraviaubilla-gestion' ), strtoupper( pathinfo( wp_parse_url( $ext, PHP_URL_PATH ), PATHINFO_EXTENSION ) ) );
+		return array( $ext, __( 'Catálogo', 'saraviaubilla-gestion' ), strtoupper( (string) pathinfo( (string) wp_parse_url( $ext, PHP_URL_PATH ), PATHINFO_EXTENSION ) ) );
+	}
+	return null;
+}
+
+/** Documentos descargables de un remate (el catálogo primero): array( url, título, extensión ). */
+function su_remate_docs( $post_id = null ) {
+	$out = array();
+	$cat = su_remate_catalogo( $post_id );
+	if ( $cat ) {
+		$out[] = $cat;
+	}
+	foreach ( array_filter( array_map( 'absint', explode( ',', (string) su_meta( 'documentos', $post_id ) ) ) ) as $id ) {
+		$url = wp_get_attachment_url( $id );
+		if ( $url && ( ! $cat || $url !== $cat[0] ) ) {
+			$out[] = array( $url, get_the_title( $id ), strtoupper( pathinfo( $url, PATHINFO_EXTENSION ) ) );
+		}
 	}
 	return $out;
 }

@@ -76,3 +76,53 @@
 		$('[data-su-files-preview="' + $(this).data('su-gallery-clear') + '"]').empty();
 	});
 })(jQuery);
+
+/* Catálogo del remate: un solo archivo PDF. */
+(function ($) {
+	'use strict';
+	$(document).on('click', '[data-su-file]', function (e) {
+		e.preventDefault();
+		var id = $(this).data('su-file');
+		var frame = wp.media({ title: 'Catálogo del remate (PDF)', button: { text: 'Usar este archivo' }, library: { type: 'application/pdf' }, multiple: false });
+		frame.on('select', function () {
+			var a = frame.state().get('selection').first().toJSON();
+			$('#' + id).val(a.id);
+			$('[data-su-files-preview="' + id + '"]').empty().append($('<span>').text(a.title || a.filename));
+		});
+		frame.open();
+	});
+})(jQuery);
+
+/* Remates: avisos de coherencia entre la fecha y el estado antes de guardar (nada se cambia solo). */
+(function () {
+	'use strict';
+	var estado = document.getElementById('su_estado_remate');
+	var fecha = document.getElementById('su_fecha');
+	var form = document.getElementById('post');
+	if (!estado || !fecha || !form) { return; }
+	var when = function () { return fecha.value ? new Date(fecha.value) : null; };
+	// Al cargar o borrar la fecha, "Próximo" y "Fecha a confirmar" se ajustan (solo esos dos).
+	fecha.addEventListener('change', function () {
+		if (estado.value === 'a_confirmar' && fecha.value) { estado.value = 'proximo'; }
+		else if (estado.value === 'proximo' && !fecha.value) { estado.value = 'a_confirmar'; }
+	});
+	form.addEventListener('submit', function (e) {
+		var d = when();
+		var now = new Date();
+		var msg = '';
+		if (estado.value === 'realizado' && d && d > now) {
+			msg = 'La fecha del remate todavía no llegó. ¿Querés marcarlo como realizado igual?';
+		} else if (estado.value === 'proximo' && !d) {
+			msg = 'El remate está como "Próximo" pero no tiene fecha: se mostrará "Fecha a confirmar". ¿Guardar igual?';
+		} else if ((estado.value === 'proximo' || estado.value === 'a_confirmar') && d && d < now) {
+			msg = 'La fecha ya pasó: el remate se mostrará en el historial como realizado. Si no se realizó, elegí "Suspendido" o "Cancelado". ¿Guardar igual?';
+		}
+		if (msg && !window.confirm(msg)) {
+			e.preventDefault();
+			e.stopImmediatePropagation();
+			var spinner = document.querySelector('#publishing-action .spinner');
+			if (spinner) { spinner.classList.remove('is-active'); }
+			document.querySelectorAll('#publish, #save-post').forEach(function (b) { b.classList.remove('disabled'); });
+		}
+	});
+})();

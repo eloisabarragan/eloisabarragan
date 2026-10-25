@@ -149,6 +149,19 @@
 		box.querySelector('[data-su-lb-prev]').addEventListener('click', function () { show(index - 1); });
 		box.querySelector('[data-su-lb-next]').addEventListener('click', function () { show(index + 1); });
 		box.addEventListener('click', function (e) { if (e.target === box) { close(); } });
+		// Gestos táctiles: deslizar a los lados cambia de foto; hacia abajo, cierra.
+		var touch = null;
+		box.addEventListener('touchstart', function (e) {
+			if (e.touches.length === 1) { touch = { x: e.touches[0].clientX, y: e.touches[0].clientY }; }
+		}, { passive: true });
+		box.addEventListener('touchend', function (e) {
+			if (!touch || !e.changedTouches.length) { return; }
+			var dx = e.changedTouches[0].clientX - touch.x;
+			var dy = e.changedTouches[0].clientY - touch.y;
+			touch = null;
+			if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) { show(index + (dx < 0 ? 1 : -1)); }
+			else if (dy > 90 && Math.abs(dy) > Math.abs(dx)) { close(); }
+		}, { passive: true });
 		document.addEventListener('keydown', function (e) {
 			if (box.hidden) { return; }
 			if (e.key === 'Escape') { close(); }
@@ -158,18 +171,44 @@
 		});
 	}
 
-	/* ---------- Compartir ---------- */
-	document.querySelectorAll('[data-su-share]').forEach(function (btn) {
+	/* ---------- Buscador: "Más filtros" en celulares ---------- */
+	document.querySelectorAll('[data-su-search]').forEach(function (form) {
+		var toggle = form.querySelector('[data-su-more]');
+		if (!toggle) { return; }
+		toggle.hidden = false;
+		form.classList.add('is-collapsible');
+		toggle.addEventListener('click', function () {
+			var open = !form.classList.contains('is-open');
+			form.classList.toggle('is-open', open);
+			toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+			if (open) {
+				var first = form.querySelector('.su-search__more select:not([disabled]), .su-search__more input');
+				if (first) { first.focus(); }
+			}
+		});
+	});
+
+	/* ---------- Compartir: copiar enlace ---------- */
+	document.querySelectorAll('[data-su-copy]').forEach(function (btn) {
 		btn.addEventListener('click', function () {
-			var data = { title: btn.getAttribute('data-title'), url: location.href };
-			if (navigator.share) {
-				navigator.share(data).catch(function () {});
-			} else if (navigator.clipboard) {
-				navigator.clipboard.writeText(location.href).then(function () {
-					btn.classList.add('is-copied');
-					btn.setAttribute('aria-label', 'Enlace copiado');
-					btn.setAttribute('title', 'Enlace copiado');
-				});
+			var url = btn.getAttribute('data-su-copy');
+			var msg = btn.parentNode.querySelector('[data-su-copy-msg]');
+			var done = function (ok) {
+				if (msg) { msg.textContent = ok ? 'Enlace copiado' : url; }
+				btn.classList.toggle('is-copied', ok);
+				setTimeout(function () { if (msg && ok) { msg.textContent = ''; } btn.classList.remove('is-copied'); }, 2500);
+			};
+			if (navigator.clipboard && window.isSecureContext) {
+				navigator.clipboard.writeText(url).then(function () { done(true); }, function () { done(false); });
+			} else {
+				// Sin acceso al portapapeles: se copia con un campo temporal.
+				var t = document.createElement('textarea');
+				t.value = url; t.setAttribute('readonly', ''); t.style.position = 'fixed'; t.style.opacity = '0';
+				document.body.appendChild(t); t.select();
+				var ok = false;
+				try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+				t.remove();
+				done(ok);
 			}
 		});
 	});

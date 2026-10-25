@@ -67,7 +67,7 @@ function su_form_stamp_age( $stamp ) {
 function su_form_messages() {
 	return array(
 		'ok'        => array( 'ok', __( '¡Gracias! Recibimos tu consulta y te respondemos a la brevedad.', 'saraviaubilla-gestion' ) ),
-		'guardada'  => array( 'warning', __( 'Recibimos tu consulta, pero no pudimos confirmar el envío por correo. Si es urgente, escribinos por WhatsApp.', 'saraviaubilla-gestion' ) ),
+		'guardada'  => array( 'warning', __( 'Tu consulta quedó registrada, pero en este momento no pudimos enviar el aviso por correo, así que puede demorar en llegarnos. Si es urgente, escribinos por WhatsApp.', 'saraviaubilla-gestion' ) ),
 		'campos'    => array( 'error', __( 'Revisá los campos marcados y volvé a enviar.', 'saraviaubilla-gestion' ) ),
 		'rapido'    => array( 'error', __( 'El formulario se envió demasiado rápido. Esperá unos segundos y volvé a intentarlo.', 'saraviaubilla-gestion' ) ),
 		'limite'    => array( 'error', __( 'Recibimos varias consultas seguidas desde tu conexión. Probá de nuevo en unos minutos o escribinos por WhatsApp.', 'saraviaubilla-gestion' ) ),
@@ -149,7 +149,7 @@ function su_contact_form( $args = array() ) {
 			</p>
 			<p class="su-field">
 				<label for="<?php echo esc_attr( $uid ); ?>-telefono"><?php esc_html_e( 'Teléfono', 'saraviaubilla-gestion' ); ?></label>
-				<input type="tel" id="<?php echo esc_attr( $uid ); ?>-telefono" name="su_telefono" maxlength="<?php echo (int) su_form_limits()['telefono']; ?>" autocomplete="tel" placeholder="09X XXX XXX" value="<?php echo esc_attr( $val( 'telefono' ) ); ?>"<?php echo $err( 'telefono' ); // phpcs:ignore WordPress.Security.EscapeOutput ?>>
+				<input type="tel" id="<?php echo esc_attr( $uid ); ?>-telefono" name="su_telefono" maxlength="<?php echo (int) su_form_limits()['telefono']; ?>" autocomplete="tel" placeholder="+598 99 123 456" value="<?php echo esc_attr( $val( 'telefono' ) ); ?>"<?php echo $err( 'telefono' ); // phpcs:ignore WordPress.Security.EscapeOutput ?>>
 				<?php $err_msg( 'telefono' ); ?>
 			</p>
 			<p class="su-field">
@@ -251,6 +251,21 @@ function su_form_redirect( $status, $values = array(), $errors = array() ) {
 	exit;
 }
 
+/**
+ * Teléfono en cualquier formato internacional: números, espacios y + ( ) - . /,
+ * un "+" solo al principio y entre 6 y 15 dígitos (máximo del estándar E.164),
+ * más una extensión opcional ("int. 12", "ext. 12").
+ */
+function su_valid_phone( $phone ) {
+	$phone = trim( (string) $phone );
+	$phone = preg_replace( '/\s*(ext\.?|int\.?|x)\s*\d{1,6}$/i', '', $phone );
+	if ( ! preg_match( '/^\+?[\d\s().\/-]+$/', $phone ) ) {
+		return false;
+	}
+	$digits = strlen( preg_replace( '/\D/', '', $phone ) );
+	return $digits >= 6 && $digits <= 15;
+}
+
 /** Limpia un nombre para usarlo en un encabezado de correo. */
 function su_mail_name( $name ) {
 	return trim( preg_replace( '/[\r\n<>"\',;:\\\\]+/', ' ', $name ) );
@@ -306,8 +321,8 @@ function su_handle_consulta() {
 	if ( ! is_email( $values['email'] ) ) {
 		$errors['email'] = __( 'Escribí un email válido, por ejemplo nombre@correo.com.', 'saraviaubilla-gestion' );
 	}
-	if ( '' !== $values['telefono'] && ! preg_match( '/^[\d\s+()\-.]{6,}$/', $values['telefono'] ) ) {
-		$errors['telefono'] = __( 'El teléfono solo puede tener números, espacios y los signos + ( ) -.', 'saraviaubilla-gestion' );
+	if ( '' !== $values['telefono'] && ! su_valid_phone( $values['telefono'] ) ) {
+		$errors['telefono'] = __( 'Escribí un teléfono válido, con el código de país si es del exterior. Ej.: +598 99 123 456, +1 305 555 0123 o +34 612 345 678.', 'saraviaubilla-gestion' );
 	}
 	if ( '' === trim( $values['mensaje'] ) ) {
 		$errors['mensaje'] = __( 'Escribí tu consulta.', 'saraviaubilla-gestion' );

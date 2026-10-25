@@ -12,16 +12,27 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'SU_VERSION', '1.1.1' );
+define( 'SU_VERSION', '1.2.0' );
 
 require get_template_directory() . '/inc/defaults.php';
 require get_template_directory() . '/inc/customizer.php';
 require get_template_directory() . '/inc/template-tags.php';
 
-/** ¿Está activo el plugin "Saravia Ubilla – Gestión"? */
+/** ¿Está activo el plugin "Saravia Ubilla – Gestión" en una versión compatible (1.2 o posterior)? */
 function su_has_gestion() {
-	return function_exists( 'su_gestion_loaded' );
+	return function_exists( 'su_gestion_loaded' ) && function_exists( 'su_remate_estado' ) && function_exists( 'su_property_features' );
 }
+
+/*
+ * Si el plugin falta o es anterior a la 1.2, las páginas de propiedades y remates usan la
+ * plantilla general (no se rompe nada) hasta que se active o actualice el plugin.
+ */
+add_filter( 'template_include', function ( $template ) {
+	if ( ! su_has_gestion() && ( is_post_type_archive( array( 'propiedad', 'remate' ) ) || is_singular( array( 'propiedad', 'remate' ) ) || is_tax( array( 'operacion', 'tipo_propiedad', 'zona' ) ) ) ) {
+		return get_index_template();
+	}
+	return $template;
+} );
 
 /** Datos de contacto: los guarda el plugin (sobreviven a un cambio de tema). */
 function su_contact_keys() {
@@ -143,7 +154,7 @@ add_action( 'admin_notices', function () {
 	if ( su_has_gestion() || ! current_user_can( 'activate_plugins' ) ) {
 		return;
 	}
-	echo '<div class="notice notice-warning"><p><strong>' . esc_html__( 'Saravia Ubilla:', 'saraviaubilla' ) . '</strong> ' . esc_html__( 'activá el plugin "Saravia Ubilla – Gestión" para administrar Propiedades, Remates y Consultas y para que funcione el formulario.', 'saraviaubilla' ) . ' <a href="' . esc_url( admin_url( 'plugins.php' ) ) . '">' . esc_html__( 'Ir a Plugins', 'saraviaubilla' ) . '</a></p></div>';
+	echo '<div class="notice notice-warning"><p><strong>' . esc_html__( 'Saravia Ubilla:', 'saraviaubilla' ) . '</strong> ' . esc_html( function_exists( 'su_gestion_loaded' ) ? __( 'actualizá el plugin "Saravia Ubilla – Gestión" a la versión 1.2 o posterior: esta versión del tema la necesita para mostrar propiedades y remates.', 'saraviaubilla' ) : __( 'activá el plugin "Saravia Ubilla – Gestión" para administrar Propiedades, Remates y Consultas y para que funcione el formulario.', 'saraviaubilla' ) ) . ' <a href="' . esc_url( admin_url( 'plugins.php' ) ) . '">' . esc_html__( 'Ir a Plugins', 'saraviaubilla' ) . '</a></p></div>';
 } );
 
 /* -------------------------------------------------------------------------

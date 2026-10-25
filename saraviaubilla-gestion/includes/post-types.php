@@ -132,7 +132,7 @@ function su_gestion_activate() {
 	flush_rewrite_rules();
 }
 
-/** Las propiedades con precio y sin moneda guardada pasan a "U$S" (lo que ya mostraba el sitio). */
+/** Las propiedades sin moneda guardada pasan a "U$S" (lo que ya mostraba el sitio). */
 function su_gestion_migrate_monedas() {
 	$ids = get_posts( array(
 		'post_type'      => 'propiedad',

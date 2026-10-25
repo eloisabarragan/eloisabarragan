@@ -17,7 +17,7 @@ $su_wa_avisar = su_whatsapp_url( __( 'Hola, quiero que me avisen cuando haya un 
 
 $su_nav = array( array( __( 'Próximos', 'saraviaubilla' ), '#proximos', $su_n_prox ? (string) $su_n_prox : '' ) );
 if ( $su_hist->found_posts ) {
-	$su_nav[] = array( __( 'Realizados', 'saraviaubilla' ), '#realizados', (string) $su_hist->found_posts );
+	$su_nav[] = array( __( 'Historial', 'saraviaubilla' ), '#realizados', (string) $su_hist->found_posts );
 }
 if ( $su_faq ) {
 	$su_nav[] = array( __( 'Cómo participar', 'saraviaubilla' ), '#participar' );
@@ -28,20 +28,48 @@ if ( $su_faq ) {
 
 	<section class="su-section su-section--tint su-section--tight" id="proximos" aria-labelledby="su-proximos-title">
 		<div class="su-wrap">
-			<h2 class="su-subtitle su-subtitle--first" id="su-proximos-title"><?php esc_html_e( 'Próximos remates', 'saraviaubilla' ); ?></h2>
 			<?php if ( $su_n_prox ) : ?>
-				<div class="su-cards">
+				<?php if ( $su_proximos->have_posts() ) : ?>
+					<h2 class="su-subtitle su-subtitle--first" id="su-proximos-title"><?php esc_html_e( 'Próximos remates', 'saraviaubilla' ); ?></h2>
 					<?php
-					foreach ( array( $su_proximos, $su_sinfecha ) as $su_q ) {
-						while ( $su_q->have_posts() ) {
-							$su_q->the_post();
-							su_remate_card();
+					// El más cercano, destacado; el resto en grilla.
+					$su_first = true;
+					$su_rest  = array();
+					while ( $su_proximos->have_posts() ) {
+						$su_proximos->the_post();
+						if ( $su_first && 'proximo' === su_remate_estado() ) {
+							su_remate_card( null, 'h3', true );
+							$su_first = false;
+						} else {
+							$su_rest[] = get_the_ID();
 						}
 					}
 					wp_reset_postdata();
 					?>
-				</div>
+					<?php if ( $su_rest ) : ?>
+						<div class="su-cards su-cards--after-featured">
+							<?php
+							foreach ( $su_rest as $su_rid ) {
+								su_remate_card( $su_rid );
+							}
+							?>
+						</div>
+					<?php endif; ?>
+				<?php endif; ?>
+				<?php if ( $su_sinfecha->have_posts() ) : ?>
+					<h2 class="su-subtitle<?php echo $su_proximos->have_posts() ? '' : ' su-subtitle--first'; ?>"<?php echo $su_proximos->have_posts() ? '' : ' id="su-proximos-title"'; ?>><?php esc_html_e( 'Con fecha a confirmar', 'saraviaubilla' ); ?></h2>
+					<div class="su-cards">
+						<?php
+						while ( $su_sinfecha->have_posts() ) {
+							$su_sinfecha->the_post();
+							su_remate_card();
+						}
+						wp_reset_postdata();
+						?>
+					</div>
+				<?php endif; ?>
 			<?php else : ?>
+				<h2 class="su-subtitle su-subtitle--first" id="su-proximos-title"><?php esc_html_e( 'Próximos remates', 'saraviaubilla' ); ?></h2>
 				<div class="su-empty su-empty--remates">
 					<?php echo su_icon( 'martillo' ); // phpcs:ignore WordPress.Security.EscapeOutput ?>
 					<p class="su-empty__title"><?php echo esc_html( su_gestion_option( 'remates_empty' ) ); ?></p>
@@ -61,7 +89,7 @@ if ( $su_faq ) {
 	<?php if ( $su_hist->have_posts() ) : ?>
 		<section class="su-section su-section--tight" id="realizados" aria-labelledby="su-realizados-title">
 			<div class="su-wrap">
-				<h2 class="su-subtitle su-subtitle--first" id="su-realizados-title"><?php esc_html_e( 'Remates realizados', 'saraviaubilla' ); ?></h2>
+				<h2 class="su-subtitle su-subtitle--first" id="su-realizados-title"><?php esc_html_e( 'Historial de remates', 'saraviaubilla' ); ?></h2>
 				<div class="su-cards">
 					<?php
 					while ( $su_hist->have_posts() ) {

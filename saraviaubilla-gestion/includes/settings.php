@@ -20,6 +20,8 @@ function su_gestion_defaults() {
 		'instagram'        => '',
 		'facebook'         => '',
 		'linkedin'         => '',
+		'monedas'          => "U\$S | Dólares | USD\n\$ | Pesos uruguayos | UYU",
+		'vendidas'         => 'catalogo',
 		'remates_intro'    => 'Remates de Bienes Inmuebles como también de Bienes Muebles: mobiliario, antigüedades, automotores, maquinaria, materiales de construcción y mercadería en general.',
 		'remates_empty'    => 'No hay remates programados en este momento.',
 		'faq_ok'           => 0,
@@ -78,6 +80,22 @@ function su_gestion_sanitize_options( $input ) {
 			case 'turnstile_on':
 			case 'faq_ok':
 				$out[ $key ] = $value ? 1 : 0;
+				break;
+			case 'vendidas':
+				$out[ $key ] = in_array( $value, array( 'catalogo', 'historial', 'ocultar' ), true ) ? $value : 'catalogo';
+				break;
+			case 'monedas':
+				$lines = array();
+				$seen  = array();
+				foreach ( preg_split( '/\r\n|\r|\n/', (string) $value ) as $line ) {
+					$parts = array_map( 'trim', explode( '|', sanitize_text_field( $line ) ) );
+					if ( '' === $parts[0] || isset( $seen[ $parts[0] ] ) ) {
+						continue;
+					}
+					$seen[ $parts[0] ] = true;
+					$lines[]           = implode( ' | ', array_filter( array( mb_substr( $parts[0], 0, 6 ), isset( $parts[1] ) ? $parts[1] : '', isset( $parts[2] ) ? strtoupper( preg_replace( '/[^A-Za-z]/', '', $parts[2] ) ) : '' ), 'strlen' ) );
+				}
+				$out[ $key ] = $lines ? implode( "\n", $lines ) : su_gestion_defaults()['monedas'];
 				break;
 			case 'remates_intro':
 			case 'remates_empty':
@@ -156,6 +174,14 @@ function su_gestion_settings_page() {
 			'facebook'   => array( __( 'Facebook (URL)', 'saraviaubilla-gestion' ), 'url', '' ),
 			'linkedin'   => array( __( 'LinkedIn (URL)', 'saraviaubilla-gestion' ), 'url', '' ),
 		),
+		__( 'Inmobiliaria', 'saraviaubilla-gestion' ) => array(
+			'vendidas' => array( __( 'Propiedades vendidas o alquiladas', 'saraviaubilla-gestion' ), 'select', __( 'En todos los casos los datos se conservan en WordPress.', 'saraviaubilla-gestion' ), array(
+				'catalogo'  => __( 'Mostrarlas en el catálogo, con su estado (al final)', 'saraviaubilla-gestion' ),
+				'historial' => __( 'Sacarlas del catálogo y mostrarlas en un historial aparte', 'saraviaubilla-gestion' ),
+				'ocultar'   => __( 'Ocultarlas del sitio público', 'saraviaubilla-gestion' ),
+			) ),
+			'monedas'  => array( __( 'Monedas', 'saraviaubilla-gestion' ), 'textarea', __( 'Una por línea: símbolo | nombre | código internacional. Ej.: € | Euros | EUR. La primera es la que se usa por defecto. Si quitás una moneda, las propiedades que la usan la conservan.', 'saraviaubilla-gestion' ) ),
+		),
 		__( 'Formulario de consultas', 'saraviaubilla-gestion' ) => array(
 			'form_email' => array( __( 'Email que recibe las consultas', 'saraviaubilla-gestion' ), 'email', __( 'Si está vacío se usa el email de administración de WordPress.', 'saraviaubilla-gestion' ) ),
 		),
@@ -196,6 +222,12 @@ function su_gestion_settings_page() {
 							<td>
 								<?php if ( 'textarea' === $conf[1] ) : ?>
 									<textarea class="large-text" rows="3" id="su_<?php echo esc_attr( $key ); ?>" name="su_gestion[<?php echo esc_attr( $key ); ?>]"><?php echo esc_textarea( su_gestion_option( $key ) ); ?></textarea>
+								<?php elseif ( 'select' === $conf[1] ) : ?>
+									<select id="su_<?php echo esc_attr( $key ); ?>" name="su_gestion[<?php echo esc_attr( $key ); ?>]">
+										<?php foreach ( $conf[3] as $su_opt => $su_label ) : ?>
+											<option value="<?php echo esc_attr( $su_opt ); ?>" <?php selected( su_gestion_option( $key ), $su_opt ); ?>><?php echo esc_html( $su_label ); ?></option>
+										<?php endforeach; ?>
+									</select>
 								<?php elseif ( 'checkbox' === $conf[1] ) : ?>
 									<input type="checkbox" id="su_<?php echo esc_attr( $key ); ?>" name="su_gestion[<?php echo esc_attr( $key ); ?>]" value="1" <?php checked( su_gestion_option( $key ), 1 ); ?>>
 								<?php else : ?>

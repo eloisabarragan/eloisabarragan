@@ -6,7 +6,7 @@
 if ( ! su_has_gestion() ) {
 	return;
 }
-$su_q = su_remates_query( 'proximos', 3 );
+$su_q = su_remates_query( 'activos', 3 );
 if ( ! $su_q->have_posts() ) {
 	$su_q = su_remates_query( 'sin_fecha', 3 );
 }

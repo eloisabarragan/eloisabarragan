@@ -10,11 +10,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 function su_property_fields() {
 	return array(
 		'precio'      => array( __( 'Precio', 'saraviaubilla-gestion' ), 'price', __( 'Ej.: 385.000. Vacío = se muestra "Consultar".', 'saraviaubilla-gestion' ) ),
-		'moneda'      => array( __( 'Moneda', 'saraviaubilla-gestion' ), 'select', '', array( 'U$S' => 'U$S (dólares)', '$' => '$ (pesos uruguayos)' ) ),
+		'moneda'      => array( __( 'Moneda', 'saraviaubilla-gestion' ), 'select', __( 'Las monedas se configuran en Ajustes → Saravia Ubilla.', 'saraviaubilla-gestion' ), su_moneda_options() ),
 		'periodo'     => array( __( 'Período del precio', 'saraviaubilla-gestion' ), 'select', '', array( '' => __( 'Precio total', 'saraviaubilla-gestion' ), 'mes' => __( 'por mes', 'saraviaubilla-gestion' ), 'noche' => __( 'por noche', 'saraviaubilla-gestion' ), 'temporada' => __( 'por temporada', 'saraviaubilla-gestion' ) ) ),
 		'estado'      => array( __( 'Estado', 'saraviaubilla-gestion' ), 'select', '', array( '' => __( 'Disponible', 'saraviaubilla-gestion' ), 'reservada' => __( 'Reservada', 'saraviaubilla-gestion' ), 'vendida' => __( 'Vendida', 'saraviaubilla-gestion' ), 'alquilada' => __( 'Alquilada', 'saraviaubilla-gestion' ) ) ),
 		'destacada'   => array( __( 'Destacada (aparece primero)', 'saraviaubilla-gestion' ), 'checkbox' ),
-		'direccion'   => array( __( 'Dirección o referencia', 'saraviaubilla-gestion' ), 'text', __( 'Se muestra en la ficha y se usa para el mapa.', 'saraviaubilla-gestion' ) ),
+		'direccion'   => array( __( 'Dirección', 'saraviaubilla-gestion' ), 'text', __( 'En el formato del país (calle y número, unidad, código postal…). No hace falta repetir barrio, ciudad ni país: salen de la Ubicación.', 'saraviaubilla-gestion' ) ),
+		'ocultar_direccion' => array( __( 'Mostrar solo la ubicación aproximada', 'saraviaubilla-gestion' ), 'checkbox', __( 'Por privacidad: no se publica la dirección y el mapa muestra solo el barrio o la ciudad.', 'saraviaubilla-gestion' ) ),
 		'dormitorios' => array( __( 'Dormitorios', 'saraviaubilla-gestion' ), 'number' ),
 		'banos'       => array( __( 'Baños', 'saraviaubilla-gestion' ), 'number' ),
 		'garajes'     => array( __( 'Garajes', 'saraviaubilla-gestion' ), 'number' ),
@@ -23,9 +24,8 @@ function su_property_fields() {
 		'anio'        => array( __( 'Año de construcción', 'saraviaubilla-gestion' ), 'number' ),
 		'padron'      => array( __( 'Padrón', 'saraviaubilla-gestion' ), 'text' ),
 		'gastos'      => array( __( 'Gastos comunes / contribución', 'saraviaubilla-gestion' ), 'text' ),
-		'caracteristicas' => array( __( 'Características', 'saraviaubilla-gestion' ), 'textarea', __( 'Una por línea: Parrillero, Calefacción, Piscina…', 'saraviaubilla-gestion' ) ),
 		'visita'      => array( __( 'Visitas / casa abierta', 'saraviaubilla-gestion' ), 'text', __( 'Ej. Sábado 14/11 de 15 a 17 h', 'saraviaubilla-gestion' ) ),
-		'mapa'        => array( __( 'Ubicación en el mapa', 'saraviaubilla-gestion' ), 'text', __( 'Dirección o coordenadas (ej. -34.9011,-56.1645). Vacío = se usa la dirección.', 'saraviaubilla-gestion' ) ),
+		'mapa'        => array( __( 'Punto en el mapa (opcional)', 'saraviaubilla-gestion' ), 'text', __( 'Coordenadas (ej. 25.7617,-80.1918) o una dirección. Vacío = se usan la dirección y la ubicación.', 'saraviaubilla-gestion' ) ),
 		'ocultar_mapa' => array( __( 'No mostrar mapa', 'saraviaubilla-gestion' ), 'checkbox', __( 'Útil si no se quiere publicar la ubicación exacta.', 'saraviaubilla-gestion' ) ),
 		'video'       => array( __( 'Video (URL de YouTube)', 'saraviaubilla-gestion' ), 'url' ),
 		'galeria'     => array( __( 'Galería de fotos', 'saraviaubilla-gestion' ), 'gallery' ),
@@ -35,15 +35,16 @@ function su_property_fields() {
 function su_remate_fields() {
 	return array(
 		'fecha'      => array( __( 'Fecha y hora del remate', 'saraviaubilla-gestion' ), 'datetime-local', __( 'Si todavía no está definida, dejala vacía: se mostrará "Fecha a confirmar".', 'saraviaubilla-gestion' ) ),
-		'realizado'  => array( __( 'Remate realizado (pasa al historial)', 'saraviaubilla-gestion' ), 'checkbox', __( 'Los remates con fecha pasada pasan solos al historial; marcalo para hacerlo antes.', 'saraviaubilla-gestion' ) ),
+		'estado_remate' => array( __( 'Estado', 'saraviaubilla-gestion' ), 'select', __( 'Realizados, cancelados y suspendidos ya pasados van al historial. La fecha nunca se cambia sola.', 'saraviaubilla-gestion' ), su_remate_estados() ),
 		'lugar'      => array( __( 'Lugar', 'saraviaubilla-gestion' ), 'text' ),
 		'modalidad'  => array( __( 'Modalidad', 'saraviaubilla-gestion' ), 'select', '', array( 'presencial' => __( 'Presencial', 'saraviaubilla-gestion' ), 'online' => __( 'Online', 'saraviaubilla-gestion' ), 'mixto' => __( 'Presencial y online', 'saraviaubilla-gestion' ) ) ),
 		'tipo'       => array( __( 'Tipo de remate', 'saraviaubilla-gestion' ), 'text', __( 'Qué se remata. Ej.: Inmueble, Maquinaria.', 'saraviaubilla-gestion' ) ),
 		'exhibicion' => array( __( 'Exhibición', 'saraviaubilla-gestion' ), 'text', __( 'Días y horarios para ver los bienes.', 'saraviaubilla-gestion' ) ),
 		'base'       => array( __( 'Condiciones del remate', 'saraviaubilla-gestion' ), 'textarea', __( 'Una condición por línea, tal como figuran en las bases o el edicto del remate.', 'saraviaubilla-gestion' ) ),
 		'online_url' => array( __( 'Enlace para ofertar online', 'saraviaubilla-gestion' ), 'url' ),
-		'documentos' => array( __( 'Documentación descargable', 'saraviaubilla-gestion' ), 'files', __( 'Catálogo, bases, edicto u otros archivos (PDF, imágenes). El nombre que se muestra es el título del archivo en Medios.', 'saraviaubilla-gestion' ) ),
-		'catalogo'   => array( __( 'Catálogo (URL de un PDF externo)', 'saraviaubilla-gestion' ), 'url', __( 'Opcional, si el archivo está en otro sitio.', 'saraviaubilla-gestion' ) ),
+		'catalogo_pdf' => array( __( 'Catálogo (PDF)', 'saraviaubilla-gestion' ), 'file', __( 'Se muestra como botón destacado "Descargar catálogo".', 'saraviaubilla-gestion' ) ),
+		'catalogo'   => array( __( 'Catálogo en otro sitio (URL)', 'saraviaubilla-gestion' ), 'url', __( 'Opcional: solo si el catálogo no se sube como archivo.', 'saraviaubilla-gestion' ) ),
+		'documentos' => array( __( 'Otra documentación descargable', 'saraviaubilla-gestion' ), 'files', __( 'Bases, edicto u otros archivos (PDF, imágenes). El nombre que se muestra es el título del archivo en Medios.', 'saraviaubilla-gestion' ) ),
 		'mapa'       => array( __( 'Ubicación en el mapa', 'saraviaubilla-gestion' ), 'text', __( 'Dirección o coordenadas. Vacío = se usa el lugar.', 'saraviaubilla-gestion' ) ),
 		'ocultar_mapa' => array( __( 'No mostrar mapa', 'saraviaubilla-gestion' ), 'checkbox' ),
 		'resultado'  => array( __( 'Comentario para el historial (opcional)', 'saraviaubilla-gestion' ), 'textarea', __( 'Se muestra en el historial de remates realizados.', 'saraviaubilla-gestion' ) ),
@@ -61,9 +62,12 @@ function su_render_box( $post, $box ) {
 	echo '<div class="su-admin-grid">';
 	foreach ( $box['args']['fields'] as $key => $conf ) {
 		$value = get_post_meta( $post->ID, '_su_' . $key, true );
+		if ( 'estado_remate' === $key ) {
+			$value = su_remate_estado_guardado( $post->ID ); // si no se eligió, el que corresponde a la fecha.
+		}
 		$id    = 'su_' . $key;
 		$type  = $conf[1];
-		$wide  = in_array( $type, array( 'textarea', 'gallery', 'files' ), true ) ? ' su-admin-field--wide' : '';
+		$wide  = in_array( $type, array( 'textarea', 'gallery', 'files', 'file' ), true ) ? ' su-admin-field--wide' : '';
 		echo '<p class="su-admin-field' . esc_attr( $wide ) . '">';
 		if ( 'checkbox' === $type ) {
 			printf( '<label for="%1$s"><input type="checkbox" id="%1$s" name="%1$s" value="1" %2$s> %3$s</label>', esc_attr( $id ), checked( $value, '1', false ), esc_html( $conf[0] ) );
@@ -73,10 +77,24 @@ function su_render_box( $post, $box ) {
 				printf( '<textarea id="%1$s" name="%1$s" rows="4" class="widefat">%2$s</textarea>', esc_attr( $id ), esc_textarea( $value ) );
 			} elseif ( 'select' === $type ) {
 				printf( '<select id="%1$s" name="%1$s" class="widefat">', esc_attr( $id ) );
-				foreach ( $conf[3] as $opt => $label ) {
+				$options = $conf[3];
+				if ( '' !== (string) $value && ! array_key_exists( $value, $options ) ) {
+					$options[ $value ] = $value; // valor guardado que ya no está en la lista: se conserva.
+				}
+				foreach ( $options as $opt => $label ) {
 					printf( '<option value="%s" %s>%s</option>', esc_attr( $opt ), selected( $value, $opt, false ), esc_html( $label ) );
 				}
 				echo '</select>';
+			} elseif ( 'file' === $type ) {
+				$file = absint( $value );
+				printf( '<input type="hidden" id="%1$s" name="%1$s" value="%2$s">', esc_attr( $id ), $file ? (int) $file : '' );
+				echo '<span class="su-admin-files" data-su-files-preview="' . esc_attr( $id ) . '">';
+				if ( $file && get_post( $file ) ) {
+					echo '<span>' . esc_html( get_the_title( $file ) ) . '</span>';
+				}
+				echo '</span>';
+				printf( '<button type="button" class="button" data-su-file="%s">%s</button> ', esc_attr( $id ), esc_html__( 'Elegir / subir PDF', 'saraviaubilla-gestion' ) );
+				printf( '<button type="button" class="button-link" data-su-gallery-clear="%s">%s</button>', esc_attr( $id ), esc_html__( 'Quitar', 'saraviaubilla-gestion' ) );
 			} elseif ( 'files' === $type ) {
 				$ids = array_filter( array_map( 'absint', explode( ',', (string) $value ) ) );
 				printf( '<input type="hidden" id="%1$s" name="%1$s" value="%2$s">', esc_attr( $id ), esc_attr( implode( ',', $ids ) ) );
@@ -148,15 +166,18 @@ add_action( 'save_post', function ( $post_id, $post ) {
 				$digits = preg_replace( '/\D/', '', (string) $raw );
 				$value  = '' === $digits ? '' : (string) (int) $digits;
 				break;
+			case 'file':
+				$value = absint( $raw ) ? (string) absint( $raw ) : '';
+				break;
 			case 'gallery':
 			case 'files':
 				$value = implode( ',', array_filter( array_map( 'absint', explode( ',', $raw ) ) ) );
 				break;
 			case 'select':
-				$value = array_key_exists( $raw, $conf[3] ) ? $raw : '';
-				// La moneda se guarda siempre (por defecto dólares).
+				$value = array_key_exists( $raw, $conf[3] ) || ( '' !== $raw && get_post_meta( $post_id, '_su_' . $key, true ) === $raw ) ? $raw : '';
+				// La moneda se guarda siempre (por defecto, la primera configurada).
 				if ( 'moneda' === $key && '' === $value ) {
-					$value = 'U$S';
+					$value = key( su_monedas_info() );
 				}
 				break;
 			default:
@@ -183,14 +204,32 @@ add_action( 'admin_enqueue_scripts', function ( $hook ) {
 
 /* Columnas útiles en los listados del escritorio. */
 add_filter( 'manage_remate_posts_columns', function ( $cols ) {
-	$cols['su_fecha'] = __( 'Fecha del remate', 'saraviaubilla-gestion' );
+	$cols['su_fecha']  = __( 'Fecha del remate', 'saraviaubilla-gestion' );
+	$cols['su_estado'] = __( 'Estado', 'saraviaubilla-gestion' );
 	return $cols;
 } );
 add_action( 'manage_remate_posts_custom_column', function ( $col, $post_id ) {
 	if ( 'su_fecha' === $col ) {
 		echo esc_html( su_remate_date( $post_id, 'corta' ) );
 	}
+	if ( 'su_estado' === $col ) {
+		echo esc_html( su_remate_estado_label( $post_id ) );
+		if ( su_remate_warnings( $post_id ) ) {
+			echo ' <span class="dashicons dashicons-warning" style="color:#dba617" title="' . esc_attr( implode( ' ', su_remate_warnings( $post_id ) ) ) . '"></span>';
+		}
+	}
 }, 10, 2 );
+
+/* Avisos de coherencia fecha/estado en la pantalla del remate. */
+add_action( 'admin_notices', function () {
+	$screen = get_current_screen();
+	if ( ! $screen || 'remate' !== $screen->id || empty( $_GET['post'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
+		return;
+	}
+	foreach ( su_remate_warnings( absint( $_GET['post'] ) ) as $msg ) { // phpcs:ignore WordPress.Security.NonceVerification
+		echo '<div class="notice notice-warning"><p><strong>' . esc_html__( 'Revisá el estado del remate:', 'saraviaubilla-gestion' ) . '</strong> ' . esc_html( $msg ) . '</p></div>';
+	}
+} );
 add_filter( 'manage_propiedad_posts_columns', function ( $cols ) {
 	$cols['su_precio'] = __( 'Precio', 'saraviaubilla-gestion' );
 	$cols['su_estado'] = __( 'Estado', 'saraviaubilla-gestion' );

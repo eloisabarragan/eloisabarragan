@@ -11,19 +11,20 @@ while ( have_posts() ) :
 	$su_operacion = su_term( 'operacion' );
 	$su_tipo      = su_term( 'tipo_propiedad' );
 	$su_chain     = su_location_chain();
-	$su_lugar     = su_location_chain_label( $su_chain, 'completa' );
+	$su_lugar     = su_location_label(); // mismo texto que en las tarjetas.
 	$su_estado    = su_meta( 'estado' );
-	$su_dir       = su_meta( 'direccion' );
-	$su_mapq      = su_meta( 'ocultar_mapa' ) ? '' : ( su_meta( 'mapa' ) ? su_meta( 'mapa' ) : $su_dir );
-	$su_feats     = array_filter( array_map( 'trim', preg_split( '/\r\n|\r|\n/', (string) su_meta( 'caracteristicas' ) ) ) );
+	$su_dir       = su_location_address(); // vacía si se muestra solo la ubicación aproximada.
+	$su_mapq      = su_location_map_query();
+	$su_feats     = su_property_features();
 	$su_wamsg     = sprintf( /* translators: 1: título, 2: enlace */ __( 'Hola, me interesa la propiedad "%1$s" %2$s', 'saraviaubilla' ), get_the_title(), get_permalink() );
 	$su_wa        = su_whatsapp_url( $su_wamsg );
-	$su_addr      = implode( ' · ', array_filter( array( $su_dir, $su_lugar ) ) );
+	$su_share_wa  = 'https://wa.me/?text=' . rawurlencode( get_the_title() . ' ' . get_permalink() );
 
 	$su_details = array_filter( array(
 		__( 'Operación', 'saraviaubilla' )            => $su_operacion ? $su_operacion->name : '',
 		__( 'Tipo', 'saraviaubilla' )                 => $su_tipo ? $su_tipo->name : '',
 	) ) + su_location_detail_rows( $su_chain ) + array_filter( array(
+		__( 'Dirección', 'saraviaubilla' )            => $su_dir,
 		__( 'Estado', 'saraviaubilla' )               => su_estado_label() ? su_estado_label() : __( 'Disponible', 'saraviaubilla' ),
 		__( 'Dormitorios', 'saraviaubilla' )          => su_meta( 'dormitorios' ),
 		__( 'Baños', 'saraviaubilla' )                => su_meta( 'banos' ),
@@ -50,13 +51,17 @@ while ( have_posts() ) :
 						<?php if ( $su_estado ) : ?><span class="su-status su-status--<?php echo esc_attr( $su_estado ); ?> su-status--inline"><?php echo esc_html( su_estado_label() ); ?></span><?php endif; ?>
 					</p>
 					<h1 class="su-single__title"><?php the_title(); ?></h1>
-					<?php if ( $su_addr ) : ?>
-						<p class="su-single__addr"><?php echo su_icon( 'pin' ); // phpcs:ignore WordPress.Security.EscapeOutput ?><?php echo esc_html( $su_addr ); ?></p>
+					<?php if ( $su_lugar ) : ?>
+						<p class="su-single__addr"><?php echo su_icon( 'pin' ); // phpcs:ignore WordPress.Security.EscapeOutput ?><?php echo esc_html( $su_lugar ); ?></p>
 					<?php endif; ?>
 				</div>
 				<div class="su-single__headprice">
 					<?php echo su_price_html(); // phpcs:ignore WordPress.Security.EscapeOutput ?>
-					<button type="button" class="su-iconbtn" data-su-share data-title="<?php echo esc_attr( get_the_title() ); ?>" aria-label="<?php esc_attr_e( 'Compartir esta propiedad', 'saraviaubilla' ); ?>"><?php echo su_icon( 'compartir' ); // phpcs:ignore WordPress.Security.EscapeOutput ?></button>
+					<div class="su-share" role="group" aria-label="<?php esc_attr_e( 'Compartir esta propiedad', 'saraviaubilla' ); ?>">
+						<a class="su-iconbtn" href="<?php echo esc_url( $su_share_wa ); ?>" target="_blank" rel="noopener" aria-label="<?php esc_attr_e( 'Compartir por WhatsApp', 'saraviaubilla' ); ?>" title="<?php esc_attr_e( 'Compartir por WhatsApp', 'saraviaubilla' ); ?>"><?php echo su_icon( 'whatsapp' ); // phpcs:ignore WordPress.Security.EscapeOutput ?></a>
+						<button type="button" class="su-iconbtn" data-su-copy="<?php echo esc_url( get_permalink() ); ?>" aria-label="<?php esc_attr_e( 'Copiar enlace', 'saraviaubilla' ); ?>" title="<?php esc_attr_e( 'Copiar enlace', 'saraviaubilla' ); ?>"><?php echo su_icon( 'enlace' ); // phpcs:ignore WordPress.Security.EscapeOutput ?></button>
+						<span class="su-share__msg" role="status" aria-live="polite" data-su-copy-msg></span>
+					</div>
 				</div>
 			</header>
 
@@ -129,7 +134,11 @@ while ( have_posts() ) :
 					<?php if ( $su_mapq ) : ?>
 						<section class="su-block">
 							<h2><?php esc_html_e( 'Ubicación', 'saraviaubilla' ); ?></h2>
-							<?php echo su_map( $su_mapq ); // phpcs:ignore WordPress.Security.EscapeOutput ?>
+							<p class="su-block__note"><?php echo su_icon( 'pin' ); // phpcs:ignore WordPress.Security.EscapeOutput ?><?php echo esc_html( implode( ' · ', array_filter( array( $su_dir, $su_lugar ) ) ) ); ?></p>
+							<?php if ( su_meta( 'ocultar_direccion' ) ) : ?>
+								<p class="su-block__hint"><?php esc_html_e( 'Ubicación aproximada: la dirección exacta se informa al consultar.', 'saraviaubilla' ); ?></p>
+							<?php endif; ?>
+							<?php echo su_map( $su_mapq, su_meta( 'ocultar_direccion' ) ? 14 : 15 ); // phpcs:ignore WordPress.Security.EscapeOutput ?>
 						</section>
 					<?php endif; ?>
 				</div>
@@ -152,25 +161,16 @@ while ( have_posts() ) :
 			</div>
 
 			<?php
-			$su_related = new WP_Query( array(
-				'post_type'      => 'propiedad',
-				'posts_per_page' => 3,
-				'post__not_in'   => array( $su_id ),
-				'no_found_rows'  => true,
-				'su_destacadas'  => true,
-				'tax_query'      => $su_operacion ? array( array( 'taxonomy' => 'operacion', 'terms' => $su_operacion->term_id ) ) : array(),
-			) );
-			if ( $su_related->have_posts() ) :
+			$su_related = su_related_properties( $su_id, 3 );
+			if ( $su_related ) :
 				?>
-				<section class="su-related">
-					<h2 class="su-head__title"><?php esc_html_e( 'También te puede interesar', 'saraviaubilla' ); ?></h2>
+				<section class="su-related" aria-labelledby="su-related-title">
+					<h2 class="su-head__title" id="su-related-title"><?php esc_html_e( 'Otras propiedades que podrían interesarte', 'saraviaubilla' ); ?></h2>
 					<div class="su-cards">
 						<?php
-						while ( $su_related->have_posts() ) {
-							$su_related->the_post();
-							su_property_card();
+						foreach ( $su_related as $su_rid ) {
+							su_property_card( $su_rid );
 						}
-						wp_reset_postdata();
 						?>
 					</div>
 				</section>

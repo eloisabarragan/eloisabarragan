@@ -40,6 +40,9 @@ function su_defaults() {
 		'steps_title'    => '',
 		'steps'          => '',
 
+		// Accesos a Inmobiliaria y Remates (debajo de la portada).
+		'access_show'    => 1,
+
 		// Propiedades.
 		'props_kicker'   => '',
 		'props_title'    => 'Propiedades',
