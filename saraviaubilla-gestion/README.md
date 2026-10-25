@@ -1,4 +1,4 @@
-# Plugin — Saravia Ubilla – Gestión (v1.0.0)
+# Plugin — Saravia Ubilla – Gestión (v1.1.0)
 
 Propiedades, Remates y Consultas de Saravia Ubilla, independientes del tema. Si se desactiva o se cambia el tema, todo sigue cargado en el escritorio. Si se desactiva el plugin, los datos quedan guardados en la base y vuelven al reactivarlo.
 
@@ -7,7 +7,7 @@ Propiedades, Remates y Consultas de Saravia Ubilla, independientes del tema. Si 
   - Datos: precio, moneda (U$S o $), período, estado (disponible, reservada, vendida, alquilada) y destacada.
   - Descripción: dormitorios, baños, superficies, características, visitas, video y galería.
   - Ubicación: mapa opcional.
-  - Organización: operación, tipo y zona.
+  - Organización: operación, tipo y **ubicación** (país → departamento → ciudad → barrio).
   - El precio se puede escribir como "385.000".
 - **Remates**:
   - Fecha y hora (vacía = "Fecha a confirmar") y casilla **Remate realizado**, que lo pasa al historial.
@@ -24,6 +24,20 @@ Propiedades, Remates y Consultas de Saravia Ubilla, independientes del tema. Si 
   - Descripción de la página de remates y mensaje para cuando no hay remates.
   - **Preguntas frecuentes**: se publican solo al marcar "Revisadas y aprobadas"; las iniciales son un borrador para revisar.
   - **Cloudflare Turnstile**: viene apagado.
+
+## Ubicaciones (Propiedades → Ubicaciones)
+Cuatro niveles: **País → Departamento / Estado / Provincia → Ciudad → Barrio / Zona**. Se pueden usar solo los niveles necesarios (por ejemplo, una chacra puede quedar en "Uruguay → Canelones").
+
+- **Alta desde la propiedad:** la caja "Ubicación" muestra listas en cascada. Cada nivel ofrece solo lo que está dentro del nivel anterior y la opción "+ Agregar nuevo…" para crear una ubicación en el momento.
+- **Administración completa** en Propiedades → Ubicaciones: crear, renombrar, mover (cambiando "Superior") y eliminar. La tabla muestra el nivel de cada ubicación y cuántas propiedades tiene.
+- **Sin duplicados:** no se puede crear dos veces la misma ubicación dentro del mismo lugar (no distingue mayúsculas ni tildes: "canelones" = "Canelones"). Sí puede haber dos con el mismo nombre en lugares distintos (Montevideo departamento y Montevideo ciudad).
+- **Sin mezclas:** el servidor verifica que cada nivel pertenezca al anterior; una ciudad de otro país no se acepta.
+- **Reorganizar sin perder nada:** la propiedad queda asociada a su ubicación más precisa; si esa ubicación se mueve, la propiedad la acompaña.
+- **Eliminar con seguridad:** no se puede eliminar una ubicación que tiene otras adentro, ni un país con propiedades. Al eliminar una ubicación con propiedades, esas propiedades pasan a la ubicación superior.
+- **Buscador automático:** solo muestra los países, departamentos, ciudades y barrios que tienen propiedades publicadas (los borradores no cuentan). Si hay un solo país, se omite ese paso y se empieza por el departamento.
+- **Fichas:** muestran país, departamento, ciudad y barrio; las tarjetas, una versión corta (barrio, ciudad).
+- **Sin servicios externos:** no usa geolocalización ni bases de datos de terceros.
+- **Actualización desde v1.0:** las zonas existentes se conservan con sus propiedades y se ubican dentro de "Uruguay". Un aviso en el escritorio invita a revisarlas (por ejemplo, poner Pocitos dentro de Montevideo → Montevideo). Los enlaces viejos (`?zona=pocitos`, `/zona/pocitos/`) siguen funcionando.
 
 ## Formulario de consultas
 - **Éxito real:** solo muestra "¡Gracias!" si `wp_mail()` confirma el envío. Si falla, la consulta se guarda igual y el visitante ve una alternativa por WhatsApp.

@@ -11,7 +11,7 @@ $su_get = su_search_params();
 // En /operacion/…/, /tipo/… o /zona/… el término de la página cuenta como filtro.
 if ( is_tax() ) {
 	$su_term = get_queried_object();
-	$su_map  = array( 'operacion' => 'operacion', 'tipo_propiedad' => 'tipo', 'zona' => 'zona' );
+	$su_map  = array( 'operacion' => 'operacion', 'tipo_propiedad' => 'tipo', 'zona' => 'ubicacion' );
 	if ( isset( $su_map[ $su_term->taxonomy ] ) && ! $su_get[ $su_map[ $su_term->taxonomy ] ] ) {
 		$su_get[ $su_map[ $su_term->taxonomy ] ] = $su_term->slug;
 	}
@@ -20,7 +20,6 @@ if ( is_tax() ) {
 $su_selects = array(
 	'operacion' => array( 'operacion', __( 'Operación', 'saraviaubilla' ), __( 'Todas', 'saraviaubilla' ) ),
 	'tipo'      => array( 'tipo_propiedad', __( 'Tipo', 'saraviaubilla' ), __( 'Todos', 'saraviaubilla' ) ),
-	'zona'      => array( 'zona', __( 'Zona', 'saraviaubilla' ), __( 'Todas', 'saraviaubilla' ) ),
 );
 $su_base = get_post_type_archive_link( 'propiedad' );
 
@@ -32,6 +31,12 @@ foreach ( $su_selects as $su_param => $su_conf ) {
 		if ( $su_t ) {
 			$su_active[] = array( $su_conf[1] . ': ' . $su_t->name, array( $su_param ) );
 		}
+	}
+}
+if ( $su_get['ubicacion'] ) {
+	$su_loc = get_term_by( 'slug', $su_get['ubicacion'], 'zona' );
+	if ( $su_loc ) {
+		$su_active[] = array( __( 'Ubicación:', 'saraviaubilla' ) . ' ' . su_location_chain_label( su_location_term_chain( $su_loc ), 'completa' ), array( 'ubicacion' ) );
 	}
 }
 if ( $su_get['dormitorios'] ) {
@@ -87,6 +92,7 @@ global $wp_query;
 						</select>
 					</p>
 				<?php endforeach; ?>
+				<?php su_location_filter_fields( $su_get['ubicacion'] ); ?>
 				<p class="su-field">
 					<label for="su-s-dormitorios"><?php esc_html_e( 'Dormitorios', 'saraviaubilla' ); ?></label>
 					<select id="su-s-dormitorios" name="dormitorios">

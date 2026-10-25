@@ -10,19 +10,20 @@ while ( have_posts() ) :
 	$su_id        = get_the_ID();
 	$su_operacion = su_term( 'operacion' );
 	$su_tipo      = su_term( 'tipo_propiedad' );
-	$su_zona      = su_term( 'zona' );
+	$su_chain     = su_location_chain();
+	$su_lugar     = su_location_chain_label( $su_chain, 'completa' );
 	$su_estado    = su_meta( 'estado' );
 	$su_dir       = su_meta( 'direccion' );
 	$su_mapq      = su_meta( 'ocultar_mapa' ) ? '' : ( su_meta( 'mapa' ) ? su_meta( 'mapa' ) : $su_dir );
 	$su_feats     = array_filter( array_map( 'trim', preg_split( '/\r\n|\r|\n/', (string) su_meta( 'caracteristicas' ) ) ) );
 	$su_wamsg     = sprintf( /* translators: 1: título, 2: enlace */ __( 'Hola, me interesa la propiedad "%1$s" %2$s', 'saraviaubilla' ), get_the_title(), get_permalink() );
 	$su_wa        = su_whatsapp_url( $su_wamsg );
-	$su_addr      = $su_zona && false === stripos( (string) $su_dir, $su_zona->name ) ? implode( ', ', array_filter( array( $su_dir, $su_zona->name ) ) ) : $su_dir;
+	$su_addr      = implode( ' · ', array_filter( array( $su_dir, $su_lugar ) ) );
 
 	$su_details = array_filter( array(
 		__( 'Operación', 'saraviaubilla' )            => $su_operacion ? $su_operacion->name : '',
 		__( 'Tipo', 'saraviaubilla' )                 => $su_tipo ? $su_tipo->name : '',
-		__( 'Zona', 'saraviaubilla' )                 => $su_zona ? $su_zona->name : '',
+	) ) + su_location_detail_rows( $su_chain ) + array_filter( array(
 		__( 'Estado', 'saraviaubilla' )               => su_estado_label() ? su_estado_label() : __( 'Disponible', 'saraviaubilla' ),
 		__( 'Dormitorios', 'saraviaubilla' )          => su_meta( 'dormitorios' ),
 		__( 'Baños', 'saraviaubilla' )                => su_meta( 'banos' ),

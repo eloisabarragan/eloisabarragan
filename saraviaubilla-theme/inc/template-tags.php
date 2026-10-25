@@ -110,12 +110,13 @@ function su_property_card( $post_id = null, $heading = 'h3' ) {
 	$post_id   = $post_id ? $post_id : get_the_ID();
 	$operacion = su_term( 'operacion', $post_id );
 	$tipo      = su_term( 'tipo_propiedad', $post_id );
-	$zona      = su_term( 'zona', $post_id );
+	$lugar     = su_location_label( $post_id, 'corta' );
+	$ubic_slugs = implode( ' ', wp_list_pluck( su_location_chain( $post_id ), 'slug' ) );
 	$estado    = su_meta( 'estado', $post_id );
 	$cerrada   = in_array( $estado, array( 'vendida', 'alquilada' ), true );
 	$heading   = in_array( $heading, array( 'h2', 'h3' ), true ) ? $heading : 'h3';
 	?>
-	<article class="su-card<?php echo $cerrada ? ' is-closed' : ''; ?>" data-su-reveal data-operacion="<?php echo esc_attr( $operacion ? $operacion->slug : '' ); ?>" data-tipo="<?php echo esc_attr( $tipo ? $tipo->slug : '' ); ?>" data-zona="<?php echo esc_attr( $zona ? $zona->slug : '' ); ?>" data-dormitorios="<?php echo esc_attr( su_meta( 'dormitorios', $post_id ) ); ?>" data-precio="<?php echo esc_attr( su_meta( 'precio', $post_id ) ); ?>" data-moneda="<?php echo esc_attr( su_moneda( $post_id ) ); ?>" data-estado="<?php echo esc_attr( $estado ); ?>" data-destacada="<?php echo su_meta( 'destacada', $post_id ) ? '1' : ''; ?>" data-fecha="<?php echo esc_attr( get_post_time( 'U', true, $post_id ) ); ?>">
+	<article class="su-card<?php echo $cerrada ? ' is-closed' : ''; ?>" data-su-reveal data-operacion="<?php echo esc_attr( $operacion ? $operacion->slug : '' ); ?>" data-tipo="<?php echo esc_attr( $tipo ? $tipo->slug : '' ); ?>" data-ubicaciones="<?php echo esc_attr( $ubic_slugs ); ?>" data-dormitorios="<?php echo esc_attr( su_meta( 'dormitorios', $post_id ) ); ?>" data-precio="<?php echo esc_attr( su_meta( 'precio', $post_id ) ); ?>" data-moneda="<?php echo esc_attr( su_moneda( $post_id ) ); ?>" data-estado="<?php echo esc_attr( $estado ); ?>" data-destacada="<?php echo su_meta( 'destacada', $post_id ) ? '1' : ''; ?>" data-fecha="<?php echo esc_attr( get_post_time( 'U', true, $post_id ) ); ?>">
 		<div class="su-card__media">
 			<?php
 			if ( has_post_thumbnail( $post_id ) ) {
@@ -137,8 +138,8 @@ function su_property_card( $post_id = null, $heading = 'h3' ) {
 			<?php endif; ?>
 		</div>
 		<div class="su-card__body">
-			<?php if ( $tipo || $zona ) : ?>
-				<p class="su-card__meta"><?php echo esc_html( implode( ' · ', array_filter( array( $tipo ? $tipo->name : '', $zona ? $zona->name : '' ) ) ) ); ?></p>
+			<?php if ( $tipo || $lugar ) : ?>
+				<p class="su-card__meta"><?php echo esc_html( implode( ' · ', array_filter( array( $tipo ? $tipo->name : '', $lugar ) ) ) ); ?></p>
 			<?php endif; ?>
 			<<?php echo $heading; // phpcs:ignore WordPress.Security.EscapeOutput ?> class="su-card__title"><a href="<?php echo esc_url( get_permalink( $post_id ) ); ?>"><?php echo esc_html( get_the_title( $post_id ) ); ?></a></<?php echo $heading; // phpcs:ignore WordPress.Security.EscapeOutput ?>>
 			<?php $su_specs = su_specs( $post_id ); ?>

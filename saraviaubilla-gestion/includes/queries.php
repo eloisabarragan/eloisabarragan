@@ -3,7 +3,9 @@
  * Buscador y orden de propiedades.
  *
  * Parámetros del listado (/inmobiliaria/ y las páginas de operación, tipo y zona):
- *   operacion, tipo, zona  → slug del término
+ *   operacion, tipo        → slug del término
+ *   u0…u3 / ubicacion      → ubicación (país, departamento, ciudad o barrio); incluye las internas
+ *   zona                   → nombre anterior de "ubicacion" (enlaces viejos)
  *   dormitorios            → mínimo
  *   moneda                 → U$S o $
  *   precio_min, precio_max → se comparan solo dentro de la moneda elegida
@@ -29,7 +31,7 @@ function su_search_params() {
 	$p = array(
 		'operacion'   => sanitize_title( $get( 'operacion' ) ),
 		'tipo'        => sanitize_title( $get( 'tipo' ) ),
-		'zona'        => sanitize_title( $get( 'zona' ) ),
+		'ubicacion'   => su_location_requested(),
 		'dormitorios' => absint( $get( 'dormitorios' ) ),
 		'moneda'      => array_key_exists( $get( 'moneda' ), su_monedas() ) ? $get( 'moneda' ) : '',
 		'precio_min'  => su_parse_price( $get( 'precio_min' ) ),
@@ -63,12 +65,13 @@ add_action( 'pre_get_posts', function ( $q ) {
 	$q->set( 'su_listing', true );
 
 	$tax_query = array();
-	foreach ( array( 'operacion' => 'operacion', 'tipo' => 'tipo_propiedad', 'zona' => 'zona' ) as $param => $tax ) {
+	foreach ( array( 'operacion' => 'operacion', 'tipo' => 'tipo_propiedad', 'ubicacion' => 'zona' ) as $param => $tax ) {
 		if ( $p[ $param ] ) {
 			$tax_query[] = array(
-				'taxonomy' => $tax,
-				'field'    => 'slug',
-				'terms'    => $p[ $param ],
+				'taxonomy'         => $tax,
+				'field'            => 'slug',
+				'terms'            => $p[ $param ],
+				'include_children' => true, // un país incluye sus departamentos, ciudades y barrios.
 			);
 		}
 	}

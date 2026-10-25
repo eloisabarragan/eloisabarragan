@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'SU_VERSION', '1.1.0' );
+define( 'SU_VERSION', '1.1.1' );
 
 require get_template_directory() . '/inc/defaults.php';
 require get_template_directory() . '/inc/customizer.php';

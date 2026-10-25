@@ -62,8 +62,8 @@ function su_seo_description() {
 		$parts = array();
 		$tipo  = su_term( 'tipo_propiedad', $id );
 		$op    = su_term( 'operacion', $id );
-		$zona  = su_term( 'zona', $id );
-		$head  = trim( ( $tipo ? $tipo->name : '' ) . ( $op ? ' en ' . mb_strtolower( $op->name ) : '' ) . ( $zona ? ', ' . $zona->name : '' ) );
+		$ubic  = su_location_label( $id, 'completa' );
+		$head  = trim( ( $tipo ? $tipo->name : '' ) . ( $op ? ' en ' . mb_strtolower( $op->name ) : '' ) . ( $ubic ? ', ' . $ubic : '' ) );
 		if ( $head ) {
 			$parts[] = $head;
 		}
@@ -232,6 +232,26 @@ add_action( 'wp_head', function () {
 		$imgs = su_seo_images( $id );
 		if ( $imgs ) {
 			$listing['image'] = $imgs;
+		}
+		$chain = su_location_chain( $id );
+		if ( $chain ) {
+			// País, departamento, ciudad y barrio salen de la jerarquía de ubicaciones.
+			$address = array( '@type' => 'PostalAddress', 'addressCountry' => $chain[0]->name );
+			if ( isset( $chain[1] ) ) {
+				$address['addressRegion'] = $chain[1]->name;
+			}
+			if ( isset( $chain[2] ) ) {
+				$address['addressLocality'] = $chain[2]->name;
+			}
+			$street = trim( implode( ', ', array_filter( array( su_meta( 'direccion', $id ), isset( $chain[3] ) ? $chain[3]->name : '' ) ) ) );
+			if ( '' !== $street ) {
+				$address['streetAddress'] = $street;
+			}
+			$listing['contentLocation'] = array(
+				'@type'   => 'Place',
+				'name'    => su_location_label( $id, 'completa' ),
+				'address' => $address,
+			);
 		}
 		if ( '' !== su_meta( 'precio', $id ) ) {
 			$estado            = su_meta( 'estado', $id );

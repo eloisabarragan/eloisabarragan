@@ -70,22 +70,43 @@ function su_register_types() {
 	) );
 
 	$tax = array(
-		'operacion'      => array( __( 'Operaciones', 'saraviaubilla-gestion' ), __( 'Operación', 'saraviaubilla-gestion' ), 'operacion', false ),
-		'tipo_propiedad' => array( __( 'Tipos de propiedad', 'saraviaubilla-gestion' ), __( 'Tipo', 'saraviaubilla-gestion' ), 'tipo', false ),
-		'zona'           => array( __( 'Zonas', 'saraviaubilla-gestion' ), __( 'Zona', 'saraviaubilla-gestion' ), 'zona', true ),
+		'operacion'      => array( __( 'Operaciones', 'saraviaubilla-gestion' ), __( 'Operación', 'saraviaubilla-gestion' ), 'operacion' ),
+		'tipo_propiedad' => array( __( 'Tipos de propiedad', 'saraviaubilla-gestion' ), __( 'Tipo', 'saraviaubilla-gestion' ), 'tipo' ),
+		// "zona" guarda las ubicaciones jerárquicas (País → Departamento → Ciudad → Barrio). Ver locations.php.
+		'zona'           => array( __( 'Ubicaciones', 'saraviaubilla-gestion' ), __( 'Ubicación', 'saraviaubilla-gestion' ), 'zona' ),
 	);
 	foreach ( $tax as $key => $conf ) {
+		$labels = array(
+			'name'          => $conf[0],
+			'singular_name' => $conf[1],
+		);
+		if ( 'zona' === $key ) {
+			$labels += array(
+				'menu_name'         => __( 'Ubicaciones', 'saraviaubilla-gestion' ),
+				'all_items'         => __( 'Todas las ubicaciones', 'saraviaubilla-gestion' ),
+				'add_new_item'      => __( 'Agregar ubicación', 'saraviaubilla-gestion' ),
+				'new_item_name'     => __( 'Nombre de la ubicación', 'saraviaubilla-gestion' ),
+				'edit_item'         => __( 'Editar ubicación', 'saraviaubilla-gestion' ),
+				'update_item'       => __( 'Guardar ubicación', 'saraviaubilla-gestion' ),
+				'search_items'      => __( 'Buscar ubicaciones', 'saraviaubilla-gestion' ),
+				'parent_item'       => __( 'Ubicación superior', 'saraviaubilla-gestion' ),
+				'parent_item_colon' => __( 'Ubicación superior:', 'saraviaubilla-gestion' ),
+				'not_found'         => __( 'Todavía no hay ubicaciones.', 'saraviaubilla-gestion' ),
+				'back_to_items'     => __( '← Volver a Ubicaciones', 'saraviaubilla-gestion' ),
+			);
+		}
 		register_taxonomy( $key, 'propiedad', array(
-			'labels'            => array(
-				'name'          => $conf[0],
-				'singular_name' => $conf[1],
-			),
+			'labels'            => $labels,
+			// Las ubicaciones se eligen en su propia caja (en cascada), no en la lista de casillas.
+			'meta_box_cb'       => 'zona' === $key ? false : null,
+			'show_in_quick_edit' => 'zona' !== $key,
 			'hierarchical'      => true,
 			'show_admin_column' => true,
 			'show_in_rest'      => true,
 			// Sin variable propia en la dirección: ?operacion= y ?zona= los usa el buscador.
 			'query_var'         => false,
-			'rewrite'           => array( 'slug' => $conf[2], 'with_front' => false, 'hierarchical' => $conf[3] ),
+			// Direcciones simples (/zona/carrasco/): el nombre en la dirección es único y no cambia al reorganizar.
+			'rewrite'           => array( 'slug' => $conf[2], 'with_front' => false, 'hierarchical' => false ),
 		) );
 	}
 }
@@ -107,6 +128,7 @@ function su_gestion_activate() {
 	}
 	su_gestion_migrate_contact();
 	su_gestion_migrate_monedas();
+	su_locations_migrate();
 	flush_rewrite_rules();
 }
 

@@ -1,10 +1,10 @@
-# Tema WordPress — Saravia Ubilla (v1.1.0)
+# Tema WordPress — Saravia Ubilla (v1.1.1)
 
 Diseño del sitio de Saravia Ubilla (bienes raíces, remates y tasaciones):
 - Mantiene la identidad: logotipo SARAVIA/UBILLA, azul marino, blanco y celeste.
 - Conserva **los textos tal cual están en el sitio actual**.
 
-Se entrega junto al plugin **Saravia Ubilla – Gestión**, que aporta Propiedades, Remates, Consultas y el formulario. El plugin va aparte para que un cambio de tema no haga desaparecer esos contenidos del panel.
+Se entrega junto al plugin **Saravia Ubilla – Gestión**, que aporta Propiedades, Remates, Consultas y el formulario. El plugin va aparte para que un cambio de tema no haga desaparecer esos contenidos del panel. Esta versión del tema requiere el plugin **v1.1.0 o posterior** (ubicaciones por país, departamento, ciudad y barrio).
 
 ## Instalación
 1. **Plugins → Añadir nuevo → Subir plugin** → `saraviaubilla-gestion.zip` → **Activar**.
@@ -23,6 +23,7 @@ Se entrega junto al plugin **Saravia Ubilla – Gestión**, que aporta Propiedad
 | Colores, textos de portada, servicios (texto breve y completo), Nosotros, misión, visión, logos de asociaciones | Apariencia → Personalizar → Saravia Ubilla |
 | Teléfono, WhatsApp, email, dirección, horario, redes | Apariencia → Personalizar → Contacto y redes **o** Ajustes → Saravia Ubilla (es el mismo dato) |
 | Propiedades, Remates, Consultas | Menú lateral del escritorio (plugin) |
+| Países, departamentos, ciudades y barrios | Propiedades → Ubicaciones, o directamente al cargar la propiedad (plugin) |
 | Descripción de la página de remates, mensaje sin remates, preguntas frecuentes, Turnstile | Ajustes → Saravia Ubilla (plugin) |
 
 ## Rendimiento y accesibilidad
