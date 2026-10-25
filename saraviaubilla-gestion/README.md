@@ -1,4 +1,4 @@
-# Plugin — Saravia Ubilla – Gestión (v1.2.0)
+# Plugin — Saravia Ubilla – Gestión (v1.2.1)
 
 Propiedades, Remates y Consultas de Saravia Ubilla, independientes del tema. Si se desactiva o se cambia el tema, todo sigue cargado en el escritorio. Si se desactiva el plugin, los datos quedan guardados en la base y vuelven al reactivarlo.
 
@@ -60,6 +60,7 @@ Cuatro niveles: **País → Departamento / Estado / Provincia → Ciudad / Local
 - **Si el correo falla**, el visitante ve que su consulta quedó registrada pero que el aviso por correo no salió, con la alternativa de WhatsApp.
 - **Si hay un error**, se conservan los datos escritos y se marca el campo con el problema.
 - **Shortcode** `[su_formulario]` para poner el formulario en cualquier página.
+- **Interés elegido por enlace:** `?interes=Valuaciones` (o Inmobiliarios, Remates, Otra consulta) abre el formulario con esa opción marcada; lo usa el botón "Solicitar tasación".
 
 > Para que los correos salgan bien desde el hosting se recomienda un plugin SMTP (por ejemplo, WP Mail SMTP).
 > Si el sitio está detrás de Cloudflare u otro proxy, el límite por conexión puede ajustarse con el filtro `su_gestion_client_ip`.

@@ -14,6 +14,9 @@
 			<?php if ( su_mod( 'contact_text' ) ) : ?>
 				<p class="su-contact__text" data-su-reveal><?php echo wp_kses_post( su_mod( 'contact_text' ) ); ?></p>
 			<?php endif; ?>
+			<?php if ( su_whatsapp_url() ) : ?>
+				<p class="su-contact__cta" data-su-reveal><a class="su-btn su-btn--wa" href="<?php echo esc_url( su_whatsapp_url( __( 'Hola, quisiera hacer una consulta.', 'saraviaubilla' ) ) ); ?>" target="_blank" rel="noopener"><?php echo su_icon( 'whatsapp' ); // phpcs:ignore WordPress.Security.EscapeOutput ?><?php esc_html_e( 'Contactanos por WhatsApp', 'saraviaubilla' ); ?></a></p>
+			<?php endif; ?>
 			<ul class="su-contact__ways" data-su-reveal>
 				<?php if ( su_whatsapp_url() ) : ?>
 					<li><a href="<?php echo esc_url( su_whatsapp_url( __( 'Hola, quisiera hacer una consulta.', 'saraviaubilla' ) ) ); ?>" target="_blank" rel="noopener"><?php echo su_icon( 'whatsapp' ); // phpcs:ignore WordPress.Security.EscapeOutput ?><span><small>WhatsApp</small><?php echo esc_html( su_mod( 'phone' ) ); ?></span></a></li>

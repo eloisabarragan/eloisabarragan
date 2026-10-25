@@ -48,7 +48,8 @@ function su_customize_register( $wp_customize ) {
 		'su_hero'     => __( 'Portada', 'saraviaubilla' ),
 		'su_services' => __( 'Servicios', 'saraviaubilla' ),
 		'su_steps'    => __( 'Cómo trabajamos', 'saraviaubilla' ),
-		'su_props'    => __( 'Propiedades y remates', 'saraviaubilla' ),
+		'su_props'    => __( 'Accesos, propiedades y remates', 'saraviaubilla' ),
+		'su_tasacion' => __( 'Tasaciones', 'saraviaubilla' ),
 		'su_about'    => __( 'Nosotros', 'saraviaubilla' ),
 		'su_contact'  => __( 'Contacto y redes', 'saraviaubilla' ),
 	);
@@ -77,6 +78,7 @@ function su_customize_register( $wp_customize ) {
 	$images = array(
 		'hero_image'  => array( 'su_hero', __( 'Imagen de fondo de la portada (opcional)', 'saraviaubilla' ) ),
 		'about_image' => array( 'su_about', __( 'Foto del equipo / oficina (opcional)', 'saraviaubilla' ) ),
+		'tasacion_image' => array( 'su_tasacion', __( 'Foto de la sección (opcional)', 'saraviaubilla' ) ),
 	);
 	foreach ( $images as $key => $conf ) {
 		$wp_customize->add_setting( 'su_' . $key, array(
@@ -94,13 +96,16 @@ function su_customize_register( $wp_customize ) {
 	$fields = array(
 		'logo_tagline'    => array( 'su_brand', __( 'Bajada del logo (si no subís un logo)', 'saraviaubilla' ), 'text' ),
 
-		'hero_kicker'     => array( 'su_hero', __( 'Antetítulo', 'saraviaubilla' ), 'text' ),
+		'header_cta'      => array( 'su_hero', __( 'Botón del encabezado (a la derecha del menú)', 'saraviaubilla' ), 'text', __( 'Vacío = no se muestra.', 'saraviaubilla' ) ),
+		'header_cta_url'  => array( 'su_hero', __( 'Enlace del botón del encabezado', 'saraviaubilla' ), 'text', __( 'Vacío = página de Contacto.', 'saraviaubilla' ) ),
+		'hero_kicker'     => array( 'su_hero', __( 'Antetítulo (opcional)', 'saraviaubilla' ), 'text' ),
 		'hero_title'      => array( 'su_hero', __( 'Título', 'saraviaubilla' ), 'text' ),
-		'hero_text'       => array( 'su_hero', __( 'Bajada', 'saraviaubilla' ), 'textarea' ),
+		'hero_subtitle'   => array( 'su_hero', __( 'Subtítulo', 'saraviaubilla' ), 'text' ),
+		'hero_text'       => array( 'su_hero', __( 'Frase', 'saraviaubilla' ), 'textarea' ),
 		'hero_btn1'       => array( 'su_hero', __( 'Botón principal', 'saraviaubilla' ), 'text' ),
-		'hero_btn1_url'   => array( 'su_hero', __( 'Enlace del botón principal', 'saraviaubilla' ), 'text', __( 'Ej. #servicios, #contacto o una dirección completa.', 'saraviaubilla' ) ),
+		'hero_btn1_url'   => array( 'su_hero', __( 'Enlace del botón principal', 'saraviaubilla' ), 'text', __( 'Vacío = Propiedades. También: #tasaciones, #contacto o una dirección completa.', 'saraviaubilla' ) ),
 		'hero_btn2'       => array( 'su_hero', __( 'Botón secundario', 'saraviaubilla' ), 'text' ),
-		'hero_btn2_url'   => array( 'su_hero', __( 'Enlace del botón secundario', 'saraviaubilla' ), 'text' ),
+		'hero_btn2_url'   => array( 'su_hero', __( 'Enlace del botón secundario', 'saraviaubilla' ), 'text', __( 'Vacío = Próximos remates.', 'saraviaubilla' ) ),
 		'stats'           => array( 'su_hero', __( 'Sellos bajo la portada', 'saraviaubilla' ), 'textarea', __( 'Uno por línea, con el formato: Dato destacado | Descripción', 'saraviaubilla' ) ),
 
 		'services_kicker' => array( 'su_services', __( 'Antetítulo', 'saraviaubilla' ), 'text' ),
@@ -111,6 +116,10 @@ function su_customize_register( $wp_customize ) {
 		'steps_title'     => array( 'su_steps', __( 'Título', 'saraviaubilla' ), 'text' ),
 		'steps'           => array( 'su_steps', __( 'Pasos', 'saraviaubilla' ), 'textarea', __( 'Uno por línea: Título del paso | Descripción', 'saraviaubilla' ) ),
 
+		'access_1'        => array( 'su_props', __( 'Acceso 1 (lleva a Propiedades)', 'saraviaubilla' ), 'text', __( 'Formato: Título | Texto', 'saraviaubilla' ) ),
+		'access_2'        => array( 'su_props', __( 'Acceso 2 (lleva a Remates)', 'saraviaubilla' ), 'text', __( 'Formato: Título | Texto', 'saraviaubilla' ) ),
+		'access_3'        => array( 'su_props', __( 'Acceso 3 (lleva a Tasaciones)', 'saraviaubilla' ), 'text', __( 'Formato: Título | Texto', 'saraviaubilla' ) ),
+		'access_4'        => array( 'su_props', __( 'Acceso 4 (lleva a Servicios)', 'saraviaubilla' ), 'text', __( 'Formato: Título | Texto. Vacío = no se muestra.', 'saraviaubilla' ) ),
 		'props_kicker'    => array( 'su_props', __( 'Antetítulo', 'saraviaubilla' ), 'text' ),
 		'props_title'     => array( 'su_props', __( 'Título', 'saraviaubilla' ), 'text' ),
 		'props_text'      => array( 'su_props', __( 'Bajada', 'saraviaubilla' ), 'textarea' ),
@@ -118,6 +127,16 @@ function su_customize_register( $wp_customize ) {
 		'remate_label'    => array( 'su_props', __( 'Etiqueta del próximo remate', 'saraviaubilla' ), 'text' ),
 		'remate_empty'    => array( 'su_props', __( 'Mensaje cuando no hay remate programado', 'saraviaubilla' ), 'textarea' ),
 
+		'about_short_title' => array( 'su_about', __( 'Portada — título de "Quiénes somos"', 'saraviaubilla' ), 'text' ),
+		'about_short_lead'  => array( 'su_about', __( 'Portada — frase destacada', 'saraviaubilla' ), 'textarea' ),
+		'about_short_text'  => array( 'su_about', __( 'Portada — párrafo corto', 'saraviaubilla' ), 'textarea', __( 'El texto completo se edita más abajo y se muestra en la página Nosotros.', 'saraviaubilla' ) ),
+		'about_values'      => array( 'su_about', __( 'Portada — valores', 'saraviaubilla' ), 'textarea', __( 'Uno por línea.', 'saraviaubilla' ) ),
+		'trust_title'       => array( 'su_about', __( 'Portada — título de la sección de confianza', 'saraviaubilla' ), 'text' ),
+		'trust_items'       => array( 'su_about', __( 'Portada — trayectoria destacada', 'saraviaubilla' ), 'textarea', __( 'Una por línea: Dato destacado | Detalle. Vacío = no se muestra la sección.', 'saraviaubilla' ) ),
+		'trust_btn'         => array( 'su_about', __( 'Portada — botón de la sección de confianza', 'saraviaubilla' ), 'text' ),
+		'tasacion_title'    => array( 'su_tasacion', __( 'Título', 'saraviaubilla' ), 'text' ),
+		'tasacion_text'     => array( 'su_tasacion', __( 'Texto', 'saraviaubilla' ), 'textarea' ),
+		'tasacion_btn'      => array( 'su_tasacion', __( 'Botón (abre el formulario con "Valuaciones" elegido)', 'saraviaubilla' ), 'text' ),
 		'about_kicker'    => array( 'su_about', __( 'Antetítulo', 'saraviaubilla' ), 'text' ),
 		'about_title'     => array( 'su_about', __( 'Título', 'saraviaubilla' ), 'text' ),
 		'about_page_kicker' => array( 'su_about', __( 'Antetítulo en la página Nosotros', 'saraviaubilla' ), 'text' ),
@@ -139,6 +158,7 @@ function su_customize_register( $wp_customize ) {
 		'facebook'        => array( 'su_contact', __( 'URL de Facebook', 'saraviaubilla' ), 'url' ),
 		'linkedin'        => array( 'su_contact', __( 'URL de LinkedIn', 'saraviaubilla' ), 'url' ),
 		'form_shortcode'  => array( 'su_contact', __( 'Shortcode de formulario externo (opcional)', 'saraviaubilla' ), 'text', __( 'Solo si se quiere reemplazar el formulario propio por el de otro plugin.', 'saraviaubilla' ) ),
+		'footer_tagline'  => array( 'su_contact', __( 'Bajada del logo en el pie', 'saraviaubilla' ), 'text' ),
 		'footer_text'     => array( 'su_contact', __( 'Texto del pie', 'saraviaubilla' ), 'textarea' ),
 	);
 
@@ -175,13 +195,28 @@ function su_customize_register( $wp_customize ) {
 		) );
 	}
 
+	foreach ( array(
+		'hero_remate'   => array( 'su_hero', __( 'Mostrar el próximo remate en la portada (tarjeta con cuenta regresiva)', 'saraviaubilla' ) ),
+		'tasacion_show' => array( 'su_tasacion', __( 'Mostrar la sección de tasaciones en la portada', 'saraviaubilla' ) ),
+	) as $key => $conf ) {
+		$wp_customize->add_setting( 'su_' . $key, array(
+			'default'           => $d[ $key ],
+			'sanitize_callback' => 'su_sanitize_checkbox',
+		) );
+		$wp_customize->add_control( 'su_' . $key, array(
+			'label'   => $conf[1],
+			'section' => $conf[0],
+			'type'    => 'checkbox',
+		) );
+	}
+
 	$wp_customize->add_setting( 'su_access_show', array(
 		'default'           => $d['access_show'],
 		'sanitize_callback' => 'su_sanitize_checkbox',
 	) );
 	$wp_customize->add_control( 'su_access_show', array(
-		'label'       => __( 'Mostrar accesos a Inmobiliaria y Remates debajo de la portada', 'saraviaubilla' ),
-		'description' => __( 'Muestran la cantidad de propiedades publicadas y el próximo remate; se completan solos.', 'saraviaubilla' ),
+		'label'       => __( 'Mostrar los accesos rápidos debajo de la portada', 'saraviaubilla' ),
+		'description' => __( 'Propiedades y Remates suman solos la cantidad publicada y la fecha del próximo remate.', 'saraviaubilla' ),
 		'section'     => 'su_props',
 		'type'        => 'checkbox',
 	) );

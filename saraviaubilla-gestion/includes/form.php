@@ -100,6 +100,9 @@ function su_contact_form( $args = array() ) {
 	$errors = is_array( $saved ) && isset( $saved['errors'] ) ? $saved['errors'] : array();
 	$msgs   = su_form_messages();
 
+	// Interés elegido desde un enlace (ej. "Solicitar tasación" → ?interes=Valuaciones).
+	// phpcs:ignore WordPress.Security.NonceVerification
+	$interes_pedido = isset( $_GET['interes'] ) && in_array( wp_unslash( $_GET['interes'] ), su_form_interests(), true ) ? sanitize_text_field( wp_unslash( $_GET['interes'] ) ) : '';
 	$val = function ( $key, $default = '' ) use ( $values ) {
 		return isset( $values[ $key ] ) ? $values[ $key ] : $default;
 	};
@@ -162,7 +165,7 @@ function su_contact_form( $args = array() ) {
 					<label for="<?php echo esc_attr( $uid ); ?>-interes"><?php esc_html_e( 'Me interesa', 'saraviaubilla-gestion' ); ?></label>
 					<select id="<?php echo esc_attr( $uid ); ?>-interes" name="su_interes">
 						<?php foreach ( su_form_interests() as $opt ) : ?>
-							<option <?php selected( $val( 'interes' ), $opt ); ?>><?php echo esc_html( $opt ); ?></option>
+							<option <?php selected( $val( 'interes', $interes_pedido ), $opt ); ?>><?php echo esc_html( $opt ); ?></option>
 						<?php endforeach; ?>
 					</select>
 				</p>

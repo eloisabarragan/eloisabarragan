@@ -1000,29 +1000,98 @@ p { margin: 0 0 1em; }
 .su-rcard--featured .su-countdown b { color: var(--marino); }
 .su-rcard--featured .su-rcard__cta { align-self: flex-start; }
 
-/* Inicio: accesos a Inmobiliaria y Remates */
-.su-access { padding: clamp(28px, 4vw, 48px) 0 0; }
-.su-access__grid { display: grid; gap: clamp(14px, 2vw, 24px); }
-@media (min-width: 760px) { .su-access__grid { grid-template-columns: 1fr 1fr; } }
-.su-access__item {
-	position: relative; display: flex; gap: 18px; align-items: flex-start; padding: clamp(22px, 2.6vw, 32px);
-	background: #fff; border: 1px solid var(--linea); border-radius: var(--r-lg); color: inherit; text-decoration: none;
-	transition: border-color .2s, box-shadow .2s;
-}
-.su-access__item:hover { border-color: var(--celeste); box-shadow: var(--sombra); }
-.su-access__item:focus-visible { outline: 3px solid var(--celeste); outline-offset: 3px; }
-.su-access__icon { flex: none; display: grid; place-items: center; width: 56px; height: 56px; border-radius: 16px; background: var(--celeste-50); color: var(--celeste-700); }
-.su-access__icon .su-icon { width: 28px; height: 28px; }
-.su-access__title { margin: 2px 0 6px; font: 700 clamp(20px, 2vw, 24px)/1.2 var(--f-display); color: var(--marino); }
-.su-access__text { margin: 0 0 12px; color: var(--grafito); }
-.su-access__go { display: inline-flex; align-items: center; gap: 6px; font: 600 15px var(--f-display); color: var(--celeste-700); }
-.su-access__go .su-icon { width: 18px; height: 18px; transition: transform .2s; }
-.su-access__item:hover .su-access__go .su-icon { transform: translateX(3px); }
-
 /* Historial de propiedades vendidas/alquiladas */
 .su-history-link { margin: clamp(24px, 3vw, 36px) 0 0; text-align: center; }
-.su-access__title, .su-access__text, .su-access__go { display: block; }
-.su-access__go { display: inline-flex; }
+
+
+/* =========================================================================
+ * v1.3 — Portada, encabezado y pie (pedido de la clienta)
+ * ====================================================================== */
+
+/* Portada: foto fuerte (si se cargó), título, subtítulo, frase y dos botones */
+.su-hero__subtitle { margin: -10px 0 22px; font: 600 clamp(14px, 1.5vw, 17px)/1.4 var(--f-display); letter-spacing: .22em; text-transform: uppercase; color: var(--celeste); }
+.su-hero.has-image .su-hero__bg img { opacity: 1; mix-blend-mode: normal; }
+.su-hero.has-image::after { background: linear-gradient(90deg, rgba(var(--marino-rgb), .92) 0%, rgba(var(--marino-rgb), .72) 45%, rgba(var(--marino-rgb), .25) 100%); }
+@media (max-width: 760px) { .su-hero.has-image::after { background: linear-gradient(180deg, rgba(var(--marino-rgb), .55) 0%, rgba(var(--marino-rgb), .9) 70%); } }
+.su-hero.has-image .su-hero__grid, .su-hero.has-image .su-hero__mark { display: none; }
+.su-hero--solo .su-hero__text { max-width: 560px; }
+
+/* Accesos rápidos */
+.su-access { padding: clamp(28px, 4vw, 56px) 0 0; }
+.su-access__grid { display: grid; gap: clamp(12px, 1.6vw, 20px); grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (min-width: 1000px) { .su-access__grid--4 { grid-template-columns: repeat(4, minmax(0, 1fr)); } .su-access__grid--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 340px) { .su-access__grid { grid-template-columns: minmax(0, 1fr); } }
+.su-access__item {
+	position: relative; display: flex; flex-direction: column; align-items: flex-start; gap: 6px;
+	padding: clamp(20px, 2.2vw, 28px); min-height: 100%;
+	background: #fff; border: 1px solid var(--linea); border-radius: var(--r-lg); color: inherit; text-decoration: none;
+	transition: border-color .2s, box-shadow .2s, transform .2s var(--ease);
+}
+.su-access__item:hover { border-color: var(--celeste); box-shadow: var(--sombra); transform: translateY(-2px); }
+.su-access__item:focus-visible { outline: 3px solid var(--celeste); outline-offset: 3px; }
+.su-access__icon { display: grid; place-items: center; width: 52px; height: 52px; margin-bottom: 10px; border-radius: 14px; background: var(--celeste-50); color: var(--celeste-700); }
+.su-access__icon .su-icon { width: 26px; height: 26px; }
+.su-access__title { display: block; font: 700 clamp(18px, 1.7vw, 21px)/1.2 var(--f-display); color: var(--marino); }
+.su-access__text { display: block; color: var(--grafito); font-size: 15px; line-height: 1.45; }
+.su-access__meta { display: block; margin-top: 4px; font: 600 13px var(--f-display); color: var(--celeste-700); }
+.su-access__go { position: absolute; right: 20px; top: 24px; color: var(--suave); }
+.su-access__go .su-icon { width: 20px; height: 20px; transition: transform .2s; }
+.su-access__item:hover .su-access__go { color: var(--marino); }
+.su-access__item:hover .su-access__go .su-icon { transform: translateX(3px); }
+@media (max-width: 600px) {
+	.su-access__item { padding: 16px 14px 18px; gap: 4px; }
+	.su-access__icon { width: 40px; height: 40px; margin-bottom: 6px; border-radius: 12px; }
+	.su-access__icon .su-icon { width: 22px; height: 22px; }
+	.su-access__title { font-size: 17px; }
+	.su-access__text { font-size: 14px; }
+	.su-access__meta { font-size: 12.5px; }
+	.su-access__go { top: 16px; right: 14px; }
+	.su-hero__subtitle { font-size: 13px; letter-spacing: .12em; }
+}
+
+/* Quiénes somos (versión corta) */
+.su-intro__grid { display: grid; gap: clamp(32px, 5vw, 72px); align-items: center; }
+.su-intro:not(.has-image) .su-intro__copy { max-width: 780px; }
+@media (min-width: 1000px) { .su-intro.has-image .su-intro__grid { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); } }
+.su-intro__lead { font: 600 clamp(20px, 2.2vw, 26px)/1.35 var(--f-display); color: var(--marino); margin: 0 0 16px; letter-spacing: -.01em; }
+.su-intro__text { color: var(--grafito); margin: 0 0 24px; max-width: 640px; }
+.su-intro__values { list-style: none; margin: 0 0 30px; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 24px; max-width: 560px; }
+@media (max-width: 420px) { .su-intro__values { grid-template-columns: minmax(0, 1fr); } }
+.su-intro__values li { display: flex; align-items: center; gap: 10px; font: 600 15.5px var(--f-display); color: var(--marino); }
+.su-intro__values .su-icon { width: 22px; height: 22px; flex: none; color: var(--celeste-700); }
+.su-intro__img { margin: 0; border-radius: var(--r-lg); overflow: hidden; aspect-ratio: 4 / 3; background: var(--niebla); }
+.su-intro__img img { width: 100%; height: 100%; object-fit: cover; }
+
+/* Tasaciones */
+.su-tasacion { padding-top: 0; }
+.su-tasacion__box { display: grid; overflow: hidden; border-radius: var(--r-lg); background: var(--marino); color: #fff; }
+.su-tasacion.has-image .su-tasacion__box { grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 900px) { .su-tasacion.has-image .su-tasacion__box { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }
+.su-tasacion__img { margin: 0; min-height: 260px; }
+.su-tasacion__img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.su-tasacion__copy { padding: clamp(32px, 5vw, 64px); }
+.su-tasacion:not(.has-image) .su-tasacion__copy { max-width: 820px; }
+.su-tasacion__title { color: #fff; font-size: clamp(26px, 3.2vw, 40px); line-height: 1.12; letter-spacing: -.02em; margin: 0 0 16px; }
+.su-tasacion__text { color: rgba(255, 255, 255, .8); font-size: clamp(16px, 1.4vw, 18px); margin: 0 0 28px; max-width: 620px; }
+
+/* Confianza: trayectoria destacada */
+.su-trust__list { list-style: none; margin: 0; padding: 0; display: grid; gap: clamp(12px, 1.6vw, 20px); grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); }
+.su-trust__list li { display: flex; flex-direction: column; gap: 8px; padding: clamp(22px, 2.4vw, 30px); background: #fff; border-radius: var(--r-lg); border: 1px solid var(--linea); }
+.su-trust__list b { font: 800 clamp(20px, 2vw, 26px)/1.15 var(--f-display); color: var(--marino); letter-spacing: -.015em; }
+.su-trust__list span { color: var(--grafito); font-size: 15px; line-height: 1.45; }
+.su-trust + .su-assoc { border-top: 0; }
+
+/* Contacto: botón de WhatsApp */
+.su-contact__cta { margin: 28px 0 0; }
+
+/* Encabezado: botón "Consultar" */
+.su-header__cta .su-icon { width: 18px; height: 18px; }
+@media (max-width: 1099px) { .su-header__cta .su-icon { width: 20px; height: 20px; } }
+
+/* Pie: marca, secciones, contacto y redes */
+@media (min-width: 800px) { .su-footer__grid { grid-template-columns: 1.3fr 1fr 1.2fr; } .su-footer__grid:has(> :nth-child(4)) { grid-template-columns: 1.3fr 1fr 1.2fr .8fr; } }
+.su-footer .su-logo__tag { letter-spacing: .16em; }
+.su-footer__menu a { display: inline-block; padding: 2px 0; }
 
 /* Tipografías alojadas en el sitio (SIL Open Font License): Inter y Plus Jakarta Sans. */
 @font-face {
@@ -1073,13 +1142,13 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 	<div class="su-wrap su-header__inner">
 		<a class="su-logo " href="index.html" rel="home"><span class="su-logo__word"><b>SARAVIA</b><span>UBILLA</span></span><span class="su-logo__tag">Bienes raíces - Remates - Tasaciones</span></a>
 		<nav class="su-nav" id="su-nav" aria-label="Principal">
-			<ul class="su-menu"><li class="current-menu-item"><a href="index.html" aria-current="page">Inicio</a></li><li><a href="servicios.html">Servicios</a></li><li><a href="inmobiliaria.html">Inmobiliaria</a></li><li><a href="proximo-remate.html">Próximo Remate</a></li><li><a href="nosotros.html">Nosotros</a></li><li><a href="contacto.html">Contacto</a></li></ul>			<div class="su-nav__extra">
+			<ul class="su-menu"><li class="current-menu-item"><a href="index.html" aria-current="page">Inicio</a></li><li><a href="proximo-remate.html">Remates</a></li><li><a href="inmobiliaria.html">Propiedades</a></li><li><a href="index.html#tasaciones">Tasaciones</a></li><li><a href="nosotros.html">Nosotros</a></li></ul>			<div class="su-nav__extra">
 									<a href="tel:099069369"><svg class="su-icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 3h4l2 5-2.5 1.5a11 11 0 0 0 6 6L16 13l5 2v4a2 2 0 0 1-2 2A17 17 0 0 1 3 5a2 2 0 0 1 2-2z"/></svg>099 069 369</a>
 											</div>
 		</nav>
 
 		<div class="su-header__actions">
-							<a class="su-btn su-btn--sm su-btn--primary su-header__cta" href="https://wa.me/59899069369?text=Hola%2C%20quisiera%20hacer%20una%20consulta." target="_blank" rel="noopener"><svg class="su-icon su-icon--whatsapp " viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg><span>Escribinos</span></a>
+							<a class="su-btn su-btn--sm su-btn--primary su-header__cta" aria-label="Consultar" href="contacto.html"><svg class="su-icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg><span>Consultar</span></a>
 						<button class="su-burger" type="button" aria-controls="su-nav" aria-expanded="false" data-su-burger>
 				<span class="screen-reader-text">Abrir menú</span>
 				<i></i><i></i><i></i>
@@ -1088,91 +1157,52 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 	</div>
 </header>
 <main class="su-view" data-view="index">
-	<section class="su-hero" data-su-hero>
+	<section class="su-hero su-hero--solo" data-su-hero>
 		<div class="su-hero__grid" aria-hidden="true"></div>
 	<div class="su-hero__mark" aria-hidden="true"><span>SARAVIA</span><span>UBILLA</span></div>
 
 	<div class="su-wrap su-hero__inner">
 		<div class="su-hero__copy">
-							<p class="su-kicker su-kicker--light" data-su-reveal>Remates y Servicios Inmobiliarios</p>
 						<h1 class="su-hero__title" data-su-reveal>SARAVIA<span>UBILLA</span></h1>
-			<p class="su-hero__text" data-su-reveal>Servicio integral y especializado en arrendamientos urbanos y rurales, valuaciones, remates de bienes muebles e inmuebles. Y con una gestión experta para atender requerimientos y cumplir con los objetivos buscados en las diferentes áreas a las que nos dedicamos.</p>
-			<div class="su-hero__actions" data-su-reveal>
-				<a class="su-btn su-btn--primary" href="#servicios">Servicios<svg class="su-icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-				<a class="su-btn su-btn--ghost" href="#contacto">Contacto</a>
-			</div>
+							<p class="su-hero__subtitle" data-su-reveal>Remates • Inmobiliaria • Tasaciones</p>
+										<p class="su-hero__text" data-su-reveal>Experiencia y confianza para acompañarte en tus operaciones inmobiliarias.</p>
+						<div class="su-hero__actions" data-su-reveal>
+									<a class="su-btn su-btn--primary" href="inmobiliaria.html">Ver propiedades<svg class="su-icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+													<a class="su-btn su-btn--ghost" href="proximo-remate.html">Próximos remates</a>
+							</div>
 		</div>
 
-					<aside class="su-remate-card" data-su-reveal aria-label="Próximo remate">
-				<p class="su-remate-card__label"><span class="su-pulse" aria-hidden="true"></span>Próximo remate</p>
-				<h2 class="su-remate-card__title"><a href="remate-remate-de-maquinaria-mobiliario-y-antiguedades-ejemplo.html">Remate de maquinaria, mobiliario y antigüedades (ejemplo)</a></h2>
-				<ul class="su-remate-card__info">
-					<li><svg class="su-icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>domingo 1 de noviembre · 14:00 h</li>
-											<li><svg class="su-icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21.5s7-6 7-11.5a7 7 0 0 0-14 0c0 5.5 7 11.5 7 11.5z"/><circle cx="12" cy="10" r="2.5"/></svg>Montevideo (lugar a confirmar)</li>
-									</ul>
-					<div class="su-countdown" data-su-countdown="2026-11-01T14:00:00-03:00" role="timer" aria-label="Tiempo que falta para el remate">
-		<span><b data-d>--</b>días</span>
-		<span><b data-h>--</b>horas</span>
-		<span><b data-m>--</b>min</span>
-		<span><b data-s>--</b>seg</span>
-	</div>
-					<a class="su-btn su-btn--light su-btn--block" href="remate-remate-de-maquinaria-mobiliario-y-antiguedades-ejemplo.html">Ver lotes y condiciones<svg class="su-icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-			</aside>
 			</div>
 </section>
 
-<section class="su-access" aria-label="Inmobiliaria y remates">
-	<div class="su-wrap su-access__grid">
-		<a class="su-access__item" href="inmobiliaria.html">
-			<span class="su-access__icon"><svg class="su-icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 9.5V20h13V9.5"/><path d="M10 20v-5.5h4V20"/></svg></span>
-			<span>
-				<span class="su-access__title">Inmobiliaria</span>
-				<span class="su-access__text">8 propiedades publicadas en España, Estados Unidos y Uruguay.</span>
-				<span class="su-access__go">Ver propiedades<svg class="su-icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-			</span>
-		</a>
-		<a class="su-access__item" href="proximo-remate.html">
-			<span class="su-access__icon"><svg class="su-icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m13.5 4.5 6 6"/><path d="m11 7 6 6"/><path d="m12.2 5.8-4.4 4.4 6 6 4.4-4.4"/><path d="M9.8 12.2 3.5 18.5a1.4 1.4 0 0 0 2 2l6.3-6.3"/><path d="M14 21h7"/></svg></span>
-			<span>
+<section class="su-access" aria-label="Accesos rápidos">
+	<div class="su-wrap su-access__grid su-access__grid--4">
+					<a class="su-access__item" href="inmobiliaria.html">
+				<span class="su-access__icon"><svg class="su-icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 9.5V20h13V9.5"/><path d="M10 20v-5.5h4V20"/></svg></span>
+				<span class="su-access__title">Propiedades</span>
+				<span class="su-access__text">Encontrá propiedades disponibles.</span>				<span class="su-access__meta">8 propiedades publicadas</span>				<span class="su-access__go" aria-hidden="true"><svg class="su-icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+			</a>
+					<a class="su-access__item" href="proximo-remate.html">
+				<span class="su-access__icon"><svg class="su-icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m13.5 4.5 6 6"/><path d="m11 7 6 6"/><path d="m12.2 5.8-4.4 4.4 6 6 4.4-4.4"/><path d="M9.8 12.2 3.5 18.5a1.4 1.4 0 0 0 2 2l6.3-6.3"/><path d="M14 21h7"/></svg></span>
 				<span class="su-access__title">Remates</span>
-				<span class="su-access__text">Próximo remate: domingo 1 de noviembre · 14:00 h.</span>
-				<span class="su-access__go">Ver remates<svg class="su-icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-			</span>
-		</a>
-	</div>
-</section>
-<section class="su-section su-remates-home" id="remates" aria-labelledby="su-remates-home-title">
-	<div class="su-wrap">
-		<div class="su-props__top">
-			<header class="su-head" data-su-reveal>
-				<h2 class="su-head__title" id="su-remates-home-title">Próximos remates</h2>
-			</header>
-			<a class="su-btn su-btn--outline su-btn--sm su-head-link" href="proximo-remate.html">Ver todos los remates<svg class="su-icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-		</div>
-		<div class="su-cards">
-				<article class="su-rcard" data-su-reveal>
-		<div class="su-rcard__media">
-			<img width="720" height="540" src="img/prueba-c-720x540.jpg" class="attachment-su-card size-su-card" alt="" loading="lazy" sizes="auto, (min-width: 1240px) 400px, (min-width: 760px) 50vw, 100vw" decoding="async" srcset="img/prueba-c-720x540.jpg 720w, img/prueba-c-480x360.jpg 480w" />							<span class="su-rcard__date" aria-hidden="true"><b>1</b>nov 2026</span>
-						<span class="su-status su-status--proximo">Próximo</span>
-		</div>
-		<div class="su-rcard__body">
-							<p class="su-card__meta">Maquinaria · Mobiliario · Antigüedades</p>
-						<h3 class="su-card__title"><a href="remate-remate-de-maquinaria-mobiliario-y-antiguedades-ejemplo.html">Remate de maquinaria, mobiliario y antigüedades (ejemplo)</a></h3>
-			<ul class="su-rcard__info">
-									<li><svg class="su-icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg><span>domingo 1 de noviembre · 14:00 h</span></li>
-									<li><svg class="su-icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21.5s7-6 7-11.5a7 7 0 0 0-14 0c0 5.5 7 11.5 7 11.5z"/><circle cx="12" cy="10" r="2.5"/></svg><span>Montevideo (lugar a confirmar)</span></li>
-									<li><svg class="su-icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m13.5 4.5 6 6"/><path d="m11 7 6 6"/><path d="m12.2 5.8-4.4 4.4 6 6 4.4-4.4"/><path d="M9.8 12.2 3.5 18.5a1.4 1.4 0 0 0 2 2l6.3-6.3"/><path d="M14 21h7"/></svg><span>Presencial y online</span></li>
-							</ul>
-									<span class="su-btn su-btn--outline su-btn--sm su-rcard__cta" aria-hidden="true">Ver detalles<svg class="su-icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-		</div>
-	</article>
+				<span class="su-access__text">Conocé los próximos remates.</span>				<span class="su-access__meta">Próximo: 01/11/2026 14:00</span>				<span class="su-access__go" aria-hidden="true"><svg class="su-icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+			</a>
+					<a class="su-access__item" href="index.html#tasaciones">
+				<span class="su-access__icon"><svg class="su-icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12.2 2.7 2.7L16.2 9.4"/></svg></span>
+				<span class="su-access__title">Tasaciones</span>
+				<span class="su-access__text">Valoraciones profesionales.</span>								<span class="su-access__go" aria-hidden="true"><svg class="su-icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+			</a>
+					<a class="su-access__item" href="servicios.html">
+				<span class="su-access__icon"><svg class="su-icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="15" r="4.5"/><path d="m11.2 11.8 8.3-8.3M16 7l2.5 2.5M18.5 4.5 21 7"/></svg></span>
+				<span class="su-access__title">Inmobiliaria</span>
+				<span class="su-access__text">Asesoramiento en operaciones inmobiliarias.</span>								<span class="su-access__go" aria-hidden="true"><svg class="su-icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+			</a>
 			</div>
-	</div>
 </section>
 <section class="su-section su-section--tint su-props" id="propiedades">
 	<div class="su-wrap">
 		<div class="su-props__top">
-			<header class="su-head " data-su-reveal><h2 class="su-head__title">Propiedades</h2></header>							<div class="su-chips" role="group" aria-label="Filtrar por operación" data-su-filter>
+			<header class="su-head " data-su-reveal><h2 class="su-head__title">Propiedades destacadas</h2></header>							<div class="su-chips" role="group" aria-label="Filtrar por operación" data-su-filter>
 					<button type="button" class="is-active" data-filter="">Todas</button>
 											<button type="button" data-filter="alquiler">Alquiler</button>
 											<button type="button" data-filter="venta">Venta</button>
@@ -1239,53 +1269,110 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 			<p class="su-center"><a class="su-btn su-btn--outline" href="inmobiliaria.html">Ver todas las propiedades<svg class="su-icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></p>
 			</div>
 </section>
-<section class="su-section su-services" id="servicios">
+<section class="su-section su-remates-home" id="remates" aria-labelledby="su-remates-home-title">
 	<div class="su-wrap">
-		<header class="su-head " data-su-reveal><h2 class="su-head__title">Servicios</h2></header>		<div class="su-services__grid">
-							<article class="su-service" data-su-reveal>
-					<span class="su-service__icon"><svg class="su-icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 9.5V20h13V9.5"/><path d="M10 20v-5.5h4V20"/></svg></span>
-										<h3 class="su-service__title">Inmobiliarios</h3>
-					<div class="su-service__text"><p>Servicios de arrendamiento, compra-venta y tasaciones de casas, apartamentos, chacras, campos, oficinas y locales comerciales, garantizando asesoramiento experto para cada operación.</p>
-</div>
-				</article>
-							<article class="su-service" data-su-reveal>
-					<span class="su-service__icon"><svg class="su-icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12.2 2.7 2.7L16.2 9.4"/></svg></span>
-										<h3 class="su-service__title">Valuaciones de todo tipo de bienes</h3>
-					<div class="su-service__text"><p>De todo tipo de bienes, con valoraciones precisas y confiables. Y realizadas en colaboración con profesionales de las áreas correspondientes.</p>
-</div>
-				</article>
-							<article class="su-service" data-su-reveal>
-					<span class="su-service__icon"><svg class="su-icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m13.5 4.5 6 6"/><path d="m11 7 6 6"/><path d="m12.2 5.8-4.4 4.4 6 6 4.4-4.4"/><path d="M9.8 12.2 3.5 18.5a1.4 1.4 0 0 0 2 2l6.3-6.3"/><path d="M14 21h7"/></svg></span>
-										<h3 class="su-service__title">Remates</h3>
-					<div class="su-service__text"><p>Remates de Bienes Inmuebles como también de Bienes Muebles: mobiliario, antigüedades, automotores, maquinaria, materiales de construcción y mercadería en general.</p>
-</div>
-				</article>
-					</div>
-					<p class="su-center" data-su-reveal><a class="su-btn su-btn--primary" href="servicios.html">Ver más<svg class="su-icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></p>
+		<div class="su-props__top">
+			<header class="su-head" data-su-reveal>
+				<h2 class="su-head__title" id="su-remates-home-title">Próximos remates</h2>
+			</header>
+			<a class="su-btn su-btn--outline su-btn--sm su-head-link" href="proximo-remate.html">Ver todos los remates<svg class="su-icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+		</div>
+						<article class="su-rcard su-rcard--featured" data-su-reveal>
+		<div class="su-rcard__media">
+			<img width="960" height="600" src="img/prueba-c-960x600.jpg" class="attachment-su-hero-md size-su-hero-md" alt="" loading="lazy" sizes="auto, (min-width: 1000px) 560px, 100vw" decoding="async" srcset="img/prueba-c-960x600.jpg 960w, img/prueba-c-300x188.jpg 300w, img/prueba-c-1024x640.jpg 1024w, img/prueba-c-768x480.jpg 768w, img/prueba-c-1536x960.jpg 1536w, img/prueba-c.jpg 1600w" />							<span class="su-rcard__date" aria-hidden="true"><b>1</b>nov 2026</span>
+						<span class="su-status su-status--proximo">Próximo</span>
+		</div>
+		<div class="su-rcard__body">
+							<p class="su-card__meta">Maquinaria · Mobiliario · Antigüedades</p>
+						<h3 class="su-card__title"><a href="remate-remate-de-maquinaria-mobiliario-y-antiguedades-ejemplo.html">Remate de maquinaria, mobiliario y antigüedades (ejemplo)</a></h3>
+			<ul class="su-rcard__info">
+									<li><svg class="su-icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg><span>domingo 1 de noviembre · 14:00 h</span></li>
+									<li><svg class="su-icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21.5s7-6 7-11.5a7 7 0 0 0-14 0c0 5.5 7 11.5 7 11.5z"/><circle cx="12" cy="10" r="2.5"/></svg><span>Montevideo (lugar a confirmar)</span></li>
+									<li><svg class="su-icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m13.5 4.5 6 6"/><path d="m11 7 6 6"/><path d="m12.2 5.8-4.4 4.4 6 6 4.4-4.4"/><path d="M9.8 12.2 3.5 18.5a1.4 1.4 0 0 0 2 2l6.3-6.3"/><path d="M14 21h7"/></svg><span>Presencial y online</span></li>
+							</ul>
+								<div class="su-countdown" data-su-countdown="2026-11-01T14:00:00-03:00" role="timer" aria-label="Tiempo que falta para el remate">
+		<span><b data-d>--</b>días</span>
+		<span><b data-h>--</b>horas</span>
+		<span><b data-m>--</b>min</span>
+		<span><b data-s>--</b>seg</span>
+	</div>
+										<span class="su-btn su-btn--primary su-rcard__cta" aria-hidden="true">Ver detalles<svg class="su-icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+		</div>
+	</article>
+				</div>
+</section>
+<section class="su-section su-intro" id="nosotros" aria-labelledby="su-intro-title">
+	<div class="su-wrap su-intro__grid">
+		<div class="su-intro__copy">
+			<p class="su-kicker" data-su-reveal>Quiénes somos</p>
+			<h2 class="su-head__title" id="su-intro-title" data-su-reveal>Saravia Ubilla</h2>
+							<p class="su-intro__lead" data-su-reveal>Una trayectoria construida sobre experiencia, confianza y conocimiento del mercado.</p>
+										<p class="su-intro__text" data-su-reveal>Nos dedicamos desde 2013 a la actividad de remates y valuaciones, y desde 2014 también operamos como corredores inmobiliarios, con formación técnica en ambas especialidades y una constante actualización.</p>
+										<ul class="su-intro__values" data-su-reveal>
+											<li><svg class="su-icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12.2 2.7 2.7L16.2 9.4"/></svg>Experiencia</li>
+											<li><svg class="su-icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12.2 2.7 2.7L16.2 9.4"/></svg>Profesionalismo</li>
+											<li><svg class="su-icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12.2 2.7 2.7L16.2 9.4"/></svg>Conocimiento del mercado</li>
+											<li><svg class="su-icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12.2 2.7 2.7L16.2 9.4"/></svg>Atención personalizada</li>
+									</ul>
+						<p data-su-reveal><a class="su-btn su-btn--outline" href="nosotros.html">Conocé nuestra historia<svg class="su-icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></p>
+		</div>
 			</div>
 </section>
-<section class="su-section su-about su-about--home su-section--tint" id="nosotros">
+<section class="su-section su-tasacion" id="tasaciones" aria-labelledby="su-tasacion-title">
 	<div class="su-wrap">
-		<div class="su-about__main">
-			<header class="su-head " data-su-reveal><p class="su-kicker">Nuestra historia</p><h2 class="su-head__title">Nosotros</h2></header>			<div class="su-about__body">
-								<div class="su-prose su-about__text" data-su-reveal><p>En <strong>Saravia Ubilla</strong>, nos dedicamos desde 2013 a la actividad de remates y valuaciones, y desde 2014, también operamos como corredores inmobiliarios. Contamos con formación técnica en ambas especialidades, obtenida en UTU, y nos hemos especializado en avalúos urbanos y rurales, participando en diversas capacitaciones ofrecidas por IUCAP (ANRTCI).</p>
-<p>A nivel internacional, hemos obtenido un Diploma en Especialización Internacional en Catastro Multipropósito y un Diploma de Especialización Internacional en Avalúos, ambos expedidos por la Universidad de Jaén (España). Además, estamos certificados como Valuador Panamericano con la credencial N° 1065, otorgada por la Unión Panamericana de Asociaciones de Valuación (UPAV).</p>
-<p>Poseemos también un Diploma en Práctica Judicial Pericial, expedido por la Facultad de Derecho de la Universidad CLAEH, y formamos parte de la nómina de Peritos Rematadores del Poder Judicial.</p>
-<p>En cuanto a nuestros servicios, nos especializamos en la operación de movimiento de ganado dentro del Sistema Nacional de Información Ganadera (SNIG), ofreciendo a nuestros clientes un servicio integral de alta calidad. Nos destacamos por nuestra constante formación y actualización para estar siempre a la vanguardia de las mejores prácticas y avances en el sector.</p>
-<p>Nuestro compromiso es proporcionar soluciones confiables, respaldadas por un equipo de profesionales experimentados, garantizando la excelencia y el éxito en cada proyecto que emprendemos.</p>
-</div>
-			</div>
-
-			
-							<p class="su-about__more" data-su-reveal><a class="su-btn su-btn--primary" href="nosotros.html">Ver más<svg class="su-icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></p>
+		<div class="su-tasacion__box">
+						<div class="su-tasacion__copy" data-su-reveal>
+				<p class="su-kicker su-kicker--light">Tasaciones</p>
+				<h2 class="su-tasacion__title" id="su-tasacion-title">¿Necesitás conocer el valor de una propiedad?</h2>
+									<p class="su-tasacion__text">Solicitá una tasación profesional. Nuestras tasaciones son realizadas por profesionales certificados, con metodologías precisas para asegurar valoraciones justas y confiables.</p>
+													<a class="su-btn su-btn--primary" href="contacto.html#contacto">Solicitar tasación<svg class="su-icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+							</div>
+		</div>
+	</div>
+</section>
+<section class="su-section su-section--tint su-trust" aria-labelledby="su-trust-title">
+	<div class="su-wrap">
+		<div class="su-props__top">
+			<header class="su-head" data-su-reveal>
+				<p class="su-kicker">Trayectoria</p>
+				<h2 class="su-head__title" id="su-trust-title">Experiencia que respalda nuestro trabajo</h2>
+			</header>
+							<a class="su-btn su-btn--outline su-btn--sm su-head-link" href="nosotros.html">Conocé nuestra trayectoria<svg class="su-icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
 					</div>
-
-			</div>
+		<ul class="su-trust__list">
+							<li data-su-reveal><b>Desde 2013</b><span>Más de 10 años de experiencia en remates y valuaciones</span></li>
+							<li data-su-reveal><b>Desde 2014</b><span>Corredores inmobiliarios</span></li>
+							<li data-su-reveal><b>Valuador Panamericano</b><span>Credencial N° 1065 otorgada por la UPAV</span></li>
+							<li data-su-reveal><b>Peritos Rematadores</b><span>En la nómina de peritos del Poder Judicial</span></li>
+							<li data-su-reveal><b>Especialización internacional</b><span>Diplomas en Avalúos y en Catastro Multipropósito, Universidad de Jaén (España)</span></li>
+							<li data-su-reveal><b>Formación nacional</b><span>UTU, capacitaciones de IUCAP (ANRTCI) y Práctica Judicial Pericial (CLAEH)</span></li>
+					</ul>
+	</div>
+</section>
+<section class="su-assoc" aria-label="Asociaciones">
+	<div class="su-wrap">
+				<ul class="su-assoc__list">
+							<li data-su-reveal title="Asociación Nacional de Rematadores, Tasadores y Corredores Inmobiliarios">
+											<span class="su-assoc__seal"><b>ANRTCI</b><small>Asociación Nacional de Rematadores, Tasadores y Corredores Inmobiliarios</small></span>
+									</li>
+							<li data-su-reveal title="Unión Panamericana de Asociaciones de Valuación">
+											<span class="su-assoc__seal"><b>UPAV</b><small>Unión Panamericana de Asociaciones de Valuación</small></span>
+									</li>
+							<li data-su-reveal title="Asociación Uruguaya de Peritos">
+											<span class="su-assoc__seal"><b>A.U.PE.</b><small>Asociación Uruguaya de Peritos</small></span>
+									</li>
+							<li data-su-reveal title="Asociación de Agentes Inmobiliarios del Uruguay">
+											<span class="su-assoc__seal"><b>ADIU</b><small>Asociación de Agentes Inmobiliarios del Uruguay</small></span>
+									</li>
+					</ul>
+	</div>
 </section>
 <section class="su-section su-contact" id="contacto">
 	<div class="su-wrap su-contact__grid">
 		<div class="su-contact__copy">
-									<h2 class="su-contact__title" data-su-reveal>Contacto</h2>
+									<h2 class="su-contact__title" data-su-reveal>¿Tenés una consulta?</h2>
+							<p class="su-contact__text" data-su-reveal>Estamos para ayudarte.</p>
+										<p class="su-contact__cta" data-su-reveal><a class="su-btn su-btn--wa" href="https://wa.me/59899069369?text=Hola%2C%20quisiera%20hacer%20una%20consulta." target="_blank" rel="noopener"><svg class="su-icon su-icon--whatsapp " viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>Contactanos por WhatsApp</a></p>
 						<ul class="su-contact__ways" data-su-reveal>
 									<li><a href="https://wa.me/59899069369?text=Hola%2C%20quisiera%20hacer%20una%20consulta." target="_blank" rel="noopener"><svg class="su-icon su-icon--whatsapp " viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg><span><small>WhatsApp</small>099 069 369</span></a></li>
 													<li><a href="tel:099069369"><svg class="su-icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 3h4l2 5-2.5 1.5a11 11 0 0 0 6 6L16 13l5 2v4a2 2 0 0 1-2 2A17 17 0 0 1 3 5a2 2 0 0 1 2-2z"/></svg><span><small>Llamanos</small>099 069 369</span></a></li>
@@ -1296,7 +1383,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 		
 		<input type="hidden" name="action" value="su_consulta">
 		<input type="hidden" name="su_context" value="0">
-		<input type="hidden" name="su_stamp" value="1792966347.f2ac532af532a867">
+		<input type="hidden" name="su_stamp" value="1792969320.0a865f1dc64a4d5f">
 				<div class="su-form__hp" aria-hidden="true"><label>Web <input type="text" name="su_web" tabindex="-1" autocomplete="off"></label></div>
 
 		<div class="su-form__grid">
@@ -1343,7 +1430,9 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 	<section class="su-section su-contact" id="contacto">
 	<div class="su-wrap su-contact__grid">
 		<div class="su-contact__copy">
-									<h1 class="su-contact__title" data-su-reveal>Contacto</h1>
+									<h1 class="su-contact__title" data-su-reveal>¿Tenés una consulta?</h1>
+							<p class="su-contact__text" data-su-reveal>Estamos para ayudarte.</p>
+										<p class="su-contact__cta" data-su-reveal><a class="su-btn su-btn--wa" href="https://wa.me/59899069369?text=Hola%2C%20quisiera%20hacer%20una%20consulta." target="_blank" rel="noopener"><svg class="su-icon su-icon--whatsapp " viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>Contactanos por WhatsApp</a></p>
 						<ul class="su-contact__ways" data-su-reveal>
 									<li><a href="https://wa.me/59899069369?text=Hola%2C%20quisiera%20hacer%20una%20consulta." target="_blank" rel="noopener"><svg class="su-icon su-icon--whatsapp " viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg><span><small>WhatsApp</small>099 069 369</span></a></li>
 													<li><a href="tel:099069369"><svg class="su-icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 3h4l2 5-2.5 1.5a11 11 0 0 0 6 6L16 13l5 2v4a2 2 0 0 1-2 2A17 17 0 0 1 3 5a2 2 0 0 1 2-2z"/></svg><span><small>Llamanos</small>099 069 369</span></a></li>
@@ -1354,7 +1443,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 		
 		<input type="hidden" name="action" value="su_consulta">
 		<input type="hidden" name="su_context" value="0">
-		<input type="hidden" name="su_stamp" value="1792966347.f2ac532af532a867">
+		<input type="hidden" name="su_stamp" value="1792969320.0a865f1dc64a4d5f">
 				<div class="su-form__hp" aria-hidden="true"><label>Web <input type="text" name="su_web" tabindex="-1" autocomplete="off"></label></div>
 
 		<div class="su-form__grid">
@@ -1641,7 +1730,9 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 	<section class="su-section su-contact" id="contacto">
 	<div class="su-wrap su-contact__grid">
 		<div class="su-contact__copy">
-									<h2 class="su-contact__title" data-su-reveal>Contacto</h2>
+									<h2 class="su-contact__title" data-su-reveal>¿Tenés una consulta?</h2>
+							<p class="su-contact__text" data-su-reveal>Estamos para ayudarte.</p>
+										<p class="su-contact__cta" data-su-reveal><a class="su-btn su-btn--wa" href="https://wa.me/59899069369?text=Hola%2C%20quisiera%20hacer%20una%20consulta." target="_blank" rel="noopener"><svg class="su-icon su-icon--whatsapp " viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>Contactanos por WhatsApp</a></p>
 						<ul class="su-contact__ways" data-su-reveal>
 									<li><a href="https://wa.me/59899069369?text=Hola%2C%20quisiera%20hacer%20una%20consulta." target="_blank" rel="noopener"><svg class="su-icon su-icon--whatsapp " viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg><span><small>WhatsApp</small>099 069 369</span></a></li>
 													<li><a href="tel:099069369"><svg class="su-icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 3h4l2 5-2.5 1.5a11 11 0 0 0 6 6L16 13l5 2v4a2 2 0 0 1-2 2A17 17 0 0 1 3 5a2 2 0 0 1 2-2z"/></svg><span><small>Llamanos</small>099 069 369</span></a></li>
@@ -1652,7 +1743,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 		
 		<input type="hidden" name="action" value="su_consulta">
 		<input type="hidden" name="su_context" value="0">
-		<input type="hidden" name="su_stamp" value="1792966347.f2ac532af532a867">
+		<input type="hidden" name="su_stamp" value="1792969320.0a865f1dc64a4d5f">
 				<div class="su-form__hp" aria-hidden="true"><label>Web <input type="text" name="su_web" tabindex="-1" autocomplete="off"></label></div>
 
 		<div class="su-form__grid">
@@ -1735,13 +1826,13 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 		<header class="su-head " data-su-reveal><h2 class="su-head__title">Servicios</h2></header>		<div class="su-services__grid">
 							<article class="su-service" data-su-reveal>
 					<span class="su-service__icon"><svg class="su-icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 9.5V20h13V9.5"/><path d="M10 20v-5.5h4V20"/></svg></span>
-										<h3 class="su-service__title">Inmobiliarios</h3>
+										<h3 class="su-service__title">Inmobiliaria</h3>
 					<div class="su-service__text"><p>Servicios de arrendamiento, compra-venta y tasaciones de casas, apartamentos, chacras, campos, oficinas y locales comerciales, garantizando asesoramiento experto para cada operación.</p>
 </div>
 				</article>
 							<article class="su-service" data-su-reveal>
 					<span class="su-service__icon"><svg class="su-icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12.2 2.7 2.7L16.2 9.4"/></svg></span>
-										<h3 class="su-service__title">Valuaciones de todo tipo de bienes</h3>
+										<h3 class="su-service__title">Valuaciones</h3>
 					<div class="su-service__text"><p>De todo tipo de bienes, con valoraciones precisas y confiables. Y realizadas en colaboración con profesionales de las áreas correspondientes.</p>
 </div>
 				</article>
@@ -1749,6 +1840,12 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 					<span class="su-service__icon"><svg class="su-icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m13.5 4.5 6 6"/><path d="m11 7 6 6"/><path d="m12.2 5.8-4.4 4.4 6 6 4.4-4.4"/><path d="M9.8 12.2 3.5 18.5a1.4 1.4 0 0 0 2 2l6.3-6.3"/><path d="M14 21h7"/></svg></span>
 										<h3 class="su-service__title">Remates</h3>
 					<div class="su-service__text"><p>Remates de Bienes Inmuebles como también de Bienes Muebles: mobiliario, antigüedades, automotores, maquinaria, materiales de construcción y mercadería en general.</p>
+</div>
+				</article>
+							<article class="su-service" data-su-reveal>
+					<span class="su-service__icon"><svg class="su-icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 18c4-3 7-3 10 0s6 3 10 0"/><path d="M2 13.5c4-3 7-3 10 0s6 3 10 0"/><circle cx="17" cy="6" r="2.5"/><path d="M6 10V5M4 7l2-2 2 2"/></svg></span>
+										<h3 class="su-service__title">Servicios rurales</h3>
+					<div class="su-service__text"><p>Arrendamientos y avalúos rurales, y operaciones de movimiento de ganado dentro del Sistema Nacional de Información Ganadera (SNIG).</p>
 </div>
 				</article>
 					</div>
@@ -1776,7 +1873,9 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 <section class="su-section su-contact" id="contacto">
 	<div class="su-wrap su-contact__grid">
 		<div class="su-contact__copy">
-									<h2 class="su-contact__title" data-su-reveal>Contacto</h2>
+									<h2 class="su-contact__title" data-su-reveal>¿Tenés una consulta?</h2>
+							<p class="su-contact__text" data-su-reveal>Estamos para ayudarte.</p>
+										<p class="su-contact__cta" data-su-reveal><a class="su-btn su-btn--wa" href="https://wa.me/59899069369?text=Hola%2C%20quisiera%20hacer%20una%20consulta." target="_blank" rel="noopener"><svg class="su-icon su-icon--whatsapp " viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>Contactanos por WhatsApp</a></p>
 						<ul class="su-contact__ways" data-su-reveal>
 									<li><a href="https://wa.me/59899069369?text=Hola%2C%20quisiera%20hacer%20una%20consulta." target="_blank" rel="noopener"><svg class="su-icon su-icon--whatsapp " viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg><span><small>WhatsApp</small>099 069 369</span></a></li>
 													<li><a href="tel:099069369"><svg class="su-icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 3h4l2 5-2.5 1.5a11 11 0 0 0 6 6L16 13l5 2v4a2 2 0 0 1-2 2A17 17 0 0 1 3 5a2 2 0 0 1 2-2z"/></svg><span><small>Llamanos</small>099 069 369</span></a></li>
@@ -1787,7 +1886,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 		
 		<input type="hidden" name="action" value="su_consulta">
 		<input type="hidden" name="su_context" value="0">
-		<input type="hidden" name="su_stamp" value="1792966347.f2ac532af532a867">
+		<input type="hidden" name="su_stamp" value="1792969320.0a865f1dc64a4d5f">
 				<div class="su-form__hp" aria-hidden="true"><label>Web <input type="text" name="su_web" tabindex="-1" autocomplete="off"></label></div>
 
 		<div class="su-form__grid">
@@ -1934,7 +2033,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 		
 		<input type="hidden" name="action" value="su_consulta">
 		<input type="hidden" name="su_context" value="304">
-		<input type="hidden" name="su_stamp" value="1792966347.f2ac532af532a867">
+		<input type="hidden" name="su_stamp" value="1792969320.0a865f1dc64a4d5f">
 				<div class="su-form__hp" aria-hidden="true"><label>Web <input type="text" name="su_web" tabindex="-1" autocomplete="off"></label></div>
 
 		<div class="su-form__grid">
@@ -2067,7 +2166,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 		
 		<input type="hidden" name="action" value="su_consulta">
 		<input type="hidden" name="su_context" value="9">
-		<input type="hidden" name="su_stamp" value="1792966348.a161baea0cef4596">
+		<input type="hidden" name="su_stamp" value="1792969320.0a865f1dc64a4d5f">
 				<div class="su-form__hp" aria-hidden="true"><label>Web <input type="text" name="su_web" tabindex="-1" autocomplete="off"></label></div>
 
 		<div class="su-form__grid">
@@ -2255,7 +2354,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 		
 		<input type="hidden" name="action" value="su_consulta">
 		<input type="hidden" name="su_context" value="11">
-		<input type="hidden" name="su_stamp" value="1792966348.a161baea0cef4596">
+		<input type="hidden" name="su_stamp" value="1792969320.0a865f1dc64a4d5f">
 				<div class="su-form__hp" aria-hidden="true"><label>Web <input type="text" name="su_web" tabindex="-1" autocomplete="off"></label></div>
 
 		<div class="su-form__grid">
@@ -2480,7 +2579,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 		
 		<input type="hidden" name="action" value="su_consulta">
 		<input type="hidden" name="su_context" value="8">
-		<input type="hidden" name="su_stamp" value="1792966348.a161baea0cef4596">
+		<input type="hidden" name="su_stamp" value="1792969320.0a865f1dc64a4d5f">
 				<div class="su-form__hp" aria-hidden="true"><label>Web <input type="text" name="su_web" tabindex="-1" autocomplete="off"></label></div>
 
 		<div class="su-form__grid">
@@ -2669,7 +2768,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 		
 		<input type="hidden" name="action" value="su_consulta">
 		<input type="hidden" name="su_context" value="305">
-		<input type="hidden" name="su_stamp" value="1792966348.a161baea0cef4596">
+		<input type="hidden" name="su_stamp" value="1792969320.0a865f1dc64a4d5f">
 				<div class="su-form__hp" aria-hidden="true"><label>Web <input type="text" name="su_web" tabindex="-1" autocomplete="off"></label></div>
 
 		<div class="su-form__grid">
@@ -2801,7 +2900,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 		
 		<input type="hidden" name="action" value="su_consulta">
 		<input type="hidden" name="su_context" value="10">
-		<input type="hidden" name="su_stamp" value="1792966348.a161baea0cef4596">
+		<input type="hidden" name="su_stamp" value="1792969320.0a865f1dc64a4d5f">
 				<div class="su-form__hp" aria-hidden="true"><label>Web <input type="text" name="su_web" tabindex="-1" autocomplete="off"></label></div>
 
 		<div class="su-form__grid">
@@ -2991,7 +3090,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 		
 		<input type="hidden" name="action" value="su_consulta">
 		<input type="hidden" name="su_context" value="12">
-		<input type="hidden" name="su_stamp" value="1792966348.a161baea0cef4596">
+		<input type="hidden" name="su_stamp" value="1792969320.0a865f1dc64a4d5f">
 				<div class="su-form__hp" aria-hidden="true"><label>Web <input type="text" name="su_web" tabindex="-1" autocomplete="off"></label></div>
 
 		<div class="su-form__grid">
@@ -3184,7 +3283,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 		
 		<input type="hidden" name="action" value="su_consulta">
 		<input type="hidden" name="su_context" value="13">
-		<input type="hidden" name="su_stamp" value="1792966348.a161baea0cef4596">
+		<input type="hidden" name="su_stamp" value="1792969320.0a865f1dc64a4d5f">
 				<div class="su-form__hp" aria-hidden="true"><label>Web <input type="text" name="su_web" tabindex="-1" autocomplete="off"></label></div>
 
 		<div class="su-form__grid">
@@ -3391,7 +3490,9 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 	<section class="su-section su-contact" id="contacto">
 	<div class="su-wrap su-contact__grid">
 		<div class="su-contact__copy">
-									<h2 class="su-contact__title" data-su-reveal>Contacto</h2>
+									<h2 class="su-contact__title" data-su-reveal>¿Tenés una consulta?</h2>
+							<p class="su-contact__text" data-su-reveal>Estamos para ayudarte.</p>
+										<p class="su-contact__cta" data-su-reveal><a class="su-btn su-btn--wa" href="https://wa.me/59899069369?text=Hola%2C%20quisiera%20hacer%20una%20consulta." target="_blank" rel="noopener"><svg class="su-icon su-icon--whatsapp " viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>Contactanos por WhatsApp</a></p>
 						<ul class="su-contact__ways" data-su-reveal>
 									<li><a href="https://wa.me/59899069369?text=Hola%2C%20quisiera%20hacer%20una%20consulta." target="_blank" rel="noopener"><svg class="su-icon su-icon--whatsapp " viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg><span><small>WhatsApp</small>099 069 369</span></a></li>
 													<li><a href="tel:099069369"><svg class="su-icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 3h4l2 5-2.5 1.5a11 11 0 0 0 6 6L16 13l5 2v4a2 2 0 0 1-2 2A17 17 0 0 1 3 5a2 2 0 0 1 2-2z"/></svg><span><small>Llamanos</small>099 069 369</span></a></li>
@@ -3402,7 +3503,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 		
 		<input type="hidden" name="action" value="su_consulta">
 		<input type="hidden" name="su_context" value="0">
-		<input type="hidden" name="su_stamp" value="1792966347.f2ac532af532a867">
+		<input type="hidden" name="su_stamp" value="1792969320.0a865f1dc64a4d5f">
 				<div class="su-form__hp" aria-hidden="true"><label>Web <input type="text" name="su_web" tabindex="-1" autocomplete="off"></label></div>
 
 		<div class="su-form__grid">
@@ -3504,7 +3605,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 		
 		<input type="hidden" name="action" value="su_consulta">
 		<input type="hidden" name="su_context" value="15">
-		<input type="hidden" name="su_stamp" value="1792966348.a161baea0cef4596">
+		<input type="hidden" name="su_stamp" value="1792969321.16e4d8194808658b">
 				<div class="su-form__hp" aria-hidden="true"><label>Web <input type="text" name="su_web" tabindex="-1" autocomplete="off"></label></div>
 
 		<div class="su-form__grid">
@@ -3676,7 +3777,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 		
 		<input type="hidden" name="action" value="su_consulta">
 		<input type="hidden" name="su_context" value="14">
-		<input type="hidden" name="su_stamp" value="1792966348.a161baea0cef4596">
+		<input type="hidden" name="su_stamp" value="1792969321.16e4d8194808658b">
 				<div class="su-form__hp" aria-hidden="true"><label>Web <input type="text" name="su_web" tabindex="-1" autocomplete="off"></label></div>
 
 		<div class="su-form__grid">
@@ -3781,7 +3882,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 		
 		<input type="hidden" name="action" value="su_consulta">
 		<input type="hidden" name="su_context" value="307">
-		<input type="hidden" name="su_stamp" value="1792966348.a161baea0cef4596">
+		<input type="hidden" name="su_stamp" value="1792969321.16e4d8194808658b">
 				<div class="su-form__hp" aria-hidden="true"><label>Web <input type="text" name="su_web" tabindex="-1" autocomplete="off"></label></div>
 
 		<div class="su-form__grid">
@@ -3900,7 +4001,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 		
 		<input type="hidden" name="action" value="su_consulta">
 		<input type="hidden" name="su_context" value="306">
-		<input type="hidden" name="su_stamp" value="1792966348.a161baea0cef4596">
+		<input type="hidden" name="su_stamp" value="1792969321.16e4d8194808658b">
 				<div class="su-form__hp" aria-hidden="true"><label>Web <input type="text" name="su_web" tabindex="-1" autocomplete="off"></label></div>
 
 		<div class="su-form__grid">
@@ -3974,7 +4075,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 				<div class="su-services__grid su-services__grid--long">
 							<article class="su-service" data-su-reveal>
 					<span class="su-service__icon"><svg class="su-icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 9.5V20h13V9.5"/><path d="M10 20v-5.5h4V20"/></svg></span>
-										<h2 class="su-service__title">Inmobiliarios</h2>
+										<h2 class="su-service__title">Inmobiliaria</h2>
 					<div class="su-service__text"><p>En nuestra área de Inmobiliaria, nos especializamos en ofrecer servicios completos de arrendamiento, compra-venta y tasaciones de diversos tipos de propiedades, incluyendo casas, apartamentos, chacras, campos, oficinas y locales comerciales. Cada operación se gestiona con un enfoque personalizado y profesional, garantizando un acompañamiento experto desde el inicio hasta el cierre de la transacción. Nuestro equipo de especialistas inmobiliarios se asegura de brindar el mejor asesoramiento, analizando el mercado en profundidad y aplicando las normativas vigentes para ofrecer soluciones que se ajusten a las necesidades de nuestros clientes, ya sea para alquilar, vender o adquirir un inmueble. Además, nuestras tasaciones son realizadas por profesionales certificados, utilizando metodologías precisas para asegurar valoraciones justas y confiables.</p>
 </div>
 				</article>
@@ -3988,6 +4089,12 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 					<span class="su-service__icon"><svg class="su-icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m13.5 4.5 6 6"/><path d="m11 7 6 6"/><path d="m12.2 5.8-4.4 4.4 6 6 4.4-4.4"/><path d="M9.8 12.2 3.5 18.5a1.4 1.4 0 0 0 2 2l6.3-6.3"/><path d="M14 21h7"/></svg></span>
 										<h2 class="su-service__title">Remates</h2>
 					<div class="su-service__text"><p>Nos especializamos en la comercialización de activos a través de subastas, ofreciendo remates de bienes muebles e inmuebles. Contamos con el título de Perito Rematador y somos miembros de la Asociación de Peritos del Uruguay, lo que nos permite acceder a formación continua en temas vinculados al ámbito judicial. Esto garantiza que, aunque nuestra actividad diaria no esté vinculada a procesos judiciales, contamos con un conocimiento actualizado y profesional que respalda nuestra gestión. Nos comprometemos a brindar una atención eficiente y personalizada en cada subasta, asegurando el mejor resultado para todas las partes involucradas.</p>
+</div>
+				</article>
+							<article class="su-service" data-su-reveal>
+					<span class="su-service__icon"><svg class="su-icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 18c4-3 7-3 10 0s6 3 10 0"/><path d="M2 13.5c4-3 7-3 10 0s6 3 10 0"/><circle cx="17" cy="6" r="2.5"/><path d="M6 10V5M4 7l2-2 2 2"/></svg></span>
+										<h2 class="su-service__title">Servicios rurales</h2>
+					<div class="su-service__text"><p>Gestionamos arrendamientos rurales y realizamos avalúos rurales. Además, nos especializamos en la operación de movimiento de ganado dentro del Sistema Nacional de Información Ganadera (SNIG), ofreciendo a nuestros clientes un servicio integral de alta calidad.</p>
 </div>
 				</article>
 					</div>
@@ -4014,7 +4121,9 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 <section class="su-section su-contact" id="contacto">
 	<div class="su-wrap su-contact__grid">
 		<div class="su-contact__copy">
-									<h2 class="su-contact__title" data-su-reveal>Contacto</h2>
+									<h2 class="su-contact__title" data-su-reveal>¿Tenés una consulta?</h2>
+							<p class="su-contact__text" data-su-reveal>Estamos para ayudarte.</p>
+										<p class="su-contact__cta" data-su-reveal><a class="su-btn su-btn--wa" href="https://wa.me/59899069369?text=Hola%2C%20quisiera%20hacer%20una%20consulta." target="_blank" rel="noopener"><svg class="su-icon su-icon--whatsapp " viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>Contactanos por WhatsApp</a></p>
 						<ul class="su-contact__ways" data-su-reveal>
 									<li><a href="https://wa.me/59899069369?text=Hola%2C%20quisiera%20hacer%20una%20consulta." target="_blank" rel="noopener"><svg class="su-icon su-icon--whatsapp " viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg><span><small>WhatsApp</small>099 069 369</span></a></li>
 													<li><a href="tel:099069369"><svg class="su-icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 3h4l2 5-2.5 1.5a11 11 0 0 0 6 6L16 13l5 2v4a2 2 0 0 1-2 2A17 17 0 0 1 3 5a2 2 0 0 1 2-2z"/></svg><span><small>Llamanos</small>099 069 369</span></a></li>
@@ -4025,7 +4134,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 		
 		<input type="hidden" name="action" value="su_consulta">
 		<input type="hidden" name="su_context" value="0">
-		<input type="hidden" name="su_stamp" value="1792966347.f2ac532af532a867">
+		<input type="hidden" name="su_stamp" value="1792969320.0a865f1dc64a4d5f">
 				<div class="su-form__hp" aria-hidden="true"><label>Web <input type="text" name="su_web" tabindex="-1" autocomplete="off"></label></div>
 
 		<div class="su-form__grid">
@@ -4072,11 +4181,11 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 	<div class="su-wrap">
 		<div class="su-footer__grid">
 			<div class="su-footer__brand">
-				<a class="su-logo su-logo--light" href="index.html" rel="home"><span class="su-logo__word"><b>SARAVIA</b><span>UBILLA</span></span><span class="su-logo__tag">Bienes raíces - Remates - Tasaciones</span></a>											</div>
+				<a class="su-logo su-logo--light" href="index.html" rel="home"><span class="su-logo__word"><b>SARAVIA</b><span>UBILLA</span></span><span class="su-logo__tag">Remates • Inmobiliaria • Tasaciones</span></a>							</div>
 
-			<nav class="su-footer__col" aria-label="Pie">
-				<h2>Links</h2>
-				<ul class="su-menu"><li class="current-menu-item"><a href="index.html" aria-current="page">Inicio</a></li><li><a href="servicios.html">Servicios</a></li><li><a href="inmobiliaria.html">Inmobiliaria</a></li><li><a href="proximo-remate.html">Próximo Remate</a></li><li><a href="nosotros.html">Nosotros</a></li><li><a href="contacto.html">Contacto</a></li></ul>			</nav>
+			<nav class="su-footer__col" aria-label="Secciones">
+				<h2>Secciones</h2>
+				<ul class="su-footer__menu"><li><a href="proximo-remate.html">Remates</a></li><li><a href="inmobiliaria.html">Propiedades</a></li><li><a href="index.html#tasaciones">Tasaciones</a></li><li><a href="nosotros.html">Nosotros</a></li><li><a href="contacto.html">Contacto</a></li></ul>			</nav>
 
 			<div class="su-footer__col">
 				<h2>Contacto</h2>
@@ -4085,7 +4194,8 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 																<li><svg class="su-icon su-icon--whatsapp " viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg><a href="https://wa.me/59899069369" target="_blank" rel="noopener">WhatsApp</a></li>
 																								</ul>
 			</div>
-		</div>
+
+								</div>
 
 		<div class="su-footer__bottom">
 			<p>© 2026 Saravia Ubilla</p>

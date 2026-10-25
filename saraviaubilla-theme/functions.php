@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'SU_VERSION', '1.2.0' );
+define( 'SU_VERSION', '1.3.0' );
 
 require get_template_directory() . '/inc/defaults.php';
 require get_template_directory() . '/inc/customizer.php';
@@ -157,23 +157,50 @@ add_action( 'admin_notices', function () {
 	echo '<div class="notice notice-warning"><p><strong>' . esc_html__( 'Saravia Ubilla:', 'saraviaubilla' ) . '</strong> ' . esc_html( function_exists( 'su_gestion_loaded' ) ? __( 'actualizá el plugin "Saravia Ubilla – Gestión" a la versión 1.2 o posterior: esta versión del tema la necesita para mostrar propiedades y remates.', 'saraviaubilla' ) : __( 'activá el plugin "Saravia Ubilla – Gestión" para administrar Propiedades, Remates y Consultas y para que funcione el formulario.', 'saraviaubilla' ) ) . ' <a href="' . esc_url( admin_url( 'plugins.php' ) ) . '">' . esc_html__( 'Ir a Plugins', 'saraviaubilla' ) . '</a></p></div>';
 } );
 
-/* -------------------------------------------------------------------------
- * Menú de respaldo si todavía no se armó uno en Apariencia → Menús
- * ---------------------------------------------------------------------- */
-function su_menu_fallback() {
+/**
+ * Dirección de cada sección del sitio (sirve aunque el plugin esté apagado o falte una página).
+ * propiedades · remates · tasaciones · servicios · nosotros · contacto
+ */
+function su_section_url( $key ) {
 	$page = function ( $slug, $anchor ) {
 		$p = get_page_by_path( $slug );
 		return $p ? get_permalink( $p ) : home_url( '/#' . $anchor );
 	};
+	switch ( $key ) {
+		case 'propiedades':
+			return su_has_gestion() ? get_post_type_archive_link( 'propiedad' ) : '';
+		case 'remates':
+			return su_has_gestion() ? get_post_type_archive_link( 'remate' ) : '';
+		case 'tasaciones':
+			return home_url( '/#tasaciones' );
+		case 'tasacion_form':
+			// Formulario de contacto con "Valuaciones" ya elegido.
+			return add_query_arg( 'interes', 'Valuaciones', $page( 'contacto', 'contacto' ) ) . '#contacto';
+		default:
+			return $page( $key, $key );
+	}
+}
+
+/* -------------------------------------------------------------------------
+ * Menú de respaldo si todavía no se armó uno en Apariencia → Menús
+ * ---------------------------------------------------------------------- */
+function su_menu_fallback( $args = array() ) {
+	// Orden pedido: Inicio · Remates · Propiedades · Tasaciones · Nosotros (Contacto va en el botón "Consultar").
 	$items = array(
 		array( home_url( '/' ), __( 'Inicio', 'saraviaubilla' ), is_front_page() ),
-		array( $page( 'servicios', 'servicios' ), __( 'Servicios', 'saraviaubilla' ), is_page( 'servicios' ) ),
-		array( get_post_type_archive_link( 'propiedad' ), __( 'Inmobiliaria', 'saraviaubilla' ), is_post_type_archive( 'propiedad' ) || is_singular( 'propiedad' ) || is_tax( array( 'operacion', 'tipo_propiedad', 'zona' ) ) ),
-		array( get_post_type_archive_link( 'remate' ), __( 'Próximo Remate', 'saraviaubilla' ), is_post_type_archive( 'remate' ) || is_singular( 'remate' ) ),
-		array( $page( 'nosotros', 'nosotros' ), __( 'Nosotros', 'saraviaubilla' ), is_page( 'nosotros' ) ),
-		array( $page( 'contacto', 'contacto' ), __( 'Contacto', 'saraviaubilla' ), is_page( 'contacto' ) ),
+		array( su_section_url( 'remates' ), __( 'Remates', 'saraviaubilla' ), is_post_type_archive( 'remate' ) || is_singular( 'remate' ) ),
+		array( su_section_url( 'propiedades' ), __( 'Propiedades', 'saraviaubilla' ), is_post_type_archive( 'propiedad' ) || is_singular( 'propiedad' ) || is_tax( array( 'operacion', 'tipo_propiedad', 'zona' ) ) ),
+		array( su_section_url( 'tasaciones' ), __( 'Tasaciones', 'saraviaubilla' ), false ),
+		array( su_section_url( 'nosotros' ), __( 'Nosotros', 'saraviaubilla' ), is_page( 'nosotros' ) ),
 	);
-	echo '<ul class="su-menu">';
+	if ( ! empty( $args['su_footer'] ) || ! su_mod( 'header_cta' ) ) {
+		// En el pie (y si no hay botón "Consultar") también va Contacto; Inicio no hace falta en el pie.
+		if ( ! empty( $args['su_footer'] ) ) {
+			array_shift( $items );
+		}
+		$items[] = array( su_section_url( 'contacto' ), __( 'Contacto', 'saraviaubilla' ), is_page( 'contacto' ) );
+	}
+	echo '<ul class="' . esc_attr( ! empty( $args['su_footer'] ) ? 'su-footer__menu' : 'su-menu' ) . '">';
 	foreach ( $items as $item ) {
 		if ( ! $item[0] ) {
 			continue; // Inmobiliaria y Remates no existen si el plugin está desactivado.

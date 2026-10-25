@@ -37,8 +37,8 @@
 		</nav>
 
 		<div class="su-header__actions">
-			<?php if ( su_whatsapp_url() ) : ?>
-				<a class="su-btn su-btn--sm su-btn--primary su-header__cta" href="<?php echo esc_url( su_whatsapp_url( __( 'Hola, quisiera hacer una consulta.', 'saraviaubilla' ) ) ); ?>" target="_blank" rel="noopener"><?php echo su_icon( 'whatsapp' ); // phpcs:ignore WordPress.Security.EscapeOutput ?><span><?php esc_html_e( 'Escribinos', 'saraviaubilla' ); ?></span></a>
+			<?php if ( su_mod( 'header_cta' ) ) : ?>
+				<a class="su-btn su-btn--sm su-btn--primary su-header__cta" aria-label="<?php echo esc_attr( su_mod( 'header_cta' ) ); ?>" href="<?php echo esc_url( su_mod( 'header_cta_url' ) ? su_mod( 'header_cta_url' ) : su_section_url( 'contacto' ) ); ?>"><?php echo su_icon( 'mail' ); // phpcs:ignore WordPress.Security.EscapeOutput ?><span><?php echo esc_html( su_mod( 'header_cta' ) ); ?></span></a>
 			<?php endif; ?>
 			<button class="su-burger" type="button" aria-controls="su-nav" aria-expanded="false" data-su-burger>
 				<span class="screen-reader-text"><?php esc_html_e( 'Abrir menú', 'saraviaubilla' ); ?></span>

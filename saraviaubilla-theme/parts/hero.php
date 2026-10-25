@@ -3,7 +3,9 @@
  * Portada: título, bajada, próximo remate y sellos de confianza.
  */
 
-$su_remate   = su_has_gestion() ? su_next_remate() : null;
+$su_remate   = su_has_gestion() && su_mod( 'hero_remate' ) ? su_next_remate() : null;
+$su_btn1_url = su_mod( 'hero_btn1_url' ) ? su_mod( 'hero_btn1_url' ) : su_section_url( 'propiedades' );
+$su_btn2_url = su_mod( 'hero_btn2_url' ) ? su_mod( 'hero_btn2_url' ) : su_section_url( 'remates' );
 $su_hero_img = (int) su_mod( 'hero_image' );
 $su_stats    = su_pairs( su_mod( 'stats' ) );
 ?>
@@ -20,10 +22,19 @@ $su_stats    = su_pairs( su_mod( 'stats' ) );
 				<p class="su-kicker su-kicker--light" data-su-reveal><?php echo esc_html( su_mod( 'hero_kicker' ) ); ?></p>
 			<?php endif; ?>
 			<h1 class="su-hero__title" data-su-reveal><?php echo su_brand_title( su_mod( 'hero_title' ) ); // phpcs:ignore WordPress.Security.EscapeOutput ?></h1>
-			<p class="su-hero__text" data-su-reveal><?php echo wp_kses_post( su_mod( 'hero_text' ) ); ?></p>
+			<?php if ( su_mod( 'hero_subtitle' ) ) : ?>
+				<p class="su-hero__subtitle" data-su-reveal><?php echo esc_html( su_mod( 'hero_subtitle' ) ); ?></p>
+			<?php endif; ?>
+			<?php if ( su_mod( 'hero_text' ) ) : ?>
+				<p class="su-hero__text" data-su-reveal><?php echo wp_kses_post( su_mod( 'hero_text' ) ); ?></p>
+			<?php endif; ?>
 			<div class="su-hero__actions" data-su-reveal>
-				<a class="su-btn su-btn--primary" href="<?php echo esc_url( su_mod( 'hero_btn1_url' ) ); ?>"><?php echo esc_html( su_mod( 'hero_btn1' ) ); ?><?php echo su_icon( 'flecha' ); // phpcs:ignore WordPress.Security.EscapeOutput ?></a>
-				<a class="su-btn su-btn--ghost" href="<?php echo esc_url( su_mod( 'hero_btn2_url' ) ); ?>"><?php echo esc_html( su_mod( 'hero_btn2' ) ); ?></a>
+				<?php if ( su_mod( 'hero_btn1' ) && $su_btn1_url ) : ?>
+					<a class="su-btn su-btn--primary" href="<?php echo esc_url( $su_btn1_url ); ?>"><?php echo esc_html( su_mod( 'hero_btn1' ) ); ?><?php echo su_icon( 'flecha' ); // phpcs:ignore WordPress.Security.EscapeOutput ?></a>
+				<?php endif; ?>
+				<?php if ( su_mod( 'hero_btn2' ) && $su_btn2_url ) : ?>
+					<a class="su-btn su-btn--ghost" href="<?php echo esc_url( $su_btn2_url ); ?>"><?php echo esc_html( su_mod( 'hero_btn2' ) ); ?></a>
+				<?php endif; ?>
 			</div>
 		</div>
 

@@ -7,16 +7,18 @@ get_header();
 ?>
 <main id="contenido">
 	<?php
-	// Inmobiliaria y Remates primero; después la empresa.
+	// Orden pedido por la clienta: portada → accesos → propiedades → remates → quiénes somos
+	// → tasaciones → confianza → contacto. Propiedades y remates solo aparecen si hay publicados.
 	get_template_part( 'parts/hero' );
 	get_template_part( 'parts/access' );
-	get_template_part( 'parts/remates-home' );
 	get_template_part( 'parts/properties' );
-	get_template_part( 'parts/services' );
+	get_template_part( 'parts/remates-home' );
 	if ( su_mod( 'steps_show' ) ) {
 		get_template_part( 'parts/steps' );
 	}
-	get_template_part( 'parts/about' );
+	get_template_part( 'parts/about-short' );
+	get_template_part( 'parts/tasaciones' );
+	get_template_part( 'parts/trust' );
 	get_template_part( 'parts/contact' );
 
 	// Si la página de inicio tiene contenido propio (bloques), se muestra al final.

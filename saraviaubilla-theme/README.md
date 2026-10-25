@@ -1,10 +1,10 @@
-# Tema WordPress — Saravia Ubilla (v1.2.0)
+# Tema WordPress — Saravia Ubilla (v1.3.0)
 
 Diseño del sitio de Saravia Ubilla (bienes raíces, remates y tasaciones):
 - Mantiene la identidad: logotipo SARAVIA/UBILLA, azul marino, blanco y celeste.
 - Conserva **los textos tal cual están en el sitio actual**.
 
-Se entrega junto al plugin **Saravia Ubilla – Gestión**, que aporta Propiedades, Remates, Consultas y el formulario. El plugin va aparte para que un cambio de tema no haga desaparecer esos contenidos del panel. Esta versión del tema requiere el plugin **v1.2.0 o posterior**. Con un plugin anterior, las páginas de propiedades y remates usan la plantilla general (no se rompen) y el escritorio avisa que hay que actualizarlo.
+Se entrega junto al plugin **Saravia Ubilla – Gestión**, que aporta Propiedades, Remates, Consultas y el formulario. El plugin va aparte para que un cambio de tema no haga desaparecer esos contenidos del panel. Esta versión del tema requiere el plugin **v1.2.0 o posterior** (recomendado 1.2.1, que permite que "Solicitar tasación" abra el formulario con "Valuaciones" elegido). Con un plugin anterior, las páginas de propiedades y remates usan la plantilla general (no se rompen) y el escritorio avisa que hay que actualizarlo.
 
 ## Instalación
 1. **Plugins → Añadir nuevo → Subir plugin** → `saraviaubilla-gestion.zip` → **Activar**.
@@ -22,7 +22,12 @@ Se entrega junto al plugin **Saravia Ubilla – Gestión**, que aporta Propiedad
 |---|---|
 | Colores, textos de portada, servicios (texto breve y completo), Nosotros, misión, visión, logos de asociaciones | Apariencia → Personalizar → Saravia Ubilla |
 | Teléfono, WhatsApp, email, dirección, horario, redes | Apariencia → Personalizar → Contacto y redes **o** Ajustes → Saravia Ubilla (es el mismo dato) |
-| Accesos a Inmobiliaria y Remates debajo de la portada (se completan solos) | Apariencia → Personalizar → Saravia Ubilla → Propiedades y remates |
+| Botón "Consultar" del encabezado, foto, título, subtítulo, frase y botones de la portada | Apariencia → Personalizar → Saravia Ubilla → Portada |
+| Accesos rápidos (Propiedades, Remates, Tasaciones, Inmobiliaria), propiedades destacadas | Apariencia → Personalizar → Saravia Ubilla → Accesos, propiedades y remates |
+| "Quiénes somos" corto (frase, párrafo y valores), trayectoria destacada | Apariencia → Personalizar → Saravia Ubilla → Nosotros |
+| Sección Tasaciones (texto, botón y foto) | Apariencia → Personalizar → Saravia Ubilla → Tasaciones |
+| Bajada del logo en el pie | Apariencia → Personalizar → Saravia Ubilla → Contacto y redes |
+| Menú (si se quiere distinto al predeterminado: Inicio · Remates · Propiedades · Tasaciones · Nosotros) | Apariencia → Menús |
 | Propiedades, Remates, Consultas | Menú lateral del escritorio (plugin) |
 | Países, departamentos/estados, ciudades y barrios | Propiedades → Ubicaciones, o directamente al cargar la propiedad (plugin) |
 | Características (Parrillero, Piscina…) | Propiedades → Características, o al cargar la propiedad (plugin) |

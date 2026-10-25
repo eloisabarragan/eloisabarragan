@@ -7,23 +7,25 @@
 	<div class="su-wrap">
 		<div class="su-footer__grid">
 			<div class="su-footer__brand">
-				<?php su_logo( 'su-logo--light' ); ?>
+				<?php su_logo( 'su-logo--light', su_mod( 'footer_tagline' ) ); ?>
 				<?php if ( su_mod( 'footer_text' ) ) : ?>
 					<p><?php echo wp_kses_post( su_mod( 'footer_text' ) ); ?></p>
 				<?php endif; ?>
-				<?php echo su_socials(); // phpcs:ignore WordPress.Security.EscapeOutput ?>
 			</div>
 
-			<nav class="su-footer__col" aria-label="<?php esc_attr_e( 'Pie', 'saraviaubilla' ); ?>">
-				<h2><?php esc_html_e( 'Links', 'saraviaubilla' ); ?></h2>
+			<nav class="su-footer__col" aria-label="<?php esc_attr_e( 'Secciones', 'saraviaubilla' ); ?>">
+				<h2><?php esc_html_e( 'Secciones', 'saraviaubilla' ); ?></h2>
 				<?php
-				wp_nav_menu( array(
-					'theme_location' => has_nav_menu( 'footer' ) ? 'footer' : 'primary',
-					'container'      => false,
-					'menu_class'     => 'su-footer__menu',
-					'fallback_cb'    => 'su_menu_fallback',
-					'depth'          => 1,
-				) );
+				if ( has_nav_menu( 'footer' ) ) {
+					wp_nav_menu( array(
+						'theme_location' => 'footer',
+						'container'      => false,
+						'menu_class'     => 'su-footer__menu',
+						'depth'          => 1,
+					) );
+				} else {
+					su_menu_fallback( array( 'su_footer' => true ) );
+				}
 				?>
 			</nav>
 
@@ -47,6 +49,14 @@
 					<?php endif; ?>
 				</ul>
 			</div>
+
+			<?php $su_social = su_socials(); ?>
+			<?php if ( $su_social ) : ?>
+				<div class="su-footer__col">
+					<h2><?php esc_html_e( 'Redes sociales', 'saraviaubilla' ); ?></h2>
+					<?php echo $su_social; // phpcs:ignore WordPress.Security.EscapeOutput ?>
+				</div>
+			<?php endif; ?>
 		</div>
 
 		<div class="su-footer__bottom">

@@ -1,4 +1,4 @@
-# Saravia Ubilla — Instalación y manual del panel (v1.2)
+# Saravia Ubilla — Instalación y manual del panel (v1.3)
 
 ## A. Instalación nueva
 1. **Plugins → Añadir nuevo → Subir plugin** → `saraviaubilla-gestion.zip` → **Activar**.
@@ -68,7 +68,23 @@ También se puede hacer todo desde la propiedad, con "+ Agregar nuevo…".
 - **Página de remates:** texto de cabecera y mensaje cuando no hay remates.
 - **Preguntas frecuentes:** se publican solo al marcar "Revisadas y aprobadas".
 
-**Apariencia → Personalizar → Saravia Ubilla:** textos de portada, servicios, Nosotros, fotos institucionales, logos y los accesos a Inmobiliaria y Remates.
+**Apariencia → Personalizar → Saravia Ubilla:**
+- **Portada:**
+  - botón "Consultar" del encabezado;
+  - **foto de fondo** (recomendado: horizontal, de 1920 px o más);
+  - título, subtítulo y frase;
+  - los dos botones.
+- **Accesos, propiedades y remates:** título y texto de los 4 accesos rápidos, título de "Propiedades destacadas" y cuántas mostrar.
+- **Servicios:** los 4 servicios. Para ocultar uno, se deja vacío su título.
+- **Nosotros:**
+  - el texto completo, que va en la página Nosotros;
+  - la versión corta de la portada (frase, párrafo y valores, uno por línea);
+  - la trayectoria destacada (una por línea: `Dato | Detalle`);
+  - misión, visión y logos de asociaciones.
+- **Tasaciones:** título, texto, botón y foto opcional. El botón abre el formulario con "Valuaciones" elegido.
+- **Contacto y redes:** datos de contacto y la bajada del logo en el pie.
+
+**Menú:** si no se arma ninguno en Apariencia → Menús, se usa el predeterminado: Inicio · Remates · Propiedades · Tasaciones · Nosotros, más el botón Consultar.
 
 ## F. Remates
 **Remates → Agregar remate:**

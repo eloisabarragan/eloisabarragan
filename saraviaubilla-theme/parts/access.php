@@ -1,68 +1,61 @@
 <?php
 /**
- * Inicio: accesos a Inmobiliaria y Remates. El texto se arma con los datos reales
- * (propiedades publicadas, países y próximo remate); no hay nada escrito a mano.
+ * Inicio: accesos rápidos (Propiedades, Remates, Tasaciones, Inmobiliaria).
+ * Títulos y textos en Apariencia → Personalizar; Propiedades y Remates suman
+ * datos reales (cantidad publicada y fecha del próximo remate).
  */
 
-if ( ! su_has_gestion() || ! su_mod( 'access_show' ) ) {
+if ( ! su_mod( 'access_show' ) ) {
 	return;
 }
-$su_count = new WP_Query( array(
-	'post_type'      => 'propiedad',
-	'posts_per_page' => 1,
-	'fields'         => 'ids',
-	'su_destacadas'  => true, // mismo criterio que el catálogo (vendidas según Ajustes).
-) );
-$su_n      = (int) $su_count->found_posts;
-$su_paises = array();
-if ( function_exists( 'su_locations_public' ) ) {
-	foreach ( su_locations_public() as $su_u ) {
-		if ( ! $su_u['parent'] ) {
-			$su_paises[] = $su_u['name'];
+$su_items = array();
+$su_defs  = array(
+	1 => array( 'casa', su_section_url( 'propiedades' ) ),
+	2 => array( 'martillo', su_section_url( 'remates' ) ),
+	3 => array( 'check', su_section_url( 'tasaciones' ) ),
+	4 => array( 'llave', su_section_url( 'servicios' ) ),
+);
+foreach ( $su_defs as $su_i => $su_def ) {
+	$su_pair = su_pairs( su_mod( 'access_' . $su_i ) );
+	if ( ! $su_pair || ! $su_def[1] ) {
+		continue; // vacío en el Personalizador, o Propiedades/Remates sin el plugin.
+	}
+	$su_meta = '';
+	if ( 1 === $su_i && su_has_gestion() ) {
+		$su_count = new WP_Query( array(
+			'post_type'      => 'propiedad',
+			'posts_per_page' => 1,
+			'fields'         => 'ids',
+			'su_destacadas'  => true, // mismo criterio que el catálogo (vendidas según Ajustes).
+		) );
+		if ( $su_count->found_posts ) {
+			/* translators: %s: cantidad */
+			$su_meta = sprintf( _n( '%s propiedad publicada', '%s propiedades publicadas', (int) $su_count->found_posts, 'saraviaubilla' ), su_number( $su_count->found_posts ) );
 		}
 	}
-}
-$su_next   = su_next_remate();
-$su_remsg  = '';
-if ( $su_next ) {
-	/* translators: %s: fecha */
-	$su_remsg = sprintf( __( 'Próximo remate: %s.', 'saraviaubilla' ), su_remate_date( $su_next->ID ) );
-} else {
-	$su_sf = su_remates_query( 'sin_fecha', 1 );
-	$su_remsg = $su_sf->have_posts() ? __( 'Hay remates con fecha a confirmar.', 'saraviaubilla' ) : __( 'Próximos remates e historial de remates realizados.', 'saraviaubilla' );
-}
-if ( $su_n ) {
-	/* translators: %s: cantidad */
-	$su_propmsg = sprintf( _n( '%s propiedad publicada', '%s propiedades publicadas', $su_n, 'saraviaubilla' ), su_number( $su_n ) );
-	if ( count( $su_paises ) > 1 ) {
-		$su_last    = array_pop( $su_paises );
-		/* translators: 1: países, 2: último país */
-		$su_propmsg .= ' ' . sprintf( __( 'en %1$s y %2$s', 'saraviaubilla' ), implode( ', ', $su_paises ), $su_last );
-	} elseif ( 1 === count( $su_paises ) ) {
-		$su_propmsg .= ' ' . sprintf( /* translators: %s: país */ __( 'en %s', 'saraviaubilla' ), $su_paises[0] );
+	if ( 2 === $su_i && su_has_gestion() ) {
+		$su_next = su_next_remate();
+		if ( $su_next ) {
+			/* translators: %s: fecha */
+			$su_meta = sprintf( __( 'Próximo: %s', 'saraviaubilla' ), su_remate_date( $su_next->ID, 'corta' ) );
+		}
 	}
-	$su_propmsg .= '.';
-} else {
-	$su_propmsg = __( 'Conocé las propiedades disponibles.', 'saraviaubilla' );
+	$su_items[] = array( $su_def[0], $su_def[1], $su_pair[0][0], $su_pair[0][1], $su_meta );
+}
+if ( ! $su_items ) {
+	return;
 }
 ?>
-<section class="su-access" aria-label="<?php esc_attr_e( 'Inmobiliaria y remates', 'saraviaubilla' ); ?>">
-	<div class="su-wrap su-access__grid">
-		<a class="su-access__item" href="<?php echo esc_url( get_post_type_archive_link( 'propiedad' ) ); ?>">
-			<span class="su-access__icon"><?php echo su_icon( 'casa' ); // phpcs:ignore WordPress.Security.EscapeOutput ?></span>
-			<span>
-				<span class="su-access__title"><?php esc_html_e( 'Inmobiliaria', 'saraviaubilla' ); ?></span>
-				<span class="su-access__text"><?php echo esc_html( $su_propmsg ); ?></span>
-				<span class="su-access__go"><?php esc_html_e( 'Ver propiedades', 'saraviaubilla' ); ?><?php echo su_icon( 'flecha' ); // phpcs:ignore WordPress.Security.EscapeOutput ?></span>
-			</span>
-		</a>
-		<a class="su-access__item" href="<?php echo esc_url( get_post_type_archive_link( 'remate' ) ); ?>">
-			<span class="su-access__icon"><?php echo su_icon( 'martillo' ); // phpcs:ignore WordPress.Security.EscapeOutput ?></span>
-			<span>
-				<span class="su-access__title"><?php esc_html_e( 'Remates', 'saraviaubilla' ); ?></span>
-				<span class="su-access__text"><?php echo esc_html( $su_remsg ); ?></span>
-				<span class="su-access__go"><?php esc_html_e( 'Ver remates', 'saraviaubilla' ); ?><?php echo su_icon( 'flecha' ); // phpcs:ignore WordPress.Security.EscapeOutput ?></span>
-			</span>
-		</a>
+<section class="su-access" aria-label="<?php esc_attr_e( 'Accesos rápidos', 'saraviaubilla' ); ?>">
+	<div class="su-wrap su-access__grid su-access__grid--<?php echo (int) count( $su_items ); ?>">
+		<?php foreach ( $su_items as $su_item ) : ?>
+			<a class="su-access__item" href="<?php echo esc_url( $su_item[1] ); ?>">
+				<span class="su-access__icon"><?php echo su_icon( $su_item[0] ); // phpcs:ignore WordPress.Security.EscapeOutput ?></span>
+				<span class="su-access__title"><?php echo esc_html( $su_item[2] ); ?></span>
+				<?php if ( $su_item[3] ) : ?><span class="su-access__text"><?php echo esc_html( $su_item[3] ); ?></span><?php endif; ?>
+				<?php if ( $su_item[4] ) : ?><span class="su-access__meta"><?php echo esc_html( $su_item[4] ); ?></span><?php endif; ?>
+				<span class="su-access__go" aria-hidden="true"><?php echo su_icon( 'flecha' ); // phpcs:ignore WordPress.Security.EscapeOutput ?></span>
+			</a>
+		<?php endforeach; ?>
 	</div>
 </section>

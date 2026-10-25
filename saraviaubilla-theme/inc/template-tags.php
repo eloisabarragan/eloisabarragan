@@ -52,14 +52,25 @@ function su_icon( $name, $class = '' ) {
 	return '<svg class="su-icon ' . esc_attr( $class ) . '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' . $icons[ $name ] . '</svg>';
 }
 
-/** Logo: el subido en Identidad del sitio o el logotipo tipográfico. */
-function su_logo( $size = '' ) {
+/**
+ * Logo: el subido en Identidad del sitio o el logotipo tipográfico.
+ *
+ * @param string      $size    Clase extra (ej. su-logo--light).
+ * @param string|null $tagline Bajada distinta a la del encabezado (la usa el pie).
+ */
+function su_logo( $size = '', $tagline = null ) {
+	$tag = null === $tagline ? su_mod( 'logo_tagline' ) : $tagline;
 	echo '<a class="su-logo ' . esc_attr( $size ) . '" href="' . esc_url( home_url( '/' ) ) . '" rel="home">';
 	if ( has_custom_logo() ) {
 		echo wp_get_attachment_image( get_theme_mod( 'custom_logo' ), 'full', false, array( 'class' => 'su-logo__img', 'alt' => get_bloginfo( 'name' ) ) );
+		if ( null !== $tagline && '' !== $tagline ) {
+			echo '<span class="su-logo__tag">' . esc_html( $tagline ) . '</span>';
+		}
 	} else {
 		echo '<span class="su-logo__word"><b>SARAVIA</b><span>UBILLA</span></span>';
-		echo '<span class="su-logo__tag">' . esc_html( su_mod( 'logo_tagline' ) ) . '</span>';
+		if ( '' !== (string) $tag ) {
+			echo '<span class="su-logo__tag">' . esc_html( $tag ) . '</span>';
+		}
 	}
 	echo '</a>';
 }

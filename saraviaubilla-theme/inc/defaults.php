@@ -16,15 +16,21 @@ function su_defaults() {
 		'color_grafito'  => '#3F4348',
 		'logo_tagline'   => 'Bienes raíces - Remates - Tasaciones',
 
-		// Portada.
-		'hero_kicker'    => 'Remates y Servicios Inmobiliarios',
+		// Encabezado: botón destacado a la derecha del menú.
+		'header_cta'     => 'Consultar',
+		'header_cta_url' => '',
+
+		// Portada (textos pedidos por la clienta).
+		'hero_kicker'    => '',
 		'hero_title'     => 'SARAVIAUBILLA',
-		'hero_text'      => 'Servicio integral y especializado en arrendamientos urbanos y rurales, valuaciones, remates de bienes muebles e inmuebles. Y con una gestión experta para atender requerimientos y cumplir con los objetivos buscados en las diferentes áreas a las que nos dedicamos.',
-		'hero_btn1'      => 'Servicios',
-		'hero_btn2'      => 'Contacto',
-		'hero_btn1_url'  => '#servicios',
-		'hero_btn2_url'  => '#contacto',
+		'hero_subtitle'  => 'Remates • Inmobiliaria • Tasaciones',
+		'hero_text'      => 'Experiencia y confianza para acompañarte en tus operaciones inmobiliarias.',
+		'hero_btn1'      => 'Ver propiedades',
+		'hero_btn2'      => 'Próximos remates',
+		'hero_btn1_url'  => '',
+		'hero_btn2_url'  => '',
 		'hero_image'     => '',
+		'hero_remate'    => 0,
 
 		// Cifras / sellos bajo la portada (una línea por sello: "Número | Texto").
 		'stats'          => '',
@@ -40,12 +46,34 @@ function su_defaults() {
 		'steps_title'    => '',
 		'steps'          => '',
 
-		// Accesos a Inmobiliaria y Remates (debajo de la portada).
+		// Accesos rápidos (debajo de la portada): título | texto. Los enlaces son fijos.
 		'access_show'    => 1,
+		'access_1'       => 'Propiedades | Encontrá propiedades disponibles.',
+		'access_2'       => 'Remates | Conocé los próximos remates.',
+		'access_3'       => 'Tasaciones | Valoraciones profesionales.',
+		'access_4'       => 'Inmobiliaria | Asesoramiento en operaciones inmobiliarias.',
+
+		// Quiénes somos (versión corta de la portada; el texto completo queda en Nosotros).
+		'about_short_title' => 'Saravia Ubilla',
+		'about_short_lead'  => 'Una trayectoria construida sobre experiencia, confianza y conocimiento del mercado.',
+		'about_short_text'  => 'Nos dedicamos desde 2013 a la actividad de remates y valuaciones, y desde 2014 también operamos como corredores inmobiliarios, con formación técnica en ambas especialidades y una constante actualización.',
+		'about_values'      => "Experiencia\nProfesionalismo\nConocimiento del mercado\nAtención personalizada",
+
+		// Tasaciones.
+		'tasacion_show'  => 1,
+		'tasacion_title' => '¿Necesitás conocer el valor de una propiedad?',
+		'tasacion_text'  => 'Solicitá una tasación profesional. Nuestras tasaciones son realizadas por profesionales certificados, con metodologías precisas para asegurar valoraciones justas y confiables.',
+		'tasacion_btn'   => 'Solicitar tasación',
+		'tasacion_image' => '',
+
+		// Confianza: trayectoria y credenciales (una por línea: Dato destacado | Detalle).
+		'trust_title'    => 'Experiencia que respalda nuestro trabajo',
+		'trust_items'    => "Desde 2013 | Más de 10 años de experiencia en remates y valuaciones\nDesde 2014 | Corredores inmobiliarios\nValuador Panamericano | Credencial N° 1065 otorgada por la UPAV\nPeritos Rematadores | En la nómina de peritos del Poder Judicial\nEspecialización internacional | Diplomas en Avalúos y en Catastro Multipropósito, Universidad de Jaén (España)\nFormación nacional | UTU, capacitaciones de IUCAP (ANRTCI) y Práctica Judicial Pericial (CLAEH)",
+		'trust_btn'      => 'Conocé nuestra trayectoria',
 
 		// Propiedades.
 		'props_kicker'   => '',
-		'props_title'    => 'Propiedades',
+		'props_title'    => 'Propiedades destacadas',
 		'props_text'     => '',
 		'props_count'    => 3,
 
@@ -66,8 +94,8 @@ function su_defaults() {
 
 		// Contacto.
 		'contact_kicker' => '',
-		'contact_title'  => 'Contacto',
-		'contact_text'   => '',
+		'contact_title'  => '¿Tenés una consulta?',
+		'contact_text'   => 'Estamos para ayudarte.',
 		'phone'          => '099 069 369',
 		'whatsapp'       => '59899069369',
 		'email'          => '',
@@ -79,6 +107,7 @@ function su_defaults() {
 		'form_email'     => '',
 		'form_shortcode' => '',
 		'footer_text'    => '',
+		'footer_tagline' => 'Remates • Inmobiliaria • Tasaciones',
 	);
 }
 
@@ -89,15 +118,15 @@ function su_default_services() {
 	return array(
 		1 => array(
 			'icon'  => 'casa',
-			'title' => 'Inmobiliarios',
+			'title' => 'Inmobiliaria',
 			'long_title' => '',
 			'text'  => 'Servicios de arrendamiento, compra-venta y tasaciones de casas, apartamentos, chacras, campos, oficinas y locales comerciales, garantizando asesoramiento experto para cada operación.',
 			'long'  => 'En nuestra área de Inmobiliaria, nos especializamos en ofrecer servicios completos de arrendamiento, compra-venta y tasaciones de diversos tipos de propiedades, incluyendo casas, apartamentos, chacras, campos, oficinas y locales comerciales. Cada operación se gestiona con un enfoque personalizado y profesional, garantizando un acompañamiento experto desde el inicio hasta el cierre de la transacción. Nuestro equipo de especialistas inmobiliarios se asegura de brindar el mejor asesoramiento, analizando el mercado en profundidad y aplicando las normativas vigentes para ofrecer soluciones que se ajusten a las necesidades de nuestros clientes, ya sea para alquilar, vender o adquirir un inmueble. Además, nuestras tasaciones son realizadas por profesionales certificados, utilizando metodologías precisas para asegurar valoraciones justas y confiables.',
 		),
 		2 => array(
 			'icon'  => 'check',
-			'title' => 'Valuaciones de todo tipo de bienes',
-			'long_title' => 'Valuaciones',
+			'title' => 'Valuaciones',
+			'long_title' => '',
 			'text'  => 'De todo tipo de bienes, con valoraciones precisas y confiables. Y realizadas en colaboración con profesionales de las áreas correspondientes.',
 			'long'  => 'Ofrecemos un servicio de valuación profesional de bienes de todo tipo, con valoraciones precisas y avaladas, garantizadas por nuestra sólida formación en avalúos y catastro multipropósito a nivel internacional. Nos mantenemos en constante actualización, aplicando las metodologías más adecuadas para asegurar que cada valoración sea objetiva, justa y acorde a las normativas vigentes, lo que permite a nuestros clientes tomar decisiones informadas y confiables.',
 		),
@@ -108,7 +137,14 @@ function su_default_services() {
 			'text'  => 'Remates de Bienes Inmuebles como también de Bienes Muebles: mobiliario, antigüedades, automotores, maquinaria, materiales de construcción y mercadería en general.',
 			'long'  => 'Nos especializamos en la comercialización de activos a través de subastas, ofreciendo remates de bienes muebles e inmuebles. Contamos con el título de Perito Rematador y somos miembros de la Asociación de Peritos del Uruguay, lo que nos permite acceder a formación continua en temas vinculados al ámbito judicial. Esto garantiza que, aunque nuestra actividad diaria no esté vinculada a procesos judiciales, contamos con un conocimiento actualizado y profesional que respalda nuestra gestión. Nos comprometemos a brindar una atención eficiente y personalizada en cada subasta, asegurando el mejor resultado para todas las partes involucradas.',
 		),
-		4 => array( 'icon' => 'campo', 'title' => '', 'long_title' => '', 'text' => '', 'long' => '' ),
+		4 => array(
+			'icon'  => 'campo',
+			'title' => 'Servicios rurales',
+			'long_title' => '',
+			// Armado con lo que la empresa ya dice de sí misma (arrendamientos y avalúos rurales, SNIG).
+			'text'  => 'Arrendamientos y avalúos rurales, y operaciones de movimiento de ganado dentro del Sistema Nacional de Información Ganadera (SNIG).',
+			'long'  => 'Gestionamos arrendamientos rurales y realizamos avalúos rurales. Además, nos especializamos en la operación de movimiento de ganado dentro del Sistema Nacional de Información Ganadera (SNIG), ofreciendo a nuestros clientes un servicio integral de alta calidad.',
+		),
 		5 => array( 'icon' => 'balanza', 'title' => '', 'long_title' => '', 'text' => '', 'long' => '' ),
 		6 => array( 'icon' => 'documento', 'title' => '', 'long_title' => '', 'text' => '', 'long' => '' ),
 	);
