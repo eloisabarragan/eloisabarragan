@@ -170,6 +170,8 @@ def main():
         f.write(FAVICON)
     urls = []
     for p in pags:
+        if p.get('privada'):
+            continue  # Las páginas con contraseña solo existen en WordPress.
         cuerpo = '\n\n'.join(seccion(p['id'], s, 'html').strip() for s in p['secciones'])
         html = pagina_html(p, v, c, cuerpo)
         carpeta = os.path.join(OUT, p['slug']) if p['slug'] else OUT

@@ -71,3 +71,27 @@
 .logotipo .custom-logo-link { display: inline-block; }
 .logotipo .custom-logo { height: 60px; width: auto; max-width: 240px; display: block; }
 @media (max-width: 768px) { .logotipo .custom-logo { height: 48px; } }
+
+/* ---------- Pantalla de contraseña (páginas privadas) ---------- */
+#cerv-clave {
+  min-height: 62vh; display: flex; align-items: center; justify-content: center;
+  padding: 80px 20px; background: linear-gradient(180deg, #faf7f2 0%, #ffffff 100%);
+  font-family: 'Poppins', system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+}
+#cerv-clave .clave-card { width: 100%; max-width: 520px; background: #fff; border-radius: 24px; padding: 44px 34px; text-align: center; box-shadow: 0 18px 50px rgba(0, 50, 90, .08); border-top: 4px solid #D39A47; }
+#cerv-clave .clave-ico { width: 60px; height: 60px; border-radius: 50%; background: rgba(211, 154, 71, .15); display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; }
+#cerv-clave .clave-ico svg { width: 28px; height: 28px; fill: none; stroke: #D39A47; stroke-width: 2.2; stroke-linecap: round; }
+#cerv-clave .clave-eyebrow { color: #D39A47; font-weight: 700; font-size: 12px; letter-spacing: .16em; text-transform: uppercase; margin-bottom: 8px; }
+#cerv-clave .clave-titulo { color: #00325A; font-size: clamp(24px, 3.4vw, 32px); line-height: 1.2; }
+#cerv-clave .clave-texto, #cerv-clave .clave-ayuda { color: #5B667A; line-height: 1.7; margin-top: 12px; font-size: 15px; }
+#cerv-clave .clave-ayuda { font-size: 13px; margin-top: 20px; }
+#cerv-clave .clave-ayuda a { color: #00325A; font-weight: 600; }
+#cerv-clave .clave-error { margin-top: 14px; background: #fdecea; color: #b71c1c; border-radius: 10px; padding: 10px 14px; font-size: 14px; font-weight: 600; }
+#cerv-clave .clave-form { margin-top: 22px; text-align: left; }
+#cerv-clave label { display: block; font-size: 13px; font-weight: 600; color: #00325A; margin-bottom: 6px; }
+#cerv-clave .clave-fila { display: flex; gap: 10px; }
+#cerv-clave input { flex: 1; min-width: 0; font: inherit; padding: 12px 14px; border: 1px solid #d6dbe3; border-radius: 12px; }
+#cerv-clave input:focus { outline: 3px solid rgba(211, 154, 71, .45); border-color: #D39A47; }
+#cerv-clave button { font: inherit; font-weight: 700; background: #00325A; color: #fff; border: 0; border-radius: 12px; padding: 12px 22px; cursor: pointer; }
+#cerv-clave button:hover { background: #00243f; }
+@media (max-width: 480px) { #cerv-clave .clave-fila { flex-direction: column; } }

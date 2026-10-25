@@ -167,5 +167,16 @@
   "secciones": [
    "01-cerv-gracias"
   ]
+ },
+ {
+  "id": "acceso-a-siged-para-padres",
+  "slug": "acceso-a-siged-para-padres",
+  "nombre": "Acceso a SIGED para padres",
+  "titulo": "Acceso a SIGED para padres · Colegio Español Cervantes",
+  "descripcion": "Cómo ingresar a la plataforma SIGED para ver los boletines.",
+  "privada": true,
+  "secciones": [
+   "01-cerv-siged"
+  ]
  }
 ]

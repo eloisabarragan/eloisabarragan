@@ -12,7 +12,9 @@ get_header();
 
 while ( have_posts() ) {
 	the_post();
-	if ( has_block( 'cervantes/seccion' ) ) {
+	if ( post_password_required() ) {
+		echo get_the_password_form(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- formulario del tema, escapado al armarlo.
+	} elseif ( has_block( 'cervantes/seccion' ) ) {
 		the_content();
 	} else {
 		?>

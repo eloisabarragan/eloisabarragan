@@ -20,3 +20,4 @@ require CERVANTES_DIR . '/inc/formularios.php';
 require CERVANTES_DIR . '/inc/noticias.php';
 require CERVANTES_DIR . '/inc/seo.php';
 require CERVANTES_DIR . '/inc/instalador.php';
+require CERVANTES_DIR . '/inc/privadas.php';

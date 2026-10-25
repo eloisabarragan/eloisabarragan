@@ -221,6 +221,9 @@ function cervantes_instalar_contenido( $reemplazar ) {
 			'post_name'    => $pagina['slug'],
 			'post_content' => wp_slash( $contenido ),
 		);
+		if ( ! empty( $pagina['privada'] ) ) {
+			$datos['post_password'] = cervantes_clave_privadas();
+		}
 		if ( $existente && ! $reemplazar ) {
 			$ids[ $pagina['id'] ] = $existente->ID;
 			continue;
@@ -272,7 +275,7 @@ function cervantes_instalar_contenido( $reemplazar ) {
 
 	return array(
 		'porcentaje' => 100,
-		'mensaje'    => '¡Listo! Ya podés ver la web y editar cada página desde Páginas.',
+		'mensaje'    => '¡Listo! Ya podés ver la web y editar cada página desde Páginas. Las páginas privadas (Acceso a SIGED, Inscripciones) tienen la contraseña provisoria «' . cervantes_clave_privadas() . '»: cambiala desde cada página, en Estado > Protegida con contraseña (poné la misma en las dos).',
 		'siguiente'  => '',
 	);
 }

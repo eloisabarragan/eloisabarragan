@@ -199,6 +199,7 @@ def main():
         datos_paginas.append({
             'id': p['id'], 'slug': p['slug'] or 'inicio', 'url': '/' + (p['slug'] + '/' if p['slug'] else ''),
             'nombre': p['nombre'], 'titulo': p['titulo'], 'descripcion': p['descripcion'], 'secciones': secciones,
+            'privada': bool(p.get('privada')),
         })
     escribir('data/paginas.json', json.dumps(datos_paginas, ensure_ascii=False, indent=1))
     escribir('data/noticias.json', json.dumps(noticias, ensure_ascii=False, indent=1))

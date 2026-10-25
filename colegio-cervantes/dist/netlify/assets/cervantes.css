@@ -5546,6 +5546,46 @@ a[href^="mailto:"]:hover, a[href^="tel:"]:hover { text-decoration: underline; }
 #cerv-gracias .gr-btn { display: inline-block; background: var(--azul); color: #fff; text-decoration: none; font-weight: 700; padding: 13px 26px; border-radius: 50px; }
 #cerv-gracias .gr-btn:hover { background: #00243f; }
 
+/* cerv-siged */
+#cerv-siged {
+  --azul: #00325A; --oro: #D39A47; --gris: #5B667A; --calido: #faf7f2;
+  background: linear-gradient(180deg, var(--calido) 0%, #ffffff 60%);
+  font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  color: var(--azul);
+}
+#cerv-siged .sg-inner { max-width: 1040px; margin: 0 auto; padding: clamp(56px, 8vw, 100px) clamp(20px, 4vw, 40px); }
+#cerv-siged .sg-header { text-align: center; max-width: 760px; margin: 0 auto 56px; }
+#cerv-siged .sg-eyebrow { display: inline-flex; align-items: center; gap: 10px; color: var(--oro); font-weight: 700; font-size: 12px; letter-spacing: .16em; text-transform: uppercase; margin-bottom: 14px; }
+#cerv-siged .sg-eyebrow::before, #cerv-siged .sg-eyebrow::after { content: ""; width: 26px; height: 2px; background: var(--oro); }
+#cerv-siged .sg-title { font-size: clamp(30px, 4.4vw, 48px); line-height: 1.12; font-weight: 700; }
+#cerv-siged .sg-title em { font-style: normal; color: var(--oro); }
+#cerv-siged .sg-intro { color: var(--gris); font-size: 17px; line-height: 1.7; margin: 16px 0 28px; }
+#cerv-siged .sg-btn { display: inline-flex; align-items: center; gap: 10px; background: var(--azul); color: #fff; text-decoration: none; font-weight: 700; padding: 15px 30px; border-radius: 50px; box-shadow: 0 12px 28px rgba(0, 50, 90, .22); transition: transform .2s, background .2s; }
+#cerv-siged .sg-btn:hover { background: #00243f; transform: translateY(-2px); }
+#cerv-siged .sg-btn svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+#cerv-siged .sg-subtitle { font-size: 24px; margin-bottom: 22px; }
+#cerv-siged .sg-pasos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 26px; }
+#cerv-siged .sg-paso, #cerv-siged .sg-card { background: #fff; border-radius: 20px; padding: 28px 26px; box-shadow: 0 14px 40px rgba(0, 50, 90, .08); border: 1px solid rgba(0, 50, 90, .06); }
+#cerv-siged .sg-paso { border-top: 4px solid var(--oro); }
+#cerv-siged .sg-num { display: inline-flex; width: 38px; height: 38px; border-radius: 50%; align-items: center; justify-content: center; background: rgba(211, 154, 71, .16); color: #b07a2e; font-weight: 700; margin-bottom: 14px; }
+#cerv-siged .sg-paso h3, #cerv-siged .sg-card h3, #cerv-siged .sg-ayuda h3 { font-size: 18px; margin-bottom: 10px; }
+#cerv-siged .sg-paso p, #cerv-siged .sg-card p, #cerv-siged .sg-ayuda p { color: var(--gris); font-size: 15px; line-height: 1.7; }
+#cerv-siged .sg-paso p + p, #cerv-siged .sg-card p + p { margin-top: 10px; }
+#cerv-siged .sg-inner a:not(.sg-btn) { color: var(--azul); font-weight: 600; }
+#cerv-siged .sg-inner code { background: var(--calido); border: 1px solid rgba(0, 50, 90, .1); border-radius: 6px; padding: 1px 6px; font-size: 14px; color: var(--azul); }
+#cerv-siged .sg-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 26px; }
+#cerv-siged .sg-ayuda { display: flex; gap: 18px; align-items: flex-start; background: var(--azul); border-radius: 20px; padding: 26px 28px; }
+#cerv-siged .sg-ayuda h3 { color: #fff; }
+#cerv-siged .sg-ayuda p { color: rgba(255, 255, 255, .82); }
+#cerv-siged .sg-ayuda a { color: #FFD200 !important; }
+#cerv-siged .sg-ayuda-ico { flex-shrink: 0; width: 44px; height: 44px; border-radius: 12px; background: rgba(255, 255, 255, .1); display: flex; align-items: center; justify-content: center; }
+#cerv-siged .sg-ayuda-ico svg { width: 24px; height: 24px; fill: none; stroke: var(--oro); stroke-width: 2; stroke-linecap: round; }
+#cerv-siged .sg-firma { margin-top: 30px; color: var(--gris); line-height: 1.6; }
+#cerv-siged .sg-firma strong { color: var(--azul); }
+@media (max-width: 860px) {
+#cerv-siged .sg-pasos, #cerv-siged .sg-grid { grid-template-columns: 1fr; }
+}
+
 /* cerv-footer */
 #cerv-footer {
   --azul:#00325A; --oro:#D39A47; --gris:#5B667A; --calido:#faf7f2;
