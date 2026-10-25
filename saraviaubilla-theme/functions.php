@@ -77,17 +77,21 @@ function su_custom_properties() {
  * Menú de respaldo si todavía no se armó uno en Apariencia → Menús
  * ---------------------------------------------------------------------- */
 function su_menu_fallback() {
+	$page = function ( $slug, $anchor ) {
+		$p = get_page_by_path( $slug );
+		return $p ? get_permalink( $p ) : home_url( '/#' . $anchor );
+	};
 	$items = array(
-		array( home_url( '/' ), __( 'Inicio', 'saraviaubilla' ) ),
-		array( home_url( '/#servicios' ), __( 'Servicios', 'saraviaubilla' ) ),
-		array( get_post_type_archive_link( 'propiedad' ), __( 'Inmobiliaria', 'saraviaubilla' ) ),
-		array( get_post_type_archive_link( 'remate' ), __( 'Próximo Remate', 'saraviaubilla' ) ),
-		array( home_url( '/#nosotros' ), __( 'Nosotros', 'saraviaubilla' ) ),
-		array( home_url( '/#contacto' ), __( 'Contacto', 'saraviaubilla' ) ),
+		array( home_url( '/' ), __( 'Inicio', 'saraviaubilla' ), is_front_page() ),
+		array( $page( 'servicios', 'servicios' ), __( 'Servicios', 'saraviaubilla' ), is_page( 'servicios' ) ),
+		array( get_post_type_archive_link( 'propiedad' ), __( 'Inmobiliaria', 'saraviaubilla' ), is_post_type_archive( 'propiedad' ) || is_singular( 'propiedad' ) || is_tax( array( 'operacion', 'tipo_propiedad', 'zona' ) ) ),
+		array( get_post_type_archive_link( 'remate' ), __( 'Próximo Remate', 'saraviaubilla' ), is_post_type_archive( 'remate' ) || is_singular( 'remate' ) ),
+		array( $page( 'nosotros', 'nosotros' ), __( 'Nosotros', 'saraviaubilla' ), is_page( 'nosotros' ) ),
+		array( $page( 'contacto', 'contacto' ), __( 'Contacto', 'saraviaubilla' ), is_page( 'contacto' ) ),
 	);
 	echo '<ul class="su-menu">';
 	foreach ( $items as $item ) {
-		printf( '<li><a href="%s">%s</a></li>', esc_url( $item[0] ), esc_html( $item[1] ) );
+		printf( '<li%s><a href="%s"%s>%s</a></li>', $item[2] ? ' class="current-menu-item"' : '', esc_url( $item[0] ), $item[2] ? ' aria-current="page"' : '', esc_html( $item[1] ) );
 	}
 	echo '</ul>';
 }

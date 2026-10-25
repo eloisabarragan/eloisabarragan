@@ -1,0 +1,7 @@
+body{margin:0;background:#fff;color:#2B3138}
+.su-header{top:env(safe-area-inset-top,0px)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:#1E3246}
+.su-wa-float{right:calc(clamp(16px,2.4vw,28px) + env(safe-area-inset-right,0px));bottom:calc(clamp(16px,2.4vw,28px) + env(safe-area-inset-bottom,0px))}
+.su-preview-note{position:fixed;left:calc(16px + env(safe-area-inset-left,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:61;margin:0;max-width:min(340px,calc(100vw - 110px));padding:10px 14px;border-radius:14px;background:#1E3246;color:#fff;font:500 12.5px/1.4 Inter,system-ui,sans-serif;box-shadow:0 10px 30px -10px rgba(0,0,0,.5)}
+.su-preview-note b{color:#BFDCEE}
+.su-map--link{display:grid;place-items:center;text-decoration:none;font:600 16px "Plus Jakarta Sans",system-ui,sans-serif;color:#1E3246;background:repeating-linear-gradient(45deg,#F3F6F9 0 14px,#EAF1F7 14px 28px)}

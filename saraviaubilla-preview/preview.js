@@ -1,0 +1,2 @@
+document.querySelectorAll('form[data-preview-form]').forEach(function(f){f.addEventListener('submit',function(e){e.preventDefault();var n=f.querySelector('.su-form__notice');if(!n){n=document.createElement('p');n.className='su-form__notice su-form__notice--ok';n.setAttribute('role','status');f.prepend(n);}n.textContent='Vista previa: en el sitio real esta consulta llega por email y queda guardada en Escritorio → Consultas.';});});
+document.querySelectorAll('[data-su-share]').forEach(function(b){b.hidden=true;});

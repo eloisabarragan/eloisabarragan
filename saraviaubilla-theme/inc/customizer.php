@@ -98,7 +98,9 @@ function su_customize_register( $wp_customize ) {
 		'hero_title'      => array( 'su_hero', __( 'Título', 'saraviaubilla' ), 'text' ),
 		'hero_text'       => array( 'su_hero', __( 'Bajada', 'saraviaubilla' ), 'textarea' ),
 		'hero_btn1'       => array( 'su_hero', __( 'Botón principal', 'saraviaubilla' ), 'text' ),
+		'hero_btn1_url'   => array( 'su_hero', __( 'Enlace del botón principal', 'saraviaubilla' ), 'text', __( 'Ej. #servicios, #contacto o una dirección completa.', 'saraviaubilla' ) ),
 		'hero_btn2'       => array( 'su_hero', __( 'Botón secundario', 'saraviaubilla' ), 'text' ),
+		'hero_btn2_url'   => array( 'su_hero', __( 'Enlace del botón secundario', 'saraviaubilla' ), 'text' ),
 		'stats'           => array( 'su_hero', __( 'Sellos bajo la portada', 'saraviaubilla' ), 'textarea', __( 'Uno por línea, con el formato: Dato destacado | Descripción', 'saraviaubilla' ) ),
 
 		'services_kicker' => array( 'su_services', __( 'Antetítulo', 'saraviaubilla' ), 'text' ),
@@ -118,6 +120,7 @@ function su_customize_register( $wp_customize ) {
 
 		'about_kicker'    => array( 'su_about', __( 'Antetítulo', 'saraviaubilla' ), 'text' ),
 		'about_title'     => array( 'su_about', __( 'Título', 'saraviaubilla' ), 'text' ),
+		'about_page_kicker' => array( 'su_about', __( 'Antetítulo en la página Nosotros', 'saraviaubilla' ), 'text' ),
 		'about_text'      => array( 'su_about', __( 'Texto', 'saraviaubilla' ), 'textarea', __( 'Separá párrafos con una línea en blanco. Podés usar <strong>negrita</strong>.', 'saraviaubilla' ) ),
 		'mission'         => array( 'su_about', __( 'Misión', 'saraviaubilla' ), 'textarea' ),
 		'vision'          => array( 'su_about', __( 'Visión', 'saraviaubilla' ), 'textarea' ),
@@ -206,6 +209,17 @@ function su_customize_register( $wp_customize ) {
 			'section' => 'su_services',
 			'type'    => 'textarea',
 		) );
+		$wp_customize->add_setting( "su_service_{$i}_long_title", array(
+			'default'           => $service['long_title'],
+			'sanitize_callback' => 'sanitize_text_field',
+		) );
+		$wp_customize->add_control( "su_service_{$i}_long_title", array(
+			/* translators: %d: número de servicio */
+			'label'       => sprintf( __( 'Servicio %d — título en la página Servicios', 'saraviaubilla' ), $i ),
+			'description' => __( 'Opcional. Si está vacío se usa el mismo título.', 'saraviaubilla' ),
+			'section'     => 'su_services',
+			'type'        => 'text',
+		) );
 		$wp_customize->add_setting( "su_service_{$i}_long", array(
 			'default'           => $service['long'],
 			'sanitize_callback' => 'su_sanitize_rich',
@@ -259,6 +273,7 @@ function su_services() {
 			'title' => $title,
 			'text'  => get_theme_mod( "su_service_{$i}_text", $service['text'] ),
 			'long'  => get_theme_mod( "su_service_{$i}_long", $service['long'] ),
+			'long_title' => get_theme_mod( "su_service_{$i}_long_title", $service['long_title'] ),
 		);
 	}
 	return $out;

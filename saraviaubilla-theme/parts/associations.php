@@ -8,9 +8,11 @@ if ( ! $su_assocs ) {
 	return;
 }
 ?>
-<section class="su-assoc" aria-label="<?php echo esc_attr( su_mod( 'assoc_title' ) ); ?>">
+<section class="su-assoc" aria-label="<?php esc_attr_e( 'Asociaciones', 'saraviaubilla' ); ?>">
 	<div class="su-wrap">
-		<p class="su-assoc__title"><?php echo esc_html( su_mod( 'assoc_title' ) ); ?></p>
+		<?php if ( su_mod( 'assoc_title' ) ) : ?>
+			<p class="su-assoc__title"><?php echo esc_html( su_mod( 'assoc_title' ) ); ?></p>
+		<?php endif; ?>
 		<ul class="su-assoc__list">
 			<?php foreach ( $su_assocs as $su_assoc ) : ?>
 				<li data-su-reveal title="<?php echo esc_attr( $su_assoc['full'] ); ?>">

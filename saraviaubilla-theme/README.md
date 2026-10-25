@@ -1,6 +1,6 @@
 # Tema WordPress — Saravia Ubilla
 
-Rediseño del sitio de Saravia Ubilla (bienes raíces, remates y tasaciones). Mantiene la identidad —logotipo SARAVIA/UBILLA, azul marino + celeste, textos originales— con un diseño actual, rápido y 100% editable desde WordPress. **No necesita plugins.**
+Rediseño del sitio de Saravia Ubilla (bienes raíces, remates y tasaciones). Mantiene la identidad (logotipo SARAVIA/UBILLA, azul marino + celeste) y **todos los textos tal cual están hoy en el sitio**, con un diseño nuevo, rápido y 100% editable desde WordPress. **No necesita plugins.**
 
 ## Instalación
 1. Apariencia → Temas → Añadir nuevo → Subir tema → `saraviaubilla-theme.zip` → **Activar**.
@@ -14,18 +14,18 @@ Rediseño del sitio de Saravia Ubilla (bienes raíces, remates y tasaciones). Ma
 ## Qué se edita y dónde
 | Qué | Dónde |
 |---|---|
-| Colores, textos de portada, sellos, servicios (6), "Cómo trabajamos", Nosotros, misión, visión, credenciales, logos de asociaciones, contacto, redes | **Apariencia → Personalizar → Saravia Ubilla** |
+| Colores, textos de portada, servicios (hasta 6, con texto breve y completo), Nosotros, misión, visión, logos de asociaciones, contacto, redes. Opcionales que vienen apagados: franja de sellos, "Cómo trabajamos" y línea de credenciales | **Apariencia → Personalizar → Saravia Ubilla** |
 | Propiedades (precio, moneda, operación, tipo, zona, dormitorios, baños, m², terreno, características, visitas, mapa, video, galería, destacada, estado) | **Escritorio → Propiedades** |
 | Remates (fecha y hora con cuenta regresiva, lugar, modalidad, exhibición, condiciones, catálogo PDF, link para ofertar online, galería) | **Escritorio → Remates** |
 | Consultas del formulario (además llegan por email) | **Escritorio → Consultas** |
 | Páginas Servicios / Nosotros / Contacto | Se arman solas con el contenido del Personalizador; lo que escribas en el editor de bloques se agrega debajo |
 
 ## Páginas
-- **Portada:** hero con el próximo remate y cuenta regresiva, sellos de trayectoria, servicios, proceso, propiedades con filtro, Nosotros con línea de credenciales, asociaciones y contacto.
+- **Inicio:** misma estructura que hoy (portada, Servicios, Nosotros, Propiedades, Contacto). Cuando se carga un remate futuro aparece en la portada con cuenta regresiva.
 - **Inmobiliaria** (`/inmobiliaria/`): buscador por operación, tipo, zona, dormitorios y precio; orden por precio.
 - **Ficha de propiedad:** galería con visor, datos, características, visitas, video, mapa (Google Maps sin clave), botón de WhatsApp con mensaje armado y formulario de consulta.
 - **Próximo remate** (`/proximo-remate/`): el próximo remate destacado, los siguientes y los realizados.
-- **Servicios**, **Nosotros**, **Contacto** (por slug), entradas y 404.
+- **Servicios** (textos completos + logos de asociaciones), **Nosotros** (historia, misión y visión), **Contacto** (por slug), entradas y 404.
 
 ## Notas
 - El formulario propio reemplaza al de Contact Form 7 (que hoy muestra el código `[contact-form-7 id="15"]` en vez del formulario). Si preferís usar un plugin, pegá su shortcode en Personalizar → Contacto y redes.

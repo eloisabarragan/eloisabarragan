@@ -10,7 +10,7 @@ get_header();
 	<?php
 	while ( have_posts() ) :
 		the_post();
-		su_page_hero( get_the_title(), su_mod( 'services_kicker' ), su_mod( 'services_text' ) );
+		su_page_hero( get_the_title() );
 		get_template_part( 'parts/services', null, array( 'long' => true, 'hide_head' => true ) );
 		if ( trim( get_the_content() ) ) :
 			?>

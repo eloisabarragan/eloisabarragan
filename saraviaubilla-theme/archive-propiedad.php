@@ -33,7 +33,7 @@ $su_selects = array(
 global $wp_query;
 ?>
 <main id="contenido">
-	<?php su_page_hero( su_mod( 'props_title' ), su_mod( 'props_kicker' ), su_mod( 'props_text' ) ); ?>
+	<?php su_page_hero( is_tax() ? single_term_title( '', false ) : __( 'Inmobiliaria', 'saraviaubilla' ) ); ?>
 
 	<section class="su-section su-section--tint su-section--tight">
 		<div class="su-wrap">

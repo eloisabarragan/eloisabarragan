@@ -12,9 +12,8 @@ get_header();
 	if ( su_mod( 'steps_show' ) ) {
 		get_template_part( 'parts/steps' );
 	}
-	get_template_part( 'parts/properties' );
 	get_template_part( 'parts/about' );
-	get_template_part( 'parts/associations' );
+	get_template_part( 'parts/properties' );
 	get_template_part( 'parts/contact' );
 
 	// Si la página de inicio tiene contenido propio (bloques), se muestra al final.

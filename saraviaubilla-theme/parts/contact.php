@@ -6,9 +6,13 @@
 <section class="su-section su-contact" id="contacto">
 	<div class="su-wrap su-contact__grid">
 		<div class="su-contact__copy">
-			<p class="su-kicker su-kicker--light" data-su-reveal><?php echo esc_html( su_mod( 'contact_kicker' ) ); ?></p>
+			<?php if ( su_mod( 'contact_kicker' ) ) : ?>
+				<p class="su-kicker su-kicker--light" data-su-reveal><?php echo esc_html( su_mod( 'contact_kicker' ) ); ?></p>
+			<?php endif; ?>
 			<h2 class="su-contact__title" data-su-reveal><?php echo esc_html( su_mod( 'contact_title' ) ); ?></h2>
-			<p class="su-contact__text" data-su-reveal><?php echo wp_kses_post( su_mod( 'contact_text' ) ); ?></p>
+			<?php if ( su_mod( 'contact_text' ) ) : ?>
+				<p class="su-contact__text" data-su-reveal><?php echo wp_kses_post( su_mod( 'contact_text' ) ); ?></p>
+			<?php endif; ?>
 			<ul class="su-contact__ways" data-su-reveal>
 				<?php if ( su_whatsapp_url() ) : ?>
 					<li><a href="<?php echo esc_url( su_whatsapp_url( __( 'Hola, quisiera hacer una consulta.', 'saraviaubilla' ) ) ); ?>" target="_blank" rel="noopener"><?php echo su_icon( 'whatsapp' ); // phpcs:ignore WordPress.Security.EscapeOutput ?><span><small>WhatsApp</small><?php echo esc_html( su_mod( 'phone' ) ); ?></span></a></li>

@@ -308,3 +308,9 @@ function su_page_hero( $title, $kicker = '', $text = '' ) {
 	</section>
 	<?php
 }
+
+/** Título de portada: si contiene "UBILLA", esa parte va en celeste como en el logo. */
+function su_brand_title( $title ) {
+	$title = esc_html( $title );
+	return preg_replace( '/(UBILLA)/i', '<span>$1</span>', $title, 1 );
+}

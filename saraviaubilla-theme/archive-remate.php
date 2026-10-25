@@ -26,7 +26,7 @@ $su_past = new WP_Query( array(
 ) );
 ?>
 <main id="contenido">
-	<?php su_page_hero( __( 'Próximo remate', 'saraviaubilla' ), __( 'Remates', 'saraviaubilla' ), __( 'Remates de bienes inmuebles y muebles: mobiliario, antigüedades, automotores, maquinaria, materiales de construcción y mercadería en general.', 'saraviaubilla' ) ); ?>
+	<?php su_page_hero( __( 'Próximo remate', 'saraviaubilla' ) ); ?>
 
 	<section class="su-section su-section--tint su-section--tight">
 		<div class="su-wrap">
@@ -69,11 +69,10 @@ $su_past = new WP_Query( array(
 				wp_reset_postdata();
 				?>
 			<?php else : ?>
-				<div class="su-empty">
-					<?php echo su_icon( 'martillo' ); // phpcs:ignore WordPress.Security.EscapeOutput ?>
-					<p><?php echo wp_kses_post( su_mod( 'remate_empty' ) ); ?></p>
-					<?php if ( su_whatsapp_url() ) : ?>
-						<a class="su-btn su-btn--primary" href="<?php echo esc_url( su_whatsapp_url( __( 'Hola, quiero que me avisen del próximo remate.', 'saraviaubilla' ) ) ); ?>" target="_blank" rel="noopener"><?php echo su_icon( 'whatsapp' ); // phpcs:ignore WordPress.Security.EscapeOutput ?><?php esc_html_e( 'Avisame del próximo', 'saraviaubilla' ); ?></a>
+				<div class="su-brandblock" data-su-reveal>
+					<?php su_logo( 'su-logo--xl' ); ?>
+					<?php if ( su_mod( 'remate_empty' ) ) : ?>
+						<p><?php echo wp_kses_post( su_mod( 'remate_empty' ) ); ?></p>
 					<?php endif; ?>
 				</div>
 			<?php endif; ?>
