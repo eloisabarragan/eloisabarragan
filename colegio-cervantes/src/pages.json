@@ -178,5 +178,16 @@
   "secciones": [
    "01-cerv-siged"
   ]
+ },
+ {
+  "id": "inscripciones",
+  "slug": "inscripciones",
+  "nombre": "Inscripciones",
+  "titulo": "Procedimiento de inscripción · Colegio Español Cervantes",
+  "descripcion": "Pasos para finalizar la inscripción en el Colegio Español Cervantes.",
+  "privada": true,
+  "secciones": [
+   "01-cerv-inscripciones"
+  ]
  }
 ]
