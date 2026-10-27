@@ -19,7 +19,7 @@ Tienda online de **FlorLatte**, atelier botánico en Las Piedras (Uruguay). *Don
   1. **Tus datos**: quién envía y quién recibe.
   2. **Entrega**: día (los domingos no hay entregas), franja horaria, envío a domicilio, Express en menos de 2 h o retiro en el local.
   3. **Dedicatoria**: 3 diseños de tarjeta, mensajes sugeridos, firma o envío anónimo, con vista previa en vivo.
-  4. **Pago**: tarjeta con vista previa animada (detecta Visa, Mastercard o Amex y valida el número con el algoritmo de Luhn), Mercado Pago o transferencia.
+  4. **Pago**: Mercado Pago Checkout Pro (tarjetas, débito, saldo de Mercado Pago, Abitab y RedPagos) o transferencia bancaria.
 - Confirmación con número de pedido, seguimiento del estado y lluvia de pétalos.
 
 **Extras**
@@ -38,9 +38,9 @@ Tienda online de **FlorLatte**, atelier botánico en Las Piedras (Uruguay). *Don
 | `BIENVENIDA15` | 15% de descuento |
 | `ENVIOGRATIS` | Envío estándar gratis |
 
-Tarjeta de prueba: `4242 4242 4242 4242`, cualquier vencimiento futuro y CVV `123`.
+**Panel de la florería (Google Sheets):** los productos, precios, stock y fotos se cargan en la hoja "Productos". Cada compra queda en la hoja "Pedidos" y llega un email con todos los datos del cliente. El stock se descuenta solo cuando se aprueba el pago.
 
-> **Importante:** el pago es una simulación. Para cobrar de verdad hay que conectar una pasarela de pago (Mercado Pago, dLocal, Stripe, etc.) y un servidor que registre los pedidos.
+**Para ponerla en marcha** seguí la guía [`CONFIGURAR-TIENDA.md`](../CONFIGURAR-TIENDA.md).
 
 ## Datos a completar antes de publicar
 
@@ -48,30 +48,15 @@ Estos datos están en `js/data.js` y hoy son **ejemplos**:
 
 - **WhatsApp** (`config.whatsapp`): mientras esté vacío, el botón flotante no aparece.
 - **Horario**, **email** y **datos bancarios** para transferencias.
-- **Precios, productos, costo de envío y hora de corte** para entregas en el día.
+- **Costo de envío y hora de corte** para entregas en el día. Los precios y productos reales se cargan en la planilla.
 - **Reseñas y valoraciones**: son de ejemplo. Reemplazalas por reseñas reales de clientes, o eliminalas.
 
 ## Cómo personalizarla
 
-Todo el contenido está en **`js/data.js`**:
+- **Productos, precios, stock y fotos:** en la planilla de Google (hoja "Productos"). Ver la guía.
+- **Tamaños, extras, envíos, cupones, datos de contacto y textos:** en `js/data.js`. Ese archivo también tiene el catálogo de respaldo, que se muestra si la planilla no responde, y las ilustraciones.
 
-- `config`: nombre, dirección, Instagram, moneda, monto para envío gratis, costos de envío, hora de corte para entregas en el día, WhatsApp, email, dirección y cupones.
-- `products`: cada producto tiene nombre, categoría, ocasiones, color, precio, precio anterior (opcional, para mostrarlo en oferta), stock, descripción y su ilustración.
-- `addons`, `sizes`, `plans`, `testimonials`, `faqs`: extras, tamaños, planes de suscripción, reseñas y preguntas frecuentes.
-
-### Usar fotos reales
-
-Las imágenes son ilustraciones generadas por código, así que la tienda se ve completa sin depender de fotos. Para usar fotos propias, copialas en la carpeta `img/` y agregá `img` al producto:
-
-```js
-{ id: 'rosas-eternas', name: 'Rosas Eternas', img: 'img/rosas-eternas.jpg', ... }
-```
-
-## Publicarla gratis con GitHub Pages
-
-1. En GitHub, entrá a **Settings → Pages**.
-2. En "Branch" elegí la rama y la carpeta raíz, y guardá.
-3. La tienda queda en `https://<tu-usuario>.github.io/<repositorio>/floreria/`.
+Si abrís `index.html` directo desde la computadora (sin servidor), la tienda funciona en modo vista previa y el pago se simula.
 
 ## Estructura
 
@@ -79,8 +64,12 @@ Las imágenes son ilustraciones generadas por código, así que la tienda se ve 
 floreria/
 ├── index.html      Estructura de la página
 ├── css/styles.css  Estilos, colores y modo oscuro
-├── js/data.js      Catálogo y configuración (editá acá)
+├── js/data.js      Reglas de precios, configuración y catálogo de respaldo
 ├── js/flowers.js   Generador de ilustraciones de flores
 ├── js/app.js       Carrito, filtros, buscador, checkout
-└── img/            Tus fotos (opcional)
+└── img/            Logo y fotos
+
+netlify/functions/  Servidor: productos, crear pedido, aviso de Mercado Pago, estado del pedido
+netlify/lib/        Precios, conexión con la planilla y con Mercado Pago
+backend/            Script de Google Sheets (hojas Productos y Pedidos, stock y emails)
 ```

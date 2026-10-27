@@ -63,10 +63,24 @@
     $$('[data-icon]', root).forEach(el => { if (!el.dataset.iconDone) { el.insertAdjacentHTML('afterbegin', icon(el.dataset.icon)); el.dataset.iconDone = '1'; } });
   }
 
+  /* Foto del producto: acepta links de Google Drive ("cualquier persona con el enlace") */
+  function photoUrl(url) {
+    const m = /drive\.google\.com\/(?:file\/d\/|open\?id=|uc\?(?:export=\w+&)?id=)([\w-]{20,})/.exec(url);
+    return m ? `https://lh3.googleusercontent.com/d/${m[1]}=w1000` : url;
+  }
+  /* Ilustración para productos nuevos de la planilla que todavía no tienen foto */
+  function defaultArt(p) {
+    const hex = (D.colors.find(c => c.id === p.color) || {}).hex;
+    const palette = !hex || hex.startsWith('conic') ? ['#f6c9d1', '#fbf3ee', '#e7b6c0', '#f5c518'] : [hex, A.shade(hex, 0.25), A.shade(hex, -0.12)];
+    const kind = { plantas: 'pot', cajas: 'box', floreros: 'vase' }[p.cat] || 'bouquet';
+    let seed = 0; for (const ch of p.id) seed = (seed * 31 + ch.charCodeAt(0)) % 9973;
+    return { kind, flowers: kind === 'pot' ? ['monstera'] : ['rose', 'peony', 'rose'], palette, wrap: kind === 'pot' ? '#c66b3d' : kind === 'box' ? '#2c2a2e' : '#efe2d6', ribbon: '#6b2433', bg: '#f3ebe4', count: 11, seed: seed + 1, eucalyptus: true };
+  }
   /* Ilustración del producto (o foto real si se cargó `img`) */
   function artFor(p, o = {}) {
-    if (p.img && !o.variant) return `<img src="${esc(p.img)}" alt="${esc(p.name)}" loading="lazy">`;
-    const base = p.art || {};
+    if (!p) return A.art({ bg: '#f3ebe4' });
+    if (p.img && !o.variant) return `<img src="${esc(photoUrl(p.img))}" alt="${esc(p.name)}" loading="lazy">`;
+    const base = p.art || defaultArt(p);
     const mult = o.mult || 1;
     return A.art(Object.assign({}, base, {
       label: p.name,
@@ -75,7 +89,7 @@
     }));
   }
   function itemArt(item) {
-    if (item.kind === 'product') return artFor(byId(item.id), { mult: (D.sizes.find(s => s.id === item.size) || {}).mult || 1 });
+    if (item.kind === 'product') return artFor(byId(item.id) || LOCAL.find(x => x.id === item.id), { mult: (D.sizes.find(s => s.id === item.size) || {}).mult || 1 });
     return A.art(item.art);
   }
 
@@ -87,8 +101,17 @@
     coupon: store.get('coupon', null),
     f: { cat: 'all', occasions: new Set(), colors: new Set(), maxPrice: 6000, sameDay: false, offer: false, sort: 'featured' }
   };
-  state.cart = state.cart.filter(i => i.kind !== 'product' || byId(i.id));
+  const LOCAL = D.products.slice(); // catálogo de respaldo (ilustraciones de adorno)
+  const localArt = id => artFor(LOCAL.find(p => p.id === id));
+  state.cart = state.cart.filter(i => (i.kind !== 'product' || byId(i.id)) && (i.kind !== 'custom' || i.build));
   state.wish = state.wish.filter(byId);
+
+  /* Stock: null = sin límite */
+  const inCart = id => state.cart.reduce((n, i) => n + (i.kind === 'product' && i.id === id ? i.qty : 0), 0);
+  const left = p => p.stock == null ? Infinity : Math.max(0, p.stock - inCart(p.id));
+  const soldOut = p => p.stock === 0;
+  const isLow = p => p.stock != null && p.stock > 0 && p.stock <= (C.lowStockFrom || 3);
+  const starsHTML = p => p.rating ? `<span class="stars" aria-label="${p.rating} de 5">${stars(p.rating)}</span><span class="rev-n">(${p.reviews})</span>` : '';
 
   /* ---------- Toasts ---------- */
   function toast(title, text, opts = {}) {
@@ -290,19 +313,19 @@
   /* ---------- Grilla ---------- */
   function cardHTML(p, i) {
     const fav = state.wish.includes(p.id);
-    const badge = p.badge ? `<span class="badge${p.oldPrice ? ' badge--sale' : ''}">${esc(p.badge)}</span>` : '';
-    return `<article class="card" style="animation-delay:${Math.min(i, 8) * 45}ms">
+    const badge = soldOut(p) ? '<span class="badge badge--out">Agotado</span>' : p.badge ? `<span class="badge${p.oldPrice ? ' badge--sale' : ''}">${esc(p.badge)}</span>` : '';
+    return `<article class="card${soldOut(p) ? ' card--out' : ''}" style="animation-delay:${Math.min(i, 8) * 45}ms">
       <div class="card__media" data-open="${p.id}" role="button" tabindex="0" aria-label="Ver ${esc(p.name)}">
         ${badge}${artFor(p)}
         <div class="card__quick">
-          <button class="btn btn--primary" data-add="${p.id}">${icon('bag')}Agregar</button>
+          ${soldOut(p) ? `<button class="btn btn--primary" disabled>Agotado</button>` : `<button class="btn btn--primary" data-add="${p.id}">${icon('bag')}Agregar</button>`}
           <button class="btn btn--ghost" data-open="${p.id}" aria-label="Vista rápida">${icon('search')}</button>
         </div>
       </div>
       <button class="fav" data-fav="${p.id}" aria-pressed="${fav}" aria-label="${fav ? 'Quitar de' : 'Agregar a'} favoritos">${icon('heart')}</button>
       <div class="card__body">
         <div class="card__row"><h3 class="card__name" data-open="${p.id}">${esc(p.name)}</h3><span class="price">${p.oldPrice ? `<s>${money(p.oldPrice)}</s>` : ''}${money(p.price)}</span></div>
-        <div class="card__meta"><span class="stars" aria-label="${p.rating} de 5">${stars(p.rating)}</span><span class="rev-n">(${p.reviews})</span>${p.sameDay ? `<span class="tag-today">${icon('zap')}Llega hoy</span>` : ''}${p.stock <= 6 ? `<span class="low">Quedan ${p.stock}</span>` : ''}</div>
+        <div class="card__meta">${starsHTML(p)}${p.sameDay && !soldOut(p) ? `<span class="tag-today">${icon('zap')}Llega hoy</span>` : ''}${isLow(p) ? `<span class="low">Quedan ${p.stock}</span>` : ''}</div>
       </div>
     </article>`;
   }
@@ -341,15 +364,15 @@
   function renderWish() {
     const body = $('#wishBody');
     if (!state.wish.length) {
-      body.innerHTML = `<div class="drawer-empty"><span class="mini__art">${artFor(byId('jardin-peonias'))}</span><strong>Todavía no guardaste nada</strong><p>Tocá el corazón en cualquier producto para guardarlo acá.</p><a href="#tienda" class="btn btn--primary" data-close>Explorar la tienda</a></div>`;
+      body.innerHTML = `<div class="drawer-empty"><span class="mini__art">${localArt('jardin-peonias')}</span><strong>Todavía no guardaste nada</strong><p>Tocá el corazón en cualquier producto para guardarlo acá.</p><a href="#tienda" class="btn btn--primary" data-close>Explorar la tienda</a></div>`;
       return;
     }
     body.innerHTML = state.wish.map(id => {
       const p = byId(id);
       return `<div class="line-item"><span class="line-item__art" data-open="${p.id}">${artFor(p)}</span><div class="line-item__info">
         <div class="line-item__top"><strong>${esc(p.name)}</strong><span class="price">${money(p.price)}</span></div>
-        <span class="line-item__opts">${catName(p.cat)} · ${stars(p.rating)}</span>
-        <div class="line-item__bottom"><button class="btn btn--primary btn--sm" data-add="${p.id}">Agregar al carrito</button><button class="remove" data-fav="${p.id}">Quitar</button></div>
+        <span class="line-item__opts">${catName(p.cat)}${soldOut(p) ? ' · Agotado' : ''}</span>
+        <div class="line-item__bottom">${soldOut(p) ? '<span></span>' : `<button class="btn btn--primary btn--sm" data-add="${p.id}">Agregar al carrito</button>`}<button class="remove" data-fav="${p.id}">Quitar</button></div>
       </div></div>`;
     }).join('');
   }
@@ -379,8 +402,13 @@
     const opts = [p.cat === 'plantas' ? null : size.name].concat(addonObjs.map(a => '+ ' + a.name)).filter(Boolean).join(' · ');
     return { key: [p.id, sizeId].concat(addons.slice().sort()).join('|'), kind: 'product', id: p.id, name: p.name, size: sizeId, addons, unit, qty, opts };
   }
+  function noStock(p) {
+    toast(soldOut(p) ? 'Producto agotado' : 'No hay más stock', soldOut(p) ? p.name : `Ya tenés en el carrito todas las unidades de ${p.name}.`, { icon: 'info' });
+  }
   function quickAdd(id) {
     const p = byId(id);
+    if (!p) return;
+    if (left(p) < 1) return noStock(p);
     addToCart(productItem(p));
     toast('Agregado al carrito', p.name, { art: artFor(p), action: 'Ver carrito', onAction: () => openDrawer('cart') });
   }
@@ -435,11 +463,11 @@
 
     const body = $('#cartBody'), foot = $('#cartFoot');
     if (!state.cart.length) {
-      body.innerHTML = `<div class="drawer-empty"><span class="mini__art">${artFor(byId('sol-de-manana'))}</span><strong>Tu carrito está vacío</strong><p>Llenalo de flores: tenemos ramos desde ${money(Math.min(...D.products.map(p => p.price)))}.</p><a href="#tienda" class="btn btn--primary" data-close>Ver la tienda</a></div>`;
+      body.innerHTML = `<div class="drawer-empty"><span class="mini__art">${localArt('sol-de-manana')}</span><strong>Tu carrito está vacío</strong><p>Llenalo de flores: tenemos ramos desde ${money(Math.min(...D.products.map(p => p.price)))}.</p><a href="#tienda" class="btn btn--primary" data-close>Ver la tienda</a></div>`;
       foot.hidden = true; return;
     }
     foot.hidden = false;
-    const upsell = ['mini-gracias', 'trio-suculentas', 'lavanda-miel'].map(byId).filter(p => !state.cart.some(i => i.id === p.id)).slice(0, 2);
+    const upsell = ['mini-gracias', 'trio-suculentas', 'lavanda-miel'].map(byId).filter(p => p && !soldOut(p) && !state.cart.some(i => i.id === p.id)).slice(0, 2);
     body.innerHTML = state.cart.map((i, idx) => `
       <div class="line-item"><span class="line-item__art">${itemArt(i)}</span><div class="line-item__info">
         <div class="line-item__top"><strong>${esc(i.name)}</strong><span class="price">${money(i.unit * i.qty)}</span></div>
@@ -463,7 +491,10 @@
   $('#cartBody').addEventListener('click', e => {
     const q = e.target.closest('[data-q]');
     if (q) {
-      const it = state.cart[+q.dataset.q]; it.qty += +q.dataset.d;
+      const it = state.cart[+q.dataset.q];
+      const prod = it.kind === 'product' && byId(it.id);
+      if (+q.dataset.d > 0 && prod && left(prod) < 1) return noStock(prod);
+      it.qty += +q.dataset.d;
       if (it.qty < 1) state.cart.splice(+q.dataset.q, 1);
       saveCart(); return;
     }
@@ -500,7 +531,7 @@
       </div>
       <div class="pm__info">
         <div><p class="eyebrow">${catName(p.cat)} · ${p.occasions.map(occName).join(', ')}</p><h2 id="pmTitle">${esc(p.name)}</h2></div>
-        <div class="pm__rating"><span class="stars">${stars(p.rating)}</span>${p.rating.toFixed(1).replace('.', ',')} · ${p.reviews} reseñas</div>
+        ${p.rating ? `<div class="pm__rating"><span class="stars">${stars(p.rating)}</span>${p.rating.toFixed(1).replace('.', ',')} · ${p.reviews} reseñas</div>` : ''}
         <div class="pm__price" id="pmPrice"></div>
         <p class="pm__desc">${esc(p.desc)}</p>
         <p class="pm__stems">${esc(p.stems)}</p>
@@ -514,7 +545,7 @@
         <div class="pm__notes">
           ${p.sameDay ? `<div>${icon('zap')}<span>${sameDayInfo().open ? 'Pedilo ahora y <b>llega hoy</b>' : 'Llega <b>mañana</b> a primera hora'}</span></div>` : `<div>${icon('truck')}<span>Entrega en 24 a 48 h</span></div>`}
           <div>${icon('card')}<span>Tarjeta con dedicatoria incluida</span></div>
-          ${p.stock <= 6 ? `<div>${icon('info')}<span class="low">¡Últimas ${p.stock} unidades!</span></div>` : ''}
+          ${soldOut(p) ? `<div>${icon('info')}<span class="low">Agotado por ahora. Escribinos y te avisamos cuando vuelva.</span></div>` : isLow(p) ? `<div>${icon('info')}<span class="low">¡Últimas ${p.stock} unidades!</span></div>` : ''}
         </div>
         <div class="pm__acc">
           <details><summary>Cuidados ${icon('plus')}</summary><p>${isPlant ? 'Ubicala con luz indirecta y regá cuando el sustrato esté seco al tacto. Evitá el sol directo del mediodía.' : 'Cortá 2 cm de los tallos en diagonal, cambiá el agua cada dos días y alejá el ramo del sol directo y la fruta madura. Así dura hasta 10 días.'}</p></details>
@@ -528,7 +559,8 @@
       $('#pmMain').innerHTML = artFor(p, { mult: mult(), variant: view });
       $('#pmThumbs').innerHTML = [0, 1, 2].map(v => `<button class="pm__thumb" data-view="${v}" aria-pressed="${v === view}" aria-label="Vista ${v + 1}">${artFor(p, { mult: mult(), variant: v })}</button>`).join('');
       $('#pmPrice').innerHTML = `${money(unit())}${p.oldPrice && size === 'clasico' ? `<s>${money(p.oldPrice)}</s><span class="save">Ahorrás ${money(p.oldPrice - p.price)}</span>` : ''}`;
-      $('#pmAdd').innerHTML = `${icon('bag')}Agregar · ${money(unit() * qty)}`;
+      $('#pmAdd').disabled = left(p) < 1;
+      $('#pmAdd').innerHTML = soldOut(p) ? 'Agotado' : left(p) < 1 ? 'Ya está todo en tu carrito' : `${icon('bag')}Agregar · ${money(unit() * qty)}`;
       $('#pmQty').textContent = qty;
     }
     panel.onclick = e => {
@@ -537,11 +569,12 @@
       const v = e.target.closest('[data-view]');
       if (v) { view = +v.dataset.view; paint(); return; }
       const q = e.target.closest('[data-pq]');
-      if (q) { qty = Math.max(1, Math.min(20, qty + +q.dataset.pq)); paint(); return; }
+      if (q) { qty = Math.max(1, Math.min(20, left(p), qty + +q.dataset.pq)); paint(); return; }
       if (e.target.closest('#pmMain')) $('#pmMain').classList.toggle('zoom');
     };
     $('#pmAddons').onchange = e => { e.target.checked ? addons.add(e.target.value) : addons.delete(e.target.value); paint(); };
     $('#pmAdd').onclick = () => {
+      if (left(p) < qty) return noStock(p);
       addToCart(productItem(p, size, Array.from(addons), qty));
       openDrawer('cart');
     };
@@ -635,7 +668,8 @@
   $('#builderAdd').addEventListener('click', () => {
     const desc = D.builderFlowers.filter(f => builder.items[f.type].qty).map(f => `${builder.items[f.type].qty} ${f.name.toLowerCase()}`).join(', ');
     const cfg = builderArtCfg();
-    addToCart({ key: 'custom-' + Date.now(), kind: 'custom', id: 'custom', name: 'Tu ramo de autor', unit: builderPrice(), qty: 1, opts: desc + ' · papel ' + D.wraps.find(w => w.id === builder.wrap).name.toLowerCase(), art: cfg });
+    const build = { wrap: builder.wrap, items: JSON.parse(JSON.stringify(builder.items)) };
+    addToCart({ key: 'custom-' + Date.now(), kind: 'custom', id: 'custom', name: 'Tu ramo de autor', unit: builderPrice(), qty: 1, opts: desc + ' · papel ' + D.wraps.find(w => w.id === builder.wrap).name.toLowerCase(), art: cfg, build });
     toast('Tu ramo está en el carrito', 'Lo armamos tal cual lo diseñaste', { art: A.art(cfg), action: 'Ver carrito', onAction: () => openDrawer('cart') });
   });
 
@@ -739,9 +773,11 @@
 
   /* ---------- Checkout ---------- */
   const STEPS = ['Tus datos', 'Entrega', 'Dedicatoria', 'Pago'];
-  const co = Object.assign({ step: 0, name: '', email: '', phone: '', rname: '', rphone: '', method: 'standard', date: null, slot: null, address: '', barrio: '', notes: '', cardStyle: 'clasica', message: '', sign: '', anon: false, pay: 'card' }, store.get('co', {}));
-  co.step = 0; co.date = null; co.slot = null;
-  const cc = { num: '', name: '', exp: '', cvv: '' };
+  const co = Object.assign({ step: 0, name: '', email: '', phone: '', rname: '', rphone: '', method: 'standard', date: null, slot: null, address: '', barrio: '', notes: '', cardStyle: 'clasica', message: '', sign: '', anon: false, pay: 'mp' }, store.get('co', {}));
+  co.step = 0;
+  if (co.pay !== 'transfer') co.pay = 'mp';
+  // Abierta como archivo (sin servidor): el pago se simula para poder recorrer la tienda.
+  const DEMO = location.protocol === 'file:';
   const saveCo = () => { const { step, ...rest } = co; store.set('co', rest); };
 
   function openCheckout() {
@@ -792,7 +828,7 @@
 
     if (co.step === 1) {
       const days = deliveryDays();
-      if (!co.date || days.find(d => d.iso === co.date && d.closed)) co.date = (days.find(d => !d.closed) || {}).iso;
+      if (!days.some(d => d.iso === co.date && !d.closed)) { co.date = (days.find(d => !d.closed) || {}).iso; co.slot = null; }
       const day = days.find(d => d.iso === co.date);
       const expressOk = day && day.today && sameDayInfo().open;
       if (co.method === 'express' && !expressOk) co.method = 'standard';
@@ -846,30 +882,16 @@
     if (co.step === 3) {
       return `
       <h2 class="co-title">Pago</h2>
-      <p class="co-sub">Elegí cómo querés pagar. Tus datos viajan cifrados.</p>
-      <div class="demo-note">${icon('info')}<span><b>Tienda en modo demostración:</b> no se realizan cobros reales. Para probar usá la tarjeta 4242 4242 4242 4242, cualquier fecha futura y CVV 123.</span></div>
-      <div class="pay-tabs">
-        <button type="button" class="pay-tab" data-pay="card" aria-pressed="${co.pay === 'card'}">${icon('credit')}Tarjeta</button>
-        <button type="button" class="pay-tab" data-pay="mp" aria-pressed="${co.pay === 'mp'}">Mercado Pago</button>
-        <button type="button" class="pay-tab" data-pay="transfer" aria-pressed="${co.pay === 'transfer'}">Transferencia</button>
-      </div>
-      ${co.pay === 'card' ? `
-        <div class="cc-wrap"><div class="cc" id="cc">
-          <div class="cc__face"><div class="cc__top"><span class="cc__chip"></span><span class="cc__brand" id="ccBrand"></span></div><div class="cc__num" id="ccNum"></div><div class="cc__bottom"><div><small>Titular</small><span id="ccName"></span></div><div><small>Vence</small><span id="ccExp"></span></div></div></div>
-          <div class="cc__face cc__face--back"><div class="cc__strip"></div><div class="cc__cvv" id="ccCvv"></div></div>
-        </div></div>
-        <div class="fieldset">
-          <div class="field"><label for="cc-num">Número de tarjeta</label><input id="cc-num" inputmode="numeric" autocomplete="cc-number" placeholder="0000 0000 0000 0000" value="${cc.num}" data-req><span class="err">Revisá el número: no parece una tarjeta válida.</span></div>
-          <div class="field"><label for="cc-name">Nombre como figura en la tarjeta</label><input id="cc-name" autocomplete="cc-name" placeholder="ANA PEREIRA" value="${esc(cc.name)}" data-req><span class="err">Completá el nombre del titular.</span></div>
-          <div class="row">
-            <div class="field"><label for="cc-exp">Vencimiento</label><input id="cc-exp" inputmode="numeric" autocomplete="cc-exp" placeholder="MM/AA" maxlength="5" value="${cc.exp}" data-req><span class="err">Ingresá una fecha futura con formato MM/AA.</span></div>
-            <div class="field"><label for="cc-cvv">Código de seguridad</label><input id="cc-cvv" inputmode="numeric" autocomplete="cc-csc" placeholder="123" maxlength="4" value="${cc.cvv}" data-req><span class="err">El código tiene 3 o 4 dígitos.</span></div>
-          </div>
-          <div class="field"><label for="cc-inst">Cuotas</label><select id="cc-inst"><option>1 pago de ${money(totals(co.method).total)}</option><option>3 cuotas sin recargo de ${money(totals(co.method).total / 3)}</option><option>6 cuotas de ${money(totals(co.method).total * 1.12 / 6)}</option></select></div>
-        </div>` : co.pay === 'mp' ? `
-        <div class="pay-alt"><p>Al confirmar te llevamos a Mercado Pago para que pagues con tu cuenta, débito o crédito. Volvés automáticamente a la tienda.</p></div>` : `
-        <div class="pay-alt"><p>Transferí el total y mandanos el comprobante por WhatsApp. Reservamos tus flores por 2 horas.</p>
-          <dl><dt>Banco</dt><dd>${esc(C.bank.name)}</dd><dt>Cuenta</dt><dd>${esc(C.bank.account)}</dd><dt>Titular</dt><dd>${esc(C.bank.holder)}</dd><dt>Importe</dt><dd>${money(totals(co.method).total)}</dd></dl></div>`}`;
+      <p class="co-sub">Elegí cómo querés pagar.</p>
+      ${DEMO ? `<div class="demo-note">${icon('info')}<span><b>Vista previa sin servidor:</b> el pago se simula. Publicada en Netlify, este paso te lleva a Mercado Pago.</span></div>` : ''}
+      <fieldset class="fieldset"><legend>Medio de pago</legend>
+        <div class="options">
+          <label class="option"><input type="radio" name="pay" value="mp" ${co.pay === 'mp' ? 'checked' : ''}><div><strong>Mercado Pago</strong><span>Tarjetas de crédito y débito, saldo de Mercado Pago, Abitab o RedPagos</span></div><b class="pay-badge">Recomendado</b></label>
+          <label class="option"><input type="radio" name="pay" value="transfer" ${co.pay === 'transfer' ? 'checked' : ''}><div><strong>Transferencia bancaria</strong><span>Te mostramos los datos al confirmar. Preparamos tu pedido cuando recibimos el comprobante.</span></div></label>
+        </div>
+      </fieldset>
+      <p class="secure secure--left">${icon('lock')}${co.pay === 'mp' ? 'Vas a pagar en el sitio seguro de Mercado Pago. Nosotros nunca vemos los datos de tu tarjeta.' : 'Te mandamos la confirmación por email con los datos para transferir.'}</p>
+      <p class="coupon-msg err" id="payErr" role="alert" hidden></p>`;
     }
     return '';
   }
@@ -898,7 +920,7 @@
       ${stepHTML()}
       <div class="co-nav">
         ${co.step ? `<button type="button" class="btn btn--ghost" id="coBack">${icon('left')}Volver</button>` : `<button type="button" class="btn btn--ghost" id="coBack">${icon('left')}Seguir comprando</button>`}
-        <button type="submit" class="btn btn--primary btn--lg">${co.step === 3 ? `${icon('lock')}Pagar ${money(t.total)}` : 'Continuar'}</button>
+        <button type="submit" class="btn btn--primary btn--lg" id="coSubmit">${co.step === 3 ? (co.pay === 'mp' ? `${icon('lock')}Pagar ${money(t.total)} con Mercado Pago` : `Confirmar pedido · ${money(t.total)}`) : 'Continuar'}</button>
       </div>
     </form>${summaryHTML()}`;
     bindCheckout();
@@ -932,8 +954,7 @@
       $('#co-anon').addEventListener('change', e => { co.anon = e.target.checked; paintGiftCard(); saveCo(); });
     }
     if (co.step === 3) {
-      form.addEventListener('click', e => { const p = e.target.closest('[data-pay]'); if (p) { co.pay = p.dataset.pay; renderCheckout(); } });
-      if (co.pay === 'card') bindCard();
+      form.addEventListener('change', e => { if (e.target.name === 'pay') { co.pay = e.target.value; saveCo(); renderCheckout(); } });
     }
   }
 
@@ -944,47 +965,6 @@
     g.innerHTML = `<span class="gift-card__logo">${esc(C.storeName)}</span><p class="gift-card__msg">${esc(co.message || 'Tu mensaje aparece acá…')}</p><p class="gift-card__sign">${co.anon ? 'Alguien que te quiere' : esc(co.sign || (co.name ? 'De ' + co.name.split(' ')[0] : 'Tu firma'))}</p>`;
   }
 
-  /* Tarjeta de crédito */
-  const brandOf = n => /^3[47]/.test(n) ? 'AMEX' : /^4/.test(n) ? 'VISA' : /^(5[1-5]|2[2-7])/.test(n) ? 'Mastercard' : '';
-  function luhn(n) {
-    let s = 0, alt = false;
-    for (let i = n.length - 1; i >= 0; i--) { let d = +n[i]; if (alt) { d *= 2; if (d > 9) d -= 9; } s += d; alt = !alt; }
-    return n.length >= 13 && s % 10 === 0;
-  }
-  function fmtCard(n) {
-    if (brandOf(n) === 'AMEX') return [n.slice(0, 4), n.slice(4, 10), n.slice(10, 15)].filter(Boolean).join(' ');
-    return n.replace(/(.{4})/g, '$1 ').trim();
-  }
-  function expOk(v) {
-    const m = /^(\d{2})\/(\d{2})$/.exec(v); if (!m) return false;
-    const mm = +m[1], yy = 2000 + +m[2]; if (mm < 1 || mm > 12) return false;
-    const now = new Date(); return yy > now.getFullYear() || (yy === now.getFullYear() && mm >= now.getMonth() + 1);
-  }
-  function paintCard() {
-    const n = cc.num;
-    $('#ccBrand').textContent = brandOf(n) || 'PÉTALO';
-    const mask = brandOf(n) === 'AMEX' ? '•••• •••••• •••••' : '•••• •••• •••• ••••';
-    const f = fmtCard(n);
-    $('#ccNum').textContent = f + mask.slice(f.length);
-    $('#ccName').textContent = cc.name || 'NOMBRE APELLIDO';
-    $('#ccExp').textContent = cc.exp || 'MM/AA';
-    $('#ccCvv').textContent = cc.cvv.replace(/./g, '•') || '•••';
-  }
-  function bindCard() {
-    paintCard();
-    const num = $('#cc-num'), name = $('#cc-name'), exp = $('#cc-exp'), cvv = $('#cc-cvv');
-    num.addEventListener('input', () => { cc.num = num.value.replace(/\D/g, '').slice(0, 16); num.value = fmtCard(cc.num); paintCard(); });
-    name.addEventListener('input', () => { cc.name = name.value.toUpperCase(); paintCard(); });
-    exp.addEventListener('input', e => {
-      let v = exp.value.replace(/\D/g, '').slice(0, 4);
-      if (v.length >= 3 || (v.length === 2 && e.inputType !== 'deleteContentBackward')) v = v.slice(0, 2) + '/' + v.slice(2);
-      exp.value = v; cc.exp = v; paintCard();
-    });
-    cvv.addEventListener('input', () => { cc.cvv = cvv.value.replace(/\D/g, '').slice(0, 4); cvv.value = cc.cvv; paintCard(); });
-    cvv.addEventListener('focus', () => $('#cc').classList.add('flip'));
-    cvv.addEventListener('blur', () => $('#cc').classList.remove('flip'));
-  }
-
   function validate() {
     let ok = true;
     const bad = el => { el.closest('.field').classList.add('invalid'); if (ok) el.focus(); ok = false; };
@@ -993,51 +973,136 @@
       if (!v) return bad(el);
       if (el.type === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)) return bad(el);
       if (el.id === 'co-phone' && v.replace(/\D/g, '').length < 8) return bad(el);
-      if (el.id === 'cc-num' && !luhn(cc.num)) return bad(el);
-      if (el.id === 'cc-exp' && !expOk(v)) return bad(el);
-      if (el.id === 'cc-cvv' && !/^\d{3,4}$/.test(v)) return bad(el);
     });
     if (co.step === 1 && co.method === 'standard' && !co.slot) { $('#slotErr').hidden = false; ok = false; }
     return ok;
   }
 
-  function next() {
-    if (!validate()) return;
-    if (co.step < 3) { co.step++; saveCo(); renderCheckout(); $('#checkout').scrollTo({ top: 0, behavior: 'smooth' }); return; }
-    // Pago simulado
-    $('#checkoutInner').innerHTML = `<div class="processing" style="grid-column:1/-1"><div class="spinner"></div><h2 class="co-title">Procesando tu pago…</h2><p class="muted">No cierres esta ventana.</p></div>`;
-    setTimeout(success, 1800);
+  function orderPayload() {
+    return {
+      items: state.cart.map(i => ({ kind: i.kind, id: i.id, size: i.size, addons: i.addons, qty: i.qty, build: i.build })),
+      coupon: state.coupon,
+      customer: { name: co.name, email: co.email, phone: co.phone, rname: co.rname, rphone: co.rphone },
+      delivery: { method: co.method, date: co.date, slot: co.slot, address: co.address, barrio: co.barrio, notes: co.notes },
+      card: { style: co.cardStyle, message: co.message, sign: co.sign, anon: co.anon },
+      payment: co.pay
+    };
+  }
+  function processing(title, text) {
+    $('#checkoutInner').innerHTML = `<div class="processing" style="grid-column:1/-1"><div class="spinner"></div><h2 class="co-title">${title}</h2><p class="muted">${text}</p></div>`;
+  }
+  function payError(msg) {
+    const el = $('#payErr'); if (!el) return;
+    el.textContent = msg; el.hidden = false;
+    const b = $('#coSubmit'); if (b) b.disabled = false;
   }
 
-  function success() {
-    const t = totals(co.method);
-    const order = 'PT-' + String(Math.floor(100000 + Math.random() * 900000));
-    const days = deliveryDays();
-    const day = days.find(d => d.iso === co.date);
-    const when = day ? (day.today ? 'Hoy' : day.d.toLocaleDateString('es', { weekday: 'long', day: 'numeric', month: 'long' })) : '';
-    const whenFull = co.method === 'express' ? 'Hoy, en menos de 2 horas' : co.method === 'pickup' ? `${when}, en el local` : `${when}, ${co.slot}`;
-    $('#steps').innerHTML = STEPS.map(s => `<li class="done"><span>${s}</span></li>`).join('');
+  async function next() {
+    if (!validate()) return;
+    if (co.step < 3) { co.step++; saveCo(); renderCheckout(); $('#checkout').scrollTo({ top: 0, behavior: 'smooth' }); return; }
+    if (DEMO) {
+      processing('Procesando tu pago…', 'No cierres esta ventana.');
+      const total = totals(co.method).total;
+      setTimeout(() => showResult({ id: 'FL-DEMO', status: co.pay === 'transfer' ? 'esperando transferencia' : 'pagado', total }), 1500);
+      return;
+    }
+    $('#coSubmit').disabled = true;
+    let res, data;
+    try {
+      res = await fetch(C.api + '/crear-pedido', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(orderPayload()) });
+      data = await res.json();
+    } catch (e) {
+      return payError('No pudimos conectarnos. Revisá tu conexión a internet e intentá de nuevo.');
+    }
+    if (!res.ok) {
+      if (data && data.code === 'stock') loadRemoteProducts();
+      return payError((data && data.error) || 'No pudimos crear tu pedido. Intentá de nuevo en unos minutos.');
+    }
+    store.set('lastOrder', { id: data.id, total: data.total, pay: co.pay });
+    if (co.pay === 'mp' && data.init_point) {
+      processing('Te llevamos a Mercado Pago…', 'Cuando termines de pagar volvés automáticamente a la tienda.');
+      location.href = data.init_point;
+      return;
+    }
+    showResult({ id: data.id, status: data.status, total: data.total, bank: data.bank });
+  }
+
+  function whenText() {
+    const day = deliveryDays().find(d => d.iso === co.date);
+    const when = day ? (day.today ? 'Hoy' : day.d.toLocaleDateString('es', { weekday: 'long', day: 'numeric', month: 'long' })) : (co.date || '');
+    return co.method === 'express' ? 'Hoy, en menos de 2 horas' : co.method === 'pickup' ? `${when}, retiro en el local` : `${when}, ${co.slot || ''}`;
+  }
+
+  // Pantalla final según el estado del pedido (también al volver de Mercado Pago)
+  function showResult(o) {
     co.step = 4;
+    $('#checkout').hidden = false; lock();
+    const paid = o.status === 'pagado';
+    const transfer = o.status === 'esperando transferencia';
+    const pending = o.status === 'pago pendiente';
+    const failed = !paid && !transfer && !pending;
+    $('#steps').innerHTML = STEPS.map((s, i) => `<li class="${failed && i === 3 ? 'current' : 'done'}"><span>${s}</span></li>`).join('');
+    const bank = o.bank || C.bank;
+    const head = paid ? `¡Gracias, ${esc(co.name.split(' ')[0] || '')}! Tu pedido <em>está en marcha</em>`
+      : transfer ? `¡Listo! Tu pedido <em>quedó reservado</em>`
+      : pending ? `Tu pago <em>está en proceso</em>`
+      : `El pago <em>no se completó</em>`;
+    const sub = paid ? `Te enviamos la confirmación a <b>${esc(co.email)}</b>. Te avisamos cuando salga a reparto.`
+      : transfer ? `Transferí el total y mandanos el comprobante. Apenas lo confirmemos empezamos a preparar tus flores.`
+      : pending ? `Si pagaste en Abitab o RedPagos puede demorar unas horas. Te avisamos por email cuando se acredite.`
+      : `No se hizo ningún cobro. Tu carrito sigue guardado: podés intentar de nuevo o elegir transferencia.`;
     $('#checkoutInner').innerHTML = `<div class="success">
-      <span class="success__icon">${icon('check')}</span>
-      <h2>¡Gracias, ${esc(co.name.split(' ')[0] || '')}! Tu pedido <em>está en marcha</em></h2>
-      <p class="order-no">Pedido ${order}</p>
-      <p class="muted">Te enviamos la confirmación a <b>${esc(co.email)}</b>. Te avisamos por WhatsApp cuando salga a reparto.</p>
-      <ol class="track"><li class="done"><i>${icon('check')}</i>Recibido</li><li class="now"><i></i>En preparación</li><li><i></i>En camino</li><li><i></i>Entregado</li></ol>
-      <div class="success__box">
+      <span class="success__icon${failed ? ' success__icon--warn' : ''}">${icon(failed ? 'info' : paid ? 'check' : 'clock')}</span>
+      <h2>${head}</h2>
+      ${o.id ? `<p class="order-no">Pedido ${esc(o.id)}</p>` : ''}
+      <p class="muted">${sub}</p>
+      ${paid ? `<ol class="track"><li class="done"><i>${icon('check')}</i>Pagado</li><li class="now"><i></i>En preparación</li><li><i></i>En camino</li><li><i></i>Entregado</li></ol>` : ''}
+      ${transfer ? `<div class="pay-alt" style="width:100%;text-align:left"><dl><dt>Banco</dt><dd>${esc(bank.name)}</dd><dt>Cuenta</dt><dd>${esc(bank.account)}</dd><dt>Titular</dt><dd>${esc(bank.holder)}</dd><dt>Importe</dt><dd>${money(o.total)}</dd><dt>Referencia</dt><dd>${esc(o.id)}</dd></dl></div>` : ''}
+      ${failed ? '' : `<div class="success__box">
         <div><span>Para</span><span>${esc(co.rname)}</span></div>
-        <div><span>Entrega</span><span>${esc(whenFull)}</span></div>
+        <div><span>Entrega</span><span>${esc(whenText())}</span></div>
         ${co.method !== 'pickup' ? `<div><span>Dirección</span><span>${esc(co.address)}, ${esc(co.barrio)}</span></div>` : ''}
         <div><span>Dedicatoria</span><span>${co.message ? '“' + esc(co.message) + '”' : 'Sin mensaje'}</span></div>
-        <div><span>Total ${co.pay === 'transfer' ? 'a transferir' : 'pagado'}</span><span><b>${money(t.total)}</b></span></div>
-      </div>
-      <button class="btn btn--primary btn--lg" id="coDone">Volver a la tienda</button>
+        <div><span>Total</span><span><b>${money(o.total)}</b></span></div>
+      </div>`}
+      ${failed ? `<div class="hero__ctas" style="justify-content:center"><button class="btn btn--primary btn--lg" id="coRetry">Intentar de nuevo</button><button class="btn btn--ghost btn--lg" id="coDone">Volver a la tienda</button></div>`
+        : `<button class="btn btn--primary btn--lg" id="coDone">Volver a la tienda</button>`}
     </div>`;
-    confetti();
-    state.cart = []; state.coupon = null; saveCart();
-    co.message = ''; co.sign = ''; co.anon = false; saveCo();
-    Object.assign(cc, { num: '', name: '', exp: '', cvv: '' });
+    if (!failed) {
+      if (paid) confetti();
+      state.cart = []; state.coupon = null; saveCart();
+      co.message = ''; co.sign = ''; co.anon = false; saveCo();
+      store.set('lastOrder', null);
+      loadRemoteProducts();
+    }
     $('#coDone').onclick = closeCheckout;
+    if ($('#coRetry')) $('#coRetry').onclick = () => { co.step = 1; renderCheckout(); };
+  }
+
+  // Vuelta desde Mercado Pago: /?pedido=FL-XXXX&payment_id=...&status=...
+  async function handleReturn() {
+    const q = new URLSearchParams(location.search);
+    const id = q.get('pedido');
+    if (!id) return;
+    history.replaceState(null, '', location.pathname + location.hash);
+    $('#checkout').hidden = false; lock();
+    $('#steps').innerHTML = STEPS.map(s => `<li class="done"><span>${s}</span></li>`).join('');
+    processing('Confirmando tu pago…', 'Estamos verificando el pago con Mercado Pago.');
+    const pid = q.get('payment_id') || q.get('collection_id');
+    let result = null;
+    for (let i = 0; i < 6; i++) {
+      try {
+        const r = await fetch(`${C.api}/pedido?id=${encodeURIComponent(id)}${pid && pid !== 'null' ? `&payment_id=${encodeURIComponent(pid)}` : ''}`);
+        if (r.ok) result = await r.json();
+      } catch (e) { /* reintenta */ }
+      if (result && result.status && result.status !== 'pendiente de pago') break;
+      if (q.get('status') === 'null' || q.get('collection_status') === 'null') break; // volvió sin pagar
+      await new Promise(res => setTimeout(res, 2000));
+    }
+    const mpStatus = q.get('collection_status') || q.get('status');
+    const status = result && result.status && result.status !== 'pendiente de pago' ? result.status
+      : mpStatus === 'pending' || mpStatus === 'in_process' ? 'pago pendiente' : 'pago rechazado';
+    showResult({ id, status, total: result ? result.total : (store.get('lastOrder', {}) || {}).total || 0 });
   }
 
   function confetti() {
@@ -1078,6 +1143,27 @@
     document.addEventListener('mouseout', e => { if (!e.relatedTarget && e.clientY <= 0) maybeWelcome(); });
   }
 
+  /* ---------- Productos desde la planilla ---------- */
+  async function loadRemoteProducts() {
+    if (DEMO) return;
+    try {
+      const r = await fetch(C.api + '/productos');
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      const { products } = await r.json();
+      if (!Array.isArray(products) || !products.length) return;
+      D.products = products.map(p => {
+        const local = LOCAL.find(x => x.id === p.id) || {};
+        return Object.assign({ occasions: [], rating: local.rating || null, reviews: local.reviews || 0, art: local.art || null }, p);
+      });
+      state.cart = state.cart.filter(i => i.kind !== 'product' || byId(i.id));
+      state.cart.forEach(i => { if (i.kind === 'product') { const p = byId(i.id); i.name = p.name; Object.assign(i, productItem(p, i.size, i.addons || [], i.qty), { key: i.key }); } });
+      state.wish = state.wish.filter(byId);
+      saveCart(); renderAllShop(); renderOccasions(); renderRecent(); renderWish(); updateCounts();
+    } catch (e) {
+      console.warn('Se muestra el catálogo de respaldo:', e.message);
+    }
+  }
+
   /* ---------- Inicio ---------- */
   $('#cartBtn').addEventListener('click', () => openDrawer('cart'));
   $('#wishBtn').addEventListener('click', () => openDrawer('wishlist'));
@@ -1102,5 +1188,7 @@
   renderWish();
   updateCounts();
   initScroll();
+  loadRemoteProducts();
+  handleReturn();
   setTimeout(maybeWelcome, 25000);
 })();

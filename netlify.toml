@@ -1,6 +1,13 @@
-# Netlify: publica la tienda de la carpeta floreria (sitio estático, sin build)
+# Netlify: publica la tienda (carpeta floreria) y las funciones del servidor (netlify/functions).
 [build]
   publish = "floreria"
+
+[build.environment]
+  NODE_VERSION = "20"
+
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
 
 [[headers]]
   for = "/*"

@@ -1,6 +1,9 @@
 /* FlorLatte — catálogo y configuración de la tienda.
-   Editá este archivo para cambiar productos, precios, envíos y cupones. */
-window.FLORLATTE = {
+   Los productos, precios, stock y fotos se manejan desde la planilla de Google (hoja "Productos").
+   Este archivo tiene el catálogo de respaldo, las ilustraciones y las reglas de precios (tamaños,
+   extras, envíos y cupones). Lo usan tanto la web como el servidor, así los precios siempre coinciden. */
+(function (root) {
+const DATA = {
   config: {
     storeName: 'FlorLatte',
     fullName: 'FlorLatte Plantas y Flores',
@@ -17,6 +20,8 @@ window.FLORLATTE = {
     city: 'Las Piedras, Canelones, Uruguay',
     hours: '',                      // ej. 'Lun a sáb 9:00–19:00' (vacío = no se muestra)
     bank: { name: 'A completar', account: 'A completar', holder: 'FlorLatte Plantas y Flores' },
+    api: '/api',                    // funciones de Netlify (productos, pedidos y Mercado Pago)
+    lowStockFrom: 3,                // mostrar "¡Quedan N!" desde esta cantidad
     coupons: {
       LATTE10: { type: 'percent', value: 10, label: '10% de descuento' },
       BIENVENIDA15: { type: 'percent', value: 15, label: '15% de bienvenida' },
@@ -71,15 +76,15 @@ window.FLORLATTE = {
   ],
 
   products: [
-    { id: 'novia-rose', name: 'Ramo de Novia Rosé', cat: 'novias', occasions: ['boda'], color: 'rosa', price: 4900, rating: 5.0, reviews: 38, badge: 'A medida', stock: 99, sameDay: false,
+    { id: 'novia-rose', name: 'Ramo de Novia Rosé', cat: 'novias', occasions: ['boda'], color: 'rosa', price: 4900, rating: 5.0, reviews: 38, badge: 'A medida', stock: null, sameDay: false,
       desc: 'Rosas rosa pálido, lisianthus y eucalipto, atado a mano con cinta de raso. Lo diseñamos junto a vos según tu vestido y tu estilo.',
       stems: 'rosas · lisianthus · eucalipto · cinta de raso',
       art: { flowers: ['rose', 'peony', 'rose'], palette: ['#f6c9d1', '#f9dfe3', '#fbf3ee'], wrap: '#fbf6f0', ribbon: '#e9c9c3', bg: '#f3ebe4', count: 13, seed: 2101, eucalyptus: true } },
-    { id: 'novia-blanca', name: 'Ramo de Novia Lilium', cat: 'novias', occasions: ['boda'], color: 'blanco', price: 5200, rating: 5.0, reviews: 24, badge: null, stock: 99, sameDay: false,
+    { id: 'novia-blanca', name: 'Ramo de Novia Lilium', cat: 'novias', occasions: ['boda'], color: 'blanco', price: 5200, rating: 5.0, reviews: 24, badge: null, stock: null, sameDay: false,
       desc: 'Lilium y rosas blancas con verdes de estación. Clásico, luminoso y con un perfume suave que acompaña todo el día.',
       stems: 'lilium · rosas blancas · ruscus',
       art: { flowers: ['lily', 'rose', 'rose'], palette: ['#fbf8f2', '#f4efe6', '#ffffff'], wrap: '#fbf6f0', ribbon: '#d8c6b8', bg: '#efe7df', count: 11, seed: 2202, eucalyptus: true } },
-    { id: 'novia-orquideas', name: 'Ramo de Novia Orquídeas', cat: 'novias', occasions: ['boda'], color: 'rosa', price: 5900, rating: 5.0, reviews: 17, badge: 'Nuevo', stock: 99, sameDay: false,
+    { id: 'novia-orquideas', name: 'Ramo de Novia Orquídeas', cat: 'novias', occasions: ['boda'], color: 'rosa', price: 5900, rating: 5.0, reviews: 17, badge: 'Nuevo', stock: null, sameDay: false,
       desc: 'Orquídeas, tulipanes y paniculata en tonos blush. Delicado y distinto, inspirado en nuestro logo.',
       stems: 'orquídeas · tulipanes · paniculata · eucalipto',
       art: { flowers: ['orchid', 'tulip', 'daisy'], palette: ['#f2c7d3', '#f6dfe2', '#fbf6f0'], wrap: '#fbf6f0', ribbon: '#6b2433', bg: '#f4e6e6', count: 11, seed: 2303, eucalyptus: true } },
@@ -218,3 +223,6 @@ window.FLORLATTE = {
     { q: '¿Cuánto duran las flores?', a: 'Garantizamos 7 días de frescura. Si algo no está bien, mandanos una foto en las primeras 48 horas y lo reponemos.' }
   ]
 };
+root.FLORLATTE = DATA;
+if (typeof module === 'object' && module.exports) module.exports = DATA;
+})(typeof window !== 'undefined' ? window : globalThis);
