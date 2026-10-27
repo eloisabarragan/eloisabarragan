@@ -9,6 +9,13 @@ Reglas generales:
 
 Los tamaños indicados son mínimos de carga. WordPress genera las versiones más chicas.
 
+## Estado (27/10)
+
+- ✅ Cargadas en el entorno local: F1 (Rambla), S3 Empresas, S4 y D1 Punta del Este, S5 y D2 Colonia, S6 y D4 Interior, S7 y D3 Vinos.
+- 🔁 Recibidas, pero hay que reenviarlas (llegaron mientras se trabajaba y no quedaron guardadas): aeropuerto exterior vertical (F2), aeropuerto interior con avión (S1), Rambla al atardecer (S2), puerto de Punta del Este vertical (D1), ruta costera panorámica (F4).
+- ⏳ Falta: F3 Nosotros (chofer abriendo la puerta).
+- ⚠️ La foto del aeropuerto exterior muestra un cartel «CARRASCO · AEROPUERTO INTERNACIONAL DE MONTEVIDEO» que parece generado: verificar que no muestre señalética inexistente de un lugar real.
+
 ## Inicio
 
 | # | Uso | Contenido | Proporción | Tamaño mínimo | Encuadre |
