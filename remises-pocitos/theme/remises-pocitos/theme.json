@@ -1,0 +1,48 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/theme.json",
+	"version": 3,
+	"settings": {
+		"appearanceTools": false,
+		"color": {
+			"custom": false,
+			"customGradient": false,
+			"defaultPalette": false,
+			"defaultGradients": false,
+			"defaultDuotone": false,
+			"palette": [
+				{ "slug": "azul-marino", "name": "Azul marino", "color": "#0F2747" },
+				{ "slug": "azul", "name": "Azul secundario", "color": "#1B7FC4" },
+				{ "slug": "verde", "name": "Verde institucional", "color": "#0A8F3E" },
+				{ "slug": "verde-profundo", "name": "Verde profundo", "color": "#087A35" },
+				{ "slug": "gris-claro", "name": "Gris claro", "color": "#E7ECF1" },
+				{ "slug": "blanco", "name": "Blanco", "color": "#FFFFFF" }
+			]
+		},
+		"typography": {
+			"customFontSize": false,
+			"defaultFontSizes": false,
+			"fontFamilies": [
+				{
+					"slug": "figtree",
+					"name": "Figtree",
+					"fontFamily": "Figtree, system-ui, sans-serif",
+					"fontFace": [
+						{ "fontFamily": "Figtree", "fontWeight": "400", "fontStyle": "normal", "fontDisplay": "swap", "src": [ "file:./assets/fonts/figtree-latin-400-normal.woff2" ] },
+						{ "fontFamily": "Figtree", "fontWeight": "500", "fontStyle": "normal", "fontDisplay": "swap", "src": [ "file:./assets/fonts/figtree-latin-500-normal.woff2" ] },
+						{ "fontFamily": "Figtree", "fontWeight": "700", "fontStyle": "normal", "fontDisplay": "swap", "src": [ "file:./assets/fonts/figtree-latin-700-normal.woff2" ] }
+					]
+				}
+			],
+			"fontSizes": [
+				{ "slug": "small", "name": "Chico", "size": "0.9375rem" },
+				{ "slug": "medium", "name": "Normal", "size": "1.0625rem" },
+				{ "slug": "large", "name": "Grande", "size": "1.375rem" }
+			]
+		},
+		"layout": { "contentSize": "760px", "wideSize": "1312px" },
+		"spacing": { "customSpacingSize": false }
+	},
+	"styles": {
+		"typography": { "fontFamily": "var(--wp--preset--font-family--figtree)" }
+	}
+}
