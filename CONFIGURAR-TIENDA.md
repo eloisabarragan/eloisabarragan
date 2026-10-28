@@ -15,7 +15,7 @@ Son 4 pasos y se hacen una sola vez. Calculá alrededor de una hora.
 
 1. Entrá a [sheets.new](https://sheets.new) con la cuenta de Google de FlorLatte y ponele de nombre **Tienda FlorLatte**.
 2. Andá a **Extensiones → Apps Script**.
-3. Borrá todo lo que aparece y pegá el contenido completo del archivo `backend/florlatte-apps-script.gs`. Tocá el ícono de **guardar** 💾.
+3. Borrá todo lo que aparece y pegá el contenido completo del archivo `backend/florlatte-apps-script.gs`. Arriba a la izquierda, tocá **Proyecto sin título** y cambiale el nombre a **Tienda FlorLatte**. Tocá el ícono de **guardar** 💾.
 4. Arriba, en la lista de funciones, elegí **instalar** y tocá **Ejecutar**.
 5. Google pide permisos. Tocá **Revisar permisos**, elegí la cuenta y, si aparece "Google no verificó esta app", tocá **Configuración avanzada → Ir a Tienda FlorLatte**. Después tocá **Permitir**.
    El script necesita esos permisos para editar la planilla y mandar los emails desde tu cuenta.
