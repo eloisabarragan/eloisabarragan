@@ -20,7 +20,7 @@ const DATA = {
     city: 'Las Piedras, Canelones, Uruguay',
     hours: '',                      // ej. 'Lun a sáb 9:00–19:00' (vacío = no se muestra)
     bank: { name: 'A completar', account: 'A completar', holder: 'FlorLatte Plantas y Flores' },
-    api: '/api',                    // funciones de Netlify (productos, pedidos y Mercado Pago)
+    sheetsUrl: '',                  // dirección de la planilla publicada (termina en /exec)
     lowStockFrom: 3,                // mostrar "¡Quedan N!" desde esta cantidad
     coupons: {
       LATTE10: { type: 'percent', value: 10, label: '10% de descuento' },

@@ -56,7 +56,7 @@ Estos datos están en `js/data.js` y hoy son **ejemplos**:
 - **Productos, precios, stock y fotos:** en la planilla de Google (hoja "Productos"). Ver la guía.
 - **Tamaños, extras, envíos, cupones, datos de contacto y textos:** en `js/data.js`. Ese archivo también tiene el catálogo de respaldo, que se muestra si la planilla no responde, y las ilustraciones.
 
-Si abrís `index.html` directo desde la computadora (sin servidor), la tienda funciona en modo vista previa y el pago se simula.
+Si abrís `index.html` directo desde la computadora, la tienda funciona en modo vista previa y el pago se simula. La dirección de la planilla va en `js/data.js` → `config.sheetsUrl`.
 
 ## Estructura
 
@@ -69,7 +69,5 @@ floreria/
 ├── js/app.js       Carrito, filtros, buscador, checkout
 └── img/            Logo y fotos
 
-netlify/functions/  Servidor: productos, crear pedido, aviso de Mercado Pago, estado del pedido
-netlify/lib/        Precios, conexión con la planilla y con Mercado Pago
-backend/            Script de Google Sheets (hojas Productos y Pedidos, stock y emails)
+backend/            Script de Google Sheets: productos, pedidos, Mercado Pago, stock y emails
 ```

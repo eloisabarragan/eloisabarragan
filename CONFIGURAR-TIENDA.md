@@ -1,131 +1,69 @@
 # Cómo poner en marcha la tienda de FlorLatte
 
-Son 4 pasos y se hacen una sola vez. Calculá alrededor de una hora.
+Todo funciona con dos piezas:
 
 | Qué | Para qué |
 |---|---|
-| **Google Sheets** | Cargar, sacar y editar productos, precios, stock y fotos. Ver los pedidos. |
-| **Gmail** (la misma cuenta de Google) | Recibir un email con los datos del cliente en cada compra. |
-| **Mercado Pago** | Cobrar con tarjeta de crédito y débito, saldo de Mercado Pago, Abitab y RedPagos. |
-| **Netlify** | Publicar la tienda en internet. |
+| **Google Sheets + script** (cuenta de Google de FlorLatte) | Productos, precios, stock, fotos y pedidos. El script también crea los pagos de Mercado Pago, recibe la confirmación, descuenta el stock y manda los emails. |
+| **Netlify** | Publica la página web. Se sube arrastrando la carpeta: no hace falta GitHub. |
 
 ---
 
-## Paso 1 · Crear la planilla
+## 1 · Planilla y script (con la cuenta de Google de FlorLatte)
 
-1. Entrá a [sheets.new](https://sheets.new) con la cuenta de Google de FlorLatte y ponele de nombre **Tienda FlorLatte**.
-2. Andá a **Extensiones → Apps Script**.
-3. Borrá todo lo que aparece y pegá el contenido completo del archivo `backend/florlatte-apps-script.gs`. Arriba a la izquierda, tocá **Proyecto sin título** y cambiale el nombre a **Tienda FlorLatte**. Tocá el ícono de **guardar** 💾.
-4. Arriba, en la lista de funciones, elegí **instalar** y tocá **Ejecutar**.
-5. Google pide permisos. Tocá **Revisar permisos**, elegí la cuenta y, si aparece "Google no verificó esta app", tocá **Configuración avanzada → Ir a Tienda FlorLatte**. Después tocá **Permitir**.
-   El script necesita esos permisos para editar la planilla y mandar los emails desde tu cuenta.
-6. Volvé a la planilla. Ahora tiene dos hojas:
-   - **Productos**, con los 23 productos actuales ya cargados.
-   - **Pedidos**, vacía, donde van a caer las compras.
-7. Recargá la planilla. Aparece un menú nuevo, **FlorLatte**. En **FlorLatte → Ver clave secreta para Netlify** está la clave que vas a necesitar en el paso 3. Copiala.
+> Usá una ventana de incógnito con **solo** la cuenta de FlorLatte abierta. Con varias cuentas a la vez, Apps Script da el error "No se puede abrir el archivo".
 
-## Paso 2 · Publicar la planilla como "aplicación web"
+1. `sheets.new` → nombre **Tienda FlorLatte**.
+2. **Extensiones → Apps Script**. Borrá todo y pegá el contenido de `backend/florlatte-apps-script.gs`. Renombrá el proyecto a **Tienda FlorLatte** y guardá 💾.
+3. Elegí la función **instalar** → **Ejecutar** → aceptá los permisos (Configuración avanzada → Ir a Tienda FlorLatte → Permitir).
+4. **Implementar → Nueva implementación → ⚙️ Aplicación web** · Ejecutar como: **Yo** · Quién tiene acceso: **Cualquier persona** → **Implementar**. Copiá la **URL** (termina en `/exec`).
 
-1. En Apps Script tocá **Implementar → Nueva implementación**.
-2. En el engranaje ⚙️ de "Tipo" elegí **Aplicación web**.
-3. Completá así:
-   - **Ejecutar como:** Yo
-   - **Quién tiene acceso:** Cualquier persona
-4. Tocá **Implementar** y copiá la **URL de la aplicación web** (termina en `/exec`).
+**Si actualizás el script más adelante:** pegá el código nuevo, guardá, ejecutá **instalar** (acepta permisos nuevos si los pide; no borra nada) y después **Implementar → Administrar implementaciones → ✏️ → Versión: Nueva versión → Implementar**. La URL no cambia.
 
-Esto no hace pública la planilla. Solo la tienda puede guardar pedidos, porque necesita la clave secreta. Lo único que se puede leer sin clave es la lista de productos activos, que ya es pública en la web.
+## 2 · Mercado Pago (con la cuenta de Mercado Pago de FlorLatte)
 
-> Si algún día cambiás el código del script, tenés que ir a **Implementar → Administrar implementaciones → ✏️ → Versión: Nueva versión → Implementar**. Si no, sigue funcionando la versión anterior.
+1. `mercadopago.com.uy/developers` → **Tus integraciones → Crear aplicación** → Pagos online → **Checkout Pro**.
+2. Copiá el **Access Token** de **Credenciales de prueba** (para probar) y el de **Credenciales de producción** (para cobrar de verdad).
+3. En la planilla (recargala): **FlorLatte → Cargar token de Mercado Pago** → pegá el token de **prueba**.
+4. **FlorLatte → Ver configuración** confirma qué token está cargado.
 
-## Paso 3 · Mercado Pago
+El token queda guardado dentro del script, no en la planilla ni en la web: nadie más lo ve.
 
-1. Entrá a [mercadopago.com.uy/developers](https://www.mercadopago.com.uy/developers) con la cuenta de Mercado Pago de FlorLatte.
-2. **Tus integraciones → Crear aplicación**. Nombre: "Tienda FlorLatte". Tipo de solución: **Pagos online**, con **Checkout Pro**.
-3. Entrá a la aplicación y copiá el **Access Token**:
-   - Para probar sin cobrar de verdad, usá el de **Credenciales de prueba** (empieza con `TEST-`).
-   - Para cobrar de verdad, usá el de **Credenciales de producción** (empieza con `APP_USR-`). Mercado Pago puede pedirte que completes los datos del negocio antes de activarlas.
+## 3 · Conectar la web con la planilla
 
-⚠️ El Access Token es como la llave de la caja. No lo mandes por WhatsApp ni lo pegues en ningún archivo de la web. Solo va en Netlify (paso 4).
+En `floreria/js/data.js`, en `config`, pegá la URL del paso 1.4:
 
-## Paso 4 · Publicar en Netlify
+```js
+sheetsUrl: 'https://script.google.com/macros/s/AKfy…/exec',
+```
 
-La tienda tiene funciones de servidor (para cobrar y guardar pedidos), así que **hay que publicarla desde GitHub**. Arrastrar la carpeta a Netlify Drop no sirve para esto.
+## 4 · Publicar en Netlify (sin GitHub)
 
-1. Entrá a [app.netlify.com](https://app.netlify.com) → **Add new site → Import an existing project → GitHub**.
-2. Elegí el repositorio y la rama donde está la tienda. Netlify lee solo el archivo `netlify.toml`, así que no hay que tocar ninguna otra opción.
-3. Antes de publicar, andá a **Site configuration → Environment variables** y agregá estas tres:
+1. Entrá a [app.netlify.com/drop](https://app.netlify.com/drop) (iniciá sesión).
+2. Arrastrá la carpeta **`floreria`**.
+3. En **Site configuration → Change site name** podés ponerle `florlatte` → `florlatte.netlify.app`.
 
-   | Nombre | Valor |
-   |---|---|
-   | `MP_ACCESS_TOKEN` | el Access Token del paso 3 |
-   | `SHEETS_URL` | la URL `/exec` del paso 2 |
-   | `SHEETS_SECRET` | la clave secreta del paso 1 |
+Para actualizar la web más adelante: en el sitio, **Deploys** → arrastrá de nuevo la carpeta `floreria` al recuadro de "Drag and drop".
 
-4. Tocá **Deploys → Trigger deploy → Deploy site**. En un par de minutos la tienda queda en línea, en una dirección del tipo `florlatte.netlify.app`. En **Domain management** podés cambiarle el nombre o conectar un dominio propio.
+## 5 · Probar y abrir
 
-## Probar antes de abrir
-
-Con las **credenciales de prueba** de Mercado Pago:
-
-1. Hacé una compra en la tienda.
-2. En Mercado Pago pagá con una [tarjeta de prueba](https://www.mercadopago.com.uy/developers/es/docs/checkout-pro/additional-content/your-integrations/test/cards). Usá como nombre del titular **APRO** para que se apruebe, u **OTHE** para que se rechace.
-3. Revisá que:
-   - el pedido aparezca en la hoja **Pedidos** con estado **pagado**;
-   - el stock del producto haya bajado en **Productos**;
-   - te haya llegado el email "Nuevo pedido pagado".
-
-Cuando todo funcione, reemplazá `MP_ACCESS_TOKEN` en Netlify por el de **producción** y volvé a publicar (Trigger deploy).
+1. Con el token de **prueba**, comprá algo con **otro email** distinto al de FlorLatte y pagá con una [tarjeta de prueba](https://www.mercadopago.com.uy/developers/es/docs/checkout-pro/additional-content/your-integrations/test/cards) (titular **APRO** = aprobado).
+2. Revisá: hoja **Pedidos** con estado **pagado**, stock descontado y email "🌷 Nuevo pedido pagado".
+3. Cargá el token de **producción** con **FlorLatte → Cargar token de Mercado Pago**. Listo: ya cobra de verdad. No hace falta tocar Netlify.
+4. Borrá las filas de prueba de **Pedidos** y corregí el stock.
 
 ---
 
 ## El día a día
 
-### Productos (hoja "Productos")
+Está todo en el **Instructivo FlorLatte** (PDF): cargar, sacar y editar productos, fotos, stock y cómo leer la hoja Pedidos.
 
-| Columna | Qué poner |
-|---|---|
-| `id` | Un nombre corto sin espacios ni tildes, único para cada producto (ej. `ramo-primavera`). **No lo cambies** una vez que el producto está a la venta. |
-| `nombre` | Como se ve en la tienda. |
-| `categoria` | Ramos, Novias, Rosas, Cajas, En florero o Plantas. |
-| `precio` | Solo el número (ej. `2890`). |
-| `precio_anterior` | Opcional. Si lo completás, el producto se muestra en oferta con el precio tachado. |
-| `stock` | Cuántas unidades hay. **Vacío = sin límite** (ideal para ramos a pedido). Con `0` se muestra "Agotado". |
-| `activo` | `sí` para mostrarlo, `no` para ocultarlo sin borrarlo. |
-| `descripcion` · `composicion` | El texto del producto y qué flores lleva. |
-| `ocasiones` | Separadas por coma: Bodas, Amor, Cumpleaños, Aniversario, Nacimiento, Gracias, Condolencias, Porque sí. |
-| `color` | Rojo, Rosa, Blanco, Amarillo, Naranja, Lila, Azul, Verde o Mix (sirve para el filtro de color). |
-| `etiqueta` | Opcional: "Nuevo", "Más vendido", "-15%"… |
-| `entrega_hoy` | `sí` si se puede entregar en el día. |
-| `foto` | Link de la foto (ver abajo). Si está vacío, se muestra una ilustración. |
-| `orden` | Número para ordenar: el 1 aparece primero. |
+Estados de un pedido: **pagado** (Mercado Pago confirmó: preparar) · **esperando transferencia** (cuando llegue el comprobante, cambiarlo a mano a `pagado`; el stock ya quedó reservado) · **pago pendiente** (Abitab/RedPagos acreditándose; pasa solo a pagado) · **pago rechazado** o **pendiente de pago** (no se cobró nada) · **devuelto / en disputa** (llega un aviso por email; revisar stock).
 
-Para **agregar** un producto, sumá una fila. Para **sacarlo**, poné `activo` en `no`. Los cambios aparecen en la web en menos de un minuto.
+### Límites y cosas a saber
 
-**Fotos:** subí la foto a Google Drive, tocá **Compartir → Cualquier persona con el enlace**, copiá el enlace y pegalo en la columna `foto`. Van mejor las fotos verticales (4:5) con fondo liso.
-
-### Pedidos (hoja "Pedidos")
-
-Cada compra suma una fila con todo: cliente, email, teléfono, quién recibe, día y franja, dirección, dedicatoria, productos y total. La columna **estado** puede decir:
-
-- **pagado**: Mercado Pago confirmó el pago. Ya te llegó el email y el stock se descontó.
-- **esperando transferencia**: el cliente eligió transferencia. Cuando llegue el comprobante, cambiá el estado a mano (por ejemplo, a `pagado`). El stock ya quedó reservado. Si el pedido se cancela, devolvé el stock a mano.
-- **pago pendiente**: pagó en Abitab o RedPagos y se está acreditando. Cuando se acredite pasa solo a **pagado**.
-- **pago rechazado** o **pendiente de pago**: no se cobró nada. El cliente puede haberse arrepentido o haberle rechazado la tarjeta.
-- **devuelto** o **en disputa**: llega un email de aviso. Revisá el stock a mano.
-
-Podés agregar tus propias columnas al final (por ejemplo "preparado", "entregado") sin romper nada. **No borres ni cambies el nombre de las columnas que ya están.**
-
-### Emails
-
-Los avisos llegan a la cuenta de Google que instaló el script. Para que lleguen a otro email: en Apps Script, **⚙️ Configuración del proyecto → Propiedades de la secuencia de comandos → `EMAIL_AVISOS`**. Para probar que funciona, usá el menú **FlorLatte → Enviar email de prueba**.
-
-Una cuenta de Gmail gratuita puede mandar hasta 100 emails por día, unas 50 compras diarias (cada compra manda 2 emails). Con Google Workspace el límite es 1.500.
-
-### Precios de tamaños, extras, envío y cupones
-
-Eso no está en la planilla: está en `floreria/js/data.js`, en `config`, `sizes` y `addons`. Cambia poco; si necesitan ajustarlo, se edita ahí y se vuelve a publicar.
-
-### Lo que todavía no hace
-
-- **Suscripciones:** se cobra el primer envío. Los siguientes se coordinan con el cliente; el cobro automático mes a mes no está incluido.
-- **Reseñas:** son de ejemplo. Conviene reemplazarlas por reseñas reales o sacarlas (en `floreria/js/data.js`, `testimonials` y `rating`/`reviews`).
+- Gmail gratuito: hasta 100 emails por día (unas 50 compras diarias).
+- Un mismo email puede hacer hasta 8 pedidos cada 10 minutos (freno contra abusos).
+- Precios de tamaños, extras, envíos y cupones: están en `floreria/js/data.js` **y** en el bloque `TIENDA` del script. Si cambian, hay que cambiarlos en los dos lugares.
+- Suscripciones: se cobra el primer envío; el cobro automático mensual no está incluido.
+- Las reseñas de la web son de ejemplo: reemplazarlas o sacarlas en `floreria/js/data.js`.

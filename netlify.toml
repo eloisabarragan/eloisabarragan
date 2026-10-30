@@ -1,13 +1,7 @@
-# Netlify: publica la tienda (carpeta floreria) y las funciones del servidor (netlify/functions).
+# Netlify: publica la carpeta floreria. La tienda es 100 % estática: los pedidos, el stock y
+# Mercado Pago los maneja el script de la planilla de Google (backend/florlatte-apps-script.gs).
 [build]
   publish = "floreria"
-
-[build.environment]
-  NODE_VERSION = "20"
-
-[functions]
-  directory = "netlify/functions"
-  node_bundler = "esbuild"
 
 [[headers]]
   for = "/*"

@@ -1,13 +1,14 @@
 /**
- * FlorLatte — panel de la tienda en Google Sheets.
+ * FlorLatte — panel y "servidor" de la tienda, dentro de Google Sheets.
  *
  * Qué hace:
  *  - Hoja "Productos": la tienda muestra lo que hay acá (agregar, sacar, precios, stock y fotos).
  *  - Hoja "Pedidos": cada compra queda registrada con los datos del cliente y el estado del pago.
+ *  - Crea el pago en Mercado Pago (Checkout Pro) con el precio calculado acá, nunca el del navegador.
  *  - Cuando Mercado Pago aprueba un pago: descuenta el stock y manda un email a la florería
  *    y otro al cliente. Se procesa una sola vez aunque el aviso llegue repetido.
  *
- * Instalación: ver CONFIGURAR-TIENDA.md (pasos 1 y 2).
+ * Instalación: ver CONFIGURAR-TIENDA.md.
  */
 
 const HOJA_PRODUCTOS = 'Productos';
@@ -15,21 +16,23 @@ const HOJA_PEDIDOS = 'Pedidos';
 const COL_PRODUCTOS = ['id', 'nombre', 'categoria', 'precio', 'precio_anterior', 'stock', 'activo', 'descripcion', 'composicion', 'ocasiones', 'color', 'etiqueta', 'entrega_hoy', 'foto', 'orden'];
 const COL_PEDIDOS = ['id', 'fecha', 'estado', 'pago', 'total', 'cliente', 'email', 'telefono', 'destinatario', 'tel_destinatario', 'tipo_entrega', 'fecha_entrega', 'franja', 'direccion', 'barrio', 'indicaciones', 'dedicatoria', 'firma', 'anonimo', 'productos', 'subtotal', 'descuento', 'cupon', 'envio', 'mp_pago_id', 'actualizado', 'items_json'];
 const NOMBRE_TIENDA = 'FlorLatte';
+const MP_API = 'https://api.mercadopago.com';
 
 /* ---------------- Menú e instalación ---------------- */
 
 function onOpen() {
   SpreadsheetApp.getUi().createMenu('FlorLatte')
-    .addItem('Instalar o reparar hojas', 'instalar')
-    .addItem('Ver clave secreta para Netlify', 'mostrarClave')
+    .addItem('Cargar token de Mercado Pago', 'cargarTokenMP')
+    .addItem('Ver configuración', 'verConfiguracion')
     .addItem('Enviar email de prueba', 'emailDePrueba')
+    .addSeparator()
+    .addItem('Instalar o reparar hojas', 'instalar')
     .addToUi();
 }
 
 function instalar() {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
   const props = PropertiesService.getScriptProperties();
-  if (!props.getProperty('SECRET')) props.setProperty('SECRET', Utilities.getUuid().replace(/-/g, ''));
   if (!props.getProperty('EMAIL_AVISOS')) props.setProperty('EMAIL_AVISOS', Session.getEffectiveUser().getEmail());
 
   let prod = ss.getSheetByName(HOJA_PRODUCTOS);
@@ -49,8 +52,7 @@ function instalar() {
   formatear(ped, COL_PEDIDOS.length);
   ped.hideColumns(COL_PEDIDOS.indexOf('items_json') + 1);
 
-  console.log('Listo. Clave secreta para Netlify (SHEETS_SECRET): ' + props.getProperty('SECRET'));
-  console.log('Los avisos de compra llegan a: ' + props.getProperty('EMAIL_AVISOS'));
+  console.log('Listo. Los avisos de compra llegan a: ' + props.getProperty('EMAIL_AVISOS'));
 }
 
 function formatear(hoja, cols) {
@@ -58,23 +60,44 @@ function formatear(hoja, cols) {
   hoja.getRange(1, 1, 1, cols).setFontWeight('bold').setBackground('#f3e1df').setFontColor('#5a1f2b');
 }
 
-function mostrarClave() {
+function cargarTokenMP() {
+  const ui = SpreadsheetApp.getUi();
+  const r = ui.prompt('Token de Mercado Pago',
+    'Pegá el Access Token de Mercado Pago (empieza con APP_USR- o TEST-).\nSe guarda en el script, no en la planilla: nadie lo ve.', ui.ButtonSet.OK_CANCEL);
+  if (r.getSelectedButton() !== ui.Button.OK) return;
+  const t = r.getResponseText().trim();
+  if (!/^(APP_USR|TEST)-[\w-]{20,}$/.test(t)) { ui.alert('Eso no parece un Access Token de Mercado Pago. Tiene que empezar con APP_USR- o TEST-. No se guardó nada.'); return; }
+  PropertiesService.getScriptProperties().setProperty('MP_ACCESS_TOKEN', t);
+  ui.alert('Listo: token guardado (' + (t.indexOf('TEST-') === 0 ? 'de PRUEBA' : 'de PRODUCCIÓN') + ').');
+}
+
+function verConfiguracion() {
   const p = PropertiesService.getScriptProperties();
+  const t = p.getProperty('MP_ACCESS_TOKEN') || '';
+  let url = '';
+  try { url = ScriptApp.getService().getUrl() || ''; } catch (e) { url = ''; }
   SpreadsheetApp.getUi().alert(
-    'Clave secreta (SHEETS_SECRET):\n\n' + (p.getProperty('SECRET') || 'Todavía no existe: usá "Instalar o reparar hojas".') +
-    '\n\nLos avisos de compra llegan a: ' + (p.getProperty('EMAIL_AVISOS') || '(sin configurar)'));
+    'Mercado Pago: ' + (t ? (t.indexOf('TEST-') === 0 ? 'token de PRUEBA cargado' : 'token de PRODUCCIÓN cargado') + ' (…' + t.slice(-6) + ')' : 'SIN token (usá "Cargar token de Mercado Pago")') +
+    '\n\nLos avisos de compra llegan a: ' + (p.getProperty('EMAIL_AVISOS') || '(sin configurar)') +
+    '\n\nDirección de la planilla para la tienda:\n' + (url || '(todavía no está implementada como aplicación web)'));
 }
 
 function emailDePrueba() {
-  avisarTienda({ id: 'PRUEBA', fecha: new Date().toLocaleString('es-UY'), estado: 'prueba', pago: 'prueba', total: 0, cliente: 'Cliente de prueba', email: '', telefono: '099 000 000', productos: '1 × Ramo de prueba — $0' }, 'Email de prueba');
+  avisarTienda({ id: 'PRUEBA', fecha: ahora(), estado: 'prueba', pago: 'prueba', total: 0, cliente: 'Cliente de prueba', email: '', telefono: '099 000 000', productos: '1 × Ramo de prueba — $0' }, 'Email de prueba');
 }
+
+function ahora() { return Utilities.formatDate(new Date(), 'America/Montevideo', 'dd/MM/yyyy HH:mm'); }
 
 /* ---------------- Aplicación web ---------------- */
 
 function doGet(e) {
   try {
-    const action = (e && e.parameter && e.parameter.action) || '';
-    if (action === 'products') return salida({ products: leerProductos() });
+    const q = (e && e.parameter) || {};
+    if (q.action === 'products') return salida({ products: leerProductos() });
+    if (q.action === 'order') {
+      if (q.payment_id && /^\d+$/.test(q.payment_id)) { try { syncPago(q.payment_id); } catch (err) { console.error(err); } }
+      return salida(estadoPedido(q.id));
+    }
     return salida({ ok: true, tienda: NOMBRE_TIENDA });
   } catch (err) {
     return salida({ error: String(err && err.message || err) });
@@ -83,15 +106,21 @@ function doGet(e) {
 
 function doPost(e) {
   try {
-    const body = JSON.parse(e.postData.contents);
-    const secret = PropertiesService.getScriptProperties().getProperty('SECRET');
-    if (!secret || body.secret !== secret) return salida({ error: 'No autorizado' });
-    if (body.action === 'createOrder') return salida(crearPedido(body.order));
-    if (body.action === 'paymentUpdate') return salida(actualizarPago(body));
-    if (body.action === 'orderStatus') return salida(estadoPedido(body.id));
-    return salida({ error: 'Acción desconocida' });
+    const q = (e && e.parameter) || {};
+    let body = {};
+    try { body = JSON.parse((e && e.postData && e.postData.contents) || '{}'); } catch (x) { body = {}; }
+    if (body.action === 'crearPedido') return salida(nuevoPedido(body));
+    // Aviso de Mercado Pago (webhook): consultamos el pago a Mercado Pago antes de creer nada
+    const tipo = body.type || body.topic || q.type || q.topic;
+    const id = (body.data && body.data.id) || q['data.id'] || (tipo === 'payment' ? q.id : '');
+    if (tipo === 'payment' && id) {
+      try { syncPago(String(id)); } catch (err) { console.error(err); }
+      return salida({ ok: true });
+    }
+    return salida({ ok: true, ignorado: true });
   } catch (err) {
-    return salida({ error: String(err && err.message || err) });
+    console.error(err);
+    return salida({ error: 'No pudimos procesar el pedido. Intentá de nuevo en unos minutos.' });
   }
 }
 
@@ -179,18 +208,18 @@ function actualizarPago(b) {
     if (!hit) return { error: 'Pedido no encontrado: ' + b.orderId };
     const p = hit.fila;
     const actual = String(p.estado);
-    const ahora = new Date().toLocaleString('es-UY', { timeZone: 'America/Montevideo' });
+    const cuando = ahora();
 
     if (actual === 'pagado' && b.estado !== 'devuelto' && b.estado !== 'en disputa') return { ok: true, estado: actual };
 
     if (b.estado === 'pagado') {
       const esperado = Number(p.total) || 0;
       if (Number(b.amount) + 1 < esperado) {
-        escribir(h, hit.cab, p._fila, { estado: 'revisar: monto distinto', mp_pago_id: b.paymentId, actualizado: ahora });
+        escribir(h, hit.cab, p._fila, { estado: 'revisar: monto distinto', mp_pago_id: b.paymentId, actualizado: cuando });
         avisarTienda(p, 'Revisar pago: Mercado Pago cobró ' + b.amount + ' y el pedido es de ' + esperado);
         return { ok: true, estado: 'revisar: monto distinto' };
       }
-      escribir(h, hit.cab, p._fila, { estado: 'pagado', mp_pago_id: b.paymentId, actualizado: ahora });
+      escribir(h, hit.cab, p._fila, { estado: 'pagado', mp_pago_id: b.paymentId, actualizado: cuando });
       let items = [];
       try { items = JSON.parse(p.items_json || '[]'); } catch (e) { items = []; }
       descontarStock(items);
@@ -202,7 +231,7 @@ function actualizarPago(b) {
 
     // Un pago rechazado no pisa un pedido por transferencia ni uno ya resuelto
     if (actual === 'esperando transferencia') return { ok: true, estado: actual };
-    escribir(h, hit.cab, p._fila, { estado: b.estado, mp_pago_id: b.paymentId, actualizado: ahora });
+    escribir(h, hit.cab, p._fila, { estado: b.estado, mp_pago_id: b.paymentId, actualizado: cuando });
     if (b.estado === 'devuelto' || b.estado === 'en disputa') {
       p.estado = b.estado;
       avisarTienda(p, 'Atención: pago ' + b.estado + ' (revisá el stock a mano)');
@@ -234,6 +263,204 @@ function descontarStock(items) {
     h.getRange(fila._fila, colStock + 1).setValue(nuevo);
     fila.stock = nuevo;
   });
+}
+
+/* ---------------- Pedidos desde la tienda ---------------- */
+
+function normTxt(s) { return String(s === undefined || s === null ? '' : s).normalize('NFD').replace(/[̀-ͯ]/g, '').trim().toLowerCase(); }
+function aNumero(v) {
+  if (v === '' || v === null || v === undefined) return null;
+  if (typeof v === 'number') return isFinite(v) ? v : null;
+  const limpio = String(v).replace(/[^\d,.-]/g, '').replace(/\.(?=\d{3}(\D|$))/g, '').replace(',', '.');
+  const n = Number(limpio);
+  return limpio && isFinite(n) ? n : null;
+}
+function buscarId(lista, valor) {
+  const v = normTxt(valor);
+  if (!v) return null;
+  const hit = lista.filter(function (x) { return normTxt(x.id) === v || normTxt(x.name) === v; })[0];
+  return hit ? hit.id : null;
+}
+
+// Productos activos con precio, tal como los ve la tienda
+function catalogo() {
+  return leerProductos().map(function (r) {
+    const stock = aNumero(r.stock);
+    return {
+      id: String(r.id).trim(),
+      name: String(r.nombre || '').trim(),
+      cat: buscarId(TIENDA.categories, r.categoria) || 'ramos',
+      price: aNumero(r.precio),
+      stock: stock === null ? null : Math.max(0, Math.floor(stock)),
+      active: !/^(no|false|0)$/.test(normTxt(r.activo))
+    };
+  }).filter(function (p) { return p.id && p.name && p.price > 0 && p.active; });
+}
+
+function redondear10(v) { return Math.round(v / 10) * 10; }
+function entero(v, min, max) { return Math.max(min, Math.min(max, Math.floor(Number(v) || 0))); }
+
+// Mismas reglas que la web (floreria/js/app.js → totals()). Los precios salen de la planilla.
+function calcular(items, cupon, metodo, cat) {
+  const C = TIENDA.config, errores = [], lineas = [], uso = {};
+  if (!Array.isArray(items) || !items.length) errores.push('El carrito está vacío.');
+  (items || []).forEach(function (it) {
+    const qty = entero(it.qty, 1, 20);
+    if (it.kind === 'product') {
+      const p = cat.filter(function (x) { return x.id === it.id; })[0];
+      if (!p) { errores.push('Uno de los productos ya no está disponible. Revisá tu carrito.'); return; }
+      const size = p.cat === 'plantas' ? TIENDA.sizes[0] : (TIENDA.sizes.filter(function (s) { return s.id === it.size; })[0] || TIENDA.sizes[0]);
+      const extras = (Array.isArray(it.addons) ? it.addons : []).map(function (a) { return TIENDA.addons.filter(function (x) { return x.id === a; })[0]; }).filter(Boolean);
+      const unit = redondear10(p.price * size.mult) + extras.reduce(function (s, a) { return s + a.price; }, 0);
+      uso[p.id] = (uso[p.id] || 0) + qty;
+      const opts = [p.cat === 'plantas' ? null : size.name].concat(extras.map(function (a) { return '+ ' + a.name; })).filter(Boolean).join(' · ');
+      lineas.push({ kind: 'product', id: p.id, name: p.name, opts: opts, qty: qty, unit: unit, total: unit * qty });
+    } else if (it.kind === 'custom') {
+      const b = it.build || {}, partes = [];
+      let tallos = 0, suma = 0;
+      TIENDA.builderFlowers.forEach(function (f) {
+        const n = b.items && b.items[f.type] ? entero(b.items[f.type].qty, 0, 30) : 0;
+        if (!n) return;
+        tallos += n; suma += n * f.price; partes.push(n + ' ' + f.name.toLowerCase());
+      });
+      const papel = TIENDA.wraps.filter(function (w) { return w.id === b.wrap; })[0] || TIENDA.wraps[0];
+      if (tallos < 3) { errores.push('Tu ramo personalizado necesita al menos 3 tallos.'); return; }
+      const unit = suma + TIENDA.builderBase;
+      lineas.push({ kind: 'custom', id: 'custom', name: 'Ramo de autor (armado por el cliente)', opts: partes.join(', ') + ' · papel ' + papel.name.toLowerCase(), qty: qty, unit: unit, total: unit * qty });
+    } else if (it.kind === 'plan') {
+      const pl = TIENDA.plans.filter(function (x) { return x.id === it.id; })[0];
+      if (!pl) { errores.push('El plan de suscripción elegido no existe.'); return; }
+      lineas.push({ kind: 'plan', id: pl.id, name: 'Suscripción ' + pl.name, opts: pl.freq + ' · primer envío', qty: 1, unit: pl.price, total: pl.price });
+    } else {
+      errores.push('Hay un producto que no reconocemos en el carrito.');
+    }
+  });
+  Object.keys(uso).forEach(function (id) {
+    const p = cat.filter(function (x) { return x.id === id; })[0];
+    if (p.stock !== null && uso[id] > p.stock) errores.push(p.stock === 0 ? p.name + ' se agotó.' : 'De ' + p.name + ' solo quedan ' + p.stock + '.');
+  });
+  const subtotal = lineas.reduce(function (s, l) { return s + l.total; }, 0);
+  const codigo = String(cupon || '').trim().toUpperCase();
+  const cp = codigo && C.coupons[codigo] ? C.coupons[codigo] : null;
+  const descuento = cp && cp.type === 'percent' ? redondear10(subtotal * cp.value / 100) : 0;
+  const m = ['standard', 'express', 'pickup'].indexOf(metodo) >= 0 ? metodo : 'standard';
+  let envio = 0;
+  if (lineas.some(function (l) { return l.kind !== 'plan'; })) {
+    const gratis = subtotal - descuento >= C.freeShippingFrom || (cp && cp.type === 'shipping');
+    if (m === 'standard') envio = gratis ? 0 : C.shipping.standard;
+    else if (m === 'express') envio = C.shipping.express - (gratis ? C.shipping.standard : 0);
+  }
+  return { lineas: lineas, subtotal: subtotal, descuento: descuento, envio: envio, total: Math.max(0, subtotal - descuento + envio), cupon: cp ? codigo : '', metodo: m, errores: errores };
+}
+
+function txt(v, max) { return String(v === undefined || v === null ? '' : v).replace(/[\u0000-\u001f\u007f]/g, ' ').trim().slice(0, max || 200); }
+function txtLargo(v, max) { return String(v === undefined || v === null ? '' : v).replace(/[\u0000-\u0009\u000b-\u001f\u007f]/g, ' ').trim().slice(0, max || 400); }
+
+function nuevoPedido(b) {
+  const c = b.customer || {}, d = b.delivery || {}, card = b.card || {};
+  const pago = b.payment === 'transfer' ? 'transferencia' : 'mercadopago';
+  const faltan = [];
+  if (!txt(c.name)) faltan.push('tu nombre');
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(txt(c.email))) faltan.push('un email válido');
+  if (txt(c.phone).replace(/\D/g, '').length < 8) faltan.push('un celular de al menos 8 dígitos');
+  if (!txt(c.rname)) faltan.push('el nombre de quien recibe');
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(txt(d.date))) faltan.push('el día de entrega');
+  if (d.method !== 'pickup' && (!txt(d.address) || !txt(d.barrio))) faltan.push('la dirección de entrega');
+  if (d.method === 'standard' && !txt(d.slot)) faltan.push('la franja horaria');
+  if (faltan.length) return { error: 'Falta completar ' + faltan.join(', ') + '.' };
+
+  // Freno simple contra pedidos repetidos en masa: hasta 8 por email cada 10 minutos
+  const cache = CacheService.getScriptCache(), clave = 'p:' + normTxt(c.email).slice(0, 200);
+  const cuenta = Number(cache.get(clave) || 0);
+  if (cuenta >= 8) return { error: 'Hiciste muchos pedidos seguidos. Esperá unos minutos o escribinos.' };
+  cache.put(clave, String(cuenta + 1), 600);
+
+  const tokenMP = PropertiesService.getScriptProperties().getProperty('MP_ACCESS_TOKEN');
+  if (pago === 'mercadopago' && !tokenMP) return { error: 'El pago con Mercado Pago todavía no está activado. Elegí transferencia o escribinos.' };
+
+  const r = calcular(b.items, b.coupon, d.method, catalogo());
+  if (r.errores.length) return { error: r.errores.join(' '), code: 'stock' };
+
+  const C = TIENDA.config;
+  const etiquetaEntrega = { standard: 'Envío a domicilio', express: 'Express (menos de 2 h)', pickup: 'Retiro en el local' }[r.metodo];
+  const o = {
+    id: 'FL-' + Date.now().toString(36).toUpperCase().slice(-4) + Utilities.getUuid().replace(/-/g, '').slice(0, 4).toUpperCase(),
+    fecha: ahora(),
+    estado: pago === 'transferencia' ? 'esperando transferencia' : 'pendiente de pago',
+    pago: pago,
+    total: r.total,
+    cliente: txt(c.name), email: txt(c.email), telefono: txt(c.phone, 40),
+    destinatario: txt(c.rname), tel_destinatario: txt(c.rphone, 40),
+    tipo_entrega: etiquetaEntrega,
+    fecha_entrega: txt(d.date, 10),
+    franja: r.metodo === 'standard' ? txt(d.slot, 20) : r.metodo === 'express' ? 'Menos de 2 h' : '',
+    direccion: r.metodo === 'pickup' ? '' : txt(d.address),
+    barrio: r.metodo === 'pickup' ? '' : txt(d.barrio, 80),
+    indicaciones: txtLargo(d.notes, 300),
+    dedicatoria: txtLargo(card.message, 240),
+    firma: card.anon ? '(anónimo)' : txt(card.sign, 80),
+    anonimo: card.anon ? 'sí' : 'no',
+    productos: r.lineas.map(function (l) { return l.qty + ' × ' + l.name + (l.opts ? ' (' + l.opts + ')' : '') + ' — ' + plata(l.total); }).join('\n'),
+    subtotal: r.subtotal, descuento: r.descuento, cupon: r.cupon, envio: r.envio,
+    mp_pago_id: '', actualizado: '',
+    items: r.lineas.map(function (l) { return { kind: l.kind, id: l.id, qty: l.qty }; }),
+    nota_pago: pago === 'transferencia' ? 'Transferí ' + plata(r.total) + ' a ' + C.bank.name + ', cuenta ' + C.bank.account + ', a nombre de ' + C.bank.holder + ', y mandanos el comprobante.' : ''
+  };
+  crearPedido(o);
+  if (pago === 'transferencia') return { id: o.id, total: o.total, status: o.estado, bank: C.bank };
+
+  const origen = /^https?:\/\/[^\s\/?#]+$/.test(String(b.origin || '')) ? b.origin : '';
+  if (!origen) return { error: 'No pudimos identificar la tienda. Recargá la página e intentá de nuevo.' };
+  try {
+    const pref = crearPreferencia(o, origen, tokenMP);
+    return { id: o.id, total: o.total, init_point: pref.init_point };
+  } catch (err) {
+    console.error(err);
+    return { error: 'Mercado Pago no respondió. Tu pedido quedó guardado: intentá pagar de nuevo o elegí transferencia.' };
+  }
+}
+
+/* ---------------- Mercado Pago ---------------- */
+
+function llamarMP(ruta, metodo, datos, token, extraHeaders) {
+  const res = UrlFetchApp.fetch(MP_API + ruta, {
+    method: metodo, contentType: 'application/json', muteHttpExceptions: true,
+    headers: Object.assign({ Authorization: 'Bearer ' + token }, extraHeaders || {}),
+    payload: datos ? JSON.stringify(datos) : undefined
+  });
+  const code = res.getResponseCode();
+  let json = {};
+  try { json = JSON.parse(res.getContentText() || '{}'); } catch (e) { json = {}; }
+  if (code >= 300) { const err = new Error('Mercado Pago ' + code + ': ' + (json.message || json.error || '')); err.status = code; throw err; }
+  return json;
+}
+
+function crearPreferencia(o, origen, token) {
+  const volver = origen + '/?pedido=' + encodeURIComponent(o.id);
+  return llamarMP('/checkout/preferences', 'post', {
+    items: [{ id: o.id, title: 'Pedido ' + NOMBRE_TIENDA + ' ' + o.id, description: o.productos.slice(0, 250), quantity: 1, unit_price: o.total, currency_id: TIENDA.config.currency }],
+    payer: { name: o.cliente, email: o.email },
+    external_reference: o.id,
+    notification_url: ScriptApp.getService().getUrl(),
+    back_urls: { success: volver, pending: volver, failure: volver },
+    auto_return: 'approved',
+    statement_descriptor: NOMBRE_TIENDA.toUpperCase().slice(0, 13)
+  }, token, { 'X-Idempotency-Key': o.id });
+}
+
+function estadoMP(status) {
+  return ({ approved: 'pagado', authorized: 'pago pendiente', pending: 'pago pendiente', in_process: 'pago pendiente', in_mediation: 'en disputa', rejected: 'pago rechazado', cancelled: 'pago rechazado', refunded: 'devuelto', charged_back: 'devuelto' })[status] || 'pendiente de pago';
+}
+
+// Consulta el pago a Mercado Pago (no confiamos en el aviso) y actualiza el pedido
+function syncPago(paymentId) {
+  const token = PropertiesService.getScriptProperties().getProperty('MP_ACCESS_TOKEN');
+  if (!token) return;
+  let p;
+  try { p = llamarMP('/v1/payments/' + encodeURIComponent(paymentId), 'get', null, token); }
+  catch (err) { if (err.status === 404) return; throw err; }
+  if (!p.external_reference) return;
+  return actualizarPago({ orderId: String(p.external_reference), estado: estadoMP(p.status), paymentId: String(p.id), amount: Number(p.transaction_amount) || 0 });
 }
 
 /* ---------------- Emails ---------------- */
@@ -292,6 +519,204 @@ function confirmarCliente(p) {
   if (para) opts.replyTo = para;
   MailApp.sendEmail(opts);
 }
+
+/* ---------------- Reglas de precios (tamaños, extras, envíos, cupones) ---------------- */
+// Se generan desde floreria/js/data.js. Si cambiás algo ahí, cambialo también acá.
+// TIENDA_INICIO
+const TIENDA = {
+  "config": {
+    "currency": "UYU",
+    "freeShippingFrom": 3500,
+    "shipping": {
+      "standard": 290,
+      "express": 490,
+      "pickup": 0
+    },
+    "coupons": {
+      "LATTE10": {
+        "type": "percent",
+        "value": 10,
+        "label": "10% de descuento"
+      },
+      "BIENVENIDA15": {
+        "type": "percent",
+        "value": 15,
+        "label": "15% de bienvenida"
+      },
+      "ENVIOGRATIS": {
+        "type": "shipping",
+        "value": 0,
+        "label": "Envío gratis"
+      }
+    },
+    "bank": {
+      "name": "A completar",
+      "account": "A completar",
+      "holder": "FlorLatte Plantas y Flores"
+    }
+  },
+  "sizes": [
+    {
+      "id": "clasico",
+      "name": "Clásico",
+      "mult": 1
+    },
+    {
+      "id": "deluxe",
+      "name": "Deluxe",
+      "mult": 1.35
+    },
+    {
+      "id": "premium",
+      "name": "Premium",
+      "mult": 1.7
+    }
+  ],
+  "addons": [
+    {
+      "id": "florero",
+      "name": "Florero de vidrio soplado",
+      "price": 890
+    },
+    {
+      "id": "bombones",
+      "name": "Bombones artesanales (12u)",
+      "price": 650
+    },
+    {
+      "id": "vela",
+      "name": "Vela de soja · higo y cedro",
+      "price": 720
+    },
+    {
+      "id": "globo",
+      "name": "Globo metalizado \"Te quiero\"",
+      "price": 390
+    },
+    {
+      "id": "osito",
+      "name": "Osito de peluche",
+      "price": 790
+    }
+  ],
+  "builderFlowers": [
+    {
+      "type": "rose",
+      "name": "Rosa",
+      "price": 190
+    },
+    {
+      "type": "peony",
+      "name": "Peonía",
+      "price": 420
+    },
+    {
+      "type": "tulip",
+      "name": "Tulipán",
+      "price": 160
+    },
+    {
+      "type": "sunflower",
+      "name": "Girasol",
+      "price": 210
+    },
+    {
+      "type": "lily",
+      "name": "Lilium",
+      "price": 260
+    },
+    {
+      "type": "hydrangea",
+      "name": "Hortensia",
+      "price": 340
+    },
+    {
+      "type": "daisy",
+      "name": "Margarita",
+      "price": 90
+    },
+    {
+      "type": "anemone",
+      "name": "Anémona",
+      "price": 180
+    },
+    {
+      "type": "carnation",
+      "name": "Clavel",
+      "price": 110
+    }
+  ],
+  "builderBase": 350,
+  "wraps": [
+    {
+      "id": "kraft",
+      "name": "Kraft"
+    },
+    {
+      "id": "seda",
+      "name": "Seda marfil"
+    },
+    {
+      "id": "rosa",
+      "name": "Rosa empolvado"
+    },
+    {
+      "id": "salvia",
+      "name": "Salvia"
+    },
+    {
+      "id": "noche",
+      "name": "Noche"
+    }
+  ],
+  "plans": [
+    {
+      "id": "quincenal",
+      "name": "Esencial",
+      "freq": "Cada 15 días",
+      "price": 1690
+    },
+    {
+      "id": "semanal",
+      "name": "Florista",
+      "freq": "Cada semana",
+      "price": 1490
+    },
+    {
+      "id": "mensual",
+      "name": "Detalle",
+      "freq": "Una vez al mes",
+      "price": 1890
+    }
+  ],
+  "categories": [
+    {
+      "id": "ramos",
+      "name": "Ramos"
+    },
+    {
+      "id": "novias",
+      "name": "Novias"
+    },
+    {
+      "id": "rosas",
+      "name": "Rosas"
+    },
+    {
+      "id": "cajas",
+      "name": "Cajas"
+    },
+    {
+      "id": "floreros",
+      "name": "En florero"
+    },
+    {
+      "id": "plantas",
+      "name": "Plantas"
+    }
+  ]
+};
+// TIENDA_FIN
 
 /* ---------------- Productos iniciales (los carga "Instalar") ---------------- */
 // SEMILLA_INICIO

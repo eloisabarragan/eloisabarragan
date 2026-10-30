@@ -776,8 +776,16 @@
   const co = Object.assign({ step: 0, name: '', email: '', phone: '', rname: '', rphone: '', method: 'standard', date: null, slot: null, address: '', barrio: '', notes: '', cardStyle: 'clasica', message: '', sign: '', anon: false, pay: 'mp' }, store.get('co', {}));
   co.step = 0;
   if (co.pay !== 'transfer') co.pay = 'mp';
-  // Abierta como archivo (sin servidor): el pago se simula para poder recorrer la tienda.
+  // Abierta como archivo desde la computadora: el pago se simula para poder recorrer la tienda.
   const DEMO = location.protocol === 'file:';
+  const API = C.sheetsUrl;
+  // Llamadas a la planilla (Apps Script). POST como texto plano para que el navegador no la bloquee.
+  async function planilla(params, body) {
+    const url = API + (params ? '?' + new URLSearchParams(params) : '');
+    const r = await fetch(url, body ? { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(body) } : {});
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    return r.json();
+  }
   const saveCo = () => { const { step, ...rest } = co; store.set('co', rest); };
 
   function openCheckout() {
@@ -1006,16 +1014,19 @@
       setTimeout(() => showResult({ id: 'FL-DEMO', status: co.pay === 'transfer' ? 'esperando transferencia' : 'pagado', total }), 1500);
       return;
     }
+    if (!API) return payError('La tienda todavía no está conectada a la planilla. Escribinos para hacer tu pedido.');
     $('#coSubmit').disabled = true;
-    let res, data;
+    $('#coSubmit').textContent = 'Procesando…';
+    let data;
     try {
-      res = await fetch(C.api + '/crear-pedido', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(orderPayload()) });
-      data = await res.json();
+      data = await planilla(null, Object.assign({ action: 'crearPedido', origin: location.origin }, orderPayload()));
     } catch (e) {
+      renderCheckout();
       return payError('No pudimos conectarnos. Revisá tu conexión a internet e intentá de nuevo.');
     }
-    if (!res.ok) {
+    if (!data || data.error) {
       if (data && data.code === 'stock') loadRemoteProducts();
+      renderCheckout();
       return payError((data && data.error) || 'No pudimos crear tu pedido. Intentá de nuevo en unos minutos.');
     }
     store.set('lastOrder', { id: data.id, total: data.total, pay: co.pay });
@@ -1092,8 +1103,8 @@
     let result = null;
     for (let i = 0; i < 6; i++) {
       try {
-        const r = await fetch(`${C.api}/pedido?id=${encodeURIComponent(id)}${pid && pid !== 'null' ? `&payment_id=${encodeURIComponent(pid)}` : ''}`);
-        if (r.ok) result = await r.json();
+        const st = await planilla(Object.assign({ action: 'order', id }, pid && pid !== 'null' ? { payment_id: pid } : {}));
+        if (st && st.estado) result = { status: st.estado, total: st.total };
       } catch (e) { /* reintenta */ }
       if (result && result.status && result.status !== 'pendiente de pago') break;
       if (q.get('status') === 'null' || q.get('collection_status') === 'null') break; // volvió sin pagar
@@ -1144,13 +1155,48 @@
   }
 
   /* ---------- Productos desde la planilla ---------- */
+  const normTxt = v => String(v ?? '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim().toLowerCase();
+  const isYes = v => v === true || /^(si|yes|true|1|x)$/.test(normTxt(v));
+  const isNo = v => v === false || /^(no|false|0)$/.test(normTxt(v));
+  function toNumber(v) {
+    if (v === '' || v == null) return null;
+    if (typeof v === 'number') return Number.isFinite(v) ? v : null;
+    const clean = String(v).replace(/[^\d,.-]/g, '').replace(/\.(?=\d{3}(\D|$))/g, '').replace(',', '.');
+    const n = Number(clean);
+    return clean && Number.isFinite(n) ? n : null;
+  }
+  // Acepta el id ("ramos") o el nombre visible ("Ramos") que se escribe en la planilla
+  const lookup = (list, value) => { const v = normTxt(value); const hit = v && list.find(x => normTxt(x.id) === v || normTxt(x.name) === v); return hit ? hit.id : null; };
+  // Google Sheets convierte "-13%" en el número -0.13: lo volvemos a mostrar como porcentaje
+  const badgeText = v => typeof v === 'number' ? (Math.abs(v) <= 1 ? `${Math.round(v * 100)}%` : String(v)) : (String(v ?? '').trim() || null);
+  function normalizeRow(row) {
+    const id = String(row.id ?? '').trim();
+    const stock = toNumber(row.stock);
+    const local = LOCAL.find(p => p.id === id) || {};
+    return {
+      id,
+      name: String(row.nombre ?? '').trim(),
+      cat: lookup(D.categories, row.categoria) || local.cat || 'ramos',
+      price: toNumber(row.precio),
+      oldPrice: toNumber(row.precio_anterior) || null,
+      stock: stock == null ? null : Math.max(0, Math.floor(stock)),
+      active: !isNo(row.activo),
+      desc: String(row.descripcion ?? '').trim(),
+      stems: String(row.composicion ?? '').trim(),
+      occasions: String(row.ocasiones ?? '').split(/[,;]/).map(o => lookup(D.occasions, o)).filter(Boolean),
+      color: lookup(D.colors, row.color) || local.color || 'mix',
+      badge: badgeText(row.etiqueta),
+      sameDay: row.entrega_hoy === '' || row.entrega_hoy == null ? true : isYes(row.entrega_hoy),
+      img: String(row.foto ?? '').trim() || null,
+      order: toNumber(row.orden) ?? 999
+    };
+  }
   async function loadRemoteProducts() {
-    if (DEMO) return;
+    if (DEMO || !API) return;
     try {
-      const r = await fetch(C.api + '/productos');
-      if (!r.ok) throw new Error('HTTP ' + r.status);
-      const { products } = await r.json();
-      if (!Array.isArray(products) || !products.length) return;
+      const { products: rows } = await planilla({ action: 'products' });
+      const products = (rows || []).map(normalizeRow).filter(p => p.id && p.name && p.price > 0 && p.active).sort((a, b) => a.order - b.order);
+      if (!products.length) return;
       D.products = products.map(p => {
         const local = LOCAL.find(x => x.id === p.id) || {};
         return Object.assign({ occasions: [], rating: local.rating || null, reviews: local.reviews || 0, art: local.art || null }, p);
