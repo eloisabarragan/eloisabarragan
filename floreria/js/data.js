@@ -20,7 +20,7 @@ const DATA = {
     city: 'Las Piedras, Canelones, Uruguay',
     hours: '',                      // ej. 'Lun a sáb 9:00–19:00' (vacío = no se muestra)
     bank: { name: 'A completar', account: 'A completar', holder: 'FlorLatte Plantas y Flores' },
-    sheetsUrl: '',                  // dirección de la planilla publicada (termina en /exec)
+    sheetsUrl: 'https://script.google.com/macros/s/AKfycbyClG0cDGRrBM8n5-EhH2Oqhskm5SFdOQFHI5aghuY0bqhep78GXZmCqgfzZx7I0exR/exec',                  // dirección de la planilla publicada (termina en /exec)
     lowStockFrom: 3,                // mostrar "¡Quedan N!" desde esta cantidad
     coupons: {
       LATTE10: { type: 'percent', value: 10, label: '10% de descuento' },
