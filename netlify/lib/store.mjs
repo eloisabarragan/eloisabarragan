@@ -25,6 +25,12 @@ function lookup(list, value) {
   return hit ? hit.id : null;
 }
 
+// Google Sheets convierte "-13%" en el número -0.13: lo volvemos a mostrar como porcentaje
+function badgeText(v) {
+  if (typeof v === 'number') return Number.isFinite(v) && Math.abs(v) <= 1 ? `${Math.round(v * 100)}%` : String(v);
+  return String(v ?? '').trim() || null;
+}
+
 export function normalizeRow(row) {
   const id = String(row.id ?? '').trim();
   const stock = toNumber(row.stock);
@@ -41,7 +47,7 @@ export function normalizeRow(row) {
     stems: String(row.composicion ?? '').trim(),
     occasions: String(row.ocasiones ?? '').split(/[,;]/).map(o => lookup(STORE.occasions, o)).filter(Boolean),
     color: lookup(STORE.colors, row.color) || (local && local.color) || 'mix',
-    badge: String(row.etiqueta ?? '').trim() || null,
+    badge: badgeText(row.etiqueta),
     sameDay: row.entrega_hoy === '' || row.entrega_hoy == null ? true : isYes(row.entrega_hoy),
     img: String(row.foto ?? '').trim() || null,
     order: toNumber(row.orden) ?? 999
