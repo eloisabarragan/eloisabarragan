@@ -115,7 +115,7 @@ function intro() {
     .to(loader, { clipPath: "inset(0 0 100% 0)", duration: 1.1, ease: "expo.inOut" })
     .add(() => { loader.hidden = true; document.body.classList.remove("is-loading"); ScrollTrigger.refresh(); })
     .from(".hero__logoimg", { y: 30, scale: 0.94, opacity: 0, duration: 1.6, ease: "expo.out" }, "-=0.5")
-    .from(".hero__ctas, .hero__scroll", { y: 20, opacity: 0, duration: 1, ease: "expo.out", stagger: 0.1 }, "-=0.9")
+    .from(".hb__text.is-active > *, .hero__sub, .hb__ctrl", { y: 20, opacity: 0, duration: 1, ease: "expo.out", stagger: 0.08, clearProps: "transform,opacity" }, "-=1.1")
     .from("#nav", { yPercent: -100, opacity: 0, duration: 1, ease: "expo.out" }, "-=1.2");
 }
 if (reduce) { loader.hidden = true; document.body.classList.remove("is-loading"); }
@@ -130,6 +130,43 @@ else {
   Promise.race([Promise.all([fontsReady, logoReady, new Promise((r) => setTimeout(r, 1500))]), new Promise((r) => setTimeout(r, 3500))])
     .then(() => gsap.to(counter, { v: 100, duration: 0.4, ease: "power1.out", onUpdate: paint, onComplete: intro }));
 }
+
+/* ---------------- Banner de inicio: diapositivas ---------------- */
+const hb = $("#heroBanner");
+const hbTexts = $$(".hb__text", hb), hbMedias = $$(".hb__media", hb), hbDots = $$(".hb__dot", hb);
+let hbCur = 0, hbTimer = 0, hbPaused = false;
+function hbShow(i) {
+  hbCur = (i + hbTexts.length) % hbTexts.length;
+  hbTexts.forEach((el, k) => { const on = k === hbCur; el.classList.toggle("is-active", on); el.inert = !on; el.setAttribute("aria-hidden", String(!on)); });
+  hbMedias.forEach((el, k) => el.classList.toggle("is-active", k === hbCur));
+  hbDots.forEach((d, k) => d.setAttribute("aria-current", String(k === hbCur)));
+  hbPlay();
+}
+function hbPlay() {
+  clearTimeout(hbTimer);
+  if (reduce || hbPaused) return;
+  hbTimer = setTimeout(() => hbShow(hbCur + 1), 7000);
+}
+function hbLabels() { hbDots.forEach((d, k) => d.setAttribute("aria-label", t("hb.go").replace("{n}", k + 1))); }
+hbLabels();
+onLang.push(hbLabels);
+$$("[data-step]", hb).forEach((b) => b.addEventListener("click", () => hbShow(hbCur + +b.dataset.step)));
+hbDots.forEach((d) => d.addEventListener("click", () => hbShow(+d.dataset.go)));
+const hbPause = (v) => { hbPaused = v; hbPlay(); };
+hb.addEventListener("pointerenter", (e) => e.pointerType === "mouse" && hbPause(true));
+hb.addEventListener("pointerleave", () => hbPause(false));
+hb.addEventListener("focusin", () => hbPause(true));
+hb.addEventListener("focusout", (e) => { if (!hb.contains(e.relatedTarget)) hbPause(false); });
+document.addEventListener("visibilitychange", () => hbPause(document.hidden));
+// Deslizar con el dedo en pantallas táctiles
+let hbX = null;
+hb.addEventListener("touchstart", (e) => { hbX = e.touches[0].clientX; }, { passive: true });
+hb.addEventListener("touchend", (e) => {
+  if (hbX === null) return;
+  const dx = e.changedTouches[0].clientX - hbX; hbX = null;
+  if (Math.abs(dx) > 50) hbShow(hbCur + (dx < 0 ? 1 : -1));
+}, { passive: true });
+hbPlay();
 
 /* ---------------- Rosa de los vientos: gira con el scroll ---------------- */
 if (!reduce) {
@@ -346,13 +383,17 @@ $$(".service").forEach((li) => {
 });
 if (!reduce) gsap.from(".service", { y: 40, opacity: 0, duration: 1, ease: "expo.out", stagger: 0.08, scrollTrigger: { trigger: ".services", start: "top 85%" } });
 
-/* ---------------- Nuestra selección: carrusel circular con las cinco categorías ---------------- */
+/* ---------------- Nuestra selección: carrusel circular con las cinco categorías ----------------
+   Al tocar la foto se abre la ficha con fotos y características. Para completarla, en cada categoría:
+   - photos: rutas de fotos adicionales, ej. ["assets/img/casa-1.webp", "assets/img/casa-2.webp"]
+   - facts:  características en los tres idiomas, ej. [{ es: "3 dormitorios", en: "3 bedrooms", pt: "3 quartos" }]
+   Mientras estén vacías, la ficha muestra solo la foto principal (no se inventan datos). */
 const CATS = [
-  { type: "casa", key: "cat.casa", art: "villa", img: "assets/img/cat-casas-900.webp" },
-  { type: "apartamento", key: "cat.apartamento", art: "tower", img: "assets/img/cat-apartamentos-1000.webp" },
-  { type: "campo", key: "cat.campo", art: "villa", img: "assets/img/cat-campos-1000.webp" },
-  { type: "terreno", key: "cat.terreno", art: "villa", img: "assets/img/cat-terrenos-1000.webp" },
-  { type: "proyecto", key: "cat.proyecto", art: "residences", img: "assets/img/cat-proyectos-1000.webp" },
+  { type: "casa", key: "cat.casa", art: "villa", img: "assets/img/cat-casas-900.webp", photos: [], facts: [] },
+  { type: "apartamento", key: "cat.apartamento", art: "tower", img: "assets/img/cat-apartamentos-1000.webp", photos: [], facts: [] },
+  { type: "campo", key: "cat.campo", art: "villa", img: "assets/img/cat-campos-1000.webp", photos: [], facts: [] },
+  { type: "terreno", key: "cat.terreno", art: "villa", img: "assets/img/cat-terrenos-1000.webp", photos: [], facts: [] },
+  { type: "proyecto", key: "cat.proyecto", art: "residences", img: "assets/img/cat-proyectos-1000.webp", photos: [], facts: [] },
 ];
 preload(CATS.map((c) => c.img));
 const orbA = $("#orbA"), orbB = $("#orbB");
@@ -401,6 +442,40 @@ function goCat(i) {
 $("#estPrev").addEventListener("click", () => goCat(curCat - 1));
 $("#estNext").addEventListener("click", () => goCat(curCat + 1));
 $("#estIndex").addEventListener("click", (e) => { const b = e.target.closest("button"); if (b) goCat(+b.dataset.i); });
+// Ficha de la categoría: foto grande, más fotos y características
+const prop = $("#propDetail"), propImg = $("#propImg");
+function propPhotos(c) { return [c.img.replace(/-\d+\.webp$/, (m) => (m === "-900.webp" ? "-1600.webp" : m)), ...c.photos]; }
+function propShow(src, k) {
+  propImg.src = src;
+  propImg.alt = `${t(CATS[curCat].key)} · ${t("est.photo").replace("{n}", k + 1)}`;
+  $$("#propThumbs button").forEach((b, j) => b.setAttribute("aria-current", String(j === k)));
+}
+function renderProp() {
+  const c = CATS[curCat];
+  if (!c) return;
+  $("#propTitle").textContent = t(c.key);
+  const photos = propPhotos(c);
+  const thumbs = $("#propThumbs");
+  thumbs.hidden = photos.length < 2;
+  thumbs.innerHTML = photos.map((src, k) => `<button type="button" data-k="${k}" aria-label="${t("est.photo").replace("{n}", k + 1)}"><img src="${src}" alt="" loading="lazy"></button>`).join("");
+  propShow(photos[0], 0);
+  $("#propFactsWrap").hidden = !c.facts.length;
+  $("#propFacts").innerHTML = c.facts.map((f) => `<li>${f[lang] || f.es}</li>`).join("");
+  const wa = $("#propWa");
+  if (CONTACT.whatsapp) { wa.href = `https://wa.me/${CONTACT.whatsapp}?text=${encodeURIComponent(t("wa.msg").replace("{s}", t(c.key)))}`; wa.hidden = false; }
+}
+function openProp() {
+  if (curCat < 0) return;
+  renderProp();
+  if (typeof prop.showModal === "function") prop.showModal(); else prop.setAttribute("open", "");
+  lenis && lenis.stop();
+  if (!reduce) gsap.fromTo($(".prop", prop), { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.7, ease: "expo.out" });
+}
+$("#propThumbs").addEventListener("click", (e) => { const b = e.target.closest("button"); if (b) propShow($("img", b).src, +b.dataset.k); });
+$("#estOpen").addEventListener("click", openProp);
+$("#estMore").addEventListener("click", openProp);
+$("#propQuote").addEventListener("click", () => { const type = CATS[curCat].type; closeForm(prop); openForm("cotizacion", type); });
+onLang.push(() => prop.open && renderProp());
 // "Cotizá tu proyecto" abre el formulario con la categoría que se está viendo
 $("#estQuote").addEventListener("click", () => openForm("cotizacion", CATS[curCat].type));
 

@@ -67,23 +67,65 @@
   <!-- 1. INICIO: logo oficial completo, centrado, en su proporción original -->
   <section class="hero" id="inicio">
     <h1 class="visually-hidden" data-i18n="hero.h1">Grupo Sureste · Inversión, Propiedades y Estilo de vida. Hacemos posible tu nueva vida en Uruguay.</h1>
-    <div class="hero__logo">
-      <img class="hero__logoimg" src="assets/img/logo-grupo-sureste-900.webp" alt="Grupo Sureste. Inversión, Propiedades, Estilo de vida. Hacemos posible tu nueva vida en Uruguay." width="900" height="1238">
-    </div>
-    <div class="hero__ctas">
-      <a href="#seleccion" class="btn btn--gold" data-magnetic data-cursor="Ver" data-i18n-attr="data-cursor:cursor.see"><span data-i18n="hero.cta1">Nuestra selección</span></a>
-      <a href="#servicios" class="btn btn--line" data-magnetic data-cursor="Ver" data-i18n-attr="data-cursor:cursor.see"><span data-i18n="hero.cta2">Servicios</span></a>
-    </div>
-    <div class="hero__sub">
-      <div class="lang lang--hero" role="group" aria-label="Idioma" data-i18n-attr="aria-label:nav.lang">
-        <button type="button" data-lang="es" aria-pressed="true">ES</button>
-        <button type="button" data-lang="en" aria-pressed="false">EN</button>
-        <button type="button" data-lang="pt" aria-pressed="false">PT</button>
+    <div class="hb" id="heroBanner" role="region" aria-roledescription="carousel" aria-label="Grupo Sureste">
+      <div class="hb__rings" aria-hidden="true"></div>
+      <div class="hb__col">
+        <div class="hb__texts" aria-live="polite">
+        <div class="hb__text is-active" data-slide="0">
+          <p class="hb__eb mono"><span data-i18n="loader.b1">Inversión</span> · <span data-i18n="loader.b2">Propiedades</span> · <span data-i18n="loader.b3">Estilo de vida</span></p>
+          <h2 class="hb__t display">Grupo Sureste</h2>
+          <p class="hb__p"><span data-i18n="about.slogan">Elige tu nueva vida.<br>Nosotros la hacemos posible.</span></p>
+          <div class="hb__ctas"><a href="#seleccion" class="btn btn--gold" data-magnetic data-cursor="Ver" data-i18n-attr="data-cursor:cursor.see"><span data-i18n="hero.cta1">Nuestra selección</span></a><a href="#servicios" class="btn btn--line" data-magnetic data-cursor="Ver" data-i18n-attr="data-cursor:cursor.see"><span data-i18n="hero.cta2">Servicios</span></a></div>
+        </div>
+        <div class="hb__text" data-slide="1" inert aria-hidden="true">
+          <p class="hb__eb mono"><span data-i18n="d1.f">Encontrar · Comprar · Invertir</span></p>
+          <h2 class="hb__t display"><span data-i18n="d1.n">Sureste Propiedades</span></h2>
+          <p class="hb__p"><span data-i18n="d1.d">Búsqueda, compra e inversión en propiedades en Montevideo, Punta del Este, José Ignacio y el interior, con asesoramiento en cada paso.</span></p>
+          <div class="hb__ctas"><a href="#seleccion" class="btn btn--gold" data-magnetic data-cursor="Ver" data-i18n-attr="data-cursor:cursor.see"><span data-i18n="hero.cta1">Nuestra selección</span></a></div>
+        </div>
+        <div class="hb__text" data-slide="2" inert aria-hidden="true">
+          <p class="hb__eb mono"><span data-i18n="d2.f">Terreno · Arquitectura · Construcción · Diseño</span></p>
+          <h2 class="hb__t display"><span data-i18n="d2.n">Sureste Proyectos</span></h2>
+          <p class="hb__p"><span data-i18n="d2.d">Del terreno a la llave en mano: búsqueda del lote, arquitectura, ingeniería, diseño interior y construcción coordinados por un mismo equipo.</span></p>
+          <div class="hb__ctas"><button type="button" class="btn btn--gold" data-open="cotizacion" data-magnetic><span data-i18n="est.cta">Cotizá tu proyecto</span></button></div>
+        </div>
+        <div class="hb__text" data-slide="3" inert aria-hidden="true">
+          <p class="hb__eb mono"><span data-i18n="d3.f">Legal · Notarial · Contable · Gestoría · Administración</span></p>
+          <h2 class="hb__t display"><span data-i18n="d3.n">Sureste Servicios</span></h2>
+          <p class="hb__p"><span data-i18n="d3.d">El respaldo jurídico, notarial, contable y de gestoría para que cada operación sea segura y tu propiedad esté siempre en orden.</span></p>
+          <div class="hb__ctas"><a href="#servicios" class="btn btn--gold" data-magnetic data-cursor="Ver" data-i18n-attr="data-cursor:cursor.see"><span data-i18n="hero.cta2">Servicios</span></a></div>
+        </div>
+        </div>
+        <div class="hero__sub">
+          <div class="lang lang--hero" role="group" aria-label="Idioma" data-i18n-attr="aria-label:nav.lang">
+            <button type="button" data-lang="es" aria-pressed="true">ES</button>
+            <button type="button" data-lang="en" aria-pressed="false">EN</button>
+            <button type="button" data-lang="pt" aria-pressed="false">PT</button>
+          </div>
+          <span class="hero__sep" aria-hidden="true"></span>
+          <a href="#nosotros" class="hero__about mono" data-i18n="nav.about">Quiénes somos</a>
+        </div>
       </div>
-      <span class="hero__sep" aria-hidden="true"></span>
-      <a href="#nosotros" class="hero__about mono" data-i18n="nav.about">Quiénes somos</a>
+      <div class="hb__medias">
+        <div class="hb__media hb__media--logo is-active" data-slide="0">
+          <img class="hero__logoimg" src="assets/img/logo-grupo-sureste-900.webp" alt="Grupo Sureste. Inversión, Propiedades, Estilo de vida. Hacemos posible tu nueva vida en Uruguay." width="900" height="1238">
+        </div>
+        <div class="hb__media hb__media--photo" data-slide="1" aria-hidden="true">
+          <img src="assets/img/cat-casas-900.webp" srcset="assets/img/cat-casas-900.webp 900w, assets/img/cat-casas-1600.webp 1600w" sizes="(max-width: 860px) 70vw, 34vw" alt="Casa frente al mar con piscina al atardecer" loading="lazy" decoding="async">
+        </div>
+        <div class="hb__media hb__media--photo" data-slide="2" aria-hidden="true">
+          <img src="assets/img/proyecto-jose-ignacio-900.webp" srcset="assets/img/proyecto-jose-ignacio-900.webp 900w, assets/img/proyecto-jose-ignacio-1600.webp 1600w" sizes="(max-width: 860px) 70vw, 34vw" alt="Casa de arquitectura contemporánea con piscina entre pinos" loading="lazy" decoding="async">
+        </div>
+        <div class="hb__media hb__media--photo" data-slide="3" aria-hidden="true">
+          <img src="assets/img/servicios-llaves-900.webp" srcset="assets/img/servicios-llaves-900.webp 900w, assets/img/servicios-llaves-1600.webp 1600w" sizes="(max-width: 860px) 70vw, 34vw" alt="Entrega de llaves con llavero de Grupo Sureste" loading="lazy" decoding="async">
+        </div>
+      </div>
+      <div class="hb__ctrl">
+        <button type="button" class="hb__arrow" data-step="-1" aria-label="Anterior" data-i18n-attr="aria-label:hb.prev"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+        <div class="hb__dots"><button type="button" class="hb__dot" data-go="0" aria-current="true"></button><button type="button" class="hb__dot" data-go="1" aria-current="false"></button><button type="button" class="hb__dot" data-go="2" aria-current="false"></button><button type="button" class="hb__dot" data-go="3" aria-current="false"></button></div>
+        <button type="button" class="hb__arrow" data-step="1" aria-label="Siguiente" data-i18n-attr="aria-label:hb.next"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+      </div>
     </div>
-    <a href="#nosotros" class="hero__scroll" aria-label="Ir a Quiénes somos" data-i18n-attr="aria-label:hero.scrollAria"><span data-i18n="hero.scroll">Descubrí</span><i></i></a>
   </section>
 
   <!-- RECORRIDO: misma animación con scroll, con fotos del material del cliente -->
@@ -153,9 +195,8 @@
   <!-- 2. QUIÉNES SOMOS: video institucional + texto -->
   <section class="about" id="nosotros">
     <div class="about__media">
-      <!-- Video institucional: completar data-src con la ruta del archivo (ej. assets/video/institucional.mp4).
-           Mientras esté vacío se muestra la foto de este bloque. -->
-      <video class="about__video" data-src="" controls playsinline preload="none" poster="assets/img/nosotros-vinedo-1000.webp" hidden></video>
+      <!-- Video institucional. Si data-src queda vacío se muestra la foto de este bloque. -->
+      <video class="about__video" data-src="assets/video/institucional.mp4" controls playsinline preload="metadata" poster="assets/video/institucional-poster.webp" width="720" height="1280" hidden></video>
       <img class="about__poster" src="assets/img/nosotros-vinedo-1000.webp" srcset="assets/img/nosotros-vinedo-600.webp 600w, assets/img/nosotros-vinedo-1000.webp 1000w" sizes="(max-width: 900px) 90vw, 40vw" alt="Viñedo al atardecer en Uruguay" width="1000" height="1778" loading="lazy">
     </div>
     <div class="about__text">
@@ -250,12 +291,14 @@
             <canvas class="orb__img is-on" id="orbA"></canvas>
             <canvas class="orb__img" id="orbB"></canvas>
           </div>
+          <button type="button" class="orb__open" id="estOpen" aria-label="Ver detalles" data-i18n-attr="aria-label:est.more,data-cursor:est.more" data-cursor="Ver detalles"></button>
           <svg class="orb__ring" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="49" /></svg>
           <span class="orb__diag" aria-hidden="true"></span>
         </div>
         <div class="estates__info">
           <p class="mono estates__place" data-i18n="sel.e">Propiedades</p>
           <h2 class="display estates__name" id="estName">Casas</h2>
+          <button type="button" class="estates__more mono" id="estMore"><span data-i18n="est.more">Ver detalles</span> <span aria-hidden="true">→</span></button>
           <div class="estates__nav">
             <button class="iconbtn" id="estPrev" aria-label="Anterior" data-i18n-attr="aria-label:est.prev">←</button>
             <button class="iconbtn" id="estNext" aria-label="Siguiente" data-i18n-attr="aria-label:est.next">→</button>
@@ -409,6 +452,25 @@
 
 <!-- FORMULARIOS: usan Netlify Forms (atributo data-netlify). Al publicar en Netlify los envíos llegan al panel del sitio
      y se reenvían por email según se configure en Site configuration → Forms → Form notifications. -->
+<dialog class="modal modal--prop" id="propDetail" aria-labelledby="propTitle">
+  <div class="modal__form prop">
+    <header class="modal__head">
+      <p class="mono modal__k" data-i18n="sel.e">Propiedades</p>
+      <h3 class="display" id="propTitle">Casas</h3>
+      <button type="button" class="modal__close" data-close aria-label="Cerrar" data-i18n-attr="aria-label:f.close">×</button>
+    </header>
+    <div class="prop__main"><img id="propImg" src="" alt="" width="1000" height="1000"></div>
+    <div class="prop__thumbs" id="propThumbs" role="group" aria-label="Fotos" data-i18n-attr="aria-label:est.photos" hidden></div>
+    <div class="prop__facts" id="propFactsWrap" hidden>
+      <p class="mono prop__k" data-i18n="est.facts">Características</p>
+      <ul class="prop__list" id="propFacts"></ul>
+    </div>
+    <div class="prop__actions">
+      <button type="button" class="btn btn--dark" id="propQuote"><span data-i18n="est.cta">Cotizá tu proyecto</span></button>
+      <a class="modal__wa" id="propWa" target="_blank" rel="noopener" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#wa-icon"/></svg><span data-i18n="wa.short">WhatsApp</span></a>
+    </div>
+  </div>
+</dialog>
 <dialog class="modal" id="modal-cotizacion" aria-labelledby="t-cotizacion">
   <form class="modal__form" name="cotizacion" method="POST" data-netlify="true" netlify-honeypot="bot-field" novalidate>
     <input type="hidden" name="form-name" value="cotizacion">
