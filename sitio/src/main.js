@@ -387,13 +387,14 @@ if (!reduce) gsap.from(".service", { y: 40, opacity: 0, duration: 1, ease: "expo
    Al tocar la foto se abre la ficha con fotos y características. Para completarla, en cada categoría:
    - photos: rutas de fotos adicionales, ej. ["assets/img/casa-1.webp", "assets/img/casa-2.webp"]
    - facts:  características en los tres idiomas, ej. [{ es: "3 dormitorios", en: "3 bedrooms", pt: "3 quartos" }]
-   Mientras estén vacías, la ficha muestra solo la foto principal (no se inventan datos). */
+   Mientras estén vacías, esas partes no se muestran (no se inventan datos).
+   - steps: pasos del proceso que aplican (textos p1–p5); rel: servicios relacionados (abren su formulario). */
 const CATS = [
-  { type: "casa", key: "cat.casa", art: "villa", img: "assets/img/cat-casas-900.webp", photos: [], facts: [] },
-  { type: "apartamento", key: "cat.apartamento", art: "tower", img: "assets/img/cat-apartamentos-1000.webp", photos: [], facts: [] },
-  { type: "campo", key: "cat.campo", art: "villa", img: "assets/img/cat-campos-1000.webp", photos: [], facts: [] },
-  { type: "terreno", key: "cat.terreno", art: "villa", img: "assets/img/cat-terrenos-1000.webp", photos: [], facts: [] },
-  { type: "proyecto", key: "cat.proyecto", art: "residences", img: "assets/img/cat-proyectos-1000.webp", photos: [], facts: [] },
+  { type: "casa", key: "cat.casa", art: "villa", img: "assets/img/cat-casas-900.webp", photos: [], facts: [], steps: [1, 2, 4, 5], rel: ["notarial", "juridica", "contable"] },
+  { type: "apartamento", key: "cat.apartamento", art: "tower", img: "assets/img/cat-apartamentos-1000.webp", photos: [], facts: [], steps: [1, 2, 4, 5], rel: ["notarial", "juridica", "contable", "gestoria"] },
+  { type: "campo", key: "cat.campo", art: "villa", img: "assets/img/cat-campos-1000.webp", photos: [], facts: [], steps: [1, 2, 4, 5], rel: ["rurales", "notarial", "juridica", "contable"] },
+  { type: "terreno", key: "cat.terreno", art: "villa", img: "assets/img/cat-terrenos-1000.webp", photos: [], facts: [], steps: [1, 2, 3, 4], rel: ["arquitectos", "construccion", "gestoria", "notarial"] },
+  { type: "proyecto", key: "cat.proyecto", art: "residences", img: "assets/img/cat-proyectos-1000.webp", photos: [], facts: [], steps: [1, 2, 3, 4, 5], rel: ["arquitectos", "construccion", "notarial", "contable"] },
 ];
 preload(CATS.map((c) => c.img));
 const orbA = $("#orbA"), orbB = $("#orbB");
@@ -442,7 +443,8 @@ function goCat(i) {
 $("#estPrev").addEventListener("click", () => goCat(curCat - 1));
 $("#estNext").addEventListener("click", () => goCat(curCat + 1));
 $("#estIndex").addEventListener("click", (e) => { const b = e.target.closest("button"); if (b) goCat(+b.dataset.i); });
-// Ficha de la categoría: foto grande, más fotos y características
+// Ficha de la categoría: foto grande, más fotos, cómo acompañamos, servicios relacionados y características
+const SVC_TITLE = { contable: "f.con.t", notarial: "f.not.t", juridica: "f.jur.t", gestoria: "f.ges.t", rurales: "f.rur.t", construccion: "f.cons.t", arquitectos: "f.arq.t" };
 const prop = $("#propDetail"), propImg = $("#propImg");
 function propPhotos(c) { return [c.img.replace(/-\d+\.webp$/, (m) => (m === "-900.webp" ? "-1600.webp" : m)), ...c.photos]; }
 function propShow(src, k) {
@@ -459,6 +461,8 @@ function renderProp() {
   thumbs.hidden = photos.length < 2;
   thumbs.innerHTML = photos.map((src, k) => `<button type="button" data-k="${k}" aria-label="${t("est.photo").replace("{n}", k + 1)}"><img src="${src}" alt="" loading="lazy"></button>`).join("");
   propShow(photos[0], 0);
+  $("#propSteps").innerHTML = c.steps.map((n) => `<li><strong>${t(`p${n}.h`)}</strong><span>${t(`p${n}.p`)}</span></li>`).join("");
+  $("#propRel").innerHTML = c.rel.map((k) => `<button type="button" class="prop__chip" data-svc="${k}">${t(SVC_TITLE[k])}</button>`).join("");
   $("#propFactsWrap").hidden = !c.facts.length;
   $("#propFacts").innerHTML = c.facts.map((f) => `<li>${f[lang] || f.es}</li>`).join("");
   const wa = $("#propWa");
@@ -472,6 +476,7 @@ function openProp() {
   if (!reduce) gsap.fromTo($(".prop", prop), { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.7, ease: "expo.out" });
 }
 $("#propThumbs").addEventListener("click", (e) => { const b = e.target.closest("button"); if (b) propShow($("img", b).src, +b.dataset.k); });
+$("#propRel").addEventListener("click", (e) => { const b = e.target.closest("[data-svc]"); if (b) { closeForm(prop); openForm(b.dataset.svc); } });
 $("#estOpen").addEventListener("click", openProp);
 $("#estMore").addEventListener("click", openProp);
 $("#propQuote").addEventListener("click", () => { const type = CATS[curCat].type; closeForm(prop); openForm("cotizacion", type); });
