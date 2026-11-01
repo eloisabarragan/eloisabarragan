@@ -3,6 +3,7 @@
   'use strict';
   const D = window.FLORLATTE, C = D.config, A = window.FlorArt;
   const $ = (s, r = document) => r.querySelector(s);
+  const LOC = () => (window.FL_I18N ? window.FL_I18N.locale : 'es');
   const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
 
   /* ---------- Utilidades ---------- */
@@ -445,7 +446,7 @@
       toast('Cupón aplicado', C.coupons[code].label, { icon: 'gift' });
       return true;
     }
-    if (msgEl) { msgEl.textContent = `El código "${code}" no existe o ya venció. Revisá que esté bien escrito.`; msgEl.className = 'coupon-msg err'; }
+    if (msgEl) { msgEl.innerHTML = `El código <b data-no-i18n>${esc(code)}</b> no existe o ya venció. Revisá que esté bien escrito.`; msgEl.className = 'coupon-msg err'; }
     return false;
   }
   function couponBlock(id) {
@@ -607,7 +608,7 @@
     const res = $('#searchResults');
     if (!nq) { res.innerHTML = ''; return; }
     const hits = D.products.filter(p => norm([p.name, p.desc, p.stems, catName(p.cat), p.occasions.map(occName).join(' ')].join(' ')).includes(nq));
-    if (!hits.length) { res.innerHTML = `<p class="muted" style="padding:10px">No encontramos "${esc(q)}". Probá con "rosas", "plantas" o una ocasión como "cumpleaños".</p>`; return; }
+    if (!hits.length) { res.innerHTML = `<p class="muted" style="padding:10px">No encontramos <b data-no-i18n>${esc(q)}</b>. Probá con "rosas", "plantas" o una ocasión como "cumpleaños".</p>`; return; }
     const mark = name => {
       const i = norm(name).indexOf(nq);
       return i < 0 ? esc(name) : esc(name.slice(0, i)) + '<mark>' + esc(name.slice(i, i + nq.length)) + '</mark>' + esc(name.slice(i + nq.length));
@@ -651,7 +652,7 @@
     $('#builderAdd').textContent = count < 3 ? 'Elegí al menos 3 tallos' : 'Agregar al carrito';
     $('#stems').innerHTML = D.builderFlowers.map(f => {
       const it = builder.items[f.type];
-      return `<div class="stem${it.qty ? ' has' : ''}">
+      return `<div class="stem${it.qty ? ' has' : ''}" data-i18n-ctx="flor">
         <span class="stem__icon">${miniFlower(f.type, it.color)}</span>
         <div class="stem__info"><strong>${f.name} <span>${money(f.price)} c/u</span></strong>
           ${f.colors.length > 1 ? `<div class="stem__colors">${f.colors.map(c => `<button class="dot" style="background:${c}" data-bcolor="${f.type}" data-c="${c}" aria-pressed="${c === it.color}" aria-label="Color ${c}"></button>`).join('')}</div>` : ''}
@@ -855,8 +856,8 @@
       const t = coTotals();
       const freeShip = co.method === 'delivery' && t.shippingKnown && t.shipping === 0;
       const zonesOk = state.zones.length > 0;
-      const wd = d => d.toLocaleDateString('es', { weekday: 'short' }).replace('.', '');
-      const mo = d => d.toLocaleDateString('es', { month: 'short' }).replace('.', '');
+      const wd = d => d.toLocaleDateString(LOC(), { weekday: 'short' }).replace('.', '');
+      const mo = d => d.toLocaleDateString(LOC(), { month: 'short' }).replace('.', '');
       return `
       <h2 class="co-title">¿Cuándo y dónde?</h2>
       <p class="co-sub">Entregamos de lunes a sábado. Los domingos el taller descansa.</p>
@@ -990,7 +991,7 @@
     const g = $('#giftCard'); if (!g) return;
     g.className = 'gift-card gift-card--' + co.cardStyle;
     $('#msgCount') && ($('#msgCount').textContent = `${co.message.length}/220`);
-    g.innerHTML = `<span class="gift-card__logo">${esc(C.storeName)}</span><p class="gift-card__msg">${esc(co.message || 'Tu mensaje aparece acá…')}</p><p class="gift-card__sign">${co.anon ? 'Alguien que te quiere' : esc(co.sign || (co.name ? 'De ' + co.name.split(' ')[0] : 'Tu firma'))}</p>`;
+    g.innerHTML = `<span class="gift-card__logo">${esc(C.storeName)}</span><p class="gift-card__msg">${co.message ? `<span data-no-i18n>${esc(co.message)}</span>` : 'Tu mensaje aparece acá…'}</p><p class="gift-card__sign">${co.anon ? 'Alguien que te quiere' : co.sign ? `<span data-no-i18n>${esc(co.sign)}</span>` : co.name ? `<span>De</span> <span data-no-i18n>${esc(co.name.split(' ')[0])}</span>` : 'Tu firma'}</p>`;
   }
 
   function validate() {
@@ -1063,7 +1064,7 @@
 
   function whenText() {
     const day = deliveryDays().find(d => d.iso === co.date);
-    const when = day ? (day.today ? 'Hoy' : day.d.toLocaleDateString('es', { weekday: 'long', day: 'numeric', month: 'long' })) : (co.date || '');
+    const when = day ? (day.today ? 'Hoy' : day.d.toLocaleDateString(LOC(), { weekday: 'long', day: 'numeric', month: 'long' })) : (co.date || '');
     return co.method === 'pickup' ? `${when}, retiro en el local` : `${when}, ${co.slot || ''}`;
   }
 
@@ -1234,12 +1235,27 @@
     }
   }
 
+  /* ---------- Idioma ---------- */
+  function initLang() {
+    const sel = $('#langSel');
+    if (!sel || !window.FL_I18N) { if (sel) sel.closest('.lang').hidden = true; return; }
+    sel.value = window.FL_I18N.lang;
+    sel.addEventListener('change', () => window.FL_I18N.setLang(sel.value));
+    // Lo que muestra fechas se vuelve a dibujar en el idioma nuevo
+    document.addEventListener('fl:lang', () => {
+      sel.value = window.FL_I18N.lang;
+      renderCutoff();
+      if (!$('#checkout').hidden && co.step <= 3) renderCheckout();
+    });
+  }
+
   /* ---------- Inicio ---------- */
   $('#cartBtn').addEventListener('click', () => openDrawer('cart'));
   $('#wishBtn').addEventListener('click', () => openDrawer('wishlist'));
   $('#menuBtn').addEventListener('click', () => openDrawer('mobileNav'));
 
   hydrateIcons();
+  initLang();
   initTheme();
   initAnnounce();
   renderCutoff(); setInterval(renderCutoff, 30000);

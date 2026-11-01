@@ -4,7 +4,7 @@ Todo funciona con dos piezas:
 
 | Qué | Para qué |
 |---|---|
-| **Google Sheets + script** (cuenta de Google de FlorLatte) | Productos, precios, stock, fotos y pedidos. El script también crea los pagos de Mercado Pago, recibe la confirmación, descuenta el stock y manda los emails. |
+| **Google Sheets + script** (cuenta de Google de FlorLatte) | Productos, precios, stock, fotos, zonas de envío y pedidos. El script también crea los pagos de Mercado Pago (con el envío incluido), recibe la confirmación, descuenta el stock y manda los emails. |
 | **Netlify** | Publica la página web. Se sube arrastrando la carpeta: no hace falta GitHub. |
 
 ---
@@ -53,6 +53,14 @@ Para actualizar la web más adelante: en el sitio, **Deploys** → arrastrá de 
 4. Borrá las filas de prueba de **Pedidos** y corregí el stock.
 
 ---
+
+## Envíos por barrio (hoja "Envios")
+
+Cada fila es una zona: `zona` (ej. Zona E), `barrios` (separados por coma), `precio` y `activo` (sí/no). El cliente elige su barrio en el checkout y se suma el precio de la zona; si la entrega es para el mismo día se suman $20 (`sameDayExtra` en `floreria/js/data.js` y en el bloque `TIENDA` del script). Para dejar de enviar a una zona, poné `no` en `activo`. Si un barrio no está en la lista, el cliente puede elegir **Retiro en el local** o escribir por WhatsApp.
+
+## Idiomas
+
+La web tiene selector **ES / EN / PT** arriba a la derecha. Arranca en el idioma del navegador del visitante (si no es inglés ni portugués, en español). Las traducciones están en `floreria/js/i18n.js`: los productos del catálogo inicial ya están traducidos; un producto nuevo cargado en la planilla se muestra con el nombre en español en los tres idiomas, salvo que se agregue su traducción a ese archivo.
 
 ## El día a día
 
