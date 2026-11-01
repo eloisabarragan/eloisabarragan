@@ -10,10 +10,23 @@ const DATA = {
     tagline: 'Donde laten las flores',
     currency: 'UYU',
     locale: 'es-UY',
-    freeShippingFrom: 3500,
-    shipping: { standard: 290, express: 490, pickup: 0 },
+    freeShippingFrom: 0,            // envío gratis desde este monto (0 = no hay envío gratis)
+    sameDayExtra: 20,               // recargo si la entrega es en el día
+    // Zonas de envío de respaldo. Las que valen son las de la hoja "Envios" de la planilla.
+    zones: [
+      { name: "Zona A", price: 260, barrios: ["Casabó", "Pajas Blancas", "La Paloma", "Paso de la Arena", "Punta Espinillo", "Santiago Vázquez", "Tres Ombúes", "Victoria", "Cerro", "Villa del Cerro", "Melilla"] },
+      { name: "Zona B", price: 220, barrios: ["Colón", "Abayubá", "Cuchilla Pereyra", "Conciliación", "Lezica", "Peñarol"] },
+      { name: "Zona C", price: 260, barrios: ["Manga", "Toledo Chico", "Villa García", "Punta de Rieles", "Piedras Blancas"] },
+      { name: "Zona D", price: 220, barrios: ["Barras de Carrasco", "Carrasco", "Carrasco Norte", "Punta Gorda"] },
+      { name: "Zona E", price: 150, barrios: ["Buceo", "Pocitos Nuevo", "Pocitos", "Punta Carretas", "Malvín", "Malvín Norte", "Parque Batlle", "Villa Dolores"] },
+      { name: "Zona F", price: 170, barrios: ["Barrio Sur", "Centro", "Ciudad Vieja", "Cordón", "Palermo", "Parque Rodó", "Villa Biarritz"] },
+      { name: "Zona G", price: 180, barrios: ["Tres Cruces", "Goes", "La Blanqueada", "Jacinto Vera", "Reducto", "La Comercial", "Prado", "Paso Molino", "La Teja", "Capurro", "Aires Puros", "Sayago", "Belvedere"] },
+      { name: "Zona H", price: 200, barrios: ["Atahualpa", "Brazo Oriental", "Casavalle", "Las Acacias", "Cerrito de la Victoria", "Villa Española"] },
+      { name: "Zona I", price: 200, barrios: ["Jardines del Hipódromo", "Maroñas", "Curva de Maroñas", "Flor de Maroñas", "Unión"] },
+      { name: "Zona J", price: 340, barrios: ["La Paz", "Las Piedras", "Pando", "Ciudad de la Costa"] }
+    ],
     sameDayCutoffHour: 16,          // pedidos antes de esta hora se entregan hoy
-    whatsapp: '',                   // número con código de país, ej. '+598 99 123 456' (vacío = se oculta el botón)
+    whatsapp: '+598 97 204 598',    // número con código de país (vacío = se oculta el botón)
     email: '',                      // opcional
     instagram: 'florlatte.uy',
     address: 'Av. Instrucciones del Año XVII 472, Las Piedras',
@@ -215,8 +228,8 @@ const DATA = {
 
   faqs: [
     { q: '¿Hacen ramos de novia?', a: 'Sí, es una de nuestras especialidades. Escribinos con al menos 3 semanas de anticipación: coordinamos una charla para conocer tu vestido, tu paleta y tu estilo, y diseñamos el ramo a medida. También hacemos boutonnieres y decoración floral.' },
-    { q: '¿Hasta qué hora puedo pedir para que llegue hoy?', a: 'Los pedidos confirmados antes de las 16:00 se entregan el mismo día, de lunes a sábado. Con Envío Express llega en menos de 2 horas.' },
-    { q: '¿Cuánto cuesta el envío?', a: 'El envío estándar cuesta $290 y es gratis en compras desde $3.500. El Envío Express cuesta $490. También podés retirar sin costo en nuestro local.' },
+    { q: '¿Hasta qué hora puedo pedir para que llegue hoy?', a: 'Los pedidos confirmados antes de las 16:00 se entregan el mismo día, de lunes a sábado, según disponibilidad.' },
+    { q: '¿Cuánto cuesta el envío?', a: 'Depende del barrio: lo elegís en el checkout y ves el costo antes de pagar. Si la entrega es en el día se suman $20. También podés retirar sin costo en nuestro local.' },
     { q: '¿Puedo elegir la fecha y el horario de entrega?', a: 'Sí. En el checkout elegís el día (hasta 10 días adelante) y una franja horaria de 3 horas.' },
     { q: '¿Las flores pueden ser distintas a la foto?', a: 'Trabajamos con flor fresca de estación. Si alguna variedad no está disponible la reemplazamos por otra de igual o mayor valor, respetando la paleta.' },
     { q: '¿Qué pasa si el destinatario no está?', a: 'Te avisamos por WhatsApp y coordinamos una segunda entrega sin costo, o lo dejamos con portería si nos autorizás.' },

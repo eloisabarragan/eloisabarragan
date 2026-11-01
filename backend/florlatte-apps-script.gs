@@ -4,6 +4,7 @@
  * Qué hace:
  *  - Hoja "Productos": la tienda muestra lo que hay acá (agregar, sacar, precios, stock y fotos).
  *  - Hoja "Pedidos": cada compra queda registrada con los datos del cliente y el estado del pago.
+ *  - Hoja "Envios": zonas de envío y su precio (se suma al total que se cobra).
  *  - Crea el pago en Mercado Pago (Checkout Pro) con el precio calculado acá, nunca el del navegador.
  *  - Cuando Mercado Pago aprueba un pago: descuenta el stock y manda un email a la florería
  *    y otro al cliente. Se procesa una sola vez aunque el aviso llegue repetido.
@@ -13,6 +14,8 @@
 
 const HOJA_PRODUCTOS = 'Productos';
 const HOJA_PEDIDOS = 'Pedidos';
+const HOJA_ENVIOS = 'Envios';
+const COL_ENVIOS = ['zona', 'barrios', 'precio', 'activo'];
 const COL_PRODUCTOS = ['id', 'nombre', 'categoria', 'precio', 'precio_anterior', 'stock', 'activo', 'descripcion', 'composicion', 'ocasiones', 'color', 'etiqueta', 'entrega_hoy', 'foto', 'orden'];
 const COL_PEDIDOS = ['id', 'fecha', 'estado', 'pago', 'total', 'cliente', 'email', 'telefono', 'destinatario', 'tel_destinatario', 'tipo_entrega', 'fecha_entrega', 'franja', 'direccion', 'barrio', 'indicaciones', 'dedicatoria', 'firma', 'anonimo', 'productos', 'subtotal', 'descuento', 'cupon', 'envio', 'mp_pago_id', 'actualizado', 'items_json'];
 const NOMBRE_TIENDA = 'FlorLatte';
@@ -51,6 +54,15 @@ function instalar() {
   if (ped.getLastRow() === 0) ped.appendRow(COL_PEDIDOS);
   formatear(ped, COL_PEDIDOS.length);
   ped.hideColumns(COL_PEDIDOS.indexOf('items_json') + 1);
+
+  let env = ss.getSheetByName(HOJA_ENVIOS);
+  if (!env) env = ss.insertSheet(HOJA_ENVIOS);
+  if (env.getLastRow() === 0) {
+    env.appendRow(COL_ENVIOS);
+    if (SEMILLA_ENVIOS.length) env.getRange(2, 1, SEMILLA_ENVIOS.length, COL_ENVIOS.length).setValues(SEMILLA_ENVIOS);
+  }
+  formatear(env, COL_ENVIOS.length);
+  env.getRange(2, COL_ENVIOS.indexOf('activo') + 1, 200, 1).setDataValidation(siNo);
 
   console.log('Listo. Los avisos de compra llegan a: ' + props.getProperty('EMAIL_AVISOS'));
 }
@@ -93,7 +105,7 @@ function ahora() { return Utilities.formatDate(new Date(), 'America/Montevideo',
 function doGet(e) {
   try {
     const q = (e && e.parameter) || {};
-    if (q.action === 'products') return salida({ products: leerProductos() });
+    if (q.action === 'products') return salida({ products: leerProductos(), zones: leerZonas() });
     if (q.action === 'order') {
       if (q.payment_id && /^\d+$/.test(q.payment_id)) { try { syncPago(q.payment_id); } catch (err) { console.error(err); } }
       return salida(estadoPedido(q.id));
@@ -282,6 +294,33 @@ function buscarId(lista, valor) {
   return hit ? hit.id : null;
 }
 
+// Zonas de envío activas: [{ name, price, barrios: [...] }]
+function leerZonas() {
+  const h = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(HOJA_ENVIOS);
+  if (!h) return [];
+  return leerFilas(h).filas.map(function (f) {
+    return {
+      name: String(f.zona === undefined ? '' : f.zona).trim(),
+      barrios: String(f.barrios === undefined ? '' : f.barrios).split(/[,;\n]/).map(function (b) { return b.trim(); }).filter(String),
+      price: aNumero(f.precio),
+      active: !/^(no|false|0)$/.test(normTxt(f.activo))
+    };
+  }).filter(function (z) { return z.name && z.price !== null && z.price >= 0 && z.active; })
+    .map(function (z) { return { name: z.name, price: z.price, barrios: z.barrios }; });
+}
+
+// Busca la zona por barrio (o por nombre de zona). Devuelve { zona, barrio } o null.
+function buscarZona(zonas, valor) {
+  const v = normTxt(valor);
+  if (!v) return null;
+  for (let i = 0; i < zonas.length; i++) {
+    const b = zonas[i].barrios.filter(function (x) { return normTxt(x) === v; })[0];
+    if (b) return { zona: zonas[i], barrio: b };
+    if (normTxt(zonas[i].name) === v) return { zona: zonas[i], barrio: '' };
+  }
+  return null;
+}
+
 // Productos activos con precio, tal como los ve la tienda
 function catalogo() {
   return leerProductos().map(function (r) {
@@ -301,7 +340,7 @@ function redondear10(v) { return Math.round(v / 10) * 10; }
 function entero(v, min, max) { return Math.max(min, Math.min(max, Math.floor(Number(v) || 0))); }
 
 // Mismas reglas que la web (floreria/js/app.js → totals()). Los precios salen de la planilla.
-function calcular(items, cupon, metodo, cat) {
+function calcular(items, cupon, metodo, zona, cat, zonas, fecha) {
   const C = TIENDA.config, errores = [], lineas = [], uso = {};
   if (!Array.isArray(items) || !items.length) errores.push('El carrito está vacío.');
   (items || []).forEach(function (it) {
@@ -343,14 +382,16 @@ function calcular(items, cupon, metodo, cat) {
   const codigo = String(cupon || '').trim().toUpperCase();
   const cp = codigo && C.coupons[codigo] ? C.coupons[codigo] : null;
   const descuento = cp && cp.type === 'percent' ? redondear10(subtotal * cp.value / 100) : 0;
-  const m = ['standard', 'express', 'pickup'].indexOf(metodo) >= 0 ? metodo : 'standard';
-  let envio = 0;
-  if (lineas.some(function (l) { return l.kind !== 'plan'; })) {
-    const gratis = subtotal - descuento >= C.freeShippingFrom || (cp && cp.type === 'shipping');
-    if (m === 'standard') envio = gratis ? 0 : C.shipping.standard;
-    else if (m === 'express') envio = C.shipping.express - (gratis ? C.shipping.standard : 0);
+  const m = metodo === 'pickup' ? 'pickup' : 'delivery';
+  let envio = 0, zonaOk = null;
+  if (m === 'delivery' && lineas.some(function (l) { return l.kind !== 'plan'; })) {
+    zonaOk = buscarZona(zonas || [], zona);
+    if (!zonaOk) errores.push('Elegí un barrio de envío válido.');
+    const gratis = (C.freeShippingFrom > 0 && subtotal - descuento >= C.freeShippingFrom) || (cp && cp.type === 'shipping');
+    const hoy = Utilities.formatDate(new Date(), 'America/Montevideo', 'yyyy-MM-dd');
+    envio = gratis || !zonaOk ? 0 : zonaOk.zona.price + (fecha === hoy ? (C.sameDayExtra || 0) : 0);
   }
-  return { lineas: lineas, subtotal: subtotal, descuento: descuento, envio: envio, total: Math.max(0, subtotal - descuento + envio), cupon: cp ? codigo : '', metodo: m, errores: errores };
+  return { lineas: lineas, subtotal: subtotal, descuento: descuento, envio: envio, total: Math.max(0, subtotal - descuento + envio), cupon: cp ? codigo : '', metodo: m, zona: zonaOk ? (zonaOk.barrio ? zonaOk.barrio + ' (' + zonaOk.zona.name + ')' : zonaOk.zona.name) : '', errores: errores };
 }
 
 function txt(v, max) { return String(v === undefined || v === null ? '' : v).replace(/[\u0000-\u001f\u007f]/g, ' ').trim().slice(0, max || 200); }
@@ -365,8 +406,8 @@ function nuevoPedido(b) {
   if (txt(c.phone).replace(/\D/g, '').length < 8) faltan.push('un celular de al menos 8 dígitos');
   if (!txt(c.rname)) faltan.push('el nombre de quien recibe');
   if (!/^\d{4}-\d{2}-\d{2}$/.test(txt(d.date))) faltan.push('el día de entrega');
-  if (d.method !== 'pickup' && (!txt(d.address) || !txt(d.barrio))) faltan.push('la dirección de entrega');
-  if (d.method === 'standard' && !txt(d.slot)) faltan.push('la franja horaria');
+  if (d.method !== 'pickup' && !txt(d.address)) faltan.push('la dirección de entrega');
+  if (d.method !== 'pickup' && !txt(d.slot)) faltan.push('la franja horaria');
   if (faltan.length) return { error: 'Falta completar ' + faltan.join(', ') + '.' };
 
   // Freno simple contra pedidos repetidos en masa: hasta 8 por email cada 10 minutos
@@ -378,11 +419,11 @@ function nuevoPedido(b) {
   const tokenMP = PropertiesService.getScriptProperties().getProperty('MP_ACCESS_TOKEN');
   if (pago === 'mercadopago' && !tokenMP) return { error: 'El pago con Mercado Pago todavía no está activado. Elegí transferencia o escribinos.' };
 
-  const r = calcular(b.items, b.coupon, d.method, catalogo());
+  const r = calcular(b.items, b.coupon, d.method, d.zone, catalogo(), leerZonas(), txt(d.date, 10));
   if (r.errores.length) return { error: r.errores.join(' '), code: 'stock' };
 
   const C = TIENDA.config;
-  const etiquetaEntrega = { standard: 'Envío a domicilio', express: 'Express (menos de 2 h)', pickup: 'Retiro en el local' }[r.metodo];
+  const etiquetaEntrega = r.metodo === 'pickup' ? 'Retiro en el local' : 'Envío a domicilio';
   const o = {
     id: 'FL-' + Date.now().toString(36).toUpperCase().slice(-4) + Utilities.getUuid().replace(/-/g, '').slice(0, 4).toUpperCase(),
     fecha: ahora(),
@@ -393,9 +434,9 @@ function nuevoPedido(b) {
     destinatario: txt(c.rname), tel_destinatario: txt(c.rphone, 40),
     tipo_entrega: etiquetaEntrega,
     fecha_entrega: txt(d.date, 10),
-    franja: r.metodo === 'standard' ? txt(d.slot, 20) : r.metodo === 'express' ? 'Menos de 2 h' : '',
+    franja: r.metodo === 'pickup' ? '' : txt(d.slot, 20),
     direccion: r.metodo === 'pickup' ? '' : txt(d.address),
-    barrio: r.metodo === 'pickup' ? '' : txt(d.barrio, 80),
+    barrio: r.zona,
     indicaciones: txtLargo(d.notes, 300),
     dedicatoria: txtLargo(card.message, 240),
     firma: card.anon ? '(anónimo)' : txt(card.sign, 80),
@@ -494,7 +535,7 @@ function avisarTienda(p, asunto) {
     filaEmail('Cliente', p.cliente) + filaEmail('Email', p.email) + filaEmail('Teléfono', p.telefono) +
     filaEmail('Recibe', p.destinatario) + filaEmail('Tel. de quien recibe', p.tel_destinatario) +
     filaEmail('Entrega', p.tipo_entrega) + filaEmail('Día', p.fecha_entrega) + filaEmail('Franja', p.franja) +
-    filaEmail('Dirección', [p.direccion, p.barrio].filter(String).join(', ')) + filaEmail('Indicaciones', p.indicaciones) +
+    filaEmail('Dirección', p.direccion) + filaEmail('Zona', p.barrio) + filaEmail('Indicaciones', p.indicaciones) +
     filaEmail('Dedicatoria', p.dedicatoria) + filaEmail('Firma', p.firma) +
     filaEmail('Productos', p.productos) + filaEmail('Subtotal', plata(p.subtotal)) +
     (Number(p.descuento) ? filaEmail('Descuento', '−' + plata(p.descuento) + (p.cupon ? ' (' + p.cupon + ')' : '')) : '') +
@@ -513,7 +554,7 @@ function confirmarCliente(p) {
   const html = plantilla('¡Gracias, ' + String(p.cliente).split(' ')[0] + '!', intro,
     filaEmail('Pedido', p.id) + filaEmail('Productos', p.productos) + filaEmail('Total', plata(p.total)) +
     filaEmail('Entrega', p.tipo_entrega) + filaEmail('Día', p.fecha_entrega) + filaEmail('Franja', p.franja) +
-    filaEmail('Para', p.destinatario) + filaEmail('Dirección', [p.direccion, p.barrio].filter(String).join(', ')));
+    filaEmail('Para', p.destinatario) + filaEmail('Dirección', [p.direccion, p.barrio].filter(String).join(' · ')));
   const para = PropertiesService.getScriptProperties().getProperty('EMAIL_AVISOS');
   const opts = { to: p.email, subject: 'Tu pedido ' + p.id + ' en ' + NOMBRE_TIENDA, htmlBody: html, name: NOMBRE_TIENDA };
   if (para) opts.replyTo = para;
@@ -526,12 +567,7 @@ function confirmarCliente(p) {
 const TIENDA = {
   "config": {
     "currency": "UYU",
-    "freeShippingFrom": 3500,
-    "shipping": {
-      "standard": 290,
-      "express": 490,
-      "pickup": 0
-    },
+    "freeShippingFrom": 0,
     "coupons": {
       "LATTE10": {
         "type": "percent",
@@ -553,7 +589,8 @@ const TIENDA = {
       "name": "A completar",
       "account": "A completar",
       "holder": "FlorLatte Plantas y Flores"
-    }
+    },
+    "sameDayExtra": 20
   },
   "sizes": [
     {
@@ -717,6 +754,22 @@ const TIENDA = {
   ]
 };
 // TIENDA_FIN
+
+/* ---------------- Zonas de envío iniciales (zona, precio, activo) ---------------- */
+// ENVIOS_INICIO
+const SEMILLA_ENVIOS = [
+  ["Zona A", "Casabó, Pajas Blancas, La Paloma, Paso de la Arena, Punta Espinillo, Santiago Vázquez, Tres Ombúes, Victoria, Cerro, Villa del Cerro, Melilla", 260, "sí"],
+  ["Zona B", "Colón, Abayubá, Cuchilla Pereyra, Conciliación, Lezica, Peñarol", 220, "sí"],
+  ["Zona C", "Manga, Toledo Chico, Villa García, Punta de Rieles, Piedras Blancas", 260, "sí"],
+  ["Zona D", "Barras de Carrasco, Carrasco, Carrasco Norte, Punta Gorda", 220, "sí"],
+  ["Zona E", "Buceo, Pocitos Nuevo, Pocitos, Punta Carretas, Malvín, Malvín Norte, Parque Batlle, Villa Dolores", 150, "sí"],
+  ["Zona F", "Barrio Sur, Centro, Ciudad Vieja, Cordón, Palermo, Parque Rodó, Villa Biarritz", 170, "sí"],
+  ["Zona G", "Tres Cruces, Goes, La Blanqueada, Jacinto Vera, Reducto, La Comercial, Prado, Paso Molino, La Teja, Capurro, Aires Puros, Sayago, Belvedere", 180, "sí"],
+  ["Zona H", "Atahualpa, Brazo Oriental, Casavalle, Las Acacias, Cerrito de la Victoria, Villa Española", 200, "sí"],
+  ["Zona I", "Jardines del Hipódromo, Maroñas, Curva de Maroñas, Flor de Maroñas, Unión", 200, "sí"],
+  ["Zona J", "La Paz, Las Piedras, Pando, Ciudad de la Costa", 340, "sí"]
+];
+// ENVIOS_FIN
 
 /* ---------------- Productos iniciales (los carga "Instalar") ---------------- */
 // SEMILLA_INICIO

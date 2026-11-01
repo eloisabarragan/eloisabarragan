@@ -99,6 +99,7 @@
     wish: store.get('wish', []),
     recent: store.get('recent', []),
     coupon: store.get('coupon', null),
+    zones: (C.zones || []).slice(),
     f: { cat: 'all', occasions: new Set(), colors: new Set(), maxPrice: 6000, sameDay: false, offer: false, sort: 'featured' }
   };
   const LOCAL = D.products.slice(); // catálogo de respaldo (ilustraciones de adorno)
@@ -170,7 +171,7 @@
   /* ---------- Anuncios, contador de entrega ---------- */
   function initAnnounce() {
     const msgs = [
-      `Envío gratis en compras desde <b>${money(C.freeShippingFrom)}</b>`,
+      C.freeShippingFrom > 0 ? `Envío gratis en compras desde <b>${money(C.freeShippingFrom)}</b>` : 'Envíos a domicilio o <b>retiro sin costo</b> en el atelier',
       'Pedí antes de las 16:00 y <b>llega hoy</b>',
       'Usá <b>LATTE10</b> y obtené 10% off',
       'Tarjeta con dedicatoria <b>de regalo</b> en cada pedido'
@@ -412,19 +413,29 @@
     addToCart(productItem(p));
     toast('Agregado al carrito', p.name, { art: artFor(p), action: 'Ver carrito', onAction: () => openDrawer('cart') });
   }
-  function totals(method = 'standard') {
+  /* Envío: a domicilio con precio por zona (hoja "Envios" de la planilla) o retiro sin costo */
+  // El cliente elige su barrio; cada barrio pertenece a una zona con su precio
+  const zoneByName = name => { const v = normTxt(name); return v ? state.zones.find(z => (z.barrios || []).some(b => normTxt(b) === v) || normTxt(z.name) === v) : null; };
+  const barrioOptions = () => {
+    const seen = new Set(), out = [];
+    state.zones.forEach(z => ((z.barrios && z.barrios.length) ? z.barrios : [z.name]).forEach(b => { const k = normTxt(b); if (k && !seen.has(k)) { seen.add(k); out.push({ name: b, zone: z }); } }));
+    return out.sort((a, b) => a.name.localeCompare(b.name, 'es'));
+  };
+  const isTodayIso = iso => { const d = new Date(); d.setHours(0, 0, 0, 0); return iso === d.toISOString().slice(0, 10); };
+  const freeShipping = (subtotal, discount, cp) => (C.freeShippingFrom > 0 && subtotal - discount >= C.freeShippingFrom) || (cp && cp.type === 'shipping');
+  function totals(method = 'delivery', zone = null, date = null) {
     const subtotal = state.cart.reduce((s, i) => s + i.unit * i.qty, 0);
     const cp = state.coupon && C.coupons[state.coupon];
     const discount = cp && cp.type === 'percent' ? round10(subtotal * cp.value / 100) : 0;
     const needsShipping = state.cart.some(i => i.kind !== 'plan');
-    let shipping = 0;
-    if (needsShipping) {
-      const freeStd = subtotal - discount >= C.freeShippingFrom || (cp && cp.type === 'shipping');
-      if (method === 'standard') shipping = freeStd ? 0 : C.shipping.standard;
-      else if (method === 'express') shipping = C.shipping.express - (freeStd ? C.shipping.standard : 0);
-      else shipping = 0;
+    const z = zone ? zoneByName(zone) : null;
+    let shipping = 0, shippingKnown = true;
+    if (needsShipping && method === 'delivery') {
+      if (freeShipping(subtotal, discount, cp)) shipping = 0;
+      else if (z) shipping = z.price + (date && isTodayIso(date) ? (C.sameDayExtra || 0) : 0);
+      else shippingKnown = false;
     }
-    return { subtotal, discount, shipping, total: Math.max(0, subtotal - discount + shipping), count: state.cart.reduce((s, i) => s + i.qty, 0) };
+    return { subtotal, discount, shipping, shippingKnown, total: Math.max(0, subtotal - discount + shipping), count: state.cart.reduce((s, i) => s + i.qty, 0) };
   }
   function applyCoupon(code, msgEl) {
     code = (code || '').trim().toUpperCase();
@@ -455,7 +466,7 @@
     const t = totals();
     $('#cartHeadCount').textContent = t.count ? `(${t.count})` : '';
     const prog = $('#shipProgress');
-    if (state.cart.some(i => i.kind !== 'plan')) {
+    if (C.freeShippingFrom > 0 && state.cart.some(i => i.kind !== 'plan')) {
       const left = C.freeShippingFrom - (t.subtotal - t.discount);
       const pct = Math.min(100, (t.subtotal - t.discount) / C.freeShippingFrom * 100);
       prog.innerHTML = (left > 0 ? `Te faltan <b>${money(left)}</b> para el <b>envío gratis</b>` : `${icon('check')} ¡Tenés <b>envío gratis</b>!`) + `<div class="bar"><i style="width:${pct}%"></i></div>`;
@@ -482,7 +493,7 @@
       <div class="totals">
         <div><span>Subtotal</span><span>${money(t.subtotal)}</span></div>
         ${t.discount ? `<div class="discount"><span>Descuento</span><span>−${money(t.discount)}</span></div>` : ''}
-        <div><span>Envío estándar</span><span>${t.shipping ? money(t.shipping) : 'Gratis'}</span></div>
+        <div><span>Envío</span><span class="muted">Se calcula según tu barrio</span></div>
         <div class="grand"><span>Total</span><span>${money(t.total)}</span></div>
       </div>
       <button class="btn btn--primary btn--lg btn--block" id="goCheckout">${icon('lock')}Finalizar compra</button>`;
@@ -549,7 +560,7 @@
         </div>
         <div class="pm__acc">
           <details><summary>Cuidados ${icon('plus')}</summary><p>${isPlant ? 'Ubicala con luz indirecta y regá cuando el sustrato esté seco al tacto. Evitá el sol directo del mediodía.' : 'Cortá 2 cm de los tallos en diagonal, cambiá el agua cada dos días y alejá el ramo del sol directo y la fruta madura. Así dura hasta 10 días.'}</p></details>
-          <details><summary>Envío y entrega ${icon('plus')}</summary><p>Envío estándar ${money(C.shipping.standard)} (gratis desde ${money(C.freeShippingFrom)}). Express en menos de 2 horas por ${money(C.shipping.express)}. Retiro sin costo en ${esc(C.address)}.</p></details>
+          <details><summary>Envío y entrega ${icon('plus')}</summary><p>Envío a domicilio con costo según tu barrio: lo ves al elegirlo en el checkout, antes de pagar. Retiro sin costo en ${esc(C.address)}.</p></details>
           <details><summary>Garantía de frescura ${icon('plus')}</summary><p>Si algo no llega perfecto, mandanos una foto dentro de las 48 h y lo reponemos sin costo.</p></details>
         </div>
       </div>`;
@@ -773,9 +784,11 @@
 
   /* ---------- Checkout ---------- */
   const STEPS = ['Tus datos', 'Entrega', 'Dedicatoria', 'Pago'];
-  const co = Object.assign({ step: 0, name: '', email: '', phone: '', rname: '', rphone: '', method: 'standard', date: null, slot: null, address: '', barrio: '', notes: '', cardStyle: 'clasica', message: '', sign: '', anon: false, pay: 'mp' }, store.get('co', {}));
+  const co = Object.assign({ step: 0, name: '', email: '', phone: '', rname: '', rphone: '', method: 'delivery', zone: '', date: null, slot: null, address: '', notes: '', cardStyle: 'clasica', message: '', sign: '', anon: false, pay: 'mp' }, store.get('co', {}));
   co.step = 0;
   if (co.pay !== 'transfer') co.pay = 'mp';
+  if (co.method !== 'pickup') co.method = 'delivery';
+  const coTotals = () => totals(co.method, co.zone, co.date);
   // Abierta como archivo desde la computadora: el pago se simula para poder recorrer la tienda.
   const DEMO = location.protocol === 'file:';
   const API = C.sheetsUrl;
@@ -838,10 +851,10 @@
       const days = deliveryDays();
       if (!days.some(d => d.iso === co.date && !d.closed)) { co.date = (days.find(d => !d.closed) || {}).iso; co.slot = null; }
       const day = days.find(d => d.iso === co.date);
-      const expressOk = day && day.today && sameDayInfo().open;
-      if (co.method === 'express' && !expressOk) co.method = 'standard';
-      const t = totals(co.method);
-      const freeStd = totals('standard').shipping === 0;
+      if (co.zone && !zoneByName(co.zone)) co.zone = '';
+      const t = coTotals();
+      const freeShip = co.method === 'delivery' && t.shippingKnown && t.shipping === 0;
+      const zonesOk = state.zones.length > 0;
       const wd = d => d.toLocaleDateString('es', { weekday: 'short' }).replace('.', '');
       const mo = d => d.toLocaleDateString('es', { month: 'short' }).replace('.', '');
       return `
@@ -852,20 +865,24 @@
       </fieldset>
       <fieldset class="fieldset"><legend>Forma de entrega</legend>
         <div class="options">
-          <label class="option"><input type="radio" name="method" value="standard" ${co.method === 'standard' ? 'checked' : ''}><div><strong>Envío a domicilio</strong><span>En la franja horaria que elijas</span></div><b>${freeStd ? 'Gratis' : money(C.shipping.standard)}</b></label>
-          <label class="option"><input type="radio" name="method" value="express" ${co.method === 'express' ? 'checked' : ''} ${expressOk ? '' : 'disabled'}><div><strong>Express · menos de 2 horas</strong><span>${expressOk ? 'Solo para entregas de hoy' : 'Disponible solo para hoy antes de las ' + C.sameDayCutoffHour + ':00'}</span></div><b>${money(C.shipping.express - (freeStd ? C.shipping.standard : 0))}</b></label>
+          <label class="option"><input type="radio" name="method" value="delivery" ${co.method === 'delivery' ? 'checked' : ''} ${zonesOk ? '' : 'disabled'}><div><strong>Envío a domicilio</strong><span>${zonesOk ? 'El costo depende de tu barrio' + (C.sameDayExtra ? ` · entrega en el día +${money(C.sameDayExtra)}` : '') : 'Por ahora no tenemos envíos online: escribinos por WhatsApp'}</span></div><b>${co.method === 'delivery' && t.shippingKnown ? (t.shipping ? money(t.shipping) : 'Gratis') : ''}</b></label>
           <label class="option"><input type="radio" name="method" value="pickup" ${co.method === 'pickup' ? 'checked' : ''}><div><strong>Retiro en el local</strong><span>${esc(C.address)}</span></div><b>Gratis</b></label>
         </div>
       </fieldset>
-      ${co.method === 'standard' ? `<fieldset class="fieldset"><legend>Franja horaria</legend>
+      ${co.method === 'delivery' ? `<fieldset class="fieldset"><legend>Barrio de entrega</legend>
+        <div class="field"><label for="co-zone">¿En qué barrio entregamos?</label>
+          <select id="co-zone"><option value="">Elegí el barrio…</option>${barrioOptions().map(o => `<option value="${esc(o.name)}" ${normTxt(o.name) === normTxt(co.zone) ? 'selected' : ''}>${esc(o.name)} · ${freeShip ? 'Gratis' : money(o.zone.price)}</option>`).join('')}</select>
+          <span class="err">Elegí el barrio de entrega.</span><span class="hint">${C.sameDayExtra ? `Si la entrega es para hoy se suman ${money(C.sameDayExtra)}. ` : ''}¿Tu barrio no está? Escribinos por WhatsApp y lo coordinamos.</span></div>
+      </fieldset>
+      <fieldset class="fieldset"><legend>Franja horaria</legend>
         <div class="slots">${SLOTS.map(s => { const k = s.join('–'); const dis = slotDisabled(s, day); if (dis && co.slot === k) co.slot = null; return `<button type="button" class="slot" data-slot="${k}" aria-pressed="${co.slot === k}" ${dis ? 'disabled' : ''}>${k}</button>`; }).join('')}</div>
         <p class="coupon-msg err" id="slotErr" hidden>Elegí una franja horaria para continuar.</p>
       </fieldset>` : ''}
       ${co.method !== 'pickup' ? `<fieldset class="fieldset"><legend>Dirección</legend>
-        <div class="row row--3">${field('address', 'Calle y número', { ac: 'street-address', ph: 'Calle 1234, apto 2' })}${field('barrio', 'Barrio', { ph: 'Centro' })}<div></div></div>
+        ${field('address', 'Calle, número y apartamento', { ac: 'street-address', ph: 'Calle 1234, apto 2' })}
         ${field('notes', 'Indicaciones para el repartidor', { req: false, textarea: true, max: 200, ph: 'Timbre 301, dejar en portería si no está…' })}
       </fieldset>` : ''}
-      <p class="muted">Envío: <b>${t.shipping ? money(t.shipping) : 'Gratis'}</b></p>`;
+      <p class="muted">Envío: <b>${co.method === 'pickup' ? 'Gratis (retiro)' : t.shippingKnown ? (t.shipping ? money(t.shipping) : 'Gratis') : 'elegí tu barrio'}</b></p>`;
     }
 
     if (co.step === 2) {
@@ -905,7 +922,7 @@
   }
 
   function summaryHTML() {
-    const t = totals(co.method);
+    const t = coTotals();
     return `<aside class="summary">
       <h3>Tu pedido</h3>
       <div class="summary__items">${state.cart.map(i => `<div class="summary__item"><span class="mini__art">${itemArt(i)}<b>${i.qty}</b></span><div><strong>${esc(i.name)}</strong>${i.opts ? `<span>${esc(i.opts)}</span>` : ''}</div><span>${money(i.unit * i.qty)}</span></div>`).join('')}</div>
@@ -913,7 +930,7 @@
       <div class="totals">
         <div><span>Subtotal</span><span>${money(t.subtotal)}</span></div>
         ${t.discount ? `<div class="discount"><span>Descuento ${state.coupon}</span><span>−${money(t.discount)}</span></div>` : ''}
-        <div><span>Envío${co.method === 'express' ? ' express' : co.method === 'pickup' ? ' (retiro)' : ''}</span><span>${t.shipping ? money(t.shipping) : 'Gratis'}</span></div>
+        <div><span>Envío${co.method === 'pickup' ? ' (retiro)' : co.zone && t.shippingKnown ? ` · ${esc(co.zone)}` : ''}</span><span>${co.method === 'pickup' ? 'Gratis' : t.shippingKnown ? (t.shipping ? money(t.shipping) : 'Gratis') : 'Según barrio'}</span></div>
         <div class="grand"><span>Total</span><span>${money(t.total)}</span></div>
       </div>
       <p class="secure">${icon('lock')}Pago protegido · Garantía de frescura 7 días</p>
@@ -923,7 +940,7 @@
   function renderCheckout() {
     if (co.step > 3) return;
     $('#steps').innerHTML = STEPS.map((s, i) => `<li class="${i < co.step ? 'done' : i === co.step ? 'current' : ''}"><span>${s}</span></li>`).join('');
-    const t = totals(co.method);
+    const t = coTotals();
     $('#checkoutInner').innerHTML = `<form class="checkout__main" id="coForm" novalidate>
       ${stepHTML()}
       <div class="co-nav">
@@ -949,7 +966,10 @@
         const d = e.target.closest('[data-date]'); if (d) { co.date = d.dataset.date; renderCheckout(); return; }
         const s = e.target.closest('[data-slot]'); if (s) { co.slot = s.dataset.slot; $$('[data-slot]').forEach(b => b.setAttribute('aria-pressed', b === s)); $('#slotErr').hidden = true; saveCo(); }
       });
-      form.addEventListener('change', e => { if (e.target.name === 'method') { co.method = e.target.value; saveCo(); renderCheckout(); } });
+      form.addEventListener('change', e => {
+        if (e.target.name === 'method') { co.method = e.target.value; saveCo(); renderCheckout(); }
+        if (e.target.id === 'co-zone') { co.zone = e.target.value; saveCo(); renderCheckout(); }
+      });
     }
     if (co.step === 2) {
       paintGiftCard();
@@ -982,7 +1002,10 @@
       if (el.type === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)) return bad(el);
       if (el.id === 'co-phone' && v.replace(/\D/g, '').length < 8) return bad(el);
     });
-    if (co.step === 1 && co.method === 'standard' && !co.slot) { $('#slotErr').hidden = false; ok = false; }
+    if (co.step === 1 && co.method === 'delivery') {
+      if (!zoneByName(co.zone)) { const z = $('#co-zone'); z.closest('.field').classList.add('invalid'); if (ok) z.focus(); ok = false; }
+      if (!co.slot) { $('#slotErr').hidden = false; ok = false; }
+    }
     return ok;
   }
 
@@ -991,7 +1014,7 @@
       items: state.cart.map(i => ({ kind: i.kind, id: i.id, size: i.size, addons: i.addons, qty: i.qty, build: i.build })),
       coupon: state.coupon,
       customer: { name: co.name, email: co.email, phone: co.phone, rname: co.rname, rphone: co.rphone },
-      delivery: { method: co.method, date: co.date, slot: co.slot, address: co.address, barrio: co.barrio, notes: co.notes },
+      delivery: { method: co.method, zone: co.zone, date: co.date, slot: co.slot, address: co.address, notes: co.notes },
       card: { style: co.cardStyle, message: co.message, sign: co.sign, anon: co.anon },
       payment: co.pay
     };
@@ -1010,7 +1033,7 @@
     if (co.step < 3) { co.step++; saveCo(); renderCheckout(); $('#checkout').scrollTo({ top: 0, behavior: 'smooth' }); return; }
     if (DEMO) {
       processing('Procesando tu pago…', 'No cierres esta ventana.');
-      const total = totals(co.method).total;
+      const total = coTotals().total;
       setTimeout(() => showResult({ id: 'FL-DEMO', status: co.pay === 'transfer' ? 'esperando transferencia' : 'pagado', total }), 1500);
       return;
     }
@@ -1041,7 +1064,7 @@
   function whenText() {
     const day = deliveryDays().find(d => d.iso === co.date);
     const when = day ? (day.today ? 'Hoy' : day.d.toLocaleDateString('es', { weekday: 'long', day: 'numeric', month: 'long' })) : (co.date || '');
-    return co.method === 'express' ? 'Hoy, en menos de 2 horas' : co.method === 'pickup' ? `${when}, retiro en el local` : `${when}, ${co.slot || ''}`;
+    return co.method === 'pickup' ? `${when}, retiro en el local` : `${when}, ${co.slot || ''}`;
   }
 
   // Pantalla final según el estado del pedido (también al volver de Mercado Pago)
@@ -1072,7 +1095,7 @@
       ${failed ? '' : `<div class="success__box">
         <div><span>Para</span><span>${esc(co.rname)}</span></div>
         <div><span>Entrega</span><span>${esc(whenText())}</span></div>
-        ${co.method !== 'pickup' ? `<div><span>Dirección</span><span>${esc(co.address)}, ${esc(co.barrio)}</span></div>` : ''}
+        ${co.method !== 'pickup' ? `<div><span>Dirección</span><span>${esc(co.address)} · ${esc(co.zone)}</span></div>` : ''}
         <div><span>Dedicatoria</span><span>${co.message ? '“' + esc(co.message) + '”' : 'Sin mensaje'}</span></div>
         <div><span>Total</span><span><b>${money(o.total)}</b></span></div>
       </div>`}
@@ -1194,7 +1217,8 @@
   async function loadRemoteProducts() {
     if (DEMO || !API) return;
     try {
-      const { products: rows } = await planilla({ action: 'products' });
+      const { products: rows, zones } = await planilla({ action: 'products' });
+      if (Array.isArray(zones) && zones.length) state.zones = zones.filter(z => z && z.name && z.price >= 0);
       const products = (rows || []).map(normalizeRow).filter(p => p.id && p.name && p.price > 0 && p.active).sort((a, b) => a.order - b.order);
       if (!products.length) return;
       D.products = products.map(p => {
