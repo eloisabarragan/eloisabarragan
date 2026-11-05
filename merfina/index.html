@@ -16,16 +16,20 @@
   --blush:#F1DFDD;
   --on-gold:#FFFDF9;
   --shade:rgba(34,28,23,.42);
+  --card:#EAE5DB;
+  --card-line:#A3804F;
+  --wa:#25D366;
+  --err:#B3261E;
   --display:"Cormorant Garamond","Cormorant",Garamond,"Times New Roman",serif;
   --body:"Jost","Avenir Next","Segoe UI",Helvetica,Arial,sans-serif;
   --ease:cubic-bezier(.2,.7,.2,1);
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
   --paper:#15110E;--paper-2:#1E1915;--ink:#F2EBE2;--muted:#ADA092;--line:#352D26;
-  --gold:#C9A673;--gold-ink:#D8B886;--blush:#33282A;--on-gold:#15110E;--shade:rgba(0,0,0,.6);color-scheme:dark}}
+  --gold:#C9A673;--gold-ink:#D8B886;--blush:#33282A;--on-gold:#15110E;--shade:rgba(0,0,0,.6);--err:#FF8A80;color-scheme:dark}}
 :root[data-theme="dark"]{
   --paper:#15110E;--paper-2:#1E1915;--ink:#F2EBE2;--muted:#ADA092;--line:#352D26;
-  --gold:#C9A673;--gold-ink:#D8B886;--blush:#33282A;--on-gold:#15110E;--shade:rgba(0,0,0,.6);color-scheme:dark}
+  --gold:#C9A673;--gold-ink:#D8B886;--blush:#33282A;--on-gold:#15110E;--shade:rgba(0,0,0,.6);--err:#FF8A80;color-scheme:dark}
 
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -159,10 +163,9 @@ section{scroll-margin-top:90px}
 .add{align-self:flex-start;font-size:.68rem;letter-spacing:.22em;text-transform:uppercase;border-bottom:1px solid var(--gold);padding-bottom:3px;transition:color .25s}
 .add:hover{color:var(--gold-ink)}
 .gift-ph{position:absolute;inset:0;display:grid;place-items:center;background:radial-gradient(circle at 30% 20%,var(--blush),var(--paper-2) 70%)}
-.gift-card{width:72%;aspect-ratio:1.6;background:var(--ink);color:var(--paper);display:flex;flex-direction:column;justify-content:space-between;padding:8% 9%;box-shadow:0 24px 40px -22px var(--shade);transform:rotate(-6deg);transition:transform .6s var(--ease)}
-.card .ph:hover .gift-card{transform:rotate(-2deg) scale(1.03)}
-.gift-card img{width:28%;filter:brightness(1.25)}
-.gift-card span{font-family:var(--display);font-size:clamp(.8rem,1.6vw,1.1rem);letter-spacing:.3em}
+.gift-card{width:74%;aspect-ratio:1.2;background:linear-gradient(var(--card-line),var(--card-line)) top 8% center/86% 1px no-repeat,linear-gradient(var(--card-line),var(--card-line)) bottom 8% center/86% 1px no-repeat,var(--card);display:grid;place-items:center;box-shadow:0 24px 40px -22px var(--shade);transform:rotate(-5deg);transition:transform .6s var(--ease)}
+.card .ph:hover .gift-card{transform:rotate(-1deg) scale(1.03)}
+.gift-card img,.card .ph .gift-card img{position:static;inset:auto;width:66%;height:auto;object-fit:contain;transform:none}
 
 /* Story */
 .story{background:var(--blush)}
@@ -175,7 +178,7 @@ section{scroll-margin-top:90px}
 .story-copy h2 em{color:var(--gold-ink)}
 .story-copy p{margin:1.1em 0}
 .story-copy .pull{font-family:var(--display);font-size:clamp(1.4rem,2.4vw,1.9rem);line-height:1.3;font-style:italic;margin:1.4em 0}
-.sign{font-family:var(--display);font-style:italic;font-size:2.6rem;color:var(--gold-ink);line-height:1;margin-top:.4em}
+.sign{font-family:var(--display);font-style:italic;font-size:1.6rem;color:var(--gold-ink);line-height:1;margin-top:.4em}
 .values{display:grid;gap:24px;margin-top:2.4em;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));border-top:1px solid color-mix(in srgb,var(--ink) 18%,transparent);padding-top:1.6em}
 .values b{display:block;font-family:var(--display);font-size:1.3rem;font-weight:500}
 .values span{font-size:.9rem;color:var(--muted)}
@@ -237,16 +240,94 @@ details p{margin:0 0 1.3em;color:var(--muted);max-width:60ch}
 .news .ok{color:var(--gold-ink);font-family:var(--display);font-style:italic;font-size:1.3rem;min-height:1.4em}
 
 /* Footer */
-footer{border-top:1px solid var(--line);padding-block:56px 32px}
-.foot{display:grid;gap:36px;grid-template-columns:repeat(auto-fit,minmax(180px,1fr))}
-.foot h4{margin:0 0 1em;font-size:.7rem;letter-spacing:.26em;text-transform:uppercase;font-weight:400;color:var(--gold-ink)}
-.foot ul{list-style:none;margin:0;padding:0;display:grid;gap:.55em;font-size:.94rem}
+footer{border-top:1px solid var(--line);padding-block:56px 96px}
+.foot{display:grid;gap:32px;grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}
+.foot h4{margin:0 0 1em;font-size:.72rem;letter-spacing:.24em;text-transform:uppercase;font-weight:500;color:var(--ink)}
+.foot ul{list-style:none;margin:0;padding:0;display:grid;gap:.6em;font-size:.95rem;color:var(--muted)}
 .foot a{text-decoration:none}
 .foot a:hover{color:var(--gold-ink)}
-.foot .mark img{width:64px}
-.foot .mark p{color:var(--muted);font-size:.92rem;max-width:30ch}
+.foot .wa-num{color:var(--ink);font-variant-numeric:tabular-nums;user-select:all}
 .legal{margin-top:48px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:.76rem;color:var(--muted);letter-spacing:.06em}
-.wordmark{font-family:var(--display);font-size:clamp(2.6rem,12vw,11rem);letter-spacing:.14em;line-height:.8;text-align:center;color:var(--line);margin-top:40px;user-select:none;overflow:hidden;white-space:nowrap}
+.wordmark{font-family:var(--display);font-weight:500;font-size:clamp(2.4rem,11.5vw,10rem);letter-spacing:.2em;margin-right:-.2em;line-height:1;text-align:center;color:var(--ink);margin-top:48px;user-select:none;white-space:nowrap;overflow:hidden}
+.wordmark-rule{width:min(320px,60%);margin:14px auto 0}
+
+/* Instagram */
+.insta-head{display:flex;justify-content:space-between;align-items:end;gap:16px;flex-wrap:wrap;margin-bottom:24px}
+.insta-head h2 b{font-weight:500;letter-spacing:.12em}
+.insta{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:6px}
+@media (max-width:860px){.insta{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.insta a{position:relative;display:block;aspect-ratio:1;max-width:100%;overflow:hidden;background:var(--paper-2)}
+.insta img{width:100%;height:100%;object-fit:cover;transition:transform .8s var(--ease)}
+.insta a:hover img{transform:scale(1.06)}
+.insta a::after{content:"";position:absolute;inset:0;background:var(--shade);opacity:0;transition:opacity .3s}
+.insta a:hover::after{opacity:.35}
+
+/* WhatsApp floating button */
+.wa-float{position:fixed;right:calc(18px + env(safe-area-inset-right,0px));bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:70;width:56px;height:56px;border-radius:50%;background:var(--wa);display:grid;place-items:center;box-shadow:0 12px 28px -10px rgba(0,0,0,.45);transition:transform .25s var(--ease)}
+.wa-float:hover{transform:scale(1.07)}
+.wa-float svg{width:28px;height:28px;fill:#FFFFFF}
+
+/* Checkout */
+.co{position:fixed;inset:0;z-index:100;background:var(--paper);overflow:auto;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);opacity:0;pointer-events:none;transform:translateY(12px);transition:opacity .35s var(--ease),transform .35s var(--ease)}
+.co.on{opacity:1;pointer-events:auto;transform:none}
+.co-top{position:sticky;top:0;z-index:2;background:var(--paper);border-bottom:1px solid var(--line)}
+.co-top .wrap{display:flex;justify-content:space-between;align-items:center;padding-block:12px;gap:12px}
+.co-top .brand{flex-direction:row;gap:10px}
+.co-top .brand img{width:32px}
+.co-back{font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;border-bottom:1px solid var(--gold);padding-bottom:2px}
+.co-grid{display:grid;gap:24px;padding-block:28px 64px;align-items:start}
+@media (min-width:920px){.co-grid{grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:40px}}
+.co h2{font-size:clamp(1.9rem,3.4vw,2.6rem);margin-bottom:6px}
+.box{border:1px solid var(--line);background:var(--paper);padding:clamp(18px,3vw,28px);display:grid;gap:16px;min-width:0}
+.box + .box{margin-top:16px}
+.box h3{font-family:var(--body);font-weight:500;font-size:1rem;letter-spacing:.02em}
+.fields{display:grid;gap:14px;grid-template-columns:repeat(2,minmax(0,1fr))}
+.fields .full{grid-column:1/-1}
+@media (max-width:560px){.fields{grid-template-columns:1fr}}
+.fld{display:grid;gap:6px;min-width:0}
+.fld label{font-size:.82rem;font-weight:500;color:var(--ink)}
+.fld label small{color:var(--muted);font-weight:300}
+.fld input,.fld select,.fld textarea,.coupon input{width:100%;min-width:0;font:inherit;font-weight:400;color:var(--ink);background:var(--paper);border:1px solid var(--line);padding:.8em .9em;border-radius:0;transition:border-color .2s}
+.fld textarea{min-height:76px;resize:vertical}
+.fld input:focus,.fld select:focus,.fld textarea:focus,.coupon input:focus{outline:none;border-color:var(--gold)}
+.fld.bad input,.fld.bad select{border-color:var(--err)}
+.fld .err{font-size:.76rem;color:var(--err);min-height:0}
+.phone{display:flex}
+.phone span{display:flex;align-items:center;gap:6px;padding:0 .9em;border:1px solid var(--line);border-right:0;background:var(--paper-2);font-size:.9rem;white-space:nowrap}
+.coupon summary{font-family:var(--body);font-weight:500;font-size:1rem;padding:0}
+.coupon summary::after{font-size:1.2rem}
+.coupon .row{display:flex;gap:8px;margin-top:14px}
+.coupon .row .btn{padding-inline:1.2em}
+.coupon .msg{font-size:.82rem;margin-top:8px}
+.hint{background:var(--paper-2);padding:14px 16px;font-size:.88rem;color:var(--muted)}
+.choice{display:grid;grid-template-columns:auto 1fr auto;gap:4px 12px;align-items:center;border:1px solid var(--line);padding:14px 16px;cursor:pointer;transition:border-color .2s}
+.choice:has(input:checked){border-color:var(--ink)}
+.choice input{accent-color:var(--ink);width:18px;height:18px;margin:0}
+.choice b{font-weight:500}
+.choice .amt{font-variant-numeric:tabular-nums;font-weight:400;white-space:nowrap}
+.choice p{grid-column:2/-1;margin:0;font-size:.84rem;color:var(--muted)}
+.choice .fee{grid-column:2/-1;justify-self:start;font-size:.76rem;font-weight:500;padding:.3em .8em;border-radius:999px;background:var(--blush);color:var(--ink)}
+.co-sum{position:sticky;top:76px}
+.sum-line{display:grid;grid-template-columns:52px 1fr auto;gap:12px;align-items:center;font-size:.88rem}
+.sum-line img,.sum-line .gift-mini{width:52px;height:64px;object-fit:cover;background:var(--card)}
+.sum-line .gift-mini{display:grid;place-items:center}
+.sum-line .gift-mini img{width:40px;height:auto}
+.sum-line small{display:block;color:var(--muted);font-size:.76rem}
+.sum-rows{display:grid;gap:8px;border-top:1px solid var(--line);padding-top:14px;font-size:.92rem}
+.sum-rows div{display:flex;justify-content:space-between;gap:12px}
+.sum-rows span:last-child{font-variant-numeric:tabular-nums}
+.sum-total{display:flex;justify-content:space-between;align-items:baseline;border-top:1px solid var(--line);padding-top:14px}
+.sum-total b{font-family:var(--display);font-weight:500;font-size:2rem;font-variant-numeric:tabular-nums}
+.co-err{color:var(--err);font-size:.86rem;margin:0}
+.done{max-width:720px;margin:0 auto;padding-block:40px 80px;display:grid;gap:18px;text-align:center;justify-items:center}
+.done .num{font-size:.78rem;letter-spacing:.24em;text-transform:uppercase;color:var(--gold-ink)}
+.done .box{text-align:left;width:100%}
+.bank{display:grid;grid-template-columns:auto 1fr;gap:8px 18px;margin:0;font-size:.95rem}
+.bank dt{color:var(--muted)}
+.bank dd{margin:0;font-variant-numeric:tabular-nums}
+.btn.wa{background:var(--wa);border-color:var(--wa);color:#FFFFFF;width:100%}
+.btn.wa:hover{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.btn.wa svg{width:18px;height:18px;fill:currentColor}
 
 /* Drawer + modal */
 .scrim{position:fixed;inset:0;background:var(--shade);z-index:80;opacity:0;pointer-events:none;transition:opacity .4s var(--ease)}
@@ -261,8 +342,8 @@ footer{border-top:1px solid var(--line);padding-block:56px 32px}
 .lines{flex:1;overflow:auto;padding:8px 24px}
 .line{display:grid;grid-template-columns:76px 1fr auto;gap:14px;padding:16px 0;border-bottom:1px solid var(--line);align-items:start}
 .line img{width:76px;height:94px;object-fit:cover;background:var(--paper-2)}
-.line .gift-mini{width:76px;height:94px;background:var(--ink);display:grid;place-items:center}
-.line .gift-mini img{width:34px;height:auto;filter:brightness(1.25);background:none}
+.line .gift-mini{width:76px;height:94px;background:var(--card);display:grid;place-items:center}
+.line .gift-mini img{width:58px;height:auto;background:none}
 .line h4{margin:0;font-family:var(--display);font-weight:500;font-size:1.15rem;line-height:1.2}
 .line small{color:var(--muted);font-size:.78rem;letter-spacing:.06em}
 .qty{display:inline-flex;align-items:center;border:1px solid var(--line);margin-top:8px}
@@ -275,6 +356,8 @@ footer{border-top:1px solid var(--line);padding-block:56px 32px}
 .tot{display:flex;justify-content:space-between;font-size:1.05rem}
 .tot b{font-weight:400;font-variant-numeric:tabular-nums}
 .drawer-foot .note{font-size:.78rem;color:var(--muted);margin:0}
+.drawer-foot .links{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:.84rem}
+.drawer-foot .links button{text-decoration:underline;text-underline-offset:3px}
 .wrapopt{display:flex;gap:10px;align-items:center;font-size:.88rem;cursor:pointer}
 .wrapopt input{accent-color:var(--gold);width:16px;height:16px}
 
@@ -313,7 +396,7 @@ footer{border-top:1px solid var(--line);padding-block:56px 32px}
 <div class="announce"><div class="wrap">
   <span>Envío gratis en compras desde $U 3.000</span>
   <span>Cada pieza llega en su estuche Merfina</span>
-  <span>Cambios sin costo dentro de los 30 días</span>
+  <span>Pagá con Mercado Pago o transferencia</span>
 </div></div>
 
 <header class="site">
@@ -393,7 +476,7 @@ footer{border-top:1px solid var(--line);padding-block:56px 32px}
       <div class="cats">
         <a class="cat" href="#tienda" data-go="botones"><img src="img/look-azul.jpg" alt="Cubre botones de camelia azul en los puños de una camisa blanca" loading="lazy"><div class="lbl"><b>Cubre botones</b><small>Ver piezas →</small></div></a>
         <a class="cat" href="#tienda" data-go="corbatas"><img src="img/look-rosa-corbata.jpg" alt="Corbata a rayas rosé con camisa rosa" loading="lazy"><div class="lbl"><b>Corbatas</b><small>Ver piezas →</small></div></a>
-        <a class="cat" href="#tienda" data-go="sets"><img src="img/look-blusa.jpg" alt="Blusa blanca con botones de corazón de perla y flor negra" loading="lazy"><div class="lbl"><b>Sets</b><small>Ver piezas →</small></div></a>
+        <a class="cat" href="#tienda" data-go="todo"><img src="img/look-blusa.jpg" alt="Blusa blanca con botones de corazón de perla y flor negra" loading="lazy"><div class="lbl"><b>Ver todo</b><small>Ver piezas →</small></div></a>
       </div>
     </div>
   </section>
@@ -406,7 +489,6 @@ footer{border-top:1px solid var(--line);padding-block:56px 32px}
           <button class="chip" data-filter="todo" aria-pressed="true">Todo</button>
           <button class="chip" data-filter="botones" aria-pressed="false">Cubre botones</button>
           <button class="chip" data-filter="corbatas" aria-pressed="false">Corbatas</button>
-          <button class="chip" data-filter="sets" aria-pressed="false">Sets &amp; regalos</button>
         </div>
       </div>
       <div class="grid" id="grid"></div>
@@ -430,7 +512,7 @@ footer{border-top:1px solid var(--line);padding-block:56px 32px}
         <div class="values">
           <div><b>Diseño</b><span>Piezas elegidas una a una, en series cortas.</span></div>
           <div><b>Versatilidad</b><span>Una misma camisa, mil looks distintos.</span></div>
-          <div><b>Presentación</b><span>Estuche y tarjeta, listos para regalar.</span></div>
+          <div><b>Presentación</b><span>Cada pieza llega en su estuche Merfina.</span></div>
         </div>
       </div>
     </div>
@@ -472,8 +554,7 @@ footer{border-top:1px solid var(--line);padding-block:56px 32px}
 
   <div class="wrap promise">
     <div><svg viewBox="0 0 32 32"><path d="M3 10h17v12H3zM20 14h5l4 4v4h-9z"/><circle cx="9" cy="24" r="2.4"/><circle cx="24" cy="24" r="2.4"/></svg><div><b>Envíos a todo Uruguay</b><span>Montevideo en 24 h · Interior en 48–72 h</span></div></div>
-    <div><svg viewBox="0 0 32 32"><rect x="5" y="12" width="22" height="15"/><path d="M5 17h22M16 12v15M16 12c-3-6-9-4-6 0M16 12c3-6 9-4 6 0"/></svg><div><b>Listo para regalar</b><span>Estuche Merfina y tarjeta escrita a mano</span></div></div>
-    <div><svg viewBox="0 0 32 32"><path d="M6 16a10 10 0 0 1 17-7l3 3M26 16a10 10 0 0 1-17 7l-3-3"/><path d="M26 6v6h-6M6 26v-6h6"/></svg><div><b>Cambios fáciles</b><span>30 días para cambiar tu pieza</span></div></div>
+    <div><svg viewBox="0 0 32 32"><rect x="5" y="12" width="22" height="15"/><path d="M5 17h22M16 12v15M16 12c-3-6-9-4-6 0M16 12c3-6 9-4 6 0"/></svg><div><b>Listo para regalar</b><span>Cada pieza llega en su estuche Merfina</span></div></div>
     <div><svg viewBox="0 0 32 32"><rect x="4" y="8" width="24" height="17" rx="2"/><path d="M4 13h24M8 20h6"/></svg><div><b>Pagá como prefieras</b><span>Tarjetas, transferencia o Mercado Pago</span></div></div>
   </div>
 
@@ -485,7 +566,25 @@ footer{border-top:1px solid var(--line);padding-block:56px 32px}
         <details><summary>¿Dañan la tela?</summary><p>No. La traba se engancha al botón, no a la tela, así que no hay que coser ni perforar nada.</p></details>
         <details><summary>¿Cómo cuido mis piezas?</summary><p>Guardalas en su estuche, lejos de la humedad. Evitá perfumes y cremas en contacto directo, y limpialas con un paño suave y seco.</p></details>
         <details><summary>¿Hacen envíos al interior?</summary><p>Enviamos a todo el país. En Montevideo llega en 24 h hábiles y al interior en 48 a 72 h. Desde $U 3.000 el envío es gratis.</p></details>
+        <details><summary>¿Cómo pago?</summary><p>Con Mercado Pago (tarjeta, débito o dinero en cuenta) o por transferencia bancaria. Al confirmar el pedido te mostramos los datos, y nos mandás el comprobante por WhatsApp al 091 900 341.</p></details>
         <details><summary>¿Puedo regalar una tarjeta?</summary><p>Sí, la Tarjeta de Regalo Merfina se envía en su sobre con el monto que elijas, para que la otra persona elija su pieza.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="ig-h" style="padding-top:0">
+    <div class="wrap">
+      <div class="insta-head">
+        <div><div class="eyebrow">@merfinajoyas</div><h2 id="ig-h" style="margin-top:.3em">Seguinos en <b>INSTAGRAM</b></h2></div>
+        <a class="btn" href="https://www.instagram.com/merfinajoyas/" target="_blank" rel="noopener">Seguinos en Instagram</a>
+      </div>
+      <div class="insta">
+        <a href="https://www.instagram.com/merfinajoyas/" target="_blank" rel="noopener" aria-label="Ver en Instagram"><img src="img/look-calas.jpg" alt="" loading="lazy"></a>
+        <a href="https://www.instagram.com/merfinajoyas/" target="_blank" rel="noopener" aria-label="Ver en Instagram"><img src="img/p-camelia-azul.jpg" alt="" loading="lazy"></a>
+        <a href="https://www.instagram.com/merfinajoyas/" target="_blank" rel="noopener" aria-label="Ver en Instagram"><img src="img/look-rosa-blanca.jpg" alt="" loading="lazy"></a>
+        <a href="https://www.instagram.com/merfinajoyas/" target="_blank" rel="noopener" aria-label="Ver en Instagram"><img src="img/p-camelia-rosa.jpg" alt="" loading="lazy"></a>
+        <a href="https://www.instagram.com/merfinajoyas/" target="_blank" rel="noopener" aria-label="Ver en Instagram"><img src="img/look-blusa.jpg" alt="" loading="lazy"></a>
+        <a href="https://www.instagram.com/merfinajoyas/" target="_blank" rel="noopener" aria-label="Ver en Instagram"><img src="img/p-flor-nacar.jpg" alt="" loading="lazy"></a>
       </div>
     </div>
   </section>
@@ -508,15 +607,17 @@ footer{border-top:1px solid var(--line);padding-block:56px 32px}
 <footer>
   <div class="wrap">
     <div class="foot">
-      <div class="mark"><img src="img/monograma.png" alt="Merfina"><p>Cubre botones y corbatas que transforman tu camisa. Hecho con cuidado en Montevideo.</p></div>
-      <div><h4>Tienda</h4><ul><li><a href="#tienda" data-go="botones">Cubre botones</a></li><li><a href="#tienda" data-go="corbatas">Corbatas</a></li><li><a href="#tienda" data-go="sets">Sets y regalos</a></li></ul></div>
-      <div><h4>Ayuda</h4><ul><li><a href="#como-se-usan">Cómo se usan</a></li><li><a href="#preguntas">Envíos y cambios</a></li><li><a href="#preguntas">Cuidado de las piezas</a></li></ul></div>
-      <div><h4>Seguinos</h4><ul><li><a href="https://www.instagram.com/merfinajoyas/" target="_blank" rel="noopener">Instagram · @merfinajoyas</a></li><li><span style="color:var(--muted)">WhatsApp · a confirmar</span></li></ul></div>
+      <div><h4>Tienda</h4><ul><li><a href="#tienda" data-go="todo">Colección Primavera</a></li><li><a href="#tienda" data-go="botones">Cubre botones</a></li><li><a href="#tienda" data-go="corbatas">Corbatas</a></li><li><a href="#tienda" data-go="todo">Gift card</a></li></ul></div>
+      <div><h4>Ayuda</h4><ul><li><a href="#preguntas">Envíos y entregas</a></li><li><a href="#preguntas">Medios de pago</a></li><li><a href="#preguntas">Cuidado de las piezas</a></li><li><a href="#como-se-usan">Cómo se usan</a></li></ul></div>
+      <div><h4>Merfina</h4><ul><li><a href="#historia">Nosotros</a></li><li><a href="https://www.instagram.com/merfinajoyas/" target="_blank" rel="noopener">Seguinos en Instagram</a></li><li>WhatsApp · <a class="wa-num" href="https://wa.me/59891900341" target="_blank" rel="noopener">091 900 341</a></li></ul></div>
     </div>
     <div class="wordmark" aria-hidden="true">MERFINA</div>
-    <div class="legal"><span>© 2026 Merfina Joyas</span><span>Una joya que hace la diferencia.</span></div>
+    <div class="rule wordmark-rule" aria-hidden="true"><i class="sparkle"></i></div>
+    <div class="legal"><span>© 2026 Merfina Joyas · Montevideo</span><span>Una joya que hace la diferencia</span></div>
   </div>
 </footer>
+
+<a class="wa-float" id="waFloat" href="https://wa.me/59891900341" target="_blank" rel="noopener" aria-label="Escribinos por WhatsApp al 091 900 341"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.8-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1 2.7c.1.2 1.8 2.8 4.4 3.9 1.6.7 2.3.8 3.1.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3z"/></svg></a>
 
 <div class="scrim" id="scrim"></div>
 
@@ -525,15 +626,11 @@ footer{border-top:1px solid var(--line);padding-block:56px 32px}
   <div class="ship" id="ship"></div>
   <div class="lines" id="lines"></div>
   <div class="drawer-foot" id="bagFoot">
-    <label class="wrapopt" for="giftWrap"><input type="checkbox" id="giftWrap"> Envolver para regalo con tarjeta (+ $U 150)</label>
+    <label class="wrapopt" for="giftWrap"><input type="checkbox" id="giftWrap"> Envolver para regalo (+ $U 150)</label>
     <div class="tot"><span>Subtotal</span><b id="subtotal">$U 0</b></div>
-    <p class="note">El envío se calcula en el siguiente paso.</p>
+    <p class="note">Envío y medio de pago se eligen en el siguiente paso.</p>
     <button class="btn solid" id="checkout">Finalizar compra</button>
-    <div id="checkoutBox" hidden>
-      <p class="note" style="margin-bottom:8px">Tu pedido quedó listo. Copiá este resumen y envialo por WhatsApp o Instagram para coordinar pago y envío:</p>
-      <div class="checkout-msg" id="checkoutMsg"></div>
-      <button class="btn" id="copyMsg" style="margin-top:10px;width:100%">Copiar resumen</button>
-    </div>
+    <div class="links"><button id="keepShopping">Seguir comprando</button><button id="emptyBag">Vaciar carrito</button></div>
   </div>
 </aside>
 
@@ -549,6 +646,73 @@ footer{border-top:1px solid var(--line);padding-block:56px 32px}
       <div><div class="opt-label" id="mOptLabel">Presentación</div><div class="opts" id="mOpts" style="margin-top:10px"></div></div>
       <button class="btn gold" id="mAdd">Agregar a la bolsa</button>
       <dl class="specs" id="mSpecs"></dl>
+    </div>
+  </div>
+</div>
+
+<div class="co" id="co" role="dialog" aria-modal="true" aria-labelledby="coTitle" aria-hidden="true">
+  <div class="co-top"><div class="wrap">
+    <span class="brand"><img src="img/monograma.png" alt=""><b>MERFINA</b></span>
+    <button class="co-back" id="coBack">Volver a la tienda</button>
+  </div></div>
+  <div class="wrap">
+    <div id="coForm">
+      <div style="padding-top:28px"><div class="eyebrow">Checkout</div><h2 id="coTitle">Finalizá tu compra</h2></div>
+      <form class="co-grid" id="coF" novalidate>
+        <div style="min-width:0">
+          <details class="box coupon">
+            <summary>Cupón de descuento</summary>
+            <div class="row"><label for="coCoupon" style="position:absolute;left:-9999px">Código del cupón</label><input id="coCoupon" placeholder="Ingresá tu código" autocomplete="off"><button type="button" class="btn" id="coApply">Aplicar</button></div>
+            <div class="msg" id="coCouponMsg" aria-live="polite"></div>
+          </details>
+          <div class="box">
+            <h3>Datos personales y de envío</h3>
+            <div class="fields">
+              <div class="fld"><label for="coName">Nombre</label><input id="coName" autocomplete="given-name"><span class="err"></span></div>
+              <div class="fld"><label for="coLast">Apellido</label><input id="coLast" autocomplete="family-name"><span class="err"></span></div>
+              <div class="fld"><label for="coEmail">Email</label><input id="coEmail" type="email" autocomplete="email"><span class="err"></span></div>
+              <div class="fld"><label for="coPhone">Teléfono</label><div class="phone"><span>🇺🇾 +598</span><input id="coPhone" type="tel" inputmode="tel" placeholder="94 231 234" autocomplete="tel-national"></div><span class="err"></span></div>
+              <div class="fld"><label for="coDep">Departamento</label><select id="coDep"><option value="">Elegí tu departamento</option></select><span class="err"></span></div>
+              <div class="fld"><label for="coCity">Ciudad o barrio</label><input id="coCity" autocomplete="address-level2"><span class="err"></span></div>
+              <div class="fld full"><label for="coAddr">Dirección</label><input id="coAddr" placeholder="Calle, número, apto." autocomplete="street-address"><span class="err"></span></div>
+              <div class="fld full"><label for="coNotes">Notas del pedido <small>(opcional)</small></label><textarea id="coNotes" placeholder="Por ejemplo: es para regalo, horario de entrega…"></textarea></div>
+            </div>
+          </div>
+          <div class="box">
+            <h3>Forma de entrega</h3>
+            <div id="coShip"><div class="hint">Seleccioná departamento y ciudad o barrio para ver las formas de entrega disponibles.</div></div>
+          </div>
+          <div class="box">
+            <h3>Medio de pago</h3>
+            <label class="choice" for="payMp"><input type="radio" name="pay" id="payMp" value="mp" checked><b>Mercado Pago</b><span class="amt" id="mpAmt"></span><span class="fee" id="mpFee"></span><p>Pagá con tarjeta, débito o dinero en cuenta.</p></label>
+            <label class="choice" for="payTr"><input type="radio" name="pay" id="payTr" value="transfer"><b>Transferencia bancaria</b><span class="amt"></span><p>Realizá el pago directamente en nuestra cuenta bancaria. Usá el número de pedido como referencia y mandanos el comprobante por WhatsApp.</p></label>
+          </div>
+        </div>
+        <aside class="box co-sum" aria-label="Resumen del pedido">
+          <h3>Resumen</h3>
+          <div id="coLines" style="display:grid;gap:12px"></div>
+          <div class="sum-rows" id="coRows"></div>
+          <div class="sum-total"><span>Total</span><b id="coTotal">$U 0</b></div>
+          <p class="co-err" id="coErr" aria-live="polite"></p>
+          <button type="submit" class="btn solid" id="coConfirm">Confirmar pedido</button>
+          <p class="note" style="margin:0;font-size:.78rem;color:var(--muted)">Al confirmar te mostramos cómo pagar. Después nos mandás el comprobante por WhatsApp y coordinamos la entrega.</p>
+        </aside>
+      </form>
+    </div>
+    <div id="coDone" class="done" hidden>
+      <span class="sparkle" style="font-size:1.6rem"></span>
+      <div class="num" id="doneNum"></div>
+      <h2>¡Gracias por tu compra!</h2>
+      <p id="doneLead" style="margin:0;color:var(--muted);max-width:52ch"></p>
+      <div class="box" id="donePay"></div>
+      <div class="box">
+        <h3>Mandanos el comprobante</h3>
+        <p style="margin:0;color:var(--muted)">Tocá el botón para abrir WhatsApp con tu pedido ya escrito y adjuntá el comprobante. Si no se abre, escribinos al <b class="wa-num" style="color:var(--ink);user-select:all">091 900 341</b> y pegá este resumen:</p>
+        <a class="btn wa" id="doneWa" href="https://wa.me/59891900341" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.8-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1 2.7c.1.2 1.8 2.8 4.4 3.9 1.6.7 2.3.8 3.1.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3z"/></svg> Enviar por WhatsApp</a>
+        <div class="checkout-msg" id="doneMsg"></div>
+        <button class="btn" id="doneCopy" type="button">Copiar resumen</button>
+      </div>
+      <button class="co-back" id="doneBack" type="button">Volver a la tienda</button>
     </div>
   </div>
 </div>
@@ -578,8 +742,8 @@ const PRODUCTS=[
  {id:"corbata-rayas",name:"Corbata Rayas Rosé",cat:"corbatas",kind:"Corbata",img:["img/p-corbata-rayas.jpg","img/look-rosa-corbata.jpg"],
   colors:["#D9B8A8","#F6E8E0"],desc:"Corbata de seda a rayas diagonales en rosé y crudo. Se combina con la Camelia Rosé para un look completo.",
   opts:[["Ancho clásico 7 cm",1890],["Ancho slim 5,5 cm",1890]],optLabel:"Ancho",specs:[["Material","Seda"],["Largo","148 cm"],["Cuidado","Limpieza en seco"]]},
- {id:"gift",name:"Tarjeta de Regalo",cat:"sets",kind:"Gift card",gift:true,img:[],
-  colors:["#221C17","#A3804F"],desc:"Para que elijan su propia joya. Llega en sobre con lacre y una nota escrita a mano.",
+ {id:"gift",name:"Gift Card Merfina",cat:"sets",kind:"Tarjeta de regalo",gift:true,img:[],
+  colors:["#EAE5DB","#A3804F","#221C17"],desc:"Para que elijan su propia joya. Llega en su sobre Merfina con el monto que elijas, o por WhatsApp en formato digital.",
   opts:[["$U 1.500",1500],["$U 3.000",3000],["$U 5.000",5000]],optLabel:"Monto",specs:[["Validez","12 meses"],["Entrega","Física o digital"]]}
 ];
 const $=s=>document.querySelector(s);
@@ -588,7 +752,7 @@ const FREE=3000, WRAP=150;
 const store={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
 let bag=store.get("merfina-bag",[]), favs=new Set(store.get("merfina-favs",[])), filter="todo";
 const byId=id=>PRODUCTS.find(p=>p.id===id);
-const giftArt=()=>`<div class="gift-ph"><div class="gift-card"><img src="img/monograma.png" alt=""><span>MERFINA</span></div></div>`;
+const giftArt=()=>`<div class="gift-ph"><div class="gift-card"><img src="img/logo-completo.png" alt="Gift card Merfina"></div></div>`;
 const heart='<svg viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg>';
 
 function renderGrid(){
@@ -629,13 +793,12 @@ function renderBag(){
   if(!n){$("#lines").innerHTML=`<div class="empty"><span class="sparkle"></span><p>Tu bolsa está vacía</p><span>Elegí una pieza para empezar.</span></div>`;return}
   $("#lines").innerHTML=bag.map(l=>{const p=byId(l.id);return `
    <div class="line">
-     ${p.gift?`<div class="gift-mini"><img src="img/monograma.png" alt=""></div>`:`<img src="${p.img[0]}" alt="">`}
+     ${p.gift?`<div class="gift-mini"><img src="img/logo-completo.png" alt=""></div>`:`<img src="${p.img[0]}" alt="">`}
      <div><h4>${p.name}</h4><small>${p.opts[l.o][0]}</small><br>
        <span class="qty"><button data-dec="${l.key}" aria-label="Quitar uno">−</button><span>${l.q}</span><button data-inc="${l.key}" aria-label="Agregar uno">+</button></span>
        <button class="rm" data-rm="${l.key}">Quitar</button></div>
      <span class="price">${fmt(p.opts[l.o][1]*l.q)}</span>
    </div>`}).join("");
-  $("#checkoutBox").hidden=true;$("#checkout").hidden=false;
 }
 $("#giftWrap").addEventListener("change",renderBag);
 $("#lines").addEventListener("click",e=>{
@@ -644,15 +807,124 @@ $("#lines").addEventListener("click",e=>{
   if(t.dataset.inc)l.q++;else if(t.dataset.dec)l.q--;else l.q=0;
   bag=bag.filter(x=>x.q>0);save();renderBag();
 });
-$("#checkout").addEventListener("click",()=>{
-  const lines=bag.map(l=>{const p=byId(l.id);return `• ${l.q} × ${p.name} (${p.opts[l.o][0]}) — ${fmt(p.opts[l.o][1]*l.q)}`});
-  if($("#giftWrap").checked)lines.push(`• Envoltorio de regalo — ${fmt(WRAP)}`);
-  $("#checkoutMsg").textContent=`¡Hola Merfina! Quiero hacer este pedido:\n${lines.join("\n")}\nSubtotal: ${$("#subtotal").textContent}`;
-  $("#checkoutBox").hidden=false;$("#checkout").hidden=true;
+/* ===== Checkout ===== */
+/* Datos del negocio: editá acá precios de envío, comisión, cupones y datos bancarios. */
+const CFG={
+  whatsapp:"59891900341",
+  mpCommission:0.12,
+  mpLink:"",            /* pegá acá un link de pago de Mercado Pago si querés mostrar el botón directo */
+  bank:[["Banco","A completar"],["Tipo de cuenta","Caja de ahorro en pesos"],["Número de cuenta","A completar"],["Titular","A completar"]],
+  ship:{
+    mvd:[{id:"dom",name:"Envío a domicilio",desc:"Montevideo · 24 h hábiles",cost:190},{id:"ret",name:"Retiro coordinado",desc:"Coordinamos el lugar y horario por WhatsApp",cost:0}],
+    int:[{id:"age",name:"Envío por agencia",desc:"Interior · 48 a 72 h hábiles",cost:250}]
+  },
+  coupons:{MERFINA10:0.10}
+};
+const DEPS=["Artigas","Canelones","Cerro Largo","Colonia","Durazno","Flores","Florida","Lavalleja","Maldonado","Montevideo","Paysandú","Río Negro","Rivera","Rocha","Salto","San José","Soriano","Tacuarembó","Treinta y Tres"];
+$("#coDep").innerHTML+=DEPS.map(d=>`<option>${d}</option>`).join("");
+let coupon=null,lastOrder=null;
+const val=id=>$("#"+id).value.trim();
+function shipOpts(){const d=val("coDep"),c=val("coCity");if(!d||!c)return null;return d==="Montevideo"?CFG.ship.mvd:CFG.ship.int}
+function totals(){
+  const items=bag.reduce((s,l)=>s+byId(l.id).opts[l.o][1]*l.q,0);
+  const wrap=$("#giftWrap").checked&&bag.length?WRAP:0;
+  const disc=coupon?Math.round(items*CFG.coupons[coupon]):0;
+  const opts=shipOpts(),sel=document.querySelector('input[name="ship"]:checked');
+  const so=opts&&sel?opts.find(o=>o.id===sel.value):null;
+  const free=items-disc>=FREE;
+  const ship=so?(free?0:so.cost):null;
+  const base=items-disc+wrap+(ship||0);
+  const pay=(document.querySelector('input[name="pay"]:checked')||{}).value||"mp";
+  const fee=pay==="mp"?Math.round(base*CFG.mpCommission):0;
+  return {items,wrap,disc,ship,so,free,base,fee,pay,total:base+fee};
+}
+function renderShip(){
+  const opts=shipOpts(),box=$("#coShip");
+  if(!opts){box.innerHTML='<div class="hint">Seleccioná departamento y ciudad o barrio para ver las formas de entrega disponibles.</div>';return}
+  const prev=(document.querySelector('input[name="ship"]:checked')||{}).value;
+  const t=totals();
+  box.innerHTML=`<div style="display:grid;gap:10px">${opts.map((o,i)=>`<label class="choice" for="ship-${o.id}"><input type="radio" name="ship" id="ship-${o.id}" value="${o.id}" ${(prev?prev===o.id:i===0)?"checked":""}><b>${o.name}</b><span class="amt">${o.cost===0?"Sin costo":t.free?`<s style="color:var(--muted)">${fmt(o.cost)}</s> Gratis`:fmt(o.cost)}</span><p>${o.desc}</p></label>`).join("")}</div>`;
+}
+function renderCo(){
+  const t=totals();
+  $("#coLines").innerHTML=bag.map(l=>{const p=byId(l.id);return `<div class="sum-line">${p.gift?`<div class="gift-mini"><img src="img/logo-completo.png" alt=""></div>`:`<img src="${p.img[0]}" alt="">`}<div>${p.name}<small>${p.opts[l.o][0]} · ${l.q} u.</small></div><span class="price">${fmt(p.opts[l.o][1]*l.q)}</span></div>`}).join("");
+  const rows=[["Subtotal",fmt(t.items)]];
+  if(t.disc)rows.push([`Cupón ${coupon}`,"− "+fmt(t.disc)]);
+  if(t.wrap)rows.push(["Envoltorio de regalo",fmt(t.wrap)]);
+  rows.push(["Envío",t.ship===null?"A calcular":t.ship===0?"Gratis":fmt(t.ship)]);
+  if(t.fee)rows.push([`Comisión Mercado Pago (${Math.round(CFG.mpCommission*100)}%)`,fmt(t.fee)]);
+  $("#coRows").innerHTML=rows.map(([a,b])=>`<div><span>${a}</span><span>${b}</span></div>`).join("");
+  $("#coTotal").textContent=fmt(t.total);
+  const mpFee=Math.round(t.base*CFG.mpCommission);
+  $("#mpFee").textContent=`Comisión de ${Math.round(CFG.mpCommission*100)}% (+ ${fmt(mpFee)})`;
+}
+function openCo(){
+  if(!bag.length)return;
+  show("drawer",false);$("#coForm").hidden=false;$("#coDone").hidden=true;$("#coErr").textContent="";
+  renderShip();renderCo();
+  const co=$("#co");co.classList.add("on");co.setAttribute("aria-hidden","false");co.scrollTop=0;document.body.style.overflow="hidden";
+  setTimeout(()=>$("#coName").focus({preventScroll:true}),350);
+}
+function closeCo(){const co=$("#co");co.classList.remove("on");co.setAttribute("aria-hidden","true");document.body.style.overflow=""}
+$("#checkout").addEventListener("click",openCo);
+$("#keepShopping").addEventListener("click",()=>show("drawer",false));
+let confirmEmpty=false;
+$("#emptyBag").addEventListener("click",e=>{
+  if(!confirmEmpty){confirmEmpty=true;e.target.textContent="¿Seguro? Tocá de nuevo";setTimeout(()=>{confirmEmpty=false;e.target.textContent="Vaciar carrito"},3000);return}
+  confirmEmpty=false;e.target.textContent="Vaciar carrito";bag=[];save();renderBag();toast("Vaciaste el carrito");
 });
-$("#copyMsg").addEventListener("click",()=>{
-  const txt=$("#checkoutMsg").textContent;
-  const sel=()=>{const r=document.createRange();r.selectNodeContents($("#checkoutMsg"));const s=getSelection();s.removeAllRanges();s.addRange(r);toast("Resumen seleccionado. Copialo con tu teclado.")};
+$("#coBack").addEventListener("click",closeCo);
+$("#doneBack").addEventListener("click",closeCo);
+["coDep","coCity"].forEach(id=>$("#"+id).addEventListener("input",()=>{renderShip();renderCo()}));
+$("#coShip").addEventListener("change",renderCo);
+document.querySelectorAll('input[name="pay"]').forEach(r=>r.addEventListener("change",renderCo));
+$("#coApply").addEventListener("click",()=>{
+  const c=val("coCoupon").toUpperCase(),m=$("#coCouponMsg");
+  if(CFG.coupons[c]){coupon=c;m.style.color="var(--gold-ink)";m.textContent=`Cupón ${c} aplicado: ${Math.round(CFG.coupons[c]*100)}% de descuento.`}
+  else{coupon=null;m.style.color="var(--err)";m.textContent=c?"Ese cupón no existe o ya venció. Revisá cómo lo escribiste.":"Escribí un código para aplicarlo."}
+  renderShip();renderCo();
+});
+function check(){
+  const rules=[["coName",v=>v.length>1,"Ingresá tu nombre."],["coLast",v=>v.length>1,"Ingresá tu apellido."],["coEmail",v=>/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v),"Ingresá un email válido, por ejemplo nombre@gmail.com."],
+    ["coPhone",v=>v.replace(/\D/g,"").length>=8,"Ingresá un teléfono de al menos 8 dígitos."],["coDep",v=>!!v,"Elegí tu departamento."],["coCity",v=>v.length>1,"Ingresá tu ciudad o barrio."],
+    ["coAddr",v=>v.length>3||(document.querySelector('input[name="ship"]:checked')||{}).value==="ret","Ingresá tu dirección para el envío."]];
+  let first=null;
+  rules.forEach(([id,ok,msg])=>{const f=$("#"+id).closest(".fld"),good=ok(val(id));f.classList.toggle("bad",!good);f.querySelector(".err").textContent=good?"":msg;if(!good&&!first)first=$("#"+id)});
+  return first;
+}
+$("#coF").addEventListener("input",e=>{const f=e.target.closest(".fld");if(f&&f.classList.contains("bad")){f.classList.remove("bad");f.querySelector(".err").textContent=""}});
+$("#coF").addEventListener("submit",e=>{
+  e.preventDefault();
+  const bad=check();
+  if(bad){$("#coErr").textContent="Revisá los datos marcados en rojo.";bad.focus();return}
+  const t=totals();
+  if(!t.so){$("#coErr").textContent="Elegí una forma de entrega.";return}
+  $("#coErr").textContent="";
+  const num="MF-"+String(Date.now()).slice(-5);
+  const lines=bag.map(l=>{const p=byId(l.id);return `• ${l.q} × ${p.name} (${p.opts[l.o][0]}) — ${fmt(p.opts[l.o][1]*l.q)}`});
+  const payName=t.pay==="mp"?"Mercado Pago":"Transferencia bancaria";
+  const msg=[`¡Hola Merfina! Hice el pedido ${num}.`,"",...lines,
+    t.wrap?`• Envoltorio de regalo — ${fmt(t.wrap)}`:null,"",
+    `Subtotal: ${fmt(t.items)}`,t.disc?`Cupón ${coupon}: − ${fmt(t.disc)}`:null,
+    `Entrega: ${t.so.name} — ${t.ship===0?"Gratis":fmt(t.ship)}`,t.fee?`Comisión Mercado Pago: ${fmt(t.fee)}`:null,
+    `TOTAL: ${fmt(t.total)}`,`Pago: ${payName}`,"",
+    `Nombre: ${val("coName")} ${val("coLast")}`,`Teléfono: +598 ${val("coPhone")}`,`Email: ${val("coEmail")}`,
+    `Dirección: ${val("coAddr")||"—"}, ${val("coCity")}, ${val("coDep")}`,val("coNotes")?`Notas: ${val("coNotes")}`:null,"",
+    "Te adjunto el comprobante de pago."].filter(x=>x!==null).join("\n");
+  lastOrder={num,msg,t};
+  $("#doneNum").textContent=`Pedido ${num}`;
+  $("#doneLead").textContent=`Total a pagar: ${fmt(t.total)}. Guardá tu número de pedido para cualquier consulta.`;
+  $("#donePay").innerHTML=t.pay==="transfer"
+    ?`<h3>Datos para la transferencia</h3><dl class="bank">${CFG.bank.map(([a,b])=>`<dt>${a}</dt><dd>${b}</dd>`).join("")}<dt>Monto</dt><dd>${fmt(t.total)}</dd><dt>Referencia</dt><dd>${num}</dd></dl>`
+    :`<h3>Pagá con Mercado Pago</h3>${CFG.mpLink?`<p style="margin:0;color:var(--muted)">Pagá ${fmt(t.total)} con tarjeta, débito o dinero en cuenta.</p><a class="btn solid" href="${CFG.mpLink}" target="_blank" rel="noopener">Pagar con Mercado Pago</a>`:`<p style="margin:0;color:var(--muted)">Mandanos tu pedido por WhatsApp y te respondemos con el link de pago de Mercado Pago por ${fmt(t.total)}. Cuando pagues, envianos el comprobante por el mismo chat.</p>`}`;
+  $("#doneMsg").textContent=msg;
+  $("#doneWa").href=`https://wa.me/${CFG.whatsapp}?text=${encodeURIComponent(msg)}`;
+  $("#coForm").hidden=true;$("#coDone").hidden=false;$("#co").scrollTop=0;
+  bag=[];coupon=null;save();renderBag();
+});
+$("#doneCopy").addEventListener("click",()=>{
+  const txt=$("#doneMsg").textContent;
+  const sel=()=>{const r=document.createRange();r.selectNodeContents($("#doneMsg"));const s=getSelection();s.removeAllRanges();s.addRange(r);toast("Resumen seleccionado. Copialo con tu teclado.")};
   try{navigator.clipboard.writeText(txt).then(()=>toast("Resumen copiado"),sel)}catch(e){sel()}
 });
 
@@ -703,7 +975,7 @@ function show(which,on){
 $("#bagBtn").addEventListener("click",()=>{lastFocus=$("#bagBtn");show("drawer",true);$("#closeBag").focus()});
 $("#closeBag").addEventListener("click",()=>show("drawer",false));
 $("#scrim").addEventListener("click",()=>{show("modal",false);show("drawer",false)});
-addEventListener("keydown",e=>{if(e.key==="Escape"){show("modal",false);show("drawer",false)}});
+addEventListener("keydown",e=>{if(e.key==="Escape"){if($("#co").classList.contains("on")){closeCo();return}show("modal",false);show("drawer",false)}});
 
 /* mobile menu */
 $("#menuBtn").addEventListener("click",()=>{const m=$("#mobileNav"),o=m.hidden;m.hidden=!o;$("#menuBtn").setAttribute("aria-expanded",o)});
