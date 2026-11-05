@@ -12,6 +12,7 @@
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--paper:#15110E;--paper-2:#1E1915;--ink:#F2EBE2;--muted:#ADA092;--line:#352D26;--gold:#C9A673;--gold-ink:#D8B886;--code-bg:#0D0B09;--code-ink:#EDE3D6;--ok:#8FD19E;--warn-bg:#2E2516;color-scheme:dark}}
 :root[data-theme="dark"]{--paper:#15110E;--paper-2:#1E1915;--ink:#F2EBE2;--muted:#ADA092;--line:#352D26;--gold:#C9A673;--gold-ink:#D8B886;--code-bg:#0D0B09;--code-ink:#EDE3D6;--ok:#8FD19E;--warn-bg:#2E2516;color-scheme:dark}
 *{box-sizing:border-box}
+[hidden]{display:none!important}
 body{background:var(--paper);color:var(--ink);font-family:var(--body);font-weight:300;font-size:1.02rem;line-height:1.7;margin:0}
 .wrap{max-width:780px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:48px 96px}
 header{text-align:center;padding-bottom:36px;border-bottom:1px solid var(--line);margin-bottom:40px}
@@ -61,6 +62,7 @@ footer{margin-top:64px;padding-top:24px;border-top:1px solid var(--line);color:v
   <div><b>Stock</b><span>Se descuenta con cada compra. A cero, la pieza aparece «Agotada» y no se puede comprar.</span></div>
   <div><b>Pedidos</b><span>Cada compra queda anotada en la pestaña Pedidos con su número (MF-1001, MF-1002…).</span></div>
   <div><b>Aviso a vos</b><span>Te llega un email con cada pedido nuevo, con el botón para escribirle al cliente por WhatsApp.</span></div>
+  <div><b>Mercado Pago</b><span>Cada pedido genera su link de pago con el monto exacto. Cuando el pago se aprueba, el pedido pasa a «Pagado» solo. No hace falta comprobante.</span></div>
   <div><b>Email al cliente</b><span>Recibe el detalle y los datos de pago; después, los avisos de pago, envío y entrega.</span></div>
   <div><b>Recordatorio</b><span>A las 24 h sin pago, el cliente recibe un recordatorio.</span></div>
   <div><b>Cancelación</b><span>A las 48 h sin pago, el pedido se cancela y el stock vuelve solo.</span></div>
@@ -89,8 +91,34 @@ footer{margin-top:64px;padding-top:24px;border-top:1px solid var(--line);color:v
     <tr><td>Quién tiene acceso</td><td><b>Cualquier persona</b></td></tr></table></div>
     Tocá <span class="ui">Implementar</span> y copiá la <b>URL de la aplicación web</b> (termina en <span class="ui">/exec</span>).</div></li>
   <li><div><b>Pasame ese link</b> y te devuelvo la tienda conectada, lista para subir. Si preferís hacerlo vos: abrí <span class="ui">index.html</span> con el Bloc de notas, buscá <span class="ui">const API_URL="";</span> y pegá el link entre las comillas.</div></li>
-  <li><div><b>Completá la pestaña Config</b>: datos bancarios, el email donde querés los avisos y, si tenés, el link de pago de Mercado Pago. Después probá el menú <span class="ui">Merfina</span> → <span class="ui">Probar el envío de emails</span>.</div></li>
+  <li><div><b>Completá la pestaña Config</b>: datos bancarios y el email donde querés los avisos. Mercado Pago se conecta aparte (abajo te explico cómo). Después probá el menú <span class="ui">Merfina</span> → <span class="ui">Probar el envío de emails</span>.</div></li>
 </ol>
+
+<h2>Conectar Mercado Pago</h2>
+<p>Se hace una sola vez y lleva unos 5 minutos. Con esto, quien elige Mercado Pago paga ahí mismo (tarjeta de crédito, débito o dinero en cuenta) y el pedido se marca como pagado solo.</p>
+<ol class="steps">
+  <li><div>Usá tu cuenta de <b>Mercado Pago de Uruguay</b>, la misma donde querés recibir la plata.</div></li>
+  <li><div>Entrá a <span class="ui">mercadopago.com.uy/developers</span>, iniciá sesión y andá a <span class="ui">Tus integraciones</span> → <span class="ui">Crear aplicación</span>.</div></li>
+  <li><div>Ponele de nombre <b>Tienda Merfina</b>. Cuando te pregunte qué vas a integrar, elegí <b>Pagos online</b>. Cuando pregunte si usás una plataforma de e-commerce, respondé <b>No</b>, y como producto elegí <b>Checkout Pro</b>. Confirmá con <span class="ui">Crear aplicación</span>.
+    <div class="note">Mercado Pago cambia los nombres de estas pantallas cada tanto. Si algo no coincide exacto, buscá siempre «Checkout Pro» y «Credenciales de producción».</div></div></li>
+  <li><div>Dentro de la aplicación, entrá a <span class="ui">Credenciales de producción</span>. Si te pide activarlas, completá el rubro (joyería o accesorios) y el sitio web de la tienda (o tu Instagram si todavía no está publicada).</div></li>
+  <li><div>Copiá el <b>Access Token</b>: es un texto largo que empieza con <span class="ui">APP_USR-</span>.
+    <div class="note"><b>El Access Token es como una contraseña.</b> No lo mandes por WhatsApp ni por email, y no lo escribas en la planilla. Se pega solo en el paso siguiente, donde queda guardado de forma privada.</div></div></li>
+  <li><div>En la planilla: menú <span class="ui">Merfina</span> → <span class="ui">Conectar Mercado Pago</span> → pegá el token → <span class="ui">Aceptar</span>. Te confirma con el nombre de tu cuenta.</div></li>
+</ol>
+<p class="ok">Listo. No hace falta configurar nada más en Mercado Pago.</p>
+
+<h3>Cómo funciona una compra con Mercado Pago</h3>
+<ol class="steps">
+  <li><div>El cliente elige Mercado Pago y confirma el pedido. La tienda reserva las piezas y lo lleva a Mercado Pago con el monto exacto.</div></li>
+  <li><div>Paga con tarjeta, débito o dinero en cuenta (las cuotas las ofrece Mercado Pago).</div></li>
+  <li><div>Vuelve a la tienda y ve «¡Pago aprobado!». Al mismo tiempo el pedido pasa a <b>Pagado</b> en la planilla, a él le llega la confirmación y a vos el email <b>«Pago aprobado MF-…»</b>.</div></li>
+  <li><div>La plata queda en tu cuenta de Mercado Pago. Vos solo preparás y despachás.</div></li>
+</ol>
+<div class="note"><b>Sobre el recargo:</b> el <b>comision_mp</b> de la pestaña Config (12%) es lo que se le suma al cliente que paga con Mercado Pago. Aparte, Mercado Pago te descuenta su comisión de lo cobrado. Si no querés cobrar recargo, poné 0.<br><br>
+<b>Si un pago no se completa</b>, el cliente puede reintentar desde el email o desde la tienda. Si nadie paga en 48 h, el pedido se cancela y el stock vuelve, como siempre.<br><br>
+<b>Para probar:</b> hacé una compra real chica con tu propia tarjeta y después devolvé la plata desde Mercado Pago (Actividad → el pago → Devolver). Así ves todo el recorrido.<br><br>
+La transferencia bancaria sigue igual: el cliente te manda el comprobante por WhatsApp y vos marcás «Pagado».</div>
 
 <div class="code-head"><h3 style="margin:0">El código para pegar</h3><button class="copy" id="copyCode" type="button">Copiar código</button></div>
 <div class="copied" id="copied" aria-live="polite"></div>
@@ -104,6 +132,8 @@ footer{margin-top:64px;padding-top:24px;border-top:1px solid var(--line);color:v
  *  - Recibe los pedidos, controla que haya stock y lo descuenta solo.
  *  - Anota cada pedido en la pestaña Pedidos con número correlativo (MF-1001…).
  *  - Valida cupones, calcula envío, envío gratis y comisión de Mercado Pago.
+ *  - Cobra con Mercado Pago (Checkout Pro): genera el link de pago con el monto exacto
+ *    y, cuando el pago se aprueba, marca el pedido como Pagado solo.
  *  - Manda emails: aviso de pedido nuevo a Merfina y confirmación al cliente
  *    con los datos de pago; después avisos de pago recibido, envío y entrega.
  *  - Si cancelás un pedido, devuelve el stock solo.
@@ -134,7 +164,7 @@ const COLS = {
   Config: [&quot;Clave&quot;, &quot;Valor&quot;, &quot;Para qué sirve&quot;],
   Pedidos: [&quot;Fecha&quot;, &quot;Pedido&quot;, &quot;Estado&quot;, &quot;Nombre&quot;, &quot;Teléfono&quot;, &quot;Email&quot;, &quot;Departamento&quot;, &quot;Ciudad o barrio&quot;, &quot;Dirección&quot;, &quot;Notas&quot;,
             &quot;Productos&quot;, &quot;Subtotal&quot;, &quot;Descuento&quot;, &quot;Cupón&quot;, &quot;Envoltorio&quot;, &quot;Entrega&quot;, &quot;Costo envío&quot;, &quot;Comisión MP&quot;, &quot;Total&quot;, &quot;Pago&quot;,
-            &quot;Seguimiento&quot;, &quot;Recordatorio&quot;, &quot;Stock devuelto&quot;, &quot;Detalle (no editar)&quot;],
+            &quot;Seguimiento&quot;, &quot;Recordatorio&quot;, &quot;Stock devuelto&quot;, &quot;Link de pago&quot;, &quot;ID pago MP&quot;, &quot;Detalle (no editar)&quot;],
   Suscriptores: [&quot;Fecha&quot;, &quot;Email&quot;, &quot;Origen&quot;]
 };
 
@@ -157,6 +187,10 @@ function onOpen() {
     .addItem(&quot;Ver el link de la tienda (para la página)&quot;, &quot;verLinkTienda&quot;)
     .addItem(&quot;Abrir la carpeta de fotos&quot;, &quot;abrirCarpetaFotos&quot;)
     .addSeparator()
+    .addItem(&quot;Conectar Mercado Pago&quot;, &quot;conectarMercadoPago&quot;)
+    .addItem(&quot;Ver conexión de Mercado Pago&quot;, &quot;verMercadoPago&quot;)
+    .addItem(&quot;Revisar pagos de Mercado Pago ahora&quot;, &quot;revisarPagosMP&quot;)
+    .addSeparator()
     .addItem(&quot;Enviarme el resumen ahora&quot;, &quot;resumenDiario&quot;)
     .addItem(&quot;Revisar pedidos vencidos ahora&quot;, &quot;tareaCadaHora&quot;)
     .addItem(&quot;Probar el envío de emails&quot;, &quot;probarEmail&quot;)
@@ -172,6 +206,7 @@ function doGet(e) {
   try {
     if (accion === &quot;catalogo&quot;) return json_(catalogoCacheado_());
     if (accion === &quot;ping&quot;) return json_({ ok: true, hora: new Date().toISOString() });
+    if (accion === &quot;pedido&quot;) return json_(estadoPedido_(e.parameter.codigo));
     return json_({ ok: false, error: &quot;accion&quot;, mensaje: &quot;Acción desconocida.&quot; });
   } catch (err) {
     registrarError_(&quot;doGet&quot;, err);
@@ -180,6 +215,10 @@ function doGet(e) {
 }
 
 function doPost(e) {
+  if (e &amp;&amp; e.parameter &amp;&amp; e.parameter.accion === &quot;mp&quot;) {
+    try { return json_(webhookMP_(e)); }
+    catch (err) { registrarError_(&quot;webhook MP&quot;, err); return json_({ ok: false }); }
+  }
   let data = {};
   try {
     data = JSON.parse((e &amp;&amp; e.postData &amp;&amp; e.postData.contents) || &quot;{}&quot;);
@@ -258,6 +297,7 @@ function catalogo_() {
       whatsappTexto: texto_(cfg.whatsapp_texto),
       mpCommission: porcentaje_(cfg.comision_mp),
       mpLink: texto_(cfg.link_mp),
+      mpConectado: !!mpToken_(),
       free: numero_(cfg.envio_gratis_desde),
       wrap: numero_(cfg.envoltorio_regalo),
       stockBajo: numero_(cfg.stock_bajo),
@@ -415,7 +455,7 @@ function crearPedido_(data) {
       entrega: opcion.name, envio: envio, comision: comision, total: total,
       pago: pago === &quot;mp&quot; ? &quot;Mercado Pago&quot; : &quot;Transferencia bancaria&quot;
     };
-    anotarPedido_(pedido);
+    pedido.fila = anotarPedido_(pedido);
     SpreadsheetApp.flush();
 
     resultado = {
@@ -430,6 +470,18 @@ function crearPedido_(data) {
   }
 
   limpiarCache_();
+  // Link de pago de Mercado Pago (fuera del bloqueo: la llamada tarda un poco)
+  if (resultado.ok &amp;&amp; pago === &quot;mp&quot; &amp;&amp; mpToken_()) {
+    try {
+      resultado._pedido.mpUrl = crearPreferenciaMP_(resultado._pedido, data.volver);
+      const t = tabla_(HOJA.pedidos);
+      t.hoja.getRange(resultado._pedido.fila, t.col[&quot;Link de pago&quot;]).setValue(resultado._pedido.mpUrl);
+      resultado.mpUrl = resultado._pedido.mpUrl;
+    } catch (err) {
+      registrarError_(&quot;preferencia MP&quot;, err);
+      resultado._alertas.push({ nombre: &quot;No se pudo crear el link de Mercado Pago (&quot; + String(err.message || err).slice(0, 120) + &quot;)&quot;, v: &quot;mandale el link por WhatsApp&quot;, stock: -1 });
+    }
+  }
   // Emails fuera del bloqueo para no demorar otros pedidos
   try { avisoPedidoNuevo_(resultado._pedido, resultado._alertas); } catch (err) { registrarError_(&quot;aviso pedido&quot;, err); }
   try { if (esSi_(config_().email_al_cliente, true)) emailConfirmacionCliente_(resultado._pedido); } catch (err) { registrarError_(&quot;email cliente&quot;, err); }
@@ -450,6 +502,7 @@ function anotarPedido_(p) {
     &quot;Seguimiento&quot;: &quot;&quot;, &quot;Recordatorio&quot;: &quot;&quot;, &quot;Stock devuelto&quot;: &quot;No&quot;, &quot;Detalle (no editar)&quot;: JSON.stringify(p.lineas.map(l =&gt; ({ id: l.id, v: l.v, q: l.q, p: l.p, n: l.nombre })))
   };
   t.hoja.appendRow(t.encabezados.map(h =&gt; (h in valores ? valores[h] : &quot;&quot;)));
+  return t.hoja.getLastRow();
 }
 
 function ultimoNumeroEnHoja_() {
@@ -607,6 +660,7 @@ function compartirFotos_(valor) {
 
 /** Cada hora: recordatorio de pago y cancelación de pedidos vencidos. */
 function tareaCadaHora() {
+  try { revisarPagosMP(); } catch (err) { registrarError_(&quot;revisar MP&quot;, err); }
   const cfg = config_();
   const horas = numero_(cfg.horas_para_cancelar) || 48;
   const horasRecordatorio = numero_(cfg.horas_recordatorio) || Math.round(horas / 2);
@@ -693,8 +747,10 @@ function avisoPedidoNuevo_(p, alertas) {
     (p.cliente.notas ? &quot;&lt;br&gt;&lt;i&gt;Notas: &quot; + esc_(p.cliente.notas) + &quot;&lt;/i&gt;&quot; : &quot;&quot;));
   cuerpo += titulo_(&quot;Productos&quot;) + tablaPedido_(p);
   cuerpo += parrafo_(&quot;Entrega: &lt;b&gt;&quot; + esc_(p.entrega) + &quot;&lt;/b&gt;&quot;);
-  if (alertas &amp;&amp; alertas.length) cuerpo += titulo_(&quot;Atención al stock&quot;) + lista_html_(alertas.map(a =&gt; esc_(a.nombre) + &quot; · &quot; + esc_(a.v) + &quot;: &quot; + (a.stock === 0 ? &quot;&lt;b&gt;AGOTADO&lt;/b&gt;&quot; : &quot;quedan &quot; + a.stock)));
-  cuerpo += parrafo_(&quot;Cuando te llegue el comprobante, cambiá el estado a &lt;b&gt;Pagado&lt;/b&gt; en la pestaña Pedidos y el cliente recibe la confirmación automáticamente.&quot;);
+  if (alertas &amp;&amp; alertas.length) cuerpo += titulo_(&quot;Atención&quot;) + lista_html_(alertas.map(a =&gt; a.stock &lt; 0 ? &quot;&lt;b&gt;&quot; + esc_(a.nombre) + &quot;&lt;/b&gt;: &quot; + esc_(a.v) : esc_(a.nombre) + &quot; · &quot; + esc_(a.v) + &quot;: &quot; + (a.stock === 0 ? &quot;&lt;b&gt;AGOTADO&lt;/b&gt;&quot; : &quot;quedan &quot; + a.stock)));
+  cuerpo += parrafo_(p.mpUrl
+    ? &quot;El cliente está pagando con Mercado Pago. Cuando el pago se apruebe, el pedido pasa a &lt;b&gt;Pagado&lt;/b&gt; solo y te llega otro email.&quot;
+    : &quot;Cuando te llegue el comprobante, cambiá el estado a &lt;b&gt;Pagado&lt;/b&gt; en la pestaña Pedidos y el cliente recibe la confirmación automáticamente.&quot;);
   cuerpo += boton_(&quot;Escribirle por WhatsApp&quot;, &quot;https://wa.me/598&quot; + soloDigitos_(p.cliente.telefono).replace(/^0/, &quot;&quot;));
   enviarAMerfina_(&quot;Pedido nuevo &quot; + p.codigo + &quot; · &quot; + pesos_(p.total), cuerpo, p.cliente.email);
 }
@@ -712,8 +768,9 @@ function instruccionesPago_(p, cfg) {
   let html = titulo_(&quot;Cómo pagar&quot;);
   if (p.pago === &quot;Transferencia bancaria&quot;) {
     html += tablaDatos_(datosBancarios_(cfg).concat([[&quot;Monto&quot;, pesos_(p.total)], [&quot;Referencia&quot;, p.codigo]]));
-  } else if (texto_(cfg.link_mp)) {
-    html += parrafo_(&quot;Pagá &quot; + pesos_(p.total) + &quot; con tarjeta, débito o dinero en cuenta:&quot;) + boton_(&quot;Pagar con Mercado Pago&quot;, texto_(cfg.link_mp));
+  } else if (p.mpUrl || texto_(cfg.link_mp)) {
+    html += parrafo_(&quot;Pagá &quot; + pesos_(p.total) + &quot; con tarjeta, débito o dinero en cuenta:&quot;) + boton_(&quot;Pagar con Mercado Pago&quot;, p.mpUrl || texto_(cfg.link_mp));
+    if (p.mpUrl) return html + parrafo_(&quot;Cuando el pago se apruebe te llega la confirmación por email. Reservamos tus piezas durante &quot; + horas + &quot; horas.&quot;);
   } else {
     html += parrafo_(&quot;Te mandamos el link de pago de Mercado Pago por WhatsApp por &quot; + pesos_(p.total) + &quot;.&quot;);
   }
@@ -754,7 +811,7 @@ function avisarCliente_(fila, tipo) {
       boton_(&quot;Escribir por WhatsApp&quot;, &quot;https://wa.me/&quot; + soloDigitos_(cfg.whatsapp));
   } else if (tipo === &quot;recordatorio&quot;) {
     asunto = &quot;Tus piezas te esperan · Pedido &quot; + codigo;
-    const p = { codigo: codigo, total: numero_(fila[&quot;Total&quot;]), pago: texto_(fila[&quot;Pago&quot;]) };
+    const p = { codigo: codigo, total: numero_(fila[&quot;Total&quot;]), pago: texto_(fila[&quot;Pago&quot;]), mpUrl: texto_(fila[&quot;Link de pago&quot;]) };
     cuerpo = parrafo_(&quot;¡Hola &quot; + nombre + &quot;! Todavía tenemos reservado tu pedido &lt;b&gt;&quot; + codigo + &quot;&lt;/b&gt;, pero no nos llegó el comprobante.&quot;) + instruccionesPago_(p, cfg);
   }
   if (asunto) {
@@ -981,6 +1038,7 @@ function aplicarFormatos_(ss) {
   prod.hoja.setColumnWidth(prod.col[&quot;Fotos&quot;], 260);
   pt.hoja.setColumnWidth(pt.col[&quot;Productos&quot;], 260);
   pt.hoja.hideColumns(pt.col[&quot;Detalle (no editar)&quot;]);
+  pt.hoja.setColumnWidth(pt.col[&quot;Link de pago&quot;], 140);
   tabla_(HOJA.config).hoja.setColumnWidth(3, 460);
   tabla_(HOJA.config).hoja.getRange(&quot;B:B&quot;).setHorizontalAlignment(&quot;left&quot;);
   tabla_(HOJA.config).hoja.getRange(&quot;A:A&quot;).setFontWeight(&quot;bold&quot;);
@@ -1023,11 +1081,12 @@ function armarResumen_(ss) {
 }
 
 function instalarDisparadores_() {
-  const nuestros = [&quot;alEditar&quot;, &quot;tareaCadaHora&quot;, &quot;resumenDiario&quot;];
+  const nuestros = [&quot;alEditar&quot;, &quot;tareaCadaHora&quot;, &quot;resumenDiario&quot;, &quot;revisarPagosMP&quot;];
   ScriptApp.getProjectTriggers().forEach(t =&gt; { if (nuestros.indexOf(t.getHandlerFunction()) &gt;= 0) ScriptApp.deleteTrigger(t); });
   const ss = SpreadsheetApp.getActive();
   ScriptApp.newTrigger(&quot;alEditar&quot;).forSpreadsheet(ss).onEdit().create();
   ScriptApp.newTrigger(&quot;tareaCadaHora&quot;).timeBased().everyHours(1).create();
+  ScriptApp.newTrigger(&quot;revisarPagosMP&quot;).timeBased().everyMinutes(10).create();
   const hora = Math.min(23, Math.max(0, numero_(config_().hora_resumen) || 21));
   ScriptApp.newTrigger(&quot;resumenDiario&quot;).timeBased().everyDays(1).atHour(hora).inTimezone(&quot;America/Montevideo&quot;).create();
 }
@@ -1059,6 +1118,178 @@ function mostrarLink_(titulo, texto, url) {
     &#x27;&lt;input style=&quot;width:100%;padding:8px;font-size:13px&quot; value=&quot;&#x27; + esc_(url) + &#x27;&quot; onclick=&quot;this.select()&quot; readonly&gt;&#x27; +
     &#x27;&lt;p&gt;&lt;a href=&quot;&#x27; + esc_(url) + &#x27;&quot; target=&quot;_blank&quot;&gt;Abrir&lt;/a&gt;&lt;/p&gt;&lt;/div&gt;&#x27;).setWidth(520).setHeight(180);
   SpreadsheetApp.getUi().showModalDialog(html, titulo);
+}
+
+/* ============================================================
+ *  MERCADO PAGO (Checkout Pro)
+ * ============================================================ */
+
+function mpToken_() {
+  return PropertiesService.getScriptProperties().getProperty(&quot;MP_TOKEN&quot;) || &quot;&quot;;
+}
+
+function mpFetch_(metodo, ruta, cuerpo) {
+  const opciones = { method: metodo, headers: { Authorization: &quot;Bearer &quot; + mpToken_() }, muteHttpExceptions: true };
+  if (cuerpo) { opciones.contentType = &quot;application/json&quot;; opciones.payload = JSON.stringify(cuerpo); }
+  if (metodo === &quot;post&quot;) opciones.headers[&quot;X-Idempotency-Key&quot;] = Utilities.getUuid();
+  const r = UrlFetchApp.fetch(&quot;https://api.mercadopago.com&quot; + ruta, opciones);
+  const codigo = r.getResponseCode();
+  let data = {};
+  try { data = JSON.parse(r.getContentText() || &quot;{}&quot;); } catch (err) { data = {}; }
+  if (codigo &gt;= 300) throw new Error(&quot;Mercado Pago respondió &quot; + codigo + &quot;: &quot; + (data.message || r.getContentText()).slice(0, 200));
+  return data;
+}
+
+/** Crea el link de pago con el monto exacto del pedido y devuelve la URL de Mercado Pago. */
+function crearPreferenciaMP_(p, volver) {
+  const cfg = config_();
+  const horas = numero_(cfg.horas_para_cancelar) || 48;
+  const ahora = new Date();
+  const vence = new Date(ahora.getTime() + horas * 36e5);
+  const pref = {
+    items: [{
+      id: p.codigo,
+      title: &quot;Pedido &quot; + p.codigo + &quot; · Merfina&quot;,
+      description: p.lineas.map(l =&gt; l.q + &quot; × &quot; + l.nombre + &quot; (&quot; + l.v + &quot;)&quot;).join(&quot;, &quot;).slice(0, 250),
+      quantity: 1,
+      unit_price: Math.round(p.total),
+      currency_id: &quot;UYU&quot;
+    }],
+    payer: { name: p.cliente.nombre, surname: p.cliente.apellido, email: p.cliente.email },
+    external_reference: p.codigo,
+    statement_descriptor: &quot;MERFINA&quot;,
+    notification_url: ScriptApp.getService().getUrl() + &quot;?accion=mp&quot;,
+    expires: true,
+    expiration_date_from: ahora.toISOString(),
+    expiration_date_to: vence.toISOString(),
+    metadata: { pedido: p.codigo }
+  };
+  const base = texto_(volver);
+  if (/^https:\/\/[^\s?#]+$/.test(base)) {
+    const ida = base + &quot;?pedido=&quot; + encodeURIComponent(p.codigo);
+    pref.back_urls = { success: ida, pending: ida, failure: ida };
+    pref.auto_return = &quot;approved&quot;;
+  }
+  const r = mpFetch_(&quot;post&quot;, &quot;/checkout/preferences&quot;, pref);
+  if (!r.init_point) throw new Error(&quot;Mercado Pago no devolvió el link de pago&quot;);
+  return r.init_point;
+}
+
+/** Mercado Pago avisa acá cada vez que cambia un pago. */
+function webhookMP_(e) {
+  let cuerpo = {};
+  try { cuerpo = JSON.parse((e.postData &amp;&amp; e.postData.contents) || &quot;{}&quot;); } catch (err) { cuerpo = {}; }
+  const prm = e.parameter || {};
+  const tipo = cuerpo.type || cuerpo.topic || prm.type || prm.topic || &quot;&quot;;
+  const id = (cuerpo.data &amp;&amp; cuerpo.data.id) || prm[&quot;data.id&quot;] || prm.id || &quot;&quot;;
+  if (tipo.indexOf(&quot;payment&quot;) &lt; 0 || !id || !mpToken_()) return { ok: true };
+  return procesarPagoMP_(String(id));
+}
+
+/**
+ * Consulta el pago directamente a Mercado Pago (no confía en lo que llega por la web)
+ * y, si está aprobado y el monto coincide, marca el pedido como Pagado.
+ */
+function procesarPagoMP_(idPago) {
+  const cache = CacheService.getScriptCache();
+  if (cache.get(&quot;mp_ok_&quot; + idPago)) return { ok: true, repetido: true };
+  const pago = mpFetch_(&quot;get&quot;, &quot;/v1/payments/&quot; + encodeURIComponent(idPago));
+  if (pago.status !== &quot;approved&quot;) return { ok: true, estado: pago.status };
+  const codigo = texto_(pago.external_reference);
+  const t = tabla_(HOJA.pedidos);
+  const fila = t.filas.find(f =&gt; texto_(f[&quot;Pedido&quot;]) === codigo);
+  if (!fila) return { ok: true, sinPedido: codigo };
+  const anterior = texto_(fila[&quot;Estado&quot;]);
+  if ([&quot;Pagado&quot;, &quot;Enviado&quot;, &quot;Entregado&quot;].indexOf(anterior) &gt;= 0) { cache.put(&quot;mp_ok_&quot; + idPago, &quot;1&quot;, 21600); return { ok: true, yaPagado: true }; }
+
+  const total = numero_(fila[&quot;Total&quot;]);
+  if (pago.currency_id !== &quot;UYU&quot; || numero_(pago.transaction_amount) + 1 &lt; total) {
+    enviarAMerfina_(&quot;Revisá el pago del pedido &quot; + codigo,
+      parrafo_(&quot;Mercado Pago aprobó un pago para el pedido &lt;b&gt;&quot; + esc_(codigo) + &quot;&lt;/b&gt;, pero el monto no coincide: se pagaron &lt;b&gt;&quot; + esc_(pago.currency_id) + &quot; &quot; + esc_(pago.transaction_amount) + &quot;&lt;/b&gt; y el pedido es de &lt;b&gt;&quot; + pesos_(total) + &quot;&lt;/b&gt;. No lo marqué como pagado: revisalo y cambiá el estado a mano.&quot;));
+    cache.put(&quot;mp_ok_&quot; + idPago, &quot;1&quot;, 21600);
+    return { ok: true, montoDistinto: true };
+  }
+
+  cache.put(&quot;mp_ok_&quot; + idPago, &quot;1&quot;, 21600);
+  t.hoja.getRange(fila._fila, t.col[&quot;Estado&quot;]).setValue(&quot;Pagado&quot;);
+  t.hoja.getRange(fila._fila, t.col[&quot;ID pago MP&quot;]).setValue(String(idPago));
+  fila[&quot;Estado&quot;] = &quot;Pagado&quot;;
+  cambiarEstado_(t, fila, &quot;Pagado&quot;, anterior, false);
+  enviarAMerfina_(&quot;Pago aprobado &quot; + codigo + &quot; · &quot; + pesos_(total),
+    tarjetas_([[&quot;Pedido&quot;, codigo], [&quot;Cobrado&quot;, pesos_(pago.transaction_amount)], [&quot;Medio&quot;, texto_(pago.payment_method_id) || &quot;Mercado Pago&quot;]]) +
+    parrafo_(&quot;El pedido de &lt;b&gt;&quot; + esc_(fila[&quot;Nombre&quot;]) + &quot;&lt;/b&gt; pasó a &lt;b&gt;Pagado&lt;/b&gt; y al cliente le llegó la confirmación. Ya podés prepararlo: &quot; + esc_(fila[&quot;Entrega&quot;]) + &quot;.&quot;) +
+    (anterior === &quot;Cancelado&quot; ? parrafo_(&quot;&lt;b&gt;Ojo:&lt;/b&gt; este pedido estaba cancelado por falta de pago y se reactivó. Revisá que tengas stock de las piezas.&quot;) : &quot;&quot;));
+  return { ok: true, pagado: codigo };
+}
+
+/** Cada 10 minutos: por si algún aviso de Mercado Pago no llegó, revisa los pedidos pendientes. */
+function revisarPagosMP() {
+  if (!mpToken_()) return;
+  const limite = Date.now() - 7 * 24 * 36e5;
+  tabla_(HOJA.pedidos).filas
+    .filter(f =&gt; texto_(f[&quot;Pago&quot;]) === &quot;Mercado Pago&quot; &amp;&amp; [&quot;Pendiente de pago&quot;, &quot;Cancelado&quot;].indexOf(texto_(f[&quot;Estado&quot;])) &gt;= 0 &amp;&amp;
+                 f[&quot;Fecha&quot;] instanceof Date &amp;&amp; f[&quot;Fecha&quot;].getTime() &gt; limite &amp;&amp; !texto_(f[&quot;ID pago MP&quot;]))
+    .forEach(f =&gt; {
+      try {
+        const r = mpFetch_(&quot;get&quot;, &quot;/v1/payments/search?sort=date_created&amp;criteria=desc&amp;external_reference=&quot; + encodeURIComponent(texto_(f[&quot;Pedido&quot;])));
+        const aprobado = (r.results || []).find(x =&gt; x.status === &quot;approved&quot;);
+        if (aprobado) procesarPagoMP_(String(aprobado.id));
+      } catch (err) { registrarError_(&quot;buscar pago &quot; + f[&quot;Pedido&quot;], err); }
+    });
+}
+
+/** Para la página: cómo está un pedido (al volver de Mercado Pago o para reintentar el pago). */
+function estadoPedido_(codigo) {
+  const c = texto_(codigo);
+  if (!/^MF-\d+$/.test(c)) return { ok: false, mensaje: &quot;Número de pedido inválido.&quot; };
+  const f = tabla_(HOJA.pedidos).filas.find(x =&gt; texto_(x[&quot;Pedido&quot;]) === c);
+  if (!f) return { ok: false, mensaje: &quot;No encontramos ese pedido.&quot; };
+  let estado = texto_(f[&quot;Estado&quot;]);
+  if (estado === &quot;Pendiente de pago&quot; &amp;&amp; texto_(f[&quot;Pago&quot;]) === &quot;Mercado Pago&quot; &amp;&amp; mpToken_()) {
+    try { revisarUnPedidoMP_(c); estado = texto_(tabla_(HOJA.pedidos).filas.find(x =&gt; texto_(x[&quot;Pedido&quot;]) === c)[&quot;Estado&quot;]); } catch (err) { registrarError_(&quot;estado &quot; + c, err); }
+  }
+  return { ok: true, pedido: c, estado: estado, total: numero_(f[&quot;Total&quot;]), pago: texto_(f[&quot;Pago&quot;]), link: estado === &quot;Pendiente de pago&quot; ? texto_(f[&quot;Link de pago&quot;]) : &quot;&quot; };
+}
+
+function revisarUnPedidoMP_(codigo) {
+  const r = mpFetch_(&quot;get&quot;, &quot;/v1/payments/search?sort=date_created&amp;criteria=desc&amp;external_reference=&quot; + encodeURIComponent(codigo));
+  const aprobado = (r.results || []).find(x =&gt; x.status === &quot;approved&quot;);
+  if (aprobado) procesarPagoMP_(String(aprobado.id));
+}
+
+function conectarMercadoPago() {
+  const ui = SpreadsheetApp.getUi();
+  const r = ui.prompt(&quot;Conectar Mercado Pago&quot;,
+    &quot;Pegá el Access Token de PRODUCCIÓN de tu aplicación de Mercado Pago (empieza con APP_USR-).\nSe guarda de forma privada: no queda escrito en la planilla.&quot;,
+    ui.ButtonSet.OK_CANCEL);
+  if (r.getSelectedButton() !== ui.Button.OK) return;
+  const token = texto_(r.getResponseText());
+  if (!/^(APP_USR|TEST)-/.test(token)) return ui.alert(&quot;Ese no parece un Access Token. Tiene que empezar con APP_USR- (o TEST- para pruebas).&quot;);
+  const props = PropertiesService.getScriptProperties();
+  const anterior = props.getProperty(&quot;MP_TOKEN&quot;);
+  props.setProperty(&quot;MP_TOKEN&quot;, token);
+  try {
+    const yo = mpFetch_(&quot;get&quot;, &quot;/users/me&quot;);
+    limpiarCache_();
+    ui.alert(&quot;¡Mercado Pago conectado!&quot;,
+      &quot;Cuenta: &quot; + (yo.nickname || yo.email || yo.id) + (yo.site_id &amp;&amp; yo.site_id !== &quot;MLU&quot; ? &quot;\n\nAtención: esta cuenta no es de Uruguay (&quot; + yo.site_id + &quot;). Los cobros en pesos uruguayos pueden fallar.&quot; : &quot;&quot;) +
+      (token.indexOf(&quot;TEST-&quot;) === 0 ? &quot;\n\nEs un token de PRUEBA: los pagos no son reales.&quot; : &quot;&quot;) +
+      &quot;\n\nDesde ahora, quien elija Mercado Pago paga directo ahí y el pedido se marca como Pagado solo.&quot;, ui.ButtonSet.OK);
+  } catch (err) {
+    if (anterior) props.setProperty(&quot;MP_TOKEN&quot;, anterior); else props.deleteProperty(&quot;MP_TOKEN&quot;);
+    ui.alert(&quot;No pude conectar con Mercado Pago. Revisá que copiaste el Access Token completo.\n\n&quot; + (err.message || err));
+  }
+}
+
+function verMercadoPago() {
+  const ui = SpreadsheetApp.getUi();
+  if (!mpToken_()) return ui.alert(&quot;Mercado Pago no está conectado. Usá el menú Merfina → Conectar Mercado Pago.&quot;);
+  try {
+    const yo = mpFetch_(&quot;get&quot;, &quot;/users/me&quot;);
+    ui.alert(&quot;Mercado Pago conectado a la cuenta: &quot; + (yo.nickname || yo.email || yo.id) + &quot; (&quot; + (yo.site_id || &quot;&quot;) + &quot;).&quot;);
+  } catch (err) {
+    ui.alert(&quot;El token guardado no funciona: &quot; + (err.message || err) + &quot;\n\nVolvé a conectar desde el menú.&quot;);
+  }
 }
 
 /* ============================================================
@@ -1204,7 +1435,7 @@ Si una foto no aparece en un par de minutos, revisá en Drive que diga «Cualqui
 <h3>Cuando entra un pedido</h3>
 <ol class="steps">
   <li><div>Te llega el email <b>«Pedido nuevo MF-…»</b> y el pedido aparece en <b>Pedidos</b> como <b>Pendiente de pago</b>. El stock ya está descontado.</div></li>
-  <li><div>Cuando el cliente te manda el comprobante por WhatsApp, cambiá el <b>Estado</b> a <b>Pagado</b>. Al cliente le llega «¡Recibimos tu pago!».</div></li>
+  <li><div><b>Mercado Pago:</b> cuando se aprueba, el pedido pasa a <b>Pagado</b> solo y te llega «Pago aprobado». <b>Transferencia:</b> cuando el cliente te manda el comprobante por WhatsApp, cambiá el <b>Estado</b> a <b>Pagado</b>. En los dos casos, al cliente le llega «¡Recibimos tu pago!».</div></li>
   <li><div>Cuando lo despachás, escribí el número de seguimiento en <b>Seguimiento</b> (si tiene) y cambiá el estado a <b>Enviado</b>. Al cliente le llega el aviso.</div></li>
   <li><div>Cuando llegó, poné <b>Entregado</b>. El cliente recibe un agradecimiento con el link a Instagram.</div></li>
 </ol>

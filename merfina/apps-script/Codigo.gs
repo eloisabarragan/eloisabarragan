@@ -8,6 +8,8 @@
  *  - Recibe los pedidos, controla que haya stock y lo descuenta solo.
  *  - Anota cada pedido en la pestaña Pedidos con número correlativo (MF-1001…).
  *  - Valida cupones, calcula envío, envío gratis y comisión de Mercado Pago.
+ *  - Cobra con Mercado Pago (Checkout Pro): genera el link de pago con el monto exacto
+ *    y, cuando el pago se aprueba, marca el pedido como Pagado solo.
  *  - Manda emails: aviso de pedido nuevo a Merfina y confirmación al cliente
  *    con los datos de pago; después avisos de pago recibido, envío y entrega.
  *  - Si cancelás un pedido, devuelve el stock solo.
@@ -38,7 +40,7 @@ const COLS = {
   Config: ["Clave", "Valor", "Para qué sirve"],
   Pedidos: ["Fecha", "Pedido", "Estado", "Nombre", "Teléfono", "Email", "Departamento", "Ciudad o barrio", "Dirección", "Notas",
             "Productos", "Subtotal", "Descuento", "Cupón", "Envoltorio", "Entrega", "Costo envío", "Comisión MP", "Total", "Pago",
-            "Seguimiento", "Recordatorio", "Stock devuelto", "Detalle (no editar)"],
+            "Seguimiento", "Recordatorio", "Stock devuelto", "Link de pago", "ID pago MP", "Detalle (no editar)"],
   Suscriptores: ["Fecha", "Email", "Origen"]
 };
 
@@ -61,6 +63,10 @@ function onOpen() {
     .addItem("Ver el link de la tienda (para la página)", "verLinkTienda")
     .addItem("Abrir la carpeta de fotos", "abrirCarpetaFotos")
     .addSeparator()
+    .addItem("Conectar Mercado Pago", "conectarMercadoPago")
+    .addItem("Ver conexión de Mercado Pago", "verMercadoPago")
+    .addItem("Revisar pagos de Mercado Pago ahora", "revisarPagosMP")
+    .addSeparator()
     .addItem("Enviarme el resumen ahora", "resumenDiario")
     .addItem("Revisar pedidos vencidos ahora", "tareaCadaHora")
     .addItem("Probar el envío de emails", "probarEmail")
@@ -76,6 +82,7 @@ function doGet(e) {
   try {
     if (accion === "catalogo") return json_(catalogoCacheado_());
     if (accion === "ping") return json_({ ok: true, hora: new Date().toISOString() });
+    if (accion === "pedido") return json_(estadoPedido_(e.parameter.codigo));
     return json_({ ok: false, error: "accion", mensaje: "Acción desconocida." });
   } catch (err) {
     registrarError_("doGet", err);
@@ -84,6 +91,10 @@ function doGet(e) {
 }
 
 function doPost(e) {
+  if (e && e.parameter && e.parameter.accion === "mp") {
+    try { return json_(webhookMP_(e)); }
+    catch (err) { registrarError_("webhook MP", err); return json_({ ok: false }); }
+  }
   let data = {};
   try {
     data = JSON.parse((e && e.postData && e.postData.contents) || "{}");
@@ -162,6 +173,7 @@ function catalogo_() {
       whatsappTexto: texto_(cfg.whatsapp_texto),
       mpCommission: porcentaje_(cfg.comision_mp),
       mpLink: texto_(cfg.link_mp),
+      mpConectado: !!mpToken_(),
       free: numero_(cfg.envio_gratis_desde),
       wrap: numero_(cfg.envoltorio_regalo),
       stockBajo: numero_(cfg.stock_bajo),
@@ -319,7 +331,7 @@ function crearPedido_(data) {
       entrega: opcion.name, envio: envio, comision: comision, total: total,
       pago: pago === "mp" ? "Mercado Pago" : "Transferencia bancaria"
     };
-    anotarPedido_(pedido);
+    pedido.fila = anotarPedido_(pedido);
     SpreadsheetApp.flush();
 
     resultado = {
@@ -334,6 +346,18 @@ function crearPedido_(data) {
   }
 
   limpiarCache_();
+  // Link de pago de Mercado Pago (fuera del bloqueo: la llamada tarda un poco)
+  if (resultado.ok && pago === "mp" && mpToken_()) {
+    try {
+      resultado._pedido.mpUrl = crearPreferenciaMP_(resultado._pedido, data.volver);
+      const t = tabla_(HOJA.pedidos);
+      t.hoja.getRange(resultado._pedido.fila, t.col["Link de pago"]).setValue(resultado._pedido.mpUrl);
+      resultado.mpUrl = resultado._pedido.mpUrl;
+    } catch (err) {
+      registrarError_("preferencia MP", err);
+      resultado._alertas.push({ nombre: "No se pudo crear el link de Mercado Pago (" + String(err.message || err).slice(0, 120) + ")", v: "mandale el link por WhatsApp", stock: -1 });
+    }
+  }
   // Emails fuera del bloqueo para no demorar otros pedidos
   try { avisoPedidoNuevo_(resultado._pedido, resultado._alertas); } catch (err) { registrarError_("aviso pedido", err); }
   try { if (esSi_(config_().email_al_cliente, true)) emailConfirmacionCliente_(resultado._pedido); } catch (err) { registrarError_("email cliente", err); }
@@ -354,6 +378,7 @@ function anotarPedido_(p) {
     "Seguimiento": "", "Recordatorio": "", "Stock devuelto": "No", "Detalle (no editar)": JSON.stringify(p.lineas.map(l => ({ id: l.id, v: l.v, q: l.q, p: l.p, n: l.nombre })))
   };
   t.hoja.appendRow(t.encabezados.map(h => (h in valores ? valores[h] : "")));
+  return t.hoja.getLastRow();
 }
 
 function ultimoNumeroEnHoja_() {
@@ -511,6 +536,7 @@ function compartirFotos_(valor) {
 
 /** Cada hora: recordatorio de pago y cancelación de pedidos vencidos. */
 function tareaCadaHora() {
+  try { revisarPagosMP(); } catch (err) { registrarError_("revisar MP", err); }
   const cfg = config_();
   const horas = numero_(cfg.horas_para_cancelar) || 48;
   const horasRecordatorio = numero_(cfg.horas_recordatorio) || Math.round(horas / 2);
@@ -597,8 +623,10 @@ function avisoPedidoNuevo_(p, alertas) {
     (p.cliente.notas ? "<br><i>Notas: " + esc_(p.cliente.notas) + "</i>" : ""));
   cuerpo += titulo_("Productos") + tablaPedido_(p);
   cuerpo += parrafo_("Entrega: <b>" + esc_(p.entrega) + "</b>");
-  if (alertas && alertas.length) cuerpo += titulo_("Atención al stock") + lista_html_(alertas.map(a => esc_(a.nombre) + " · " + esc_(a.v) + ": " + (a.stock === 0 ? "<b>AGOTADO</b>" : "quedan " + a.stock)));
-  cuerpo += parrafo_("Cuando te llegue el comprobante, cambiá el estado a <b>Pagado</b> en la pestaña Pedidos y el cliente recibe la confirmación automáticamente.");
+  if (alertas && alertas.length) cuerpo += titulo_("Atención") + lista_html_(alertas.map(a => a.stock < 0 ? "<b>" + esc_(a.nombre) + "</b>: " + esc_(a.v) : esc_(a.nombre) + " · " + esc_(a.v) + ": " + (a.stock === 0 ? "<b>AGOTADO</b>" : "quedan " + a.stock)));
+  cuerpo += parrafo_(p.mpUrl
+    ? "El cliente está pagando con Mercado Pago. Cuando el pago se apruebe, el pedido pasa a <b>Pagado</b> solo y te llega otro email."
+    : "Cuando te llegue el comprobante, cambiá el estado a <b>Pagado</b> en la pestaña Pedidos y el cliente recibe la confirmación automáticamente.");
   cuerpo += boton_("Escribirle por WhatsApp", "https://wa.me/598" + soloDigitos_(p.cliente.telefono).replace(/^0/, ""));
   enviarAMerfina_("Pedido nuevo " + p.codigo + " · " + pesos_(p.total), cuerpo, p.cliente.email);
 }
@@ -616,8 +644,9 @@ function instruccionesPago_(p, cfg) {
   let html = titulo_("Cómo pagar");
   if (p.pago === "Transferencia bancaria") {
     html += tablaDatos_(datosBancarios_(cfg).concat([["Monto", pesos_(p.total)], ["Referencia", p.codigo]]));
-  } else if (texto_(cfg.link_mp)) {
-    html += parrafo_("Pagá " + pesos_(p.total) + " con tarjeta, débito o dinero en cuenta:") + boton_("Pagar con Mercado Pago", texto_(cfg.link_mp));
+  } else if (p.mpUrl || texto_(cfg.link_mp)) {
+    html += parrafo_("Pagá " + pesos_(p.total) + " con tarjeta, débito o dinero en cuenta:") + boton_("Pagar con Mercado Pago", p.mpUrl || texto_(cfg.link_mp));
+    if (p.mpUrl) return html + parrafo_("Cuando el pago se apruebe te llega la confirmación por email. Reservamos tus piezas durante " + horas + " horas.");
   } else {
     html += parrafo_("Te mandamos el link de pago de Mercado Pago por WhatsApp por " + pesos_(p.total) + ".");
   }
@@ -658,7 +687,7 @@ function avisarCliente_(fila, tipo) {
       boton_("Escribir por WhatsApp", "https://wa.me/" + soloDigitos_(cfg.whatsapp));
   } else if (tipo === "recordatorio") {
     asunto = "Tus piezas te esperan · Pedido " + codigo;
-    const p = { codigo: codigo, total: numero_(fila["Total"]), pago: texto_(fila["Pago"]) };
+    const p = { codigo: codigo, total: numero_(fila["Total"]), pago: texto_(fila["Pago"]), mpUrl: texto_(fila["Link de pago"]) };
     cuerpo = parrafo_("¡Hola " + nombre + "! Todavía tenemos reservado tu pedido <b>" + codigo + "</b>, pero no nos llegó el comprobante.") + instruccionesPago_(p, cfg);
   }
   if (asunto) {
@@ -885,6 +914,7 @@ function aplicarFormatos_(ss) {
   prod.hoja.setColumnWidth(prod.col["Fotos"], 260);
   pt.hoja.setColumnWidth(pt.col["Productos"], 260);
   pt.hoja.hideColumns(pt.col["Detalle (no editar)"]);
+  pt.hoja.setColumnWidth(pt.col["Link de pago"], 140);
   tabla_(HOJA.config).hoja.setColumnWidth(3, 460);
   tabla_(HOJA.config).hoja.getRange("B:B").setHorizontalAlignment("left");
   tabla_(HOJA.config).hoja.getRange("A:A").setFontWeight("bold");
@@ -927,11 +957,12 @@ function armarResumen_(ss) {
 }
 
 function instalarDisparadores_() {
-  const nuestros = ["alEditar", "tareaCadaHora", "resumenDiario"];
+  const nuestros = ["alEditar", "tareaCadaHora", "resumenDiario", "revisarPagosMP"];
   ScriptApp.getProjectTriggers().forEach(t => { if (nuestros.indexOf(t.getHandlerFunction()) >= 0) ScriptApp.deleteTrigger(t); });
   const ss = SpreadsheetApp.getActive();
   ScriptApp.newTrigger("alEditar").forSpreadsheet(ss).onEdit().create();
   ScriptApp.newTrigger("tareaCadaHora").timeBased().everyHours(1).create();
+  ScriptApp.newTrigger("revisarPagosMP").timeBased().everyMinutes(10).create();
   const hora = Math.min(23, Math.max(0, numero_(config_().hora_resumen) || 21));
   ScriptApp.newTrigger("resumenDiario").timeBased().everyDays(1).atHour(hora).inTimezone("America/Montevideo").create();
 }
@@ -963,6 +994,178 @@ function mostrarLink_(titulo, texto, url) {
     '<input style="width:100%;padding:8px;font-size:13px" value="' + esc_(url) + '" onclick="this.select()" readonly>' +
     '<p><a href="' + esc_(url) + '" target="_blank">Abrir</a></p></div>').setWidth(520).setHeight(180);
   SpreadsheetApp.getUi().showModalDialog(html, titulo);
+}
+
+/* ============================================================
+ *  MERCADO PAGO (Checkout Pro)
+ * ============================================================ */
+
+function mpToken_() {
+  return PropertiesService.getScriptProperties().getProperty("MP_TOKEN") || "";
+}
+
+function mpFetch_(metodo, ruta, cuerpo) {
+  const opciones = { method: metodo, headers: { Authorization: "Bearer " + mpToken_() }, muteHttpExceptions: true };
+  if (cuerpo) { opciones.contentType = "application/json"; opciones.payload = JSON.stringify(cuerpo); }
+  if (metodo === "post") opciones.headers["X-Idempotency-Key"] = Utilities.getUuid();
+  const r = UrlFetchApp.fetch("https://api.mercadopago.com" + ruta, opciones);
+  const codigo = r.getResponseCode();
+  let data = {};
+  try { data = JSON.parse(r.getContentText() || "{}"); } catch (err) { data = {}; }
+  if (codigo >= 300) throw new Error("Mercado Pago respondió " + codigo + ": " + (data.message || r.getContentText()).slice(0, 200));
+  return data;
+}
+
+/** Crea el link de pago con el monto exacto del pedido y devuelve la URL de Mercado Pago. */
+function crearPreferenciaMP_(p, volver) {
+  const cfg = config_();
+  const horas = numero_(cfg.horas_para_cancelar) || 48;
+  const ahora = new Date();
+  const vence = new Date(ahora.getTime() + horas * 36e5);
+  const pref = {
+    items: [{
+      id: p.codigo,
+      title: "Pedido " + p.codigo + " · Merfina",
+      description: p.lineas.map(l => l.q + " × " + l.nombre + " (" + l.v + ")").join(", ").slice(0, 250),
+      quantity: 1,
+      unit_price: Math.round(p.total),
+      currency_id: "UYU"
+    }],
+    payer: { name: p.cliente.nombre, surname: p.cliente.apellido, email: p.cliente.email },
+    external_reference: p.codigo,
+    statement_descriptor: "MERFINA",
+    notification_url: ScriptApp.getService().getUrl() + "?accion=mp",
+    expires: true,
+    expiration_date_from: ahora.toISOString(),
+    expiration_date_to: vence.toISOString(),
+    metadata: { pedido: p.codigo }
+  };
+  const base = texto_(volver);
+  if (/^https:\/\/[^\s?#]+$/.test(base)) {
+    const ida = base + "?pedido=" + encodeURIComponent(p.codigo);
+    pref.back_urls = { success: ida, pending: ida, failure: ida };
+    pref.auto_return = "approved";
+  }
+  const r = mpFetch_("post", "/checkout/preferences", pref);
+  if (!r.init_point) throw new Error("Mercado Pago no devolvió el link de pago");
+  return r.init_point;
+}
+
+/** Mercado Pago avisa acá cada vez que cambia un pago. */
+function webhookMP_(e) {
+  let cuerpo = {};
+  try { cuerpo = JSON.parse((e.postData && e.postData.contents) || "{}"); } catch (err) { cuerpo = {}; }
+  const prm = e.parameter || {};
+  const tipo = cuerpo.type || cuerpo.topic || prm.type || prm.topic || "";
+  const id = (cuerpo.data && cuerpo.data.id) || prm["data.id"] || prm.id || "";
+  if (tipo.indexOf("payment") < 0 || !id || !mpToken_()) return { ok: true };
+  return procesarPagoMP_(String(id));
+}
+
+/**
+ * Consulta el pago directamente a Mercado Pago (no confía en lo que llega por la web)
+ * y, si está aprobado y el monto coincide, marca el pedido como Pagado.
+ */
+function procesarPagoMP_(idPago) {
+  const cache = CacheService.getScriptCache();
+  if (cache.get("mp_ok_" + idPago)) return { ok: true, repetido: true };
+  const pago = mpFetch_("get", "/v1/payments/" + encodeURIComponent(idPago));
+  if (pago.status !== "approved") return { ok: true, estado: pago.status };
+  const codigo = texto_(pago.external_reference);
+  const t = tabla_(HOJA.pedidos);
+  const fila = t.filas.find(f => texto_(f["Pedido"]) === codigo);
+  if (!fila) return { ok: true, sinPedido: codigo };
+  const anterior = texto_(fila["Estado"]);
+  if (["Pagado", "Enviado", "Entregado"].indexOf(anterior) >= 0) { cache.put("mp_ok_" + idPago, "1", 21600); return { ok: true, yaPagado: true }; }
+
+  const total = numero_(fila["Total"]);
+  if (pago.currency_id !== "UYU" || numero_(pago.transaction_amount) + 1 < total) {
+    enviarAMerfina_("Revisá el pago del pedido " + codigo,
+      parrafo_("Mercado Pago aprobó un pago para el pedido <b>" + esc_(codigo) + "</b>, pero el monto no coincide: se pagaron <b>" + esc_(pago.currency_id) + " " + esc_(pago.transaction_amount) + "</b> y el pedido es de <b>" + pesos_(total) + "</b>. No lo marqué como pagado: revisalo y cambiá el estado a mano."));
+    cache.put("mp_ok_" + idPago, "1", 21600);
+    return { ok: true, montoDistinto: true };
+  }
+
+  cache.put("mp_ok_" + idPago, "1", 21600);
+  t.hoja.getRange(fila._fila, t.col["Estado"]).setValue("Pagado");
+  t.hoja.getRange(fila._fila, t.col["ID pago MP"]).setValue(String(idPago));
+  fila["Estado"] = "Pagado";
+  cambiarEstado_(t, fila, "Pagado", anterior, false);
+  enviarAMerfina_("Pago aprobado " + codigo + " · " + pesos_(total),
+    tarjetas_([["Pedido", codigo], ["Cobrado", pesos_(pago.transaction_amount)], ["Medio", texto_(pago.payment_method_id) || "Mercado Pago"]]) +
+    parrafo_("El pedido de <b>" + esc_(fila["Nombre"]) + "</b> pasó a <b>Pagado</b> y al cliente le llegó la confirmación. Ya podés prepararlo: " + esc_(fila["Entrega"]) + ".") +
+    (anterior === "Cancelado" ? parrafo_("<b>Ojo:</b> este pedido estaba cancelado por falta de pago y se reactivó. Revisá que tengas stock de las piezas.") : ""));
+  return { ok: true, pagado: codigo };
+}
+
+/** Cada 10 minutos: por si algún aviso de Mercado Pago no llegó, revisa los pedidos pendientes. */
+function revisarPagosMP() {
+  if (!mpToken_()) return;
+  const limite = Date.now() - 7 * 24 * 36e5;
+  tabla_(HOJA.pedidos).filas
+    .filter(f => texto_(f["Pago"]) === "Mercado Pago" && ["Pendiente de pago", "Cancelado"].indexOf(texto_(f["Estado"])) >= 0 &&
+                 f["Fecha"] instanceof Date && f["Fecha"].getTime() > limite && !texto_(f["ID pago MP"]))
+    .forEach(f => {
+      try {
+        const r = mpFetch_("get", "/v1/payments/search?sort=date_created&criteria=desc&external_reference=" + encodeURIComponent(texto_(f["Pedido"])));
+        const aprobado = (r.results || []).find(x => x.status === "approved");
+        if (aprobado) procesarPagoMP_(String(aprobado.id));
+      } catch (err) { registrarError_("buscar pago " + f["Pedido"], err); }
+    });
+}
+
+/** Para la página: cómo está un pedido (al volver de Mercado Pago o para reintentar el pago). */
+function estadoPedido_(codigo) {
+  const c = texto_(codigo);
+  if (!/^MF-\d+$/.test(c)) return { ok: false, mensaje: "Número de pedido inválido." };
+  const f = tabla_(HOJA.pedidos).filas.find(x => texto_(x["Pedido"]) === c);
+  if (!f) return { ok: false, mensaje: "No encontramos ese pedido." };
+  let estado = texto_(f["Estado"]);
+  if (estado === "Pendiente de pago" && texto_(f["Pago"]) === "Mercado Pago" && mpToken_()) {
+    try { revisarUnPedidoMP_(c); estado = texto_(tabla_(HOJA.pedidos).filas.find(x => texto_(x["Pedido"]) === c)["Estado"]); } catch (err) { registrarError_("estado " + c, err); }
+  }
+  return { ok: true, pedido: c, estado: estado, total: numero_(f["Total"]), pago: texto_(f["Pago"]), link: estado === "Pendiente de pago" ? texto_(f["Link de pago"]) : "" };
+}
+
+function revisarUnPedidoMP_(codigo) {
+  const r = mpFetch_("get", "/v1/payments/search?sort=date_created&criteria=desc&external_reference=" + encodeURIComponent(codigo));
+  const aprobado = (r.results || []).find(x => x.status === "approved");
+  if (aprobado) procesarPagoMP_(String(aprobado.id));
+}
+
+function conectarMercadoPago() {
+  const ui = SpreadsheetApp.getUi();
+  const r = ui.prompt("Conectar Mercado Pago",
+    "Pegá el Access Token de PRODUCCIÓN de tu aplicación de Mercado Pago (empieza con APP_USR-).\nSe guarda de forma privada: no queda escrito en la planilla.",
+    ui.ButtonSet.OK_CANCEL);
+  if (r.getSelectedButton() !== ui.Button.OK) return;
+  const token = texto_(r.getResponseText());
+  if (!/^(APP_USR|TEST)-/.test(token)) return ui.alert("Ese no parece un Access Token. Tiene que empezar con APP_USR- (o TEST- para pruebas).");
+  const props = PropertiesService.getScriptProperties();
+  const anterior = props.getProperty("MP_TOKEN");
+  props.setProperty("MP_TOKEN", token);
+  try {
+    const yo = mpFetch_("get", "/users/me");
+    limpiarCache_();
+    ui.alert("¡Mercado Pago conectado!",
+      "Cuenta: " + (yo.nickname || yo.email || yo.id) + (yo.site_id && yo.site_id !== "MLU" ? "\n\nAtención: esta cuenta no es de Uruguay (" + yo.site_id + "). Los cobros en pesos uruguayos pueden fallar." : "") +
+      (token.indexOf("TEST-") === 0 ? "\n\nEs un token de PRUEBA: los pagos no son reales." : "") +
+      "\n\nDesde ahora, quien elija Mercado Pago paga directo ahí y el pedido se marca como Pagado solo.", ui.ButtonSet.OK);
+  } catch (err) {
+    if (anterior) props.setProperty("MP_TOKEN", anterior); else props.deleteProperty("MP_TOKEN");
+    ui.alert("No pude conectar con Mercado Pago. Revisá que copiaste el Access Token completo.\n\n" + (err.message || err));
+  }
+}
+
+function verMercadoPago() {
+  const ui = SpreadsheetApp.getUi();
+  if (!mpToken_()) return ui.alert("Mercado Pago no está conectado. Usá el menú Merfina → Conectar Mercado Pago.");
+  try {
+    const yo = mpFetch_("get", "/users/me");
+    ui.alert("Mercado Pago conectado a la cuenta: " + (yo.nickname || yo.email || yo.id) + " (" + (yo.site_id || "") + ").");
+  } catch (err) {
+    ui.alert("El token guardado no funciona: " + (err.message || err) + "\n\nVolvé a conectar desde el menú.");
+  }
 }
 
 /* ============================================================

@@ -32,6 +32,7 @@
   --gold:#C9A673;--gold-ink:#D8B886;--blush:#33282A;--on-gold:#15110E;--shade:rgba(0,0,0,.6);--err:#FF8A80;color-scheme:dark}
 
 *{box-sizing:border-box}
+[hidden]{display:none!important}
 html{scroll-behavior:smooth}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
 body{background:var(--paper);color:var(--ink);font-family:var(--body);font-weight:300;font-size:1rem;line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
@@ -699,7 +700,7 @@ footer{border-top:1px solid var(--line);padding-block:56px 96px}
           </div>
           <div class="box">
             <h3>Medio de pago</h3>
-            <label class="choice" for="payMp"><input type="radio" name="pay" id="payMp" value="mp" checked><b>Mercado Pago</b><span class="amt" id="mpAmt"></span><span class="fee" id="mpFee"></span><p>Pagá con tarjeta, débito o dinero en cuenta.</p></label>
+            <label class="choice" for="payMp"><input type="radio" name="pay" id="payMp" value="mp" checked><b>Mercado Pago</b><span class="amt" id="mpAmt"></span><span class="fee" id="mpFee"></span><p id="mpDesc">Pagá con tarjeta, débito o dinero en cuenta.</p></label>
             <label class="choice" for="payTr"><input type="radio" name="pay" id="payTr" value="transfer"><b>Transferencia bancaria</b><span class="amt"></span><p>Realizá el pago directamente en nuestra cuenta bancaria. Usá el número de pedido como referencia y mandanos el comprobante por WhatsApp.</p></label>
           </div>
         </div>
@@ -720,7 +721,7 @@ footer{border-top:1px solid var(--line);padding-block:56px 96px}
       <h2>¡Gracias por tu compra!</h2>
       <p id="doneLead" style="margin:0;color:var(--muted);max-width:52ch"></p>
       <div class="box" id="donePay"></div>
-      <div class="box">
+      <div class="box" id="doneProof">
         <h3>Mandanos el comprobante</h3>
         <p style="margin:0;color:var(--muted)">Tocá el botón para abrir WhatsApp con tu pedido ya escrito y adjuntá el comprobante. Si no se abre, escribinos al <b class="wa-num" style="color:var(--ink);user-select:all">091 900 341</b> y pegá este resumen:</p>
         <a class="btn wa" id="doneWa" href="https://wa.me/59891900341" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.8-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1 2.7c.1.2 1.8 2.8 4.4 3.9 1.6.7 2.3.8 3.1.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3z"/></svg> Enviar por WhatsApp</a>
@@ -822,7 +823,7 @@ async function loadCatalog(silent){
     if(!d.ok)throw new Error(d.mensaje||"catálogo");
     PRODUCTS=d.productos;
     const c=d.config||{};
-    ["whatsapp","mpCommission","mpLink","free","wrap","stockBajo","horasPago","bank","ship"].forEach(k=>{if(c[k]!==undefined&&c[k]!==null&&c[k]!=="")CFG[k]=c[k]});
+    ["whatsapp","mpCommission","mpLink","mpConectado","free","wrap","stockBajo","horasPago","bank","ship"].forEach(k=>{if(c[k]!==undefined&&c[k]!==null&&c[k]!=="")CFG[k]=c[k]});
     catalogState="ready";
     reconcileBag(silent);
     renderGrid();renderBag();
@@ -954,6 +955,7 @@ function renderCo(){
   $("#coTotal").textContent=fmt(t.total);
   const mpFee=Math.round(t.base*CFG.mpCommission);
   $("#mpFee").hidden=!(CFG.mpCommission>0);
+  $("#mpDesc").textContent=CFG.mpConectado?"Pagá con tarjeta, débito o dinero en cuenta. Al confirmar te llevamos a Mercado Pago para pagar de forma segura.":"Pagá con tarjeta, débito o dinero en cuenta.";
   $("#mpFee").textContent=`Comisión de ${Math.round(CFG.mpCommission*100)}% (+ ${fmt(mpFee)})`;
 }
 function openCo(){
@@ -1014,7 +1016,7 @@ $("#coF").addEventListener("submit",async e=>{
   if(API_URL){
     sending=true;const btn=$("#coConfirm");btn.disabled=true;btn.textContent="Reservando tus piezas…";
     try{
-      const r=await api({accion:"pedido",items:items.map(({id,v,q})=>({id,v,q})),cliente,envio:t.so.id,pago:t.pay,cupon:t.coupon,envoltorio:!!t.wrap});
+      const r=await api({accion:"pedido",items:items.map(({id,v,q})=>({id,v,q})),cliente,envio:t.so.id,pago:t.pay,cupon:t.coupon,envoltorio:!!t.wrap,volver:location.href.split(/[?#]/)[0]});
       if(!r.ok){
         if(r.error==="stock"){await loadCatalog(true);reconcileBag(true);renderBag();renderShip();renderCo();if(!bag.length)closeCo()}
         if(r.error==="cupon"){coupon=null;renderCo()}
@@ -1024,6 +1026,7 @@ $("#coF").addEventListener("submit",async e=>{
       }
       num=r.pedido;
       const s=r.totales;fin={items:s.subtotal,disc:s.descuento,coupon:s.cupon,wrap:s.envoltorio,ship:s.envio,entrega:s.entrega,fee:s.comision,total:s.total,pay:r.pago};
+      fin.mpUrl=r.mpUrl||"";
       if(r.banco&&r.banco.length)CFG.bank=r.banco;if(r.mpLink!==undefined)CFG.mpLink=r.mpLink;if(r.horasPago)CFG.horasPago=r.horasPago;
     }catch(err){
       $("#coErr").textContent="No pudimos conectarnos para confirmar tu pedido. Revisá tu conexión y probá de nuevo, o escribinos por WhatsApp al 091 900 341.";
@@ -1037,6 +1040,7 @@ $("#coF").addEventListener("submit",async e=>{
   if(API_URL)loadCatalog(true);
 });
 function showDone(num,t,items,c){
+  $("#donePay").hidden=false;$("#coDone h2").textContent="¡Gracias por tu compra!";
   const payName=t.pay==="mp"?"Mercado Pago":"Transferencia bancaria";
   const msg=[`¡Hola Merfina! Hice el pedido ${num}.`,"",...items.map(i=>`• ${i.q} × ${i.name} (${i.v}) — ${fmt(i.price*i.q)}`),
     t.wrap?`• Envoltorio de regalo — ${fmt(t.wrap)}`:null,"",
@@ -1053,7 +1057,40 @@ function showDone(num,t,items,c){
     :`<h3>Pagá con Mercado Pago</h3>${CFG.mpLink?`<p style="margin:0;color:var(--muted)">Pagá ${fmt(t.total)} con tarjeta, débito o dinero en cuenta.</p><a class="btn solid" href="${esc(CFG.mpLink)}" target="_blank" rel="noopener">Pagar con Mercado Pago</a>`:`<p style="margin:0;color:var(--muted)">Mandanos tu pedido por WhatsApp y te respondemos con el link de pago de Mercado Pago por ${fmt(t.total)}. Cuando pagues, envianos el comprobante por el mismo chat.</p>`}`;
   $("#doneMsg").textContent=msg;
   $("#doneWa").href=`https://wa.me/${CFG.whatsapp}?text=${encodeURIComponent(msg)}`;
+  $("#doneProof").hidden=false;
+  if(t.pay==="mp"&&t.mpUrl){
+    $("#doneLead").textContent=`Total: ${fmt(t.total)}. Te llevamos a Mercado Pago para pagar. Cuando se apruebe, te llega la confirmación por email.`;
+    $("#donePay").innerHTML=`<h3>Pagá con Mercado Pago</h3><p style="margin:0;color:var(--muted)">Si no se abre solo en unos segundos, tocá el botón.</p><a class="btn solid" id="mpGo" href="${esc(t.mpUrl)}">Pagar ${fmt(t.total)} con Mercado Pago</a>`;
+    $("#doneProof").hidden=true;
+    setTimeout(()=>{try{location.assign(t.mpUrl)}catch(e){}},1600);
+  }
   $("#coForm").hidden=true;$("#coDone").hidden=false;$("#co").scrollTop=0;
+}
+
+/* Vuelta desde Mercado Pago: ?pedido=MF-1001&status=approved */
+async function showReturn(){
+  const q=new URLSearchParams(location.search);
+  const num=q.get("pedido")||q.get("external_reference");
+  if(!num||!/^MF-\d+$/.test(num))return;
+  const st=q.get("collection_status")||q.get("status")||"";
+  try{history.replaceState(null,"",location.pathname+location.hash)}catch(e){}
+  const paint=(estado,link,total)=>{
+    const paid=["Pagado","Enviado","Entregado"].includes(estado)||(!estado&&st==="approved");
+    const pending=!paid&&(["pending","in_process"].includes(st));
+    $("#doneNum").textContent=`Pedido ${num}`;
+    $("#coDone h2").textContent=paid?"¡Pago aprobado!":pending?"Tu pago está en proceso":"El pago no se completó";
+    $("#doneLead").textContent=paid?"Gracias por tu compra. Ya estamos preparando tus piezas en su estuche Merfina. Te mandamos la confirmación por email."
+      :pending?"Mercado Pago está procesando tu pago. Apenas se apruebe te llega la confirmación por email; no hace falta que hagas nada más."
+      :"Tus piezas siguen reservadas por un rato. Podés intentar pagar de nuevo o escribirnos por WhatsApp.";
+    $("#donePay").innerHTML=!paid&&!pending&&link?`<h3>Intentar de nuevo</h3><a class="btn solid" href="${esc(link)}">Pagar${total?" "+fmt(total):""} con Mercado Pago</a>`:"";
+    $("#donePay").hidden=!$("#donePay").innerHTML;
+    $("#doneProof").hidden=true;
+    $("#coForm").hidden=true;$("#coDone").hidden=false;
+    const co=$("#co");co.classList.add("on");co.setAttribute("aria-hidden","false");document.body.style.overflow="hidden";
+  };
+  paint("", "", 0);
+  if(!API_URL)return;
+  try{const r=await(await fetch(API_URL+"?accion=pedido&codigo="+encodeURIComponent(num))).json();if(r.ok)paint(r.estado,r.link,r.total)}catch(e){}
 }
 $("#doneCopy").addEventListener("click",()=>{
   const txt=$("#doneMsg").textContent;
@@ -1139,5 +1176,6 @@ $("#newsForm").addEventListener("submit",async e=>{
 let tt;function toast(msg){$("#toastTxt").textContent=msg;$("#toast").classList.add("on");clearTimeout(tt);tt=setTimeout(()=>$("#toast").classList.remove("on"),3200)}
 
 renderGrid();renderBag();renderFavs();
+showReturn();
 if(API_URL){loadCatalog();setInterval(()=>{if(document.visibilityState==="visible"&&!$("#co").classList.contains("on"))loadCatalog(true)},120000)}
 </script>
