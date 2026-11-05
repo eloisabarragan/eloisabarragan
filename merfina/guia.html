@@ -54,7 +54,7 @@ footer{margin-top:64px;padding-top:24px;border-top:1px solid var(--line);color:v
   <div class="mark">MERFINA</div>
   <div class="eyebrow" style="margin-top:28px">Guía de la tienda online</div>
   <h1>Tu tienda, manejada desde una planilla</h1>
-  <p class="lead">Una sola vez conectás la planilla (unos 10 minutos). Después cargás productos, precios y stock en Google Sheets, y la tienda hace el resto sola.</p>
+  <p class="lead">Una sola vez activás la planilla (unos 10 minutos). Después cargás productos, precios y stock en Google Sheets, y la tienda hace el resto sola.</p>
 </header>
 
 <h2>Lo que pasa solo</h2>
@@ -75,23 +75,22 @@ footer{margin-top:64px;padding-top:24px;border-top:1px solid var(--line);color:v
 </div>
 
 <h2>Configuración, una sola vez</h2>
-<p>Hacelo desde una computadora, con la cuenta de Google donde querés recibir los pedidos.</p>
+<p>La planilla te llega <b>ya armada</b>, con los productos cargados. Solo hay que hacerla tuya y activarla. Hacelo desde una computadora, con la cuenta de Google donde querés recibir los pedidos.</p>
 <ol class="steps">
-  <li><div><b>Creá la planilla.</b> Entrá a <span class="ui">sheets.new</span> y ponele de nombre <b>Merfina · Tienda</b>.</div></li>
-  <li><div>En el menú de arriba: <span class="ui">Extensiones</span> → <span class="ui">Apps Script</span>. Se abre una pestaña nueva con un poco de código.</div></li>
-  <li><div><b>Borrá todo</b> lo que aparece ahí y <b>pegá el código</b> que copiás con el botón de acá abajo. Tocá el ícono del disquete <span class="ui">Guardar</span>. Arriba a la izquierda, cambiá «Proyecto sin título» por <b>Merfina tienda</b>.</div></li>
-  <li><div>En la barra de arriba del código, elegí la función <span class="ui">configurarTienda</span> y tocá <span class="ui">▶ Ejecutar</span>.</div></li>
-  <li><div><b>Dale permiso.</b> Google te pide autorización: <span class="ui">Revisar permisos</span> → elegí tu cuenta → aparece «Google no verificó esta app» → <span class="ui">Configuración avanzada</span> → <span class="ui">Ir a Merfina tienda</span> → <span class="ui">Permitir</span>.
-    <div class="note">Es normal: el aviso aparece porque el programa es tuyo y no de una empresa. Pide permiso para leer la planilla, mandar emails en tu nombre y compartir las fotos de la tienda.</div></div></li>
-  <li><div>Volvé a la planilla. Vas a ver las pestañas <b>Resumen, Productos, Variantes, Envios, Cupones, Config, Pedidos y Suscriptores</b>, con los productos de ejemplo cargados, y el menú <span class="ui">Merfina</span> arriba.</div></li>
-  <li><div><b>Publicá la conexión.</b> En Apps Script: <span class="ui">Implementar</span> → <span class="ui">Nueva implementación</span> → engranaje ⚙ → <span class="ui">Aplicación web</span>. Completá:
+  <li><div><b>Abrí el link de la planilla</b> que te mandamos y tocá <span class="ui">Hacer una copia</span>. Queda en tu Google Drive como <b>Copia de Merfina · Tienda</b> (le podés sacar el «Copia de»).</div></li>
+  <li><div>Esperá unos segundos a que aparezca el menú <span class="ui">Merfina</span> arriba, al lado de «Ayuda». Si no aparece, recargá la página.</div></li>
+  <li><div>Tocá <span class="ui">Merfina</span> → <span class="ui">Configurar la tienda (primera vez o reparar)</span>.</div></li>
+  <li><div><b>Dale permiso.</b> Google te pide autorización: <span class="ui">Continuar</span> → elegí tu cuenta → aparece «Google no verificó esta app» → <span class="ui">Configuración avanzada</span> → <span class="ui">Ir a Merfina tienda</span> → <span class="ui">Permitir</span>. Después volvé a tocar <span class="ui">Merfina</span> → <span class="ui">Configurar la tienda</span>.
+    <div class="note">Es normal: el aviso aparece porque el programa es tuyo y no de una empresa. Pide permiso para leer la planilla, mandar emails en tu nombre y crear la carpeta de fotos.</div></div></li>
+  <li><div>Te aparece «¡Tienda configurada!». Ya están activados los avisos, el resumen diario, los recordatorios y la carpeta de fotos.</div></li>
+  <li><div><b>Publicá la conexión.</b> Menú <span class="ui">Extensiones</span> → <span class="ui">Apps Script</span>. En la pestaña que se abre: <span class="ui">Implementar</span> (botón azul, arriba a la derecha) → <span class="ui">Nueva implementación</span> → engranaje ⚙ → <span class="ui">Aplicación web</span>. Completá:
     <div class="tbl"><table><tr><th>Campo</th><th>Qué poner</th></tr>
     <tr><td>Descripción</td><td>Tienda</td></tr>
     <tr><td>Ejecutar como</td><td><b>Yo</b> (tu email)</td></tr>
     <tr><td>Quién tiene acceso</td><td><b>Cualquier persona</b></td></tr></table></div>
     Tocá <span class="ui">Implementar</span> y copiá la <b>URL de la aplicación web</b> (termina en <span class="ui">/exec</span>).</div></li>
-  <li><div><b>Pasame ese link</b> y te devuelvo la tienda conectada, lista para subir. Si preferís hacerlo vos: abrí <span class="ui">index.html</span> con el Bloc de notas, buscá <span class="ui">const API_URL="";</span> y pegá el link entre las comillas.</div></li>
-  <li><div><b>Completá la pestaña Config</b>: datos bancarios y el email donde querés los avisos. Mercado Pago se conecta aparte (abajo te explico cómo). Después probá el menú <span class="ui">Merfina</span> → <span class="ui">Probar el envío de emails</span>.</div></li>
+  <li><div><b>Mandá ese link</b> a quien te armó la tienda para conectarla. Este link sí se puede compartir: no da acceso a tu cuenta.</div></li>
+  <li><div><b>Completá la pestaña Config</b> con los datos bancarios y revisá que el email de avisos sea el tuyo. Probá el menú <span class="ui">Merfina</span> → <span class="ui">Probar el envío de emails</span>.</div></li>
 </ol>
 
 <h2>Conectar Mercado Pago</h2>
@@ -104,7 +103,7 @@ footer{margin-top:64px;padding-top:24px;border-top:1px solid var(--line);color:v
   <li><div>Dentro de la aplicación, entrá a <span class="ui">Credenciales de producción</span>. Si te pide activarlas, completá el rubro (joyería o accesorios) y el sitio web de la tienda (o tu Instagram si todavía no está publicada).</div></li>
   <li><div>Copiá el <b>Access Token</b>: es un texto largo que empieza con <span class="ui">APP_USR-</span>.
     <div class="note"><b>El Access Token es como una contraseña.</b> No lo mandes por WhatsApp ni por email, y no lo escribas en la planilla. Se pega solo en el paso siguiente, donde queda guardado de forma privada.</div></div></li>
-  <li><div>En la planilla: menú <span class="ui">Merfina</span> → <span class="ui">Conectar Mercado Pago</span> → pegá el token → <span class="ui">Aceptar</span>. Te confirma con el nombre de tu cuenta.</div></li>
+  <li><div>En tu planilla: menú <span class="ui">Merfina</span> → <span class="ui">Conectar Mercado Pago</span> → pegá el token → <span class="ui">Aceptar</span>. Te confirma con el nombre de tu cuenta.</div></li>
 </ol>
 <p class="ok">Listo. No hace falta configurar nada más en Mercado Pago.</p>
 
@@ -120,6 +119,15 @@ footer{margin-top:64px;padding-top:24px;border-top:1px solid var(--line);color:v
 <b>Para probar:</b> hacé una compra real chica con tu propia tarjeta y después devolvé la plata desde Mercado Pago (Actividad → el pago → Devolver). Así ves todo el recorrido.<br><br>
 La transferencia bancaria sigue igual: el cliente te manda el comprobante por WhatsApp y vos marcás «Pagado».</div>
 
+<h2>Para quien arma la planilla</h2>
+<p>Esta parte la hace una sola vez quien prepara la tienda, antes de entregársela a Merfina.</p>
+<ol class="steps">
+  <li><div>Entrá a <span class="ui">sheets.new</span> con tu cuenta y ponele de nombre <b>Merfina · Tienda</b>.</div></li>
+  <li><div><span class="ui">Extensiones</span> → <span class="ui">Apps Script</span>. Borrá lo que hay, pegá el código de abajo, guardá (disquete) y nombrá el proyecto <b>Merfina tienda</b>.</div></li>
+  <li><div>Elegí la función <span class="ui">prepararPlantilla</span> y tocá <span class="ui">▶ Ejecutar</span>. Autorizá con tu cuenta. Esta función arma las pestañas y los productos de ejemplo, pero <b>no</b> activa avisos ni tareas en tu cuenta.</div></li>
+  <li><div>Cargá productos, precios, stock y fotos. Dejá la pestaña Pedidos vacía y no ejecutes «Configurar la tienda» en esta planilla.</div></li>
+  <li><div><b>Para entregarla:</b> <span class="ui">Compartir</span> → Acceso general: <b>Cualquier persona con el enlace</b> (Lector) → <span class="ui">Copiar enlace</span>. En el link, cambiá el final <span class="ui">/edit…</span> por <span class="ui">/copy</span> y mandáselo. Al abrirlo le aparece directo el botón «Hacer una copia», con el programa incluido.</div></li>
+</ol>
 <div class="code-head"><h3 style="margin:0">El código para pegar</h3><button class="copy" id="copyCode" type="button">Copiar código</button></div>
 <div class="copied" id="copied" aria-live="polite"></div>
 <pre id="code">/**
@@ -142,7 +150,9 @@ La transferencia bancaria sigue igual: el cliente te manda el comprobante por Wh
  *  - Manda un resumen diario por email y mantiene la pestaña Resumen al día.
  *  - Guarda los emails del newsletter en Suscriptores.
  *
- * Primera vez: menú Merfina → &quot;Configurar la tienda&quot;. Ver GUIA en el zip.
+ * Para preparar una plantilla y pasársela a Merfina: ejecutá prepararPlantilla
+ * (no activa avisos ni tareas en tu cuenta) y compartila con el link /copy.
+ * Quien se queda con la tienda: menú Merfina → &quot;Configurar la tienda&quot;. Ver GUIA en el zip.
  */
 
 const HOJA = {
@@ -878,26 +888,41 @@ function tablaPedido_(p) {
  *  CONFIGURACIÓN INICIAL
  * ============================================================ */
 
-function configurarTienda() {
+/**
+ * Para quien arma la tienda y después la entrega: crea las pestañas, los datos de ejemplo
+ * y los formatos, pero NO activa avisos, tareas ni la carpeta de fotos en su cuenta.
+ */
+function prepararPlantilla() {
   const ss = SpreadsheetApp.getActive();
+  armarPlanilla_(ss, false);
+  SpreadsheetApp.getUi().alert(&quot;Plantilla lista&quot;,
+    &quot;Cargá productos, precios, stock y fotos.\n\nPara entregarla: Compartir → Acceso general: «Cualquier persona con el enlace» (Lector) → Copiar enlace, y en el link cambiá el final «/edit…» por «/copy».\n\n&quot; +
+    &quot;Quien la copie solo tiene que usar el menú Merfina → Configurar la tienda.&quot;, SpreadsheetApp.getUi().ButtonSet.OK);
+}
+
+function armarPlanilla_(ss, conEmail) {
   ss.setSpreadsheetLocale(&quot;es_UY&quot;);
   ss.setSpreadsheetTimeZone(&quot;America/Montevideo&quot;);
-
   Object.keys(COLS).forEach(nombre =&gt; prepararHoja_(ss, nombre, COLS[nombre]));
-  cargarDatosIniciales_(ss);
+  cargarDatosIniciales_(ss, conEmail);
   CONFIG_CACHE_ = null;
   aplicarFormatos_(ss);
   armarResumen_(ss);
+  const hojaVieja = ss.getSheetByName(&quot;Hoja 1&quot;) || ss.getSheetByName(&quot;Sheet1&quot;);
+  if (hojaVieja &amp;&amp; ss.getSheets().length &gt; 1 &amp;&amp; hojaVieja.getLastRow() === 0) ss.deleteSheet(hojaVieja);
+  ss.setActiveSheet(ss.getSheetByName(HOJA.resumen));
+}
+
+function configurarTienda() {
+  const ss = SpreadsheetApp.getActive();
+  armarPlanilla_(ss, true);
+  completarEmailAvisos_();
   const carpeta = carpetaFotos_();
   instalarDisparadores_();
 
   const props = PropertiesService.getScriptProperties();
   if (!props.getProperty(&quot;ultimoPedido&quot;)) props.setProperty(&quot;ultimoPedido&quot;, String(Math.max(1000, ultimoNumeroEnHoja_())));
   limpiarCache_();
-
-  const hojaVieja = ss.getSheetByName(&quot;Hoja 1&quot;) || ss.getSheetByName(&quot;Sheet1&quot;);
-  if (hojaVieja &amp;&amp; ss.getSheets().length &gt; 1 &amp;&amp; hojaVieja.getLastRow() === 0) ss.deleteSheet(hojaVieja);
-  ss.setActiveSheet(ss.getSheetByName(HOJA.resumen));
 
   SpreadsheetApp.getUi().alert(&quot;¡Tienda configurada!&quot;,
     &quot;Ya están creadas las pestañas, los productos de ejemplo, los avisos y las tareas automáticas.\n\n&quot; +
@@ -917,7 +942,17 @@ function prepararHoja_(ss, nombre, encabezados) {
   return hoja;
 }
 
-function cargarDatosIniciales_(ss) {
+/** Si el email de avisos quedó vacío (planilla copiada de una plantilla), pone el de quien la configura. */
+function completarEmailAvisos_() {
+  const t = tabla_(HOJA.config);
+  const fila = t.filas.find(f =&gt; texto_(f[&quot;Clave&quot;]) === &quot;email_avisos&quot;);
+  if (fila &amp;&amp; !texto_(fila[&quot;Valor&quot;])) {
+    t.hoja.getRange(fila._fila, t.col[&quot;Valor&quot;]).setValue(Session.getEffectiveUser().getEmail());
+    CONFIG_CACHE_ = null;
+  }
+}
+
+function cargarDatosIniciales_(ss, conEmail) {
   const vacia = nombre =&gt; ss.getSheetByName(nombre).getLastRow() &lt; 2;
   const escribir = (nombre, objetos) =&gt; {
     const t = tabla_(nombre);
@@ -967,7 +1002,7 @@ function cargarDatosIniciales_(ss) {
   const existentes = t.filas.map(f =&gt; texto_(f[&quot;Clave&quot;]));
   const defaults = [
     [&quot;whatsapp&quot;, &quot;59891900341&quot;, &quot;WhatsApp de Merfina con código de país, sin espacios ni +&quot;],
-    [&quot;email_avisos&quot;, Session.getEffectiveUser().getEmail(), &quot;Email donde te llegan los pedidos nuevos y el resumen diario&quot;],
+    [&quot;email_avisos&quot;, conEmail ? Session.getEffectiveUser().getEmail() : &quot;&quot;, &quot;Email donde te llegan los pedidos nuevos y el resumen diario&quot;],
     [&quot;email_al_cliente&quot;, &quot;Sí&quot;, &quot;Sí = el cliente recibe emails de confirmación, pago, envío y entrega&quot;],
     [&quot;comision_mp&quot;, 0.12, &quot;Recargo por pagar con Mercado Pago (0 si no cobrás recargo)&quot;],
     [&quot;link_mp&quot;, &quot;&quot;, &quot;Link de pago de Mercado Pago (opcional). Si lo dejás vacío, mandás el link por WhatsApp&quot;],

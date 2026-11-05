@@ -18,7 +18,9 @@
  *  - Manda un resumen diario por email y mantiene la pestaña Resumen al día.
  *  - Guarda los emails del newsletter en Suscriptores.
  *
- * Primera vez: menú Merfina → "Configurar la tienda". Ver GUIA en el zip.
+ * Para preparar una plantilla y pasársela a Merfina: ejecutá prepararPlantilla
+ * (no activa avisos ni tareas en tu cuenta) y compartila con el link /copy.
+ * Quien se queda con la tienda: menú Merfina → "Configurar la tienda". Ver GUIA en el zip.
  */
 
 const HOJA = {
@@ -754,26 +756,41 @@ function tablaPedido_(p) {
  *  CONFIGURACIÓN INICIAL
  * ============================================================ */
 
-function configurarTienda() {
+/**
+ * Para quien arma la tienda y después la entrega: crea las pestañas, los datos de ejemplo
+ * y los formatos, pero NO activa avisos, tareas ni la carpeta de fotos en su cuenta.
+ */
+function prepararPlantilla() {
   const ss = SpreadsheetApp.getActive();
+  armarPlanilla_(ss, false);
+  SpreadsheetApp.getUi().alert("Plantilla lista",
+    "Cargá productos, precios, stock y fotos.\n\nPara entregarla: Compartir → Acceso general: «Cualquier persona con el enlace» (Lector) → Copiar enlace, y en el link cambiá el final «/edit…» por «/copy».\n\n" +
+    "Quien la copie solo tiene que usar el menú Merfina → Configurar la tienda.", SpreadsheetApp.getUi().ButtonSet.OK);
+}
+
+function armarPlanilla_(ss, conEmail) {
   ss.setSpreadsheetLocale("es_UY");
   ss.setSpreadsheetTimeZone("America/Montevideo");
-
   Object.keys(COLS).forEach(nombre => prepararHoja_(ss, nombre, COLS[nombre]));
-  cargarDatosIniciales_(ss);
+  cargarDatosIniciales_(ss, conEmail);
   CONFIG_CACHE_ = null;
   aplicarFormatos_(ss);
   armarResumen_(ss);
+  const hojaVieja = ss.getSheetByName("Hoja 1") || ss.getSheetByName("Sheet1");
+  if (hojaVieja && ss.getSheets().length > 1 && hojaVieja.getLastRow() === 0) ss.deleteSheet(hojaVieja);
+  ss.setActiveSheet(ss.getSheetByName(HOJA.resumen));
+}
+
+function configurarTienda() {
+  const ss = SpreadsheetApp.getActive();
+  armarPlanilla_(ss, true);
+  completarEmailAvisos_();
   const carpeta = carpetaFotos_();
   instalarDisparadores_();
 
   const props = PropertiesService.getScriptProperties();
   if (!props.getProperty("ultimoPedido")) props.setProperty("ultimoPedido", String(Math.max(1000, ultimoNumeroEnHoja_())));
   limpiarCache_();
-
-  const hojaVieja = ss.getSheetByName("Hoja 1") || ss.getSheetByName("Sheet1");
-  if (hojaVieja && ss.getSheets().length > 1 && hojaVieja.getLastRow() === 0) ss.deleteSheet(hojaVieja);
-  ss.setActiveSheet(ss.getSheetByName(HOJA.resumen));
 
   SpreadsheetApp.getUi().alert("¡Tienda configurada!",
     "Ya están creadas las pestañas, los productos de ejemplo, los avisos y las tareas automáticas.\n\n" +
@@ -793,7 +810,17 @@ function prepararHoja_(ss, nombre, encabezados) {
   return hoja;
 }
 
-function cargarDatosIniciales_(ss) {
+/** Si el email de avisos quedó vacío (planilla copiada de una plantilla), pone el de quien la configura. */
+function completarEmailAvisos_() {
+  const t = tabla_(HOJA.config);
+  const fila = t.filas.find(f => texto_(f["Clave"]) === "email_avisos");
+  if (fila && !texto_(fila["Valor"])) {
+    t.hoja.getRange(fila._fila, t.col["Valor"]).setValue(Session.getEffectiveUser().getEmail());
+    CONFIG_CACHE_ = null;
+  }
+}
+
+function cargarDatosIniciales_(ss, conEmail) {
   const vacia = nombre => ss.getSheetByName(nombre).getLastRow() < 2;
   const escribir = (nombre, objetos) => {
     const t = tabla_(nombre);
@@ -843,7 +870,7 @@ function cargarDatosIniciales_(ss) {
   const existentes = t.filas.map(f => texto_(f["Clave"]));
   const defaults = [
     ["whatsapp", "59891900341", "WhatsApp de Merfina con código de país, sin espacios ni +"],
-    ["email_avisos", Session.getEffectiveUser().getEmail(), "Email donde te llegan los pedidos nuevos y el resumen diario"],
+    ["email_avisos", conEmail ? Session.getEffectiveUser().getEmail() : "", "Email donde te llegan los pedidos nuevos y el resumen diario"],
     ["email_al_cliente", "Sí", "Sí = el cliente recibe emails de confirmación, pago, envío y entrega"],
     ["comision_mp", 0.12, "Recargo por pagar con Mercado Pago (0 si no cobrás recargo)"],
     ["link_mp", "", "Link de pago de Mercado Pago (opcional). Si lo dejás vacío, mandás el link por WhatsApp"],
