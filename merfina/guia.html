@@ -1,0 +1,1204 @@
+<title>Guía Tienda Merfina</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Jost:wght@300;400;500&display=swap">
+<style>
+/* Layout: a single reading column like a printed instruction booklet; steps are real sequences, so they are numbered. */
+:root{
+  --paper:#FBF7F2;--paper-2:#F3ECE3;--ink:#221C17;--muted:#6F655B;--line:#E4DACD;--gold:#A3804F;--gold-ink:#8A6A3E;--code-bg:#221C17;--code-ink:#F3ECE3;--ok:#2F6B3A;--warn-bg:#FCF1DC;
+  --display:"Cormorant Garamond",Garamond,"Times New Roman",serif;--body:"Jost","Avenir Next","Segoe UI",Helvetica,Arial,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--paper:#15110E;--paper-2:#1E1915;--ink:#F2EBE2;--muted:#ADA092;--line:#352D26;--gold:#C9A673;--gold-ink:#D8B886;--code-bg:#0D0B09;--code-ink:#EDE3D6;--ok:#8FD19E;--warn-bg:#2E2516;color-scheme:dark}}
+:root[data-theme="dark"]{--paper:#15110E;--paper-2:#1E1915;--ink:#F2EBE2;--muted:#ADA092;--line:#352D26;--gold:#C9A673;--gold-ink:#D8B886;--code-bg:#0D0B09;--code-ink:#EDE3D6;--ok:#8FD19E;--warn-bg:#2E2516;color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-weight:300;font-size:1.02rem;line-height:1.7;margin:0}
+.wrap{max-width:780px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:48px 96px}
+header{text-align:center;padding-bottom:36px;border-bottom:1px solid var(--line);margin-bottom:40px}
+.mark{font-family:var(--display);letter-spacing:.42em;font-size:1.1rem;margin-right:-.42em}
+.eyebrow{font-size:.72rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold-ink)}
+h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.1;text-wrap:balance;margin:0}
+h1{font-size:clamp(2.4rem,6vw,3.6rem);margin:.3em 0 .2em}
+h2{font-size:clamp(1.8rem,4vw,2.4rem);margin:56px 0 8px;padding-top:8px}
+h3{font-size:1.4rem;margin:28px 0 6px}
+p{margin:.6em 0}
+.lead{color:var(--muted);max-width:56ch;margin:0 auto}
+ol.steps{list-style:none;counter-reset:s;padding:0;margin:20px 0;display:grid;gap:18px}
+ol.steps>li{counter-increment:s;display:grid;grid-template-columns:42px 1fr;gap:14px;align-items:start}
+ol.steps>li::before{content:counter(s);width:42px;height:42px;border-radius:50%;border:1px solid var(--gold);color:var(--gold-ink);display:grid;place-items:center;font-family:var(--display);font-size:1.3rem}
+ol.steps>li>div{min-width:0;padding-top:6px}
+b,strong{font-weight:500}
+.ui{display:inline-block;background:var(--paper-2);border:1px solid var(--line);padding:0 .45em;border-radius:4px;font-size:.92em;white-space:nowrap}
+.note{background:var(--warn-bg);padding:14px 18px;border-left:2px solid var(--gold);margin:16px 0;font-size:.95rem}
+.ok{color:var(--ok);font-weight:500}
+.auto{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));margin:18px 0}
+.auto div{border:1px solid var(--line);padding:14px 16px;min-width:0}
+.auto b{display:block;font-family:var(--display);font-size:1.2rem;font-weight:500}
+.auto span{font-size:.92rem;color:var(--muted)}
+table{border-collapse:collapse;width:100%;font-size:.94rem;margin:12px 0}
+.tbl{overflow-x:auto}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-weight:500;font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-ink)}
+.code-head{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-top:18px}
+.copy{font:inherit;font-size:.78rem;letter-spacing:.2em;text-transform:uppercase;background:var(--ink);color:var(--paper);border:0;padding:.9em 1.6em;cursor:pointer}
+.copy:hover{background:var(--gold)}
+.copy:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+pre{background:var(--code-bg);color:var(--code-ink);padding:16px;max-height:260px;overflow:auto;font-size:.74rem;line-height:1.5;margin:10px 0 0}
+.copied{font-size:.86rem;color:var(--ok);min-height:1.4em}
+footer{margin-top:64px;padding-top:24px;border-top:1px solid var(--line);color:var(--muted);font-size:.86rem;text-align:center}
+</style>
+
+<div class="wrap">
+<header>
+  <div class="mark">MERFINA</div>
+  <div class="eyebrow" style="margin-top:28px">Guía de la tienda online</div>
+  <h1>Tu tienda, manejada desde una planilla</h1>
+  <p class="lead">Una sola vez conectás la planilla (unos 10 minutos). Después cargás productos, precios y stock en Google Sheets, y la tienda hace el resto sola.</p>
+</header>
+
+<h2>Lo que pasa solo</h2>
+<div class="auto">
+  <div><b>Stock</b><span>Se descuenta con cada compra. A cero, la pieza aparece «Agotada» y no se puede comprar.</span></div>
+  <div><b>Pedidos</b><span>Cada compra queda anotada en la pestaña Pedidos con su número (MF-1001, MF-1002…).</span></div>
+  <div><b>Aviso a vos</b><span>Te llega un email con cada pedido nuevo, con el botón para escribirle al cliente por WhatsApp.</span></div>
+  <div><b>Email al cliente</b><span>Recibe el detalle y los datos de pago; después, los avisos de pago, envío y entrega.</span></div>
+  <div><b>Recordatorio</b><span>A las 24 h sin pago, el cliente recibe un recordatorio.</span></div>
+  <div><b>Cancelación</b><span>A las 48 h sin pago, el pedido se cancela y el stock vuelve solo.</span></div>
+  <div><b>Stock bajo</b><span>Te aviso cuando una pieza queda con 2 o menos unidades.</span></div>
+  <div><b>Resumen diario</b><span>A las 21 h, un email con ventas, pedidos por enviar, pendientes y agotados.</span></div>
+  <div><b>Cupones</b><span>Valida código, vencimiento, usos máximos y compra mínima.</span></div>
+  <div><b>Envíos</b><span>Calcula el costo según el departamento y aplica el envío gratis.</span></div>
+  <div><b>Newsletter</b><span>Los emails de suscripción quedan guardados en la pestaña Suscriptores.</span></div>
+  <div><b>Fotos</b><span>Las fotos que pegás desde Google Drive se hacen públicas solas para que se vean.</span></div>
+</div>
+
+<h2>Configuración, una sola vez</h2>
+<p>Hacelo desde una computadora, con la cuenta de Google donde querés recibir los pedidos.</p>
+<ol class="steps">
+  <li><div><b>Creá la planilla.</b> Entrá a <span class="ui">sheets.new</span> y ponele de nombre <b>Merfina · Tienda</b>.</div></li>
+  <li><div>En el menú de arriba: <span class="ui">Extensiones</span> → <span class="ui">Apps Script</span>. Se abre una pestaña nueva con un poco de código.</div></li>
+  <li><div><b>Borrá todo</b> lo que aparece ahí y <b>pegá el código</b> que copiás con el botón de acá abajo. Tocá el ícono del disquete <span class="ui">Guardar</span>. Arriba a la izquierda, cambiá «Proyecto sin título» por <b>Merfina tienda</b>.</div></li>
+  <li><div>En la barra de arriba del código, elegí la función <span class="ui">configurarTienda</span> y tocá <span class="ui">▶ Ejecutar</span>.</div></li>
+  <li><div><b>Dale permiso.</b> Google te pide autorización: <span class="ui">Revisar permisos</span> → elegí tu cuenta → aparece «Google no verificó esta app» → <span class="ui">Configuración avanzada</span> → <span class="ui">Ir a Merfina tienda</span> → <span class="ui">Permitir</span>.
+    <div class="note">Es normal: el aviso aparece porque el programa es tuyo y no de una empresa. Pide permiso para leer la planilla, mandar emails en tu nombre y compartir las fotos de la tienda.</div></div></li>
+  <li><div>Volvé a la planilla. Vas a ver las pestañas <b>Resumen, Productos, Variantes, Envios, Cupones, Config, Pedidos y Suscriptores</b>, con los productos de ejemplo cargados, y el menú <span class="ui">Merfina</span> arriba.</div></li>
+  <li><div><b>Publicá la conexión.</b> En Apps Script: <span class="ui">Implementar</span> → <span class="ui">Nueva implementación</span> → engranaje ⚙ → <span class="ui">Aplicación web</span>. Completá:
+    <div class="tbl"><table><tr><th>Campo</th><th>Qué poner</th></tr>
+    <tr><td>Descripción</td><td>Tienda</td></tr>
+    <tr><td>Ejecutar como</td><td><b>Yo</b> (tu email)</td></tr>
+    <tr><td>Quién tiene acceso</td><td><b>Cualquier persona</b></td></tr></table></div>
+    Tocá <span class="ui">Implementar</span> y copiá la <b>URL de la aplicación web</b> (termina en <span class="ui">/exec</span>).</div></li>
+  <li><div><b>Pasame ese link</b> y te devuelvo la tienda conectada, lista para subir. Si preferís hacerlo vos: abrí <span class="ui">index.html</span> con el Bloc de notas, buscá <span class="ui">const API_URL="";</span> y pegá el link entre las comillas.</div></li>
+  <li><div><b>Completá la pestaña Config</b>: datos bancarios, el email donde querés los avisos y, si tenés, el link de pago de Mercado Pago. Después probá el menú <span class="ui">Merfina</span> → <span class="ui">Probar el envío de emails</span>.</div></li>
+</ol>
+
+<div class="code-head"><h3 style="margin:0">El código para pegar</h3><button class="copy" id="copyCode" type="button">Copiar código</button></div>
+<div class="copied" id="copied" aria-live="polite"></div>
+<pre id="code">/**
+ * MERFINA · Programa de la tienda online
+ * ------------------------------------------------------------
+ * Este programa vive dentro de la planilla de Google de Merfina y hace de
+ * &quot;cerebro&quot; de la tienda:
+ *
+ *  - Le pasa a la página los productos, precios, fotos y stock de la planilla.
+ *  - Recibe los pedidos, controla que haya stock y lo descuenta solo.
+ *  - Anota cada pedido en la pestaña Pedidos con número correlativo (MF-1001…).
+ *  - Valida cupones, calcula envío, envío gratis y comisión de Mercado Pago.
+ *  - Manda emails: aviso de pedido nuevo a Merfina y confirmación al cliente
+ *    con los datos de pago; después avisos de pago recibido, envío y entrega.
+ *  - Si cancelás un pedido, devuelve el stock solo.
+ *  - Recuerda el pago a las 24 h y cancela solo los pedidos no pagados a las 48 h.
+ *  - Avisa cuando algo queda con stock bajo o se agota.
+ *  - Manda un resumen diario por email y mantiene la pestaña Resumen al día.
+ *  - Guarda los emails del newsletter en Suscriptores.
+ *
+ * Primera vez: menú Merfina → &quot;Configurar la tienda&quot;. Ver GUIA en el zip.
+ */
+
+const HOJA = {
+  productos: &quot;Productos&quot;,
+  variantes: &quot;Variantes&quot;,
+  envios: &quot;Envios&quot;,
+  cupones: &quot;Cupones&quot;,
+  config: &quot;Config&quot;,
+  pedidos: &quot;Pedidos&quot;,
+  suscriptores: &quot;Suscriptores&quot;,
+  resumen: &quot;Resumen&quot;
+};
+
+const COLS = {
+  Productos: [&quot;ID&quot;, &quot;Nombre&quot;, &quot;Categoría&quot;, &quot;Tipo&quot;, &quot;Descripción&quot;, &quot;Fotos&quot;, &quot;Colores&quot;, &quot;Etiqueta&quot;, &quot;Detalles&quot;, &quot;Nombre de opción&quot;, &quot;Activo&quot;, &quot;Orden&quot;],
+  Variantes: [&quot;ID producto&quot;, &quot;Variante&quot;, &quot;Precio&quot;, &quot;Precio anterior&quot;, &quot;Stock&quot;, &quot;Activo&quot;],
+  Envios: [&quot;ID&quot;, &quot;Zona&quot;, &quot;Nombre&quot;, &quot;Descripción&quot;, &quot;Costo&quot;, &quot;Pide dirección&quot;, &quot;Activo&quot;],
+  Cupones: [&quot;Código&quot;, &quot;Descuento %&quot;, &quot;Activo&quot;, &quot;Vence&quot;, &quot;Usos máximos&quot;, &quot;Usos&quot;, &quot;Compra mínima&quot;],
+  Config: [&quot;Clave&quot;, &quot;Valor&quot;, &quot;Para qué sirve&quot;],
+  Pedidos: [&quot;Fecha&quot;, &quot;Pedido&quot;, &quot;Estado&quot;, &quot;Nombre&quot;, &quot;Teléfono&quot;, &quot;Email&quot;, &quot;Departamento&quot;, &quot;Ciudad o barrio&quot;, &quot;Dirección&quot;, &quot;Notas&quot;,
+            &quot;Productos&quot;, &quot;Subtotal&quot;, &quot;Descuento&quot;, &quot;Cupón&quot;, &quot;Envoltorio&quot;, &quot;Entrega&quot;, &quot;Costo envío&quot;, &quot;Comisión MP&quot;, &quot;Total&quot;, &quot;Pago&quot;,
+            &quot;Seguimiento&quot;, &quot;Recordatorio&quot;, &quot;Stock devuelto&quot;, &quot;Detalle (no editar)&quot;],
+  Suscriptores: [&quot;Fecha&quot;, &quot;Email&quot;, &quot;Origen&quot;]
+};
+
+const ESTADOS = [&quot;Pendiente de pago&quot;, &quot;Pagado&quot;, &quot;Enviado&quot;, &quot;Entregado&quot;, &quot;Cancelado&quot;];
+const CATEGORIAS = { &quot;Cubre botones&quot;: &quot;botones&quot;, &quot;Corbatas&quot;: &quot;corbatas&quot;, &quot;Sets&quot;: &quot;sets&quot;, &quot;Gift card&quot;: &quot;sets&quot; };
+const ZONAS = [&quot;Montevideo&quot;, &quot;Interior&quot;, &quot;Todo el país&quot;];
+const SI_NO = [&quot;Sí&quot;, &quot;No&quot;];
+
+const DEPARTAMENTOS = [&quot;Artigas&quot;, &quot;Canelones&quot;, &quot;Cerro Largo&quot;, &quot;Colonia&quot;, &quot;Durazno&quot;, &quot;Flores&quot;, &quot;Florida&quot;, &quot;Lavalleja&quot;, &quot;Maldonado&quot;,
+  &quot;Montevideo&quot;, &quot;Paysandú&quot;, &quot;Río Negro&quot;, &quot;Rivera&quot;, &quot;Rocha&quot;, &quot;Salto&quot;, &quot;San José&quot;, &quot;Soriano&quot;, &quot;Tacuarembó&quot;, &quot;Treinta y Tres&quot;];
+
+/* ============================================================
+ *  MENÚ
+ * ============================================================ */
+
+function onOpen() {
+  SpreadsheetApp.getUi().createMenu(&quot;Merfina&quot;)
+    .addItem(&quot;Configurar la tienda (primera vez o reparar)&quot;, &quot;configurarTienda&quot;)
+    .addSeparator()
+    .addItem(&quot;Ver el link de la tienda (para la página)&quot;, &quot;verLinkTienda&quot;)
+    .addItem(&quot;Abrir la carpeta de fotos&quot;, &quot;abrirCarpetaFotos&quot;)
+    .addSeparator()
+    .addItem(&quot;Enviarme el resumen ahora&quot;, &quot;resumenDiario&quot;)
+    .addItem(&quot;Revisar pedidos vencidos ahora&quot;, &quot;tareaCadaHora&quot;)
+    .addItem(&quot;Probar el envío de emails&quot;, &quot;probarEmail&quot;)
+    .addToUi();
+}
+
+/* ============================================================
+ *  PÁGINA → PLANILLA
+ * ============================================================ */
+
+function doGet(e) {
+  const accion = (e &amp;&amp; e.parameter &amp;&amp; e.parameter.accion) || &quot;catalogo&quot;;
+  try {
+    if (accion === &quot;catalogo&quot;) return json_(catalogoCacheado_());
+    if (accion === &quot;ping&quot;) return json_({ ok: true, hora: new Date().toISOString() });
+    return json_({ ok: false, error: &quot;accion&quot;, mensaje: &quot;Acción desconocida.&quot; });
+  } catch (err) {
+    registrarError_(&quot;doGet&quot;, err);
+    return json_({ ok: false, error: &quot;servidor&quot;, mensaje: &quot;No pudimos cargar la tienda. Probá de nuevo en un momento.&quot; });
+  }
+}
+
+function doPost(e) {
+  let data = {};
+  try {
+    data = JSON.parse((e &amp;&amp; e.postData &amp;&amp; e.postData.contents) || &quot;{}&quot;);
+  } catch (err) {
+    return json_({ ok: false, error: &quot;formato&quot;, mensaje: &quot;No pudimos leer el pedido.&quot; });
+  }
+  try {
+    if (data.accion === &quot;pedido&quot;) return json_(crearPedido_(data));
+    if (data.accion === &quot;cupon&quot;) return json_(consultarCupon_(data));
+    if (data.accion === &quot;suscribir&quot;) return json_(suscribir_(data));
+    return json_({ ok: false, error: &quot;accion&quot;, mensaje: &quot;Acción desconocida.&quot; });
+  } catch (err) {
+    registrarError_(&quot;doPost &quot; + data.accion, err);
+    return json_({ ok: false, error: &quot;servidor&quot;, mensaje: &quot;Hubo un problema al procesar tu pedido. Escribinos por WhatsApp y lo resolvemos.&quot; });
+  }
+}
+
+function json_(obj) {
+  return ContentService.createTextOutput(JSON.stringify(obj)).setMimeType(ContentService.MimeType.JSON);
+}
+
+/* ============================================================
+ *  CATÁLOGO
+ * ============================================================ */
+
+function catalogoCacheado_() {
+  const cache = CacheService.getScriptCache();
+  const guardado = cache.get(&quot;catalogo&quot;);
+  if (guardado) return JSON.parse(guardado);
+  const cat = catalogo_();
+  try { cache.put(&quot;catalogo&quot;, JSON.stringify(cat), 60); } catch (err) { /* catálogo muy grande para la caché: se sirve igual */ }
+  return cat;
+}
+
+function limpiarCache_() {
+  CacheService.getScriptCache().remove(&quot;catalogo&quot;);
+}
+
+function catalogo_() {
+  const cfg = config_();
+  const productos = tabla_(HOJA.productos).filas;
+  const variantes = tabla_(HOJA.variantes).filas;
+
+  const lista = productos
+    .filter(p =&gt; texto_(p[&quot;ID&quot;]) &amp;&amp; texto_(p[&quot;Nombre&quot;]) &amp;&amp; esSi_(p[&quot;Activo&quot;], true))
+    .sort((a, b) =&gt; (numero_(a[&quot;Orden&quot;]) || 999) - (numero_(b[&quot;Orden&quot;]) || 999))
+    .map(p =&gt; {
+      const id = texto_(p[&quot;ID&quot;]);
+      const categoria = texto_(p[&quot;Categoría&quot;]);
+      const opts = variantes
+        .filter(v =&gt; texto_(v[&quot;ID producto&quot;]) === id &amp;&amp; texto_(v[&quot;Variante&quot;]) &amp;&amp; numero_(v[&quot;Precio&quot;]) &gt; 0 &amp;&amp; esSi_(v[&quot;Activo&quot;], true))
+        .map(v =&gt; [texto_(v[&quot;Variante&quot;]), numero_(v[&quot;Precio&quot;]), stockDe_(v), numero_(v[&quot;Precio anterior&quot;]) || null]);
+      return {
+        id: id,
+        name: texto_(p[&quot;Nombre&quot;]),
+        cat: CATEGORIAS[categoria] || &quot;botones&quot;,
+        kind: texto_(p[&quot;Tipo&quot;]) || categoria,
+        tag: texto_(p[&quot;Etiqueta&quot;]),
+        img: lista_(p[&quot;Fotos&quot;]).map(fotoUrl_),
+        colors: lista_(p[&quot;Colores&quot;]),
+        desc: texto_(p[&quot;Descripción&quot;]),
+        optLabel: texto_(p[&quot;Nombre de opción&quot;]) || &quot;Presentación&quot;,
+        specs: detalles_(p[&quot;Detalles&quot;]),
+        gift: categoria === &quot;Gift card&quot;,
+        opts: opts
+      };
+    })
+    .filter(p =&gt; p.opts.length);
+
+  return {
+    ok: true,
+    actualizado: new Date().toISOString(),
+    productos: lista,
+    config: {
+      whatsapp: soloDigitos_(cfg.whatsapp),
+      whatsappTexto: texto_(cfg.whatsapp_texto),
+      mpCommission: porcentaje_(cfg.comision_mp),
+      mpLink: texto_(cfg.link_mp),
+      free: numero_(cfg.envio_gratis_desde),
+      wrap: numero_(cfg.envoltorio_regalo),
+      stockBajo: numero_(cfg.stock_bajo),
+      horasPago: numero_(cfg.horas_para_cancelar),
+      bank: datosBancarios_(cfg),
+      ship: enviosPublicos_()
+    }
+  };
+}
+
+function enviosPublicos_() {
+  const out = { mvd: [], int: [] };
+  tabla_(HOJA.envios).filas
+    .filter(s =&gt; texto_(s[&quot;ID&quot;]) &amp;&amp; texto_(s[&quot;Nombre&quot;]) &amp;&amp; esSi_(s[&quot;Activo&quot;], true))
+    .forEach(s =&gt; {
+      const o = { id: texto_(s[&quot;ID&quot;]), name: texto_(s[&quot;Nombre&quot;]), desc: texto_(s[&quot;Descripción&quot;]), cost: numero_(s[&quot;Costo&quot;]), addr: esSi_(s[&quot;Pide dirección&quot;], true) };
+      const zona = texto_(s[&quot;Zona&quot;]);
+      if (zona === &quot;Montevideo&quot; || zona === &quot;Todo el país&quot;) out.mvd.push(o);
+      if (zona === &quot;Interior&quot; || zona === &quot;Todo el país&quot;) out.int.push(o);
+    });
+  return out;
+}
+
+function datosBancarios_(cfg) {
+  return [[&quot;Banco&quot;, cfg.banco], [&quot;Tipo de cuenta&quot;, cfg.tipo_cuenta], [&quot;Número de cuenta&quot;, cfg.numero_cuenta], [&quot;Titular&quot;, cfg.titular]]
+    .map(([a, b]) =&gt; [a, texto_(b)]).filter(([, b]) =&gt; b);
+}
+
+function stockDe_(v) {
+  const s = v[&quot;Stock&quot;];
+  if (s === &quot;&quot; || s === null || s === undefined) return null; // vacío = sin límite (gift cards)
+  return Math.max(0, Math.floor(numero_(s)));
+}
+
+/* ============================================================
+ *  PEDIDOS
+ * ============================================================ */
+
+function crearPedido_(data) {
+  const c = data.cliente || {};
+  const cliente = {
+    nombre: limpiar_(c.nombre, 60), apellido: limpiar_(c.apellido, 60), email: limpiar_(c.email, 120).toLowerCase(),
+    telefono: limpiar_(c.telefono, 30), departamento: limpiar_(c.departamento, 40), ciudad: limpiar_(c.ciudad, 80),
+    direccion: limpiar_(c.direccion, 160), notas: limpiar_(c.notas, 500)
+  };
+  const faltan = [];
+  if (cliente.nombre.length &lt; 2) faltan.push(&quot;nombre&quot;);
+  if (cliente.apellido.length &lt; 2) faltan.push(&quot;apellido&quot;);
+  if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(cliente.email)) faltan.push(&quot;email&quot;);
+  if (soloDigitos_(cliente.telefono).length &lt; 8) faltan.push(&quot;teléfono&quot;);
+  if (DEPARTAMENTOS.indexOf(cliente.departamento) &lt; 0) faltan.push(&quot;departamento&quot;);
+  if (cliente.ciudad.length &lt; 2) faltan.push(&quot;ciudad o barrio&quot;);
+  if (faltan.length) return { ok: false, error: &quot;datos&quot;, mensaje: &quot;Revisá estos datos: &quot; + faltan.join(&quot;, &quot;) + &quot;.&quot; };
+
+  const pedidos = (data.items || []).filter(i =&gt; i &amp;&amp; i.id &amp;&amp; i.v &amp;&amp; numero_(i.q) &gt; 0);
+  if (!pedidos.length) return { ok: false, error: &quot;vacio&quot;, mensaje: &quot;Tu carrito está vacío.&quot; };
+  if (pedidos.length &gt; 40) return { ok: false, error: &quot;datos&quot;, mensaje: &quot;El pedido tiene demasiados productos.&quot; };
+
+  const pago = data.pago === &quot;transfer&quot; ? &quot;transfer&quot; : &quot;mp&quot;;
+  const lock = LockService.getScriptLock();
+  if (!lock.tryLock(25000)) return { ok: false, error: &quot;ocupado&quot;, mensaje: &quot;Hay muchos pedidos en este momento. Probá de nuevo en unos segundos.&quot; };
+
+  let resultado;
+  try {
+    const cfg = config_();
+    const prodTabla = tabla_(HOJA.productos);
+    const varTabla = tabla_(HOJA.variantes);
+    const productos = {};
+    prodTabla.filas.forEach(p =&gt; { if (texto_(p[&quot;ID&quot;])) productos[texto_(p[&quot;ID&quot;])] = p; });
+
+    // Agrupar cantidades por variante
+    const pedidoPorVariante = {};
+    pedidos.forEach(i =&gt; {
+      const k = texto_(i.id) + &quot;||&quot; + texto_(i.v);
+      pedidoPorVariante[k] = (pedidoPorVariante[k] || 0) + Math.floor(numero_(i.q));
+    });
+
+    const lineas = [];
+    const sinStock = [];
+    Object.keys(pedidoPorVariante).forEach(k =&gt; {
+      const [id, variante] = k.split(&quot;||&quot;);
+      const q = pedidoPorVariante[k];
+      const prod = productos[id];
+      const fila = varTabla.filas.find(v =&gt; texto_(v[&quot;ID producto&quot;]) === id &amp;&amp; texto_(v[&quot;Variante&quot;]) === variante &amp;&amp; esSi_(v[&quot;Activo&quot;], true));
+      if (!prod || !esSi_(prod[&quot;Activo&quot;], true) || !fila || !(numero_(fila[&quot;Precio&quot;]) &gt; 0)) {
+        sinStock.push({ id: id, v: variante, disponible: 0, nombre: prod ? texto_(prod[&quot;Nombre&quot;]) : id });
+        return;
+      }
+      const stock = stockDe_(fila);
+      if (stock !== null &amp;&amp; stock &lt; q) {
+        sinStock.push({ id: id, v: variante, disponible: stock, nombre: texto_(prod[&quot;Nombre&quot;]) });
+        return;
+      }
+      lineas.push({ id: id, v: variante, q: q, p: numero_(fila[&quot;Precio&quot;]), nombre: texto_(prod[&quot;Nombre&quot;]), fila: fila, stock: stock });
+    });
+
+    if (sinStock.length) {
+      resultado = {
+        ok: false, error: &quot;stock&quot;, faltantes: sinStock,
+        mensaje: &quot;Mientras elegías, se vendieron algunas piezas: &quot; + sinStock.map(s =&gt; s.nombre + &quot; (&quot; + s.v + &quot;): &quot; + (s.disponible ? &quot;quedan &quot; + s.disponible : &quot;agotado&quot;)).join(&quot;; &quot;) + &quot;.&quot;
+      };
+      return resultado;
+    }
+
+    const subtotal = lineas.reduce((s, l) =&gt; s + l.p * l.q, 0);
+
+    // Cupón
+    let descuento = 0, cupon = &quot;&quot;, cuponFila = null;
+    if (texto_(data.cupon)) {
+      const cup = validarCupon_(data.cupon, subtotal);
+      if (!cup.ok) { resultado = cup; return resultado; }
+      cupon = cup.codigo; descuento = Math.round(subtotal * cup.pct); cuponFila = cup.fila;
+    }
+
+    // Envío
+    const zona = cliente.departamento === &quot;Montevideo&quot; ? &quot;mvd&quot; : &quot;int&quot;;
+    const opcion = enviosPublicos_()[zona].find(o =&gt; o.id === texto_(data.envio));
+    if (!opcion) { resultado = { ok: false, error: &quot;envio&quot;, mensaje: &quot;Elegí una forma de entrega válida para tu departamento.&quot; }; return resultado; }
+    if (opcion.addr &amp;&amp; cliente.direccion.length &lt; 4) { resultado = { ok: false, error: &quot;datos&quot;, mensaje: &quot;Ingresá tu dirección para el envío.&quot; }; return resultado; }
+    const gratisDesde = numero_(cfg.envio_gratis_desde);
+    const envio = gratisDesde &gt; 0 &amp;&amp; subtotal - descuento &gt;= gratisDesde ? 0 : opcion.cost;
+
+    const envoltorio = data.envoltorio ? numero_(cfg.envoltorio_regalo) : 0;
+    const base = subtotal - descuento + envoltorio + envio;
+    const comision = pago === &quot;mp&quot; ? Math.round(base * porcentaje_(cfg.comision_mp)) : 0;
+    const total = base + comision;
+
+    // Descontar stock
+    const colStock = varTabla.col[&quot;Stock&quot;];
+    const stockBajo = numero_(cfg.stock_bajo);
+    const alertas = [];
+    lineas.forEach(l =&gt; {
+      if (l.stock === null) return;
+      const nuevo = l.stock - l.q;
+      varTabla.hoja.getRange(l.fila._fila, colStock).setValue(nuevo);
+      if (nuevo &lt;= stockBajo) alertas.push({ nombre: l.nombre, v: l.v, stock: nuevo });
+    });
+
+    // Contar uso del cupón
+    if (cuponFila) {
+      const cupTabla = tabla_(HOJA.cupones);
+      cupTabla.hoja.getRange(cuponFila._fila, cupTabla.col[&quot;Usos&quot;]).setValue(numero_(cuponFila[&quot;Usos&quot;]) + 1);
+    }
+
+    // Número de pedido correlativo
+    const props = PropertiesService.getScriptProperties();
+    const numero = Math.max(numero_(props.getProperty(&quot;ultimoPedido&quot;)) || 1000, ultimoNumeroEnHoja_()) + 1;
+    props.setProperty(&quot;ultimoPedido&quot;, String(numero));
+    const codigo = &quot;MF-&quot; + numero;
+
+    const pedido = {
+      codigo: codigo, fecha: new Date(), estado: &quot;Pendiente de pago&quot;, cliente: cliente,
+      lineas: lineas.map(l =&gt; ({ id: l.id, v: l.v, q: l.q, p: l.p, nombre: l.nombre })),
+      subtotal: subtotal, descuento: descuento, cupon: cupon, envoltorio: envoltorio,
+      entrega: opcion.name, envio: envio, comision: comision, total: total,
+      pago: pago === &quot;mp&quot; ? &quot;Mercado Pago&quot; : &quot;Transferencia bancaria&quot;
+    };
+    anotarPedido_(pedido);
+    SpreadsheetApp.flush();
+
+    resultado = {
+      ok: true, pedido: codigo,
+      totales: { subtotal: subtotal, descuento: descuento, cupon: cupon, envoltorio: envoltorio, envio: envio, entrega: opcion.name, comision: comision, total: total },
+      pago: pago, banco: datosBancarios_(cfg), mpLink: texto_(cfg.link_mp), horasPago: numero_(cfg.horas_para_cancelar)
+    };
+    resultado._pedido = pedido;
+    resultado._alertas = alertas;
+  } finally {
+    lock.releaseLock();
+  }
+
+  limpiarCache_();
+  // Emails fuera del bloqueo para no demorar otros pedidos
+  try { avisoPedidoNuevo_(resultado._pedido, resultado._alertas); } catch (err) { registrarError_(&quot;aviso pedido&quot;, err); }
+  try { if (esSi_(config_().email_al_cliente, true)) emailConfirmacionCliente_(resultado._pedido); } catch (err) { registrarError_(&quot;email cliente&quot;, err); }
+  delete resultado._pedido;
+  delete resultado._alertas;
+  return resultado;
+}
+
+function anotarPedido_(p) {
+  const t = tabla_(HOJA.pedidos);
+  const valores = {
+    &quot;Fecha&quot;: p.fecha, &quot;Pedido&quot;: p.codigo, &quot;Estado&quot;: p.estado,
+    &quot;Nombre&quot;: p.cliente.nombre + &quot; &quot; + p.cliente.apellido, &quot;Teléfono&quot;: &quot;+598 &quot; + p.cliente.telefono, &quot;Email&quot;: p.cliente.email,
+    &quot;Departamento&quot;: p.cliente.departamento, &quot;Ciudad o barrio&quot;: p.cliente.ciudad, &quot;Dirección&quot;: p.cliente.direccion, &quot;Notas&quot;: p.cliente.notas,
+    &quot;Productos&quot;: p.lineas.map(l =&gt; l.q + &quot; × &quot; + l.nombre + &quot; (&quot; + l.v + &quot;)&quot;).join(&quot;\n&quot;),
+    &quot;Subtotal&quot;: p.subtotal, &quot;Descuento&quot;: p.descuento, &quot;Cupón&quot;: p.cupon, &quot;Envoltorio&quot;: p.envoltorio,
+    &quot;Entrega&quot;: p.entrega, &quot;Costo envío&quot;: p.envio, &quot;Comisión MP&quot;: p.comision, &quot;Total&quot;: p.total, &quot;Pago&quot;: p.pago,
+    &quot;Seguimiento&quot;: &quot;&quot;, &quot;Recordatorio&quot;: &quot;&quot;, &quot;Stock devuelto&quot;: &quot;No&quot;, &quot;Detalle (no editar)&quot;: JSON.stringify(p.lineas.map(l =&gt; ({ id: l.id, v: l.v, q: l.q, p: l.p, n: l.nombre })))
+  };
+  t.hoja.appendRow(t.encabezados.map(h =&gt; (h in valores ? valores[h] : &quot;&quot;)));
+}
+
+function ultimoNumeroEnHoja_() {
+  let max = 0;
+  tabla_(HOJA.pedidos).filas.forEach(f =&gt; {
+    const m = /MF-(\d+)/.exec(texto_(f[&quot;Pedido&quot;]));
+    if (m) max = Math.max(max, Number(m[1]));
+  });
+  return max;
+}
+
+/* ============================================================
+ *  CUPONES Y NEWSLETTER
+ * ============================================================ */
+
+function consultarCupon_(data) {
+  const r = validarCupon_(data.codigo, numero_(data.subtotal));
+  if (r.ok) return { ok: true, codigo: r.codigo, pct: r.pct, mensaje: r.mensaje };
+  return r;
+}
+
+function validarCupon_(codigoIngresado, subtotal) {
+  const codigo = texto_(codigoIngresado).toUpperCase();
+  if (!codigo) return { ok: false, error: &quot;cupon&quot;, mensaje: &quot;Escribí un código para aplicarlo.&quot; };
+  const fila = tabla_(HOJA.cupones).filas.find(c =&gt; texto_(c[&quot;Código&quot;]).toUpperCase() === codigo);
+  if (!fila || !esSi_(fila[&quot;Activo&quot;], false)) return { ok: false, error: &quot;cupon&quot;, mensaje: &quot;Ese cupón no existe o ya no está activo. Revisá cómo lo escribiste.&quot; };
+  const vence = fila[&quot;Vence&quot;];
+  if (vence instanceof Date) {
+    const fin = new Date(vence); fin.setHours(23, 59, 59, 999);
+    if (fin &lt; new Date()) return { ok: false, error: &quot;cupon&quot;, mensaje: &quot;Ese cupón venció.&quot; };
+  }
+  const max = numero_(fila[&quot;Usos máximos&quot;]);
+  if (max &gt; 0 &amp;&amp; numero_(fila[&quot;Usos&quot;]) &gt;= max) return { ok: false, error: &quot;cupon&quot;, mensaje: &quot;Ese cupón ya se usó todas las veces disponibles.&quot; };
+  const minimo = numero_(fila[&quot;Compra mínima&quot;]);
+  if (minimo &gt; 0 &amp;&amp; subtotal &lt; minimo) return { ok: false, error: &quot;cupon&quot;, mensaje: &quot;Ese cupón es para compras desde &quot; + pesos_(minimo) + &quot;.&quot; };
+  const pct = porcentaje_(fila[&quot;Descuento %&quot;]);
+  if (!(pct &gt; 0)) return { ok: false, error: &quot;cupon&quot;, mensaje: &quot;Ese cupón no tiene descuento cargado.&quot; };
+  return { ok: true, codigo: codigo, pct: pct, fila: fila, mensaje: &quot;Cupón &quot; + codigo + &quot; aplicado: &quot; + Math.round(pct * 100) + &quot;% de descuento.&quot; };
+}
+
+function suscribir_(data) {
+  const email = limpiar_(data.email, 120).toLowerCase();
+  if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return { ok: false, error: &quot;email&quot;, mensaje: &quot;Revisá el email: parece incompleto.&quot; };
+  const t = tabla_(HOJA.suscriptores);
+  if (!t.filas.some(f =&gt; texto_(f[&quot;Email&quot;]).toLowerCase() === email)) t.hoja.appendRow([new Date(), email, limpiar_(data.origen, 40) || &quot;Newsletter&quot;]);
+  const cfg = config_();
+  const cup = texto_(cfg.cupon_bienvenida);
+  return { ok: true, mensaje: cup ? &quot;¡Gracias! Tu código de bienvenida es &quot; + cup + &quot;.&quot; : &quot;¡Gracias por suscribirte!&quot; };
+}
+
+/* ============================================================
+ *  CUANDO MERFINA EDITA LA PLANILLA
+ * ============================================================ */
+
+function alEditar(e) {
+  if (!e || !e.range) return;
+  const hoja = e.range.getSheet();
+  const nombre = hoja.getName();
+
+  if ([HOJA.productos, HOJA.variantes, HOJA.envios, HOJA.cupones, HOJA.config].indexOf(nombre) &gt;= 0) limpiarCache_();
+
+  if (nombre === HOJA.productos) return editarProductos_(hoja, e.range);
+  if (nombre === HOJA.pedidos) return editarPedidos_(hoja, e.range, e.oldValue);
+}
+
+function editarProductos_(hoja, rango) {
+  const t = tabla_(HOJA.productos);
+  const colNombre = t.col[&quot;Nombre&quot;], colId = t.col[&quot;ID&quot;], colFotos = t.col[&quot;Fotos&quot;];
+  for (let r = rango.getRow(); r &lt;= rango.getLastRow(); r++) {
+    if (r &lt; 2) continue;
+    const fila = t.filas.find(f =&gt; f._fila === r);
+    if (!fila) continue;
+    // ID automático al escribir el nombre
+    if (rango.getColumn() &lt;= colNombre &amp;&amp; rango.getLastColumn() &gt;= colNombre &amp;&amp; texto_(fila[&quot;Nombre&quot;]) &amp;&amp; !texto_(fila[&quot;ID&quot;])) {
+      const usados = t.filas.map(f =&gt; texto_(f[&quot;ID&quot;]));
+      let id = slug_(fila[&quot;Nombre&quot;]), base = id, n = 2;
+      while (usados.indexOf(id) &gt;= 0) id = base + &quot;-&quot; + n++;
+      hoja.getRange(r, colId).setValue(id);
+      // Crea una variante para completar precio y stock
+      const vt = tabla_(HOJA.variantes);
+      if (!vt.filas.some(v =&gt; texto_(v[&quot;ID producto&quot;]) === id)) {
+        const nueva = { &quot;ID producto&quot;: id, &quot;Variante&quot;: &quot;Par&quot;, &quot;Precio&quot;: &quot;&quot;, &quot;Precio anterior&quot;: &quot;&quot;, &quot;Stock&quot;: 0, &quot;Activo&quot;: &quot;Sí&quot; };
+        vt.hoja.appendRow(vt.encabezados.map(h =&gt; (h in nueva ? nueva[h] : &quot;&quot;)));
+      }
+      SpreadsheetApp.getActive().toast(&quot;Le puse el ID «&quot; + id + &quot;». Completá precio y stock en la pestaña Variantes.&quot;, &quot;Merfina&quot;, 8);
+    }
+    // Fotos de Google Drive: las hace públicas para que se vean en la tienda
+    if (rango.getColumn() &lt;= colFotos &amp;&amp; rango.getLastColumn() &gt;= colFotos) compartirFotos_(fila[&quot;Fotos&quot;]);
+  }
+}
+
+function editarPedidos_(hoja, rango, valorAnterior) {
+  const t = tabla_(HOJA.pedidos);
+  const colEstado = t.col[&quot;Estado&quot;];
+  if (rango.getColumn() &gt; colEstado || rango.getLastColumn() &lt; colEstado) return;
+  for (let r = Math.max(2, rango.getRow()); r &lt;= rango.getLastRow(); r++) {
+    const fila = t.filas.find(f =&gt; f._fila === r);
+    if (!fila || !texto_(fila[&quot;Pedido&quot;])) continue;
+    const nuevo = texto_(fila[&quot;Estado&quot;]);
+    const anterior = rango.getNumRows() === 1 ? texto_(valorAnterior) : &quot;&quot;;
+    if (nuevo === anterior) continue;
+    cambiarEstado_(t, fila, nuevo, anterior, false);
+  }
+}
+
+function cambiarEstado_(t, fila, nuevo, anterior, automatico) {
+  const devuelto = esSi_(fila[&quot;Stock devuelto&quot;], false);
+  if (nuevo === &quot;Cancelado&quot; &amp;&amp; !devuelto) {
+    moverStock_(fila, +1);
+    t.hoja.getRange(fila._fila, t.col[&quot;Stock devuelto&quot;]).setValue(&quot;Sí&quot;);
+    if (!automatico) avisarCliente_(fila, &quot;cancelado&quot;);
+  } else if (nuevo !== &quot;Cancelado&quot; &amp;&amp; devuelto) {
+    // Se reactivó un pedido cancelado: vuelve a descontar el stock
+    moverStock_(fila, -1);
+    t.hoja.getRange(fila._fila, t.col[&quot;Stock devuelto&quot;]).setValue(&quot;No&quot;);
+  }
+  if (nuevo === &quot;Pagado&quot;) avisarCliente_(fila, &quot;pagado&quot;);
+  if (nuevo === &quot;Enviado&quot;) avisarCliente_(fila, &quot;enviado&quot;);
+  if (nuevo === &quot;Entregado&quot;) avisarCliente_(fila, &quot;entregado&quot;);
+}
+
+function moverStock_(filaPedido, signo) {
+  let detalle = [];
+  try { detalle = JSON.parse(texto_(filaPedido[&quot;Detalle (no editar)&quot;]) || &quot;[]&quot;); } catch (err) { return; }
+  const lock = LockService.getScriptLock();
+  lock.waitLock(25000);
+  try {
+    const vt = tabla_(HOJA.variantes);
+    detalle.forEach(d =&gt; {
+      const v = vt.filas.find(f =&gt; texto_(f[&quot;ID producto&quot;]) === d.id &amp;&amp; texto_(f[&quot;Variante&quot;]) === d.v);
+      if (!v || stockDe_(v) === null) return;
+      const nuevo = stockDe_(v) + signo * d.q;
+      vt.hoja.getRange(v._fila, vt.col[&quot;Stock&quot;]).setValue(Math.max(0, nuevo));
+      v[&quot;Stock&quot;] = Math.max(0, nuevo);
+    });
+    SpreadsheetApp.flush();
+  } finally {
+    lock.releaseLock();
+  }
+  limpiarCache_();
+}
+
+function compartirFotos_(valor) {
+  lista_(valor).forEach(url =&gt; {
+    const id = idDrive_(url);
+    if (!id) return;
+    try { DriveApp.getFileById(id).setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW); }
+    catch (err) { registrarError_(&quot;compartir foto &quot; + id, err); }
+  });
+}
+
+/* ============================================================
+ *  TAREAS AUTOMÁTICAS
+ * ============================================================ */
+
+/** Cada hora: recordatorio de pago y cancelación de pedidos vencidos. */
+function tareaCadaHora() {
+  const cfg = config_();
+  const horas = numero_(cfg.horas_para_cancelar) || 48;
+  const horasRecordatorio = numero_(cfg.horas_recordatorio) || Math.round(horas / 2);
+  const t = tabla_(HOJA.pedidos);
+  const ahora = Date.now();
+  const cancelados = [];
+
+  t.filas.forEach(f =&gt; {
+    if (texto_(f[&quot;Estado&quot;]) !== &quot;Pendiente de pago&quot; || !(f[&quot;Fecha&quot;] instanceof Date)) return;
+    const edad = (ahora - f[&quot;Fecha&quot;].getTime()) / 36e5;
+    if (edad &gt;= horas) {
+      t.hoja.getRange(f._fila, t.col[&quot;Estado&quot;]).setValue(&quot;Cancelado&quot;);
+      f[&quot;Estado&quot;] = &quot;Cancelado&quot;;
+      cambiarEstado_(t, f, &quot;Cancelado&quot;, &quot;Pendiente de pago&quot;, true);
+      avisarCliente_(f, &quot;vencido&quot;);
+      cancelados.push(f);
+    } else if (edad &gt;= horasRecordatorio &amp;&amp; !texto_(f[&quot;Recordatorio&quot;])) {
+      avisarCliente_(f, &quot;recordatorio&quot;);
+      t.hoja.getRange(f._fila, t.col[&quot;Recordatorio&quot;]).setValue(new Date());
+    }
+  });
+
+  if (cancelados.length) {
+    enviarAMerfina_(&quot;Se cancelaron &quot; + cancelados.length + &quot; pedidos sin pago&quot;,
+      parrafo_(&quot;Pasaron &quot; + horas + &quot; horas sin recibir el pago, así que cancelé estos pedidos y devolví el stock:&quot;) +
+      lista_html_(cancelados.map(f =&gt; &quot;&lt;b&gt;&quot; + esc_(f[&quot;Pedido&quot;]) + &quot;&lt;/b&gt; · &quot; + esc_(f[&quot;Nombre&quot;]) + &quot; · &quot; + pesos_(f[&quot;Total&quot;]))) +
+      parrafo_(&quot;Si alguno sí pagó, volvé a ponerle el estado «Pagado» en la pestaña Pedidos y el stock se descuenta de nuevo.&quot;));
+  }
+}
+
+/** Todos los días: resumen de ventas, pendientes y stock. */
+function resumenDiario() {
+  const cfg = config_();
+  const t = tabla_(HOJA.pedidos);
+  const hoy = new Date(); hoy.setHours(0, 0, 0, 0);
+  const inicioMes = new Date(hoy.getFullYear(), hoy.getMonth(), 1);
+  const validos = [&quot;Pagado&quot;, &quot;Enviado&quot;, &quot;Entregado&quot;];
+
+  const deHoy = t.filas.filter(f =&gt; f[&quot;Fecha&quot;] instanceof Date &amp;&amp; f[&quot;Fecha&quot;] &gt;= hoy &amp;&amp; texto_(f[&quot;Pedido&quot;]));
+  const pendientes = t.filas.filter(f =&gt; texto_(f[&quot;Estado&quot;]) === &quot;Pendiente de pago&quot;);
+  const paraEnviar = t.filas.filter(f =&gt; texto_(f[&quot;Estado&quot;]) === &quot;Pagado&quot;);
+  const mes = t.filas.filter(f =&gt; f[&quot;Fecha&quot;] instanceof Date &amp;&amp; f[&quot;Fecha&quot;] &gt;= inicioMes &amp;&amp; validos.indexOf(texto_(f[&quot;Estado&quot;])) &gt;= 0);
+  const totalMes = mes.reduce((s, f) =&gt; s + numero_(f[&quot;Total&quot;]), 0);
+
+  const stock = stockCritico_(numero_(cfg.stock_bajo));
+
+  let cuerpo = &quot;&quot;;
+  cuerpo += tarjetas_([[&quot;Pedidos de hoy&quot;, deHoy.length], [&quot;Vendido este mes&quot;, pesos_(totalMes)], [&quot;Esperando pago&quot;, pendientes.length], [&quot;Para enviar&quot;, paraEnviar.length]]);
+  if (paraEnviar.length) cuerpo += titulo_(&quot;Pagados, listos para enviar&quot;) + lista_html_(paraEnviar.map(f =&gt; &quot;&lt;b&gt;&quot; + esc_(f[&quot;Pedido&quot;]) + &quot;&lt;/b&gt; · &quot; + esc_(f[&quot;Nombre&quot;]) + &quot; · &quot; + esc_(f[&quot;Entrega&quot;]) + &quot; · &quot; + esc_(f[&quot;Ciudad o barrio&quot;]) + &quot;, &quot; + esc_(f[&quot;Departamento&quot;])));
+  if (pendientes.length) cuerpo += titulo_(&quot;Esperando el comprobante&quot;) + lista_html_(pendientes.map(f =&gt; &quot;&lt;b&gt;&quot; + esc_(f[&quot;Pedido&quot;]) + &quot;&lt;/b&gt; · &quot; + esc_(f[&quot;Nombre&quot;]) + &quot; · &quot; + pesos_(f[&quot;Total&quot;]) + &quot; · &quot; + esc_(f[&quot;Pago&quot;])));
+  if (stock.agotados.length) cuerpo += titulo_(&quot;Agotados&quot;) + lista_html_(stock.agotados);
+  if (stock.bajos.length) cuerpo += titulo_(&quot;Quedan pocas unidades&quot;) + lista_html_(stock.bajos);
+  if (!deHoy.length &amp;&amp; !pendientes.length &amp;&amp; !paraEnviar.length) cuerpo += parrafo_(&quot;Hoy no entraron pedidos nuevos.&quot;);
+
+  enviarAMerfina_(&quot;Resumen del día · &quot; + Utilities.formatDate(new Date(), zona_(), &quot;dd/MM&quot;), cuerpo);
+}
+
+function stockCritico_(umbral) {
+  const productos = {};
+  tabla_(HOJA.productos).filas.forEach(p =&gt; { productos[texto_(p[&quot;ID&quot;])] = p; });
+  const agotados = [], bajos = [];
+  tabla_(HOJA.variantes).filas.forEach(v =&gt; {
+    const p = productos[texto_(v[&quot;ID producto&quot;])];
+    if (!p || !esSi_(p[&quot;Activo&quot;], true) || !esSi_(v[&quot;Activo&quot;], true)) return;
+    const s = stockDe_(v);
+    if (s === null) return;
+    const txt = esc_(p[&quot;Nombre&quot;]) + &quot; · &quot; + esc_(v[&quot;Variante&quot;]);
+    if (s === 0) agotados.push(txt);
+    else if (s &lt;= umbral) bajos.push(txt + &quot; · quedan &quot; + s);
+  });
+  return { agotados: agotados, bajos: bajos };
+}
+
+/* ============================================================
+ *  EMAILS
+ * ============================================================ */
+
+function avisoPedidoNuevo_(p, alertas) {
+  let cuerpo = tarjetas_([[&quot;Pedido&quot;, p.codigo], [&quot;Total&quot;, pesos_(p.total)], [&quot;Pago&quot;, p.pago]]);
+  cuerpo += titulo_(&quot;Cliente&quot;) + parrafo_(
+    esc_(p.cliente.nombre + &quot; &quot; + p.cliente.apellido) + &quot;&lt;br&gt;&quot; +
+    &quot;Tel: +598 &quot; + esc_(p.cliente.telefono) + &quot; · &quot; + esc_(p.cliente.email) + &quot;&lt;br&gt;&quot; +
+    esc_([p.cliente.direccion, p.cliente.ciudad, p.cliente.departamento].filter(String).join(&quot;, &quot;)) +
+    (p.cliente.notas ? &quot;&lt;br&gt;&lt;i&gt;Notas: &quot; + esc_(p.cliente.notas) + &quot;&lt;/i&gt;&quot; : &quot;&quot;));
+  cuerpo += titulo_(&quot;Productos&quot;) + tablaPedido_(p);
+  cuerpo += parrafo_(&quot;Entrega: &lt;b&gt;&quot; + esc_(p.entrega) + &quot;&lt;/b&gt;&quot;);
+  if (alertas &amp;&amp; alertas.length) cuerpo += titulo_(&quot;Atención al stock&quot;) + lista_html_(alertas.map(a =&gt; esc_(a.nombre) + &quot; · &quot; + esc_(a.v) + &quot;: &quot; + (a.stock === 0 ? &quot;&lt;b&gt;AGOTADO&lt;/b&gt;&quot; : &quot;quedan &quot; + a.stock)));
+  cuerpo += parrafo_(&quot;Cuando te llegue el comprobante, cambiá el estado a &lt;b&gt;Pagado&lt;/b&gt; en la pestaña Pedidos y el cliente recibe la confirmación automáticamente.&quot;);
+  cuerpo += boton_(&quot;Escribirle por WhatsApp&quot;, &quot;https://wa.me/598&quot; + soloDigitos_(p.cliente.telefono).replace(/^0/, &quot;&quot;));
+  enviarAMerfina_(&quot;Pedido nuevo &quot; + p.codigo + &quot; · &quot; + pesos_(p.total), cuerpo, p.cliente.email);
+}
+
+function emailConfirmacionCliente_(p) {
+  const cfg = config_();
+  let cuerpo = parrafo_(&quot;¡Hola &quot; + esc_(p.cliente.nombre) + &quot;! Gracias por elegir Merfina. Recibimos tu pedido &lt;b&gt;&quot; + p.codigo + &quot;&lt;/b&gt;.&quot;);
+  cuerpo += tablaPedido_(p);
+  cuerpo += instruccionesPago_(p, cfg);
+  enviarACliente_(p.cliente.email, &quot;Recibimos tu pedido &quot; + p.codigo + &quot; · Merfina&quot;, cuerpo);
+}
+
+function instruccionesPago_(p, cfg) {
+  const horas = numero_(cfg.horas_para_cancelar) || 48;
+  let html = titulo_(&quot;Cómo pagar&quot;);
+  if (p.pago === &quot;Transferencia bancaria&quot;) {
+    html += tablaDatos_(datosBancarios_(cfg).concat([[&quot;Monto&quot;, pesos_(p.total)], [&quot;Referencia&quot;, p.codigo]]));
+  } else if (texto_(cfg.link_mp)) {
+    html += parrafo_(&quot;Pagá &quot; + pesos_(p.total) + &quot; con tarjeta, débito o dinero en cuenta:&quot;) + boton_(&quot;Pagar con Mercado Pago&quot;, texto_(cfg.link_mp));
+  } else {
+    html += parrafo_(&quot;Te mandamos el link de pago de Mercado Pago por WhatsApp por &quot; + pesos_(p.total) + &quot;.&quot;);
+  }
+  html += parrafo_(&quot;Cuando pagues, mandanos el comprobante por WhatsApp con tu número de pedido &lt;b&gt;&quot; + p.codigo + &quot;&lt;/b&gt;. Reservamos tus piezas durante &quot; + horas + &quot; horas.&quot;);
+  html += boton_(&quot;Enviar comprobante por WhatsApp&quot;, &quot;https://wa.me/&quot; + soloDigitos_(cfg.whatsapp) + &quot;?text=&quot; + encodeURIComponent(&quot;¡Hola Merfina! Te mando el comprobante del pedido &quot; + p.codigo + &quot;.&quot;));
+  return html;
+}
+
+function avisarCliente_(fila, tipo) {
+  const cfg = config_();
+  if (!esSi_(cfg.email_al_cliente, true)) return;
+  const email = texto_(fila[&quot;Email&quot;]);
+  if (!email) return;
+  const nombre = esc_(texto_(fila[&quot;Nombre&quot;]).split(&quot; &quot;)[0]);
+  const codigo = texto_(fila[&quot;Pedido&quot;]);
+  let asunto = &quot;&quot;, cuerpo = &quot;&quot;;
+  if (tipo === &quot;pagado&quot;) {
+    asunto = &quot;¡Recibimos tu pago! Pedido &quot; + codigo;
+    cuerpo = parrafo_(&quot;¡Hola &quot; + nombre + &quot;! Confirmamos el pago de tu pedido &lt;b&gt;&quot; + codigo + &quot;&lt;/b&gt;. Ya estamos preparando tus piezas en su estuche Merfina.&quot;) +
+      parrafo_(&quot;Entrega: &lt;b&gt;&quot; + esc_(fila[&quot;Entrega&quot;]) + &quot;&lt;/b&gt;. Te avisamos por acá cuando salga.&quot;);
+  } else if (tipo === &quot;enviado&quot;) {
+    const seg = texto_(fila[&quot;Seguimiento&quot;]);
+    asunto = &quot;Tu pedido &quot; + codigo + &quot; ya salió&quot;;
+    cuerpo = parrafo_(&quot;¡Hola &quot; + nombre + &quot;! Tu pedido &lt;b&gt;&quot; + codigo + &quot;&lt;/b&gt; ya está en camino (&quot; + esc_(fila[&quot;Entrega&quot;]) + &quot;).&quot;) +
+      (seg ? parrafo_(&quot;Seguimiento: &lt;b&gt;&quot; + esc_(seg) + &quot;&lt;/b&gt;&quot;) : &quot;&quot;);
+  } else if (tipo === &quot;entregado&quot;) {
+    asunto = &quot;¡Que lo disfrutes! Pedido &quot; + codigo;
+    cuerpo = parrafo_(&quot;¡Hola &quot; + nombre + &quot;! Esperamos que tus piezas Merfina te encanten.&quot;) +
+      parrafo_(&quot;Si te sacás una foto con ellas, etiquetanos en Instagram: nos encanta verlas puestas.&quot;) +
+      boton_(&quot;Seguinos en Instagram&quot;, &quot;https://www.instagram.com/merfinajoyas/&quot;);
+  } else if (tipo === &quot;cancelado&quot;) {
+    asunto = &quot;Pedido &quot; + codigo + &quot; cancelado&quot;;
+    cuerpo = parrafo_(&quot;¡Hola &quot; + nombre + &quot;! Te avisamos que el pedido &lt;b&gt;&quot; + codigo + &quot;&lt;/b&gt; fue cancelado. Si fue un error o querés retomarlo, escribinos por WhatsApp.&quot;) +
+      boton_(&quot;Escribir por WhatsApp&quot;, &quot;https://wa.me/&quot; + soloDigitos_(cfg.whatsapp));
+  } else if (tipo === &quot;vencido&quot;) {
+    asunto = &quot;Tu reserva &quot; + codigo + &quot; venció&quot;;
+    cuerpo = parrafo_(&quot;¡Hola &quot; + nombre + &quot;! No recibimos el pago del pedido &lt;b&gt;&quot; + codigo + &quot;&lt;/b&gt;, así que liberamos las piezas. Si todavía las querés, podés volver a comprarlas en la tienda o escribirnos.&quot;) +
+      boton_(&quot;Escribir por WhatsApp&quot;, &quot;https://wa.me/&quot; + soloDigitos_(cfg.whatsapp));
+  } else if (tipo === &quot;recordatorio&quot;) {
+    asunto = &quot;Tus piezas te esperan · Pedido &quot; + codigo;
+    const p = { codigo: codigo, total: numero_(fila[&quot;Total&quot;]), pago: texto_(fila[&quot;Pago&quot;]) };
+    cuerpo = parrafo_(&quot;¡Hola &quot; + nombre + &quot;! Todavía tenemos reservado tu pedido &lt;b&gt;&quot; + codigo + &quot;&lt;/b&gt;, pero no nos llegó el comprobante.&quot;) + instruccionesPago_(p, cfg);
+  }
+  if (asunto) {
+    try { enviarACliente_(email, asunto, cuerpo); } catch (err) { registrarError_(&quot;email &quot; + tipo, err); }
+  }
+}
+
+function enviarAMerfina_(asunto, cuerpo, responderA) {
+  const cfg = config_();
+  const para = texto_(cfg.email_avisos) || Session.getEffectiveUser().getEmail();
+  if (!para) return;
+  MailApp.sendEmail({ to: para, subject: asunto, htmlBody: plantilla_(asunto, cuerpo), name: &quot;Tienda Merfina&quot;, replyTo: responderA || para });
+}
+
+function enviarACliente_(email, asunto, cuerpo) {
+  const cfg = config_();
+  // Gmail permite unos 100 emails por día: dejamos lugar para los avisos a Merfina
+  if (MailApp.getRemainingDailyQuota() &lt; 10) { registrarError_(&quot;cupo de emails&quot;, &quot;Sin cupo diario: no se envió «&quot; + asunto + &quot;» a &quot; + email); return; }
+  MailApp.sendEmail({ to: email, subject: asunto, htmlBody: plantilla_(asunto, cuerpo), name: &quot;Merfina&quot;, replyTo: texto_(cfg.email_avisos) || undefined });
+}
+
+function probarEmail() {
+  enviarAMerfina_(&quot;Prueba de la tienda Merfina&quot;, parrafo_(&quot;¡Funciona! Así se ven los avisos de la tienda.&quot;) + tarjetas_([[&quot;Pedido&quot;, &quot;MF-0000&quot;], [&quot;Total&quot;, pesos_(2990)]]));
+  SpreadsheetApp.getUi().alert(&quot;Listo. Revisá tu email (&quot; + (texto_(config_().email_avisos) || Session.getEffectiveUser().getEmail()) + &quot;).&quot;);
+}
+
+/* ---- Piezas de los emails (colores de Merfina) ---- */
+
+function plantilla_(titulo, cuerpo) {
+  return &#x27;&lt;div style=&quot;background:#F3ECE3;padding:24px 12px;font-family:Helvetica,Arial,sans-serif;color:#221C17&quot;&gt;&#x27; +
+    &#x27;&lt;div style=&quot;max-width:560px;margin:0 auto;background:#FBF7F2;border-top:3px solid #A3804F&quot;&gt;&#x27; +
+    &#x27;&lt;div style=&quot;text-align:center;padding:28px 24px 8px&quot;&gt;&lt;div style=&quot;font-family:Georgia,\&#x27;Times New Roman\&#x27;,serif;font-size:26px;letter-spacing:10px;color:#221C17&quot;&gt;MERFINA&lt;/div&gt;&#x27; +
+    &#x27;&lt;div style=&quot;color:#A3804F;font-size:11px;letter-spacing:4px;margin-top:4px&quot;&gt;JOYAS&lt;/div&gt;&lt;/div&gt;&#x27; +
+    &#x27;&lt;div style=&quot;padding:8px 28px 28px;font-size:15px;line-height:1.6&quot;&gt;&#x27; +
+    &#x27;&lt;h1 style=&quot;font-family:Georgia,serif;font-weight:normal;font-size:22px;margin:12px 0 16px&quot;&gt;&#x27; + esc_(titulo) + &#x27;&lt;/h1&gt;&#x27; + cuerpo + &#x27;&lt;/div&gt;&#x27; +
+    &#x27;&lt;div style=&quot;text-align:center;padding:16px;border-top:1px solid #E4DACD;color:#6F655B;font-size:12px&quot;&gt;Merfina · Una joya que hace la diferencia&lt;/div&gt;&#x27; +
+    &#x27;&lt;/div&gt;&lt;/div&gt;&#x27;;
+}
+function parrafo_(html) { return &#x27;&lt;p style=&quot;margin:0 0 14px&quot;&gt;&#x27; + html + &#x27;&lt;/p&gt;&#x27;; }
+function titulo_(t) { return &#x27;&lt;h3 style=&quot;font-size:12px;letter-spacing:3px;text-transform:uppercase;color:#8A6A3E;margin:22px 0 8px&quot;&gt;&#x27; + esc_(t) + &#x27;&lt;/h3&gt;&#x27;; }
+function lista_html_(items) { return &#x27;&lt;ul style=&quot;margin:0 0 14px;padding-left:18px&quot;&gt;&#x27; + items.map(i =&gt; &#x27;&lt;li style=&quot;margin:4px 0&quot;&gt;&#x27; + i + &#x27;&lt;/li&gt;&#x27;).join(&quot;&quot;) + &#x27;&lt;/ul&gt;&#x27;; }
+function boton_(txt, url) { return &#x27;&lt;p style=&quot;margin:18px 0&quot;&gt;&lt;a href=&quot;&#x27; + esc_(url) + &#x27;&quot; style=&quot;display:inline-block;background:#221C17;color:#FBF7F2;text-decoration:none;padding:12px 22px;font-size:12px;letter-spacing:2px;text-transform:uppercase&quot;&gt;&#x27; + esc_(txt) + &#x27;&lt;/a&gt;&lt;/p&gt;&#x27;; }
+function tarjetas_(pares) {
+  return &#x27;&lt;table role=&quot;presentation&quot; style=&quot;width:100%;border-collapse:collapse;margin:0 0 14px&quot;&gt;&lt;tr&gt;&#x27; + pares.map(([a, b]) =&gt;
+    &#x27;&lt;td style=&quot;background:#F3ECE3;padding:12px;border:3px solid #FBF7F2;vertical-align:top&quot;&gt;&lt;div style=&quot;font-size:11px;letter-spacing:1px;color:#6F655B;text-transform:uppercase&quot;&gt;&#x27; + esc_(a) + &#x27;&lt;/div&gt;&lt;div style=&quot;font-size:18px;margin-top:4px&quot;&gt;&#x27; + esc_(String(b)) + &#x27;&lt;/div&gt;&lt;/td&gt;&#x27;).join(&quot;&quot;) + &#x27;&lt;/tr&gt;&lt;/table&gt;&#x27;;
+}
+function tablaDatos_(pares) {
+  return &#x27;&lt;table role=&quot;presentation&quot; style=&quot;border-collapse:collapse;margin:0 0 14px&quot;&gt;&#x27; + pares.map(([a, b]) =&gt;
+    &#x27;&lt;tr&gt;&lt;td style=&quot;padding:4px 18px 4px 0;color:#6F655B&quot;&gt;&#x27; + esc_(a) + &#x27;&lt;/td&gt;&lt;td style=&quot;padding:4px 0&quot;&gt;&lt;b&gt;&#x27; + esc_(b) + &#x27;&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&#x27;).join(&quot;&quot;) + &#x27;&lt;/table&gt;&#x27;;
+}
+function tablaPedido_(p) {
+  const filas = p.lineas.map(l =&gt; [l.q + &quot; × &quot; + l.nombre + &quot; (&quot; + l.v + &quot;)&quot;, pesos_(l.p * l.q)]);
+  filas.push([&quot;Subtotal&quot;, pesos_(p.subtotal)]);
+  if (p.descuento) filas.push([&quot;Cupón &quot; + p.cupon, &quot;− &quot; + pesos_(p.descuento)]);
+  if (p.envoltorio) filas.push([&quot;Envoltorio de regalo&quot;, pesos_(p.envoltorio)]);
+  filas.push([&quot;Envío · &quot; + p.entrega, p.envio ? pesos_(p.envio) : &quot;Gratis&quot;]);
+  if (p.comision) filas.push([&quot;Comisión Mercado Pago&quot;, pesos_(p.comision)]);
+  return &#x27;&lt;table role=&quot;presentation&quot; style=&quot;width:100%;border-collapse:collapse;margin:0 0 14px;font-size:14px&quot;&gt;&#x27; +
+    filas.map(([a, b]) =&gt; &#x27;&lt;tr&gt;&lt;td style=&quot;padding:6px 0;border-bottom:1px solid #E4DACD&quot;&gt;&#x27; + esc_(a) + &#x27;&lt;/td&gt;&lt;td style=&quot;padding:6px 0;border-bottom:1px solid #E4DACD;text-align:right;white-space:nowrap&quot;&gt;&#x27; + esc_(b) + &#x27;&lt;/td&gt;&lt;/tr&gt;&#x27;).join(&quot;&quot;) +
+    &#x27;&lt;tr&gt;&lt;td style=&quot;padding:10px 0;font-size:16px&quot;&gt;&lt;b&gt;Total&lt;/b&gt;&lt;/td&gt;&lt;td style=&quot;padding:10px 0;text-align:right;font-size:18px&quot;&gt;&lt;b&gt;&#x27; + pesos_(p.total) + &#x27;&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&#x27;;
+}
+
+/* ============================================================
+ *  CONFIGURACIÓN INICIAL
+ * ============================================================ */
+
+function configurarTienda() {
+  const ss = SpreadsheetApp.getActive();
+  ss.setSpreadsheetLocale(&quot;es_UY&quot;);
+  ss.setSpreadsheetTimeZone(&quot;America/Montevideo&quot;);
+
+  Object.keys(COLS).forEach(nombre =&gt; prepararHoja_(ss, nombre, COLS[nombre]));
+  cargarDatosIniciales_(ss);
+  CONFIG_CACHE_ = null;
+  aplicarFormatos_(ss);
+  armarResumen_(ss);
+  const carpeta = carpetaFotos_();
+  instalarDisparadores_();
+
+  const props = PropertiesService.getScriptProperties();
+  if (!props.getProperty(&quot;ultimoPedido&quot;)) props.setProperty(&quot;ultimoPedido&quot;, String(Math.max(1000, ultimoNumeroEnHoja_())));
+  limpiarCache_();
+
+  const hojaVieja = ss.getSheetByName(&quot;Hoja 1&quot;) || ss.getSheetByName(&quot;Sheet1&quot;);
+  if (hojaVieja &amp;&amp; ss.getSheets().length &gt; 1 &amp;&amp; hojaVieja.getLastRow() === 0) ss.deleteSheet(hojaVieja);
+  ss.setActiveSheet(ss.getSheetByName(HOJA.resumen));
+
+  SpreadsheetApp.getUi().alert(&quot;¡Tienda configurada!&quot;,
+    &quot;Ya están creadas las pestañas, los productos de ejemplo, los avisos y las tareas automáticas.\n\n&quot; +
+    &quot;Último paso: Implementar → Nueva implementación → Aplicación web (Ejecutar como: Yo · Acceso: Cualquier persona) y pasá el link que te da Google.\n\n&quot; +
+    &quot;Carpeta para subir fotos: &quot; + carpeta.getUrl(), SpreadsheetApp.getUi().ButtonSet.OK);
+}
+
+function prepararHoja_(ss, nombre, encabezados) {
+  let hoja = ss.getSheetByName(nombre);
+  if (!hoja) hoja = ss.insertSheet(nombre);
+  const actuales = hoja.getLastColumn() ? hoja.getRange(1, 1, 1, hoja.getLastColumn()).getValues()[0].map(texto_) : [];
+  encabezados.forEach(h =&gt; {
+    if (actuales.indexOf(h) &lt; 0) { actuales.push(h); hoja.getRange(1, actuales.length).setValue(h); }
+  });
+  hoja.setFrozenRows(1);
+  hoja.getRange(1, 1, 1, hoja.getLastColumn()).setFontWeight(&quot;bold&quot;).setBackground(&quot;#221C17&quot;).setFontColor(&quot;#FBF7F2&quot;);
+  return hoja;
+}
+
+function cargarDatosIniciales_(ss) {
+  const vacia = nombre =&gt; ss.getSheetByName(nombre).getLastRow() &lt; 2;
+  const escribir = (nombre, objetos) =&gt; {
+    const t = tabla_(nombre);
+    const filas = objetos.map(o =&gt; t.encabezados.map(h =&gt; (h in o ? o[h] : &quot;&quot;)));
+    t.hoja.getRange(2, 1, filas.length, t.encabezados.length).setValues(filas);
+  };
+
+  if (vacia(HOJA.productos)) escribir(HOJA.productos, [
+    { &quot;ID&quot;: &quot;camelia-azul&quot;, &quot;Nombre&quot;: &quot;Camelia Azul Noche&quot;, &quot;Categoría&quot;: &quot;Cubre botones&quot;, &quot;Tipo&quot;: &quot;Cubre botones&quot;, &quot;Descripción&quot;: &quot;Camelia de pétalos esmaltados en dos tonos de azul, con cristal central y borde de baño dorado. Pensada para puños franceses y camisas blancas.&quot;, &quot;Fotos&quot;: &quot;img/p-camelia-azul.jpg, img/look-azul.jpg, img/p-camelia-azul-2.jpg&quot;, &quot;Colores&quot;: &quot;#3E5671, #8FA6BE, #B8955A&quot;, &quot;Etiqueta&quot;: &quot;Más vendido&quot;, &quot;Detalles&quot;: &quot;Medida: 28 mm; Terminación: Baño de oro 18k; Detalle: Esmalte y cristal&quot;, &quot;Nombre de opción&quot;: &quot;Presentación&quot;, &quot;Activo&quot;: &quot;Sí&quot;, &quot;Orden&quot;: 1 },
+    { &quot;ID&quot;: &quot;camelia-rose&quot;, &quot;Nombre&quot;: &quot;Camelia Rosé&quot;, &quot;Categoría&quot;: &quot;Cubre botones&quot;, &quot;Tipo&quot;: &quot;Cubre botones&quot;, &quot;Descripción&quot;: &quot;Pétalos calados en dorado con esmalte coral translúcido y un brillante al centro. Ilumina cualquier camisa rosa o celeste.&quot;, &quot;Fotos&quot;: &quot;img/p-camelia-rosa.jpg, img/look-rosa-corbata.jpg&quot;, &quot;Colores&quot;: &quot;#E8A69A, #F4D3CB, #C9A063&quot;, &quot;Etiqueta&quot;: &quot;Nuevo&quot;, &quot;Detalles&quot;: &quot;Medida: 26 mm; Terminación: Baño de oro 18k; Detalle: Esmalte translúcido&quot;, &quot;Nombre de opción&quot;: &quot;Presentación&quot;, &quot;Activo&quot;: &quot;Sí&quot;, &quot;Orden&quot;: 2 },
+    { &quot;ID&quot;: &quot;flor-nacar&quot;, &quot;Nombre&quot;: &quot;Flor de Nácar&quot;, &quot;Categoría&quot;: &quot;Cubre botones&quot;, &quot;Tipo&quot;: &quot;Cubre botones&quot;, &quot;Descripción&quot;: &quot;Cinco pétalos de nácar con centro de granulado dorado. Delicada y luminosa, perfecta para cuellos y puños.&quot;, &quot;Fotos&quot;: &quot;img/p-flor-nacar.jpg, img/look-rosa-blanca.jpg&quot;, &quot;Colores&quot;: &quot;#F6EEE6, #E9C46A&quot;, &quot;Etiqueta&quot;: &quot;&quot;, &quot;Detalles&quot;: &quot;Medida: 20 mm; Terminación: Baño de oro 18k; Detalle: Nácar natural&quot;, &quot;Nombre de opción&quot;: &quot;Presentación&quot;, &quot;Activo&quot;: &quot;Sí&quot;, &quot;Orden&quot;: 3 },
+    { &quot;ID&quot;: &quot;corazon-perla&quot;, &quot;Nombre&quot;: &quot;Corazón de Perla&quot;, &quot;Categoría&quot;: &quot;Cubre botones&quot;, &quot;Tipo&quot;: &quot;Cubre botones&quot;, &quot;Descripción&quot;: &quot;Corazón de perla sobre marco festoneado en esmalte negro y dorado. Un clásico con guiño romántico.&quot;, &quot;Fotos&quot;: &quot;img/p-corazon-perla.jpg, img/look-blusa.jpg&quot;, &quot;Colores&quot;: &quot;#F3EFEA, #1E1B1A, #C9A063&quot;, &quot;Etiqueta&quot;: &quot;&quot;, &quot;Detalles&quot;: &quot;Medida: 18 mm; Terminación: Baño de oro 18k; Detalle: Perla sintética&quot;, &quot;Nombre de opción&quot;: &quot;Presentación&quot;, &quot;Activo&quot;: &quot;Sí&quot;, &quot;Orden&quot;: 4 },
+    { &quot;ID&quot;: &quot;flor-onix&quot;, &quot;Nombre&quot;: &quot;Flor Ónix&quot;, &quot;Categoría&quot;: &quot;Cubre botones&quot;, &quot;Tipo&quot;: &quot;Cubre botones&quot;, &quot;Descripción&quot;: &quot;Flor de cinco pétalos en esmalte negro brillante con estambres dorados. Contraste puro sobre blanco.&quot;, &quot;Fotos&quot;: &quot;img/p-flor-negra.jpg, img/look-blusa.jpg&quot;, &quot;Colores&quot;: &quot;#1E1B1A, #C9A063&quot;, &quot;Etiqueta&quot;: &quot;&quot;, &quot;Detalles&quot;: &quot;Medida: 18 mm; Terminación: Baño de oro 18k; Detalle: Esmalte negro&quot;, &quot;Nombre de opción&quot;: &quot;Presentación&quot;, &quot;Activo&quot;: &quot;Sí&quot;, &quot;Orden&quot;: 5 },
+    { &quot;ID&quot;: &quot;set-paris&quot;, &quot;Nombre&quot;: &quot;Set Blusa París&quot;, &quot;Categoría&quot;: &quot;Sets&quot;, &quot;Tipo&quot;: &quot;Set de 4 piezas&quot;, &quot;Descripción&quot;: &quot;Dos Corazones de Perla y dos Flores Ónix para alternar en la tapeta. El look de la campaña, listo en un estuche.&quot;, &quot;Fotos&quot;: &quot;img/p-blusa-botones.jpg, img/look-calas.jpg, img/look-blusa.jpg&quot;, &quot;Colores&quot;: &quot;#F3EFEA, #1E1B1A, #C9A063&quot;, &quot;Etiqueta&quot;: &quot;Edición limitada&quot;, &quot;Detalles&quot;: &quot;Incluye: 2 corazones + 2 flores; Terminación: Baño de oro 18k; Estuche: Merfina de regalo&quot;, &quot;Nombre de opción&quot;: &quot;Presentación&quot;, &quot;Activo&quot;: &quot;Sí&quot;, &quot;Orden&quot;: 6 },
+    { &quot;ID&quot;: &quot;corbata-rayas&quot;, &quot;Nombre&quot;: &quot;Corbata Rayas Rosé&quot;, &quot;Categoría&quot;: &quot;Corbatas&quot;, &quot;Tipo&quot;: &quot;Corbata&quot;, &quot;Descripción&quot;: &quot;Corbata de seda a rayas diagonales en rosé y crudo. Se combina con la Camelia Rosé para un look completo.&quot;, &quot;Fotos&quot;: &quot;img/p-corbata-rayas.jpg, img/look-rosa-corbata.jpg&quot;, &quot;Colores&quot;: &quot;#D9B8A8, #F6E8E0&quot;, &quot;Etiqueta&quot;: &quot;&quot;, &quot;Detalles&quot;: &quot;Material: Seda; Largo: 148 cm; Cuidado: Limpieza en seco&quot;, &quot;Nombre de opción&quot;: &quot;Ancho&quot;, &quot;Activo&quot;: &quot;Sí&quot;, &quot;Orden&quot;: 7 },
+    { &quot;ID&quot;: &quot;gift&quot;, &quot;Nombre&quot;: &quot;Gift Card Merfina&quot;, &quot;Categoría&quot;: &quot;Gift card&quot;, &quot;Tipo&quot;: &quot;Tarjeta de regalo&quot;, &quot;Descripción&quot;: &quot;Para que elijan su propia joya. Llega en su sobre Merfina con el monto que elijas, o por WhatsApp en formato digital.&quot;, &quot;Fotos&quot;: &quot;&quot;, &quot;Colores&quot;: &quot;#EAE5DB, #A3804F, #221C17&quot;, &quot;Etiqueta&quot;: &quot;&quot;, &quot;Detalles&quot;: &quot;Validez: 12 meses; Entrega: Física o digital&quot;, &quot;Nombre de opción&quot;: &quot;Monto&quot;, &quot;Activo&quot;: &quot;Sí&quot;, &quot;Orden&quot;: 8 }
+  ]);
+
+  if (vacia(HOJA.variantes)) {
+    const v = [];
+    const tres = (id, a, b, c, st) =&gt; [[&quot;Par&quot;, a], [&quot;Set x4&quot;, b], [&quot;Set x6&quot;, c]].forEach(([n, pr]) =&gt; v.push({ &quot;ID producto&quot;: id, &quot;Variante&quot;: n, &quot;Precio&quot;: pr, &quot;Stock&quot;: st, &quot;Activo&quot;: &quot;Sí&quot; }));
+    tres(&quot;camelia-azul&quot;, 1490, 2690, 3790, 10);
+    tres(&quot;camelia-rose&quot;, 1490, 2690, 3790, 10);
+    tres(&quot;flor-nacar&quot;, 1290, 2390, 3390, 10);
+    tres(&quot;corazon-perla&quot;, 1190, 2190, 3090, 10);
+    tres(&quot;flor-onix&quot;, 1190, 2190, 3090, 10);
+    v.push({ &quot;ID producto&quot;: &quot;set-paris&quot;, &quot;Variante&quot;: &quot;Set x4&quot;, &quot;Precio&quot;: 2290, &quot;Stock&quot;: 5, &quot;Activo&quot;: &quot;Sí&quot; });
+    v.push({ &quot;ID producto&quot;: &quot;set-paris&quot;, &quot;Variante&quot;: &quot;Set x6&quot;, &quot;Precio&quot;: 3290, &quot;Stock&quot;: 5, &quot;Activo&quot;: &quot;Sí&quot; });
+    v.push({ &quot;ID producto&quot;: &quot;corbata-rayas&quot;, &quot;Variante&quot;: &quot;Ancho clásico 7 cm&quot;, &quot;Precio&quot;: 1890, &quot;Stock&quot;: 5, &quot;Activo&quot;: &quot;Sí&quot; });
+    v.push({ &quot;ID producto&quot;: &quot;corbata-rayas&quot;, &quot;Variante&quot;: &quot;Ancho slim 5,5 cm&quot;, &quot;Precio&quot;: 1890, &quot;Stock&quot;: 5, &quot;Activo&quot;: &quot;Sí&quot; });
+    [1500, 3000, 5000].forEach(m =&gt; v.push({ &quot;ID producto&quot;: &quot;gift&quot;, &quot;Variante&quot;: pesos_(m), &quot;Precio&quot;: m, &quot;Stock&quot;: &quot;&quot;, &quot;Activo&quot;: &quot;Sí&quot; }));
+    escribir(HOJA.variantes, v);
+  }
+
+  if (vacia(HOJA.envios)) escribir(HOJA.envios, [
+    { &quot;ID&quot;: &quot;domicilio-mvd&quot;, &quot;Zona&quot;: &quot;Montevideo&quot;, &quot;Nombre&quot;: &quot;Envío a domicilio&quot;, &quot;Descripción&quot;: &quot;Montevideo · 24 h hábiles&quot;, &quot;Costo&quot;: 190, &quot;Pide dirección&quot;: &quot;Sí&quot;, &quot;Activo&quot;: &quot;Sí&quot; },
+    { &quot;ID&quot;: &quot;retiro&quot;, &quot;Zona&quot;: &quot;Montevideo&quot;, &quot;Nombre&quot;: &quot;Retiro coordinado&quot;, &quot;Descripción&quot;: &quot;Coordinamos lugar y horario por WhatsApp&quot;, &quot;Costo&quot;: 0, &quot;Pide dirección&quot;: &quot;No&quot;, &quot;Activo&quot;: &quot;Sí&quot; },
+    { &quot;ID&quot;: &quot;agencia&quot;, &quot;Zona&quot;: &quot;Interior&quot;, &quot;Nombre&quot;: &quot;Envío por agencia&quot;, &quot;Descripción&quot;: &quot;Interior · 48 a 72 h hábiles&quot;, &quot;Costo&quot;: 250, &quot;Pide dirección&quot;: &quot;Sí&quot;, &quot;Activo&quot;: &quot;Sí&quot; }
+  ]);
+
+  if (vacia(HOJA.cupones)) escribir(HOJA.cupones, [
+    { &quot;Código&quot;: &quot;MERFINA10&quot;, &quot;Descuento %&quot;: 0.1, &quot;Activo&quot;: &quot;Sí&quot;, &quot;Vence&quot;: &quot;&quot;, &quot;Usos máximos&quot;: &quot;&quot;, &quot;Usos&quot;: 0, &quot;Compra mínima&quot;: &quot;&quot; },
+    { &quot;Código&quot;: &quot;CYBER15&quot;, &quot;Descuento %&quot;: 0.15, &quot;Activo&quot;: &quot;No&quot;, &quot;Vence&quot;: &quot;&quot;, &quot;Usos máximos&quot;: 100, &quot;Usos&quot;: 0, &quot;Compra mínima&quot;: 2000 }
+  ]);
+
+  const t = tabla_(HOJA.config);
+  const existentes = t.filas.map(f =&gt; texto_(f[&quot;Clave&quot;]));
+  const defaults = [
+    [&quot;whatsapp&quot;, &quot;59891900341&quot;, &quot;WhatsApp de Merfina con código de país, sin espacios ni +&quot;],
+    [&quot;email_avisos&quot;, Session.getEffectiveUser().getEmail(), &quot;Email donde te llegan los pedidos nuevos y el resumen diario&quot;],
+    [&quot;email_al_cliente&quot;, &quot;Sí&quot;, &quot;Sí = el cliente recibe emails de confirmación, pago, envío y entrega&quot;],
+    [&quot;comision_mp&quot;, 0.12, &quot;Recargo por pagar con Mercado Pago (0 si no cobrás recargo)&quot;],
+    [&quot;link_mp&quot;, &quot;&quot;, &quot;Link de pago de Mercado Pago (opcional). Si lo dejás vacío, mandás el link por WhatsApp&quot;],
+    [&quot;envio_gratis_desde&quot;, 3000, &quot;Compras desde este monto tienen envío gratis (0 = nunca)&quot;],
+    [&quot;envoltorio_regalo&quot;, 150, &quot;Precio del envoltorio de regalo&quot;],
+    [&quot;horas_recordatorio&quot;, 24, &quot;A las cuántas horas sin pago se le recuerda al cliente&quot;],
+    [&quot;horas_para_cancelar&quot;, 48, &quot;A las cuántas horas sin pago se cancela el pedido y vuelve el stock&quot;],
+    [&quot;stock_bajo&quot;, 2, &quot;Te aviso cuando una variante queda con esta cantidad o menos&quot;],
+    [&quot;hora_resumen&quot;, 21, &quot;Hora del resumen diario por email (0 a 23)&quot;],
+    [&quot;cupon_bienvenida&quot;, &quot;MERFINA10&quot;, &quot;Código que se muestra al suscribirse al newsletter (vacío = ninguno)&quot;],
+    [&quot;banco&quot;, &quot;&quot;, &quot;Datos para transferencia&quot;],
+    [&quot;tipo_cuenta&quot;, &quot;Caja de ahorro en pesos&quot;, &quot;Datos para transferencia&quot;],
+    [&quot;numero_cuenta&quot;, &quot;&quot;, &quot;Datos para transferencia&quot;],
+    [&quot;titular&quot;, &quot;&quot;, &quot;Datos para transferencia&quot;]
+  ];
+  defaults.filter(d =&gt; existentes.indexOf(d[0]) &lt; 0).forEach(d =&gt; t.hoja.appendRow(d));
+}
+
+function aplicarFormatos_(ss) {
+  const lista = (vals) =&gt; SpreadsheetApp.newDataValidation().requireValueInList(vals, true).setAllowInvalid(false).build();
+  const validar = (nombre, columna, regla) =&gt; {
+    const t = tabla_(nombre);
+    const c = t.col[columna];
+    if (c) t.hoja.getRange(2, c, Math.max(t.hoja.getMaxRows() - 1, 1), 1).setDataValidation(regla);
+  };
+
+  validar(HOJA.productos, &quot;Categoría&quot;, lista(Object.keys(CATEGORIAS)));
+  validar(HOJA.productos, &quot;Activo&quot;, lista(SI_NO));
+  validar(HOJA.variantes, &quot;Activo&quot;, lista(SI_NO));
+  const prod = tabla_(HOJA.productos);
+  validar(HOJA.variantes, &quot;ID producto&quot;, SpreadsheetApp.newDataValidation()
+    .requireValueInRange(prod.hoja.getRange(2, prod.col[&quot;ID&quot;], Math.max(prod.hoja.getMaxRows() - 1, 1), 1), true).setAllowInvalid(false).build());
+  validar(HOJA.envios, &quot;Zona&quot;, lista(ZONAS));
+  validar(HOJA.envios, &quot;Pide dirección&quot;, lista(SI_NO));
+  validar(HOJA.envios, &quot;Activo&quot;, lista(SI_NO));
+  validar(HOJA.cupones, &quot;Activo&quot;, lista(SI_NO));
+  validar(HOJA.pedidos, &quot;Estado&quot;, lista(ESTADOS));
+
+  const formato = (nombre, columna, fmt) =&gt; { const t = tabla_(nombre); const c = t.col[columna]; if (c) t.hoja.getRange(2, c, Math.max(t.hoja.getMaxRows() - 1, 1), 1).setNumberFormat(fmt); };
+  [&quot;Precio&quot;, &quot;Precio anterior&quot;].forEach(c =&gt; formato(HOJA.variantes, c, &#x27;&quot;$U&quot; #,##0&#x27;));
+  formato(HOJA.envios, &quot;Costo&quot;, &#x27;&quot;$U&quot; #,##0&#x27;);
+  formato(HOJA.cupones, &quot;Descuento %&quot;, &quot;0%&quot;);
+  formato(HOJA.cupones, &quot;Vence&quot;, &quot;dd/mm/yyyy&quot;);
+  formato(HOJA.cupones, &quot;Compra mínima&quot;, &#x27;&quot;$U&quot; #,##0&#x27;);
+  [&quot;Subtotal&quot;, &quot;Descuento&quot;, &quot;Envoltorio&quot;, &quot;Costo envío&quot;, &quot;Comisión MP&quot;, &quot;Total&quot;].forEach(c =&gt; formato(HOJA.pedidos, c, &#x27;&quot;$U&quot; #,##0&#x27;));
+  formato(HOJA.pedidos, &quot;Fecha&quot;, &quot;dd/mm/yyyy hh:mm&quot;);
+  formato(HOJA.pedidos, &quot;Recordatorio&quot;, &quot;dd/mm hh:mm&quot;);
+  formato(HOJA.suscriptores, &quot;Fecha&quot;, &quot;dd/mm/yyyy hh:mm&quot;);
+
+  // Colores: stock y estados
+  const vt = tabla_(HOJA.variantes);
+  const colS = vt.col[&quot;Stock&quot;];
+  const letraS = letra_(colS);
+  const rangoS = vt.hoja.getRange(2, colS, Math.max(vt.hoja.getMaxRows() - 1, 1), 1);
+  const pt = tabla_(HOJA.pedidos);
+  const rangoE = pt.hoja.getRange(2, pt.col[&quot;Estado&quot;], Math.max(pt.hoja.getMaxRows() - 1, 1), 1);
+  const reglas = [
+    SpreadsheetApp.newConditionalFormatRule().whenFormulaSatisfied(&quot;=AND(&quot; + letraS + &quot;2&lt;&gt;\&quot;\&quot;,&quot; + letraS + &quot;2=0)&quot;).setBackground(&quot;#F4C7C3&quot;).setFontColor(&quot;#8B1A10&quot;).setRanges([rangoS]).build(),
+    SpreadsheetApp.newConditionalFormatRule().whenFormulaSatisfied(&quot;=AND(&quot; + letraS + &quot;2&lt;&gt;\&quot;\&quot;,&quot; + letraS + &quot;2&gt;0,&quot; + letraS + &quot;2&lt;=VLOOKUP(\&quot;stock_bajo\&quot;,INDIRECT(\&quot;Config!A:B\&quot;),2,FALSE))&quot;).setBackground(&quot;#FCE8B2&quot;).setRanges([rangoS]).build()
+  ];
+  vt.hoja.setConditionalFormatRules(reglas);
+  const colorEstado = { &quot;Pendiente de pago&quot;: &quot;#FCE8B2&quot;, &quot;Pagado&quot;: &quot;#D9EAD3&quot;, &quot;Enviado&quot;: &quot;#CFE2F3&quot;, &quot;Entregado&quot;: &quot;#E6E1F2&quot;, &quot;Cancelado&quot;: &quot;#EFEFEF&quot; };
+  pt.hoja.setConditionalFormatRules(Object.keys(colorEstado).map(e =&gt;
+    SpreadsheetApp.newConditionalFormatRule().whenTextEqualTo(e).setBackground(colorEstado[e]).setRanges([rangoE]).build()));
+
+  // Anchos y detalles
+  prod.hoja.setColumnWidth(prod.col[&quot;Descripción&quot;], 320);
+  prod.hoja.setColumnWidth(prod.col[&quot;Fotos&quot;], 260);
+  pt.hoja.setColumnWidth(pt.col[&quot;Productos&quot;], 260);
+  pt.hoja.hideColumns(pt.col[&quot;Detalle (no editar)&quot;]);
+  tabla_(HOJA.config).hoja.setColumnWidth(3, 460);
+  tabla_(HOJA.config).hoja.getRange(&quot;B:B&quot;).setHorizontalAlignment(&quot;left&quot;);
+  tabla_(HOJA.config).hoja.getRange(&quot;A:A&quot;).setFontWeight(&quot;bold&quot;);
+
+  // Proteger el detalle y el ID para no romperlos sin querer (solo aviso)
+  pt.hoja.getRange(1, pt.col[&quot;Detalle (no editar)&quot;], pt.hoja.getMaxRows(), 1).protect().setWarningOnly(true).setDescription(&quot;La tienda usa esta columna para devolver stock&quot;);
+}
+
+function armarResumen_(ss) {
+  let h = ss.getSheetByName(HOJA.resumen);
+  if (!h) h = ss.insertSheet(HOJA.resumen, 0);
+  h.clear();
+  const pt = tabla_(HOJA.pedidos), vt = tabla_(HOJA.variantes);
+  const F = letra_(pt.col[&quot;Fecha&quot;]), E = letra_(pt.col[&quot;Estado&quot;]), T = letra_(pt.col[&quot;Total&quot;]), S = letra_(vt.col[&quot;Stock&quot;]);
+  const vendido = &quot;SUMPRODUCT((Pedidos!&quot; + F + &quot;2:&quot; + F + &quot;&gt;=__DESDE__)*ISNUMBER(MATCH(Pedidos!&quot; + E + &quot;2:&quot; + E + &quot;,{\&quot;Pagado\&quot;;\&quot;Enviado\&quot;;\&quot;Entregado\&quot;},0))*Pedidos!&quot; + T + &quot;2:&quot; + T + &quot;)&quot;;
+  const filas = [
+    [&quot;Resumen de la tienda&quot;, &quot;&quot;],
+    [&quot;Se actualiza solo con cada pedido.&quot;, &quot;&quot;],
+    [&quot;&quot;, &quot;&quot;],
+    [&quot;Vendido hoy&quot;, &quot;=&quot; + vendido.replace(&quot;__DESDE__&quot;, &quot;TODAY()&quot;)],
+    [&quot;Vendido este mes&quot;, &quot;=&quot; + vendido.replace(&quot;__DESDE__&quot;, &quot;EOMONTH(TODAY(),-1)+1&quot;)],
+    [&quot;Pedidos este mes&quot;, &quot;=COUNTIFS(Pedidos!&quot; + F + &quot;2:&quot; + F + &quot;,\&quot;&gt;=\&quot;&amp;(EOMONTH(TODAY(),-1)+1),Pedidos!&quot; + E + &quot;2:&quot; + E + &quot;,\&quot;&lt;&gt;Cancelado\&quot;)&quot;],
+    [&quot;Esperando pago&quot;, &quot;=COUNTIF(Pedidos!&quot; + E + &quot;2:&quot; + E + &quot;,\&quot;Pendiente de pago\&quot;)&quot;],
+    [&quot;Pagados para enviar&quot;, &quot;=COUNTIF(Pedidos!&quot; + E + &quot;2:&quot; + E + &quot;,\&quot;Pagado\&quot;)&quot;],
+    [&quot;Variantes agotadas&quot;, &quot;=COUNTIFS(Variantes!&quot; + S + &quot;2:&quot; + S + &quot;,0,Variantes!&quot; + S + &quot;2:&quot; + S + &quot;,\&quot;&lt;&gt;\&quot;)&quot;],
+    [&quot;Variantes con stock bajo&quot;, &quot;=COUNTIFS(Variantes!&quot; + S + &quot;2:&quot; + S + &quot;,\&quot;&gt;0\&quot;,Variantes!&quot; + S + &quot;2:&quot; + S + &quot;,\&quot;&lt;=\&quot;&amp;VLOOKUP(\&quot;stock_bajo\&quot;,Config!A:B,2,FALSE))&quot;],
+    [&quot;Suscriptores del newsletter&quot;, &quot;=COUNTA(Suscriptores!B2:B)&quot;]
+  ];
+  filas.forEach((f, i) =&gt; {
+    h.getRange(i + 1, 1).setValue(f[0]);
+    if (String(f[1]).charAt(0) === &quot;=&quot;) h.getRange(i + 1, 2).setFormula(f[1]); else h.getRange(i + 1, 2).setValue(f[1]);
+  });
+  h.getRange(&quot;A1&quot;).setFontSize(18).setFontWeight(&quot;bold&quot;);
+  h.getRange(&quot;A2&quot;).setFontColor(&quot;#6F655B&quot;);
+  h.getRange(&quot;A4:A11&quot;).setFontWeight(&quot;bold&quot;);
+  h.getRange(&quot;B4:B5&quot;).setNumberFormat(&#x27;&quot;$U&quot; #,##0&#x27;);
+  h.getRange(&quot;B4:B11&quot;).setFontSize(14).setHorizontalAlignment(&quot;left&quot;);
+  h.setColumnWidth(1, 240); h.setColumnWidth(2, 180);
+  h.setTabColor(&quot;#A3804F&quot;);
+}
+
+function instalarDisparadores_() {
+  const nuestros = [&quot;alEditar&quot;, &quot;tareaCadaHora&quot;, &quot;resumenDiario&quot;];
+  ScriptApp.getProjectTriggers().forEach(t =&gt; { if (nuestros.indexOf(t.getHandlerFunction()) &gt;= 0) ScriptApp.deleteTrigger(t); });
+  const ss = SpreadsheetApp.getActive();
+  ScriptApp.newTrigger(&quot;alEditar&quot;).forSpreadsheet(ss).onEdit().create();
+  ScriptApp.newTrigger(&quot;tareaCadaHora&quot;).timeBased().everyHours(1).create();
+  const hora = Math.min(23, Math.max(0, numero_(config_().hora_resumen) || 21));
+  ScriptApp.newTrigger(&quot;resumenDiario&quot;).timeBased().everyDays(1).atHour(hora).inTimezone(&quot;America/Montevideo&quot;).create();
+}
+
+function carpetaFotos_() {
+  const props = PropertiesService.getScriptProperties();
+  const id = props.getProperty(&quot;carpetaFotos&quot;);
+  if (id) { try { return DriveApp.getFolderById(id); } catch (err) { /* la borraron: se crea otra */ } }
+  const carpeta = DriveApp.createFolder(&quot;Merfina · Fotos de la tienda&quot;);
+  try { carpeta.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW); } catch (err) { registrarError_(&quot;compartir carpeta&quot;, err); }
+  props.setProperty(&quot;carpetaFotos&quot;, carpeta.getId());
+  return carpeta;
+}
+
+function abrirCarpetaFotos() {
+  const url = carpetaFotos_().getUrl();
+  mostrarLink_(&quot;Carpeta de fotos&quot;, &quot;Subí acá las fotos. Después abrí cada foto → Compartir → Copiar vínculo, y pegalo en la columna Fotos de Productos (varias fotos separadas por coma).&quot;, url);
+}
+
+function verLinkTienda() {
+  const url = ScriptApp.getService().getUrl();
+  if (!url) return SpreadsheetApp.getUi().alert(&quot;Todavía no implementaste la aplicación web. Andá a Implementar → Nueva implementación → Aplicación web.&quot;);
+  mostrarLink_(&quot;Link de la tienda&quot;, &quot;Este es el link que va en la página (API_URL):&quot;, url);
+}
+
+function mostrarLink_(titulo, texto, url) {
+  const html = HtmlService.createHtmlOutput(
+    &#x27;&lt;div style=&quot;font-family:Arial;font-size:14px;line-height:1.5&quot;&gt;&lt;p&gt;&#x27; + esc_(texto) + &#x27;&lt;/p&gt;&#x27; +
+    &#x27;&lt;input style=&quot;width:100%;padding:8px;font-size:13px&quot; value=&quot;&#x27; + esc_(url) + &#x27;&quot; onclick=&quot;this.select()&quot; readonly&gt;&#x27; +
+    &#x27;&lt;p&gt;&lt;a href=&quot;&#x27; + esc_(url) + &#x27;&quot; target=&quot;_blank&quot;&gt;Abrir&lt;/a&gt;&lt;/p&gt;&lt;/div&gt;&#x27;).setWidth(520).setHeight(180);
+  SpreadsheetApp.getUi().showModalDialog(html, titulo);
+}
+
+/* ============================================================
+ *  UTILIDADES
+ * ============================================================ */
+
+function tabla_(nombre) {
+  const hoja = SpreadsheetApp.getActive().getSheetByName(nombre);
+  if (!hoja) throw new Error(&quot;Falta la pestaña &quot; + nombre + &quot;. Usá el menú Merfina → Configurar la tienda.&quot;);
+  const valores = hoja.getDataRange().getValues();
+  const encabezados = (valores[0] || []).map(texto_);
+  const col = {};
+  encabezados.forEach((h, i) =&gt; { if (h) col[h] = i + 1; });
+  const filas = [];
+  for (let i = 1; i &lt; valores.length; i++) {
+    if (valores[i].every(v =&gt; v === &quot;&quot; || v === null)) continue;
+    const f = { _fila: i + 1 };
+    encabezados.forEach((h, j) =&gt; { if (h) f[h] = valores[i][j]; });
+    filas.push(f);
+  }
+  return { hoja: hoja, encabezados: encabezados, col: col, filas: filas };
+}
+
+let CONFIG_CACHE_ = null;
+function config_() {
+  if (CONFIG_CACHE_) return CONFIG_CACHE_;
+  const cfg = {};
+  try { tabla_(HOJA.config).filas.forEach(f =&gt; { if (texto_(f[&quot;Clave&quot;])) cfg[texto_(f[&quot;Clave&quot;])] = f[&quot;Valor&quot;]; }); } catch (err) { /* sin config todavía */ }
+  CONFIG_CACHE_ = cfg;
+  return cfg;
+}
+
+function texto_(v) {
+  if (v === null || v === undefined) return &quot;&quot;;
+  if (v instanceof Date) return Utilities.formatDate(v, zona_(), &quot;dd/MM/yyyy&quot;);
+  return String(v).trim();
+}
+
+function numero_(v) {
+  if (typeof v === &quot;number&quot;) return isFinite(v) ? v : 0;
+  let s = texto_(v).replace(/[^\d,.\-]/g, &quot;&quot;);
+  if (!s) return 0;
+  if (s.indexOf(&quot;,&quot;) &gt;= 0) s = s.replace(/\./g, &quot;&quot;).replace(&quot;,&quot;, &quot;.&quot;);  // 1.490,50
+  else if (/^\d{1,3}(\.\d{3})+$/.test(s)) s = s.replace(/\./g, &quot;&quot;);     // 1.490
+  const n = Number(s);
+  return isFinite(n) ? n : 0;
+}
+
+function porcentaje_(v) {
+  const conSigno = texto_(v).indexOf(&quot;%&quot;) &gt;= 0;
+  const n = numero_(v);
+  return conSigno || n &gt; 1 ? n / 100 : n;
+}
+
+function esSi_(v, porDefecto) {
+  const t = texto_(v).toLowerCase();
+  if (!t) return porDefecto;
+  return [&quot;sí&quot;, &quot;si&quot;, &quot;s&quot;, &quot;yes&quot;, &quot;true&quot;, &quot;1&quot;, &quot;x&quot;].indexOf(t) &gt;= 0 || v === true;
+}
+
+function lista_(v) {
+  return texto_(v).split(/[\n,]+/).map(s =&gt; s.trim()).filter(String);
+}
+
+function detalles_(v) {
+  return texto_(v).split(/[\n;]+/).map(s =&gt; s.trim()).filter(String).map(s =&gt; {
+    const i = s.indexOf(&quot;:&quot;);
+    return i &gt; 0 ? [s.slice(0, i).trim(), s.slice(i + 1).trim()] : [&quot;&quot;, s];
+  });
+}
+
+function idDrive_(url) {
+  const m = /\/d\/([\w-]{20,})/.exec(url) || /[?&amp;]id=([\w-]{20,})/.exec(url);
+  return m ? m[1] : &quot;&quot;;
+}
+
+function fotoUrl_(url) {
+  const id = idDrive_(url);
+  return id ? &quot;https://lh3.googleusercontent.com/d/&quot; + id + &quot;=w1200&quot; : url;
+}
+
+function slug_(t) {
+  return texto_(t).toLowerCase().normalize(&quot;NFD&quot;).replace(/[̀-ͯ]/g, &quot;&quot;).replace(/[^a-z0-9]+/g, &quot;-&quot;).replace(/^-|-$/g, &quot;&quot;).slice(0, 40) || &quot;producto&quot;;
+}
+
+function soloDigitos_(v) { return texto_(v).replace(/\D/g, &quot;&quot;); }
+function limpiar_(v, max) { return texto_(v).replace(/[&lt;&gt;]/g, &quot;&quot;).slice(0, max); }
+function pesos_(n) { return &quot;$U &quot; + Math.round(numero_(n)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, &quot;.&quot;); }
+function esc_(v) { return texto_(v).replace(/&amp;/g, &quot;&amp;amp;&quot;).replace(/&lt;/g, &quot;&amp;lt;&quot;).replace(/&gt;/g, &quot;&amp;gt;&quot;).replace(/&quot;/g, &quot;&amp;quot;&quot;); }
+function zona_() { return &quot;America/Montevideo&quot;; }
+function letra_(n) { let s = &quot;&quot;; while (n &gt; 0) { const m = (n - 1) % 26; s = String.fromCharCode(65 + m) + s; n = Math.floor((n - 1) / 26); } return s; }
+
+function registrarError_(donde, err) {
+  console.error(donde + &quot;: &quot; + (err &amp;&amp; err.stack || err));
+}
+</pre>
+
+<h2>El día a día</h2>
+
+<h3>Cargar un producto nuevo</h3>
+<ol class="steps">
+  <li><div>En <b>Productos</b>, escribí el <b>Nombre</b> en una fila vacía. El <b>ID</b> se completa solo y se crea una fila en <b>Variantes</b>.</div></li>
+  <li><div>Completá Categoría, Tipo, Descripción, Colores (por ejemplo <span class="ui">#3E5671, #B8955A</span>), Etiqueta (Nuevo, Más vendido…) y Detalles (<span class="ui">Medida: 28 mm; Terminación: Baño de oro</span>).</div></li>
+  <li><div><b>Fotos:</b> menú <span class="ui">Merfina</span> → <span class="ui">Abrir la carpeta de fotos</span>, subí las fotos, y en cada una: clic derecho → <span class="ui">Compartir</span> → <span class="ui">Copiar vínculo</span>. Pegá los vínculos en la columna Fotos, separados por coma. La primera es la principal y la segunda aparece al pasar el mouse.</div></li>
+  <li><div>En <b>Variantes</b> poné <b>Precio</b> y <b>Stock</b> de cada presentación (Par, Set x4, Set x6…), una fila por presentación.</div></li>
+</ol>
+<p>Los cambios se ven en la tienda en un minuto, sin tocar nada más.</p>
+
+<div class="tbl"><table>
+<tr><th>Para…</th><th>Hacé esto</th></tr>
+<tr><td>Reponer stock</td><td>Cambiá el número en <b>Variantes → Stock</b>.</td></tr>
+<tr><td>Ocultar un producto</td><td><b>Productos → Activo</b> = No. Para una sola presentación: <b>Variantes → Activo</b> = No.</td></tr>
+<tr><td>Poner una oferta</td><td>Escribí el precio viejo en <b>Precio anterior</b> y el nuevo en <b>Precio</b>. Aparece tachado.</td></tr>
+<tr><td>Sin límite de stock</td><td>Dejá <b>Stock</b> vacío (por ejemplo, gift cards).</td></tr>
+<tr><td>Cambiar el orden</td><td>Columna <b>Orden</b> en Productos: 1 aparece primero.</td></tr>
+<tr><td>Crear un cupón</td><td>Pestaña <b>Cupones</b>: código, descuento (15%), Activo = Sí. Opcional: vencimiento, usos máximos y compra mínima. <b>CYBER15</b> ya está creado, solo hay que activarlo.</td></tr>
+<tr><td>Cambiar envíos</td><td>Pestaña <b>Envios</b>: costo, descripción, zona (Montevideo, Interior o Todo el país).</td></tr>
+<tr><td>Envío gratis, recargo MP, horas de reserva</td><td>Pestaña <b>Config</b>.</td></tr>
+</table></div>
+
+<h3>Cuando entra un pedido</h3>
+<ol class="steps">
+  <li><div>Te llega el email <b>«Pedido nuevo MF-…»</b> y el pedido aparece en <b>Pedidos</b> como <b>Pendiente de pago</b>. El stock ya está descontado.</div></li>
+  <li><div>Cuando el cliente te manda el comprobante por WhatsApp, cambiá el <b>Estado</b> a <b>Pagado</b>. Al cliente le llega «¡Recibimos tu pago!».</div></li>
+  <li><div>Cuando lo despachás, escribí el número de seguimiento en <b>Seguimiento</b> (si tiene) y cambiá el estado a <b>Enviado</b>. Al cliente le llega el aviso.</div></li>
+  <li><div>Cuando llegó, poné <b>Entregado</b>. El cliente recibe un agradecimiento con el link a Instagram.</div></li>
+</ol>
+<p>Si un cliente se arrepiente, poné <b>Cancelado</b> y el stock vuelve solo. Si te equivocaste y lo volvés a poner en Pagado, el stock se descuenta de nuevo.</p>
+
+<div class="note"><b>Para tener en cuenta</b><br>
+Una cuenta de Gmail común manda hasta 100 emails por día. Cada pedido usa unos 2 o 3, así que alcanza para unos 30 pedidos diarios. Si llegás al límite, los emails a clientes se pausan hasta el día siguiente, pero los pedidos se siguen anotando y tus avisos siguen llegando.<br><br>
+Si alguna vez cambiamos el código: <span class="ui">Implementar</span> → <span class="ui">Gestionar implementaciones</span> → lápiz ✎ → Versión: <b>Nueva versión</b> → <span class="ui">Implementar</span>. El link no cambia.</div>
+
+<footer>Merfina · Una joya que hace la diferencia</footer>
+</div>
+
+<script>
+document.getElementById("copyCode").addEventListener("click",()=>{
+  const pre=document.getElementById("code"),out=document.getElementById("copied");
+  const sel=()=>{const r=document.createRange();r.selectNodeContents(pre);const s=getSelection();s.removeAllRanges();s.addRange(r);out.textContent="Código seleccionado: copialo con Ctrl+C (o Cmd+C en Mac)."};
+  try{navigator.clipboard.writeText(pre.textContent).then(()=>{out.textContent="Código copiado. Pegalo en Apps Script."},sel)}catch(e){sel()}
+});
+</script>

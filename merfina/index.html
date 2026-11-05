@@ -167,6 +167,20 @@ section{scroll-margin-top:90px}
 .card .ph:hover .gift-card{transform:rotate(-1deg) scale(1.03)}
 .gift-card img,.card .ph .gift-card img{position:static;inset:auto;width:66%;height:auto;object-fit:contain;transform:none}
 
+.card .tag.out{background:var(--ink);color:var(--paper)}
+.card.is-out .ph img{opacity:.55;filter:grayscale(.3)}
+.add.off{border-bottom-color:var(--line);color:var(--muted)}
+.skel .ph{animation:pulse 1.4s ease-in-out infinite}
+.skel .kind,.skel h3{background:var(--paper-2);width:60%;animation:pulse 1.4s ease-in-out infinite}
+@keyframes pulse{50%{opacity:.5}}
+.grid-msg{grid-column:1/-1;display:grid;justify-items:center;gap:14px;padding:48px 0;text-align:center;color:var(--muted)}
+.grid-msg p{margin:0;font-family:var(--display);font-size:1.4rem;color:var(--ink)}
+.opt:disabled{opacity:.45;cursor:not-allowed;text-decoration:line-through}
+.qty button:disabled{opacity:.3;cursor:not-allowed}
+.m-stock{font-size:.82rem;color:var(--gold-ink);min-height:0}
+.m-stock:empty{display:none}
+#mAdd:disabled,#coConfirm:disabled{opacity:.6;cursor:not-allowed}
+
 /* Story */
 .story{background:var(--blush)}
 .story-grid{display:grid;gap:clamp(32px,5vw,80px);align-items:center}
@@ -626,7 +640,7 @@ footer{border-top:1px solid var(--line);padding-block:56px 96px}
   <div class="ship" id="ship"></div>
   <div class="lines" id="lines"></div>
   <div class="drawer-foot" id="bagFoot">
-    <label class="wrapopt" for="giftWrap"><input type="checkbox" id="giftWrap"> Envolver para regalo (+ $U 150)</label>
+    <label class="wrapopt" for="giftWrap"><input type="checkbox" id="giftWrap"> Envolver para regalo (+ <span id="wrapPrice">$U 150</span>)</label>
     <div class="tot"><span>Subtotal</span><b id="subtotal">$U 0</b></div>
     <p class="note">Envío y medio de pago se eligen en el siguiente paso.</p>
     <button class="btn solid" id="checkout">Finalizar compra</button>
@@ -642,6 +656,7 @@ footer{border-top:1px solid var(--line);padding-block:56px 96px}
       <div class="eyebrow" id="mKind"></div>
       <h3 id="mTitle"></h3>
       <div class="price" id="mPrice"></div>
+      <div class="m-stock" id="mStock" aria-live="polite"></div>
       <p id="mDesc"></p>
       <div><div class="opt-label" id="mOptLabel">Presentación</div><div class="opts" id="mOpts" style="margin-top:10px"></div></div>
       <button class="btn gold" id="mAdd">Agregar a la bolsa</button>
@@ -720,55 +735,136 @@ footer{border-top:1px solid var(--line);padding-block:56px 96px}
 <div class="toast" id="toast" role="status" aria-live="polite"><i class="sparkle"></i><span id="toastTxt"></span></div>
 
 <script>
-const PRODUCTS=[
+/* ===== Conexión con la planilla de Merfina =====
+   Pegá entre las comillas el link de la aplicación web de Google Apps Script (termina en /exec).
+   Si lo dejás vacío, la tienda muestra los productos de ejemplo de abajo y no descuenta stock. */
+const API_URL="";
+
+/* Productos de ejemplo (solo se usan si API_URL está vacío). Opciones: [nombre, precio, stock (null = sin límite), precio anterior] */
+let PRODUCTS=[
  {id:"camelia-azul",name:"Camelia Azul Noche",cat:"botones",kind:"Cubre botones",tag:"Más vendido",img:["img/p-camelia-azul.jpg","img/look-azul.jpg","img/p-camelia-azul-2.jpg"],
   colors:["#3E5671","#8FA6BE","#B8955A"],desc:"Camelia de pétalos esmaltados en dos tonos de azul, con cristal central y borde de baño dorado. Pensada para puños franceses y camisas blancas.",
-  opts:[["Par",1490],["Set x4",2690],["Set x6",3790]],specs:[["Medida","28 mm"],["Terminación","Baño de oro 18k"],["Detalle","Esmalte y cristal"]]},
+  opts:[["Par",1490,null],["Set x4",2690,null],["Set x6",3790,null]],specs:[["Medida","28 mm"],["Terminación","Baño de oro 18k"],["Detalle","Esmalte y cristal"]]},
  {id:"camelia-rose",name:"Camelia Rosé",cat:"botones",kind:"Cubre botones",tag:"Nuevo",img:["img/p-camelia-rosa.jpg","img/look-rosa-corbata.jpg"],
   colors:["#E8A69A","#F4D3CB","#C9A063"],desc:"Pétalos calados en dorado con esmalte coral translúcido y un brillante al centro. Ilumina cualquier camisa rosa o celeste.",
-  opts:[["Par",1490],["Set x4",2690],["Set x6",3790]],specs:[["Medida","26 mm"],["Terminación","Baño de oro 18k"],["Detalle","Esmalte translúcido"]]},
+  opts:[["Par",1490,null],["Set x4",2690,null],["Set x6",3790,null]],specs:[["Medida","26 mm"],["Terminación","Baño de oro 18k"],["Detalle","Esmalte translúcido"]]},
  {id:"flor-nacar",name:"Flor de Nácar",cat:"botones",kind:"Cubre botones",img:["img/p-flor-nacar.jpg","img/look-rosa-blanca.jpg"],
   colors:["#F6EEE6","#E9C46A"],desc:"Cinco pétalos de nácar con centro de granulado dorado. Delicada y luminosa, perfecta para cuellos y puños.",
-  opts:[["Par",1290],["Set x4",2390],["Set x6",3390]],specs:[["Medida","20 mm"],["Terminación","Baño de oro 18k"],["Detalle","Nácar natural"]]},
+  opts:[["Par",1290,null],["Set x4",2390,null],["Set x6",3390,null]],specs:[["Medida","20 mm"],["Terminación","Baño de oro 18k"],["Detalle","Nácar natural"]]},
  {id:"corazon-perla",name:"Corazón de Perla",cat:"botones",kind:"Cubre botones",img:["img/p-corazon-perla.jpg","img/look-blusa.jpg"],
   colors:["#F3EFEA","#1E1B1A","#C9A063"],desc:"Corazón de perla sobre marco festoneado en esmalte negro y dorado. Un clásico con guiño romántico.",
-  opts:[["Par",1190],["Set x4",2190],["Set x6",3090]],specs:[["Medida","18 mm"],["Terminación","Baño de oro 18k"],["Detalle","Perla sintética"]]},
+  opts:[["Par",1190,null],["Set x4",2190,null],["Set x6",3090,null]],specs:[["Medida","18 mm"],["Terminación","Baño de oro 18k"],["Detalle","Perla sintética"]]},
  {id:"flor-onix",name:"Flor Ónix",cat:"botones",kind:"Cubre botones",img:["img/p-flor-negra.jpg","img/look-blusa.jpg"],
   colors:["#1E1B1A","#C9A063"],desc:"Flor de cinco pétalos en esmalte negro brillante con estambres dorados. Contraste puro sobre blanco.",
-  opts:[["Par",1190],["Set x4",2190],["Set x6",3090]],specs:[["Medida","18 mm"],["Terminación","Baño de oro 18k"],["Detalle","Esmalte negro"]]},
+  opts:[["Par",1190,null],["Set x4",2190,null],["Set x6",3090,null]],specs:[["Medida","18 mm"],["Terminación","Baño de oro 18k"],["Detalle","Esmalte negro"]]},
  {id:"set-paris",name:"Set Blusa París",cat:"sets",kind:"Set de 4 piezas",tag:"Edición limitada",img:["img/p-blusa-botones.jpg","img/look-calas.jpg","img/look-blusa.jpg"],
   colors:["#F3EFEA","#1E1B1A","#C9A063"],desc:"Dos Corazones de Perla y dos Flores Ónix para alternar en la tapeta. El look de la campaña, listo en un estuche.",
-  opts:[["Set x4",2290],["Set x6",3290]],specs:[["Incluye","2 corazones + 2 flores"],["Terminación","Baño de oro 18k"],["Estuche","Merfina de regalo"]]},
+  opts:[["Set x4",2290,null],["Set x6",3290,null]],specs:[["Incluye","2 corazones + 2 flores"],["Terminación","Baño de oro 18k"],["Estuche","Merfina de regalo"]]},
  {id:"corbata-rayas",name:"Corbata Rayas Rosé",cat:"corbatas",kind:"Corbata",img:["img/p-corbata-rayas.jpg","img/look-rosa-corbata.jpg"],
   colors:["#D9B8A8","#F6E8E0"],desc:"Corbata de seda a rayas diagonales en rosé y crudo. Se combina con la Camelia Rosé para un look completo.",
-  opts:[["Ancho clásico 7 cm",1890],["Ancho slim 5,5 cm",1890]],optLabel:"Ancho",specs:[["Material","Seda"],["Largo","148 cm"],["Cuidado","Limpieza en seco"]]},
+  opts:[["Ancho clásico 7 cm",1890,null],["Ancho slim 5,5 cm",1890,null]],optLabel:"Ancho",specs:[["Material","Seda"],["Largo","148 cm"],["Cuidado","Limpieza en seco"]]},
  {id:"gift",name:"Gift Card Merfina",cat:"sets",kind:"Tarjeta de regalo",gift:true,img:[],
   colors:["#EAE5DB","#A3804F","#221C17"],desc:"Para que elijan su propia joya. Llega en su sobre Merfina con el monto que elijas, o por WhatsApp en formato digital.",
-  opts:[["$U 1.500",1500],["$U 3.000",3000],["$U 5.000",5000]],optLabel:"Monto",specs:[["Validez","12 meses"],["Entrega","Física o digital"]]}
+  opts:[["$U 1.500",1500,null],["$U 3.000",3000,null],["$U 5.000",5000,null]],optLabel:"Monto",specs:[["Validez","12 meses"],["Entrega","Física o digital"]]}
 ];
+
+/* Datos del negocio de ejemplo. Con API_URL, todo esto viene de la pestaña Config de la planilla. */
+const CFG={
+  whatsapp:"59891900341",
+  mpCommission:0.12,
+  mpLink:"",
+  free:3000,
+  wrap:150,
+  stockBajo:2,
+  horasPago:48,
+  bank:[["Banco","A completar"],["Tipo de cuenta","Caja de ahorro en pesos"],["Número de cuenta","A completar"],["Titular","A completar"]],
+  ship:{
+    mvd:[{id:"domicilio-mvd",name:"Envío a domicilio",desc:"Montevideo · 24 h hábiles",cost:190,addr:true},{id:"retiro",name:"Retiro coordinado",desc:"Coordinamos el lugar y horario por WhatsApp",cost:0,addr:false}],
+    int:[{id:"agencia",name:"Envío por agencia",desc:"Interior · 48 a 72 h hábiles",cost:250,addr:true}]
+  },
+  coupons:{MERFINA10:0.10}
+};
+
 const $=s=>document.querySelector(s);
-const fmt=n=>"$U "+n.toLocaleString("es-UY");
-const FREE=3000, WRAP=150;
+const fmt=n=>"$U "+Math.round(n).toLocaleString("es-UY");
+const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"})[c]);
 const store={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
-let bag=store.get("merfina-bag",[]), favs=new Set(store.get("merfina-favs",[])), filter="todo";
+let favs=new Set(store.get("merfina-favs",[])),filter="todo",catalogState=API_URL?"loading":"ready";
 const byId=id=>PRODUCTS.find(p=>p.id===id);
+const optIdx=(p,v)=>p?p.opts.findIndex(o=>o[0]===v):-1;
+const stockOf=o=>o[2]===null||o[2]===undefined?Infinity:o[2];
+const inBag=(id,v)=>bag.filter(l=>l.id===id&&l.v===v).reduce((s,l)=>s+l.q,0);
+const soldOut=p=>p.opts.every(o=>stockOf(o)<=0);
+const lowStock=p=>!soldOut(p)&&p.opts.some(o=>stockOf(o)>0&&stockOf(o)<=CFG.stockBajo);
+const firstAvail=p=>{const i=p.opts.findIndex(o=>stockOf(o)>0);return i<0?0:i};
+
+/* Bolsa: cada línea guarda producto + nombre de la variante */
+let bag=store.get("merfina-bag",[]).map(l=>{
+  if(l.v)return l;const p=byId(l.id);const v=p&&p.opts[l.o]?p.opts[l.o][0]:null;
+  return v?{key:l.id+"|"+v,id:l.id,v,q:l.q}:null;
+}).filter(Boolean);
+const lineOpt=l=>{const p=byId(l.id);const i=optIdx(p,l.v);return i<0?null:p.opts[i]};
+
 const giftArt=()=>`<div class="gift-ph"><div class="gift-card"><img src="img/logo-completo.png" alt="Gift card Merfina"></div></div>`;
 const heart='<svg viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg>';
 
+/* ===== Planilla: leer catálogo y enviar pedidos ===== */
+async function api(body){
+  const r=await fetch(API_URL,{method:"POST",body:JSON.stringify(body)});
+  if(!r.ok)throw new Error("HTTP "+r.status);
+  return r.json();
+}
+async function loadCatalog(silent){
+  if(!API_URL)return true;
+  try{
+    const r=await fetch(API_URL+"?accion=catalogo&t="+Date.now());
+    const d=await r.json();
+    if(!d.ok)throw new Error(d.mensaje||"catálogo");
+    PRODUCTS=d.productos;
+    const c=d.config||{};
+    ["whatsapp","mpCommission","mpLink","free","wrap","stockBajo","horasPago","bank","ship"].forEach(k=>{if(c[k]!==undefined&&c[k]!==null&&c[k]!=="")CFG[k]=c[k]});
+    catalogState="ready";
+    reconcileBag(silent);
+    renderGrid();renderBag();
+    if(cur&&$("#modal").classList.contains("on")){cur=byId(cur.id)||cur;renderOpts()}
+    return true;
+  }catch(e){
+    if(!silent){catalogState="error";renderGrid()}
+    return false;
+  }
+}
+function reconcileBag(silent){
+  const changes=[];
+  bag=bag.filter(l=>{const o=lineOpt(l);if(!o){changes.push(`${l.v} ya no está disponible`);return false}return true});
+  bag.forEach(l=>{const max=stockOf(lineOpt(l));if(l.q>max){changes.push(`${byId(l.id).name} (${l.v}): ${max>0?"quedan "+max:"se agotó"}`);l.q=Math.max(0,max)}});
+  bag=bag.filter(l=>l.q>0);save();
+  if(changes.length&&!silent)toast("Actualizamos tu bolsa: "+changes.join("; "));
+  return changes;
+}
+
+/* ===== Grilla ===== */
+function priceHtml(o){return o[3]&&o[3]>o[1]?`<s style="color:var(--muted);font-weight:300">${fmt(o[3])}</s> ${fmt(o[1])}`:fmt(o[1])}
 function renderGrid(){
   const g=$("#grid");
-  g.innerHTML=PRODUCTS.filter(p=>filter==="todo"||p.cat===filter).map(p=>`
-   <article class="card">
-     <div class="ph" data-open="${p.id}" role="button" tabindex="0" aria-label="Ver ${p.name}">
-       ${p.tag?`<span class="tag">${p.tag}</span>`:""}
-       <button class="fav" data-fav="${p.id}" aria-label="Guardar ${p.name} en favoritos" aria-pressed="${favs.has(p.id)}">${heart}</button>
-       ${p.gift?giftArt():`<img src="${p.img[0]}" alt="${p.name}" loading="lazy">${p.img[1]?`<img class="alt" src="${p.img[1]}" alt="" loading="lazy">`:""}`}
-       <button class="quick" data-open="${p.id}">Vista rápida</button>
+  if(catalogState==="loading"){g.innerHTML=Array.from({length:4},()=>`<article class="card skel" aria-hidden="true"><div class="ph"></div><div class="kind">&nbsp;</div><div class="meta top"><h3>&nbsp;</h3></div></article>`).join("");return}
+  if(catalogState==="error"){g.innerHTML=`<div class="grid-msg"><p>No pudimos cargar las piezas. Revisá tu conexión.</p><button class="btn" id="retryCat">Reintentar</button></div>`;$("#retryCat").onclick=()=>{catalogState="loading";renderGrid();loadCatalog()};return}
+  const list=PRODUCTS.filter(p=>filter==="todo"||p.cat===filter);
+  if(!list.length){g.innerHTML=`<div class="grid-msg"><p>Pronto vas a encontrar piezas nuevas en esta categoría.</p></div>`;return}
+  g.innerHTML=list.map(p=>{
+    const out=soldOut(p),low=lowStock(p),i=firstAvail(p),o=p.opts[i];
+    const tag=out?`<span class="tag out">Agotado</span>`:p.tag?`<span class="tag">${esc(p.tag)}</span>`:low?`<span class="tag">Últimas unidades</span>`:"";
+    return `
+   <article class="card${out?" is-out":""}">
+     <div class="ph" data-open="${esc(p.id)}" role="button" tabindex="0" aria-label="Ver ${esc(p.name)}">
+       ${tag}
+       <button class="fav" data-fav="${esc(p.id)}" aria-label="Guardar ${esc(p.name)} en favoritos" aria-pressed="${favs.has(p.id)}">${heart}</button>
+       ${p.gift||!p.img.length?giftArt():`<img src="${esc(p.img[0])}" alt="${esc(p.name)}" loading="lazy">${p.img[1]?`<img class="alt" src="${esc(p.img[1])}" alt="" loading="lazy">`:""}`}
+       <button class="quick" data-open="${esc(p.id)}">Vista rápida</button>
      </div>
-     <div class="kind">${p.kind}</div>
-     <div class="meta top"><h3>${p.name}</h3><span class="price">${p.opts.length>1&&!p.gift?"desde ":""}${fmt(p.opts[0][1])}</span></div>
-     <div class="meta"><span class="swatches">${p.colors.map(c=>`<i style="background:${c}"></i>`).join("")}</span><button class="add" data-add="${p.id}">Agregar</button></div>
-   </article>`).join("");
+     <div class="kind">${esc(p.kind)}</div>
+     <div class="meta top"><h3>${esc(p.name)}</h3><span class="price">${p.opts.length>1&&!p.gift?"desde ":""}${priceHtml(o)}</span></div>
+     <div class="meta"><span class="swatches">${(p.colors||[]).map(c=>`<i style="background:${esc(c)}"></i>`).join("")}</span>${out?`<span class="add off">Agotado</span>`:`<button class="add" data-add="${esc(p.id)}">Agregar</button>`}</div>
+   </article>`}).join("");
 }
 function setFilter(f){
   filter=f;document.querySelectorAll(".chip").forEach(c=>c.setAttribute("aria-pressed",c.dataset.filter===f));renderGrid();
@@ -776,86 +872,88 @@ function setFilter(f){
 document.querySelectorAll(".chip").forEach(c=>c.addEventListener("click",()=>setFilter(c.dataset.filter)));
 document.querySelectorAll("[data-go]").forEach(a=>a.addEventListener("click",()=>setFilter(a.dataset.go)));
 
+/* ===== Bolsa ===== */
 function badge(el,n){el.textContent=n;el.classList.toggle("on",n>0);el.classList.remove("bump");void el.offsetWidth;if(n>0)el.classList.add("bump")}
 function save(){store.set("merfina-bag",bag);store.set("merfina-favs",[...favs])}
-function addToBag(id,optIdx=0){
-  const p=byId(id),key=id+"|"+optIdx,line=bag.find(l=>l.key===key);
-  if(line)line.q++;else bag.push({key,id,o:optIdx,q:1});
-  save();renderBag();toast(`${p.name} · ${p.opts[optIdx][0]} se agregó a tu bolsa`);
+function addToBag(id,i){
+  const p=byId(id);if(!p)return false;
+  if(i===undefined)i=firstAvail(p);
+  const o=p.opts[i],v=o[0],max=stockOf(o),have=inBag(id,v);
+  if(max<=0){toast(`${p.name} · ${v} está agotado`);return false}
+  if(have+1>max){toast(`Solo quedan ${max} de ${p.name} · ${v}, y ya están en tu bolsa`);return false}
+  const key=id+"|"+v,line=bag.find(l=>l.key===key);
+  if(line)line.q++;else bag.push({key,id,v,q:1});
+  save();renderBag();toast(`${p.name} · ${v} se agregó a tu bolsa`);return true;
 }
+function bagItems(){return bag.reduce((s,l)=>s+(lineOpt(l)?lineOpt(l)[1]*l.q:0),0)}
 function renderBag(){
   const n=bag.reduce((s,l)=>s+l.q,0);badge($("#bagCount"),n);
-  const sub=bag.reduce((s,l)=>s+byId(l.id).opts[l.o][1]*l.q,0)+($("#giftWrap").checked&&n?WRAP:0);
+  const sub=bagItems()+($("#giftWrap").checked&&n?CFG.wrap:0);
   $("#subtotal").textContent=fmt(sub);
-  const left=FREE-sub;
-  $("#ship").innerHTML=(left>0?`Te faltan <b style="font-weight:500">${fmt(left)}</b> para el envío gratis`:`<b style="font-weight:500">¡Tu envío es gratis!</b>`)+`<div class="bar"><i style="width:${Math.min(100,sub/FREE*100)}%"></i></div>`;
+  $("#wrapPrice").textContent=fmt(CFG.wrap);
+  const left=CFG.free-bagItems();
+  $("#ship").hidden=!(CFG.free>0);
+  $("#ship").innerHTML=(left>0?`Te faltan <b style="font-weight:500">${fmt(left)}</b> para el envío gratis`:`<b style="font-weight:500">¡Tu envío es gratis!</b>`)+`<div class="bar"><i style="width:${Math.min(100,bagItems()/CFG.free*100)}%"></i></div>`;
   $("#bagFoot").hidden=!n;
   if(!n){$("#lines").innerHTML=`<div class="empty"><span class="sparkle"></span><p>Tu bolsa está vacía</p><span>Elegí una pieza para empezar.</span></div>`;return}
-  $("#lines").innerHTML=bag.map(l=>{const p=byId(l.id);return `
+  $("#lines").innerHTML=bag.map(l=>{const p=byId(l.id),o=lineOpt(l);if(!p||!o)return"";const max=stockOf(o);return `
    <div class="line">
-     ${p.gift?`<div class="gift-mini"><img src="img/logo-completo.png" alt=""></div>`:`<img src="${p.img[0]}" alt="">`}
-     <div><h4>${p.name}</h4><small>${p.opts[l.o][0]}</small><br>
-       <span class="qty"><button data-dec="${l.key}" aria-label="Quitar uno">−</button><span>${l.q}</span><button data-inc="${l.key}" aria-label="Agregar uno">+</button></span>
-       <button class="rm" data-rm="${l.key}">Quitar</button></div>
-     <span class="price">${fmt(p.opts[l.o][1]*l.q)}</span>
+     ${p.gift||!p.img.length?`<div class="gift-mini"><img src="img/logo-completo.png" alt=""></div>`:`<img src="${esc(p.img[0])}" alt="">`}
+     <div><h4>${esc(p.name)}</h4><small>${esc(l.v)}${max<=CFG.stockBajo&&max!==Infinity?` · quedan ${max}`:""}</small><br>
+       <span class="qty"><button data-dec="${esc(l.key)}" aria-label="Quitar uno">−</button><span>${l.q}</span><button data-inc="${esc(l.key)}" aria-label="Agregar uno" ${l.q>=max?"disabled":""}>+</button></span>
+       <button class="rm" data-rm="${esc(l.key)}">Quitar</button></div>
+     <span class="price">${fmt(o[1]*l.q)}</span>
    </div>`}).join("");
 }
 $("#giftWrap").addEventListener("change",renderBag);
 $("#lines").addEventListener("click",e=>{
   const t=e.target.closest("button");if(!t)return;
   const k=t.dataset.inc||t.dataset.dec||t.dataset.rm,l=bag.find(x=>x.key===k);if(!l)return;
-  if(t.dataset.inc)l.q++;else if(t.dataset.dec)l.q--;else l.q=0;
+  if(t.dataset.inc){const max=stockOf(lineOpt(l));if(l.q+1>max){toast(`Solo quedan ${max} unidades`);return}l.q++}
+  else if(t.dataset.dec)l.q--;else l.q=0;
   bag=bag.filter(x=>x.q>0);save();renderBag();
 });
+
 /* ===== Checkout ===== */
-/* Datos del negocio: editá acá precios de envío, comisión, cupones y datos bancarios. */
-const CFG={
-  whatsapp:"59891900341",
-  mpCommission:0.12,
-  mpLink:"",            /* pegá acá un link de pago de Mercado Pago si querés mostrar el botón directo */
-  bank:[["Banco","A completar"],["Tipo de cuenta","Caja de ahorro en pesos"],["Número de cuenta","A completar"],["Titular","A completar"]],
-  ship:{
-    mvd:[{id:"dom",name:"Envío a domicilio",desc:"Montevideo · 24 h hábiles",cost:190},{id:"ret",name:"Retiro coordinado",desc:"Coordinamos el lugar y horario por WhatsApp",cost:0}],
-    int:[{id:"age",name:"Envío por agencia",desc:"Interior · 48 a 72 h hábiles",cost:250}]
-  },
-  coupons:{MERFINA10:0.10}
-};
 const DEPS=["Artigas","Canelones","Cerro Largo","Colonia","Durazno","Flores","Florida","Lavalleja","Maldonado","Montevideo","Paysandú","Río Negro","Rivera","Rocha","Salto","San José","Soriano","Tacuarembó","Treinta y Tres"];
 $("#coDep").innerHTML+=DEPS.map(d=>`<option>${d}</option>`).join("");
-let coupon=null,lastOrder=null;
+let coupon=null,sending=false;
 const val=id=>$("#"+id).value.trim();
 function shipOpts(){const d=val("coDep"),c=val("coCity");if(!d||!c)return null;return d==="Montevideo"?CFG.ship.mvd:CFG.ship.int}
+function selShip(){const opts=shipOpts(),sel=document.querySelector('input[name="ship"]:checked');return opts&&sel?opts.find(o=>o.id===sel.value)||null:null}
 function totals(){
-  const items=bag.reduce((s,l)=>s+byId(l.id).opts[l.o][1]*l.q,0);
-  const wrap=$("#giftWrap").checked&&bag.length?WRAP:0;
-  const disc=coupon?Math.round(items*CFG.coupons[coupon]):0;
-  const opts=shipOpts(),sel=document.querySelector('input[name="ship"]:checked');
-  const so=opts&&sel?opts.find(o=>o.id===sel.value):null;
-  const free=items-disc>=FREE;
+  const items=bagItems();
+  const wrap=$("#giftWrap").checked&&bag.length?CFG.wrap:0;
+  const disc=coupon?Math.round(items*coupon.pct):0;
+  const so=selShip();
+  const free=CFG.free>0&&items-disc>=CFG.free;
   const ship=so?(free?0:so.cost):null;
   const base=items-disc+wrap+(ship||0);
   const pay=(document.querySelector('input[name="pay"]:checked')||{}).value||"mp";
   const fee=pay==="mp"?Math.round(base*CFG.mpCommission):0;
-  return {items,wrap,disc,ship,so,free,base,fee,pay,total:base+fee};
+  return {items,wrap,disc,coupon:coupon?coupon.code:"",ship,entrega:so?so.name:"",so,free,base,fee,pay,total:base+fee};
 }
 function renderShip(){
   const opts=shipOpts(),box=$("#coShip");
   if(!opts){box.innerHTML='<div class="hint">Seleccioná departamento y ciudad o barrio para ver las formas de entrega disponibles.</div>';return}
+  if(!opts.length){box.innerHTML='<div class="hint">Por ahora no tenemos entregas para tu zona. Escribinos por WhatsApp y lo coordinamos.</div>';return}
   const prev=(document.querySelector('input[name="ship"]:checked')||{}).value;
   const t=totals();
-  box.innerHTML=`<div style="display:grid;gap:10px">${opts.map((o,i)=>`<label class="choice" for="ship-${o.id}"><input type="radio" name="ship" id="ship-${o.id}" value="${o.id}" ${(prev?prev===o.id:i===0)?"checked":""}><b>${o.name}</b><span class="amt">${o.cost===0?"Sin costo":t.free?`<s style="color:var(--muted)">${fmt(o.cost)}</s> Gratis`:fmt(o.cost)}</span><p>${o.desc}</p></label>`).join("")}</div>`;
+  box.innerHTML=`<div style="display:grid;gap:10px">${opts.map((o,i)=>`<label class="choice" for="ship-${esc(o.id)}"><input type="radio" name="ship" id="ship-${esc(o.id)}" value="${esc(o.id)}" ${(opts.some(x=>x.id===prev)?prev===o.id:i===0)?"checked":""}><b>${esc(o.name)}</b><span class="amt">${o.cost===0?"Sin costo":t.free?`<s style="color:var(--muted)">${fmt(o.cost)}</s> Gratis`:fmt(o.cost)}</span><p>${esc(o.desc)}</p></label>`).join("")}</div>`;
+  const so=selShip();$("#coAddr").closest(".fld").querySelector("label").innerHTML=so&&so.addr===false?'Dirección <small>(opcional)</small>':"Dirección";
 }
 function renderCo(){
   const t=totals();
-  $("#coLines").innerHTML=bag.map(l=>{const p=byId(l.id);return `<div class="sum-line">${p.gift?`<div class="gift-mini"><img src="img/logo-completo.png" alt=""></div>`:`<img src="${p.img[0]}" alt="">`}<div>${p.name}<small>${p.opts[l.o][0]} · ${l.q} u.</small></div><span class="price">${fmt(p.opts[l.o][1]*l.q)}</span></div>`}).join("");
+  $("#coLines").innerHTML=bag.map(l=>{const p=byId(l.id),o=lineOpt(l);if(!p||!o)return"";return `<div class="sum-line">${p.gift||!p.img.length?`<div class="gift-mini"><img src="img/logo-completo.png" alt=""></div>`:`<img src="${esc(p.img[0])}" alt="">`}<div>${esc(p.name)}<small>${esc(l.v)} · ${l.q} u.</small></div><span class="price">${fmt(o[1]*l.q)}</span></div>`}).join("");
   const rows=[["Subtotal",fmt(t.items)]];
-  if(t.disc)rows.push([`Cupón ${coupon}`,"− "+fmt(t.disc)]);
+  if(t.disc)rows.push([`Cupón ${t.coupon}`,"− "+fmt(t.disc)]);
   if(t.wrap)rows.push(["Envoltorio de regalo",fmt(t.wrap)]);
   rows.push(["Envío",t.ship===null?"A calcular":t.ship===0?"Gratis":fmt(t.ship)]);
   if(t.fee)rows.push([`Comisión Mercado Pago (${Math.round(CFG.mpCommission*100)}%)`,fmt(t.fee)]);
-  $("#coRows").innerHTML=rows.map(([a,b])=>`<div><span>${a}</span><span>${b}</span></div>`).join("");
+  $("#coRows").innerHTML=rows.map(([a,b])=>`<div><span>${esc(a)}</span><span>${b}</span></div>`).join("");
   $("#coTotal").textContent=fmt(t.total);
   const mpFee=Math.round(t.base*CFG.mpCommission);
+  $("#mpFee").hidden=!(CFG.mpCommission>0);
   $("#mpFee").textContent=`Comisión de ${Math.round(CFG.mpCommission*100)}% (+ ${fmt(mpFee)})`;
 }
 function openCo(){
@@ -864,6 +962,7 @@ function openCo(){
   renderShip();renderCo();
   const co=$("#co");co.classList.add("on");co.setAttribute("aria-hidden","false");co.scrollTop=0;document.body.style.overflow="hidden";
   setTimeout(()=>$("#coName").focus({preventScroll:true}),350);
+  if(API_URL)loadCatalog(true).then(()=>{const ch=reconcileBag(true);renderBag();if(!bag.length){closeCo();toast("Las piezas de tu bolsa se agotaron mientras elegías.");return}renderShip();renderCo();if(ch.length)$("#coErr").textContent="Actualizamos tu bolsa: "+ch.join("; ")+"."});
 }
 function closeCo(){const co=$("#co");co.classList.remove("on");co.setAttribute("aria-hidden","true");document.body.style.overflow=""}
 $("#checkout").addEventListener("click",openCo);
@@ -876,52 +975,86 @@ $("#emptyBag").addEventListener("click",e=>{
 $("#coBack").addEventListener("click",closeCo);
 $("#doneBack").addEventListener("click",closeCo);
 ["coDep","coCity"].forEach(id=>$("#"+id).addEventListener("input",()=>{renderShip();renderCo()}));
-$("#coShip").addEventListener("change",renderCo);
+$("#coShip").addEventListener("change",()=>{renderShip();renderCo()});
 document.querySelectorAll('input[name="pay"]').forEach(r=>r.addEventListener("change",renderCo));
-$("#coApply").addEventListener("click",()=>{
-  const c=val("coCoupon").toUpperCase(),m=$("#coCouponMsg");
-  if(CFG.coupons[c]){coupon=c;m.style.color="var(--gold-ink)";m.textContent=`Cupón ${c} aplicado: ${Math.round(CFG.coupons[c]*100)}% de descuento.`}
-  else{coupon=null;m.style.color="var(--err)";m.textContent=c?"Ese cupón no existe o ya venció. Revisá cómo lo escribiste.":"Escribí un código para aplicarlo."}
+$("#coApply").addEventListener("click",async()=>{
+  const c=val("coCoupon").toUpperCase(),m=$("#coCouponMsg"),b=$("#coApply");
+  const ok=msg=>{m.style.color="var(--gold-ink)";m.textContent=msg},bad=msg=>{coupon=null;m.style.color="var(--err)";m.textContent=msg};
+  if(!c){bad("Escribí un código para aplicarlo.");renderShip();renderCo();return}
+  if(API_URL){
+    b.disabled=true;b.textContent="…";
+    try{const r=await api({accion:"cupon",codigo:c,subtotal:bagItems()});if(r.ok){coupon={code:r.codigo,pct:r.pct};ok(r.mensaje)}else bad(r.mensaje)}
+    catch(e){bad("No pudimos validar el cupón. Probá de nuevo.")}
+    b.disabled=false;b.textContent="Aplicar";
+  }else if(CFG.coupons[c]){coupon={code:c,pct:CFG.coupons[c]};ok(`Cupón ${c} aplicado: ${Math.round(CFG.coupons[c]*100)}% de descuento.`)}
+  else bad("Ese cupón no existe o ya venció. Revisá cómo lo escribiste.");
   renderShip();renderCo();
 });
 function check(){
+  const so=selShip();
   const rules=[["coName",v=>v.length>1,"Ingresá tu nombre."],["coLast",v=>v.length>1,"Ingresá tu apellido."],["coEmail",v=>/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v),"Ingresá un email válido, por ejemplo nombre@gmail.com."],
     ["coPhone",v=>v.replace(/\D/g,"").length>=8,"Ingresá un teléfono de al menos 8 dígitos."],["coDep",v=>!!v,"Elegí tu departamento."],["coCity",v=>v.length>1,"Ingresá tu ciudad o barrio."],
-    ["coAddr",v=>v.length>3||(document.querySelector('input[name="ship"]:checked')||{}).value==="ret","Ingresá tu dirección para el envío."]];
+    ["coAddr",v=>v.length>3||(so&&so.addr===false),"Ingresá tu dirección para el envío."]];
   let first=null;
   rules.forEach(([id,ok,msg])=>{const f=$("#"+id).closest(".fld"),good=ok(val(id));f.classList.toggle("bad",!good);f.querySelector(".err").textContent=good?"":msg;if(!good&&!first)first=$("#"+id)});
   return first;
 }
 $("#coF").addEventListener("input",e=>{const f=e.target.closest(".fld");if(f&&f.classList.contains("bad")){f.classList.remove("bad");f.querySelector(".err").textContent=""}});
-$("#coF").addEventListener("submit",e=>{
+$("#coF").addEventListener("submit",async e=>{
   e.preventDefault();
+  if(sending)return;
   const bad=check();
   if(bad){$("#coErr").textContent="Revisá los datos marcados en rojo.";bad.focus();return}
   const t=totals();
   if(!t.so){$("#coErr").textContent="Elegí una forma de entrega.";return}
   $("#coErr").textContent="";
-  const num="MF-"+String(Date.now()).slice(-5);
-  const lines=bag.map(l=>{const p=byId(l.id);return `• ${l.q} × ${p.name} (${p.opts[l.o][0]}) — ${fmt(p.opts[l.o][1]*l.q)}`});
+  const cliente={nombre:val("coName"),apellido:val("coLast"),email:val("coEmail"),telefono:val("coPhone"),departamento:val("coDep"),ciudad:val("coCity"),direccion:val("coAddr"),notas:val("coNotes")};
+  const items=bag.map(l=>({id:l.id,v:l.v,q:l.q,name:byId(l.id).name,price:lineOpt(l)[1]}));
+  let num,fin=t;
+  if(API_URL){
+    sending=true;const btn=$("#coConfirm");btn.disabled=true;btn.textContent="Reservando tus piezas…";
+    try{
+      const r=await api({accion:"pedido",items:items.map(({id,v,q})=>({id,v,q})),cliente,envio:t.so.id,pago:t.pay,cupon:t.coupon,envoltorio:!!t.wrap});
+      if(!r.ok){
+        if(r.error==="stock"){await loadCatalog(true);reconcileBag(true);renderBag();renderShip();renderCo();if(!bag.length)closeCo()}
+        if(r.error==="cupon"){coupon=null;renderCo()}
+        $("#coErr").textContent=r.mensaje||"No pudimos confirmar el pedido. Probá de nuevo.";
+        if(!bag.length)toast(r.mensaje);
+        return;
+      }
+      num=r.pedido;
+      const s=r.totales;fin={items:s.subtotal,disc:s.descuento,coupon:s.cupon,wrap:s.envoltorio,ship:s.envio,entrega:s.entrega,fee:s.comision,total:s.total,pay:r.pago};
+      if(r.banco&&r.banco.length)CFG.bank=r.banco;if(r.mpLink!==undefined)CFG.mpLink=r.mpLink;if(r.horasPago)CFG.horasPago=r.horasPago;
+    }catch(err){
+      $("#coErr").textContent="No pudimos conectarnos para confirmar tu pedido. Revisá tu conexión y probá de nuevo, o escribinos por WhatsApp al 091 900 341.";
+      return;
+    }finally{sending=false;const btn=$("#coConfirm");btn.disabled=false;btn.textContent="Confirmar pedido"}
+  }else{
+    num="MF-"+String(Date.now()).slice(-5);
+  }
+  showDone(num,fin,items,cliente);
+  bag=[];coupon=null;$("#coCoupon").value="";$("#coCouponMsg").textContent="";save();renderBag();
+  if(API_URL)loadCatalog(true);
+});
+function showDone(num,t,items,c){
   const payName=t.pay==="mp"?"Mercado Pago":"Transferencia bancaria";
-  const msg=[`¡Hola Merfina! Hice el pedido ${num}.`,"",...lines,
+  const msg=[`¡Hola Merfina! Hice el pedido ${num}.`,"",...items.map(i=>`• ${i.q} × ${i.name} (${i.v}) — ${fmt(i.price*i.q)}`),
     t.wrap?`• Envoltorio de regalo — ${fmt(t.wrap)}`:null,"",
-    `Subtotal: ${fmt(t.items)}`,t.disc?`Cupón ${coupon}: − ${fmt(t.disc)}`:null,
-    `Entrega: ${t.so.name} — ${t.ship===0?"Gratis":fmt(t.ship)}`,t.fee?`Comisión Mercado Pago: ${fmt(t.fee)}`:null,
+    `Subtotal: ${fmt(t.items)}`,t.disc?`Cupón ${t.coupon}: − ${fmt(t.disc)}`:null,
+    `Entrega: ${t.entrega} — ${t.ship===0?"Gratis":fmt(t.ship)}`,t.fee?`Comisión Mercado Pago: ${fmt(t.fee)}`:null,
     `TOTAL: ${fmt(t.total)}`,`Pago: ${payName}`,"",
-    `Nombre: ${val("coName")} ${val("coLast")}`,`Teléfono: +598 ${val("coPhone")}`,`Email: ${val("coEmail")}`,
-    `Dirección: ${val("coAddr")||"—"}, ${val("coCity")}, ${val("coDep")}`,val("coNotes")?`Notas: ${val("coNotes")}`:null,"",
+    `Nombre: ${c.nombre} ${c.apellido}`,`Teléfono: +598 ${c.telefono}`,`Email: ${c.email}`,
+    `Dirección: ${c.direccion||"—"}, ${c.ciudad}, ${c.departamento}`,c.notas?`Notas: ${c.notas}`:null,"",
     "Te adjunto el comprobante de pago."].filter(x=>x!==null).join("\n");
-  lastOrder={num,msg,t};
   $("#doneNum").textContent=`Pedido ${num}`;
-  $("#doneLead").textContent=`Total a pagar: ${fmt(t.total)}. Guardá tu número de pedido para cualquier consulta.`;
+  $("#doneLead").textContent=`Total a pagar: ${fmt(t.total)}.${API_URL?" Te mandamos un email con el detalle.":""} Reservamos tus piezas durante ${CFG.horasPago} horas.`;
   $("#donePay").innerHTML=t.pay==="transfer"
-    ?`<h3>Datos para la transferencia</h3><dl class="bank">${CFG.bank.map(([a,b])=>`<dt>${a}</dt><dd>${b}</dd>`).join("")}<dt>Monto</dt><dd>${fmt(t.total)}</dd><dt>Referencia</dt><dd>${num}</dd></dl>`
-    :`<h3>Pagá con Mercado Pago</h3>${CFG.mpLink?`<p style="margin:0;color:var(--muted)">Pagá ${fmt(t.total)} con tarjeta, débito o dinero en cuenta.</p><a class="btn solid" href="${CFG.mpLink}" target="_blank" rel="noopener">Pagar con Mercado Pago</a>`:`<p style="margin:0;color:var(--muted)">Mandanos tu pedido por WhatsApp y te respondemos con el link de pago de Mercado Pago por ${fmt(t.total)}. Cuando pagues, envianos el comprobante por el mismo chat.</p>`}`;
+    ?`<h3>Datos para la transferencia</h3><dl class="bank">${CFG.bank.map(([a,b])=>`<dt>${esc(a)}</dt><dd>${esc(b)}</dd>`).join("")}<dt>Monto</dt><dd>${fmt(t.total)}</dd><dt>Referencia</dt><dd>${esc(num)}</dd></dl>`
+    :`<h3>Pagá con Mercado Pago</h3>${CFG.mpLink?`<p style="margin:0;color:var(--muted)">Pagá ${fmt(t.total)} con tarjeta, débito o dinero en cuenta.</p><a class="btn solid" href="${esc(CFG.mpLink)}" target="_blank" rel="noopener">Pagar con Mercado Pago</a>`:`<p style="margin:0;color:var(--muted)">Mandanos tu pedido por WhatsApp y te respondemos con el link de pago de Mercado Pago por ${fmt(t.total)}. Cuando pagues, envianos el comprobante por el mismo chat.</p>`}`;
   $("#doneMsg").textContent=msg;
   $("#doneWa").href=`https://wa.me/${CFG.whatsapp}?text=${encodeURIComponent(msg)}`;
   $("#coForm").hidden=true;$("#coDone").hidden=false;$("#co").scrollTop=0;
-  bag=[];coupon=null;save();renderBag();
-});
+}
 $("#doneCopy").addEventListener("click",()=>{
   const txt=$("#doneMsg").textContent;
   const sel=()=>{const r=document.createRange();r.selectNodeContents($("#doneMsg"));const s=getSelection();s.removeAllRanges();s.addRange(r);toast("Resumen seleccionado. Copialo con tu teclado.")};
@@ -933,7 +1066,7 @@ function renderFavs(){badge($("#favCount"),favs.size)}
 $("#favBtn").addEventListener("click",()=>{
   if(!favs.size){toast("Tocá el corazón de una pieza para guardarla");return}
   setFilter("todo");location.hash="";document.getElementById("tienda").scrollIntoView();
-  toast(`Tenés ${favs.size} ${favs.size===1?"pieza guardada":"piezas guardadas"}: ${[...favs].map(id=>byId(id).name).join(", ")}`);
+  toast(`Tenés ${favs.size} ${favs.size===1?"pieza guardada":"piezas guardadas"}: ${[...favs].map(id=>byId(id)).filter(Boolean).map(p=>p.name).join(", ")}`);
 });
 
 /* grid delegation */
@@ -948,21 +1081,24 @@ $("#grid").addEventListener("keydown",e=>{if(e.key==="Enter"&&e.target.matches("
 /* modal */
 let cur=null,curOpt=0,lastFocus=null;
 function openModal(id){
-  const p=byId(id);cur=p;curOpt=0;lastFocus=document.activeElement;
+  const p=byId(id);if(!p)return;cur=p;curOpt=firstAvail(p);lastFocus=document.activeElement;
   $("#mKind").textContent=p.kind;$("#mTitle").textContent=p.name;$("#mDesc").textContent=p.desc;
   $("#mOptLabel").textContent=p.optLabel||"Presentación";
-  $("#mMedia").innerHTML=p.gift?`<div class="main gift" style="aspect-ratio:4/5;position:relative">${giftArt()}</div>`:
-    `<img class="main" id="mMain" src="${p.img[0]}" alt="${p.name}"><div class="thumbs">${p.img.map((s,i)=>`<button data-thumb="${s}" aria-pressed="${i===0}" aria-label="Ver foto ${i+1}"><img src="${s}" alt=""></button>`).join("")}</div>`;
-  $("#mSpecs").innerHTML=p.specs.map(([a,b])=>`<dt>${a}</dt><dd>${b}</dd>`).join("");
+  $("#mMedia").innerHTML=p.gift||!p.img.length?`<div class="main gift" style="aspect-ratio:4/5;position:relative">${giftArt()}</div>`:
+    `<img class="main" id="mMain" src="${esc(p.img[0])}" alt="${esc(p.name)}"><div class="thumbs">${p.img.length>1?p.img.map((s,i)=>`<button data-thumb="${esc(s)}" aria-pressed="${i===0}" aria-label="Ver foto ${i+1}"><img src="${esc(s)}" alt=""></button>`).join(""):""}</div>`;
+  $("#mSpecs").innerHTML=(p.specs||[]).map(([a,b])=>`<dt>${esc(a)}</dt><dd>${esc(b)}</dd>`).join("");
   renderOpts();show("modal",true);$("#closeModal").focus();
 }
 function renderOpts(){
-  $("#mOpts").innerHTML=cur.opts.map(([l],i)=>`<button class="opt" data-opt="${i}" aria-pressed="${i===curOpt}">${l}</button>`).join("");
-  $("#mPrice").textContent=fmt(cur.opts[curOpt][1]);
+  $("#mOpts").innerHTML=cur.opts.map((o,i)=>{const s=stockOf(o);return `<button class="opt" data-opt="${i}" aria-pressed="${i===curOpt}" ${s<=0?"disabled":""}>${esc(o[0])}${s<=0?" · Agotado":""}</button>`}).join("");
+  const o=cur.opts[curOpt],s=stockOf(o);
+  $("#mPrice").innerHTML=priceHtml(o);
+  $("#mStock").textContent=s<=0?"Agotado":s<=CFG.stockBajo?`¡Quedan solo ${s}!`:"";
+  $("#mAdd").disabled=s<=0;$("#mAdd").textContent=s<=0?"Agotado":"Agregar a la bolsa";
 }
-$("#mOpts").addEventListener("click",e=>{const b=e.target.closest("[data-opt]");if(b){curOpt=+b.dataset.opt;renderOpts()}});
+$("#mOpts").addEventListener("click",e=>{const b=e.target.closest("[data-opt]");if(b&&!b.disabled){curOpt=+b.dataset.opt;renderOpts()}});
 $("#mMedia").addEventListener("click",e=>{const b=e.target.closest("[data-thumb]");if(!b)return;$("#mMain").src=b.dataset.thumb;document.querySelectorAll("[data-thumb]").forEach(x=>x.setAttribute("aria-pressed",x===b))});
-$("#mAdd").addEventListener("click",()=>{addToBag(cur.id,curOpt);show("modal",false);setTimeout(()=>show("drawer",true),250)});
+$("#mAdd").addEventListener("click",()=>{if(addToBag(cur.id,curOpt)){show("modal",false);setTimeout(()=>show("drawer",true),250)}});
 $("#closeModal").addEventListener("click",()=>show("modal",false));
 
 /* overlays */
@@ -987,14 +1123,21 @@ $("#railPrev").addEventListener("click",()=>rail.scrollBy({left:-step(),behavior
 $("#railNext").addEventListener("click",()=>rail.scrollBy({left:step(),behavior:"smooth"}));
 
 /* newsletter */
-$("#newsForm").addEventListener("submit",e=>{
-  e.preventDefault();const v=$("#newsEmail").value.trim();
-  if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v)){$("#newsOk").textContent="Revisá el email: parece incompleto.";return}
-  $("#newsOk").textContent="¡Gracias! Te esperamos con un 10% en tu primera compra.";$("#newsEmail").value="";
+$("#newsForm").addEventListener("submit",async e=>{
+  e.preventDefault();const v=$("#newsEmail").value.trim(),out=$("#newsOk");
+  if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v)){out.textContent="Revisá el email: parece incompleto.";return}
+  if(API_URL){
+    out.textContent="Enviando…";
+    try{const r=await api({accion:"suscribir",email:v,origen:"Newsletter web"});out.textContent=r.mensaje;if(r.ok)$("#newsEmail").value=""}
+    catch(err){out.textContent="No pudimos suscribirte. Probá de nuevo en un momento."}
+    return;
+  }
+  out.textContent="¡Gracias! Te esperamos con un 10% en tu primera compra.";$("#newsEmail").value="";
 });
 
 /* toast */
-let tt;function toast(msg){$("#toastTxt").textContent=msg;$("#toast").classList.add("on");clearTimeout(tt);tt=setTimeout(()=>$("#toast").classList.remove("on"),2600)}
+let tt;function toast(msg){$("#toastTxt").textContent=msg;$("#toast").classList.add("on");clearTimeout(tt);tt=setTimeout(()=>$("#toast").classList.remove("on"),3200)}
 
 renderGrid();renderBag();renderFavs();
+if(API_URL){loadCatalog();setInterval(()=>{if(document.visibilityState==="visible"&&!$("#co").classList.contains("on"))loadCatalog(true)},120000)}
 </script>
