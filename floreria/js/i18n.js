@@ -493,6 +493,23 @@
     ['La tienda todavía no está conectada a la planilla. Escribinos para hacer tu pedido.', 'The shop isn’t connected yet. Message us to place your order.', 'A loja ainda não está conectada. Fale conosco para fazer seu pedido.'],
     ['No pudimos crear tu pedido. Intentá de nuevo en unos minutos.', 'We couldn’t create your order. Please try again in a few minutes.', 'Não conseguimos criar seu pedido. Tente de novo em alguns minutos.'],
 
+    ['Entregamos todos los días, también los domingos.', 'We deliver every day, Sundays included.', 'Entregamos todos os dias, inclusive aos domingos.'],
+    ['Tarjeta', 'Card', 'Cartão'],
+    ['Crédito o débito, a través de Mercado Pago. También saldo de Mercado Pago, Abitab o RedPagos.', 'Credit or debit, through Mercado Pago. Mercado Pago balance, Abitab or RedPagos also accepted.', 'Crédito ou débito, pelo Mercado Pago. Também saldo do Mercado Pago, Abitab ou RedPagos.'],
+    ['PayPal', 'PayPal', 'PayPal'],
+    ['Pagás en dólares con tu cuenta PayPal o tarjeta internacional.', 'Pay in US dollars with your PayPal account or an international card.', 'Pague em dólares com sua conta PayPal ou cartão internacional.'],
+    ['Vas a pagar en el sitio seguro de PayPal. Tipo de cambio: {n} US$ = {$}', 'You’ll pay on PayPal’s secure site. Exchange rate: {n} US$ = {$}', 'Você vai pagar no site seguro do PayPal. Câmbio: {n} US$ = {$}'],
+    ['Pagar US{$} con PayPal', 'Pay US{$} with PayPal', 'Pagar US{$} com PayPal'],
+    ['Pagar {$} con tarjeta', 'Pay {$} by card', 'Pagar {$} com cartão'],
+    ['Te llevamos a PayPal…', 'Taking you to PayPal…', 'Levando você ao PayPal…'],
+    ['Estamos verificando el pago con PayPal.', 'We’re checking the payment with PayPal.', 'Estamos verificando o pagamento com o PayPal.'],
+    ['El pago con tarjeta todavía no está activado. Escribinos por WhatsApp para hacer tu pedido.', 'Card payments aren’t active yet. Message us on WhatsApp to place your order.', 'O pagamento com cartão ainda não está ativo. Fale conosco pelo WhatsApp para fazer seu pedido.'],
+    ['El pago con PayPal todavía no está activado. Elegí tarjeta o escribinos.', 'PayPal payments aren’t active yet. Choose card or message us.', 'O pagamento com PayPal ainda não está ativo. Escolha cartão ou fale conosco.'],
+    ['PayPal no respondió. Tu pedido quedó guardado: intentá de nuevo o pagá con tarjeta.', 'PayPal didn’t respond. Your order was saved: try again or pay by card.', 'O PayPal não respondeu. Seu pedido foi salvo: tente de novo ou pague com cartão.'],
+    ['Mercado Pago no respondió. Tu pedido quedó guardado: intentá pagar de nuevo o elegí PayPal.', 'Mercado Pago didn’t respond. Your order was saved: try paying again or choose PayPal.', 'O Mercado Pago não respondeu. Seu pedido foi salvo: tente pagar de novo ou escolha PayPal.'],
+    ['Los pedidos confirmados antes de las {n}:{n} se entregan el mismo día, todos los días de la semana, según disponibilidad.', 'Orders confirmed before {n}:{n} are delivered the same day, any day of the week, subject to availability.', 'Pedidos confirmados antes das {n}:{n} são entregues no mesmo dia, todos os dias da semana, conforme disponibilidade.'],
+    ['No se hizo ningún cobro. Tu carrito sigue guardado: podés intentar de nuevo.', 'You were not charged. Your cart is still saved: you can try again.', 'Nenhuma cobrança foi feita. Seu carrinho continua salvo: você pode tentar de novo.'],
+
     // Resultado
     ['¡Gracias,', 'Thank you,', 'Obrigado,'],
     ['! Tu pedido', '! Your order', '! Seu pedido'],

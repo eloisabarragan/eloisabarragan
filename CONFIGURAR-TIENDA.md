@@ -29,6 +29,14 @@ Todo funciona con dos piezas:
 
 El token queda guardado dentro del script, no en la planilla ni en la web: nadie más lo ve.
 
+## 2b · PayPal (opcional)
+
+1. Con una cuenta **PayPal Business**, entrá a [developer.paypal.com](https://developer.paypal.com) → **Apps & Credentials** → **Create App**. Copiá el **Client ID** y el **Secret** (pestaña *Sandbox* para probar, *Live* para cobrar de verdad).
+2. En la planilla: **FlorLatte → Configurar PayPal** → pegá Client ID, Secret, escribí `prueba` o `live` y el **tipo de cambio** (pesos por dólar, ej. `40`). PayPal no cobra en pesos uruguayos: el total se convierte a dólares con ese número.
+3. Para actualizar el tipo de cambio, volvé a usar el mismo menú.
+
+Mientras PayPal no esté configurado, la tienda solo muestra **Tarjeta** (Mercado Pago).
+
 ## 3 · Conectar la web con la planilla
 
 En `floreria/js/data.js`, en `config`, pegá la URL del paso 1.4:

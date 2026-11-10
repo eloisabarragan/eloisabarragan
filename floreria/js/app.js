@@ -11,6 +11,7 @@
     get(k, d) { try { const v = localStorage.getItem('florlatte:' + k); return v ? JSON.parse(v) : d; } catch (e) { return d; } },
     set(k, v) { try { localStorage.setItem('florlatte:' + k, JSON.stringify(v)); } catch (e) { /* almacenamiento no disponible */ } }
   };
+  const usd = v => (state.payments.rate ? (Math.round(v / state.payments.rate * 100) / 100).toFixed(2) : '–');
   const money = v => '$' + String(Math.round(v)).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
   const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   const norm = s => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
@@ -101,6 +102,7 @@
     recent: store.get('recent', []),
     coupon: store.get('coupon', null),
     zones: (C.zones || []).slice(),
+    payments: { card: true, paypal: false, rate: null },
     f: { cat: 'all', occasions: new Set(), colors: new Set(), maxPrice: 6000, sameDay: false, offer: false, sort: 'featured' }
   };
   const LOCAL = D.products.slice(); // catálogo de respaldo (ilustraciones de adorno)
@@ -191,7 +193,7 @@
   }
   function sameDayInfo(now = new Date()) {
     const cutoff = new Date(now); cutoff.setHours(C.sameDayCutoffHour, 0, 0, 0);
-    const open = now.getDay() !== 0 && now < cutoff;
+    const open = now < cutoff;
     return { open, ms: cutoff - now };
   }
   function renderCutoff() {
@@ -758,7 +760,7 @@
       C.hours ? `<li>${icon('clock')}<span><strong>Horario</strong>${esc(C.hours)}</span></li>` : '',
       `<li>${icon('leaf')}<span><strong>Floristería &amp; vivero</strong>Plantas, flores de estación y ramos de novia a medida</span></li>`
     ].join('');
-    $('#mapsLink').href = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(C.address + ', ' + C.city);
+    $('#mapsLink').href = C.mapsUrl || 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(C.address + ', ' + C.city);
   }
   $('#newsForm').addEventListener('submit', e => {
     e.preventDefault();
@@ -787,7 +789,7 @@
   const STEPS = ['Tus datos', 'Entrega', 'Dedicatoria', 'Pago'];
   const co = Object.assign({ step: 0, name: '', email: '', phone: '', rname: '', rphone: '', method: 'delivery', zone: '', date: null, slot: null, address: '', notes: '', cardStyle: 'clasica', message: '', sign: '', anon: false, pay: 'mp' }, store.get('co', {}));
   co.step = 0;
-  if (co.pay !== 'transfer') co.pay = 'mp';
+  if (co.pay !== 'paypal') co.pay = 'mp';
   if (co.method !== 'pickup') co.method = 'delivery';
   const coTotals = () => totals(co.method, co.zone, co.date);
   // Abierta como archivo desde la computadora: el pago se simula para poder recorrer la tienda.
@@ -816,7 +818,7 @@
     const out = [], now = new Date(), info = sameDayInfo(now);
     for (let i = 0; i < 10; i++) {
       const d = new Date(now); d.setDate(now.getDate() + i); d.setHours(0, 0, 0, 0);
-      const closed = d.getDay() === 0 || (i === 0 && !info.open);
+      const closed = i === 0 && !info.open;
       out.push({ iso: d.toISOString().slice(0, 10), d, closed, today: i === 0 });
     }
     return out;
@@ -860,7 +862,7 @@
       const mo = d => d.toLocaleDateString(LOC(), { month: 'short' }).replace('.', '');
       return `
       <h2 class="co-title">¿Cuándo y dónde?</h2>
-      <p class="co-sub">Entregamos de lunes a sábado. Los domingos el taller descansa.</p>
+      <p class="co-sub">Entregamos todos los días, también los domingos.</p>
       <fieldset class="fieldset"><legend>Día de entrega</legend>
         <div class="dates">${days.map(d => `<button type="button" class="date" data-date="${d.iso}" aria-pressed="${d.iso === co.date}" ${d.closed ? 'disabled' : ''}><small>${d.today ? 'Hoy' : wd(d.d)}</small><strong>${d.d.getDate()}</strong><small>${mo(d.d)}</small></button>`).join('')}</div>
       </fieldset>
@@ -912,11 +914,11 @@
       ${DEMO ? `<div class="demo-note">${icon('info')}<span><b>Vista previa sin servidor:</b> el pago se simula. Publicada en Netlify, este paso te lleva a Mercado Pago.</span></div>` : ''}
       <fieldset class="fieldset"><legend>Medio de pago</legend>
         <div class="options">
-          <label class="option"><input type="radio" name="pay" value="mp" ${co.pay === 'mp' ? 'checked' : ''}><div><strong>Mercado Pago</strong><span>Tarjetas de crédito y débito, saldo de Mercado Pago, Abitab o RedPagos</span></div><b class="pay-badge">Recomendado</b></label>
-          <label class="option"><input type="radio" name="pay" value="transfer" ${co.pay === 'transfer' ? 'checked' : ''}><div><strong>Transferencia bancaria</strong><span>Te mostramos los datos al confirmar. Preparamos tu pedido cuando recibimos el comprobante.</span></div></label>
+          <label class="option"><input type="radio" name="pay" value="mp" ${co.pay === 'mp' ? 'checked' : ''}><div><strong>Tarjeta</strong><span>Crédito o débito, a través de Mercado Pago. También saldo de Mercado Pago, Abitab o RedPagos.</span></div><b class="pay-badge">Recomendado</b></label>
+          ${state.payments.paypal ? `<label class="option"><input type="radio" name="pay" value="paypal" ${co.pay === 'paypal' ? 'checked' : ''}><div><strong>PayPal</strong><span>Pagás en dólares con tu cuenta PayPal o tarjeta internacional.</span></div><b>US$ ${usd(coTotals().total)}</b></label>` : ''}
         </div>
       </fieldset>
-      <p class="secure secure--left">${icon('lock')}${co.pay === 'mp' ? 'Vas a pagar en el sitio seguro de Mercado Pago. Nosotros nunca vemos los datos de tu tarjeta.' : 'Te mandamos la confirmación por email con los datos para transferir.'}</p>
+      <p class="secure secure--left">${icon('lock')}${co.pay === 'paypal' ? `Vas a pagar en el sitio seguro de PayPal. Tipo de cambio: 1 US$ = ${money(state.payments.rate)}.` : 'Vas a pagar en el sitio seguro de Mercado Pago. Nosotros nunca vemos los datos de tu tarjeta.'}</p>
       <p class="coupon-msg err" id="payErr" role="alert" hidden></p>`;
     }
     return '';
@@ -946,7 +948,7 @@
       ${stepHTML()}
       <div class="co-nav">
         ${co.step ? `<button type="button" class="btn btn--ghost" id="coBack">${icon('left')}Volver</button>` : `<button type="button" class="btn btn--ghost" id="coBack">${icon('left')}Seguir comprando</button>`}
-        <button type="submit" class="btn btn--primary btn--lg" id="coSubmit">${co.step === 3 ? (co.pay === 'mp' ? `${icon('lock')}Pagar ${money(t.total)} con Mercado Pago` : `Confirmar pedido · ${money(t.total)}`) : 'Continuar'}</button>
+        <button type="submit" class="btn btn--primary btn--lg" id="coSubmit">${co.step === 3 ? (co.pay === 'paypal' ? `${icon('lock')}Pagar US$ ${usd(t.total)} con PayPal` : `${icon('lock')}Pagar ${money(t.total)} con tarjeta`) : 'Continuar'}</button>
       </div>
     </form>${summaryHTML()}`;
     bindCheckout();
@@ -1054,8 +1056,8 @@
       return payError((data && data.error) || 'No pudimos crear tu pedido. Intentá de nuevo en unos minutos.');
     }
     store.set('lastOrder', { id: data.id, total: data.total, pay: co.pay });
-    if (co.pay === 'mp' && data.init_point) {
-      processing('Te llevamos a Mercado Pago…', 'Cuando termines de pagar volvés automáticamente a la tienda.');
+    if (data.init_point) {
+      processing(co.pay === 'paypal' ? 'Te llevamos a PayPal…' : 'Te llevamos a Mercado Pago…', 'Cuando termines de pagar volvés automáticamente a la tienda.');
       location.href = data.init_point;
       return;
     }
@@ -1085,7 +1087,7 @@
     const sub = paid ? `Te enviamos la confirmación a <b>${esc(co.email)}</b>. Te avisamos cuando salga a reparto.`
       : transfer ? `Transferí el total y mandanos el comprobante. Apenas lo confirmemos empezamos a preparar tus flores.`
       : pending ? `Si pagaste en Abitab o RedPagos puede demorar unas horas. Te avisamos por email cuando se acredite.`
-      : `No se hizo ningún cobro. Tu carrito sigue guardado: podés intentar de nuevo o elegir transferencia.`;
+      : `No se hizo ningún cobro. Tu carrito sigue guardado: podés intentar de nuevo.`;
     $('#checkoutInner').innerHTML = `<div class="success">
       <span class="success__icon${failed ? ' success__icon--warn' : ''}">${icon(failed ? 'info' : paid ? 'check' : 'clock')}</span>
       <h2>${head}</h2>
@@ -1124,10 +1126,14 @@
     $('#steps').innerHTML = STEPS.map(s => `<li class="done"><span>${s}</span></li>`).join('');
     processing('Confirmando tu pago…', 'Estamos verificando el pago con Mercado Pago.');
     const pid = q.get('payment_id') || q.get('collection_id');
+    const ppToken = q.get('pp') && !q.get('cancel') ? q.get('token') : null;
+    if (q.get('pp')) processing('Confirmando tu pago…', 'Estamos verificando el pago con PayPal.');
     let result = null;
     for (let i = 0; i < 6; i++) {
+      if (q.get('pp') && q.get('cancel')) break; // canceló en PayPal
       try {
-        const st = await planilla(Object.assign({ action: 'order', id }, pid && pid !== 'null' ? { payment_id: pid } : {}));
+        const extra = ppToken ? { paypal_token: ppToken } : pid && pid !== 'null' ? { payment_id: pid } : {};
+        const st = await planilla(Object.assign({ action: 'order', id }, extra));
         if (st && st.estado) result = { status: st.estado, total: st.total };
       } catch (e) { /* reintenta */ }
       if (result && result.status && result.status !== 'pendiente de pago') break;
@@ -1218,7 +1224,8 @@
   async function loadRemoteProducts() {
     if (DEMO || !API) return;
     try {
-      const { products: rows, zones } = await planilla({ action: 'products' });
+      const { products: rows, zones, payments } = await planilla({ action: 'products' });
+      if (payments) { state.payments = Object.assign({ card: true, paypal: false, rate: null }, payments); if (!state.payments.paypal && co.pay === 'paypal') co.pay = 'mp'; }
       if (Array.isArray(zones) && zones.length) state.zones = zones.filter(z => z && z.name && z.price >= 0);
       const products = (rows || []).map(normalizeRow).filter(p => p.id && p.name && p.price > 0 && p.active).sort((a, b) => a.order - b.order);
       if (!products.length) return;

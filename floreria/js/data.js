@@ -23,7 +23,12 @@ const DATA = {
       { name: "Zona G", price: 180, barrios: ["Tres Cruces", "Goes", "La Blanqueada", "Jacinto Vera", "Reducto", "La Comercial", "Prado", "Paso Molino", "La Teja", "Capurro", "Aires Puros", "Sayago", "Belvedere"] },
       { name: "Zona H", price: 200, barrios: ["Atahualpa", "Brazo Oriental", "Casavalle", "Las Acacias", "Cerrito de la Victoria", "Villa Española"] },
       { name: "Zona I", price: 200, barrios: ["Jardines del Hipódromo", "Maroñas", "Curva de Maroñas", "Flor de Maroñas", "Unión"] },
-      { name: "Zona J", price: 340, barrios: ["La Paz", "Las Piedras", "Pando", "Ciudad de la Costa"] }
+      { name: "Zona J", price: 340, barrios: ["Pando", "Ciudad de la Costa"] },
+      { name: "Centro de Las Piedras", price: 120, barrios: ["Centro de Las Piedras"] },
+      { name: "Las Piedras", price: 180, barrios: ["Las Piedras"] },
+      { name: "La Paz", price: 220, barrios: ["La Paz"] },
+      { name: "18 de Mayo", price: 220, barrios: ["18 de Mayo"] },
+      { name: "Progreso", price: 380, barrios: ["Progreso"] }
     ],
     sameDayCutoffHour: 16,          // pedidos antes de esta hora se entregan hoy
     whatsapp: '+598 97 204 598',    // número con código de país (vacío = se oculta el botón)
@@ -34,6 +39,7 @@ const DATA = {
     hours: '',                      // ej. 'Lun a sáb 9:00–19:00' (vacío = no se muestra)
     bank: { name: 'A completar', account: 'A completar', holder: 'FlorLatte Plantas y Flores' },
     sheetsUrl: 'https://script.google.com/macros/s/AKfycbyClG0cDGRrBM8n5-EhH2Oqhskm5SFdOQFHI5aghuY0bqhep78GXZmCqgfzZx7I0exR/exec',                  // dirección de la planilla publicada (termina en /exec)
+    mapsUrl: '',                    // link de Google Maps del local (Compartir → Copiar vínculo); vacío = busca la dirección
     lowStockFrom: 3,                // mostrar "¡Quedan N!" desde esta cantidad
     coupons: {
       LATTE10: { type: 'percent', value: 10, label: '10% de descuento' },
@@ -228,7 +234,7 @@ const DATA = {
 
   faqs: [
     { q: '¿Hacen ramos de novia?', a: 'Sí, es una de nuestras especialidades. Escribinos con al menos 3 semanas de anticipación: coordinamos una charla para conocer tu vestido, tu paleta y tu estilo, y diseñamos el ramo a medida. También hacemos boutonnieres y decoración floral.' },
-    { q: '¿Hasta qué hora puedo pedir para que llegue hoy?', a: 'Los pedidos confirmados antes de las 16:00 se entregan el mismo día, de lunes a sábado, según disponibilidad.' },
+    { q: '¿Hasta qué hora puedo pedir para que llegue hoy?', a: 'Los pedidos confirmados antes de las 16:00 se entregan el mismo día, todos los días de la semana, según disponibilidad.' },
     { q: '¿Cuánto cuesta el envío?', a: 'Depende del barrio: lo elegís en el checkout y ves el costo antes de pagar. Si la entrega es en el día se suman $20. También podés retirar sin costo en nuestro local.' },
     { q: '¿Puedo elegir la fecha y el horario de entrega?', a: 'Sí. En el checkout elegís el día (hasta 10 días adelante) y una franja horaria de 3 horas.' },
     { q: '¿Las flores pueden ser distintas a la foto?', a: 'Trabajamos con flor fresca de estación. Si alguna variedad no está disponible la reemplazamos por otra de igual o mayor valor, respetando la paleta.' },

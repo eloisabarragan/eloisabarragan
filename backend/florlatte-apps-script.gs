@@ -20,12 +20,14 @@ const COL_PRODUCTOS = ['id', 'nombre', 'categoria', 'precio', 'precio_anterior',
 const COL_PEDIDOS = ['id', 'fecha', 'estado', 'pago', 'total', 'cliente', 'email', 'telefono', 'destinatario', 'tel_destinatario', 'tipo_entrega', 'fecha_entrega', 'franja', 'direccion', 'barrio', 'indicaciones', 'dedicatoria', 'firma', 'anonimo', 'productos', 'subtotal', 'descuento', 'cupon', 'envio', 'mp_pago_id', 'actualizado', 'items_json'];
 const NOMBRE_TIENDA = 'FlorLatte';
 const MP_API = 'https://api.mercadopago.com';
+const PAYPAL_API = { live: 'https://api-m.paypal.com', prueba: 'https://api-m.sandbox.paypal.com' };
 
 /* ---------------- Menú e instalación ---------------- */
 
 function onOpen() {
   SpreadsheetApp.getUi().createMenu('FlorLatte')
     .addItem('Cargar token de Mercado Pago', 'cargarTokenMP')
+    .addItem('Configurar PayPal', 'cargarPayPal')
     .addItem('Ver configuración', 'verConfiguracion')
     .addItem('Enviar email de prueba', 'emailDePrueba')
     .addSeparator()
@@ -83,13 +85,33 @@ function cargarTokenMP() {
   ui.alert('Listo: token guardado (' + (t.indexOf('TEST-') === 0 ? 'de PRUEBA' : 'de PRODUCCIÓN') + ').');
 }
 
+function cargarPayPal() {
+  const ui = SpreadsheetApp.getUi(), props = PropertiesService.getScriptProperties();
+  const pedir = (titulo, texto) => { const r = ui.prompt(titulo, texto, ui.ButtonSet.OK_CANCEL); return r.getSelectedButton() === ui.Button.OK ? r.getResponseText().trim() : null; };
+  const id = pedir('PayPal (1 de 4)', 'Pegá el Client ID de tu app de PayPal (developer.paypal.com → Apps & Credentials).');
+  if (id === null) return;
+  const secret = pedir('PayPal (2 de 4)', 'Pegá el Secret de esa misma app. Se guarda en el script, no en la planilla.');
+  if (secret === null) return;
+  const modo = pedir('PayPal (3 de 4)', 'Escribí "live" si son credenciales reales, o "prueba" si son de Sandbox.');
+  if (modo === null) return;
+  const tc = pedir('PayPal (4 de 4)', 'Tipo de cambio: ¿cuántos pesos uruguayos es 1 dólar? (ej: 40). PayPal cobra en dólares.');
+  if (tc === null) return;
+  const rate = aNumero(tc);
+  if (id.length < 20 || secret.length < 20) { ui.alert('El Client ID o el Secret parecen incompletos. No se guardó nada.'); return; }
+  if (!rate || rate < 1) { ui.alert('El tipo de cambio tiene que ser un número, por ejemplo 40. No se guardó nada.'); return; }
+  props.setProperties({ PAYPAL_CLIENT_ID: id, PAYPAL_SECRET: secret, PAYPAL_MODO: normTxt(modo) === 'live' ? 'live' : 'prueba', PAYPAL_CAMBIO: String(rate) });
+  ui.alert('Listo: PayPal configurado (' + (normTxt(modo) === 'live' ? 'REAL' : 'de PRUEBA') + '), 1 US$ = $' + rate + '.\nPara cambiar solo el tipo de cambio, volvé a usar este menú.');
+}
+
 function verConfiguracion() {
   const p = PropertiesService.getScriptProperties();
   const t = p.getProperty('MP_ACCESS_TOKEN') || '';
+  const pp = configPayPal();
   let url = '';
   try { url = ScriptApp.getService().getUrl() || ''; } catch (e) { url = ''; }
   SpreadsheetApp.getUi().alert(
     'Mercado Pago: ' + (t ? (t.indexOf('TEST-') === 0 ? 'token de PRUEBA cargado' : 'token de PRODUCCIÓN cargado') + ' (…' + t.slice(-6) + ')' : 'SIN token (usá "Cargar token de Mercado Pago")') +
+    '\n\nPayPal: ' + (payPalActivo() ? (pp.modo === 'live' ? 'REAL' : 'de PRUEBA') + ' · 1 US$ = $' + pp.rate : 'sin configurar (usá "Configurar PayPal")') +
     '\n\nLos avisos de compra llegan a: ' + (p.getProperty('EMAIL_AVISOS') || '(sin configurar)') +
     '\n\nDirección de la planilla para la tienda:\n' + (url || '(todavía no está implementada como aplicación web)'));
 }
@@ -105,9 +127,13 @@ function ahora() { return Utilities.formatDate(new Date(), 'America/Montevideo',
 function doGet(e) {
   try {
     const q = (e && e.parameter) || {};
-    if (q.action === 'products') return salida({ products: leerProductos(), zones: leerZonas() });
+    if (q.action === 'products') {
+      const pp = configPayPal();
+      return salida({ products: leerProductos(), zones: leerZonas(), payments: { card: !!PropertiesService.getScriptProperties().getProperty('MP_ACCESS_TOKEN'), paypal: payPalActivo(), rate: payPalActivo() ? pp.rate : null } });
+    }
     if (q.action === 'order') {
       if (q.payment_id && /^\d+$/.test(q.payment_id)) { try { syncPago(q.payment_id); } catch (err) { console.error(err); } }
+      if (q.paypal_token && /^[A-Z0-9]{8,40}$/.test(q.paypal_token)) { try { capturarPayPal(q.paypal_token, q.id); } catch (err) { console.error(err); } }
       return salida(estadoPedido(q.id));
     }
     return salida({ ok: true, tienda: NOMBRE_TIENDA });
@@ -399,7 +425,7 @@ function txtLargo(v, max) { return String(v === undefined || v === null ? '' : v
 
 function nuevoPedido(b) {
   const c = b.customer || {}, d = b.delivery || {}, card = b.card || {};
-  const pago = b.payment === 'transfer' ? 'transferencia' : 'mercadopago';
+  const pago = b.payment === 'transfer' ? 'transferencia' : b.payment === 'paypal' ? 'paypal' : 'mercadopago';
   const faltan = [];
   if (!txt(c.name)) faltan.push('tu nombre');
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(txt(c.email))) faltan.push('un email válido');
@@ -417,7 +443,8 @@ function nuevoPedido(b) {
   cache.put(clave, String(cuenta + 1), 600);
 
   const tokenMP = PropertiesService.getScriptProperties().getProperty('MP_ACCESS_TOKEN');
-  if (pago === 'mercadopago' && !tokenMP) return { error: 'El pago con Mercado Pago todavía no está activado. Elegí transferencia o escribinos.' };
+  if (pago === 'mercadopago' && !tokenMP) return { error: 'El pago con tarjeta todavía no está activado. Escribinos por WhatsApp para hacer tu pedido.' };
+  if (pago === 'paypal' && !payPalActivo()) return { error: 'El pago con PayPal todavía no está activado. Elegí tarjeta o escribinos.' };
 
   const r = calcular(b.items, b.coupon, d.method, d.zone, catalogo(), leerZonas(), txt(d.date, 10));
   if (r.errores.length) return { error: r.errores.join(' '), code: 'stock' };
@@ -447,18 +474,101 @@ function nuevoPedido(b) {
     items: r.lineas.map(function (l) { return { kind: l.kind, id: l.id, qty: l.qty }; }),
     nota_pago: pago === 'transferencia' ? 'Transferí ' + plata(r.total) + ' a ' + C.bank.name + ', cuenta ' + C.bank.account + ', a nombre de ' + C.bank.holder + ', y mandanos el comprobante.' : ''
   };
+  const origen = /^https?:\/\/[^\s\/?#]+$/.test(String(b.origin || '')) ? b.origin : '';
+  if (pago !== 'transferencia' && !origen) return { error: 'No pudimos identificar la tienda. Recargá la página e intentá de nuevo.' };
+  const pp = configPayPal();
+  const usd = pago === 'paypal' ? (Math.round(o.total / pp.rate * 100) / 100).toFixed(2) : '';
+  if (pago === 'paypal') o.mp_pago_id = 'PayPal pendiente · US$ ' + usd;
   crearPedido(o);
   if (pago === 'transferencia') return { id: o.id, total: o.total, status: o.estado, bank: C.bank };
 
-  const origen = /^https?:\/\/[^\s\/?#]+$/.test(String(b.origin || '')) ? b.origin : '';
-  if (!origen) return { error: 'No pudimos identificar la tienda. Recargá la página e intentá de nuevo.' };
+  if (pago === 'paypal') {
+    try {
+      const orden = crearOrdenPayPal(o, usd, origen, pp);
+      return { id: o.id, total: o.total, usd: usd, init_point: orden.url };
+    } catch (err) {
+      console.error(err);
+      return { error: 'PayPal no respondió. Tu pedido quedó guardado: intentá de nuevo o pagá con tarjeta.' };
+    }
+  }
   try {
     const pref = crearPreferencia(o, origen, tokenMP);
     return { id: o.id, total: o.total, init_point: pref.init_point };
   } catch (err) {
     console.error(err);
-    return { error: 'Mercado Pago no respondió. Tu pedido quedó guardado: intentá pagar de nuevo o elegí transferencia.' };
+    return { error: 'Mercado Pago no respondió. Tu pedido quedó guardado: intentá pagar de nuevo o elegí PayPal.' };
   }
+}
+
+/* ---------------- PayPal ---------------- */
+
+function configPayPal() {
+  const p = PropertiesService.getScriptProperties();
+  return { id: p.getProperty('PAYPAL_CLIENT_ID') || '', secret: p.getProperty('PAYPAL_SECRET') || '', modo: p.getProperty('PAYPAL_MODO') === 'live' ? 'live' : 'prueba', rate: Number(p.getProperty('PAYPAL_CAMBIO')) || 0 };
+}
+function payPalActivo() { const c = configPayPal(); return !!(c.id && c.secret && c.rate > 0); }
+
+function tokenPayPal(c) {
+  const cache = CacheService.getScriptCache(), clave = 'pptoken:' + c.modo;
+  const guardado = cache.get(clave);
+  if (guardado) return guardado;
+  const res = UrlFetchApp.fetch(PAYPAL_API[c.modo] + '/v1/oauth2/token', {
+    method: 'post', muteHttpExceptions: true, payload: 'grant_type=client_credentials', contentType: 'application/x-www-form-urlencoded',
+    headers: { Authorization: 'Basic ' + Utilities.base64Encode(c.id + ':' + c.secret) }
+  });
+  const j = JSON.parse(res.getContentText() || '{}');
+  if (res.getResponseCode() >= 300 || !j.access_token) throw new Error('PayPal no aceptó las credenciales (' + res.getResponseCode() + ').');
+  cache.put(clave, j.access_token, Math.max(60, Math.min(21000, (j.expires_in || 600) - 120)));
+  return j.access_token;
+}
+
+function llamarPayPal(ruta, metodo, datos, c, extra) {
+  const res = UrlFetchApp.fetch(PAYPAL_API[c.modo] + ruta, {
+    method: metodo, contentType: 'application/json', muteHttpExceptions: true,
+    headers: Object.assign({ Authorization: 'Bearer ' + tokenPayPal(c) }, extra || {}),
+    payload: datos ? JSON.stringify(datos) : undefined
+  });
+  let j = {};
+  try { j = JSON.parse(res.getContentText() || '{}'); } catch (e) { j = {}; }
+  const code = res.getResponseCode();
+  if (code >= 300) { const err = new Error('PayPal ' + code + ': ' + (j.name || '') + ' ' + (j.message || '')); err.status = code; err.body = j; throw err; }
+  return j;
+}
+
+function crearOrdenPayPal(o, usd, origen, c) {
+  const volver = origen + '/?pedido=' + encodeURIComponent(o.id) + '&pp=1';
+  const j = llamarPayPal('/v2/checkout/orders', 'post', {
+    intent: 'CAPTURE',
+    purchase_units: [{ reference_id: o.id, custom_id: o.id, description: ('Pedido ' + NOMBRE_TIENDA + ' ' + o.id).slice(0, 127), amount: { currency_code: 'USD', value: usd } }],
+    payment_source: { paypal: { experience_context: { brand_name: NOMBRE_TIENDA, user_action: 'PAY_NOW', shipping_preference: 'NO_SHIPPING', return_url: volver, cancel_url: volver + '&cancel=1' } } }
+  }, c, { 'PayPal-Request-Id': o.id });
+  const link = (j.links || []).filter(function (l) { return l.rel === 'payer-action' || l.rel === 'approve'; })[0];
+  if (!link) throw new Error('PayPal no devolvió el link de pago.');
+  return { url: link.href, id: j.id };
+}
+
+// Cuando el cliente vuelve de PayPal: cobramos la orden y confirmamos el pedido
+function capturarPayPal(token, pedidoId) {
+  const c = configPayPal();
+  if (!payPalActivo()) return;
+  let j;
+  try { j = llamarPayPal('/v2/checkout/orders/' + encodeURIComponent(token) + '/capture', 'post', {}, c, { 'PayPal-Request-Id': 'cap-' + token }); }
+  catch (err) {
+    if (err.status === 422 || err.status === 404) j = llamarPayPal('/v2/checkout/orders/' + encodeURIComponent(token), 'get', null, c);
+    else throw err;
+  }
+  const u = (j.purchase_units || [])[0] || {};
+  const ref = u.custom_id || u.reference_id || '';
+  const cap = (((u.payments || {}).captures) || [])[0];
+  if (!ref || String(ref) !== String(pedidoId) || !cap) return;
+  const hit = buscarPedido(ref);
+  if (!hit) return;
+  const esperado = Number(String(hit.fila.mp_pago_id || '').replace(/^.*US\$\s*/, '')) || 0;
+  const cobrado = Number(cap.amount && cap.amount.value) || 0;
+  const estado = cap.status === 'COMPLETED' ? 'pagado' : cap.status === 'PENDING' ? 'pago pendiente' : 'pago rechazado';
+  // El monto se compara en dólares; a actualizarPago le pasamos el total en pesos si coincide
+  const ok = cap.amount && cap.amount.currency_code === 'USD' && cobrado + 0.01 >= esperado;
+  return actualizarPago({ orderId: ref, estado: estado, paymentId: 'PayPal ' + cap.id + ' · US$ ' + cobrado.toFixed(2), amount: ok ? Number(hit.fila.total) : cobrado });
 }
 
 /* ---------------- Mercado Pago ---------------- */
@@ -767,7 +877,12 @@ const SEMILLA_ENVIOS = [
   ["Zona G", "Tres Cruces, Goes, La Blanqueada, Jacinto Vera, Reducto, La Comercial, Prado, Paso Molino, La Teja, Capurro, Aires Puros, Sayago, Belvedere", 180, "sí"],
   ["Zona H", "Atahualpa, Brazo Oriental, Casavalle, Las Acacias, Cerrito de la Victoria, Villa Española", 200, "sí"],
   ["Zona I", "Jardines del Hipódromo, Maroñas, Curva de Maroñas, Flor de Maroñas, Unión", 200, "sí"],
-  ["Zona J", "La Paz, Las Piedras, Pando, Ciudad de la Costa", 340, "sí"]
+  ["Zona J", "Pando, Ciudad de la Costa", 340, "sí"],
+  ["Centro de Las Piedras", "Centro de Las Piedras", 120, "sí"],
+  ["Las Piedras", "Las Piedras", 180, "sí"],
+  ["La Paz", "La Paz", 220, "sí"],
+  ["18 de Mayo", "18 de Mayo", 220, "sí"],
+  ["Progreso", "Progreso", 380, "sí"]
 ];
 // ENVIOS_FIN
 
