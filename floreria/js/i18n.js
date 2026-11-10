@@ -511,6 +511,9 @@
     ['No se hizo ningún cobro. Tu carrito sigue guardado: podés intentar de nuevo.', 'You were not charged. Your cart is still saved: you can try again.', 'Nenhuma cobrança foi feita. Seu carrinho continua salvo: você pode tentar de novo.'],
 
     ['Estamos esperando la confirmación del pago. Si pagaste en Abitab o RedPagos puede demorar unas horas. Te avisamos por email apenas se acredite.', 'We’re waiting for the payment confirmation. If you paid at Abitab or RedPagos it may take a few hours. We’ll email you as soon as it clears.', 'Estamos aguardando a confirmação do pagamento. Se você pagou no Abitab ou RedPagos pode levar algumas horas. Avisamos por e-mail assim que for creditado.'],
+    ['Entregas', 'Deliveries', 'Entregas'],
+    ['todos los días', 'every day', 'todos os dias'],
+    [', también domingos', ', Sundays included', ', inclusive domingos'],
     // Resultado
     ['¡Gracias,', 'Thank you,', 'Obrigado,'],
     ['! Tu pedido', '! Your order', '! Seu pedido'],

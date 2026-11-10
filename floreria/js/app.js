@@ -4,6 +4,8 @@
   const D = window.FLORLATTE, C = D.config, A = window.FlorArt;
   const $ = (s, r = document) => r.querySelector(s);
   const LOC = () => (window.FL_I18N ? window.FL_I18N.locale : 'es');
+  const FEAT = Object.assign({ suscripcion: true, resenas: true, newsletter: true }, (window.FLORLATTE.config || {}).features || {});
+  const hasCoupons = () => Object.keys(window.FLORLATTE.config.coupons || {}).length > 0;
   const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
 
   /* ---------- Utilidades ---------- */
@@ -115,7 +117,7 @@
   const left = p => p.stock == null ? Infinity : Math.max(0, p.stock - inCart(p.id));
   const soldOut = p => p.stock === 0;
   const isLow = p => p.stock != null && p.stock > 0 && p.stock <= (C.lowStockFrom || 3);
-  const starsHTML = p => p.rating ? `<span class="stars" aria-label="${p.rating} de 5">${stars(p.rating)}</span><span class="rev-n">(${p.reviews})</span>` : '';
+  const starsHTML = p => FEAT.resenas && p.rating ? `<span class="stars" aria-label="${p.rating} de 5">${stars(p.rating)}</span><span class="rev-n">(${p.reviews})</span>` : '';
 
   /* ---------- Toasts ---------- */
   function toast(title, text, opts = {}) {
@@ -176,7 +178,7 @@
     const msgs = [
       C.freeShippingFrom > 0 ? `Envío gratis en compras desde <b>${money(C.freeShippingFrom)}</b>` : 'Envíos a domicilio o <b>retiro sin costo</b> en el atelier',
       'Pedí antes de las 16:00 y <b>llega hoy</b>',
-      'Usá <b>LATTE10</b> y obtené 10% off',
+      'Entregas <b>todos los días</b>, también domingos',
       'Tarjeta con dedicatoria <b>de regalo</b> en cada pedido'
     ];
     const track = $('#announce');
@@ -452,6 +454,7 @@
     return false;
   }
   function couponBlock(id) {
+    if (!hasCoupons()) return '';
     if (state.coupon) return `<div class="coupon-msg ok">${icon('check')} Cupón <b>${state.coupon}</b> aplicado · ${C.coupons[state.coupon].label} <button class="remove" data-rmcoupon>Quitar</button></div>`;
     return `<form class="coupon" data-coupon><label class="visually-hidden" for="${id}">Código de descuento</label><input id="${id}" placeholder="Código de descuento" autocomplete="off"><button class="btn btn--ghost btn--sm" type="submit">Aplicar</button></form><p class="coupon-msg" aria-live="polite"></p>`;
   }
@@ -545,7 +548,7 @@
       </div>
       <div class="pm__info">
         <div><p class="eyebrow">${catName(p.cat)} · ${p.occasions.map(occName).join(', ')}</p><h2 id="pmTitle">${esc(p.name)}</h2></div>
-        ${p.rating ? `<div class="pm__rating"><span class="stars">${stars(p.rating)}</span>${p.rating.toFixed(1).replace('.', ',')} · ${p.reviews} reseñas</div>` : ''}
+        ${FEAT.resenas && p.rating ? `<div class="pm__rating"><span class="stars">${stars(p.rating)}</span>${p.rating.toFixed(1).replace('.', ',')} · ${p.reviews} reseñas</div>` : ''}
         <div class="pm__price" id="pmPrice"></div>
         <p class="pm__desc">${esc(p.desc)}</p>
         <p class="pm__stems">${esc(p.stems)}</p>
@@ -773,6 +776,7 @@
 
   /* ---------- Pop-up de bienvenida ---------- */
   function maybeWelcome() {
+    if (!FEAT.newsletter) return;
     if (store.get('welcomed', false)) return;
     if (document.body.classList.contains('locked')) { setTimeout(maybeWelcome, 8000); return; }
     store.set('welcomed', true);
@@ -1285,4 +1289,10 @@
   loadRemoteProducts();
   handleReturn();
   setTimeout(maybeWelcome, 25000);
+
+  // Secciones apagadas en config.features: se sacan de la página
+  const hide = sel => $$(sel).forEach(el => { (el.closest('.footer li') || el).hidden = true; });
+  if (!FEAT.suscripcion) hide('#suscripcion, a[href="#suscripcion"]');
+  if (!FEAT.resenas) { hide('.section--reviews'); $$('#sort option[value="rating"]').forEach(o => { o.disabled = true; o.hidden = true; }); }
+  if (!FEAT.newsletter) hide('.newsletter');
 })();

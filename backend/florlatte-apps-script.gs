@@ -712,23 +712,7 @@ const TIENDA = {
   "config": {
     "currency": "UYU",
     "freeShippingFrom": 0,
-    "coupons": {
-      "LATTE10": {
-        "type": "percent",
-        "value": 10,
-        "label": "10% de descuento"
-      },
-      "BIENVENIDA15": {
-        "type": "percent",
-        "value": 15,
-        "label": "15% de bienvenida"
-      },
-      "ENVIOGRATIS": {
-        "type": "shipping",
-        "value": 0,
-        "label": "Envío gratis"
-      }
-    },
+    "coupons": {},
     "bank": {
       "name": "A completar",
       "account": "A completar",

@@ -43,11 +43,15 @@ const DATA = {
     paypalRate: 40,                 // pesos por dólar para cobrar con PayPal (se cambia desde el menú de la planilla)
     mapsUrl: '',                    // link de Google Maps del local (Compartir → Copiar vínculo); vacío = busca la dirección
     lowStockFrom: 3,                // mostrar "¡Quedan N!" desde esta cantidad
-    coupons: {
-      LATTE10: { type: 'percent', value: 10, label: '10% de descuento' },
-      BIENVENIDA15: { type: 'percent', value: 15, label: '15% de bienvenida' },
-      ENVIOGRATIS: { type: 'shipping', value: 0, label: 'Envío gratis' }
-    }
+    // Secciones que se pueden prender o apagar (true = se muestra)
+    features: {
+      suscripcion: false,           // planes de suscripción
+      resenas: false,               // reseñas de clientes y estrellas en los productos
+      newsletter: false             // franja de newsletter y pop-up de bienvenida con descuento
+    },
+    // Cupones de descuento. Ejemplo: LATTE10: { type: 'percent', value: 10, label: '10% de descuento' }
+    // Si se agregan, hay que cargarlos igual en el bloque TIENDA del script de la planilla.
+    coupons: {}
   },
 
   categories: [
