@@ -510,6 +510,7 @@
     ['Los pedidos confirmados antes de las {n}:{n} se entregan el mismo día, todos los días de la semana, según disponibilidad.', 'Orders confirmed before {n}:{n} are delivered the same day, any day of the week, subject to availability.', 'Pedidos confirmados antes das {n}:{n} são entregues no mesmo dia, todos os dias da semana, conforme disponibilidade.'],
     ['No se hizo ningún cobro. Tu carrito sigue guardado: podés intentar de nuevo.', 'You were not charged. Your cart is still saved: you can try again.', 'Nenhuma cobrança foi feita. Seu carrinho continua salvo: você pode tentar de novo.'],
 
+    ['Estamos esperando la confirmación del pago. Si pagaste en Abitab o RedPagos puede demorar unas horas. Te avisamos por email apenas se acredite.', 'We’re waiting for the payment confirmation. If you paid at Abitab or RedPagos it may take a few hours. We’ll email you as soon as it clears.', 'Estamos aguardando a confirmação do pagamento. Se você pagou no Abitab ou RedPagos pode levar algumas horas. Avisamos por e-mail assim que for creditado.'],
     // Resultado
     ['¡Gracias,', 'Thank you,', 'Obrigado,'],
     ['! Tu pedido', '! Your order', '! Seu pedido'],

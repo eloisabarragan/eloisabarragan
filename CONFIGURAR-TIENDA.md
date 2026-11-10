@@ -29,13 +29,13 @@ Todo funciona con dos piezas:
 
 El token queda guardado dentro del script, no en la planilla ni en la web: nadie más lo ve.
 
-## 2b · PayPal (opcional)
+## 2b · PayPal
 
-1. Con una cuenta **PayPal Business**, entrá a [developer.paypal.com](https://developer.paypal.com) → **Apps & Credentials** → **Create App**. Copiá el **Client ID** y el **Secret** (pestaña *Sandbox* para probar, *Live* para cobrar de verdad).
-2. En la planilla: **FlorLatte → Configurar PayPal** → pegá Client ID, Secret, escribí `prueba` o `live` y el **tipo de cambio** (pesos por dólar, ej. `40`). PayPal no cobra en pesos uruguayos: el total se convierte a dólares con ese número.
-3. Para actualizar el tipo de cambio, volvé a usar el mismo menú.
+Ya viene configurado con el ID de comerciante de PayPal de la tienda (`paypalMerchant` en `floreria/js/data.js` y en el bloque `TIENDA` del script). No necesita claves: el cliente paga en PayPal y PayPal avisa a la planilla, que confirma el aviso con PayPal antes de marcar el pedido como pagado.
 
-Mientras PayPal no esté configurado, la tienda solo muestra **Tarjeta** (Mercado Pago).
+PayPal cobra en **dólares**: el total se convierte con el tipo de cambio (por defecto 1 US$ = $40). Para cambiarlo: **FlorLatte → Tipo de cambio de PayPal**.
+
+Si alguna vez un pedido pagado con PayPal queda en "pendiente de pago" (PayPal no avisó), igual llega el email de PayPal a la cuenta de la tienda: cambiá el estado a mano a `pagado`.
 
 ## 3 · Conectar la web con la planilla
 

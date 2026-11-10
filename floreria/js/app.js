@@ -1086,7 +1086,7 @@
       : `El pago <em>no se completó</em>`;
     const sub = paid ? `Te enviamos la confirmación a <b>${esc(co.email)}</b>. Te avisamos cuando salga a reparto.`
       : transfer ? `Transferí el total y mandanos el comprobante. Apenas lo confirmemos empezamos a preparar tus flores.`
-      : pending ? `Si pagaste en Abitab o RedPagos puede demorar unas horas. Te avisamos por email cuando se acredite.`
+      : pending ? `Estamos esperando la confirmación del pago. Si pagaste en Abitab o RedPagos puede demorar unas horas. Te avisamos por email apenas se acredite.`
       : `No se hizo ningún cobro. Tu carrito sigue guardado: podés intentar de nuevo.`;
     $('#checkoutInner').innerHTML = `<div class="success">
       <span class="success__icon${failed ? ' success__icon--warn' : ''}">${icon(failed ? 'info' : paid ? 'check' : 'clock')}</span>
@@ -1129,7 +1129,8 @@
     const ppToken = q.get('pp') && !q.get('cancel') ? q.get('token') : null;
     if (q.get('pp')) processing('Confirmando tu pago…', 'Estamos verificando el pago con PayPal.');
     let result = null;
-    for (let i = 0; i < 6; i++) {
+    const tries = q.get('pp') ? 10 : 6; // el aviso de PayPal puede tardar unos segundos
+    for (let i = 0; i < tries; i++) {
       if (q.get('pp') && q.get('cancel')) break; // canceló en PayPal
       try {
         const extra = ppToken ? { paypal_token: ppToken } : pid && pid !== 'null' ? { payment_id: pid } : {};
@@ -1142,7 +1143,7 @@
     }
     const mpStatus = q.get('collection_status') || q.get('status');
     const status = result && result.status && result.status !== 'pendiente de pago' ? result.status
-      : mpStatus === 'pending' || mpStatus === 'in_process' ? 'pago pendiente' : 'pago rechazado';
+      : (q.get('pp') && !q.get('cancel')) || mpStatus === 'pending' || mpStatus === 'in_process' ? 'pago pendiente' : 'pago rechazado';
     showResult({ id, status, total: result ? result.total : (store.get('lastOrder', {}) || {}).total || 0 });
   }
 

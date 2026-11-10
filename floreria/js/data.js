@@ -39,6 +39,8 @@ const DATA = {
     hours: '',                      // ej. 'Lun a sáb 9:00–19:00' (vacío = no se muestra)
     bank: { name: 'A completar', account: 'A completar', holder: 'FlorLatte Plantas y Flores' },
     sheetsUrl: 'https://script.google.com/macros/s/AKfycbyClG0cDGRrBM8n5-EhH2Oqhskm5SFdOQFHI5aghuY0bqhep78GXZmCqgfzZx7I0exR/exec',                  // dirección de la planilla publicada (termina en /exec)
+    paypalMerchant: 'F88PST4RZJ858', // ID de comerciante de PayPal de la tienda
+    paypalRate: 40,                 // pesos por dólar para cobrar con PayPal (se cambia desde el menú de la planilla)
     mapsUrl: '',                    // link de Google Maps del local (Compartir → Copiar vínculo); vacío = busca la dirección
     lowStockFrom: 3,                // mostrar "¡Quedan N!" desde esta cantidad
     coupons: {

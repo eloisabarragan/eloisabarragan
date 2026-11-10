@@ -21,13 +21,15 @@ const COL_PEDIDOS = ['id', 'fecha', 'estado', 'pago', 'total', 'cliente', 'email
 const NOMBRE_TIENDA = 'FlorLatte';
 const MP_API = 'https://api.mercadopago.com';
 const PAYPAL_API = { live: 'https://api-m.paypal.com', prueba: 'https://api-m.sandbox.paypal.com' };
+const PAYPAL_WEB = 'https://www.paypal.com/cgi-bin/webscr';
+const PAYPAL_IPN = 'https://ipnpb.paypal.com/cgi-bin/webscr';
 
 /* ---------------- Menú e instalación ---------------- */
 
 function onOpen() {
   SpreadsheetApp.getUi().createMenu('FlorLatte')
     .addItem('Cargar token de Mercado Pago', 'cargarTokenMP')
-    .addItem('Configurar PayPal', 'cargarPayPal')
+    .addItem('Tipo de cambio de PayPal', 'cargarCambioPayPal')
     .addItem('Ver configuración', 'verConfiguracion')
     .addItem('Enviar email de prueba', 'emailDePrueba')
     .addSeparator()
@@ -85,22 +87,14 @@ function cargarTokenMP() {
   ui.alert('Listo: token guardado (' + (t.indexOf('TEST-') === 0 ? 'de PRUEBA' : 'de PRODUCCIÓN') + ').');
 }
 
-function cargarPayPal() {
-  const ui = SpreadsheetApp.getUi(), props = PropertiesService.getScriptProperties();
-  const pedir = (titulo, texto) => { const r = ui.prompt(titulo, texto, ui.ButtonSet.OK_CANCEL); return r.getSelectedButton() === ui.Button.OK ? r.getResponseText().trim() : null; };
-  const id = pedir('PayPal (1 de 4)', 'Pegá el Client ID de tu app de PayPal (developer.paypal.com → Apps & Credentials).');
-  if (id === null) return;
-  const secret = pedir('PayPal (2 de 4)', 'Pegá el Secret de esa misma app. Se guarda en el script, no en la planilla.');
-  if (secret === null) return;
-  const modo = pedir('PayPal (3 de 4)', 'Escribí "live" si son credenciales reales, o "prueba" si son de Sandbox.');
-  if (modo === null) return;
-  const tc = pedir('PayPal (4 de 4)', 'Tipo de cambio: ¿cuántos pesos uruguayos es 1 dólar? (ej: 40). PayPal cobra en dólares.');
-  if (tc === null) return;
-  const rate = aNumero(tc);
-  if (id.length < 20 || secret.length < 20) { ui.alert('El Client ID o el Secret parecen incompletos. No se guardó nada.'); return; }
-  if (!rate || rate < 1) { ui.alert('El tipo de cambio tiene que ser un número, por ejemplo 40. No se guardó nada.'); return; }
-  props.setProperties({ PAYPAL_CLIENT_ID: id, PAYPAL_SECRET: secret, PAYPAL_MODO: normTxt(modo) === 'live' ? 'live' : 'prueba', PAYPAL_CAMBIO: String(rate) });
-  ui.alert('Listo: PayPal configurado (' + (normTxt(modo) === 'live' ? 'REAL' : 'de PRUEBA') + '), 1 US$ = $' + rate + '.\nPara cambiar solo el tipo de cambio, volvé a usar este menú.');
+function cargarCambioPayPal() {
+  const ui = SpreadsheetApp.getUi();
+  const r = ui.prompt('Tipo de cambio de PayPal', 'PayPal cobra en dólares. ¿Cuántos pesos uruguayos es 1 dólar? (ahora: ' + configPayPal().rate + ')', ui.ButtonSet.OK_CANCEL);
+  if (r.getSelectedButton() !== ui.Button.OK) return;
+  const rate = aNumero(r.getResponseText());
+  if (!rate || rate < 1) { ui.alert('Tiene que ser un número, por ejemplo 40. No se guardó nada.'); return; }
+  PropertiesService.getScriptProperties().setProperty('PAYPAL_CAMBIO', String(rate));
+  ui.alert('Listo: 1 US$ = $' + rate + '.');
 }
 
 function verConfiguracion() {
@@ -111,7 +105,7 @@ function verConfiguracion() {
   try { url = ScriptApp.getService().getUrl() || ''; } catch (e) { url = ''; }
   SpreadsheetApp.getUi().alert(
     'Mercado Pago: ' + (t ? (t.indexOf('TEST-') === 0 ? 'token de PRUEBA cargado' : 'token de PRODUCCIÓN cargado') + ' (…' + t.slice(-6) + ')' : 'SIN token (usá "Cargar token de Mercado Pago")') +
-    '\n\nPayPal: ' + (payPalActivo() ? (pp.modo === 'live' ? 'REAL' : 'de PRUEBA') + ' · 1 US$ = $' + pp.rate : 'sin configurar (usá "Configurar PayPal")') +
+    '\n\nPayPal: ' + (payPalActivo() ? 'activo · cuenta ' + pp.merchant + ' · 1 US$ = $' + pp.rate : 'desactivado') +
     '\n\nLos avisos de compra llegan a: ' + (p.getProperty('EMAIL_AVISOS') || '(sin configurar)') +
     '\n\nDirección de la planilla para la tienda:\n' + (url || '(todavía no está implementada como aplicación web)'));
 }
@@ -148,6 +142,11 @@ function doPost(e) {
     let body = {};
     try { body = JSON.parse((e && e.postData && e.postData.contents) || '{}'); } catch (x) { body = {}; }
     if (body.action === 'crearPedido') return salida(nuevoPedido(body));
+    // Aviso de PayPal (IPN): se confirma con PayPal antes de creer nada
+    if (q.txn_id && q.payment_status) {
+      try { procesarIPN(e); } catch (err) { console.error(err); }
+      return salida({ ok: true });
+    }
     // Aviso de Mercado Pago (webhook): consultamos el pago a Mercado Pago antes de creer nada
     const tipo = body.type || body.topic || q.type || q.topic;
     const id = (body.data && body.data.id) || q['data.id'] || (tipo === 'payment' ? q.id : '');
@@ -484,8 +483,8 @@ function nuevoPedido(b) {
 
   if (pago === 'paypal') {
     try {
-      const orden = crearOrdenPayPal(o, usd, origen, pp);
-      return { id: o.id, total: o.total, usd: usd, init_point: orden.url };
+      const url = pp.id && pp.secret ? crearOrdenPayPal(o, usd, origen, pp).url : linkPayPal(o, usd, origen, pp);
+      return { id: o.id, total: o.total, usd: usd, init_point: url };
     } catch (err) {
       console.error(err);
       return { error: 'PayPal no respondió. Tu pedido quedó guardado: intentá de nuevo o pagá con tarjeta.' };
@@ -503,10 +502,45 @@ function nuevoPedido(b) {
 /* ---------------- PayPal ---------------- */
 
 function configPayPal() {
-  const p = PropertiesService.getScriptProperties();
-  return { id: p.getProperty('PAYPAL_CLIENT_ID') || '', secret: p.getProperty('PAYPAL_SECRET') || '', modo: p.getProperty('PAYPAL_MODO') === 'live' ? 'live' : 'prueba', rate: Number(p.getProperty('PAYPAL_CAMBIO')) || 0 };
+  const p = PropertiesService.getScriptProperties(), C = TIENDA.config;
+  return {
+    merchant: p.getProperty('PAYPAL_MERCHANT') || C.paypalMerchant || '',
+    rate: Number(p.getProperty('PAYPAL_CAMBIO')) || C.paypalRate || 0,
+    // Opcional: credenciales de API (si se cargan, se usa la integración por API en vez del botón clásico)
+    id: p.getProperty('PAYPAL_CLIENT_ID') || '', secret: p.getProperty('PAYPAL_SECRET') || '', modo: p.getProperty('PAYPAL_MODO') === 'live' ? 'live' : 'prueba'
+  };
 }
-function payPalActivo() { const c = configPayPal(); return !!(c.id && c.secret && c.rate > 0); }
+function payPalActivo() { const c = configPayPal(); return !!((c.merchant || (c.id && c.secret)) && c.rate > 0); }
+
+// Pago con la cuenta de PayPal de la tienda (ID de comerciante): no necesita claves
+function linkPayPal(o, usd, origen, c) {
+  const volver = origen + '/?pedido=' + encodeURIComponent(o.id) + '&pp=1';
+  const q = {
+    cmd: '_xclick', business: c.merchant, item_name: ('Pedido ' + NOMBRE_TIENDA + ' ' + o.id).slice(0, 127),
+    invoice: o.id, custom: o.id, amount: usd, currency_code: 'USD', no_shipping: '1', no_note: '1', charset: 'utf-8',
+    return: volver, cancel_return: volver + '&cancel=1', rm: '1', notify_url: ScriptApp.getService().getUrl(), email: o.email
+  };
+  return PAYPAL_WEB + '?' + Object.keys(q).map(function (k) { return k + '=' + encodeURIComponent(q[k]); }).join('&');
+}
+
+// Aviso de pago de PayPal: lo devolvemos a PayPal para que confirme que es auténtico
+function procesarIPN(e) {
+  const raw = e.postData && e.postData.contents;
+  if (!raw) return;
+  const res = UrlFetchApp.fetch(PAYPAL_IPN, { method: 'post', payload: 'cmd=_notify-validate&' + raw, contentType: 'application/x-www-form-urlencoded', muteHttpExceptions: true });
+  if (String(res.getContentText()).trim() !== 'VERIFIED') return;
+  const q = e.parameter, c = configPayPal();
+  const paraNosotros = [q.receiver_id, q.receiver_email, q.business].some(function (v) { return v && normTxt(v) === normTxt(c.merchant); });
+  if (!paraNosotros || q.mc_currency !== 'USD') return;
+  const ref = q.invoice || q.custom;
+  const hit = buscarPedido(ref);
+  if (!hit) return;
+  const esperado = Number(String(hit.fila.mp_pago_id || '').replace(/^.*US\$\s*/, '')) || 0;
+  const cobrado = Number(q.mc_gross) || 0;
+  const st = String(q.payment_status);
+  const estado = st === 'Completed' ? 'pagado' : st === 'Pending' ? 'pago pendiente' : (st === 'Refunded' || st === 'Reversed') ? 'devuelto' : 'pago rechazado';
+  return actualizarPago({ orderId: ref, estado: estado, paymentId: 'PayPal ' + q.txn_id + ' · US$ ' + cobrado.toFixed(2), amount: cobrado + 0.01 >= esperado ? Number(hit.fila.total) : cobrado });
+}
 
 function tokenPayPal(c) {
   const cache = CacheService.getScriptCache(), clave = 'pptoken:' + c.modo;
@@ -700,7 +734,9 @@ const TIENDA = {
       "account": "A completar",
       "holder": "FlorLatte Plantas y Flores"
     },
-    "sameDayExtra": 20
+    "sameDayExtra": 20,
+    "paypalMerchant": "F88PST4RZJ858",
+    "paypalRate": 40
   },
   "sizes": [
     {
