@@ -41,7 +41,7 @@ const DATA = {
     sheetsUrl: 'https://script.google.com/macros/s/AKfycbyClG0cDGRrBM8n5-EhH2Oqhskm5SFdOQFHI5aghuY0bqhep78GXZmCqgfzZx7I0exR/exec',                  // dirección de la planilla publicada (termina en /exec)
     paypalMerchant: 'F88PST4RZJ858', // ID de comerciante de PayPal de la tienda
     paypalRate: 40,                 // pesos por dólar para cobrar con PayPal (se cambia desde el menú de la planilla)
-    mapsUrl: '',                    // link de Google Maps del local (Compartir → Copiar vínculo); vacío = busca la dirección
+    mapsUrl: 'https://maps.app.goo.gl/9gU6WRop4YNqKrVt9',                    // link de Google Maps del local (Compartir → Copiar vínculo); vacío = busca la dirección
     lowStockFrom: 3,                // mostrar "¡Quedan N!" desde esta cantidad
     // Secciones que se pueden prender o apagar (true = se muestra)
     features: {
