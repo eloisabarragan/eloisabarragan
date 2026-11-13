@@ -2,11 +2,13 @@ import { h, api, moneyFormatter, formatQty } from './common.js';
 
 const $ = (id) => document.getElementById(id);
 const CART_KEY = 'huerta-carrito';
+const FAV_KEY = 'huerta-favoritos';
 
 let config;
 let money = (n) => `$${n}`;
 let products = [];
 let cart = loadCart(); // { idProducto: cantidad }
+let favorites = loadFavorites(); // ids de productos marcados con el corazón
 let category = 'Todos';
 let step = 'cart'; // cart | checkout
 
@@ -23,6 +25,24 @@ function saveCart() {
   } catch {
     /* sin almacenamiento: el carrito dura mientras la página esté abierta */
   }
+}
+
+function loadFavorites() {
+  try {
+    return new Set(JSON.parse(localStorage.getItem(FAV_KEY)) || []);
+  } catch {
+    return new Set();
+  }
+}
+function toggleFavorite(id) {
+  if (!favorites.delete(id)) favorites.add(id);
+  try {
+    localStorage.setItem(FAV_KEY, JSON.stringify([...favorites]));
+  } catch {
+    /* sin almacenamiento: los favoritos duran mientras la página esté abierta */
+  }
+  if (favorites.size === 0 && category === 'Favoritos') category = 'Todos';
+  renderShop();
 }
 
 const byId = (id) => products.find((p) => p.id === Number(id));
@@ -59,12 +79,32 @@ function productArt(p) {
   return h('span', { class: 'emoji', 'aria-hidden': 'true' }, p.emoji);
 }
 
+function heart(p) {
+  const on = favorites.has(p.id);
+  const button = h('button', {
+    type: 'button',
+    class: `heart${on ? ' is-on' : ''}`,
+    'aria-pressed': String(on),
+    'aria-label': on ? `Quitar ${p.name} de favoritos` : `Guardar ${p.name} en favoritos`,
+    onclick: () => toggleFavorite(p.id),
+  });
+  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  svg.setAttribute('viewBox', '0 0 24 24');
+  svg.setAttribute('aria-hidden', 'true');
+  const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+  path.setAttribute('d', 'M12 20s-7.5-4.5-7.5-9.800A4.200 4.200 0 0 1 12 7.700a4.200 4.200 0 0 1 7.500 2.500C19.500 15.500 12 20 12 20Z');
+  svg.append(path);
+  button.append(svg);
+  return button;
+}
+
 function card(p) {
   const inCart = cart[p.id] > 0;
   return h(
     'article',
     { class: 'card' },
     h('span', { class: 'badge' }, 'Orgánico'),
+    heart(p),
     h('div', { class: 'card-art' }, productArt(p)),
     h('h3', {}, p.name),
     p.origin &&
@@ -91,6 +131,7 @@ function card(p) {
 
 function renderShop() {
   const categories = ['Todos', ...new Set(products.map((p) => p.category))];
+  if (favorites.size) categories.push('Favoritos');
   $('chips').replaceChildren(
     ...categories.map((c) =>
       h(
@@ -111,11 +152,19 @@ function renderShop() {
 
   const term = normalize($('search').value);
   const visible = products.filter(
-    (p) => (category === 'Todos' || p.category === category) && (!term || normalize(p.name).includes(term))
+    (p) =>
+      (category === 'Todos' || (category === 'Favoritos' ? favorites.has(p.id) : p.category === category)) &&
+      (!term || normalize(p.name).includes(term))
   );
   $('grid').replaceChildren(...visible.map(card));
   $('empty').hidden = visible.length > 0;
-  $('featured-grid').replaceChildren(...products.filter((p) => p.featured).slice(0, 4).map(card));
+
+  // Carrusel de la portada: primero los destacados, después los que tienen foto.
+  const track = $('featured-grid');
+  const scroll = track.scrollLeft;
+  const top = [...products].sort((x, y) => y.featured - x.featured || !!y.image - !!x.image).slice(0, 8);
+  track.replaceChildren(...top.map(card));
+  track.scrollLeft = scroll;
 }
 
 const normalize = (s) => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').trim();
@@ -276,6 +325,12 @@ async function init() {
   for (const id of Object.keys(cart)) if (!byId(id)) delete cart[id];
   saveCart();
 
+  const slide = (dir) => {
+    const track = $('featured-grid');
+    track.scrollBy({ left: dir * track.clientWidth, behavior: 'smooth' });
+  };
+  $('car-prev').addEventListener('click', () => slide(-1));
+  $('car-next').addEventListener('click', () => slide(1));
   $('search').addEventListener('input', renderShop);
   $('search-link').addEventListener('click', () => setTimeout(() => $('search').focus(), 300));
   $('cart-open').addEventListener('click', () => openDrawer(true));
