@@ -67,6 +67,7 @@ const seed = [
   ['Zanahoria', 'Verduras', 55, 'kg', 0.5, 'San José', '🥕', 0],
   ['Papa', 'Verduras', 60, 'kg', 0.5, 'San José', '🥔', 0],
   ['Cebolla', 'Verduras', 58, 'kg', 0.5, 'Canelones', '🧅', 0],
+  ['Cebolla colorada', 'Verduras', 75, 'kg', 0.5, 'Canelones', '🧅', 0],
   ['Zapallo cabutiá', 'Verduras', 48, 'kg', 0.5, 'Canelones', '🎃', 0],
   ['Espinaca', 'Verduras', 65, 'atado', 1, 'Montevideo rural', '🍃', 0],
   ['Boniato', 'Verduras', 70, 'kg', 0.5, 'Canelones', '🍠', 0],
@@ -92,3 +93,15 @@ if (db.prepare('SELECT COUNT(*) AS n FROM products').get().n === 0) {
     insert.run(name, category, price, unit, step, origin, emoji, featured);
   }
 }
+
+// Fotos incluidas en el proyecto. Se asignan a los productos que todavía no tienen foto,
+// así que nunca pisan una foto subida desde el panel.
+const photos = {
+  'Brócoli': 'brocoli',
+  'Tomate perita': 'tomate',
+  'Lechuga crespa': 'lechuga',
+  'Cebolla': 'cebolla',
+  'Cebolla colorada': 'cebolla-colorada',
+};
+const setPhoto = db.prepare("UPDATE products SET image = ? WHERE name = ? AND image = ''");
+for (const [name, file] of Object.entries(photos)) setPhoto.run(`/img/productos/${file}.jpg`, name);
