@@ -31,9 +31,10 @@
         <a class="icon-btn" href="#tienda" id="search-link" aria-label="Buscar productos">
           <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></svg>
         </a>
-        <button class="icon-btn" id="cart-open" aria-label="Abrir carrito">
+        <button class="cart-btn" id="cart-open" aria-label="Abrir carrito">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l-1 12H6L5 8Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>
-          <span class="cart-count" id="cart-count" hidden>0</span>
+          <span class="cart-btn-text">Carrito</span>
+          <span class="cart-count" id="cart-count">0</span>
         </button>
       </div>
     </div>
@@ -136,6 +137,12 @@
     </div>
     <p class="wrap footer-note">© <span id="year"></span> Huerta Orgánica</p>
   </footer>
+
+  <!-- Barra fija que aparece cuando hay productos en el carrito -->
+  <button type="button" class="cart-bar" id="cart-bar" hidden>
+    <span id="cart-bar-text">Ver carrito</span>
+    <strong id="cart-bar-total"></strong>
+  </button>
 
   <!-- Carrito -->
   <div class="backdrop" id="backdrop" hidden></div>

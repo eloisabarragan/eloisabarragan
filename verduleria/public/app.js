@@ -123,7 +123,8 @@ function card(p) {
         : h(
             'button',
             { type: 'button', class: 'add', 'aria-label': `Agregar ${p.name} al carrito`, onclick: () => setQty(p.id, p.step) },
-            '+'
+            h('span', { 'aria-hidden': 'true' }, '+'),
+            ' Agregar'
           )
     )
   );
@@ -188,7 +189,6 @@ function renderCart() {
   const lines = cartLines();
   const count = lines.length;
   $('cart-count').textContent = count;
-  $('cart-count').hidden = count === 0;
   $('cart-open').setAttribute('aria-label', `Abrir carrito (${count} ${count === 1 ? 'producto' : 'productos'})`);
 
   if (count === 0) step = 'cart';
@@ -222,6 +222,9 @@ function renderCart() {
   );
 
   const t = totals();
+  $('cart-bar').hidden = count === 0 || $('drawer').classList.contains('is-open');
+  $('cart-bar-text').textContent = `Ver carrito · ${count} ${count === 1 ? 'producto' : 'productos'}`;
+  $('cart-bar-total').textContent = money(t.subtotal);
   $('t-subtotal').textContent = money(t.subtotal);
   $('t-shipping').textContent = t.delivery === 'retiro' ? 'Retiro en el local' : t.shipping ? money(t.shipping) : 'Gratis';
   $('t-total').textContent = money(t.total);
@@ -244,6 +247,7 @@ function openDrawer(open) {
   drawer.setAttribute('aria-hidden', String(!open));
   $('backdrop').hidden = !open;
   document.body.classList.toggle('no-scroll', open);
+  $('cart-bar').hidden = open || cartLines().length === 0;
   if (open) $('cart-close').focus();
   else $('cart-open').focus();
 }
@@ -334,6 +338,7 @@ async function init() {
   $('search').addEventListener('input', renderShop);
   $('search-link').addEventListener('click', () => setTimeout(() => $('search').focus(), 300));
   $('cart-open').addEventListener('click', () => openDrawer(true));
+  $('cart-bar').addEventListener('click', () => openDrawer(true));
   $('cart-close').addEventListener('click', () => openDrawer(false));
   $('backdrop').addEventListener('click', () => openDrawer(false));
   document.addEventListener('keydown', (e) => e.key === 'Escape' && $('drawer').classList.contains('is-open') && openDrawer(false));
