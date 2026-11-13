@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Administración · Huerta Orgánica</title>
+  <link rel="icon" href="/img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/admin.css">
+</head>
+<body class="admin">
+  <!-- Ingreso -->
+  <main class="page" id="login-view" hidden>
+    <form class="panel" id="login-form">
+      <p class="eyebrow">Huerta Orgánica</p>
+      <h1>Administración</h1>
+      <p class="lead">Ingresá la contraseña para ver los pedidos y editar los productos.</p>
+      <label>Contraseña<input type="password" name="password" autocomplete="current-password" required></label>
+      <p class="form-error" id="login-error" role="alert" hidden></p>
+      <div class="actions"><button class="btn btn-primary">Ingresar</button></div>
+    </form>
+  </main>
+
+  <!-- Panel -->
+  <div id="admin-view" hidden>
+    <header class="site-header">
+      <div class="wrap header-inner">
+        <a class="brand" href="/" target="_blank" rel="noopener">
+          <span>
+            <span class="brand-name">Huerta Orgánica</span>
+            <span class="brand-tag">Administración</span>
+          </span>
+        </a>
+        <nav class="tabs" aria-label="Secciones">
+          <button type="button" class="chip is-active" data-tab="orders">Pedidos</button>
+          <button type="button" class="chip" data-tab="products">Productos</button>
+        </nav>
+        <button type="button" class="link-btn" id="logout">Salir</button>
+      </div>
+    </header>
+
+    <main class="wrap admin-main">
+      <p class="form-error" id="admin-error" role="alert" hidden></p>
+
+      <section id="tab-orders">
+        <div class="admin-head">
+          <h1>Pedidos</h1>
+          <button type="button" class="btn btn-ghost" id="refresh">Actualizar</button>
+        </div>
+        <div id="orders"></div>
+      </section>
+
+      <section id="tab-products" hidden>
+        <div class="admin-head">
+          <h1>Productos</h1>
+          <button type="button" class="btn btn-primary" id="new-product">Nuevo producto</button>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th></th><th>Producto</th><th>Categoría</th><th>Precio</th><th>A la venta</th><th></th></tr></thead>
+            <tbody id="products"></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <dialog id="product-dialog">
+    <form id="product-form" method="dialog">
+      <h2 id="product-title">Nuevo producto</h2>
+      <label>Nombre<input name="name" required maxlength="60"></label>
+      <div class="row">
+        <label>Categoría<input name="category" required maxlength="30" list="categories"></label>
+        <label>Origen (opcional)<input name="origin" maxlength="60" placeholder="Canelones"></label>
+      </div>
+      <datalist id="categories"></datalist>
+      <div class="row row-3">
+        <label>Precio<input name="price" type="number" min="1" step="1" required></label>
+        <label>Se vende por<select name="unit"></select></label>
+        <label>Se pide de a<select name="step"><option value="1">1</option><option value="0.5">0,5</option><option value="0.25">0,25</option></select></label>
+      </div>
+      <div class="row">
+        <label>Foto (JPG, PNG o WebP)<input name="file" type="file" accept="image/jpeg,image/png,image/webp"></label>
+        <label>Dibujo si no hay foto<input name="emoji" maxlength="8" placeholder="🥬"></label>
+      </div>
+      <input type="hidden" name="image">
+      <p class="photo-state" id="photo-state" hidden><span></span> <button type="button" class="link-btn" id="remove-photo">Quitar foto</button></p>
+      <label class="check"><input type="checkbox" name="featured"> Destacado (aparece en la portada)</label>
+      <label class="check"><input type="checkbox" name="available" checked> A la venta</label>
+      <p class="form-error" id="product-error" role="alert" hidden></p>
+      <div class="actions">
+        <button class="btn btn-primary" value="save">Guardar</button>
+        <button type="button" class="btn btn-ghost" id="cancel-product">Cancelar</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="/admin.js" type="module"></script>
+</body>
+</html>

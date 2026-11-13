@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Huerta Orgánica · Frutas y verduras orgánicas a domicilio</title>
+  <meta name="description" content="Huerta Orgánica: frutas y verduras orgánicas, cosechadas a mano y entregadas en el día. Pedí online y pagá con Mercado Pago o transferencia.">
+  <link rel="icon" href="/img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="/" aria-label="Huerta Orgánica, inicio">
+        <svg class="brand-leaf" viewBox="0 0 40 40" aria-hidden="true"><path d="M6 34c0-14 8-24 28-28-1 18-9 27-22 27-2 0-4 0-6 1Z" fill="currentColor"/><path d="M6 34C12 24 19 17 28 12" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/><path d="M4 22c0-7 3-11 9-13 0 5-1 9-4 12" fill="currentColor" opacity=".55"/></svg>
+        <span>
+          <span class="brand-name">Huerta Orgánica</span>
+          <span class="brand-tag">De la huerta a tu casa</span>
+        </span>
+      </a>
+      <nav class="nav" aria-label="Principal">
+        <a href="#tienda">Tienda</a>
+        <a href="#como-funciona">Cómo funciona</a>
+        <a href="#nosotros">Nosotros</a>
+        <a href="#contacto">Contacto</a>
+      </nav>
+      <div class="header-actions">
+        <a class="icon-btn" href="#tienda" id="search-link" aria-label="Buscar productos">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></svg>
+        </a>
+        <button class="icon-btn" id="cart-open" aria-label="Abrir carrito">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l-1 12H6L5 8Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>
+          <span class="cart-count" id="cart-count" hidden>0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="hero">
+      <div class="hero-art" aria-hidden="true">
+        <span class="v v1">🥦</span><span class="v v2">🥬</span><span class="v v3">🍅</span>
+        <span class="v v4">🫑</span><span class="v v5">🥕</span><span class="v v6">🍋</span>
+        <span class="v v7">🍓</span><span class="v v8">🌿</span>
+      </div>
+      <div class="wrap hero-inner">
+        <p class="eyebrow">Cosechado a mano · Orgánico · Siempre fresco</p>
+        <h1>Directo de la <em>huerta</em>.<br>Naturalmente tuyo.</h1>
+        <p class="hero-sub">Frutas y verduras orgánicas de productores locales, elegidas una por una y entregadas en tu casa el mismo día.</p>
+        <a class="btn btn-primary" href="#tienda">Ver todos los productos <span aria-hidden="true">→</span></a>
+      </div>
+    </section>
+
+    <section class="wrap featured" aria-label="Productos destacados">
+      <div class="grid" id="featured-grid"></div>
+    </section>
+
+    <section class="wrap stats" aria-label="Por qué elegirnos">
+      <div class="stat">
+        <span class="stat-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20c0-8 4-13 14-15 0 10-4 15-11 15-1 0-2 0-3 0Z"/><path d="M5 20c3-5 6-8 10-10"/></svg></span>
+        <strong>100%</strong><span>Orgánico</span>
+      </div>
+      <div class="stat">
+        <span class="stat-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 20V10l6-5 6 5v10"/><path d="M15 13h6v7"/><path d="M7 20v-5h4v5"/><path d="M2 20h20"/></svg></span>
+        <strong>Local</strong><span>Productores de la zona</span>
+      </div>
+      <div class="stat">
+        <span class="stat-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 7h11v9H2z"/><path d="M13 10h4l4 3v3h-8"/><circle cx="6.5" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/></svg></span>
+        <strong>En el día</strong><span>Entrega a domicilio</span>
+      </div>
+    </section>
+
+    <section class="wrap shop" id="tienda">
+      <div class="section-head">
+        <p class="eyebrow">Nuestra tienda</p>
+        <h2>Frescura que se ve.</h2>
+      </div>
+      <div class="shop-tools">
+        <div class="chips" id="chips" role="group" aria-label="Filtrar por categoría"></div>
+        <label class="search">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></svg>
+          <input type="search" id="search" placeholder="Buscar un producto…" aria-label="Buscar un producto">
+        </label>
+      </div>
+      <div class="grid" id="grid" aria-live="polite"></div>
+      <p class="empty" id="empty" hidden>No encontramos productos con esa búsqueda.</p>
+    </section>
+
+    <section class="how" id="como-funciona">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="eyebrow">Cómo funciona</p>
+          <h2>Tu pedido en tres pasos.</h2>
+        </div>
+        <ol class="steps">
+          <li><span class="step-n">01</span><h3>Elegí</h3><p>Armá tu carrito con las frutas y verduras de la semana, por kilo o por unidad.</p></li>
+          <li><span class="step-n">02</span><h3>Pagá</h3><p>Con Mercado Pago o por transferencia, coordinando por WhatsApp.</p></li>
+          <li><span class="step-n">03</span><h3>Recibí</h3><p>Te lo llevamos a tu casa en el día, o pasás a retirarlo por el local.</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="wrap about" id="nosotros">
+      <div>
+        <p class="eyebrow">Nosotros</p>
+        <h2>Sabé lo que comés.<br>Queré de dónde viene.</h2>
+      </div>
+      <div class="about-text">
+        <p>En Huerta Orgánica trabajamos con productores de confianza que cultivan sin agroquímicos. Elegimos cada fruta y cada verdura a mano, en su mejor momento, para que llegue a tu mesa con todo su sabor.</p>
+        <p>Creemos en la comida de estación, en el trato directo y en cuidar la tierra que nos da de comer.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" id="contacto">
+    <div class="wrap footer-inner">
+      <div>
+        <p class="brand-name">Huerta Orgánica</p>
+        <p class="brand-tag">De la huerta a tu casa</p>
+      </div>
+      <div>
+        <h3>Visitanos</h3>
+        <p id="store-address"></p>
+        <p id="store-hours"></p>
+      </div>
+      <div>
+        <h3>Contacto</h3>
+        <p id="store-phone"></p>
+        <p><a id="store-whatsapp" href="#" target="_blank" rel="noopener">Escribinos por WhatsApp</a></p>
+      </div>
+    </div>
+    <p class="wrap footer-note">© <span id="year"></span> Huerta Orgánica</p>
+  </footer>
+
+  <!-- Carrito -->
+  <div class="backdrop" id="backdrop" hidden></div>
+  <aside class="drawer" id="drawer" aria-label="Carrito de compras" aria-hidden="true" inert>
+    <div class="drawer-head">
+      <h2 id="drawer-title">Tu carrito</h2>
+      <button class="icon-btn" id="cart-close" aria-label="Cerrar carrito">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+      </button>
+    </div>
+
+    <div class="drawer-body" id="cart-view">
+      <p class="cart-empty" id="cart-empty">Tu carrito está vacío.<br>Sumá productos desde la tienda.</p>
+      <ul class="cart-list" id="cart-list"></ul>
+    </div>
+
+    <form class="drawer-body" id="checkout-view" hidden novalidate>
+      <button type="button" class="link-btn" id="back-to-cart">← Volver al carrito</button>
+
+      <fieldset>
+        <legend>Tus datos</legend>
+        <label>Nombre y apellido<input name="name" autocomplete="name" required maxlength="80"></label>
+        <label>Teléfono / WhatsApp<input name="phone" type="tel" autocomplete="tel" required maxlength="25" placeholder="099 123 456"></label>
+      </fieldset>
+
+      <fieldset>
+        <legend>Entrega</legend>
+        <div class="options">
+          <label class="option"><input type="radio" name="delivery" value="envio" checked><span><strong>Envío a domicilio</strong><small id="shipping-hint"></small></span></label>
+          <label class="option"><input type="radio" name="delivery" value="retiro"><span><strong>Retiro en el local</strong><small id="pickup-hint"></small></span></label>
+        </div>
+        <label id="address-field">Dirección de entrega<input name="address" autocomplete="street-address" maxlength="160" placeholder="Calle, número, apto, barrio"></label>
+        <label>Aclaraciones (opcional)<textarea name="notes" rows="2" maxlength="300" placeholder="Horario preferido, timbre, etc."></textarea></label>
+      </fieldset>
+
+      <fieldset>
+        <legend>Pago</legend>
+        <div class="options">
+          <label class="option" id="pay-mp"><input type="radio" name="payment" value="mercadopago"><span><strong>Mercado Pago</strong><small>Tarjeta de crédito, débito o dinero en cuenta.</small></span></label>
+          <label class="option"><input type="radio" name="payment" value="transferencia"><span><strong>Transferencia por WhatsApp</strong><small>Te pasamos los datos de la cuenta por WhatsApp y nos enviás el comprobante.</small></span></label>
+        </div>
+      </fieldset>
+      <p class="form-error" id="form-error" role="alert" hidden></p>
+    </form>
+
+    <div class="drawer-foot" id="drawer-foot" hidden>
+      <dl class="totals">
+        <div><dt>Subtotal</dt><dd id="t-subtotal"></dd></div>
+        <div id="t-shipping-row"><dt>Envío</dt><dd id="t-shipping"></dd></div>
+        <div class="total"><dt>Total</dt><dd id="t-total"></dd></div>
+      </dl>
+      <p class="free-hint" id="free-hint" hidden></p>
+      <button class="btn btn-primary btn-block" id="cart-action">Finalizar compra</button>
+    </div>
+  </aside>
+
+  <script src="/app.js" type="module"></script>
+</body>
+</html>

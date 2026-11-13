@@ -1,0 +1,17 @@
+{
+  "name": "huerta-organica",
+  "version": "1.0.0",
+  "description": "Tienda online de Huerta Orgánica: catálogo, carrito, pedidos, Mercado Pago y panel de administración.",
+  "type": "module",
+  "private": true,
+  "engines": {
+    "node": ">=22.13"
+  },
+  "scripts": {
+    "start": "node --env-file-if-exists=.env server.js",
+    "dev": "node --env-file-if-exists=.env --watch server.js"
+  },
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}
