@@ -1486,6 +1486,145 @@ function panelCambiarEstado(token, codigo, nuevo, seguimiento) {
   return { ok: true, mensaje: "Pedido " + codigo + ": " + nuevo + "." + (avisa ? " Le avisamos a la clienta por email." : "") };
 }
 
+/* ---------- Panel · Ajustes: envíos, pagos, promociones, cupones, textos y contacto ---------- */
+
+const CLAVES_AJUSTES = ["whatsapp", "email_avisos", "email_contacto", "instagram", "comision_mp", "envio_gratis_desde", "envoltorio_regalo",
+  "cupon_bienvenida", "banco", "tipo_cuenta", "numero_cuenta", "titular", "horas_recordatorio", "horas_para_cancelar", "stock_bajo", "email_al_cliente"];
+const CLAVES_TEXTOS = ["aviso", "envios", "cambios", "terminos", "privacidad"];
+
+function panelAjustes(token) {
+  sesion_(token);
+  const cfg = config_();
+  const config = {};
+  CLAVES_AJUSTES.forEach(k => { config[k] = cfg[k] === undefined ? "" : cfg[k]; });
+  config.comision_mp = Math.round(porcentaje_(cfg.comision_mp) * 1000) / 10;
+  config.email_al_cliente = esSi_(cfg.email_al_cliente, true);
+  const textos = {};
+  try { tabla_(HOJA.textos).filas.forEach(f => { if (CLAVES_TEXTOS.indexOf(texto_(f["Clave"])) >= 0) textos[texto_(f["Clave"])] = texto_(f["Contenido"]); }); } catch (err) { /* sin pestaña */ }
+  return {
+    ok: true, zonas: ZONAS, mpConectado: !!mpToken_(), config: config, textos: textos,
+    envios: tabla_(HOJA.envios).filas.filter(f => texto_(f["Nombre"])).map(f => ({
+      id: texto_(f["ID"]), zona: texto_(f["Zona"]) || "Todo el país", nombre: texto_(f["Nombre"]), descripcion: texto_(f["Descripción"]),
+      costo: numero_(f["Costo"]), direccion: esSi_(f["Pide dirección"], true), activo: esSi_(f["Activo"], true)
+    })),
+    cupones: tabla_(HOJA.cupones).filas.filter(f => texto_(f["Código"])).map(f => ({
+      codigo: texto_(f["Código"]).toUpperCase(), pct: Math.round(porcentaje_(f["Descuento %"]) * 100), activo: esSi_(f["Activo"], false),
+      vence: f["Vence"] instanceof Date ? Utilities.formatDate(f["Vence"], zona_(), "yyyy-MM-dd") : "",
+      usosMax: numero_(f["Usos máximos"]) || "", usos: numero_(f["Usos"]), minimo: numero_(f["Compra mínima"]) || ""
+    }))
+  };
+}
+
+/** Reemplaza todas las filas de datos de una pestaña por las nuevas. */
+function reemplazarFilas_(nombre, objetos) {
+  const t = tabla_(nombre);
+  const ultima = t.hoja.getLastRow();
+  for (let r = ultima; r >= 2; r--) t.hoja.deleteRow(r);
+  if (objetos.length) t.hoja.getRange(2, 1, objetos.length, t.encabezados.length).setValues(objetos.map(o => t.encabezados.map(h => (h in o ? o[h] : ""))));
+}
+
+function conLock_(fn) {
+  const lock = LockService.getScriptLock();
+  if (!lock.tryLock(20000)) return { ok: false, mensaje: "La tienda está ocupada. Probá de nuevo en unos segundos." };
+  try { return fn(); } finally { lock.releaseLock(); limpiarCache_(); CONFIG_CACHE_ = null; }
+}
+
+function panelGuardarEnvios(token, lista) {
+  sesion_(token);
+  const usados = [];
+  const filas = [];
+  for (const e of (lista || []).slice(0, 30)) {
+    const nombre = limpiar_(e && e.nombre, 60);
+    if (!nombre) continue;
+    const zona = ZONAS.indexOf(e.zona) >= 0 ? e.zona : "Todo el país";
+    const costo = Math.round(numero_(e.costo));
+    if (costo < 0 || costo > 100000) return { ok: false, mensaje: "Revisá el costo de «" + nombre + "»." };
+    let id = slug_(texto_(e.id) || nombre), base = id, n = 2;
+    while (usados.indexOf(id) >= 0) id = base + "-" + n++;
+    usados.push(id);
+    filas.push({ "ID": id, "Zona": zona, "Nombre": nombre, "Descripción": limpiar_(e.descripcion, 160), "Costo": costo, "Pide dirección": e.direccion === false ? "No" : "Sí", "Activo": e.activo === false ? "No" : "Sí" });
+  }
+  if (!filas.some(f => f["Activo"] === "Sí")) return { ok: false, mensaje: "Dejá al menos una forma de entrega activa: sin entregas nadie puede comprar." };
+  const zonasCubiertas = filas.filter(f => f["Activo"] === "Sí").map(f => f["Zona"]);
+  const avisos = [];
+  if (zonasCubiertas.indexOf("Todo el país") < 0 && zonasCubiertas.indexOf("Montevideo") < 0) avisos.push("Montevideo");
+  if (zonasCubiertas.indexOf("Todo el país") < 0 && zonasCubiertas.indexOf("Interior") < 0) avisos.push("el interior");
+  return conLock_(() => {
+    reemplazarFilas_(HOJA.envios, filas);
+    return { ok: true, mensaje: "Envíos guardados." + (avisos.length ? " Ojo: no hay entrega activa para " + avisos.join(" ni para ") + "." : "") };
+  });
+}
+
+function panelGuardarConfig(token, datos) {
+  sesion_(token);
+  const d = datos || {};
+  const valores = {};
+  const errores = [];
+  const num = (k, max) => { if (!(k in d)) return; const n = numero_(d[k]); if (n < 0 || n > max) errores.push(k); else valores[k] = Math.round(n); };
+  const txt = (k, max) => { if (k in d) valores[k] = limpiar_(d[k], max); };
+  const email = k => { if (!(k in d)) return; const v = limpiar_(d[k], 120).toLowerCase(); if (v && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v)) errores.push(k); else valores[k] = v; };
+  if ("comision_mp" in d) { const p = numero_(d.comision_mp); if (p < 0 || p > 30) errores.push("comision_mp"); else valores.comision_mp = Math.round(p * 10) / 1000; }
+  if ("whatsapp" in d) { const w = soloDigitos_(d.whatsapp); if (w && (w.length < 8 || w.length > 15)) errores.push("whatsapp"); else valores.whatsapp = w.length === 8 && w.charAt(0) === "9" ? "598" + w : w.length === 9 && w.charAt(0) === "0" ? "598" + w.slice(1) : w; }
+  num("envio_gratis_desde", 1000000); num("envoltorio_regalo", 100000); num("horas_recordatorio", 240); num("horas_para_cancelar", 720); num("stock_bajo", 1000);
+  email("email_avisos"); email("email_contacto");
+  txt("banco", 60); txt("tipo_cuenta", 60); txt("numero_cuenta", 40); txt("titular", 80); txt("instagram", 40);
+  if ("cupon_bienvenida" in d) valores.cupon_bienvenida = limpiar_(d.cupon_bienvenida, 20).toUpperCase();
+  if ("email_al_cliente" in d) valores.email_al_cliente = d.email_al_cliente ? "Sí" : "No";
+  if (valores.instagram) valores.instagram = valores.instagram.replace(/^@/, "");
+  const nombres = { comision_mp: "el recargo (0 a 30 %)", whatsapp: "el WhatsApp", email_avisos: "el email de avisos", email_contacto: "el email de contacto", envio_gratis_desde: "el monto de envío gratis", envoltorio_regalo: "el precio del envoltorio", horas_recordatorio: "las horas del recordatorio", horas_para_cancelar: "las horas de reserva", stock_bajo: "el aviso de stock bajo" };
+  if (errores.length) return { ok: false, mensaje: "Revisá " + errores.map(e => nombres[e] || e).join(", ") + "." };
+  if ("horas_recordatorio" in valores && "horas_para_cancelar" in valores && valores.horas_recordatorio >= valores.horas_para_cancelar) return { ok: false, mensaje: "El recordatorio tiene que ser antes de la cancelación." };
+  if (valores.horas_para_cancelar !== undefined && valores.horas_para_cancelar < 2) return { ok: false, mensaje: "La reserva tiene que durar al menos 2 horas." };
+  return conLock_(() => {
+    const t = tabla_(HOJA.config);
+    Object.keys(valores).forEach(k => {
+      const f = t.filas.find(x => texto_(x["Clave"]) === k);
+      if (f) t.hoja.getRange(f._fila, t.col["Valor"]).setValue(valores[k]);
+      else t.hoja.appendRow([k, valores[k], ""]);
+    });
+    const cfg = (CONFIG_CACHE_ = null, config_());
+    const banco = [cfg.banco, cfg.numero_cuenta, cfg.titular].filter(x => texto_(x)).length;
+    return { ok: true, mensaje: "Guardado." + (banco > 0 && banco < 3 ? " Para ofrecer transferencia faltan datos: banco, número de cuenta y titular." : "") };
+  });
+}
+
+function panelGuardarCupones(token, lista) {
+  sesion_(token);
+  const actuales = {};
+  tabla_(HOJA.cupones).filas.forEach(f => { actuales[texto_(f["Código"]).toUpperCase()] = numero_(f["Usos"]); });
+  const filas = [], vistos = [];
+  for (const c of (lista || []).slice(0, 50)) {
+    const codigo = limpiar_(c && c.codigo, 20).toUpperCase().replace(/\s+/g, "");
+    if (!codigo) continue;
+    if (!/^[A-Z0-9_-]{3,20}$/.test(codigo)) return { ok: false, mensaje: "El código «" + codigo + "» solo puede tener letras, números, - o _ (de 3 a 20)." };
+    if (vistos.indexOf(codigo) >= 0) return { ok: false, mensaje: "El código " + codigo + " está repetido." };
+    vistos.push(codigo);
+    const pct = numero_(c.pct);
+    if (!(pct >= 1 && pct <= 90)) return { ok: false, mensaje: "El descuento de " + codigo + " tiene que ser entre 1 y 90 %." };
+    let vence = "";
+    if (texto_(c.vence)) { const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(texto_(c.vence)); if (!m) return { ok: false, mensaje: "Revisá la fecha de " + codigo + "." }; vence = new Date(Number(m[1]), Number(m[2]) - 1, Number(m[3])); }
+    filas.push({ "Código": codigo, "Descuento %": pct / 100, "Activo": c.activo ? "Sí" : "No", "Vence": vence,
+      "Usos máximos": numero_(c.usosMax) > 0 ? Math.round(numero_(c.usosMax)) : "", "Usos": actuales[codigo] || 0, "Compra mínima": numero_(c.minimo) > 0 ? Math.round(numero_(c.minimo)) : "" });
+  }
+  return conLock_(() => { reemplazarFilas_(HOJA.cupones, filas); return { ok: true, mensaje: "Cupones guardados." }; });
+}
+
+function panelGuardarTextos(token, textos) {
+  sesion_(token);
+  const d = textos || {};
+  return conLock_(() => {
+    const t = tabla_(HOJA.textos);
+    CLAVES_TEXTOS.forEach(k => {
+      if (!(k in d)) return;
+      const v = String(d[k] == null ? "" : d[k]).replace(/[<>]/g, "").slice(0, k === "aviso" ? 120 : 20000);
+      const f = t.filas.find(x => texto_(x["Clave"]) === k);
+      if (f) t.hoja.getRange(f._fila, t.col["Contenido"]).setValue(v);
+      else { const o = { "Clave": k, "Contenido": v }; t.hoja.appendRow(t.encabezados.map(h => (h in o ? o[h] : ""))); }
+    });
+    return { ok: true, mensaje: "Textos guardados. Se ven en la tienda en un minuto." };
+  });
+}
+
 /** Evita que una misma tarea se dispare muchas veces seguidas (protege el cupo de emails). */
 function permitirCada_(clave, segundos) {
   const cache = CacheService.getScriptCache();

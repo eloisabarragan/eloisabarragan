@@ -24,14 +24,14 @@ Nada de esto está inventado en el código. Hasta que se cargue, la tienda se co
 |---|---|---|---|
 | 7 | **Productos:** nombre definitivo, descripción, precio y stock por presentación | Panel → Productos | 6 borradores con las fotos de la sesión, **sin precio e inactivos**. Los nombres son provisorios |
 | 8 | **Fotos de productos nuevos**: leopardo, corazones turquesa, ojo turco, perlas, corbatas, etc. | Panel → foto desde el celular | Las fotos que se compartieron por WhatsApp nunca llegaron como archivo |
-| 9 | **Costos y plazos de envío** por zona | Planilla → Envios | Una sola opción: "Envío a coordinar", sin costo cargado |
-| 10 | **Datos bancarios**: banco, tipo de cuenta, número y titular | Planilla → Config | Vacíos: la transferencia no se ofrece |
-| 11 | **Recargo por Mercado Pago** (si se cobra) | Config → comision_mp | 0 % |
-| 12 | Envío gratis desde cierto monto (opcional) | Config → envio_gratis_desde | Desactivado |
-| 13 | Envoltorio de regalo y su precio (opcional) | Config → envoltorio_regalo | No se ofrece |
-| 14 | Cupones (opcional) | Planilla → Cupones | Ninguno |
-| 15 | Email público de contacto (opcional) | Config → email_contacto | No se muestra |
-| 16 | **Política de cambios** propia | Planilla → Textos → cambios | Solo se muestra el derecho legal de arrepentimiento (Ley 17.250, art. 16) |
+| 9 | **Costos y plazos de envío** por zona | Panel → Ajustes → Envíos | Una sola opción: "Envío a coordinar", sin costo cargado |
+| 10 | **Datos bancarios**: banco, tipo de cuenta, número y titular | Panel → Ajustes → Pagos | Vacíos: la transferencia no se ofrece |
+| 11 | **Recargo por Mercado Pago** (si se cobra) | Panel → Ajustes → Pagos | 0 % |
+| 12 | Envío gratis desde cierto monto (opcional) | Panel → Ajustes → Promociones | Desactivado |
+| 13 | Envoltorio de regalo y su precio (opcional) | Panel → Ajustes → Promociones | No se ofrece |
+| 14 | Cupones (opcional) | Panel → Ajustes → Promociones | Ninguno |
+| 15 | Email público de contacto (opcional) | Panel → Ajustes → Contacto | No se muestra |
+| 16 | **Política de cambios** propia | Panel → Ajustes → Textos | Solo se muestra el derecho legal de arrepentimiento (Ley 17.250, art. 16) |
 
 ## D. Revisión legal y administrativa (recomendada antes de vender)
 

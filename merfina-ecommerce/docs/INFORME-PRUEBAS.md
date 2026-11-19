@@ -6,8 +6,8 @@ Fecha: 19/11/2026 · Entorno de pruebas: Node 22, Chromium (Playwright 1.63), Li
 
 | Batería | Resultado |
 |---|---|
-| Backend (programa de la planilla, servicios de Google simulados) | **33 / 33 OK** |
-| Navegador real (tienda + panel, Chromium, cabeceras de seguridad de Netlify) | **18 / 18 OK** |
+| Backend (programa de la planilla, servicios de Google simulados) | **41 / 41 OK** |
+| Navegador real (tienda + panel, Chromium, cabeceras de seguridad de Netlify) | **20 / 20 OK** |
 | Build de Netlify (`scripts/build-site.mjs`) y validación de `netlify.toml` | OK |
 
 > **Importante:** estas pruebas usan una **simulación** de Google Apps Script y de Mercado Pago. Verifican la lógica completa, pero **no** prueban los servicios reales. Lo que falta comprobar en real está en la [sección 4](#4-lo-que-no-se-pudo-verificar-acá).
@@ -72,6 +72,7 @@ Se conservaron el diseño editorial, la paleta, la tipografía, todas las fotos 
 | 31 | Panel: eliminar un producto lo saca de la planilla y de la tienda | ✔ |
 | 32 | Panel: cambiar la clave cierra las sesiones abiertas | ✔ |
 | 33 | El panel se sirve como página web | ✔ |
+| 34–41 | Panel · Ajustes: lee la configuración; valida y guarda envíos por zona, recargo, envío gratis, contacto, datos bancarios, cupones (con vencimiento, mínimo y usos) y textos; todas exigen sesión | ✔ |
 
 ## 3. Pruebas en navegador (`tests/e2e.test.cjs`)
 
@@ -97,6 +98,8 @@ La tienda compilada (`dist/`) se sirvió **con la misma Content-Security-Policy 
 | 16 | Páginas institucionales: cargan, muestran los envíos de la planilla y los textos de Mercedes (sin inyección de HTML); 404 correcto | ✔ |
 | 17 | Celular (390 px): sin desborde horizontal en ninguna página | ✔ |
 | 18 | Seguridad: la CSP no bloquea nada propio y no hay errores de JavaScript | ✔ |
+| 19 | Ninguna imagen se ve estirada o aplastada (celular y escritorio) | ✔ |
+| 20 | Panel · Ajustes desde el celular: envíos, recargo, cupón y aviso, y la tienda los muestra en el checkout | ✔ |
 
 Las capturas están en `tests/capturas/`.
 

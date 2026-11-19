@@ -245,6 +245,51 @@ servidor.listen(0, async () => {
     assert.ok(E.mails.some(m => /ya salió/.test(m.subject) && /DAC 998877/.test(m.htmlBody)));
   });
 
+  await prueba("Panel · Ajustes: Mercedes carga envíos, recargo, cupón y aviso desde el celular y la tienda los muestra", async () => {
+    await panel.click("#tAj");
+    await panel.waitForSelector("#ajEnv .fila");
+    await panel.click("#ajEnvAdd");
+    const filas = await panel.$$("#ajEnv .fila");
+    const nueva = filas[filas.length - 1];
+    await (await nueva.$('[data-k="nombre"]')).fill("Envío a domicilio");
+    await (await nueva.$('[data-k="zona"]')).selectOption("Montevideo");
+    await (await nueva.$('[data-k="costo"]')).fill("220");
+    await (await nueva.$('[data-k="descripcion"]')).fill("24 a 48 h hábiles");
+    await panel.click("#ajEnvSave");
+    await panel.waitForFunction(() => /Envíos guardados/.test(document.querySelector("#toast").textContent));
+    await panel.click("summary:has-text('Pagos')");
+    await panel.fill('[data-c="comision_mp"]', "5");
+    await panel.click('[data-guardar="pagos"]');
+    await panel.waitForFunction(() => /Guardado/.test(document.querySelector("#toast").textContent));
+    await panel.click("summary:has-text('Promociones')");
+    await panel.click("#ajCupAdd");
+    await panel.fill('#ajCup .fila [data-k="codigo"]', "cyber15");
+    await panel.fill('#ajCup .fila [data-k="pct"]', "15");
+    await panel.click("#ajCupSave");
+    await panel.waitForFunction(() => /Cupones guardados/.test(document.querySelector("#toast").textContent));
+    await panel.click("summary:has-text('Textos de la tienda')");
+    await panel.fill('[data-t="aviso"]', "Cyber: 15% off con CYBER15");
+    await panel.click("#ajTxtSave");
+    await panel.waitForFunction(() => /Textos guardados/.test(document.querySelector("#toast").textContent));
+    await panel.screenshot({ path: path.join(CAPTURAS, "panel-ajustes.png"), fullPage: true });
+
+    E.limpiarCache();
+    await tienda.goto(BASE + "/");
+    await tienda.waitForFunction(() => /Cyber: 15% off/.test(document.querySelector(".announce").textContent));
+    await tienda.waitForSelector('#grid [data-open="corazon-turquesa"]');
+    await tienda.hover('#grid [data-open="corazon-turquesa"].ph'); await tienda.click('.ph [data-add="corazon-turquesa"]');
+    await tienda.click("#bagBtn"); await tienda.click("#checkout"); await tienda.waitForSelector("#co.on");
+    assert.equal(await tienda.isHidden("#couponBox"), false, "con cupón activo aparece el campo");
+    await tienda.selectOption("#coDep", "Montevideo"); await tienda.fill("#coCity", "Pocitos");
+    await tienda.waitForFunction(() => /Envío a domicilio/.test(document.querySelector("#coShip").textContent) && /220/.test(document.querySelector("#coShip").textContent));
+    await tienda.click('label[for="ship-envio-a-domicilio"]');
+    await tienda.click(".coupon summary"); await tienda.fill("#coCoupon", "cyber15"); await tienda.click("#coApply");
+    await tienda.waitForFunction(() => /15% de descuento/.test(document.querySelector("#coCouponMsg").textContent));
+    const filasResumen = await tienda.textContent("#coRows");
+    assert.match(filasResumen, /Cupón CYBER15/); assert.match(filasResumen, /220/); assert.match(filasResumen, /Recargo Mercado Pago \(5%\)/);
+    await tienda.click("#coBack");
+  });
+
   await prueba("Newsletter: pide consentimiento y guarda en la planilla", async () => {
     await tienda.goto(BASE + "/");
     await tienda.fill("#newsEmail", "nueva@example.com");

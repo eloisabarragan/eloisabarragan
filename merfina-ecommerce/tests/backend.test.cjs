@@ -139,6 +139,87 @@ prueba("Panel: completar un borrador y publicarlo reemplaza sus variantes", () =
   assert.equal(get({ accion: "catalogo" }).productos.length, 2);
 });
 
+// ---------- Panel · Ajustes ----------
+prueba("Ajustes: lee la configuración sin datos inventados", () => {
+  const a = g.panelAjustes(token);
+  assert.equal(a.ok, true);
+  assert.equal(a.config.comision_mp, 0);
+  assert.equal(a.envios.length, 1);
+  assert.equal(a.cupones.length, 0);
+  assert.equal(a.mpConectado, false);
+});
+
+prueba("Ajustes: no deja guardar sin ninguna entrega activa ni con costos inválidos", () => {
+  assert.match(g.panelGuardarEnvios(token, [{ nombre: "Retiro", zona: "Montevideo", costo: 0, activo: false }]).mensaje, /al menos una forma de entrega activa/);
+  assert.match(g.panelGuardarEnvios(token, [{ nombre: "Moto", zona: "Montevideo", costo: -5, activo: true }]).mensaje, /costo/);
+});
+
+prueba("Ajustes: envíos por zona se guardan y la tienda los ofrece según el departamento", () => {
+  const r = g.panelGuardarEnvios(token, [
+    { nombre: "Envío a domicilio", zona: "Montevideo", costo: 200, descripcion: "24 a 48 h", direccion: true, activo: true },
+    { nombre: "Retiro coordinado", zona: "Montevideo", costo: 0, direccion: false, activo: true }
+  ]);
+  assert.equal(r.ok, true);
+  assert.match(r.mensaje, /no hay entrega activa para el interior/);
+  const c = get({ accion: "catalogo" });
+  assert.equal(c.config.ship.mvd.length, 2);
+  assert.equal(c.config.ship.int.length, 0);
+  g.panelGuardarEnvios(token, [
+    { nombre: "Envío a coordinar", zona: "Todo el país", costo: 0, activo: true, direccion: true, id: "a-coordinar" },
+    { nombre: "Envío a domicilio", zona: "Montevideo", costo: 200, descripcion: "24 a 48 h", activo: false }
+  ]);
+  E.limpiarCache();
+  assert.equal(get({ accion: "catalogo" }).config.ship.mvd[0].id, "a-coordinar");
+});
+
+prueba("Ajustes: recargo, envío gratis y contacto con validación", () => {
+  assert.match(g.panelGuardarConfig(token, { comision_mp: 80 }).mensaje, /recargo/);
+  assert.match(g.panelGuardarConfig(token, { email_avisos: "no-es-email" }).mensaje, /email de avisos/);
+  assert.match(g.panelGuardarConfig(token, { horas_recordatorio: 50, horas_para_cancelar: 48 }).mensaje, /antes de la cancelación/);
+  const r = g.panelGuardarConfig(token, { comision_mp: "7.5", envio_gratis_desde: 5000, whatsapp: "091 900 341", instagram: "@merfinajoyas" });
+  assert.equal(r.ok, true);
+  E.limpiarCache();
+  const c = get({ accion: "catalogo" });
+  assert.equal(c.config.mpCommission, 0.075);
+  assert.equal(c.config.free, 5000);
+  assert.equal(c.config.whatsapp, "59891900341");
+  assert.equal(c.config.instagram, "merfinajoyas");
+  g.panelGuardarConfig(token, { comision_mp: 0, envio_gratis_desde: 0 });
+});
+
+prueba("Ajustes: datos bancarios incompletos avisan; completos habilitan transferencia", () => {
+  assert.match(g.panelGuardarConfig(token, { banco: "Banco X", numero_cuenta: "", titular: "" }).mensaje, /faltan datos/);
+  assert.deepEqual(get({ accion: "catalogo" }).config.pagos, ["coordinar"]);
+  g.panelGuardarConfig(token, { banco: "", numero_cuenta: "", titular: "" });
+});
+
+prueba("Ajustes: cupones con validación, conservando los usos", () => {
+  assert.match(g.panelGuardarCupones(token, [{ codigo: "a", pct: 10 }]).mensaje, /solo puede tener/);
+  assert.match(g.panelGuardarCupones(token, [{ codigo: "CYBER", pct: 95 }]).mensaje, /entre 1 y 90/);
+  assert.equal(g.panelGuardarCupones(token, [{ codigo: "cyber15", pct: 15, activo: true, vence: "2099-12-31", usosMax: 100, minimo: 1000 }]).ok, true);
+  E.limpiarCache();
+  assert.equal(get({ accion: "catalogo" }).config.hayCupones, true);
+  assert.match(post({ accion: "cupon", codigo: "CYBER15", subtotal: 500 }).mensaje, /desde \$U 1\.000/);
+  assert.equal(post({ accion: "cupon", codigo: "CYBER15", subtotal: 1500 }).pct, 0.15);
+  assert.equal(g.panelAjustes(token).cupones[0].vence, "2099-12-31");
+  g.panelGuardarCupones(token, []);
+});
+
+prueba("Ajustes: textos y aviso de la franja se publican, sin HTML", () => {
+  g.panelGuardarTextos(token, { aviso: "¡Cyber! <b>15%</b> off", cambios: "Política de prueba." });
+  E.limpiarCache();
+  const t = get({ accion: "catalogo" }).textos;
+  assert.equal(t.aviso.contenido, "¡Cyber! b15%/b off");
+  assert.equal(t.cambios.contenido, "Política de prueba.");
+  g.panelGuardarTextos(token, { aviso: "", cambios: "" });
+  E.limpiarCache();
+  assert.deepEqual(get({ accion: "catalogo" }).textos, {});
+});
+
+prueba("Ajustes: todas las funciones exigen sesión", () => {
+  ["panelAjustes", "panelGuardarEnvios", "panelGuardarConfig", "panelGuardarCupones", "panelGuardarTextos"].forEach(fn => assert.throws(() => g[fn]("x", {}), /SESION/, fn));
+});
+
 // ---------- Pedidos ----------
 const cliente = { nombre: "Ana", apellido: "Pérez", email: "ana@example.com", telefono: "094 231 234", departamento: "Montevideo", ciudad: "Pocitos", direccion: "Av. Brasil 2500", notas: "" };
 let pedido1;

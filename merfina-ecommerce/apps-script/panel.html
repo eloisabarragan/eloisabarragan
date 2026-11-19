@@ -84,6 +84,20 @@ dl.kv dt{color:var(--muted)}dl.kv dd{margin:0;white-space:pre-wrap;word-break:br
 .empty{padding:32px 8px;text-align:center;color:var(--muted)}
 .help{font-size:.82rem;color:var(--muted);margin:0}
 .confirm{background:var(--err-bg);padding:12px;display:grid;gap:10px}
+.aj{border:1px solid var(--line);background:#FFFDFA;margin-top:12px}
+.aj summary{list-style:none;cursor:pointer;padding:16px;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.aj summary::-webkit-details-marker{display:none}
+.aj summary b{font-family:var(--display);font-weight:400;font-size:1.35rem}
+.aj summary small{display:block;color:var(--muted);font-size:.8rem}
+.aj summary::after{content:"+";font-size:1.4rem;color:var(--gold)}
+.aj[open] summary::after{content:"–"}
+.aj .in{padding:0 16px 18px;display:grid;gap:14px}
+.fila{border:1px solid var(--line);padding:12px;display:grid;gap:10px;background:var(--paper)}
+.dos{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.chk{display:flex;gap:8px;align-items:center;font-size:.88rem}
+.chk input{width:20px;height:20px;accent-color:var(--ink)}
+.ok-pill{display:inline-block;background:var(--ok-bg);color:var(--ok);padding:.2em .7em;border-radius:999px;font-size:.8rem}
+.no-pill{display:inline-block;background:var(--warn-bg);padding:.2em .7em;border-radius:999px;font-size:.8rem}
 </style>
 </head>
 <body>
@@ -107,6 +121,7 @@ dl.kv dt{color:var(--muted)}dl.kv dd{margin:0;white-space:pre-wrap;word-break:br
     <div class="tabs" role="tablist">
       <button class="tab" role="tab" id="tPed" aria-selected="true">Pedidos</button>
       <button class="tab" role="tab" id="tProd" aria-selected="false">Productos</button>
+      <button class="tab" role="tab" id="tAj" aria-selected="false">Ajustes</button>
     </div>
     <div class="notice" id="avisos" hidden></div>
 
@@ -115,12 +130,82 @@ dl.kv dt{color:var(--muted)}dl.kv dd{margin:0;white-space:pre-wrap;word-break:br
       <div class="list" id="lPed"></div>
     </section>
 
+    <section id="sAj" hidden><div id="ajCont"><div class="empty">Cargando ajustes…</div></div></section>
+
     <section id="sProd" hidden>
       <button class="btn gold wide" id="bNuevo" style="margin-top:12px">+ Nuevo producto</button>
       <div class="list" id="lProd"></div>
     </section>
   </div>
 </div>
+
+<!-- Ajustes (dentro de la app) -->
+<template id="tplAj">
+  <details class="aj" open>
+    <summary><span><b>Envíos</b><small>Formas de entrega, zonas y costos</small></span></summary>
+    <div class="in">
+      <p class="help">Cada forma de entrega aparece en el checkout según el departamento. «Todo el país» se muestra en Montevideo y en el interior. Costo 0 = «a coordinar».</p>
+      <div id="ajEnv" style="display:grid;gap:10px"></div>
+      <button type="button" class="btn line" id="ajEnvAdd">+ Agregar forma de entrega</button>
+      <button type="button" class="btn" id="ajEnvSave">Guardar envíos</button>
+    </div>
+  </details>
+  <details class="aj">
+    <summary><span><b>Pagos</b><small>Mercado Pago, transferencia y recargo</small></span></summary>
+    <div class="in">
+      <div id="ajMp"></div>
+      <label class="f">Recargo por pagar con Mercado Pago (%) <small>0 = sin recargo</small><input type="number" inputmode="decimal" min="0" max="30" step="0.5" data-c="comision_mp"></label>
+      <p class="help" style="margin-top:6px"><b style="font-weight:500">Transferencia bancaria</b> · si completás los 4 datos, la tienda ofrece transferencia.</p>
+      <label class="f">Banco<input type="text" data-c="banco" maxlength="60"></label>
+      <label class="f">Tipo de cuenta <small>ej. Caja de ahorro en pesos</small><input type="text" data-c="tipo_cuenta" maxlength="60"></label>
+      <label class="f">Número de cuenta<input type="text" data-c="numero_cuenta" maxlength="40"></label>
+      <label class="f">Titular<input type="text" data-c="titular" maxlength="80"></label>
+      <button type="button" class="btn" data-guardar="pagos">Guardar pagos</button>
+    </div>
+  </details>
+  <details class="aj">
+    <summary><span><b>Promociones</b><small>Envío gratis, envoltorio de regalo y cupones</small></span></summary>
+    <div class="in">
+      <label class="f">Envío gratis en compras desde ($U) <small>0 = nunca</small><input type="number" inputmode="numeric" min="0" data-c="envio_gratis_desde"></label>
+      <label class="f">Precio del envoltorio de regalo ($U) <small>0 = no se ofrece</small><input type="number" inputmode="numeric" min="0" data-c="envoltorio_regalo"></label>
+      <button type="button" class="btn" data-guardar="promos">Guardar promociones</button>
+      <p class="help" style="margin-top:8px"><b style="font-weight:500">Cupones de descuento</b> · si no hay ninguno activo, la tienda no muestra el campo de cupón.</p>
+      <div id="ajCup" style="display:grid;gap:10px"></div>
+      <button type="button" class="btn line" id="ajCupAdd">+ Agregar cupón</button>
+      <button type="button" class="btn" id="ajCupSave">Guardar cupones</button>
+      <label class="f">Código de bienvenida para el newsletter <small>Se le muestra a quien se suscribe. Vacío = ninguno. Tiene que existir como cupón.</small><input type="text" data-c="cupon_bienvenida" maxlength="20"></label>
+      <button type="button" class="btn line" data-guardar="bienvenida">Guardar código de bienvenida</button>
+    </div>
+  </details>
+  <details class="aj">
+    <summary><span><b>Textos de la tienda</b><small>Aviso de arriba y políticas</small></span></summary>
+    <div class="in">
+      <p class="help">Vacío = se usa el texto general. Separá párrafos con una línea en blanco; «## » al principio de una línea = título; «- » = punto de lista.</p>
+      <label class="f">Aviso de la franja de arriba <small>ej. ¡Cyber! 15% off con CYBER15</small><input type="text" data-t="aviso" maxlength="120"></label>
+      <label class="f">Política de cambios y devoluciones<textarea data-t="cambios" rows="6"></textarea></label>
+      <label class="f">Página de envíos (texto extra)<textarea data-t="envios" rows="4"></textarea></label>
+      <label class="f">Términos y condiciones <small>Vacío = texto general</small><textarea data-t="terminos" rows="4"></textarea></label>
+      <label class="f">Política de privacidad <small>Vacío = texto general</small><textarea data-t="privacidad" rows="4"></textarea></label>
+      <button type="button" class="btn" id="ajTxtSave">Guardar textos</button>
+    </div>
+  </details>
+  <details class="aj">
+    <summary><span><b>Contacto y avisos</b><small>WhatsApp, emails y reserva de pedidos</small></span></summary>
+    <div class="in">
+      <label class="f">WhatsApp de la tienda<input type="tel" inputmode="tel" data-c="whatsapp" maxlength="20"></label>
+      <label class="f">Instagram (sin @)<input type="text" data-c="instagram" maxlength="40"></label>
+      <label class="f">Email donde te llegan los pedidos<input type="email" data-c="email_avisos" maxlength="120"></label>
+      <label class="f">Email público de contacto <small>opcional</small><input type="email" data-c="email_contacto" maxlength="120"></label>
+      <div class="dos">
+        <label class="f">Recordar el pago a las (horas)<input type="number" inputmode="numeric" min="1" data-c="horas_recordatorio"></label>
+        <label class="f">Cancelar sin pago a las (horas)<input type="number" inputmode="numeric" min="2" data-c="horas_para_cancelar"></label>
+      </div>
+      <label class="f">Avisarme cuando queden (unidades)<input type="number" inputmode="numeric" min="0" data-c="stock_bajo"></label>
+      <label class="chk"><input type="checkbox" data-c="email_al_cliente"> Mandar emails automáticos a las clientas</label>
+      <button type="button" class="btn" data-guardar="contacto">Guardar contacto y avisos</button>
+    </div>
+  </details>
+</template>
 
 <!-- Detalle de pedido -->
 <div class="sheet" id="vPed" hidden>
@@ -209,8 +294,52 @@ function cargar(){
 }
 
 /* ---------- Pestañas ---------- */
-function verTab(cual){$("#tPed").setAttribute("aria-selected",cual==="ped");$("#tProd").setAttribute("aria-selected",cual==="prod");$("#sPed").hidden=cual!=="ped";$("#sProd").hidden=cual!=="prod"}
-$("#tPed").onclick=function(){verTab("ped")};$("#tProd").onclick=function(){verTab("prod")};
+function verTab(cual){$("#tPed").setAttribute("aria-selected",cual==="ped");$("#tProd").setAttribute("aria-selected",cual==="prod");$("#tAj").setAttribute("aria-selected",cual==="aj");$("#sPed").hidden=cual!=="ped";$("#sProd").hidden=cual!=="prod";$("#sAj").hidden=cual!=="aj";if(cual==="aj"&&!AJ)cargarAjustes()}
+$("#tPed").onclick=function(){verTab("ped")};$("#tProd").onclick=function(){verTab("prod")};$("#tAj").onclick=function(){verTab("aj")};
+
+/* ---------- Ajustes ---------- */
+var AJ=null;
+function cargarAjustes(){
+  api("panelAjustes",TOKEN).then(function(d){AJ=d;pintarAjustes()}).catch(fallo);
+}
+function pintarAjustes(){
+  var c=$("#ajCont");c.innerHTML="";c.appendChild($("#tplAj").content.cloneNode(true));
+  c.querySelectorAll("[data-c]").forEach(function(i){var v=AJ.config[i.dataset.c];if(i.type==="checkbox")i.checked=!!v;else i.value=(v===undefined||v===null)?"":v});
+  c.querySelectorAll("[data-t]").forEach(function(i){i.value=AJ.textos[i.dataset.t]||""});
+  $("#ajMp").innerHTML=AJ.mpConectado?'<span class="ok-pill">Mercado Pago conectado</span>':'<span class="no-pill">Mercado Pago sin conectar</span><p class="help" style="margin-top:6px">Se conecta una sola vez desde la compu, en la planilla: menú Merfina → Conectar Mercado Pago.</p>';
+  pintarEnvios();pintarCupones();
+  $("#ajEnvAdd").onclick=function(){leerEnvios();AJ.envios.push({id:"",zona:"Montevideo",nombre:"",descripcion:"",costo:0,direccion:true,activo:true});pintarEnvios()};
+  $("#ajEnvSave").onclick=function(){leerEnvios();guardar(this,"panelGuardarEnvios",AJ.envios)};
+  $("#ajCupAdd").onclick=function(){leerCupones();AJ.cupones.push({codigo:"",pct:10,activo:true,vence:"",usosMax:"",usos:0,minimo:""});pintarCupones()};
+  $("#ajCupSave").onclick=function(){leerCupones();guardar(this,"panelGuardarCupones",AJ.cupones)};
+  $("#ajTxtSave").onclick=function(){var t={};c.querySelectorAll("[data-t]").forEach(function(i){t[i.dataset.t]=i.value});guardar(this,"panelGuardarTextos",t)};
+  c.querySelectorAll("[data-guardar]").forEach(function(b){b.onclick=function(){
+    var grupo={pagos:["comision_mp","banco","tipo_cuenta","numero_cuenta","titular"],promos:["envio_gratis_desde","envoltorio_regalo"],bienvenida:["cupon_bienvenida"],contacto:["whatsapp","instagram","email_avisos","email_contacto","horas_recordatorio","horas_para_cancelar","stock_bajo","email_al_cliente"]}[b.dataset.guardar];
+    var d={};grupo.forEach(function(k){var i=c.querySelector('[data-c="'+k+'"]');d[k]=i.type==="checkbox"?i.checked:i.value});guardar(b,"panelGuardarConfig",d)}});
+}
+function guardar(b,fn,datos){
+  var txt=b.textContent;b.disabled=true;b.textContent="Guardando…";
+  api(fn,TOKEN,datos).then(function(r){b.disabled=false;b.textContent=txt;toast(r.mensaje,!r.ok);if(r.ok){AJ=null;api("panelAjustes",TOKEN).then(function(d){AJ=d});api("panelDatos",TOKEN).then(function(d){DATA=d;var av=$("#avisos");av.hidden=!d.avisos.length;av.innerHTML=d.avisos.length?"<b style='font-weight:500'>Para tener en cuenta</b><ul>"+d.avisos.map(function(a){return "<li>"+esc(a)+"</li>"}).join("")+"</ul>":""})}})
+  .catch(function(e){b.disabled=false;b.textContent=txt;fallo(e)});
+}
+function pintarEnvios(){
+  $("#ajEnv").innerHTML=AJ.envios.map(function(e,i){return '<div class="fila" data-i="'+i+'"><label class="f">Nombre <small>ej. Envío a domicilio</small><input type="text" data-k="nombre" maxlength="60" value="'+esc(e.nombre)+'"></label>'+
+    '<div class="dos"><label class="f">Zona<select data-k="zona">'+AJ.zonas.map(function(z){return "<option"+(z===e.zona?" selected":"")+">"+esc(z)+"</option>"}).join("")+'</select></label><label class="f">Costo $U<input type="number" inputmode="numeric" min="0" data-k="costo" value="'+esc(e.costo)+'"></label></div>'+
+    '<label class="f">Descripción <small>ej. 24 a 48 h hábiles</small><input type="text" data-k="descripcion" maxlength="160" value="'+esc(e.descripcion)+'"></label>'+
+    '<div class="dos"><label class="chk"><input type="checkbox" data-k="direccion"'+(e.direccion?" checked":"")+'> Pide dirección</label><label class="chk"><input type="checkbox" data-k="activo"'+(e.activo?" checked":"")+'> Activa</label></div>'+
+    '<button type="button" class="link" data-quitar="'+i+'" style="justify-self:start">Quitar</button></div>'}).join("")||'<div class="empty">No hay formas de entrega.</div>';
+  $("#ajEnv").onclick=function(ev){var q=ev.target.closest("[data-quitar]");if(q){leerEnvios();AJ.envios.splice(+q.dataset.quitar,1);pintarEnvios()}};
+}
+function leerEnvios(){document.querySelectorAll("#ajEnv .fila").forEach(function(f){var e=AJ.envios[+f.dataset.i];f.querySelectorAll("[data-k]").forEach(function(i){e[i.dataset.k]=i.type==="checkbox"?i.checked:i.value})})}
+function pintarCupones(){
+  $("#ajCup").innerHTML=AJ.cupones.map(function(c,i){return '<div class="fila" data-i="'+i+'"><div class="dos"><label class="f">Código<input type="text" data-k="codigo" maxlength="20" value="'+esc(c.codigo)+'" style="text-transform:uppercase"></label><label class="f">Descuento %<input type="number" inputmode="numeric" min="1" max="90" data-k="pct" value="'+esc(c.pct)+'"></label></div>'+
+    '<div class="dos"><label class="f">Vence <small>opcional</small><input type="date" data-k="vence" value="'+esc(c.vence)+'"></label><label class="f">Usos máximos <small>opcional</small><input type="number" inputmode="numeric" min="0" data-k="usosMax" value="'+esc(c.usosMax)+'"></label></div>'+
+    '<label class="f">Compra mínima $U <small>opcional</small><input type="number" inputmode="numeric" min="0" data-k="minimo" value="'+esc(c.minimo)+'"></label>'+
+    '<div class="row"><label class="chk"><input type="checkbox" data-k="activo"'+(c.activo?" checked":"")+'> Activo</label><span class="small muted">Usado '+(c.usos||0)+' veces</span></div>'+
+    '<button type="button" class="link" data-quitar="'+i+'" style="justify-self:start">Quitar</button></div>'}).join("")||'<div class="empty">No hay cupones.</div>';
+  $("#ajCup").onclick=function(ev){var q=ev.target.closest("[data-quitar]");if(q){leerCupones();AJ.cupones.splice(+q.dataset.quitar,1);pintarCupones()}};
+}
+function leerCupones(){document.querySelectorAll("#ajCup .fila").forEach(function(f){var c=AJ.cupones[+f.dataset.i];f.querySelectorAll("[data-k]").forEach(function(i){c[i.dataset.k]=i.type==="checkbox"?i.checked:i.value})})}
 document.querySelectorAll("[data-close]").forEach(function(b){b.onclick=function(){b.closest(".sheet").hidden=true}});
 
 /* ---------- Pedidos ---------- */
@@ -323,7 +452,7 @@ $("#eDel").onclick=function(){
 
 $("#bAct").onclick=function(){cargar();toast("Actualizado")};
 /* Se actualiza solo al volver a la pestaña y cada minuto, si no estás editando */
-function libre(){return !$("#vApp").hidden&&$("#vProd").hidden&&$("#vPed").hidden}
+function libre(){return !$("#vApp").hidden&&$("#vProd").hidden&&$("#vPed").hidden&&$("#sAj").hidden}
 document.addEventListener("visibilitychange",function(){if(document.visibilityState==="visible"&&TOKEN&&libre())cargar()});
 setInterval(function(){if(document.visibilityState==="visible"&&TOKEN&&libre())cargar()},60000);
 if(TOKEN)cargar();else mostrarLogin();

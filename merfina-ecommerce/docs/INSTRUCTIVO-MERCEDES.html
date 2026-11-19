@@ -91,11 +91,11 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);text-al
     <div class="note"><b>El Access Token es como la contraseña de tu Mercado Pago.</b> No lo mandes por WhatsApp ni por email, y no lo escribas en la planilla. Se pega solo en ese menú.</div></div></li>
 </ol>
 
-<h3>4. Tus datos</h3>
+<h3>4. Tus datos (desde el panel, en la pestaña Ajustes)</h3>
 <ol class="steps">
-  <li><div>Pestaña <b>Config</b>: completá <b>banco, tipo_cuenta, numero_cuenta y titular</b> si querés ofrecer transferencia. Si falta alguno, la tienda no muestra esa opción. Si cobrás recargo por Mercado Pago, poné el porcentaje en <b>comision_mp</b>, por ejemplo <span class="ui">10%</span>; si no, dejá 0.</div></li>
-  <li><div>Pestaña <b>Envios</b>: ahora hay una sola opción, «Envío a coordinar». Cuando tengas costos reales, cargá una fila por forma de entrega (ver <a href="#e">Parte E</a>).</div></li>
-  <li><div>Pestaña <b>Textos</b>: escribí tu política de cambios en la fila <b>cambios</b>. Las páginas de términos y privacidad tienen un texto general: pedile a alguien de confianza que las revise.</div></li>
+  <li><div><b>Envíos:</b> cargá cada forma de entrega con su zona (Montevideo, Interior o Todo el país), costo y descripción. Ejemplo: <i>Envío a domicilio · Montevideo · 200</i> y <i>Agencia · Interior · 250</i>. Cuando tengas las tuyas, desactivá «Envío a coordinar».</div></li>
+  <li><div><b>Pagos:</b> completá banco, tipo de cuenta, número y titular si querés ofrecer transferencia. Si cobrás recargo por Mercado Pago, poné el porcentaje; si no, 0.</div></li>
+  <li><div><b>Textos de la tienda:</b> escribí tu política de cambios. Las páginas de términos y privacidad tienen un texto general: pedile a alguien de confianza que las revise.</div></li>
 </ol>
 <p class="ok">Listo: con esto la tienda puede vender.</p>
 
@@ -152,16 +152,17 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);text-al
 </ul>
 <div class="note"><b>Límite de Gmail:</b> una cuenta común de Gmail manda hasta 100 emails por día, que alcanza para unos 30 pedidos diarios. Si un día se llega al límite, los emails a clientas se retoman al día siguiente, pero los pedidos se siguen registrando y tus avisos siguen llegando.</div>
 
-<h2 id="e">Parte E · Ajustes en la planilla</h2>
-<p>Esto se cambia pocas veces, directamente en la planilla. Los cambios se ven en la tienda en un minuto.</p>
+<h2 id="e">Parte E · Ajustes (desde el panel)</h2>
+<p>En el panel, pestaña <span class="ui">Ajustes</span>. Cada sección tiene su propio botón <span class="ui">Guardar</span> y los cambios se ven en la tienda en un minuto.</p>
 <div class="tbl"><table>
-<tr><th>Pestaña</th><th>Qué podés hacer</th></tr>
-<tr><td><b>Envios</b></td><td>Una fila por forma de entrega: Zona (Montevideo, Interior o Todo el país), nombre, descripción, costo, si pide dirección y si está activa. Ejemplo: <i>Montevideo · Envío a domicilio · costo</i> y <i>Interior · Agencia · costo</i>. Cuando cargues las reales, poné «No» en «Activo» de la fila «Envío a coordinar».</td></tr>
-<tr><td><b>Cupones</b></td><td>Código, % de descuento (ej. 15%), Activo = Sí. Opcional: vencimiento, usos máximos y compra mínima. Si no hay ninguno activo, la tienda no muestra el campo de cupón.</td></tr>
-<tr><td><b>Config</b></td><td>Datos bancarios, recargo de Mercado Pago, envío gratis desde cierto monto, precio del envoltorio de regalo (0 = no se ofrece), horas de reserva, email de avisos, email público de contacto, código de bienvenida del newsletter.</td></tr>
-<tr><td><b>Textos</b></td><td>Textos de las páginas Envíos, Cambios, Términos y Privacidad, y el aviso de la franja negra de arriba (por ejemplo, una promo de Cyber). Escribí en «Contenido»: separá los párrafos con una línea en blanco; una línea que empieza con <span class="ui">## </span> es un título y una que empieza con <span class="ui">- </span> es un punto de lista. Vacío = se usa el texto general.</td></tr>
-<tr><td><b>Resumen</b></td><td>Ventas de hoy y del mes, pedidos pendientes, agotados y suscriptores. Se actualiza solo.</td></tr>
+<tr><th>Sección</th><th>Qué podés hacer</th></tr>
+<tr><td><b>Envíos</b></td><td>Agregar, editar, activar o quitar formas de entrega: nombre, zona (Montevideo, Interior o Todo el país), costo (0 = a coordinar), descripción y si pide dirección. Tiene que quedar al menos una activa.</td></tr>
+<tr><td><b>Pagos</b></td><td>Ver si Mercado Pago está conectado, poner el recargo y cargar los datos bancarios para transferencia.</td></tr>
+<tr><td><b>Promociones</b></td><td>Envío gratis desde cierto monto, precio del envoltorio de regalo (0 = no se ofrece) y <b>cupones</b>: código, % de descuento, vencimiento, usos máximos, compra mínima y si está activo. Ves cuántas veces se usó cada cupón. Si no hay ninguno activo, la tienda no muestra el campo de cupón.</td></tr>
+<tr><td><b>Textos de la tienda</b></td><td>El aviso de la franja negra de arriba (por ejemplo una promo de Cyber) y los textos de cambios, envíos, términos y privacidad. Separá párrafos con una línea en blanco; <span class="ui">## </span> al principio de una línea = título; <span class="ui">- </span> = punto de lista.</td></tr>
+<tr><td><b>Contacto y avisos</b></td><td>WhatsApp, Instagram, email donde te llegan los pedidos, email público, horas para recordar el pago y para cancelar, cuándo avisarte de stock bajo, y si se mandan emails a las clientas.</td></tr>
 </table></div>
+<p>La planilla sigue teniendo todo (pestañas Envios, Config, Cupones, Textos, Pedidos y Resumen) por si preferís verlo ahí, pero no hace falta abrirla.</p>
 
 <h2 id="f">Parte F · Si algo no funciona</h2>
 <div class="tbl"><table>
