@@ -38,7 +38,7 @@ function crearEntorno() {
   const hojas = { "Hoja 1": envolver(new Hoja("Hoja 1")) };
   const ui = { alert: () => {}, prompt: () => ({ getSelectedButton: () => "OK", getResponseText: () => g.respuestaPrompt }), showModalDialog() {}, createMenu: () => chain, ButtonSet: { OK: 1, OK_CANCEL: 2 }, Button: { OK: "OK" } };
   const ss = new Proxy({
-    getSheetByName: n => hojas[n] || null, insertSheet: n => (hojas[n] = envolver(new Hoja(n))), getSheets: () => Object.values(hojas),
+    getSheetByName: n => hojas[n] || null, getSpreadsheetLocale: () => "es_UY", insertSheet: n => (hojas[n] = envolver(new Hoja(n))), getSheets: () => Object.values(hojas),
     deleteSheet: s => { delete hojas[s.getName()]; }, toast() {}, getUi: () => ui
   }, { get: (t, k) => (k in t ? t[k] : () => chain) });
 

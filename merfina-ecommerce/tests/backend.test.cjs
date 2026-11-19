@@ -31,6 +31,13 @@ prueba("Mercedes configura su copia: se activan avisos y tareas con su email", (
   assert.ok(g.disparadores >= 4);
 });
 
+prueba("Fórmulas del Resumen con «;» para planillas en español (sin #ERROR!)", () => {
+  const f = E.hojas.Resumen.d.slice(3, 10).map(r => r[1]);
+  assert.ok(f.every(x => typeof x === "string" && x.startsWith("=")));
+  assert.ok(f.every(x => !/,/.test(x.replace(/"[^"]*"/g, ""))), "no quedan comas fuera de comillas");
+  assert.match(f[1], /EOMONTH\(TODAY\(\);-1\)/);
+});
+
 prueba("No hay precios ni políticas inventadas: borradores inactivos, sin precio, sin cupones", () => {
   const prods = tabla("Productos").filas;
   assert.equal(prods.length, 6);

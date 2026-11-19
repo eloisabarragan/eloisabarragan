@@ -1001,8 +1001,8 @@ function aplicarFormatos_(ss) {
   const pt = tabla_(HOJA.pedidos);
   const rangoE = pt.hoja.getRange(2, pt.col["Estado"], Math.max(pt.hoja.getMaxRows() - 1, 1), 1);
   const reglas = [
-    SpreadsheetApp.newConditionalFormatRule().whenFormulaSatisfied("=AND(" + letraS + "2<>\"\"," + letraS + "2=0)").setBackground("#F4C7C3").setFontColor("#8B1A10").setRanges([rangoS]).build(),
-    SpreadsheetApp.newConditionalFormatRule().whenFormulaSatisfied("=AND(" + letraS + "2<>\"\"," + letraS + "2>0," + letraS + "2<=VLOOKUP(\"stock_bajo\",INDIRECT(\"Config!A:B\"),2,FALSE))").setBackground("#FCE8B2").setRanges([rangoS]).build()
+    SpreadsheetApp.newConditionalFormatRule().whenFormulaSatisfied(fx_("=AND(" + letraS + "2<>\"\"," + letraS + "2=0)")).setBackground("#F4C7C3").setFontColor("#8B1A10").setRanges([rangoS]).build(),
+    SpreadsheetApp.newConditionalFormatRule().whenFormulaSatisfied(fx_("=AND(" + letraS + "2<>\"\"," + letraS + "2>0," + letraS + "2<=VLOOKUP(\"stock_bajo\",INDIRECT(\"Config!A:B\"),2,FALSE))")).setBackground("#FCE8B2").setRanges([rangoS]).build()
   ];
   vt.hoja.setConditionalFormatRules(reglas);
   const colorEstado = { "Pendiente de pago": "#FCE8B2", "Pagado": "#D9EAD3", "Enviado": "#CFE2F3", "Entregado": "#E6E1F2", "Cancelado": "#EFEFEF" };
@@ -1049,7 +1049,7 @@ function armarResumen_(ss) {
   ];
   filas.forEach((f, i) => {
     h.getRange(i + 1, 1).setValue(f[0]);
-    if (String(f[1]).charAt(0) === "=") h.getRange(i + 1, 2).setFormula(f[1]); else h.getRange(i + 1, 2).setValue(f[1]);
+    if (String(f[1]).charAt(0) === "=") h.getRange(i + 1, 2).setFormula(fx_(f[1])); else h.getRange(i + 1, 2).setValue(f[1]);
   });
   h.getRange("A1").setFontSize(18).setFontWeight("bold");
   h.getRange("A2").setFontColor("#6F655B");
@@ -1722,6 +1722,19 @@ function limpiar_(v, max) { return texto_(v).replace(/[<>]/g, "").slice(0, max);
 function pesos_(n) { return "$U " + Math.round(numero_(n)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."); }
 function esc_(v) { return texto_(v).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;"); }
 function zona_() { return "America/Montevideo"; }
+/**
+ * Las fórmulas se escriben con «,» pero en planillas en español (Uruguay, Argentina, España…)
+ * Google espera «;». Cambia las comas que están fuera de comillas según el idioma de la planilla.
+ */
+function fx_(formula) {
+  const loc = String(SpreadsheetApp.getActive().getSpreadsheetLocale() || "en_US");
+  const usaPunto = /^(en|ja|zh|ko|he|th|hi|ms|fil)/.test(loc) || /^es_(MX|US|PR|DO|GT|HN|NI|PA|SV|PE)/.test(loc);
+  if (usaPunto) return formula;
+  let dentro = false, out = "";
+  for (const c of formula) { if (c === '"') dentro = !dentro; out += !dentro && c === "," ? ";" : c; }
+  return out;
+}
+
 function letra_(n) { let s = ""; while (n > 0) { const m = (n - 1) % 26; s = String.fromCharCode(65 + m) + s; n = Math.floor((n - 1) / 26); } return s; }
 
 function registrarError_(donde, err) {
