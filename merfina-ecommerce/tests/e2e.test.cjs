@@ -157,11 +157,11 @@ servidor.listen(0, async () => {
     await tienda.click("#mAdd");
     await tienda.waitForSelector("#drawer.on");
     await tienda.click("#closeBag");
-    await tienda.click('[data-add="camelia-azul"]');
+    await tienda.hover('#grid [data-open="camelia-azul"].ph'); await tienda.click('.ph [data-add="camelia-azul"]');
     await tienda.waitForFunction(() => /Solo quedan 1/.test(document.querySelector("#toastTxt").textContent));
   });
   await prueba("Tienda: la bolsa se mantiene al recargar", async () => {
-    await tienda.click('[data-add="corazon-turquesa"]');
+    await tienda.hover('#grid [data-open="corazon-turquesa"].ph'); await tienda.click('.ph [data-add="corazon-turquesa"]');
     await tienda.reload();
     await tienda.waitForSelector('#grid [data-open="camelia-azul"]');
     assert.equal(await tienda.textContent("#bagCount"), "2");
@@ -195,8 +195,8 @@ servidor.listen(0, async () => {
     E.config("banco", "Banco de prueba"); E.config("numero_cuenta", "000-TEST"); E.config("titular", "Titular de prueba");
     E.limpiarCache();
     await tienda.goto(BASE + "/");
-    await tienda.waitForSelector('#grid [data-add="corazon-turquesa"]');
-    await tienda.click('[data-add="corazon-turquesa"]');
+    await tienda.waitForSelector('#grid [data-open="corazon-turquesa"]');
+    await tienda.hover('#grid [data-open="corazon-turquesa"].ph'); await tienda.click('.ph [data-add="corazon-turquesa"]');
     await tienda.click("#bagBtn"); await tienda.click("#checkout"); await tienda.waitForSelector("#co.on");
     await tienda.waitForFunction(() => document.querySelectorAll('#coPay input[name="pay"]').length === 2);
     await tienda.fill("#coName", "Ana"); await tienda.fill("#coLast", "Pérez"); await tienda.fill("#coEmail", "ana@example.com"); await tienda.fill("#coPhone", "094231234");

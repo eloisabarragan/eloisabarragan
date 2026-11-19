@@ -85,7 +85,7 @@
   const priceHtml = o => (o[3] && o[3] > o[1] ? '<s class="was">' + fmt(o[3]) + "</s> " + fmt(o[1]) : fmt(o[1]));
   function renderGrid() {
     const g = $("#grid");
-    if (estadoCatalogo === "cargando") { g.innerHTML = Array.from({ length: 4 }, () => '<article class="card skel" aria-hidden="true"><div class="ph"></div><div class="kind">&nbsp;</div><div class="meta top"><h3>&nbsp;</h3></div></article>').join(""); g.setAttribute("aria-busy", "true"); return; }
+    if (estadoCatalogo === "cargando") { g.innerHTML = Array.from({ length: 4 }, () => '<article class="card skel" aria-hidden="true"><div class="ph"></div><div class="info"><div class="kind">&nbsp;</div><h3>&nbsp;</h3></div></article>').join(""); g.setAttribute("aria-busy", "true"); return; }
     g.removeAttribute("aria-busy");
     if (estadoCatalogo === "error" || estadoCatalogo === "sin-conexion") {
       g.innerHTML = '<div class="grid-msg"><p>' + (estadoCatalogo === "error" ? "No pudimos cargar las piezas. Revisá tu conexión." : "La tienda se está preparando.") + '</p>' +
@@ -101,15 +101,17 @@
     g.innerHTML = list.map(p => {
       const out = soldOut(p), low = lowStock(p), o = p.opts[firstAvail(p)];
       const tag = out ? '<span class="tag out">Agotado</span>' : p.tag ? '<span class="tag">' + esc(p.tag) + "</span>" : low ? '<span class="tag">Últimas unidades</span>' : "";
+      const varias = p.opts.filter(x => stockOf(x) > 0).length > 1;
+      const accion = out ? "" : varias ? '<button class="quick" type="button" data-open="' + esc(p.id) + '">Elegir presentación</button>' : '<button class="quick" type="button" data-add="' + esc(p.id) + '">Agregar a la bolsa</button>';
       return '<article class="card' + (out ? " is-out" : "") + '">' +
         '<div class="ph" data-open="' + esc(p.id) + '" role="button" tabindex="0" aria-label="Ver ' + esc(p.name) + '">' + tag +
         '<button class="fav" type="button" data-fav="' + esc(p.id) + '" aria-label="Guardar ' + esc(p.name) + ' en favoritos" aria-pressed="' + favs.has(p.id) + '">' + heart + "</button>" +
         (p.gift || !p.img.length ? giftArt() : '<img src="' + esc(p.img[0]) + '" alt="' + esc(p.name) + '" loading="lazy" decoding="async">' + (p.img[1] ? '<img class="alt" src="' + esc(p.img[1]) + '" alt="" loading="lazy" decoding="async">' : "")) +
-        '<button class="quick" type="button" data-open="' + esc(p.id) + '">Vista rápida</button></div>' +
-        '<div class="kind">' + esc(p.kind) + "</div>" +
-        '<div class="meta top"><h3>' + esc(p.name) + '</h3><span class="price">' + (p.opts.length > 1 && !p.gift ? "desde " : "") + priceHtml(o) + "</span></div>" +
-        '<div class="meta"><span class="swatches">' + (p.colors || []).filter(c => /^#[0-9a-f]{3,8}$/i.test(c)).map(c => '<i style="background:' + c + '"></i>').join("") + "</span>" +
-        (out ? '<span class="add off">Agotado</span>' : '<button class="add" type="button" data-add="' + esc(p.id) + '">Agregar</button>') + "</div></article>";
+        accion + "</div>" +
+        '<div class="info"><div class="kind">' + esc(p.kind) + "</div>" +
+        "<h3>" + esc(p.name) + "</h3>" +
+        '<div class="price">' + (p.opts.length > 1 && !p.gift ? "desde " : "") + priceHtml(o) + "</div>" +
+        (out ? '<span class="add off">Agotado</span>' : varias ? '<button class="add" type="button" data-open="' + esc(p.id) + '">Elegir</button>' : '<button class="add" type="button" data-add="' + esc(p.id) + '">Agregar</button>') + "</div></article>";
     }).join("");
   }
   function setFilter(f) {
@@ -433,9 +435,25 @@
   /* ---------- Menú móvil y lookbook ---------- */
   $("#menuBtn").addEventListener("click", () => { const m = $("#mobileNav"), o = m.hidden; m.hidden = !o; $("#menuBtn").setAttribute("aria-expanded", o); });
   $("#mobileNav").addEventListener("click", e => { if (e.target.closest("a")) { $("#mobileNav").hidden = true; $("#menuBtn").setAttribute("aria-expanded", false); } });
-  const rail = $("#rail"), paso = () => rail.firstElementChild.getBoundingClientRect().width + 18;
-  $("#railPrev").addEventListener("click", () => rail.scrollBy({ left: -paso(), behavior: "smooth" }));
-  $("#railNext").addEventListener("click", () => rail.scrollBy({ left: paso(), behavior: "smooth" }));
+  const rail = $("#rail");
+  if (rail && $("#railPrev")) {
+    const paso = () => rail.firstElementChild.getBoundingClientRect().width + 18;
+    $("#railPrev").addEventListener("click", () => rail.scrollBy({ left: -paso(), behavior: "smooth" }));
+    $("#railNext").addEventListener("click", () => rail.scrollBy({ left: paso(), behavior: "smooth" }));
+  }
+
+  /* ---------- Encabezado: transparente sobre la portada ---------- */
+  const cabecera = $("#siteHeader"), portada = $("#hero");
+  if (cabecera && portada) {
+    const actualizar = () => {
+      const sobre = portada.getBoundingClientRect().bottom > cabecera.getBoundingClientRect().bottom + 8 && $("#mobileNav").hidden;
+      cabecera.classList.toggle("over", sobre);
+    };
+    addEventListener("scroll", actualizar, { passive: true });
+    addEventListener("resize", actualizar);
+    $("#menuBtn").addEventListener("click", actualizar);
+    actualizar();
+  }
 
   /* ---------- Newsletter ---------- */
   $("#newsForm").addEventListener("submit", async e => {
