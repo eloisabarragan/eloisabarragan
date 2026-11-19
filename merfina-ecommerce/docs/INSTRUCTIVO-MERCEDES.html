@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Instructivo · Tienda Merfina</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=Jost:wght@300;400;500&display=swap">
+<style>
+:root{--paper:#FBF7F2;--paper-2:#F3ECE3;--ink:#221C17;--muted:#6F655B;--line:#E4DACD;--gold:#A3804F;--gold-ink:#8A6A3E;--ok:#2F6B3A;--warn:#FCF1DC;
+  --display:"Cormorant Garamond",Garamond,serif;--body:"Jost","Segoe UI",Helvetica,Arial,sans-serif}
+@media (prefers-color-scheme:dark){:root{--paper:#15110E;--paper-2:#1E1915;--ink:#F2EBE2;--muted:#ADA092;--line:#352D26;--gold:#C9A673;--gold-ink:#D8B886;--ok:#8FD19E;--warn:#2E2516;color-scheme:dark}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-weight:300;font-size:1.02rem;line-height:1.7}
+.wrap{max-width:760px;margin:0 auto;padding:40px max(16px,env(safe-area-inset-left,0px)) 96px max(16px,env(safe-area-inset-right,0px))}
+header{text-align:center;border-bottom:1px solid var(--line);padding-bottom:28px;margin-bottom:12px}
+.mark{font-family:var(--display);letter-spacing:.42em;margin-right:-.42em;font-size:1.1rem}
+.eyebrow{font-size:.72rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold-ink)}
+h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.12;margin:0;text-wrap:balance}
+h1{font-size:clamp(2.2rem,6vw,3.2rem);margin:.4em 0 .2em}
+h2{font-size:clamp(1.7rem,4vw,2.3rem);margin:56px 0 10px;padding-top:12px;border-top:1px solid var(--line)}
+h3{font-size:1.35rem;margin:28px 0 6px}
+p{margin:.6em 0}
+b{font-weight:500}
+.ui{display:inline-block;background:var(--paper-2);border:1px solid var(--line);padding:0 .45em;border-radius:4px;font-size:.92em;white-space:nowrap}
+ol.steps{list-style:none;counter-reset:s;padding:0;margin:16px 0;display:grid;gap:14px}
+ol.steps>li{counter-increment:s;display:grid;grid-template-columns:38px 1fr;gap:12px}
+ol.steps>li::before{content:counter(s);width:38px;height:38px;border-radius:50%;border:1px solid var(--gold);color:var(--gold-ink);display:grid;place-items:center;font-family:var(--display);font-size:1.2rem}
+ol.steps>li>div{padding-top:5px;min-width:0}
+.note{background:var(--warn);border-left:2px solid var(--gold);padding:12px 16px;margin:14px 0;font-size:.95rem}
+.ok{color:var(--ok);font-weight:500}
+.toc{background:var(--paper-2);padding:16px 20px;margin:20px 0}
+.toc ol{margin:6px 0 0;padding-left:20px}
+.tbl{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:.94rem;margin:10px 0}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-weight:500;font-size:.76rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-ink)}
+.pill{display:inline-block;font-size:.8rem;padding:.1em .7em;border-radius:999px;background:var(--paper-2);white-space:nowrap}
+footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);text-align:center;color:var(--muted);font-size:.86rem}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="mark">MERFINA</div>
+  <div class="eyebrow" style="margin-top:24px">Instructivo de la tienda online</div>
+  <h1>Tu tienda, desde el celular</h1>
+  <p style="color:var(--muted);max-width:52ch;margin:0 auto">Una sola vez activás la tienda (unos 20 minutos, en la compu). Después cargás productos y manejás pedidos desde el panel, en el celular.</p>
+</header>
+
+<div class="toc"><b>Contenido</b>
+  <ol>
+    <li><a href="#a">Parte A · Activar la tienda (una sola vez)</a></li>
+    <li><a href="#b">Parte B · Cargar productos y fotos</a></li>
+    <li><a href="#c">Parte C · Atender los pedidos</a></li>
+    <li><a href="#d">Parte D · Lo que pasa solo</a></li>
+    <li><a href="#e">Parte E · Ajustes en la planilla (envíos, cupones, textos)</a></li>
+    <li><a href="#f">Parte F · Si algo no funciona</a></li>
+  </ol>
+</div>
+
+<h2 id="a">Parte A · Activar la tienda</h2>
+<p>Hacelo desde una <b>computadora</b>, con la cuenta de Google donde querés recibir los pedidos.</p>
+
+<h3>1. Tu planilla</h3>
+<ol class="steps">
+  <li><div>Abrí el link de la planilla que te mandaron y tocá <span class="ui">Hacer una copia</span>. Queda en tu Google Drive.</div></li>
+  <li><div>Esperá a que aparezca arriba el menú <span class="ui">Merfina</span>, al lado de «Ayuda». Si no aparece, recargá la página.</div></li>
+  <li><div>Tocá <span class="ui">Merfina</span> → <span class="ui">Configurar la tienda</span>. Google pide permiso: <span class="ui">Continuar</span> → tu cuenta → «Google no verificó esta app» → <span class="ui">Configuración avanzada</span> → <span class="ui">Ir a Merfina tienda</span> → <span class="ui">Permitir</span>. Después volvé a tocar <span class="ui">Merfina</span> → <span class="ui">Configurar la tienda</span> hasta que diga <b>«¡Tienda configurada!»</b>.
+    <div class="note">El aviso de «app no verificada» es normal: el programa es tuyo, no de una empresa. Pide permiso para leer tu planilla, mandar los emails de la tienda desde tu Gmail y guardar las fotos en tu Drive.</div></div></li>
+  <li><div>Tocá <span class="ui">Merfina</span> → <span class="ui">Crear o cambiar la clave del panel</span> y elegí una clave de al menos 8 caracteres. <b>No la compartas.</b></div></li>
+</ol>
+
+<h3>2. Publicar la conexión</h3>
+<ol class="steps">
+  <li><div>Menú <span class="ui">Extensiones</span> → <span class="ui">Apps Script</span>. En la pestaña nueva, tocá el botón azul <span class="ui">Implementar</span> → <span class="ui">Nueva implementación</span> → engranaje ⚙ → <span class="ui">Aplicación web</span>.</div></li>
+  <li><div>Completá así:
+    <div class="tbl"><table><tr><th>Campo</th><th>Qué poner</th></tr><tr><td>Descripción</td><td>Tienda</td></tr><tr><td>Ejecutar como</td><td><b>Yo</b></td></tr><tr><td>Quién tiene acceso</td><td><b>Cualquier persona</b></td></tr></table></div>
+    Tocá <span class="ui">Implementar</span> y copiá el link que termina en <span class="ui">/exec</span>.</div></li>
+  <li><div><b>Mandá ese link</b> a quien publica la tienda. Ese link se puede compartir: no da acceso a tu cuenta.</div></li>
+</ol>
+
+<h3>3. Conectar Mercado Pago</h3>
+<ol class="steps">
+  <li><div>Entrá a <span class="ui">mercadopago.com.uy/developers</span> con tu cuenta de Mercado Pago, la que recibe la plata.</div></li>
+  <li><div><span class="ui">Tus integraciones</span> → <span class="ui">Crear aplicación</span>. Nombre: <b>Tienda Merfina</b>. Tipo: <b>Pagos online</b>. ¿Usás una plataforma de e-commerce? <b>No</b>. Producto: <b>Checkout Pro</b>.
+    <div class="note">Mercado Pago cambia los nombres de las pantallas cada tanto. Si algo no coincide, buscá «Checkout Pro» y «Credenciales de producción».</div></div></li>
+  <li><div>Entrá a <span class="ui">Credenciales de producción</span>. Si te pide activarlas, completá el rubro y la dirección de la tienda. Copiá el <b>Access Token</b>: empieza con <span class="ui">APP_USR-</span>.</div></li>
+  <li><div>En tu planilla: <span class="ui">Merfina</span> → <span class="ui">Conectar Mercado Pago</span> → pegá el token → <span class="ui">Aceptar</span>. Te confirma el nombre de tu cuenta.
+    <div class="note"><b>El Access Token es como la contraseña de tu Mercado Pago.</b> No lo mandes por WhatsApp ni por email, y no lo escribas en la planilla. Se pega solo en ese menú.</div></div></li>
+</ol>
+
+<h3>4. Tus datos</h3>
+<ol class="steps">
+  <li><div>Pestaña <b>Config</b>: completá <b>banco, tipo_cuenta, numero_cuenta y titular</b> si querés ofrecer transferencia. Si falta alguno, la tienda no muestra esa opción. Si cobrás recargo por Mercado Pago, poné el porcentaje en <b>comision_mp</b>, por ejemplo <span class="ui">10%</span>; si no, dejá 0.</div></li>
+  <li><div>Pestaña <b>Envios</b>: ahora hay una sola opción, «Envío a coordinar». Cuando tengas costos reales, cargá una fila por forma de entrega (ver <a href="#e">Parte E</a>).</div></li>
+  <li><div>Pestaña <b>Textos</b>: escribí tu política de cambios en la fila <b>cambios</b>. Las páginas de términos y privacidad tienen un texto general: pedile a alguien de confianza que las revise.</div></li>
+</ol>
+<p class="ok">Listo: con esto la tienda puede vender.</p>
+
+<h2 id="b">Parte B · Cargar productos y fotos</h2>
+<p><b>Abrí el panel:</b> entrá a la dirección de la tienda con <span class="ui">/panel</span> al final, o en la planilla usá <span class="ui">Merfina</span> → <span class="ui">Abrir el panel de Merfina</span>. En el celular, guardalo en la pantalla de inicio: en iPhone, <span class="ui">Compartir</span> → <span class="ui">Agregar a inicio</span>; en Android, <span class="ui">⋮</span> → <span class="ui">Agregar a pantalla principal</span>. Entrás con tu clave.</p>
+
+<h3>Producto nuevo</h3>
+<ol class="steps">
+  <li><div>Pestaña <span class="ui">Productos</span> → <span class="ui">+ Nuevo producto</span>.</div></li>
+  <li><div>Escribí el <b>nombre</b> y elegí la <b>categoría</b>.</div></li>
+  <li><div><b>Fotos:</b> tocá <span class="ui">+ Agregar fotos</span>. Podés sacar la foto en el momento o elegir de tu galería, hasta 8 por producto. Se achican y se suben solas.
+    <ul style="margin:6px 0 0;padding-left:18px">
+      <li>La <b>primera</b> es la principal. Tocá otra foto para ponerla primera.</li>
+      <li>La <b>segunda</b> aparece en la tienda al pasar el mouse.</li>
+      <li>Conviene usar fotos verticales y con buena luz, con la pieza en primer plano.</li>
+    </ul></div></li>
+  <li><div><b>Descripción:</b> contá cómo es la pieza, los materiales, las medidas y cómo se usa.</div></li>
+  <li><div><b>Presentaciones, precio y stock:</b> una fila por presentación, por ejemplo <i>Par · 1350 · 5</i>. Con <span class="ui">+ Agregar presentación</span> sumás <i>Set x4</i>, etc. <b>Stock vacío = sin límite</b> (útil para gift cards).</div></li>
+  <li><div>Prendé <span class="ui">Publicado en la tienda</span> y tocá <span class="ui">Guardar</span>. En un minuto aparece en la tienda.</div></li>
+</ol>
+<div class="note">Ya hay <b>6 borradores</b> con las fotos de la sesión de fotos: Camelia Azul Noche, Camelia Rosé, Flor de Nácar, Corazón de Perla, Flor Ónix y Corbata Rayas Rosé. Los nombres son provisorios: abrí cada uno, corregí el nombre, poné descripción, precio y stock, y publicalo.</div>
+
+<h3>Cambios del día a día</h3>
+<div class="tbl"><table>
+<tr><th>Para…</th><th>En el panel</th></tr>
+<tr><td>Reponer stock o cambiar un precio</td><td>Abrí el producto, cambiá el número y tocá Guardar.</td></tr>
+<tr><td>Poner una oferta</td><td>En <i>Más opciones</i> → «Precio anterior» poné el precio viejo. En la tienda aparece tachado.</td></tr>
+<tr><td>Destacar una pieza</td><td>En <i>Más opciones</i> → «Etiqueta»: Nuevo, Más vendido, Edición limitada…</td></tr>
+<tr><td>Ocultar un producto</td><td>Apagá «Publicado en la tienda». Queda como borrador.</td></tr>
+<tr><td>Borrarlo para siempre</td><td>Abrilo → «Eliminar producto» → tocá de nuevo para confirmar.</td></tr>
+</table></div>
+<p>Cuando el stock llega a 0, la pieza aparece <b>«Agotado»</b> en la tienda y no se puede comprar. Cuando quedan pocas, dice «Últimas unidades».</p>
+
+<h2 id="c">Parte C · Atender los pedidos</h2>
+<p>Cada pedido te llega por email (<b>«Pedido nuevo MF-…»</b>) y aparece en la pestaña <span class="ui">Pedidos</span> del panel. El stock ya está descontado y reservado.</p>
+<div class="tbl"><table>
+<tr><th>Estado</th><th>Qué significa y qué hacés</th></tr>
+<tr><td><span class="pill">Pendiente de pago</span></td><td><b>Mercado Pago:</b> no hacés nada; cuando se aprueba, pasa a Pagado solo y te llega «Pago aprobado». <b>Transferencia:</b> cuando te llega el comprobante por WhatsApp, tocá <span class="ui">Marcar como pagado</span>. <b>A coordinar:</b> escribile a la clienta (el botón de WhatsApp está en el pedido).</td></tr>
+<tr><td><span class="pill">Pagado</span></td><td>Prepará el pedido. Al despacharlo, escribí el número de seguimiento (si tiene) y tocá <span class="ui">Marcar como enviado</span>.</td></tr>
+<tr><td><span class="pill">Enviado</span></td><td>Cuando la clienta lo recibe, tocá <span class="ui">Marcar como entregado</span>.</td></tr>
+<tr><td><span class="pill">Cancelado</span></td><td>El stock volvió solo. Si te equivocaste, <span class="ui">Reactivar pedido</span> lo descuenta de nuevo.</td></tr>
+</table></div>
+<p>En cada cambio de estado, la clienta recibe un email automático: pago recibido, pedido enviado con su seguimiento, entregado o cancelado.</p>
+
+<h2 id="d">Parte D · Lo que pasa solo</h2>
+<ul>
+  <li>El stock baja con cada pedido y vuelve si se cancela.</li>
+  <li>Si dos personas compran la última pieza al mismo tiempo, se la lleva una sola. A la otra la tienda le avisa.</li>
+  <li>La clienta recibe la confirmación del pedido con las instrucciones de pago.</li>
+  <li>A las <b>24 horas</b> sin pago, la clienta recibe un recordatorio. A las <b>48 horas</b>, el pedido se cancela y el stock vuelve. Esos plazos se cambian en Config.</li>
+  <li>Te avisamos por email cuando una pieza queda con 2 unidades o menos.</li>
+  <li>Todos los días a las 21 h te llega un resumen: ventas, pedidos por enviar, pendientes y agotados.</li>
+  <li>Los emails del newsletter (con consentimiento) quedan en la pestaña Suscriptores.</li>
+</ul>
+<div class="note"><b>Límite de Gmail:</b> una cuenta común de Gmail manda hasta 100 emails por día, que alcanza para unos 30 pedidos diarios. Si un día se llega al límite, los emails a clientas se retoman al día siguiente, pero los pedidos se siguen registrando y tus avisos siguen llegando.</div>
+
+<h2 id="e">Parte E · Ajustes en la planilla</h2>
+<p>Esto se cambia pocas veces, directamente en la planilla. Los cambios se ven en la tienda en un minuto.</p>
+<div class="tbl"><table>
+<tr><th>Pestaña</th><th>Qué podés hacer</th></tr>
+<tr><td><b>Envios</b></td><td>Una fila por forma de entrega: Zona (Montevideo, Interior o Todo el país), nombre, descripción, costo, si pide dirección y si está activa. Ejemplo: <i>Montevideo · Envío a domicilio · costo</i> y <i>Interior · Agencia · costo</i>. Cuando cargues las reales, poné «No» en «Activo» de la fila «Envío a coordinar».</td></tr>
+<tr><td><b>Cupones</b></td><td>Código, % de descuento (ej. 15%), Activo = Sí. Opcional: vencimiento, usos máximos y compra mínima. Si no hay ninguno activo, la tienda no muestra el campo de cupón.</td></tr>
+<tr><td><b>Config</b></td><td>Datos bancarios, recargo de Mercado Pago, envío gratis desde cierto monto, precio del envoltorio de regalo (0 = no se ofrece), horas de reserva, email de avisos, email público de contacto, código de bienvenida del newsletter.</td></tr>
+<tr><td><b>Textos</b></td><td>Textos de las páginas Envíos, Cambios, Términos y Privacidad, y el aviso de la franja negra de arriba (por ejemplo, una promo de Cyber). Escribí en «Contenido»: separá los párrafos con una línea en blanco; una línea que empieza con <span class="ui">## </span> es un título y una que empieza con <span class="ui">- </span> es un punto de lista. Vacío = se usa el texto general.</td></tr>
+<tr><td><b>Resumen</b></td><td>Ventas de hoy y del mes, pedidos pendientes, agotados y suscriptores. Se actualiza solo.</td></tr>
+</table></div>
+
+<h2 id="f">Parte F · Si algo no funciona</h2>
+<div class="tbl"><table>
+<tr><th>Pasa esto</th><th>Probá esto</th></tr>
+<tr><td>El panel dice «Tu sesión venció»</td><td>Entrá de nuevo con tu clave. Las sesiones duran unas horas.</td></tr>
+<tr><td>«Demasiados intentos»</td><td>Esperá 15 minutos. Si no te acordás la clave, creá una nueva desde la planilla.</td></tr>
+<tr><td>Un producto no aparece en la tienda</td><td>Revisá que esté «Publicado», que tenga al menos una foto y un precio. Esperá un minuto y recargá.</td></tr>
+<tr><td>No llegan los emails</td><td>Revisá Spam. Menú <span class="ui">Merfina</span> → <span class="ui">Probar el envío de emails</span>.</td></tr>
+<tr><td>Un pago de Mercado Pago no pasó a Pagado</td><td>Menú <span class="ui">Merfina</span> → <span class="ui">Revisar pagos de Mercado Pago ahora</span>. Si el monto pagado no coincide con el pedido, te llega un email para revisarlo a mano.</td></tr>
+<tr><td>Mercado Pago dejó de funcionar</td><td>Menú <span class="ui">Merfina</span> → <span class="ui">Ver conexión de Mercado Pago</span>. Si el token venció, conectalo de nuevo.</td></tr>
+</table></div>
+
+<footer>Merfina · Una joya que hace la diferencia</footer>
+</div>
+</body>
+</html>

@@ -293,6 +293,14 @@ function crearPedido_(data) {
   if (!pedidos.length) return { ok: false, error: "vacio", mensaje: "Tu carrito está vacío." };
   if (pedidos.length > 40) return { ok: false, error: "datos", mensaje: "El pedido tiene demasiados productos." };
 
+  // Freno a pedidos falsos que bloqueen stock: máximo 3 pendientes por email y 40 pedidos cada 10 minutos
+  const pendientesMismoEmail = tabla_(HOJA.pedidos).filas.filter(f => texto_(f["Email"]).toLowerCase() === cliente.email && texto_(f["Estado"]) === "Pendiente de pago").length;
+  if (pendientesMismoEmail >= 3) return { ok: false, error: "limite", mensaje: "Ya tenés pedidos esperando el pago. Completá el pago o escribinos por WhatsApp." };
+  const cacheP = CacheService.getScriptCache();
+  const recientes = Number(cacheP.get("pedidos_10min") || 0);
+  if (recientes >= 40) return { ok: false, error: "limite", mensaje: "Estamos recibiendo muchos pedidos. Probá de nuevo en unos minutos." };
+  cacheP.put("pedidos_10min", String(recientes + 1), 600);
+
   const medios = mediosDePago_(config_());
   if (medios.indexOf(data.pago) < 0) return { ok: false, error: "pago", mensaje: "Elegí un medio de pago disponible." };
   const pago = data.pago;
@@ -828,6 +836,7 @@ function tablaPedido_(p) {
  * y los formatos, pero NO activa avisos, tareas ni la carpeta de fotos en su cuenta.
  */
 function prepararPlantilla() {
+  SpreadsheetApp.getUi(); // solo desde la planilla (falla si se llama desde la web)
   const ss = SpreadsheetApp.getActive();
   armarPlanilla_(ss, false);
   SpreadsheetApp.getUi().alert("Plantilla lista",
@@ -849,6 +858,7 @@ function armarPlanilla_(ss, conEmail) {
 }
 
 function configurarTienda() {
+  SpreadsheetApp.getUi(); // solo desde la planilla (falla si se llama desde la web)
   const ss = SpreadsheetApp.getActive();
   armarPlanilla_(ss, true);
   completarEmailAvisos_();
@@ -1072,6 +1082,7 @@ function carpetaFotos_() {
 }
 
 function abrirCarpetaFotos() {
+  SpreadsheetApp.getUi();
   const url = carpetaFotos_().getUrl();
   mostrarLink_("Carpeta de fotos", "Subí acá las fotos. Después abrí cada foto → Compartir → Copiar vínculo, y pegalo en la columna Fotos de Productos (varias fotos separadas por coma).", url);
 }

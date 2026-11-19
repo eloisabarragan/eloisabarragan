@@ -292,6 +292,23 @@ prueba("Sin cupo de Gmail: el pedido se registra y Mercedes recibe el aviso", ()
   g.cupoEmails = 100;
 });
 
+prueba("Freno a pedidos falsos: máximo 3 pendientes por email", () => {
+  const otro = { ...cliente, email: "bot@example.com" };
+  for (let i = 0; i < 3; i++) assert.equal(post({ accion: "pedido", items: [{ id: "leopardo-dorado", v: "Set x4", q: 1 }], cliente: otro, envio: "a-coordinar", pago: "transfer" }).ok, true);
+  const r = post({ accion: "pedido", items: [{ id: "leopardo-dorado", v: "Set x4", q: 1 }], cliente: otro, envio: "a-coordinar", pago: "transfer" });
+  assert.equal(r.error, "limite");
+});
+
+prueba("Las funciones de menú no se pueden ejecutar desde la web", () => {
+  g.sinUi = true;
+  const antes = g.disparadores;
+  assert.throws(() => g.configurarTienda(), /getUi/);
+  assert.throws(() => g.prepararPlantilla(), /getUi/);
+  assert.throws(() => g.conectarMercadoPago(), /getUi/);
+  assert.equal(g.disparadores, antes);
+  g.sinUi = false;
+});
+
 prueba("Suscripción al newsletter sin duplicados", () => {
   assert.equal(post({ accion: "suscribir", email: "x@y.com" }).ok, true);
   assert.equal(post({ accion: "suscribir", email: "X@y.com" }).ok, true);
