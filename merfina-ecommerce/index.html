@@ -94,7 +94,8 @@ em{font-style:italic}
 /* Encabezado: transparente sobre la portada, marfil al bajar */
 .masthead{position:fixed;top:0;left:0;right:0;z-index:60}
 header.site{background:var(--ivory);border-bottom:1px solid var(--line);transition:background .5s var(--ease),border-color .5s var(--ease),color .5s var(--ease)}
-section[id],div[id="tienda"]{scroll-margin-top:120px}
+section[id]{scroll-margin-top:150px}
+@media (max-width:999px){section[id]{scroll-margin-top:130px}}
 header.site.over{background:transparent;border-color:transparent;color:var(--ivory)}
 .nav{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;height:84px}
 .nav-left{display:flex;align-items:center;gap:8px}
