@@ -1,0 +1,12 @@
+{
+  "name": "merfina-tienda",
+  "private": true,
+  "description": "Tienda online de Merfina Joyas: sitio estático (Netlify) + planilla de Google con Apps Script.",
+  "scripts": {
+    "build": "node scripts/build-gs.mjs && node scripts/build-site.mjs",
+    "test:backend": "node scripts/build-gs.mjs && node tests/backend.test.cjs",
+    "test:navegador": "node scripts/build-gs.mjs && node scripts/build-site.mjs && node tests/e2e.test.cjs",
+    "test": "npm run test:backend && npm run test:navegador"
+  },
+  "engines": { "node": ">=20" }
+}

@@ -3,6 +3,7 @@
 <head>
 <base target="_top">
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Panel Merfina</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -100,7 +101,7 @@ dl.kv dt{color:var(--muted)}dl.kv dd{margin:0;white-space:pre-wrap;word-break:br
 <div id="vApp" hidden>
   <div class="top"><div class="wrap">
     <span class="mark">MERFINA</span>
-    <button class="link" id="bSalir">Salir</button>
+    <span style="display:flex;gap:18px"><button class="link" id="bAct">Actualizar</button><button class="link" id="bSalir">Salir</button></span>
   </div></div>
   <div class="wrap">
     <div class="tabs" role="tablist">
@@ -320,6 +321,11 @@ $("#eDel").onclick=function(){
   b.disabled=true;api("panelBorrarProducto",TOKEN,edit.id).then(function(r){b.disabled=false;toast(r.mensaje);$("#vProd").hidden=true;cargar()}).catch(function(err){b.disabled=false;fallo(err)});
 };
 
+$("#bAct").onclick=function(){cargar();toast("Actualizado")};
+/* Se actualiza solo al volver a la pestaña y cada minuto, si no estás editando */
+function libre(){return !$("#vApp").hidden&&$("#vProd").hidden&&$("#vPed").hidden}
+document.addEventListener("visibilitychange",function(){if(document.visibilityState==="visible"&&TOKEN&&libre())cargar()});
+setInterval(function(){if(document.visibilityState==="visible"&&TOKEN&&libre())cargar()},60000);
 if(TOKEN)cargar();else mostrarLogin();
 </script>
 </body>

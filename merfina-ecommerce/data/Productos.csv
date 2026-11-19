@@ -1,7 +1,0 @@
-id,nombre,categoria,tipo,precio,stock,activo,descripcion,imagenes,variantes,presentacion,etiqueta
-camelia-azul,Camelia Azul Noche,botones,Cubre botones,0,0,no,Completar descripción,"[""img/p-camelia-azul.jpg"",""img/look-azul.jpg"",""img/p-camelia-azul-2.jpg""]","[[""Par"",0]]",Par,
-camelia-rose,Camelia Rosé,botones,Cubre botones,0,0,no,Completar descripción,"[""img/p-camelia-rosa.jpg"",""img/look-rosa-corbata.jpg""]","[[""Par"",0]]",Par,
-flor-nacar,Flor de Nácar,botones,Cubre botones,0,0,no,Completar descripción,"[""img/p-flor-nacar.jpg"",""img/look-rosa-blanca.jpg""]","[[""Par"",0]]",Par,
-corazon-perla,Corazón de Perla,botones,Cubre botones,0,0,no,Completar descripción,"[""img/p-corazon-perla.jpg"",""img/look-blusa.jpg""]","[[""Par"",0]]",Par,
-flor-onix,Flor Ónix,botones,Cubre botones,0,0,no,Completar descripción,"[""img/p-flor-negra.jpg"",""img/look-blusa.jpg""]","[[""Par"",0]]",Par,
-corbata-rayas,Corbata Rayas Rosé,corbatas,Corbata,0,0,no,Completar descripción,"[""img/p-corbata-rayas.jpg"",""img/look-rosa-corbata.jpg""]","[[""Unidad"",0]]",Unidad,

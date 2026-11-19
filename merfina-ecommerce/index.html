@@ -3,8 +3,24 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Merfina Joyas</title>
-<meta name="claude:viewport-fit-sides" content="cover">
+<title>Merfina Joyas · Cubre botones y corbatas</title>
+<meta name="description" content="Cubre botones y corbatas que transforman cada camisa. Piezas pensadas para quienes entienden que el verdadero estilo está en los detalles. Montevideo, Uruguay.">
+<meta name="theme-color" content="#FBF7F2">
+<link rel="canonical" href="__SITE_URL__/">
+<link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32.png">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="es_UY">
+<meta property="og:site_name" content="Merfina Joyas">
+<meta property="og:title" content="Merfina Joyas · Una joya que hace la diferencia">
+<meta property="og:description" content="Cubre botones y corbatas que transforman cada camisa. Piezas pensadas para quienes entienden que el verdadero estilo está en los detalles. Montevideo, Uruguay.">
+<meta property="og:url" content="__SITE_URL__/">
+<meta property="og:image" content="__SITE_URL__/img/og-merfina.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Store","name":"Merfina Joyas","description":"Cubre botones y corbatas que transforman cada camisa. Piezas pensadas para quienes entienden que el verdadero estilo está en los detalles. Montevideo, Uruguay.","url":"__SITE_URL__/","logo":"__SITE_URL__/img/logo-completo.png","image":"__SITE_URL__/img/og-merfina.jpg","address":{"@type":"PostalAddress","addressLocality":"Montevideo","addressCountry":"UY"},"telephone":"+598 91 900 341","sameAs":["https://www.instagram.com/merfinajoyas/"]}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@300;400;500&display=swap">
@@ -37,6 +53,7 @@
   --gold:#C9A673;--gold-ink:#D8B886;--blush:#33282A;--on-gold:#15110E;--shade:rgba(0,0,0,.6);--err:#FF8A80;color-scheme:dark}
 
 *{box-sizing:border-box}
+[hidden]{display:none!important}
 html{scroll-behavior:smooth}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
 body{background:var(--paper);color:var(--ink);font-family:var(--body);font-weight:300;font-size:1rem;line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
@@ -395,15 +412,38 @@ footer{border-top:1px solid var(--line);padding-block:56px 96px}
 .toast.on{transform:translate(-50%,0);visibility:visible}
 .toast .sparkle{flex:none}
 
+.card .tag.out{background:var(--ink);color:var(--paper)}
+.card.is-out .ph img{opacity:.55;filter:grayscale(.3)}
+.add.off{border-bottom-color:var(--line);color:var(--muted)}
+.was{color:var(--muted);font-weight:300}
+.skel .ph{animation:pulse 1.4s ease-in-out infinite}
+.skel .kind,.skel h3{background:var(--paper-2);width:60%;animation:pulse 1.4s ease-in-out infinite}
+@keyframes pulse{50%{opacity:.5}}
+.grid-msg{grid-column:1/-1;display:grid;justify-items:center;gap:16px;padding:48px 0;text-align:center;color:var(--muted)}
+.grid-msg p{margin:0;font-family:var(--display);font-size:1.5rem;color:var(--ink)}
+.opt:disabled{opacity:.45;cursor:not-allowed;text-decoration:line-through}
+.qty button:disabled{opacity:.3;cursor:not-allowed}
+.m-stock{font-size:.82rem;color:var(--gold-ink)}
+.m-stock:empty{display:none}
+#mAdd:disabled,#coConfirm:disabled{opacity:.6;cursor:not-allowed}
+.muted-p{margin:0;color:var(--muted)}
+.consent{display:flex;gap:10px;align-items:flex-start;font-size:.86rem;line-height:1.45;text-align:left}
+.consent input{accent-color:var(--ink);width:18px;height:18px;margin:2px 0 0;flex:none}
+.consent a{color:inherit}
+.news .consent{max-width:520px;color:var(--muted)}
+.hp{position:absolute!important;left:-9999px!important;width:1px;height:1px;overflow:hidden}
+.skip{position:absolute;left:-9999px;top:8px;z-index:200;background:var(--ink);color:var(--paper);padding:.6em 1em}
+.skip:focus{left:8px}
 .checkout-msg{background:var(--paper-2);padding:14px;font-size:.82rem;white-space:pre-wrap;max-height:180px;overflow:auto;border:1px solid var(--line)}
 </style>
 </head>
 <body>
+<a class="skip" href="#tienda">Saltar a la tienda</a>
 
 <div class="announce"><div class="wrap">
   <span>Piezas que transforman cada look</span>
   <span>Detalles elegidos con amor</span>
-  <span>Pedidos sujetos a confirmación</span>
+  <span>Envíos a todo Uruguay</span>
 </div></div>
 
 <header class="site">
@@ -440,6 +480,8 @@ footer{border-top:1px solid var(--line);padding-block:56px 96px}
       <a href="#como-se-usan">Cómo se usan</a>
       <a href="#lookbook">Lookbook</a>
       <a href="#preguntas">Preguntas</a>
+      <a href="envios.html">Envíos</a>
+      <a href="contacto.html">Contacto</a>
     </div>
   </div>
 </header>
@@ -470,8 +512,8 @@ footer{border-top:1px solid var(--line);padding-block:56px 96px}
 
   <div class="marquee" aria-hidden="true">
     <div class="marquee-track">
-      <span>Camelias esmaltadas <i class="sparkle"></i> Corazones de perla <i class="sparkle"></i> Flores de nácar <i class="sparkle"></i> Baño dorado <i class="sparkle"></i> Corbatas de seda <i class="sparkle"></i></span>
-      <span>Camelias esmaltadas <i class="sparkle"></i> Corazones de perla <i class="sparkle"></i> Flores de nácar <i class="sparkle"></i> Baño dorado <i class="sparkle"></i> Corbatas de seda <i class="sparkle"></i></span>
+      <span>Cubre botones <i class="sparkle"></i> Corbatas <i class="sparkle"></i> Detalles que transforman <i class="sparkle"></i> Una joya que hace la diferencia <i class="sparkle"></i></span>
+      <span>Cubre botones <i class="sparkle"></i> Corbatas <i class="sparkle"></i> Detalles que transforman <i class="sparkle"></i> Una joya que hace la diferencia <i class="sparkle"></i></span>
     </div>
   </div>
 
@@ -506,7 +548,7 @@ footer{border-top:1px solid var(--line);padding-block:56px 96px}
     <div class="wrap story-grid">
       <figure class="story-photo" style="margin:0">
         <img src="img/look-rosa-blanca.jpg" alt="Camisa rosa con cubre botones de flor de nácar en el puño" loading="lazy">
-        <figcaption>Flor de Nácar · en el puño</figcaption>
+        <figcaption>En el puño</figcaption>
       </figure>
       <div class="story-copy">
         <div class="eyebrow">Sobre Merfina</div>
@@ -550,19 +592,19 @@ footer{border-top:1px solid var(--line);padding-block:56px 96px}
         </div>
       </div>
       <div class="look-rail" id="rail">
-        <figure><img src="img/look-calas.jpg" alt="Blusa blanca con botones de corazón y flor, jean y calas" loading="lazy"><figcaption><b>Set Blusa París</b><span>Corazón + Ónix</span></figcaption></figure>
-        <figure><img src="img/look-azul.jpg" alt="Camelias azules en puños blancos" loading="lazy"><figcaption><b>Camelia Azul Noche</b><span>Puños</span></figcaption></figure>
-        <figure><img src="img/look-rosa-corbata.jpg" alt="Camisa rosa con corbata a rayas y camelias rosé" loading="lazy"><figcaption><b>Camelia Rosé</b><span>+ Corbata Rayas</span></figcaption></figure>
-        <figure><img src="img/look-blusa.jpg" alt="Detalle de blusa con botones de perla y flor negra" loading="lazy"><figcaption><b>Corazón de Perla</b><span>Cuello</span></figcaption></figure>
-        <figure><img src="img/look-rosa-blanca.jpg" alt="Camisa rosa con flores de nácar en el puño" loading="lazy"><figcaption><b>Flor de Nácar</b><span>Puño</span></figcaption></figure>
+        <figure><img src="img/look-calas.jpg" alt="Blusa blanca con botones de corazón y flor, jean y calas" loading="lazy"><figcaption><b>En la tapeta</b><span>Blusa</span></figcaption></figure>
+        <figure><img src="img/look-azul.jpg" alt="Camelias azules en puños blancos" loading="lazy"><figcaption><b>En los puños</b><span>Camisa blanca</span></figcaption></figure>
+        <figure><img src="img/look-rosa-corbata.jpg" alt="Camisa rosa con corbata a rayas y camelias rosé" loading="lazy"><figcaption><b>Con corbata</b><span>Camisa rosa</span></figcaption></figure>
+        <figure><img src="img/look-blusa.jpg" alt="Detalle de blusa con botones de perla y flor negra" loading="lazy"><figcaption><b>En el cuello</b><span>Blusa</span></figcaption></figure>
+        <figure><img src="img/look-rosa-blanca.jpg" alt="Camisa rosa con flores de nácar en el puño" loading="lazy"><figcaption><b>En el puño</b><span>Camisa rosa</span></figcaption></figure>
       </div>
     </div>
   </section>
 
   <div class="wrap promise">
-    <div><svg viewBox="0 0 32 32"><path d="M3 10h17v12H3zM20 14h5l4 4v4h-9z"/><circle cx="9" cy="24" r="2.4"/><circle cx="24" cy="24" r="2.4"/></svg><div><b>Envíos a todo Uruguay</b><span>Consultá cobertura y plazos al realizar tu pedido</span></div></div>
+    <div><svg viewBox="0 0 32 32"><path d="M3 10h17v12H3zM20 14h5l4 4v4h-9z"/><circle cx="9" cy="24" r="2.4"/><circle cx="24" cy="24" r="2.4"/></svg><div><b>Envíos a todo Uruguay</b><span>Las formas de entrega para tu departamento aparecen al finalizar la compra</span></div></div>
     <div><svg viewBox="0 0 32 32"><rect x="5" y="12" width="22" height="15"/><path d="M5 17h22M16 12v15M16 12c-3-6-9-4-6 0M16 12c3-6 9-4 6 0"/></svg><div><b>Listo para regalar</b><span>Detalles elegidos con amor</span></div></div>
-    <div><svg viewBox="0 0 32 32"><rect x="4" y="8" width="24" height="17" rx="2"/><path d="M4 13h24M8 20h6"/></svg><div><b>Pagá como prefieras</b><span>Coordinamos el pago después de confirmar tu pedido</span></div></div>
+    <div><svg viewBox="0 0 32 32"><rect x="4" y="8" width="24" height="17" rx="2"/><path d="M4 13h24M8 20h6"/></svg><div><b>Pagá como prefieras</b><span>Los medios de pago disponibles aparecen al finalizar la compra</span></div></div>
   </div>
 
   <section class="sec" id="preguntas" aria-labelledby="faq-h" style="padding-top:clamp(24px,4vw,48px)">
@@ -572,8 +614,9 @@ footer{border-top:1px solid var(--line);padding-block:56px 96px}
         <details open><summary>¿Sirven para cualquier camisa?</summary><p>La compatibilidad depende del modelo y del tamaño del botón. Consultanos antes de comprar si tenés dudas.</p></details>
         <details><summary>¿Dañan la tela?</summary><p>El sistema de sujeción depende de la pieza. Recomendamos colocarla con cuidado y consultar ante cualquier duda.</p></details>
         <details><summary>¿Cómo cuido mis piezas?</summary><p>Guardalas en su estuche, lejos de la humedad. Evitá perfumes y cremas en contacto directo, y limpialas con un paño suave y seco.</p></details>
-        <details><summary>¿Hacen envíos al interior?</summary><p>La cobertura, los plazos y los costos de entrega se confirman con tu pedido.</p></details>
-        <details><summary>¿Cómo pago?</summary><p>El pedido queda pendiente de confirmación. Te contactamos para coordinar el pago. La pasarela online todavía no está habilitada.</p></details>
+        <details><summary>¿Hacen envíos al interior?</summary><p>Sí. Al finalizar la compra, elegí tu departamento y vas a ver las formas de entrega disponibles. Más información en <a href="envios.html">Envíos y entregas</a>.</p></details>
+        <details><summary>¿Cómo pago?</summary><p>Al finalizar la compra ves los medios de pago disponibles. Si pagás con Mercado Pago, el pago se procesa en su sitio y tu pedido se confirma automáticamente cuando se aprueba. Nosotros nunca vemos los datos de tu tarjeta.</p></details>
+        <details><summary>¿Puedo cambiar o devolver una pieza?</summary><p>Mirá nuestra política en <a href="cambios.html">Cambios y devoluciones</a>.</p></details>
         <details><summary>¿Puedo regalar una tarjeta?</summary><p>Consultanos por Instagram para saber si hay tarjetas de regalo disponibles.</p></details>
       </div>
     </div>
@@ -601,11 +644,12 @@ footer{border-top:1px solid var(--line);padding-block:56px 96px}
       <span class="sparkle" style="font-size:1.4rem"></span>
       <h2 id="news-h">Primero en enterarte <em>de cada lanzamiento</em></h2>
       <p>Nuevas piezas y ediciones especiales. Suscribite para enterarte primero.</p>
-      <form id="newsForm" novalidate><input name="website" type="text" tabindex="-1" autocomplete="off" style="display:none">
+      <form id="newsForm" novalidate><input name="website" type="text" tabindex="-1" autocomplete="off" class="hp" aria-hidden="true">
         <label for="newsEmail" class="sr" style="position:absolute;left:-9999px">Tu email</label>
         <input id="newsEmail" type="email" placeholder="Tu email" autocomplete="email" required>
         <button type="submit">Suscribirme</button>
       </form>
+      <label class="consent" for="newsConsent"><input type="checkbox" id="newsConsent"> Acepto recibir novedades de Merfina por email. Puedo darme de baja cuando quiera. <a href="privacidad.html">Privacidad</a></label>
       <div class="ok" id="newsOk" aria-live="polite"></div>
     </div>
   </section>
@@ -614,9 +658,10 @@ footer{border-top:1px solid var(--line);padding-block:56px 96px}
 <footer>
   <div class="wrap">
     <div class="foot">
-      <div><h4>Tienda</h4><ul><li><a href="#tienda" data-go="todo">Colección Primavera</a></li><li><a href="#tienda" data-go="botones">Cubre botones</a></li><li><a href="#tienda" data-go="corbatas">Corbatas</a></li><li><a href="#tienda" data-go="todo">Gift card</a></li></ul></div>
-      <div><h4>Ayuda</h4><ul><li><a href="#preguntas">Envíos y entregas</a></li><li><a href="#preguntas">Medios de pago</a></li><li><a href="#preguntas">Cuidado de las piezas</a></li><li><a href="#como-se-usan">Cómo se usan</a></li></ul></div>
-      <div><h4>Merfina</h4><ul><li><a href="#historia">Nosotros</a></li><li><a href="https://www.instagram.com/merfinajoyas/" target="_blank" rel="noopener">Seguinos en Instagram</a></li><li>WhatsApp · <a class="wa-num" href="https://wa.me/59891900341" target="_blank" rel="noopener">091 900 341</a></li></ul></div>
+      <div><h4>Tienda</h4><ul><li><a href="#tienda" data-go="todo">Colección</a></li><li><a href="#tienda" data-go="botones">Cubre botones</a></li><li><a href="#tienda" data-go="corbatas">Corbatas</a></li><li><a href="#como-se-usan">Cómo se usan</a></li></ul></div>
+      <div><h4>Ayuda</h4><ul><li><a href="envios.html">Envíos y entregas</a></li><li><a href="cambios.html">Cambios y devoluciones</a></li><li><a href="#preguntas">Preguntas frecuentes</a></li><li><a href="contacto.html">Contacto</a></li></ul></div>
+      <div><h4>Merfina</h4><ul><li><a href="#historia">Nosotros</a></li><li><a href="https://www.instagram.com/merfinajoyas/" target="_blank" rel="noopener">Seguinos en Instagram</a></li><li>WhatsApp · <a class="wa-num" data-wa href="https://wa.me/59891900341" target="_blank" rel="noopener">091 900 341</a></li></ul></div>
+      <div><h4>Legal</h4><ul><li><a href="terminos.html">Términos y condiciones</a></li><li><a href="privacidad.html">Política de privacidad</a></li></ul></div>
     </div>
     <div class="wordmark" aria-hidden="true">MERFINA</div>
     <div class="rule wordmark-rule" aria-hidden="true"><i class="sparkle"></i></div>
@@ -624,7 +669,7 @@ footer{border-top:1px solid var(--line);padding-block:56px 96px}
   </div>
 </footer>
 
-<a class="wa-float" id="waFloat" href="https://wa.me/59891900341" target="_blank" rel="noopener" aria-label="Escribinos por WhatsApp al 091 900 341"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.8-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1 2.7c.1.2 1.8 2.8 4.4 3.9 1.6.7 2.3.8 3.1.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3z"/></svg></a>
+<a class="wa-float" id="waFloat" data-wa href="https://wa.me/59891900341" target="_blank" rel="noopener" aria-label="Escribinos por WhatsApp al 091 900 341"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.8-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1 2.7c.1.2 1.8 2.8 4.4 3.9 1.6.7 2.3.8 3.1.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3z"/></svg></a>
 
 <div class="scrim" id="scrim"></div>
 
@@ -633,7 +678,7 @@ footer{border-top:1px solid var(--line);padding-block:56px 96px}
   <div class="ship" id="ship"></div>
   <div class="lines" id="lines"></div>
   <div class="drawer-foot" id="bagFoot">
-    <label class="wrapopt" for="giftWrap"><input type="checkbox" id="giftWrap"> Envolver para regalo (+ $U 150)</label>
+    <label class="wrapopt" for="giftWrap" id="wrapBox" hidden><input type="checkbox" id="giftWrap"> Envolver para regalo (+ <span id="wrapPrice"></span>)</label>
     <div class="tot"><span>Subtotal</span><b id="subtotal">$U 0</b></div>
     <p class="note">Envío y medio de pago se eligen en el siguiente paso.</p>
     <button class="btn solid" id="checkout">Finalizar compra</button>
@@ -649,6 +694,7 @@ footer{border-top:1px solid var(--line);padding-block:56px 96px}
       <div class="eyebrow" id="mKind"></div>
       <h3 id="mTitle"></h3>
       <div class="price" id="mPrice"></div>
+      <div class="m-stock" id="mStock" aria-live="polite"></div>
       <p id="mDesc"></p>
       <div><div class="opt-label" id="mOptLabel">Presentación</div><div class="opts" id="mOpts" style="margin-top:10px"></div></div>
       <button class="btn gold" id="mAdd">Agregar a la bolsa</button>
@@ -667,7 +713,7 @@ footer{border-top:1px solid var(--line);padding-block:56px 96px}
       <div style="padding-top:28px"><div class="eyebrow">Checkout</div><h2 id="coTitle">Finalizá tu compra</h2></div>
       <form class="co-grid" id="coF" novalidate>
         <div style="min-width:0">
-          <details class="box coupon">
+          <details class="box coupon" id="couponBox" hidden>
             <summary>Cupón de descuento</summary>
             <div class="row"><label for="coCoupon" style="position:absolute;left:-9999px">Código del cupón</label><input id="coCoupon" placeholder="Ingresá tu código" autocomplete="off"><button type="button" class="btn" id="coApply">Aplicar</button></div>
             <div class="msg" id="coCouponMsg" aria-live="polite"></div>
@@ -690,9 +736,8 @@ footer{border-top:1px solid var(--line);padding-block:56px 96px}
             <div id="coShip"><div class="hint">Seleccioná departamento y ciudad o barrio para ver las formas de entrega disponibles.</div></div>
           </div>
           <div class="box">
-            <h3>Pago</h3><p>El pago se coordina después de confirmar la disponibilidad. No se cobra online.</p>
-            
-            <label class="choice" for="payTr"><input type="radio" name="pay" id="payTr" value="coordinar" checked><b>Coordinar con Merfina</b><p>Recibirás las instrucciones cuando confirmemos tu pedido.</p></label>
+            <h3>Medio de pago</h3>
+            <div id="coPay" style="display:grid;gap:10px"></div>
           </div>
         </div>
         <aside class="box co-sum" aria-label="Resumen del pedido">
@@ -700,21 +745,24 @@ footer{border-top:1px solid var(--line);padding-block:56px 96px}
           <div id="coLines" style="display:grid;gap:12px"></div>
           <div class="sum-rows" id="coRows"></div>
           <div class="sum-total"><span>Total</span><b id="coTotal">$U 0</b></div>
+          <label class="consent" for="coTerms"><input type="checkbox" id="coTerms"> <span>Acepto los <a href="terminos.html" target="_blank" rel="noopener">términos y condiciones</a> y la <a href="privacidad.html" target="_blank" rel="noopener">política de privacidad</a>.</span></label>
+          <p class="co-err" id="coTermsErr" aria-live="polite"></p>
+          <input name="website" type="text" tabindex="-1" autocomplete="off" class="hp" aria-hidden="true">
           <p class="co-err" id="coErr" aria-live="polite"></p>
-          <button type="submit" class="btn solid" id="coConfirm">Enviar solicitud de pedido</button>
-          <p class="note" style="margin:0;font-size:.78rem;color:var(--muted)">El pedido se registra como pendiente. No implica pago ni reserva confirmada de stock.</p>
+          <button type="submit" class="btn solid" id="coConfirm">Confirmar pedido</button>
+          <p class="note" style="margin:0;font-size:.78rem;color:var(--muted)">Al confirmar reservamos tus piezas. Los precios y el stock se verifican al momento de tu compra.</p>
         </aside>
       </form>
     </div>
     <div id="coDone" class="done" hidden>
       <span class="sparkle" style="font-size:1.6rem"></span>
       <div class="num" id="doneNum"></div>
-      <h2>¡Recibimos tu solicitud!</h2>
+      <h2>¡Gracias por tu compra!</h2>
       <p id="doneLead" style="margin:0;color:var(--muted);max-width:52ch"></p>
       <div class="box" id="donePay"></div>
-      <div class="box">
-        <h3>Contactanos por WhatsApp</h3>
-        <p style="margin:0;color:var(--muted)">Tocá el botón para abrir WhatsApp con el número de solicitud. Si no se abre, escribinos al <b class="wa-num" style="color:var(--ink);user-select:all">091 900 341</b> y pegá este resumen:</p>
+      <div class="box" id="doneProof">
+        <h3>Escribinos por WhatsApp</h3>
+        <p style="margin:0;color:var(--muted)">Tocá el botón para abrir WhatsApp con tu pedido ya escrito (si pagaste por transferencia, adjuntá el comprobante). Si no se abre, escribinos al <b class="wa-num" style="color:var(--ink);user-select:all">091 900 341</b> y pegá este resumen:</p>
         <a class="btn wa" id="doneWa" href="https://wa.me/59891900341" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.8-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1 2.7c.1.2 1.8 2.8 4.4 3.9 1.6.7 2.3.8 3.1.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3z"/></svg> Enviar por WhatsApp</a>
         <div class="checkout-msg" id="doneMsg"></div>
         <button class="btn" id="doneCopy" type="button">Copiar resumen</button>
@@ -726,277 +774,7 @@ footer{border-top:1px solid var(--line);padding-block:56px 96px}
 
 <div class="toast" id="toast" role="status" aria-live="polite"><i class="sparkle"></i><span id="toastTxt"></span></div>
 
-<script>
-let PRODUCTS=[
- {id:"camelia-azul",name:"Camelia Azul Noche",cat:"botones",kind:"Cubre botones",tag:"Más vendido",img:["img/p-camelia-azul.jpg","img/look-azul.jpg","img/p-camelia-azul-2.jpg"],
-  colors:["#3E5671","#8FA6BE","#B8955A"],desc:"Camelia de pétalos esmaltados en dos tonos de azul, con cristal central y borde de baño dorado. Pensada para puños franceses y camisas blancas.",
-  opts:[["Par",1490],["Set x4",2690],["Set x6",3790]],specs:[["Medida","28 mm"],["Terminación","Baño de oro 18k"],["Detalle","Esmalte y cristal"]]},
- {id:"camelia-rose",name:"Camelia Rosé",cat:"botones",kind:"Cubre botones",tag:"Nuevo",img:["img/p-camelia-rosa.jpg","img/look-rosa-corbata.jpg"],
-  colors:["#E8A69A","#F4D3CB","#C9A063"],desc:"Pétalos calados en dorado con esmalte coral translúcido y un brillante al centro. Ilumina cualquier camisa rosa o celeste.",
-  opts:[["Par",1490],["Set x4",2690],["Set x6",3790]],specs:[["Medida","26 mm"],["Terminación","Baño de oro 18k"],["Detalle","Esmalte translúcido"]]},
- {id:"flor-nacar",name:"Flor de Nácar",cat:"botones",kind:"Cubre botones",img:["img/p-flor-nacar.jpg","img/look-rosa-blanca.jpg"],
-  colors:["#F6EEE6","#E9C46A"],desc:"Cinco pétalos de nácar con centro de granulado dorado. Delicada y luminosa, perfecta para cuellos y puños.",
-  opts:[["Par",1290],["Set x4",2390],["Set x6",3390]],specs:[["Medida","20 mm"],["Terminación","Baño de oro 18k"],["Detalle","Nácar natural"]]},
- {id:"corazon-perla",name:"Corazón de Perla",cat:"botones",kind:"Cubre botones",img:["img/p-corazon-perla.jpg","img/look-blusa.jpg"],
-  colors:["#F3EFEA","#1E1B1A","#C9A063"],desc:"Corazón de perla sobre marco festoneado en esmalte negro y dorado. Un clásico con guiño romántico.",
-  opts:[["Par",1190],["Set x4",2190],["Set x6",3090]],specs:[["Medida","18 mm"],["Terminación","Baño de oro 18k"],["Detalle","Perla sintética"]]},
- {id:"flor-onix",name:"Flor Ónix",cat:"botones",kind:"Cubre botones",img:["img/p-flor-negra.jpg","img/look-blusa.jpg"],
-  colors:["#1E1B1A","#C9A063"],desc:"Flor de cinco pétalos en esmalte negro brillante con estambres dorados. Contraste puro sobre blanco.",
-  opts:[["Par",1190],["Set x4",2190],["Set x6",3090]],specs:[["Medida","18 mm"],["Terminación","Baño de oro 18k"],["Detalle","Esmalte negro"]]},
- {id:"set-paris",name:"Set Blusa París",cat:"sets",kind:"Set de 4 piezas",tag:"Edición limitada",img:["img/p-blusa-botones.jpg","img/look-calas.jpg","img/look-blusa.jpg"],
-  colors:["#F3EFEA","#1E1B1A","#C9A063"],desc:"Dos Corazones de Perla y dos Flores Ónix para alternar en la tapeta. El look de la campaña, listo en un estuche.",
-  opts:[["Set x4",2290],["Set x6",3290]],specs:[["Incluye","2 corazones + 2 flores"],["Terminación","Baño de oro 18k"],["Estuche","Merfina de regalo"]]},
- {id:"corbata-rayas",name:"Corbata Rayas Rosé",cat:"corbatas",kind:"Corbata",img:["img/p-corbata-rayas.jpg","img/look-rosa-corbata.jpg"],
-  colors:["#D9B8A8","#F6E8E0"],desc:"Corbata de seda a rayas diagonales en rosé y crudo. Se combina con la Camelia Rosé para un look completo.",
-  opts:[["Ancho clásico 7 cm",1890],["Ancho slim 5,5 cm",1890]],optLabel:"Ancho",specs:[["Material","Seda"],["Largo","148 cm"],["Cuidado","Limpieza en seco"]]},
- {id:"gift",name:"Gift Card Merfina",cat:"sets",kind:"Tarjeta de regalo",gift:true,img:[],
-  colors:["#EAE5DB","#A3804F","#221C17"],desc:"Para que elijan su propia joya. Llega en su sobre Merfina con el monto que elijas, o por WhatsApp en formato digital.",
-  opts:[["Consultar",0]],optLabel:"Monto",specs:[["Disponibilidad","A consultar"]]}
-];
-const $=s=>document.querySelector(s);
-const fmt=n=>"$U "+n.toLocaleString("es-UY");
-const FREE=99999999, WRAP=0;
-const store={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
-let bag=store.get("merfina-bag",[]), favs=new Set(store.get("merfina-favs",[])), filter="todo";
-const byId=id=>PRODUCTS.find(p=>p.id===id);
-const giftArt=()=>`<div class="gift-ph"><div class="gift-card"><img src="img/logo-completo.png" alt="Gift card Merfina"></div></div>`;
-const heart='<svg viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg>';
-
-function renderGrid(){
-  const g=$("#grid");
-  g.innerHTML=PRODUCTS.filter(p=>filter==="todo"||p.cat===filter).map(p=>`
-   <article class="card">
-     <div class="ph" data-open="${p.id}" role="button" tabindex="0" aria-label="Ver ${p.name}">
-       ${p.tag?`<span class="tag">${p.tag}</span>`:""}
-       <button class="fav" data-fav="${p.id}" aria-label="Guardar ${p.name} en favoritos" aria-pressed="${favs.has(p.id)}">${heart}</button>
-       ${p.gift?giftArt():`<img src="${p.img[0]}" alt="${p.name}" loading="lazy">${p.img[1]?`<img class="alt" src="${p.img[1]}" alt="" loading="lazy">`:""}`}
-       <button class="quick" data-open="${p.id}">Vista rápida</button>
-     </div>
-     <div class="kind">${p.kind}</div>
-     <div class="meta top"><h3>${p.name}</h3><span class="price">${p.opts.length>1&&!p.gift?"desde ":""}${fmt(p.opts[0][1])}</span></div>
-     <div class="meta"><span class="swatches">${p.colors.map(c=>`<i style="background:${c}"></i>`).join("")}</span><button class="add" data-add="${p.id}">Agregar</button></div>
-   </article>`).join("");
-}
-function setFilter(f){
-  filter=f;document.querySelectorAll(".chip").forEach(c=>c.setAttribute("aria-pressed",c.dataset.filter===f));renderGrid();
-}
-document.querySelectorAll(".chip").forEach(c=>c.addEventListener("click",()=>setFilter(c.dataset.filter)));
-document.querySelectorAll("[data-go]").forEach(a=>a.addEventListener("click",()=>setFilter(a.dataset.go)));
-
-function badge(el,n){el.textContent=n;el.classList.toggle("on",n>0);el.classList.remove("bump");void el.offsetWidth;if(n>0)el.classList.add("bump")}
-function save(){store.set("merfina-bag",bag);store.set("merfina-favs",[...favs])}
-function addToBag(id,optIdx=0){
-  const p=byId(id),key=id+"|"+optIdx,line=bag.find(l=>l.key===key);
-  if(line)line.q++;else bag.push({key,id,o:optIdx,q:1});
-  save();renderBag();toast(`${p.name} · ${p.opts[optIdx][0]} se agregó a tu bolsa`);
-}
-function renderBag(){
-  const n=bag.reduce((s,l)=>s+l.q,0);badge($("#bagCount"),n);
-  const sub=bag.reduce((s,l)=>s+byId(l.id).opts[l.o][1]*l.q,0)+($("#giftWrap").checked&&n?WRAP:0);
-  $("#subtotal").textContent=fmt(sub);
-  const left=FREE-sub;
-  $("#ship").innerHTML="Envío: costo y disponibilidad a confirmar antes del pago";
-  $("#bagFoot").hidden=!n;
-  if(!n){$("#lines").innerHTML=`<div class="empty"><span class="sparkle"></span><p>Tu bolsa está vacía</p><span>Elegí una pieza para empezar.</span></div>`;return}
-  $("#lines").innerHTML=bag.map(l=>{const p=byId(l.id);return `
-   <div class="line">
-     ${p.gift?`<div class="gift-mini"><img src="img/logo-completo.png" alt=""></div>`:`<img src="${p.img[0]}" alt="">`}
-     <div><h4>${p.name}</h4><small>${p.opts[l.o][0]}</small><br>
-       <span class="qty"><button data-dec="${l.key}" aria-label="Quitar uno">−</button><span>${l.q}</span><button data-inc="${l.key}" aria-label="Agregar uno">+</button></span>
-       <button class="rm" data-rm="${l.key}">Quitar</button></div>
-     <span class="price">${fmt(p.opts[l.o][1]*l.q)}</span>
-   </div>`}).join("");
-}
-$("#giftWrap").addEventListener("change",renderBag);
-$("#lines").addEventListener("click",e=>{
-  const t=e.target.closest("button");if(!t)return;
-  const k=t.dataset.inc||t.dataset.dec||t.dataset.rm,l=bag.find(x=>x.key===k);if(!l)return;
-  if(t.dataset.inc)l.q++;else if(t.dataset.dec)l.q--;else l.q=0;
-  bag=bag.filter(x=>x.q>0);save();renderBag();
-});
-/* ===== Checkout ===== */
-/* Datos del negocio: editá acá precios de envío, comisión, cupones y datos bancarios. */
-const CFG={
-  whatsapp:"59891900341",
-  mpCommission:0,
-  mpLink:"",            /* pegá acá un link de pago de Mercado Pago si querés mostrar el botón directo */
-  bank:[["Banco","A completar"],["Tipo de cuenta","Caja de ahorro en pesos"],["Número de cuenta","A completar"],["Titular","A completar"]],
-  ship:{
-    mvd:[{id:"dom",name:"Envío a domicilio",desc:"Costo y plazo a confirmar",cost:0},{id:"ret",name:"Retiro coordinado",desc:"Coordinamos el lugar y horario por WhatsApp",cost:0}],
-    int:[{id:"age",name:"Envío por agencia",desc:"Costo y plazo a confirmar",cost:0}]
-  },
-  coupons:{}
-};
-const DEPS=["Artigas","Canelones","Cerro Largo","Colonia","Durazno","Flores","Florida","Lavalleja","Maldonado","Montevideo","Paysandú","Río Negro","Rivera","Rocha","Salto","San José","Soriano","Tacuarembó","Treinta y Tres"];
-$("#coDep").innerHTML+=DEPS.map(d=>`<option>${d}</option>`).join("");
-let coupon=null,lastOrder=null;
-const val=id=>$("#"+id).value.trim();
-function shipOpts(){const d=val("coDep"),c=val("coCity");if(!d||!c)return null;return d==="Montevideo"?CFG.ship.mvd:CFG.ship.int}
-function totals(){
-  const items=bag.reduce((s,l)=>s+byId(l.id).opts[l.o][1]*l.q,0);
-  const wrap=$("#giftWrap").checked&&bag.length?WRAP:0;
-  const disc=coupon?Math.round(items*CFG.coupons[coupon]):0;
-  const opts=shipOpts(),sel=document.querySelector('input[name="ship"]:checked');
-  const so=opts&&sel?opts.find(o=>o.id===sel.value):null;
-  const free=false;
-  const ship=so?0:null;
-  const base=items-disc+wrap+(ship||0);
-  const pay=(document.querySelector('input[name="pay"]:checked')||{}).value||"mp";
-  const fee=0;
-  return {items,wrap,disc,ship,so,free,base,fee,pay,total:base+fee};
-}
-function renderShip(){
-  const opts=shipOpts(),box=$("#coShip");
-  if(!opts){box.innerHTML='<div class="hint">Seleccioná departamento y ciudad o barrio para ver las formas de entrega disponibles.</div>';return}
-  const prev=(document.querySelector('input[name="ship"]:checked')||{}).value;
-  const t=totals();
-  box.innerHTML=`<div style="display:grid;gap:10px">${opts.map((o,i)=>`<label class="choice" for="ship-${o.id}"><input type="radio" name="ship" id="ship-${o.id}" value="${o.id}" ${(prev?prev===o.id:i===0)?"checked":""}><b>${o.name}</b><span class="amt">${o.cost===0?"Sin costo":t.free?`<s style="color:var(--muted)">${fmt(o.cost)}</s> Gratis`:fmt(o.cost)}</span><p>${o.desc}</p></label>`).join("")}</div>`;
-}
-function renderCo(){
-  const t=totals();
-  $("#coLines").innerHTML=bag.map(l=>{const p=byId(l.id);return `<div class="sum-line">${p.gift?`<div class="gift-mini"><img src="img/logo-completo.png" alt=""></div>`:`<img src="${p.img[0]}" alt="">`}<div>${p.name}<small>${p.opts[l.o][0]} · ${l.q} u.</small></div><span class="price">${fmt(p.opts[l.o][1]*l.q)}</span></div>`}).join("");
-  const rows=[["Subtotal",fmt(t.items)]];
-  if(t.disc)rows.push([`Cupón ${coupon}`,"− "+fmt(t.disc)]);
-  if(t.wrap)rows.push(["Envoltorio de regalo",fmt(t.wrap)]);
-  rows.push(["Envío",t.ship===null?"A calcular":t.ship===0?"Gratis":fmt(t.ship)]);
-  if(t.fee)rows.push([`Comisión Mercado Pago (${Math.round(CFG.mpCommission*100)}%)`,fmt(t.fee)]);
-  $("#coRows").innerHTML=rows.map(([a,b])=>`<div><span>${a}</span><span>${b}</span></div>`).join("");
-  $("#coTotal").textContent=fmt(t.total);
-  const mpFee=Math.round(t.base*CFG.mpCommission);
-  $("#mpFee").textContent=`Comisión de ${Math.round(CFG.mpCommission*100)}% (+ ${fmt(mpFee)})`;
-}
-function openCo(){
-  if(!bag.length)return;
-  show("drawer",false);$("#coForm").hidden=false;$("#coDone").hidden=true;$("#coErr").textContent="";
-  renderShip();renderCo();
-  const co=$("#co");co.classList.add("on");co.setAttribute("aria-hidden","false");co.scrollTop=0;document.body.style.overflow="hidden";
-  setTimeout(()=>$("#coName").focus({preventScroll:true}),350);
-}
-function closeCo(){const co=$("#co");co.classList.remove("on");co.setAttribute("aria-hidden","true");document.body.style.overflow=""}
-$("#checkout").addEventListener("click",openCo);
-$("#keepShopping").addEventListener("click",()=>show("drawer",false));
-let confirmEmpty=false;
-$("#emptyBag").addEventListener("click",e=>{
-  if(!confirmEmpty){confirmEmpty=true;e.target.textContent="¿Seguro? Tocá de nuevo";setTimeout(()=>{confirmEmpty=false;e.target.textContent="Vaciar carrito"},3000);return}
-  confirmEmpty=false;e.target.textContent="Vaciar carrito";bag=[];save();renderBag();toast("Vaciaste el carrito");
-});
-$("#coBack").addEventListener("click",closeCo);
-$("#doneBack").addEventListener("click",closeCo);
-["coDep","coCity"].forEach(id=>$("#"+id).addEventListener("input",()=>{renderShip();renderCo()}));
-$("#coShip").addEventListener("change",renderCo);
-document.querySelectorAll('input[name="pay"]').forEach(r=>r.addEventListener("change",renderCo));
-$("#coApply").addEventListener("click",()=>{
-  const c=val("coCoupon").toUpperCase(),m=$("#coCouponMsg");
-  if(CFG.coupons[c]){coupon=c;m.style.color="var(--gold-ink)";m.textContent=`Cupón ${c} aplicado: ${Math.round(CFG.coupons[c]*100)}% de descuento.`}
-  else{coupon=null;m.style.color="var(--err)";m.textContent=c?"Ese cupón no existe o ya venció. Revisá cómo lo escribiste.":"Escribí un código para aplicarlo."}
-  renderShip();renderCo();
-});
-function check(){
-  const rules=[["coName",v=>v.length>1,"Ingresá tu nombre."],["coLast",v=>v.length>1,"Ingresá tu apellido."],["coEmail",v=>/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v),"Ingresá un email válido, por ejemplo nombre@gmail.com."],
-    ["coPhone",v=>v.replace(/\D/g,"").length>=8,"Ingresá un teléfono de al menos 8 dígitos."],["coDep",v=>!!v,"Elegí tu departamento."],["coCity",v=>v.length>1,"Ingresá tu ciudad o barrio."],
-    ["coAddr",v=>v.length>3||(document.querySelector('input[name="ship"]:checked')||{}).value==="ret","Ingresá tu dirección para el envío."]];
-  let first=null;
-  rules.forEach(([id,ok,msg])=>{const f=$("#"+id).closest(".fld"),good=ok(val(id));f.classList.toggle("bad",!good);f.querySelector(".err").textContent=good?"":msg;if(!good&&!first)first=$("#"+id)});
-  return first;
-}
-$("#coF").addEventListener("input",e=>{const f=e.target.closest(".fld");if(f&&f.classList.contains("bad")){f.classList.remove("bad");f.querySelector(".err").textContent=""}});
-$("#coF").addEventListener("submit",async e=>{
-  e.preventDefault();
-  const bad=check();if(bad){$("#coErr").textContent="Revisá los datos marcados en rojo.";bad.focus();return}
-  const t=totals();if(!t.so){$("#coErr").textContent="Elegí una forma de entrega.";return}
-  const button=$("#coConfirm");button.disabled=true;button.textContent="Registrando solicitud…";$("#coErr").textContent="";
-  try{
-    const payload={customer:{name:val("coName"),lastName:val("coLast"),email:val("coEmail"),phone:val("coPhone"),department:val("coDep"),city:val("coCity"),address:val("coAddr"),notes:val("coNotes")},shipping:t.so.id,items:bag.map(l=>({id:l.id,variant:l.o,quantity:l.q})),website:document.querySelector('[name="website"]')?.value||""};
-    const res=await fetch('/.netlify/functions/create-order',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(payload)});
-    const result=await res.json();if(!res.ok)throw Error(result.error||"No se pudo registrar el pedido.");
-    const num=result.orderId;
-    const msg=`Hola Merfina, hice la solicitud ${num}. Quisiera confirmar disponibilidad, costo de envío y forma de pago.`;
-    $("#doneNum").textContent=`Solicitud ${num}`;
-    $("#doneLead").textContent="Tu solicitud quedó registrada como pendiente. Merfina te confirmará la disponibilidad, el precio final, el envío y cómo pagar.";
-    $("#donePay").innerHTML='<h3>Próximo paso</h3><p>Esperá la confirmación de Merfina. No realices ningún pago todavía.</p>';
-    $("#doneMsg").textContent=msg;
-    $("#doneWa").href=`https://wa.me/${CFG.whatsapp}?text=${encodeURIComponent(msg)}`;
-    $("#coForm").hidden=true;$("#coDone").hidden=false;$("#co").scrollTop=0;
-    bag=[];coupon=null;save();renderBag();
-  }catch(err){$("#coErr").textContent=err.message+" No se registró la solicitud; intentá nuevamente."}
-  finally{button.disabled=false;button.textContent="Enviar solicitud de pedido"}
-});
-$("#doneCopy").addEventListener("click",()=>{
-  const txt=$("#doneMsg").textContent;
-  const sel=()=>{const r=document.createRange();r.selectNodeContents($("#doneMsg"));const s=getSelection();s.removeAllRanges();s.addRange(r);toast("Resumen seleccionado. Copialo con tu teclado.")};
-  try{navigator.clipboard.writeText(txt).then(()=>toast("Resumen copiado"),sel)}catch(e){sel()}
-});
-
-/* favourites */
-function renderFavs(){badge($("#favCount"),favs.size)}
-$("#favBtn").addEventListener("click",()=>{
-  if(!favs.size){toast("Tocá el corazón de una pieza para guardarla");return}
-  setFilter("todo");location.hash="";document.getElementById("tienda").scrollIntoView();
-  toast(`Tenés ${favs.size} ${favs.size===1?"pieza guardada":"piezas guardadas"}: ${[...favs].map(id=>byId(id).name).join(", ")}`);
-});
-
-/* grid delegation */
-$("#grid").addEventListener("click",e=>{
-  const fav=e.target.closest("[data-fav]");
-  if(fav){e.stopPropagation();const id=fav.dataset.fav;favs.has(id)?favs.delete(id):favs.add(id);fav.setAttribute("aria-pressed",favs.has(id));save();renderFavs();toast(favs.has(id)?`${byId(id).name} se guardó en favoritos`:`${byId(id).name} se quitó de favoritos`);return}
-  const add=e.target.closest("[data-add]");if(add){addToBag(add.dataset.add);return}
-  const op=e.target.closest("[data-open]");if(op)openModal(op.dataset.open);
-});
-$("#grid").addEventListener("keydown",e=>{if(e.key==="Enter"&&e.target.matches(".ph"))openModal(e.target.dataset.open)});
-
-/* modal */
-let cur=null,curOpt=0,lastFocus=null;
-function openModal(id){
-  const p=byId(id);cur=p;curOpt=0;lastFocus=document.activeElement;
-  $("#mKind").textContent=p.kind;$("#mTitle").textContent=p.name;$("#mDesc").textContent=p.desc;
-  $("#mOptLabel").textContent=p.optLabel||"Presentación";
-  $("#mMedia").innerHTML=p.gift?`<div class="main gift" style="aspect-ratio:4/5;position:relative">${giftArt()}</div>`:
-    `<img class="main" id="mMain" src="${p.img[0]}" alt="${p.name}"><div class="thumbs">${p.img.map((s,i)=>`<button data-thumb="${s}" aria-pressed="${i===0}" aria-label="Ver foto ${i+1}"><img src="${s}" alt=""></button>`).join("")}</div>`;
-  $("#mSpecs").innerHTML=p.specs.map(([a,b])=>`<dt>${a}</dt><dd>${b}</dd>`).join("");
-  renderOpts();show("modal",true);$("#closeModal").focus();
-}
-function renderOpts(){
-  $("#mOpts").innerHTML=cur.opts.map(([l],i)=>`<button class="opt" data-opt="${i}" aria-pressed="${i===curOpt}">${l}</button>`).join("");
-  $("#mPrice").textContent=fmt(cur.opts[curOpt][1]);
-}
-$("#mOpts").addEventListener("click",e=>{const b=e.target.closest("[data-opt]");if(b){curOpt=+b.dataset.opt;renderOpts()}});
-$("#mMedia").addEventListener("click",e=>{const b=e.target.closest("[data-thumb]");if(!b)return;$("#mMain").src=b.dataset.thumb;document.querySelectorAll("[data-thumb]").forEach(x=>x.setAttribute("aria-pressed",x===b))});
-$("#mAdd").addEventListener("click",()=>{addToBag(cur.id,curOpt);show("modal",false);setTimeout(()=>show("drawer",true),250)});
-$("#closeModal").addEventListener("click",()=>show("modal",false));
-
-/* overlays */
-function show(which,on){
-  const el=$("#"+which);el.classList.toggle("on",on);el.setAttribute("aria-hidden",!on);
-  const any=$("#modal").classList.contains("on")||$("#drawer").classList.contains("on");
-  $("#scrim").classList.toggle("on",any);document.body.style.overflow=any?"hidden":"";
-  if(!on&&lastFocus&&!any)lastFocus.focus?.();
-}
-$("#bagBtn").addEventListener("click",()=>{lastFocus=$("#bagBtn");show("drawer",true);$("#closeBag").focus()});
-$("#closeBag").addEventListener("click",()=>show("drawer",false));
-$("#scrim").addEventListener("click",()=>{show("modal",false);show("drawer",false)});
-addEventListener("keydown",e=>{if(e.key==="Escape"){if($("#co").classList.contains("on")){closeCo();return}show("modal",false);show("drawer",false)}});
-
-/* mobile menu */
-$("#menuBtn").addEventListener("click",()=>{const m=$("#mobileNav"),o=m.hidden;m.hidden=!o;$("#menuBtn").setAttribute("aria-expanded",o)});
-$("#mobileNav").addEventListener("click",e=>{if(e.target.closest("a")){$("#mobileNav").hidden=true;$("#menuBtn").setAttribute("aria-expanded",false)}});
-
-/* lookbook rail */
-const rail=$("#rail"),step=()=>rail.firstElementChild.getBoundingClientRect().width+18;
-$("#railPrev").addEventListener("click",()=>rail.scrollBy({left:-step(),behavior:"smooth"}));
-$("#railNext").addEventListener("click",()=>rail.scrollBy({left:step(),behavior:"smooth"}));
-
-/* newsletter */
-$("#newsForm").addEventListener("submit",e=>{
-  e.preventDefault();const v=$("#newsEmail").value.trim();
-  if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v)){$("#newsOk").textContent="Revisá el email: parece incompleto.";return}
-  $("#newsOk").textContent="¡Gracias por tu interés! La suscripción estará disponible próximamente.";$("#newsEmail").value="";
-});
-
-/* toast */
-let tt;function toast(msg){$("#toastTxt").textContent=msg;$("#toast").classList.add("on");clearTimeout(tt);tt=setTimeout(()=>$("#toast").classList.remove("on"),2600)}
-
-renderGrid();renderBag();renderFavs();
-fetch('/.netlify/functions/catalog').then(async r=>{if(!r.ok)throw Error();return r.json()}).then(data=>{if(Array.isArray(data.products)&&data.products.length){PRODUCTS=data.products;bag=bag.filter(l=>PRODUCTS.some(p=>p.id===l.id&&p.opts[l.o]));renderGrid();renderBag()}}).catch(()=>{document.querySelector('#shop-h').textContent='Colección · vista previa';});
-</script>
+<script src="assets/js/config.js"></script>
+<script src="assets/js/tienda.js" defer></script>
 </body>
 </html>

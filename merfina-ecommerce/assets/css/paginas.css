@@ -1,0 +1,55 @@
+/* Páginas institucionales de Merfina: misma identidad que la tienda, columna de lectura. */
+:root{
+  --paper:#FBF7F2;--paper-2:#F3ECE3;--ink:#221C17;--muted:#6F655B;--line:#E4DACD;--gold:#A3804F;--gold-ink:#8A6A3E;--wa:#25D366;
+  --display:"Cormorant Garamond","Cormorant",Garamond,"Times New Roman",serif;
+  --body:"Jost","Avenir Next","Segoe UI",Helvetica,Arial,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--paper:#15110E;--paper-2:#1E1915;--ink:#F2EBE2;--muted:#ADA092;--line:#352D26;--gold:#C9A673;--gold-ink:#D8B886;color-scheme:dark}}
+:root[data-theme="dark"]{--paper:#15110E;--paper-2:#1E1915;--ink:#F2EBE2;--muted:#ADA092;--line:#352D26;--gold:#C9A673;--gold-ink:#D8B886;color-scheme:dark}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-weight:300;font-size:1.02rem;line-height:1.75;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+img{max-width:100%;display:block}
+:focus-visible{outline:1.5px solid var(--gold);outline-offset:3px}
+.wrap{max-width:1240px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+@media (min-width:760px){.wrap{padding-left:max(40px,env(safe-area-inset-left,0px));padding-right:max(40px,env(safe-area-inset-right,0px))}}
+.skip{position:absolute;left:-9999px;top:8px;z-index:200;background:var(--ink);color:var(--paper);padding:.6em 1em}
+.skip:focus{left:8px}
+header.site{position:sticky;top:0;z-index:50;background:var(--paper);border-bottom:1px solid var(--line)}
+.nav{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding-block:14px}
+.nav .back{font-size:.74rem;letter-spacing:.2em;text-transform:uppercase;text-decoration:none}
+.nav .back span{display:none}
+@media (min-width:600px){.nav .back span{display:inline}}
+.brand{display:flex;flex-direction:column;align-items:center;text-decoration:none;gap:2px}
+.brand img{width:44px;height:auto}
+.brand b{font-family:var(--display);font-weight:500;font-size:1.05rem;letter-spacing:.42em;margin-right:-.42em}
+.nav .bag{justify-self:end;font-size:.74rem;letter-spacing:.2em;text-transform:uppercase;text-decoration:none}
+main{padding-block:clamp(40px,7vw,88px)}
+.doc{max-width:68ch;margin:0 auto}
+.eyebrow{font-size:.72rem;letter-spacing:.32em;text-transform:uppercase;color:var(--gold-ink)}
+h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.1;margin:0;text-wrap:balance}
+h1{font-size:clamp(2.4rem,6vw,3.8rem);margin:.25em 0 .4em}
+h2{font-size:clamp(1.5rem,3vw,2rem);margin:1.6em 0 .4em}
+p,li{max-width:68ch}
+.lead{font-size:1.1rem;color:var(--muted)}
+.note{background:var(--paper-2);border-left:2px solid var(--gold);padding:14px 18px;margin:1.4em 0;font-size:.95rem}
+.opts{display:grid;gap:10px;margin:1em 0;padding:0;list-style:none}
+.opts li{border:1px solid var(--line);padding:14px 16px;display:grid;gap:2px}
+.opts b{font-weight:500}
+.opts small{color:var(--muted)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.6em;padding:1em 2em;font-size:.74rem;letter-spacing:.24em;text-transform:uppercase;text-decoration:none;border:1px solid var(--ink);color:var(--ink);transition:background .3s,color .3s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.wa{background:var(--wa);border-color:var(--wa);color:#fff}
+.btn svg{width:18px;height:18px;fill:currentColor}
+.contact{display:grid;gap:12px;margin:1.6em 0}
+.contact .row{display:flex;gap:12px;flex-wrap:wrap}
+.updated{color:var(--muted);font-size:.86rem;margin-top:3em}
+footer{border-top:1px solid var(--line);padding-block:40px 32px;font-size:.92rem}
+.foot{display:grid;gap:28px;grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}
+.foot h4{margin:0 0 .8em;font-size:.72rem;letter-spacing:.24em;text-transform:uppercase;font-weight:500}
+.foot ul{list-style:none;margin:0;padding:0;display:grid;gap:.5em;color:var(--muted)}
+.foot a{text-decoration:none}
+.foot a:hover{color:var(--gold-ink)}
+.legal{margin-top:32px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;color:var(--muted);font-size:.8rem}
