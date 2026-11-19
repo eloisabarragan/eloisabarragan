@@ -838,9 +838,9 @@ function prepararPlantilla() {
   SpreadsheetApp.getUi(); // solo desde la planilla (falla si se llama desde la web)
   const ss = SpreadsheetApp.getActive();
   armarPlanilla_(ss, false);
-  SpreadsheetApp.getUi().alert("Plantilla lista",
-    "Cargá productos, precios, stock y fotos.\n\nPara entregarla: Compartir → Acceso general: «Cualquier persona con el enlace» (Lector) → Copiar enlace, y en el link cambiá el final «/edit…» por «/copy».\n\n" +
-    "Quien la copie solo tiene que usar el menú Merfina → Configurar la tienda.", SpreadsheetApp.getUi().ButtonSet.OK);
+  // Aviso que no frena la ejecución (un cartel con «Aceptar» se queda esperando si estás en Apps Script)
+  ss.toast("Plantilla lista. Compartila con el link /copy.", "Merfina", 15);
+  console.log("Plantilla lista. Compartir → Cualquier persona con el enlace → cambiar el final del link por /copy.");
 }
 
 function armarPlanilla_(ss, conEmail) {
