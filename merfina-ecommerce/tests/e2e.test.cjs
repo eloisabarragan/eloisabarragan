@@ -291,6 +291,21 @@ servidor.listen(0, async () => {
     await movil.screenshot({ path: path.join(CAPTURAS, "tienda-celular-grilla.png") });
   });
 
+  await prueba("Ninguna imagen se ve estirada o aplastada (celular y escritorio)", async () => {
+    for (const vista of [{ viewport: { width: 390, height: 844 }, isMobile: true }, { viewport: { width: 1440, height: 900 } }]) {
+      const pg = await nuevaPagina(vista);
+      for (const pag of ["", "envios.html", "contacto.html"]) {
+        await pg.goto(BASE + "/" + pag);
+        await pg.evaluate(async () => { for (let y = 0; y < document.body.scrollHeight; y += 600) { window.scrollTo(0, y); await new Promise(r => setTimeout(r, 30)); } });
+        await pg.waitForTimeout(500);
+        const malas = await pg.evaluate(() => [...document.images].filter(i => i.complete && i.naturalWidth && i.getBoundingClientRect().width > 4 && getComputedStyle(i).objectFit !== "cover")
+          .map(i => { const r = i.getBoundingClientRect(); return { src: i.getAttribute("src"), real: i.naturalWidth / i.naturalHeight, vista: r.width / r.height }; })
+          .filter(x => Math.abs(x.vista / x.real - 1) > 0.03).map(x => x.src + " " + x.real.toFixed(2) + "→" + x.vista.toFixed(2)));
+        assert.deepEqual(malas, [], (pag || "inicio") + " " + vista.viewport.width);
+      }
+    }
+  });
+
   await prueba("Seguridad: la política CSP no bloquea nada propio y no hay errores de JavaScript", async () => {
     const csp = problemas.filter(p => /Content Security Policy|Refused/.test(p));
     assert.deepEqual(csp, []);
