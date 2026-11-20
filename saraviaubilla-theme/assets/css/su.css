@@ -1089,3 +1089,9 @@ p { margin: 0 0 1em; }
 @media (min-width: 800px) { .su-footer__grid { grid-template-columns: 1.3fr 1fr 1.2fr; } .su-footer__grid:has(> :nth-child(4)) { grid-template-columns: 1.3fr 1fr 1.2fr .8fr; } }
 .su-footer .su-logo__tag { letter-spacing: .16em; }
 .su-footer__menu a { display: inline-block; padding: 2px 0; }
+
+/* Logo subido: sobre la portada (encabezado transparente) se muestra la versión clara */
+.su-logo__normal, .su-logo__alt { display: contents; }
+.su-logo__alt { display: none; }
+.su-header--over:not(.is-scrolled):not(.is-menu) .su-logo__normal { display: none; }
+.su-header--over:not(.is-scrolled):not(.is-menu) .su-logo__alt { display: contents; }

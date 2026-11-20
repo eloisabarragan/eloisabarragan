@@ -1,4 +1,4 @@
-# Tema WordPress — Saravia Ubilla (v1.3.0)
+# Tema WordPress — Saravia Ubilla (v1.3.1)
 
 Diseño del sitio de Saravia Ubilla (bienes raíces, remates y tasaciones):
 - Mantiene la identidad: logotipo SARAVIA/UBILLA, azul marino, blanco y celeste.

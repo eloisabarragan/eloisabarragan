@@ -55,22 +55,34 @@ function su_icon( $name, $class = '' ) {
 /**
  * Logo: el subido en Identidad del sitio o el logotipo tipográfico.
  *
- * @param string      $size    Clase extra (ej. su-logo--light).
+ * Sobre fondos oscuros (portada y pie) un logo subido con letras oscuras no se lee:
+ * ahí se usa el "Logo para fondos oscuros" del Personalizador o, si no hay, la versión
+ * tipográfica clara del mismo logo (SARAVIA en blanco, UBILLA en celeste).
+ *
+ * @param string      $size    Clase extra (su-logo--light = siempre sobre fondo oscuro).
  * @param string|null $tagline Bajada distinta a la del encabezado (la usa el pie).
  */
 function su_logo( $size = '', $tagline = null ) {
-	$tag = null === $tagline ? su_mod( 'logo_tagline' ) : $tagline;
-	echo '<a class="su-logo ' . esc_attr( $size ) . '" href="' . esc_url( home_url( '/' ) ) . '" rel="home">';
-	if ( has_custom_logo() ) {
-		echo wp_get_attachment_image( get_theme_mod( 'custom_logo' ), 'full', false, array( 'class' => 'su-logo__img', 'alt' => get_bloginfo( 'name' ) ) );
-		if ( null !== $tagline && '' !== $tagline ) {
-			echo '<span class="su-logo__tag">' . esc_html( $tagline ) . '</span>';
-		}
-	} else {
-		echo '<span class="su-logo__word"><b>SARAVIA</b><span>UBILLA</span></span>';
+	$tag   = null === $tagline ? su_mod( 'logo_tagline' ) : $tagline;
+	$dark  = false !== strpos( $size, 'su-logo--light' );
+	$light = (int) su_mod( 'logo_light' );
+	$word  = function () use ( $tag ) {
+		$out = '<span class="su-logo__word"><b>SARAVIA</b><span>UBILLA</span></span>';
 		if ( '' !== (string) $tag ) {
-			echo '<span class="su-logo__tag">' . esc_html( $tag ) . '</span>';
+			$out .= '<span class="su-logo__tag">' . esc_html( $tag ) . '</span>';
 		}
+		return $out;
+	};
+	$alt = $light ? wp_get_attachment_image( $light, 'full', false, array( 'class' => 'su-logo__img', 'alt' => get_bloginfo( 'name' ) ) ) : $word();
+	echo '<a class="su-logo ' . esc_attr( $size ) . '" href="' . esc_url( home_url( '/' ) ) . '" rel="home">';
+	if ( ! has_custom_logo() ) {
+		echo $word(); // phpcs:ignore WordPress.Security.EscapeOutput
+	} elseif ( $dark ) {
+		echo $alt; // phpcs:ignore WordPress.Security.EscapeOutput
+	} else {
+		// Encabezado: el logo original y, oculta, la versión clara (se muestra sobre la portada).
+		echo '<span class="su-logo__normal">' . wp_get_attachment_image( get_theme_mod( 'custom_logo' ), 'full', false, array( 'class' => 'su-logo__img', 'alt' => get_bloginfo( 'name' ) ) ) . '</span>';
+		echo '<span class="su-logo__alt" aria-hidden="true">' . $alt . '</span>'; // phpcs:ignore WordPress.Security.EscapeOutput
 	}
 	echo '</a>';
 }

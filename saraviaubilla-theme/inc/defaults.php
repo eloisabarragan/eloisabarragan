@@ -15,6 +15,7 @@ function su_defaults() {
 		'color_celeste'  => '#559FCF',
 		'color_grafito'  => '#3F4348',
 		'logo_tagline'   => 'Bienes raíces - Remates - Tasaciones',
+		'logo_light'     => '',
 
 		// Encabezado: botón destacado a la derecha del menú.
 		'header_cta'     => 'Consultar',

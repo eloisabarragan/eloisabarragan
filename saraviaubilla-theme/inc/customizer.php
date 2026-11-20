@@ -76,6 +76,7 @@ function su_customize_register( $wp_customize ) {
 
 	// Imágenes.
 	$images = array(
+		'logo_light'  => array( 'su_brand', __( 'Logo para fondos oscuros (opcional)', 'saraviaubilla' ) ),
 		'hero_image'  => array( 'su_hero', __( 'Imagen de fondo de la portada (opcional)', 'saraviaubilla' ) ),
 		'about_image' => array( 'su_about', __( 'Foto del equipo / oficina (opcional)', 'saraviaubilla' ) ),
 		'tasacion_image' => array( 'su_tasacion', __( 'Foto de la sección (opcional)', 'saraviaubilla' ) ),
