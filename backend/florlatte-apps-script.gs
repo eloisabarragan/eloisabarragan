@@ -5,7 +5,7 @@
  *  - Hoja "Productos": la tienda muestra lo que hay acá (agregar, sacar, precios, stock y fotos).
  *  - Hoja "Pedidos": cada compra queda registrada con los datos del cliente y el estado del pago.
  *  - Hoja "Envios": zonas de envío y su precio (se suma al total que se cobra).
- *  - Hojas "Arma tu ramo", "Tamaños", "Extras", "Ocasiones" y "Destacados": lo que se ve en
+ *  - Hojas "Portada", "Arma tu ramo", "Tamaños", "Extras", "Ocasiones" y "Destacados": lo que se ve en
  *    esas partes de la web (flores con precio y colores, tamaños, extras de regalo, etc.).
  *  - Crea el pago en Mercado Pago (Checkout Pro) con el precio calculado acá, nunca el del navegador.
  *  - Cuando Mercado Pago aprueba un pago: descuenta el stock y manda un email a la florería
@@ -24,6 +24,7 @@ const COL_TAMANOS = ['tamaño', 'detalle', 'aumento %', 'activo'];
 const COL_EXTRAS = ['extra', 'precio', 'activo'];
 const COL_OCASIONES = ['ocasion', 'foto', 'activo'];
 const COL_DESTACADOS = ['titulo', 'texto', 'activo'];
+const HOJA_PORTADA = 'Portada', COL_PORTADA = ['dato', 'valor'];
 const COL_PRODUCTOS = ['id', 'nombre', 'categoria', 'precio', 'precio_anterior', 'stock', 'activo', 'descripcion', 'composicion', 'ocasiones', 'color', 'etiqueta', 'entrega_hoy', 'foto', 'orden'];
 const COL_PEDIDOS = ['id', 'fecha', 'estado', 'pago', 'total', 'cliente', 'email', 'telefono', 'destinatario', 'tel_destinatario', 'tipo_entrega', 'fecha_entrega', 'franja', 'direccion', 'barrio', 'indicaciones', 'dedicatoria', 'firma', 'anonimo', 'productos', 'subtotal', 'descuento', 'cupon', 'envio', 'mp_pago_id', 'actualizado', 'items_json'];
 const NOMBRE_TIENDA = 'FlorLatte';
@@ -88,6 +89,15 @@ function instalar() {
     formatear(h, x[1].length);
     h.getRange(2, x[1].indexOf('activo') + 1, 100, 1).setDataValidation(siNo);
   });
+  let portada = ss.getSheetByName(HOJA_PORTADA);
+  if (!portada) {
+    portada = ss.insertSheet(HOJA_PORTADA, 0);
+    portada.appendRow(COL_PORTADA);
+    portada.getRange(2, 1, SEMILLA_PORTADA.length, 2).setValues(SEMILLA_PORTADA);
+    portada.setColumnWidth(1, 160);
+    portada.setColumnWidth(2, 520);
+  }
+  formatear(portada, COL_PORTADA.length);
 
   console.log('Listo. Los avisos de compra llegan a: ' + props.getProperty('EMAIL_AVISOS'));
 }
@@ -146,7 +156,7 @@ function doGet(e) {
       const pp = configPayPal();
       const r = reglas();
       return salida({ products: leerProductos(), zones: leerZonas(), sizes: r.desdePlanilla.sizes ? r.sizes : null, addons: r.desdePlanilla.addons ? r.addons : null,
-        builder: r.desdePlanilla.flowers ? { flowers: r.flowers, base: r.base } : null, occasions: leerOcasiones(), perks: leerDestacados(), payments: { card: !!PropertiesService.getScriptProperties().getProperty('MP_ACCESS_TOKEN'), paypal: payPalActivo(), rate: payPalActivo() ? pp.rate : null } });
+        builder: r.desdePlanilla.flowers ? { flowers: r.flowers, base: r.base } : null, occasions: leerOcasiones(), perks: leerDestacados(), hero: leerPortada(), payments: { card: !!PropertiesService.getScriptProperties().getProperty('MP_ACCESS_TOKEN'), paypal: payPalActivo(), rate: payPalActivo() ? pp.rate : null } });
     }
     if (q.action === 'order') {
       if (q.payment_id && /^\d+$/.test(q.payment_id)) { try { syncPago(q.payment_id); } catch (err) { console.error(err); } }
@@ -437,6 +447,22 @@ function leerOcasiones() {
   const o = leerHoja(HOJA_OCASIONES);
   if (!o) return null;
   return o.filter(function (f) { return txt(f.ocasion) && estaActivo(f.activo); }).map(function (f) { return { name: txt(f.ocasion, 40), img: txt(f.foto, 500) }; });
+}
+// Banner de arriba: foto, textos, avisos de la franja superior y los 3 datos
+function leerPortada() {
+  const filas = leerHoja(HOJA_PORTADA);
+  if (!filas) return null;
+  const out = { avisos: [], datos: [] };
+  filas.forEach(function (f) {
+    const k = normTxt(f.dato), v = txt(f.valor, 500);
+    if (!k) return;
+    if (k.indexOf('aviso') === 0) { if (v) out.avisos.push(v.slice(0, 140)); return; }
+    if (k.indexOf('dato') === 0) { if (v) out.datos.push(v.slice(0, 80)); return; }
+    const clave = k.indexOf('foto') === 0 ? 'foto' : k.indexOf('frase chica') === 0 ? 'eyebrow' : k.indexOf('titulo') === 0 ? 'titulo'
+      : k.indexOf('frase en cursiva') === 0 ? 'cursiva' : k.indexOf('texto') === 0 ? 'texto' : null;
+    if (clave && v) out[clave] = v;
+  });
+  return out;
 }
 function leerDestacados() {
   const d = leerHoja(HOJA_DESTACADOS);
@@ -1045,6 +1071,20 @@ const SEMILLA_EXTRAS = [
 const SEMILLA_OCASIONES = [
   ["Bodas", "", "sí"], ["Amor", "", "sí"], ["Cumpleaños", "", "sí"], ["Aniversario", "", "sí"],
   ["Nacimiento", "", "sí"], ["Gracias", "", "sí"], ["Condolencias", "", "sí"], ["Porque sí", "", "sí"]
+];
+const SEMILLA_PORTADA = [
+  ["Foto", ""],
+  ["Frase chica", "Atelier botánico · Las Piedras"],
+  ["Título", "Donde *laten* las flores."],
+  ["Frase en cursiva", "Nos encanta acompañarte"],
+  ["Texto", "Ramos, plantas y flores armados a mano en nuestro espacio. Elegí, escribí tu dedicatoria y lo llevamos a quien más querés."],
+  ["Aviso 1", "Envíos a domicilio o *retiro sin costo* en el atelier"],
+  ["Aviso 2", "Pedí antes de las 16:00 y *llega hoy*"],
+  ["Aviso 3", "Entregas *todos los días*, también domingos"],
+  ["Aviso 4", "Tarjeta con dedicatoria *de regalo* en cada pedido"],
+  ["Dato 1", "Floristería / & vivero"],
+  ["Dato 2", "Novias / ramos a medida"],
+  ["Dato 3", "Hecho a mano / con amor en nuestro espacio"]
 ];
 const SEMILLA_DESTACADOS = [
   ["Entrega en el día", "Pedí antes de las 16:00", "sí"],

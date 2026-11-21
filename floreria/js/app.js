@@ -182,17 +182,47 @@
       'Entregas <b>todos los días</b>, también domingos',
       'Tarjeta con dedicatoria <b>de regalo</b> en cada pedido'
     ];
+    setAnnounce(msgs);
     const track = $('#announce');
-    track.innerHTML = msgs.map((m, i) => `<p class="announce__item${i ? '' : ' on'}">${m}</p>`).join('');
     let i = 0;
     setInterval(() => {
       const items = $$('.announce__item', track);
+      if (items.length < 2) return;
+      if (i >= items.length || !items[i].classList.contains('on')) i = Math.max(0, items.findIndex(x => x.classList.contains('on')));
       items[i].classList.remove('on'); items[i].classList.add('out');
       const prev = items[i];
       setTimeout(() => prev.classList.remove('out'), 600);
       i = (i + 1) % items.length;
       items[i].classList.add('on');
     }, 4200);
+  }
+  function setAnnounce(msgs) {
+    const bar = $('#announce').closest('.announce');
+    if (bar) bar.hidden = !msgs.length;
+    $('#announce').innerHTML = msgs.map((m, i) => `<p class="announce__item${i ? '' : ' on'}">${m}</p>`).join('');
+  }
+  // Texto de la planilla: *palabra* se muestra resaltada
+  const rich = (t, tag) => esc(t).replace(/\*([^*]+)\*/g, `<${tag}>$1</${tag}>`);
+  // Si algún texto dice "antes de las 14:00", la entrega en el día se corta a esa hora
+  function cutoffFrom(texts) {
+    const m = texts.map(t => /antes de las (\d{1,2})/i.exec(t)).find(Boolean);
+    if (m && +m[1] >= 6 && +m[1] <= 22 && +m[1] !== C.sameDayCutoffHour) { C.sameDayCutoffHour = +m[1]; renderCutoff(); return true; }
+    return false;
+  }
+  function renderHero(h) {
+    const hero = $('.hero'); if (!hero || !h) return;
+    const set = (sel, html) => { const el = $(sel, hero); if (el && html) el.innerHTML = html; };
+    set('.eyebrow', h.eyebrow && esc(h.eyebrow));
+    set('.hero__title', h.titulo && rich(h.titulo, 'em'));
+    set('.hero__script', h.cursiva && esc(h.cursiva));
+    set('.hero__lead', h.texto && esc(h.texto));
+    if (h.foto) { const img = $('.hero__frame img', hero); if (img) { img.src = photoUrl(h.foto); img.alt = 'FlorLatte'; } }
+    if (Array.isArray(h.datos)) {
+      const ul = $('.hero__stats', hero);
+      ul.hidden = !h.datos.length;
+      ul.innerHTML = h.datos.map(d => { const [a, b = ''] = d.split('/'); return `<li><strong>${esc(a.trim())}</strong><span>${esc(b.trim())}</span></li>`; }).join('');
+    }
+    if (Array.isArray(h.avisos)) { cutoffFrom(h.avisos); setAnnounce(h.avisos.map(a => rich(a, 'b'))); }
   }
   function sameDayInfo(now = new Date()) {
     const cutoff = new Date(now); cutoff.setHours(C.sameDayCutoffHour, 0, 0, 0);
@@ -236,10 +266,7 @@
     box.innerHTML = list.map((k, i) => `<div class="perk"><span data-icon="${PERK_ICONS[i % PERK_ICONS.length]}"></span><div><strong>${esc(k.title)}</strong><span>${esc(k.text)}</span></div></div>`).join('');
     hydrateIcons(box);
     // Si un destacado dice "antes de las 14:00", la entrega en el día se corta a esa hora
-    const m = list.map(k => /antes de las (\d{1,2})/i.exec(k.text + ' ' + k.title)).find(Boolean);
-    if (m && +m[1] >= 6 && +m[1] <= 22 && +m[1] !== C.sameDayCutoffHour) {
-      C.sameDayCutoffHour = +m[1];
-      renderCutoff();
+    if (cutoffFrom(list.map(k => k.text + ' ' + k.title))) {
       $$('.announce__item').forEach(el => { if (/antes de las|before|antes das/i.test(el.textContent)) el.innerHTML = `Pedí antes de las ${cutoffTxt()} y <b>llega hoy</b>`; });
     }
   }
@@ -1289,8 +1316,9 @@
   async function loadRemoteProducts() {
     if (DEMO || !API) return;
     try {
-      const { products: rows, zones, payments, sizes, addons, builder: bld, occasions, perks } = await planilla({ action: 'products' });
+      const { products: rows, zones, payments, sizes, addons, builder: bld, occasions, perks, hero } = await planilla({ action: 'products' });
       applySheetContent({ sizes, addons, bld, occasions, perks });
+      if (hero) renderHero(hero);
       if (payments) { state.payments = Object.assign({ card: true, paypal: false, rate: null }, payments); if (!state.payments.paypal && co.pay === 'paypal') co.pay = 'mp'; }
       if (Array.isArray(zones) && zones.length) state.zones = zones.filter(z => z && z.name && z.price >= 0);
       const products = (rows || []).map(normalizeRow).filter(p => p.id && p.name && p.price > 0 && p.active).sort((a, b) => a.order - b.order);

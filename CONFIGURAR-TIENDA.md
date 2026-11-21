@@ -70,6 +70,7 @@ Cada fila es una zona: `zona` (ej. Zona E), `barrios` (separados por coma), `pre
 
 Las crea **FlorLatte → Instalar o reparar hojas** (si ya existen, no las toca). Para sacar algo, poné `no` en `activo`. Los cambios se ven al recargar la web.
 
+- **Portada** (el banner): columna `dato` fija y `valor` editable: Foto, Frase chica, Título, Frase en cursiva, Texto, Aviso 1…N (la franja bordó de arriba) y Dato 1…N (las palabras grandes, "Grande / chico"). `*palabra*` se resalta; un aviso o dato vacío no se muestra.
 - **Arma tu ramo**: `flor`, `precio` (por tallo), `colores` (separados por coma: rojo, rosa, rosa claro, fucsia, magenta, blanco, crema, durazno, coral, naranja, amarillo, lila, violeta, celeste, azul, verde, bordo, o un código como #f4a6b8) y `activo`. La fila **Armado (papel y eucalipto)** es lo que se suma a cada ramo. Una flor nueva se dibuja como margarita (rosa, peonía, tulipán, girasol, lilium, hortensia, anémona, clavel y orquídea tienen su propio dibujo).
 - **Tamaños**: `tamaño`, `detalle` (el textito de abajo) y `aumento %` sobre el precio del producto (0 = precio de la foto, 35 = 35 % más). El primero es el que viene marcado.
 - **Extras**: los "Completá el regalo", con `extra` y `precio`.
