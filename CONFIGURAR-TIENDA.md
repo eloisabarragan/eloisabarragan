@@ -66,6 +66,18 @@ Para actualizar la web más adelante: en el sitio, **Deploys** → arrastrá de 
 
 Cada fila es una zona: `zona` (ej. Zona E), `barrios` (separados por coma), `precio` y `activo` (sí/no). El cliente elige su barrio en el checkout y se suma el precio de la zona; si la entrega es para el mismo día se suman $20 (`sameDayExtra` en `floreria/js/data.js` y en el bloque `TIENDA` del script). Para dejar de enviar a una zona, poné `no` en `activo`. Si un barrio no está en la lista, el cliente puede elegir **Retiro en el local** o escribir por WhatsApp.
 
+## Otras partes de la web que se editan desde la planilla
+
+Las crea **FlorLatte → Instalar o reparar hojas** (si ya existen, no las toca). Para sacar algo, poné `no` en `activo`. Los cambios se ven al recargar la web.
+
+- **Arma tu ramo**: `flor`, `precio` (por tallo), `colores` (separados por coma: rojo, rosa, rosa claro, fucsia, magenta, blanco, crema, durazno, coral, naranja, amarillo, lila, violeta, celeste, azul, verde, bordo, o un código como #f4a6b8) y `activo`. La fila **Armado (papel y eucalipto)** es lo que se suma a cada ramo. Una flor nueva se dibuja como margarita (rosa, peonía, tulipán, girasol, lilium, hortensia, anémona, clavel y orquídea tienen su propio dibujo).
+- **Tamaños**: `tamaño`, `detalle` (el textito de abajo) y `aumento %` sobre el precio del producto (0 = precio de la foto, 35 = 35 % más). El primero es el que viene marcado.
+- **Extras**: los "Completá el regalo", con `extra` y `precio`.
+- **Ocasiones**: `ocasion` y `foto` (opcional, link de Drive como en Productos; sin foto se usa un dibujo). En la hoja Productos, la columna `ocasiones` usa estos nombres.
+- **Destacados**: los cartelitos de arriba (`titulo` y `texto`). Si uno dice "antes de las 14:00", la entrega en el día se corta a esa hora.
+
+Los precios se vuelven a calcular en el script con estas hojas: lo que se cobra siempre coincide con lo que se ve. Los textos que escribe la clienta se muestran tal cual en inglés y portugués (solo se traducen los de fábrica).
+
 ## Idiomas
 
 La web tiene selector **ES / EN / PT** arriba a la derecha. Arranca en el idioma del navegador del visitante (si no es inglés ni portugués, en español). Las traducciones están en `floreria/js/i18n.js`: los productos del catálogo inicial ya están traducidos; un producto nuevo cargado en la planilla se muestra con el nombre en español en los tres idiomas, salvo que se agregue su traducción a ese archivo.

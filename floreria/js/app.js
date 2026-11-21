@@ -174,10 +174,11 @@
   });
 
   /* ---------- Anuncios, contador de entrega ---------- */
+  const cutoffTxt = () => String(C.sameDayCutoffHour).padStart(2, '0') + ':00';
   function initAnnounce() {
     const msgs = [
       C.freeShippingFrom > 0 ? `Envío gratis en compras desde <b>${money(C.freeShippingFrom)}</b>` : 'Envíos a domicilio o <b>retiro sin costo</b> en el atelier',
-      'Pedí antes de las 16:00 y <b>llega hoy</b>',
+      `Pedí antes de las ${cutoffTxt()} y <b>llega hoy</b>`,
       'Entregas <b>todos los días</b>, también domingos',
       'Tarjeta con dedicatoria <b>de regalo</b> en cada pedido'
     ];
@@ -219,8 +220,28 @@
 
   /* ---------- Ocasiones y categorías ---------- */
   function renderOccasions() {
+    const sec = $('#occasions').closest('section');
+    if (sec) sec.hidden = !D.occasions.length;
     $('#occasions').innerHTML = D.occasions.map(o =>
-      `<button class="occasion${state.f.occasions.has(o.id) && state.f.occasions.size === 1 ? ' active' : ''}" data-occ="${o.id}"><span class="occasion__art">${A.art(Object.assign({ label: o.name }, o.art))}</span>${o.name}</button>`).join('');
+      `<button class="occasion${state.f.occasions.has(o.id) && state.f.occasions.size === 1 ? ' active' : ''}" data-occ="${esc(o.id)}"><span class="occasion__art">${o.img ? `<img src="${esc(photoUrl(o.img))}" alt="" loading="lazy">` : A.art(Object.assign({ label: o.name }, o.art || OCC_ART))}</span>${esc(o.name)}</button>`).join('');
+  }
+  const OCC_ART = { flowers: ['peony', 'rose', 'daisy'], palette: ['#f4a6b8', '#fbf3ee', '#e7b6c0'], bg: '#f3ebe4', count: 6, seed: 29 };
+
+  /* ---------- Destacados (los 4 cartelitos de arriba) ---------- */
+  const PERK_ICONS = ['truck', 'leaf', 'card', 'shield', 'gift', 'sparkle', 'clock', 'zap'];
+  function renderPerks(list) {
+    const box = $('.perks__inner'); if (!box) return;
+    box.closest('.perks').hidden = !list.length;
+    box.style.gridTemplateColumns = list.length && list.length < 4 && innerWidth > 900 ? `repeat(${list.length}, 1fr)` : '';
+    box.innerHTML = list.map((k, i) => `<div class="perk"><span data-icon="${PERK_ICONS[i % PERK_ICONS.length]}"></span><div><strong>${esc(k.title)}</strong><span>${esc(k.text)}</span></div></div>`).join('');
+    hydrateIcons(box);
+    // Si un destacado dice "antes de las 14:00", la entrega en el día se corta a esa hora
+    const m = list.map(k => /antes de las (\d{1,2})/i.exec(k.text + ' ' + k.title)).find(Boolean);
+    if (m && +m[1] >= 6 && +m[1] <= 22 && +m[1] !== C.sameDayCutoffHour) {
+      C.sameDayCutoffHour = +m[1];
+      renderCutoff();
+      $$('.announce__item').forEach(el => { if (/antes de las|before|antes das/i.test(el.textContent)) el.innerHTML = `Pedí antes de las ${cutoffTxt()} y <b>llega hoy</b>`; });
+    }
   }
   $('#occasions').addEventListener('click', e => {
     const b = e.target.closest('[data-occ]'); if (!b) return;
@@ -401,11 +422,13 @@
     if (existing) existing.qty += item.qty; else state.cart.push(item);
     saveCart();
   }
-  function productItem(p, sizeId = 'clasico', addons = [], qty = 1) {
-    const size = D.sizes.find(s => s.id === sizeId);
+  function productItem(p, sizeId, addons = [], qty = 1) {
+    const size = p.cat === 'plantas' ? { id: D.sizes[0].id, name: '', mult: 1 } : (D.sizes.find(s => s.id === sizeId) || D.sizes[0]);
+    sizeId = size.id;
+    addons = addons.filter(a => D.addons.some(x => x.id === a));
     const addonObjs = addons.map(a => D.addons.find(x => x.id === a));
     const unit = round10(p.price * size.mult) + addonObjs.reduce((s, a) => s + a.price, 0);
-    const opts = [p.cat === 'plantas' ? null : size.name].concat(addonObjs.map(a => '+ ' + a.name)).filter(Boolean).join(' · ');
+    const opts = [size.name || null].concat(addonObjs.map(a => '+ ' + a.name)).filter(Boolean).join(' · ');
     return { key: [p.id, sizeId].concat(addons.slice().sort()).join('|'), kind: 'product', id: p.id, name: p.name, size: sizeId, addons, unit, qty, opts };
   }
   function noStock(p) {
@@ -535,7 +558,7 @@
   function openProduct(id) {
     const p = byId(id); if (!p) return;
     pushRecent(id);
-    let size = 'clasico', qty = 1, view = 0;
+    let size = D.sizes[0].id, qty = 1, view = 0;
     const addons = new Set();
     const isPlant = p.cat === 'plantas';
     const panel = $('#pmPanel');
@@ -552,8 +575,8 @@
         <div class="pm__price" id="pmPrice"></div>
         <p class="pm__desc">${esc(p.desc)}</p>
         <p class="pm__stems">${esc(p.stems)}</p>
-        ${isPlant ? '' : `<div><p class="opt-title"><span>Tamaño</span></p><div class="sizes" id="pmSizes">${D.sizes.map(s => `<button class="size" data-size="${s.id}" aria-pressed="${s.id === size}"><strong>${s.name}</strong><span>${s.note}</span><em>${money(round10(p.price * s.mult))}</em></button>`).join('')}</div></div>`}
-        <div><p class="opt-title"><span>Completá el regalo</span><span>opcional</span></p><div class="addons" id="pmAddons">${D.addons.map(a => `<label class="addon"><span class="check"><input type="checkbox" value="${a.id}"></span>${a.name}<span>+${money(a.price)}</span></label>`).join('')}</div></div>
+        ${isPlant ? '' : `<div><p class="opt-title"><span>Tamaño</span></p><div class="sizes" id="pmSizes">${D.sizes.map(s => `<button class="size" data-size="${s.id}" aria-pressed="${s.id === size}"><strong>${esc(s.name)}</strong><span>${esc(s.note || '')}</span><em>${money(round10(p.price * s.mult))}</em></button>`).join('')}</div></div>`}
+        <div${D.addons.length ? '' : ' hidden'}><p class="opt-title"><span>Completá el regalo</span><span>opcional</span></p><div class="addons" id="pmAddons">${D.addons.map(a => `<label class="addon"><span class="check"><input type="checkbox" value="${esc(a.id)}"></span>${esc(a.name)}<span>+${money(a.price)}</span></label>`).join('')}</div></div>
         <div class="pm__buy">
           <div class="qty"><button data-pq="-1" aria-label="Menos">${icon('minus')}</button><output id="pmQty">1</output><button data-pq="1" aria-label="Más">${icon('plus')}</button></div>
           <button class="btn btn--primary" id="pmAdd"></button>
@@ -570,12 +593,12 @@
           <details><summary>Garantía de frescura ${icon('plus')}</summary><p>Si algo no llega perfecto, mandanos una foto dentro de las 48 h y lo reponemos sin costo.</p></details>
         </div>
       </div>`;
-    const mult = () => (D.sizes.find(s => s.id === size) || D.sizes[0]).mult;
+    const mult = () => isPlant ? 1 : (D.sizes.find(s => s.id === size) || D.sizes[0]).mult;
     const unit = () => round10(p.price * mult()) + Array.from(addons).reduce((s, a) => s + D.addons.find(x => x.id === a).price, 0);
     function paint() {
       $('#pmMain').innerHTML = artFor(p, { mult: mult(), variant: view });
       $('#pmThumbs').innerHTML = [0, 1, 2].map(v => `<button class="pm__thumb" data-view="${v}" aria-pressed="${v === view}" aria-label="Vista ${v + 1}">${artFor(p, { mult: mult(), variant: v })}</button>`).join('');
-      $('#pmPrice').innerHTML = `${money(unit())}${p.oldPrice && size === 'clasico' ? `<s>${money(p.oldPrice)}</s><span class="save">Ahorrás ${money(p.oldPrice - p.price)}</span>` : ''}`;
+      $('#pmPrice').innerHTML = `${money(unit())}${p.oldPrice && size === D.sizes[0].id ? `<s>${money(p.oldPrice)}</s><span class="save">Ahorrás ${money(p.oldPrice - p.price)}</span>` : ''}`;
       $('#pmAdd').disabled = left(p) < 1;
       $('#pmAdd').innerHTML = soldOut(p) ? 'Agotado' : left(p) < 1 ? 'Ya está todo en tu carrito' : `${icon('bag')}Agregar · ${money(unit() * qty)}`;
       $('#pmQty').textContent = qty;
@@ -632,15 +655,24 @@
     wrap: 'kraft',
     items: { rose: { qty: 5, color: '#f4a6b8' }, peony: { qty: 2, color: '#f4a6b8' }, daisy: { qty: 3, color: '#ffffff' } }
   };
-  D.builderFlowers.forEach(f => { if (!builder.items[f.type]) builder.items[f.type] = { qty: 0, color: f.colors[0] }; });
+  function syncBuilder() {
+    D.builderFlowers.forEach(f => {
+      const it = builder.items[f.type];
+      if (!it) builder.items[f.type] = { qty: 0, color: f.colors[0] };
+      else if (!f.colors.includes(it.color)) it.color = f.colors[0];
+    });
+    if (!D.wraps.some(w => w.id === builder.wrap)) builder.wrap = D.wraps[0].id;
+  }
+  syncBuilder();
+  const drawOf = f => f.art || f.type;
   function builderStems() {
     const stems = [];
-    D.builderFlowers.forEach(f => { const it = builder.items[f.type]; for (let i = 0; i < it.qty; i++) stems.push({ type: f.type, color: it.color }); });
+    D.builderFlowers.forEach(f => { const it = builder.items[f.type]; for (let i = 0; i < it.qty; i++) stems.push({ type: drawOf(f), color: it.color }); });
     // intercalar para que el ramo se vea mezclado
     for (let i = stems.length - 1; i > 0; i--) { const j = (i * 7 + 3) % (i + 1); [stems[i], stems[j]] = [stems[j], stems[i]]; }
     return stems;
   }
-  function builderPrice() { return D.builderFlowers.reduce((s, f) => s + f.price * builder.items[f.type].qty, 0) + 350; }
+  function builderPrice() { return D.builderFlowers.reduce((s, f) => s + f.price * builder.items[f.type].qty, 0) + (D.builderBase ?? 350); }
   function builderArtCfg() {
     const wrap = D.wraps.find(w => w.id === builder.wrap);
     const stems = builderStems();
@@ -658,8 +690,8 @@
     $('#stems').innerHTML = D.builderFlowers.map(f => {
       const it = builder.items[f.type];
       return `<div class="stem${it.qty ? ' has' : ''}" data-i18n-ctx="flor">
-        <span class="stem__icon">${miniFlower(f.type, it.color)}</span>
-        <div class="stem__info"><strong>${f.name} <span>${money(f.price)} c/u</span></strong>
+        <span class="stem__icon">${miniFlower(drawOf(f), it.color)}</span>
+        <div class="stem__info"><strong>${esc(f.name)} <span>${money(f.price)} c/u</span></strong>
           ${f.colors.length > 1 ? `<div class="stem__colors">${f.colors.map(c => `<button class="dot" style="background:${c}" data-bcolor="${f.type}" data-c="${c}" aria-pressed="${c === it.color}" aria-label="Color ${c}"></button>`).join('')}</div>` : ''}
         </div>
         <div class="qty"><button data-bq="${f.type}" data-d="-1" aria-label="Quitar ${f.name}">${icon('minus')}</button><output>${it.qty}</output><button data-bq="${f.type}" data-d="1" aria-label="Agregar ${f.name}">${icon('plus')}</button></div>
@@ -678,7 +710,7 @@
   $('#builderRandom').addEventListener('click', () => {
     const pickN = () => Math.random() < 0.45 ? 0 : 1 + Math.floor(Math.random() * 5);
     D.builderFlowers.forEach(f => { builder.items[f.type] = { qty: pickN(), color: f.colors[Math.floor(Math.random() * f.colors.length)] }; });
-    if (builderStems().length < 5) builder.items.rose.qty += 5;
+    if (builderStems().length < 5) builder.items[D.builderFlowers[0].type].qty += 5;
     builder.wrap = D.wraps[Math.floor(Math.random() * D.wraps.length)].id;
     renderBuilder();
   });
@@ -1226,10 +1258,39 @@
       order: toNumber(row.orden) ?? 999
     };
   }
+  // Tamaños, extras, flores de "Armá tu ramo", ocasiones y destacados que vienen de la planilla
+  function applySheetContent({ sizes, addons, bld, occasions, perks }) {
+    if (Array.isArray(sizes) && sizes.length) D.sizes = sizes.filter(x => x && x.id && x.mult > 0);
+    if (Array.isArray(addons)) D.addons = addons.filter(x => x && x.id && x.price >= 0);
+    if (bld && Array.isArray(bld.flowers) && bld.flowers.length) {
+      D.builderFlowers = bld.flowers.filter(f => f && f.type && f.colors && f.colors.length);
+      D.builderBase = Number(bld.base) || 0;
+      syncBuilder(); renderBuilder();
+    }
+    if (Array.isArray(occasions)) {
+      const used = new Set();
+      D.occasions = occasions.filter(o => o && o.name).map(o => {
+        const def = LOCAL_OCC.find(x => normTxt(x.name) === normTxt(o.name) || normTxt(x.id) === normTxt(o.name));
+        let id = def ? def.id : normTxt(o.name).replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'ocasion';
+        while (used.has(id)) id += '-2';
+        used.add(id);
+        return { id, name: o.name, img: o.img || '', art: def ? def.art : null };
+      });
+      state.f.occasions.forEach(id => { if (!used.has(id)) state.f.occasions.delete(id); });
+      renderOccasions();
+    }
+    if (Array.isArray(perks)) renderPerks(perks.filter(k => k && (k.title || k.text)));
+    // Los productos del carrito se recalculan con los precios nuevos
+    state.cart.forEach(i => { if (i.kind === 'product') { const p = byId(i.id); if (p) Object.assign(i, productItem(p, i.size, i.addons || [], i.qty), { key: i.key }); } });
+    state.cart = state.cart.filter(i => i.kind !== 'custom' || !i.build || Object.keys(i.build.items || {}).every(t => !i.build.items[t].qty || D.builderFlowers.some(f => f.type === t)));
+    state.cart.forEach(i => { if (i.kind === 'custom' && i.build) i.unit = D.builderFlowers.reduce((s, f) => s + f.price * ((i.build.items[f.type] || {}).qty || 0), 0) + (D.builderBase ?? 350); });
+  }
+  const LOCAL_OCC = D.occasions.slice();
   async function loadRemoteProducts() {
     if (DEMO || !API) return;
     try {
-      const { products: rows, zones, payments } = await planilla({ action: 'products' });
+      const { products: rows, zones, payments, sizes, addons, builder: bld, occasions, perks } = await planilla({ action: 'products' });
+      applySheetContent({ sizes, addons, bld, occasions, perks });
       if (payments) { state.payments = Object.assign({ card: true, paypal: false, rate: null }, payments); if (!state.payments.paypal && co.pay === 'paypal') co.pay = 'mp'; }
       if (Array.isArray(zones) && zones.length) state.zones = zones.filter(z => z && z.name && z.price >= 0);
       const products = (rows || []).map(normalizeRow).filter(p => p.id && p.name && p.price > 0 && p.active).sort((a, b) => a.order - b.order);

@@ -5,6 +5,8 @@
  *  - Hoja "Productos": la tienda muestra lo que hay acá (agregar, sacar, precios, stock y fotos).
  *  - Hoja "Pedidos": cada compra queda registrada con los datos del cliente y el estado del pago.
  *  - Hoja "Envios": zonas de envío y su precio (se suma al total que se cobra).
+ *  - Hojas "Arma tu ramo", "Tamaños", "Extras", "Ocasiones" y "Destacados": lo que se ve en
+ *    esas partes de la web (flores con precio y colores, tamaños, extras de regalo, etc.).
  *  - Crea el pago en Mercado Pago (Checkout Pro) con el precio calculado acá, nunca el del navegador.
  *  - Cuando Mercado Pago aprueba un pago: descuenta el stock y manda un email a la florería
  *    y otro al cliente. Se procesa una sola vez aunque el aviso llegue repetido.
@@ -16,6 +18,12 @@ const HOJA_PRODUCTOS = 'Productos';
 const HOJA_PEDIDOS = 'Pedidos';
 const HOJA_ENVIOS = 'Envios';
 const COL_ENVIOS = ['zona', 'barrios', 'precio', 'activo'];
+const HOJA_RAMO = 'Arma tu ramo', HOJA_TAMANOS = 'Tamaños', HOJA_EXTRAS = 'Extras', HOJA_OCASIONES = 'Ocasiones', HOJA_DESTACADOS = 'Destacados';
+const COL_RAMO = ['flor', 'precio', 'colores', 'activo'];
+const COL_TAMANOS = ['tamaño', 'detalle', 'aumento %', 'activo'];
+const COL_EXTRAS = ['extra', 'precio', 'activo'];
+const COL_OCASIONES = ['ocasion', 'foto', 'activo'];
+const COL_DESTACADOS = ['titulo', 'texto', 'activo'];
 const COL_PRODUCTOS = ['id', 'nombre', 'categoria', 'precio', 'precio_anterior', 'stock', 'activo', 'descripcion', 'composicion', 'ocasiones', 'color', 'etiqueta', 'entrega_hoy', 'foto', 'orden'];
 const COL_PEDIDOS = ['id', 'fecha', 'estado', 'pago', 'total', 'cliente', 'email', 'telefono', 'destinatario', 'tel_destinatario', 'tipo_entrega', 'fecha_entrega', 'franja', 'direccion', 'barrio', 'indicaciones', 'dedicatoria', 'firma', 'anonimo', 'productos', 'subtotal', 'descuento', 'cupon', 'envio', 'mp_pago_id', 'actualizado', 'items_json'];
 const NOMBRE_TIENDA = 'FlorLatte';
@@ -67,6 +75,19 @@ function instalar() {
   }
   formatear(env, COL_ENVIOS.length);
   env.getRange(2, COL_ENVIOS.indexOf('activo') + 1, 200, 1).setDataValidation(siNo);
+
+  // Hojas de la web: se crean con lo que se ve hoy, y no se tocan si ya existen
+  [[HOJA_RAMO, COL_RAMO, SEMILLA_RAMO], [HOJA_TAMANOS, COL_TAMANOS, SEMILLA_TAMANOS], [HOJA_EXTRAS, COL_EXTRAS, SEMILLA_EXTRAS],
+   [HOJA_OCASIONES, COL_OCASIONES, SEMILLA_OCASIONES], [HOJA_DESTACADOS, COL_DESTACADOS, SEMILLA_DESTACADOS]].forEach(function (x) {
+    let h = ss.getSheetByName(x[0]);
+    if (!h) h = ss.insertSheet(x[0]);
+    if (h.getLastRow() === 0) {
+      h.appendRow(x[1]);
+      h.getRange(2, 1, x[2].length, x[1].length).setValues(x[2]);
+    }
+    formatear(h, x[1].length);
+    h.getRange(2, x[1].indexOf('activo') + 1, 100, 1).setDataValidation(siNo);
+  });
 
   console.log('Listo. Los avisos de compra llegan a: ' + props.getProperty('EMAIL_AVISOS'));
 }
@@ -123,7 +144,9 @@ function doGet(e) {
     const q = (e && e.parameter) || {};
     if (q.action === 'products') {
       const pp = configPayPal();
-      return salida({ products: leerProductos(), zones: leerZonas(), payments: { card: !!PropertiesService.getScriptProperties().getProperty('MP_ACCESS_TOKEN'), paypal: payPalActivo(), rate: payPalActivo() ? pp.rate : null } });
+      const r = reglas();
+      return salida({ products: leerProductos(), zones: leerZonas(), sizes: r.desdePlanilla.sizes ? r.sizes : null, addons: r.desdePlanilla.addons ? r.addons : null,
+        builder: r.desdePlanilla.flowers ? { flowers: r.flowers, base: r.base } : null, occasions: leerOcasiones(), perks: leerDestacados(), payments: { card: !!PropertiesService.getScriptProperties().getProperty('MP_ACCESS_TOKEN'), paypal: payPalActivo(), rate: payPalActivo() ? pp.rate : null } });
     }
     if (q.action === 'order') {
       if (q.payment_id && /^\d+$/.test(q.payment_id)) { try { syncPago(q.payment_id); } catch (err) { console.error(err); } }
@@ -334,6 +357,93 @@ function leerZonas() {
     .map(function (z) { return { name: z.name, price: z.price, barrios: z.barrios }; });
 }
 
+/* ---------------- Contenido editable de la web ---------------- */
+
+// Filas de una hoja, o null si la hoja no existe o está vacía (entonces se usa lo de fábrica)
+function leerHoja(nombre) {
+  const h = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(nombre);
+  if (!h || h.getLastRow() < 2) return null;
+  return leerFilas(h).filas;
+}
+function estaActivo(v) { return !/^(no|false|0)$/.test(normTxt(v)); }
+function slug(s) { return normTxt(s).replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 40); }
+function idUnico(base, usados) { let id = base || 'item', n = 2; while (usados[id]) id = base + '-' + n++; usados[id] = 1; return id; }
+
+// Colores que se pueden escribir en la planilla (o un código como #f4a6b8)
+const COLORES = {
+  'rojo': '#b3122e', 'bordo': '#7a1f2b', 'rosa': '#f4a6b8', 'rosa claro': '#fbe7ea', 'rosado': '#f4a6b8', 'rosa palido': '#fbe7ea',
+  'fucsia': '#e86a92', 'rosa fuerte': '#e86a92', 'magenta': '#c7365f', 'blanco': '#fdfbf6', 'crema': '#f4f1ea', 'marfil': '#f4f1ea',
+  'durazno': '#f7b59a', 'salmon': '#ff7f6a', 'coral': '#ff7f6a', 'naranja': '#f08a24', 'amarillo': '#f5c518', 'lila': '#b7a6e0',
+  'violeta': '#9a7fd1', 'morado': '#7b4fa0', 'celeste': '#8fb3e0', 'azul': '#5b7fc7', 'verde': '#7fb069', 'negro': '#2c2a2e'
+};
+function leerColores(v) {
+  return String(v === undefined || v === null ? '' : v).split(/[,;\/\n]|\sy\s/).map(function (c) {
+    const t = c.trim();
+    if (/^#[0-9a-f]{6}$/i.test(t)) return t.toLowerCase();
+    return COLORES[normTxt(t)] || null;
+  }).filter(Boolean).slice(0, 6);
+}
+// Qué dibujo usa cada flor (las nuevas se dibujan como margarita)
+const DIBUJOS = [['rosa', 'rose'], ['peon', 'peony'], ['tulip', 'tulip'], ['girasol', 'sunflower'], ['lili', 'lily'], ['lirio', 'lily'],
+  ['hortensia', 'hydrangea'], ['margarita', 'daisy'], ['anemona', 'anemone'], ['clavel', 'carnation'], ['orquidea', 'orchid']];
+function dibujoDe(nombre) {
+  const n = normTxt(nombre);
+  const hit = DIBUJOS.filter(function (d) { return n.indexOf(d[0]) === 0; })[0];
+  return hit ? hit[1] : 'daisy';
+}
+function porcentaje(v) {
+  let a = aNumero(v);
+  if (a === null) return 0;
+  if (typeof v === 'number' && Math.abs(a) > 0 && Math.abs(a) < 1) a = a * 100; // celda con formato %
+  return Math.max(-90, Math.min(500, a));
+}
+
+// Precios de "Arma tu ramo", tamaños y extras: de la planilla si están, si no los de fábrica (TIENDA)
+function reglas() {
+  const r = { sizes: TIENDA.sizes, addons: TIENDA.addons, flowers: TIENDA.builderFlowers, base: TIENDA.builderBase, desdePlanilla: {} };
+  const t = leerHoja(HOJA_TAMANOS);
+  if (t) {
+    const usados = {};
+    const s = t.filter(function (f) { return txt(f['tamaño']) && estaActivo(f.activo); }).map(function (f) {
+      const pct = porcentaje(f['aumento %']);
+      return { id: idUnico(slug(f['tamaño']), usados), name: txt(f['tamaño'], 40), note: txt(f.detalle, 60), mult: Math.round((1 + pct / 100) * 1000) / 1000 };
+    });
+    if (s.length) { r.sizes = s; r.desdePlanilla.sizes = true; }
+  }
+  const e = leerHoja(HOJA_EXTRAS);
+  if (e) {
+    const usados = {};
+    r.addons = e.filter(function (f) { const p = aNumero(f.precio); return txt(f.extra) && p !== null && p >= 0 && estaActivo(f.activo); })
+      .map(function (f) { return { id: idUnico(slug(f.extra), usados), name: txt(f.extra, 80), price: Math.round(aNumero(f.precio)) }; });
+    r.desdePlanilla.addons = true;
+  }
+  const b = leerHoja(HOJA_RAMO);
+  if (b) {
+    const usados = {}, fl = [];
+    let base = r.base;
+    b.forEach(function (f) {
+      const nombre = txt(f.flor, 40), precio = aNumero(f.precio);
+      if (!nombre || precio === null || precio < 0 || !estaActivo(f.activo)) return;
+      if (normTxt(nombre).indexOf('armado') === 0) { base = Math.round(precio); return; }
+      const dibujo = dibujoDe(nombre);
+      const colores = leerColores(f.colores);
+      fl.push({ type: idUnico(usados[dibujo] ? slug(nombre) : dibujo, usados), art: dibujo, name: nombre, price: Math.round(precio), colors: colores.length ? colores : ['#f4a6b8'] });
+    });
+    if (fl.length) { r.flowers = fl; r.base = base; r.desdePlanilla.flowers = true; }
+  }
+  return r;
+}
+function leerOcasiones() {
+  const o = leerHoja(HOJA_OCASIONES);
+  if (!o) return null;
+  return o.filter(function (f) { return txt(f.ocasion) && estaActivo(f.activo); }).map(function (f) { return { name: txt(f.ocasion, 40), img: txt(f.foto, 500) }; });
+}
+function leerDestacados() {
+  const d = leerHoja(HOJA_DESTACADOS);
+  if (!d) return null;
+  return d.filter(function (f) { return (txt(f.titulo) || txt(f.texto)) && estaActivo(f.activo); }).map(function (f) { return { title: txt(f.titulo, 60), text: txt(f.texto, 90) }; });
+}
+
 // Busca la zona por barrio (o por nombre de zona). Devuelve { zona, barrio } o null.
 function buscarZona(zonas, valor) {
   const v = normTxt(valor);
@@ -365,16 +475,17 @@ function redondear10(v) { return Math.round(v / 10) * 10; }
 function entero(v, min, max) { return Math.max(min, Math.min(max, Math.floor(Number(v) || 0))); }
 
 // Mismas reglas que la web (floreria/js/app.js → totals()). Los precios salen de la planilla.
-function calcular(items, cupon, metodo, zona, cat, zonas, fecha) {
+function calcular(items, cupon, metodo, zona, cat, zonas, fecha, R) {
   const C = TIENDA.config, errores = [], lineas = [], uso = {};
+  R = R || reglas();
   if (!Array.isArray(items) || !items.length) errores.push('El carrito está vacío.');
   (items || []).forEach(function (it) {
     const qty = entero(it.qty, 1, 20);
     if (it.kind === 'product') {
       const p = cat.filter(function (x) { return x.id === it.id; })[0];
       if (!p) { errores.push('Uno de los productos ya no está disponible. Revisá tu carrito.'); return; }
-      const size = p.cat === 'plantas' ? TIENDA.sizes[0] : (TIENDA.sizes.filter(function (s) { return s.id === it.size; })[0] || TIENDA.sizes[0]);
-      const extras = (Array.isArray(it.addons) ? it.addons : []).map(function (a) { return TIENDA.addons.filter(function (x) { return x.id === a; })[0]; }).filter(Boolean);
+      const size = p.cat === 'plantas' ? { name: '', mult: 1 } : (R.sizes.filter(function (s) { return s.id === it.size; })[0] || R.sizes[0]);
+      const extras = (Array.isArray(it.addons) ? it.addons : []).map(function (a) { return R.addons.filter(function (x) { return x.id === a; })[0]; }).filter(Boolean);
       const unit = redondear10(p.price * size.mult) + extras.reduce(function (s, a) { return s + a.price; }, 0);
       uso[p.id] = (uso[p.id] || 0) + qty;
       const opts = [p.cat === 'plantas' ? null : size.name].concat(extras.map(function (a) { return '+ ' + a.name; })).filter(Boolean).join(' · ');
@@ -382,14 +493,14 @@ function calcular(items, cupon, metodo, zona, cat, zonas, fecha) {
     } else if (it.kind === 'custom') {
       const b = it.build || {}, partes = [];
       let tallos = 0, suma = 0;
-      TIENDA.builderFlowers.forEach(function (f) {
+      R.flowers.forEach(function (f) {
         const n = b.items && b.items[f.type] ? entero(b.items[f.type].qty, 0, 30) : 0;
         if (!n) return;
         tallos += n; suma += n * f.price; partes.push(n + ' ' + f.name.toLowerCase());
       });
       const papel = TIENDA.wraps.filter(function (w) { return w.id === b.wrap; })[0] || TIENDA.wraps[0];
       if (tallos < 3) { errores.push('Tu ramo personalizado necesita al menos 3 tallos.'); return; }
-      const unit = suma + TIENDA.builderBase;
+      const unit = suma + R.base;
       lineas.push({ kind: 'custom', id: 'custom', name: 'Ramo de autor (armado por el cliente)', opts: partes.join(', ') + ' · papel ' + papel.name.toLowerCase(), qty: qty, unit: unit, total: unit * qty });
     } else if (it.kind === 'plan') {
       const pl = TIENDA.plans.filter(function (x) { return x.id === it.id; })[0];
@@ -905,6 +1016,42 @@ const SEMILLA_ENVIOS = [
   ["Progreso", "Progreso", 380, "sí"]
 ];
 // ENVIOS_FIN
+
+/* ---------------- Contenido inicial de la web (lo carga "Instalar o reparar hojas" si la hoja no existe) ---------------- */
+const SEMILLA_RAMO = [
+  ["Rosa", 190, "rojo, rosa, blanco, durazno", "sí"],
+  ["Peonía", 420, "rosa, rosa claro, magenta", "sí"],
+  ["Tulipán", 160, "coral, amarillo, blanco, violeta", "sí"],
+  ["Girasol", 210, "amarillo", "sí"],
+  ["Lilium", 260, "blanco, rosa", "sí"],
+  ["Hortensia", 340, "celeste, lila, crema", "sí"],
+  ["Margarita", 90, "blanco", "sí"],
+  ["Anémona", 180, "blanco, fucsia", "sí"],
+  ["Clavel", 110, "fucsia, naranja, rojo", "sí"],
+  ["Armado (papel y eucalipto)", 350, "", "sí"]
+];
+const SEMILLA_TAMANOS = [
+  ["Clásico", "Tal como en la foto", 0, "sí"],
+  ["Deluxe", "+40% de flores", 35, "sí"],
+  ["Premium", "El doble de impacto", 70, "sí"]
+];
+const SEMILLA_EXTRAS = [
+  ["Florero de vidrio soplado", 890, "sí"],
+  ["Bombones artesanales (12u)", 650, "sí"],
+  ["Vela de soja · higo y cedro", 720, "sí"],
+  ["Globo metalizado \"Te quiero\"", 390, "sí"],
+  ["Osito de peluche", 790, "sí"]
+];
+const SEMILLA_OCASIONES = [
+  ["Bodas", "", "sí"], ["Amor", "", "sí"], ["Cumpleaños", "", "sí"], ["Aniversario", "", "sí"],
+  ["Nacimiento", "", "sí"], ["Gracias", "", "sí"], ["Condolencias", "", "sí"], ["Porque sí", "", "sí"]
+];
+const SEMILLA_DESTACADOS = [
+  ["Entrega en el día", "Pedí antes de las 16:00", "sí"],
+  ["Frescura 7 días", "O te lo reponemos", "sí"],
+  ["Tarjeta gratis", "Con tu dedicatoria", "sí"],
+  ["Pago seguro", "Tarjetas y Mercado Pago", "sí"]
+];
 
 /* ---------------- Productos iniciales (los carga "Instalar") ---------------- */
 // SEMILLA_INICIO
