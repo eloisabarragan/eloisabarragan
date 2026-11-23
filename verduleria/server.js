@@ -13,16 +13,29 @@ const BASE_URL = (env.BASE_URL || `http://localhost:${PORT}`).replace(/\/+$/, ''
 const ADMIN_PASSWORD = env.ADMIN_PASSWORD || '';
 const MP_ACCESS_TOKEN = env.MP_ACCESS_TOKEN || '';
 const CURRENCY = env.CURRENCY || 'UYU';
-const SHIPPING_COST = Number(env.SHIPPING_COST ?? 90);
-const FREE_SHIPPING_FROM = Number(env.FREE_SHIPPING_FROM ?? 1500);
-const CLUB_PRICE = Number(env.CLUB_PRICE ?? 290); // precio mensual del Club Huerta
-const STORE = {
-  name: 'Huerta Orgánica',
+
+// Datos del negocio. Los valores del archivo .env son el punto de partida;
+// lo que se guarda desde el panel (pestaña Ajustes) tiene prioridad.
+const SETTING_DEFAULTS = {
   phone: env.STORE_PHONE || '099 123 456',
   whatsapp: env.STORE_WHATSAPP || '59899123456',
   address: env.STORE_ADDRESS || 'Av. Ejemplo 1234, Montevideo',
   hours: env.STORE_HOURS || 'Lunes a sábado de 8 a 20 h',
+  shippingCost: Number(env.SHIPPING_COST ?? 90),
+  freeShippingFrom: Number(env.FREE_SHIPPING_FROM ?? 1500),
+  clubPrice: Number(env.CLUB_PRICE ?? 290), // precio mensual del Club Huerta
 };
+const NUMERIC_SETTINGS = ['shippingCost', 'freeShippingFrom', 'clubPrice'];
+const STORE_NAME = 'Huerta Orgánica';
+let settings = loadSettings();
+
+function loadSettings() {
+  const result = { ...SETTING_DEFAULTS };
+  for (const { key, value } of db.prepare('SELECT key, value FROM settings').all()) {
+    if (key in result) result[key] = NUMERIC_SETTINGS.includes(key) ? Number(value) : value;
+  }
+  return result;
+}
 
 const UNITS = ['kg', 'unidad', 'atado', 'docena', 'bandeja', 'frasco'];
 const ORDER_STATUSES = ['nuevo', 'preparando', 'en_camino', 'entregado', 'cancelado'];
@@ -31,7 +44,9 @@ const SUBSCRIPTION_STATUSES = ['pendiente', 'activa', 'cancelada'];
 
 const app = express();
 app.disable('x-powered-by');
-if (env.TRUST_PROXY) app.set('trust proxy', 1);
+// Los hostings ponen la web detrás de un proxy: así vemos la dirección real de cada visitante
+// (si no, todos compartirían la misma y los límites de uso los bloquearían a todos juntos).
+if (env.TRUST_PROXY !== '0') app.set('trust proxy', 1);
 
 app.use((req, res, next) => {
   res.set('X-Content-Type-Options', 'nosniff');
@@ -113,11 +128,11 @@ function orderWithItems(order) {
 
 app.get('/api/config', (req, res) => {
   res.json({
-    store: STORE,
+    store: { name: STORE_NAME, phone: settings.phone, whatsapp: settings.whatsapp, address: settings.address, hours: settings.hours },
     currency: CURRENCY,
-    shippingCost: SHIPPING_COST,
-    freeShippingFrom: FREE_SHIPPING_FROM,
-    clubPrice: CLUB_PRICE,
+    shippingCost: settings.shippingCost,
+    freeShippingFrom: settings.freeShippingFrom,
+    clubPrice: settings.clubPrice,
     mpEnabled: !!MP_ACCESS_TOKEN,
     // Si existe public/img/hero.jpg se usa como foto de portada.
     heroImage: fs.existsSync(path.join(here, 'public', 'img', 'hero.jpg')) ? '/img/hero.jpg' : null,
@@ -131,7 +146,7 @@ app.get('/api/products', (req, res) => {
 
 app.post(
   '/api/orders',
-  rateLimit(20, 60 * 60 * 1000),
+  rateLimit(30, 60 * 60 * 1000),
   wrap(async (req, res) => {
     const b = req.body || {};
     const customerName = text(b.name, { min: 2, max: 80, label: 'Nombre' });
@@ -165,7 +180,7 @@ app.post(
 
     const subtotal = lines.reduce((sum, l) => sum + l.line_total, 0);
     const member = isMember(phone); // los socios del Club Huerta no pagan envío
-    const shipping = deliveryMethod === 'envio' && !member && subtotal < FREE_SHIPPING_FROM ? SHIPPING_COST : 0;
+    const shipping = deliveryMethod === 'envio' && !member && subtotal < settings.freeShippingFrom ? settings.shippingCost : 0;
     const total = subtotal + shipping;
     const code = crypto.randomBytes(16).toString('hex');
 
@@ -297,7 +312,7 @@ async function createMpPreference(order) {
     method: 'POST',
     body: JSON.stringify({
       items: [
-        { title: `Pedido N.º ${order.id} - ${STORE.name}`, quantity: 1, unit_price: order.total, currency_id: CURRENCY },
+        { title: `Pedido N.º ${order.id} - ${STORE_NAME}`, quantity: 1, unit_price: order.total, currency_id: CURRENCY },
       ],
       external_reference: order.code,
       back_urls: { success: back, pending: back, failure: back },
@@ -339,10 +354,10 @@ async function createMpSubscription(sub) {
   const pre = await mpFetch('/preapproval', {
     method: 'POST',
     body: JSON.stringify({
-      reason: `Club Huerta - ${STORE.name}`,
+      reason: `Club Huerta - ${STORE_NAME}`,
       external_reference: sub.code,
       payer_email: sub.email,
-      auto_recurring: { frequency: 1, frequency_type: 'months', transaction_amount: CLUB_PRICE, currency_id: CURRENCY },
+      auto_recurring: { frequency: 1, frequency_type: 'months', transaction_amount: settings.clubPrice, currency_id: CURRENCY },
       back_url: `${BASE_URL}/?club=${sub.code}`,
       status: 'pending',
     }),
@@ -361,7 +376,7 @@ async function syncMpSubscription(mpId, expectedCode = null) {
 
   if (pre.status === 'authorized') {
     const amount = Number(pre.auto_recurring?.transaction_amount);
-    if (!(amount >= CLUB_PRICE) || pre.auto_recurring?.currency_id !== CURRENCY) {
+    if (!(amount >= settings.clubPrice) || pre.auto_recurring?.currency_id !== CURRENCY) {
       console.error(`Suscripción ${mpId}: el monto o la moneda no coinciden con el precio del Club.`);
       return;
     }
@@ -456,6 +471,30 @@ app.patch('/api/admin/orders/:id', requireAdmin, (req, res) => {
   res.json({ ok: true });
 });
 
+app.get('/api/admin/settings', requireAdmin, (req, res) => res.json(settings));
+
+app.put('/api/admin/settings', requireAdmin, (req, res) => {
+  const b = req.body || {};
+  const whatsapp = String(b.whatsapp ?? '').replace(/\D/g, '');
+  if (whatsapp.length < 8 || whatsapp.length > 15) fail(400, 'El WhatsApp va con código de país y solo números, por ejemplo 59899123456.');
+  const next = {
+    phone: text(b.phone, { min: 6, max: 25, label: 'Teléfono' }),
+    whatsapp,
+    address: text(b.address, { min: 5, max: 160, label: 'Dirección' }),
+    hours: text(b.hours, { min: 3, max: 120, label: 'Horarios' }),
+  };
+  const limits = { shippingCost: 0, freeShippingFrom: 0, clubPrice: 1 };
+  for (const key of NUMERIC_SETTINGS) {
+    const n = Number(b[key]);
+    if (!Number.isInteger(n) || n < limits[key] || n > 1_000_000) fail(400, 'Los montos tienen que ser números enteros, sin decimales.');
+    next[key] = n;
+  }
+  const save = db.prepare('INSERT INTO settings (key, value) VALUES (?, ?) ON CONFLICT(key) DO UPDATE SET value = excluded.value');
+  for (const [key, value] of Object.entries(next)) save.run(key, String(value));
+  settings = loadSettings();
+  res.json(settings);
+});
+
 app.get('/api/admin/subscriptions', requireAdmin, (req, res) => {
   res.json(db.prepare('SELECT * FROM subscriptions ORDER BY id DESC LIMIT 500').all());
 });
@@ -524,6 +563,14 @@ app.delete('/api/admin/products/:id', requireAdmin, (req, res) => {
 });
 
 // Subida de fotos: el navegador manda el archivo tal cual en el cuerpo del pedido.
+// Mira los primeros bytes del archivo: no alcanza con que diga ser una imagen.
+function looksLikeImage(buf, ext) {
+  if (buf.length < 12) return false;
+  if (ext === 'jpg') return buf[0] === 0xff && buf[1] === 0xd8 && buf[2] === 0xff;
+  if (ext === 'png') return buf.subarray(0, 8).equals(Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]));
+  return buf.toString('latin1', 0, 4) === 'RIFF' && buf.toString('latin1', 8, 12) === 'WEBP';
+}
+
 const IMAGE_TYPES = { 'image/jpeg': 'jpg', 'image/png': 'png', 'image/webp': 'webp' };
 app.post(
   '/api/admin/upload',
@@ -531,7 +578,7 @@ app.post(
   express.raw({ type: Object.keys(IMAGE_TYPES), limit: '4mb' }),
   (req, res) => {
     const ext = IMAGE_TYPES[req.headers['content-type']];
-    if (!ext || !Buffer.isBuffer(req.body) || req.body.length === 0) fail(400, 'Subí una foto JPG, PNG o WebP de hasta 4 MB.');
+    if (!ext || !Buffer.isBuffer(req.body) || !looksLikeImage(req.body, ext)) fail(400, 'Subí una foto JPG, PNG o WebP de hasta 4 MB.');
     const filename = `${crypto.randomBytes(12).toString('hex')}.${ext}`;
     fs.writeFileSync(path.join(uploadsDir, filename), req.body);
     res.status(201).json({ url: `/uploads/${filename}` });
@@ -543,6 +590,7 @@ app.post(
 app.use('/uploads', express.static(uploadsDir, { maxAge: '30d', index: false }));
 app.use(express.static(path.join(here, 'public'), { extensions: ['html'] }));
 
+app.get('/salud', (req, res) => res.json({ ok: true })); // para que el hosting sepa que la web está viva
 app.use('/api', (req, res) => res.status(404).json({ error: 'No existe.' }));
 app.use((req, res) => res.status(404).sendFile(path.join(here, 'public', '404.html')));
 
@@ -556,8 +604,19 @@ app.use((err, req, res, next) => {
   res.status(status).json({ error: message });
 });
 
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log(`Huerta Orgánica funcionando en ${BASE_URL}`);
   if (!ADMIN_PASSWORD) console.log('Aviso: falta ADMIN_PASSWORD, el panel /admin está deshabilitado.');
   if (!MP_ACCESS_TOKEN) console.log('Aviso: falta MP_ACCESS_TOKEN, solo se ofrece transferencia por WhatsApp.');
 });
+
+// Al apagar el servidor (por ejemplo en una actualización del hosting) cerramos todo prolijo.
+for (const signal of ['SIGTERM', 'SIGINT']) {
+  process.on(signal, () => {
+    server.close(() => {
+      db.close();
+      process.exit(0);
+    });
+    setTimeout(() => process.exit(0), 5000).unref();
+  });
+}

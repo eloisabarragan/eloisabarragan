@@ -39,6 +39,7 @@
           <button type="button" class="chip is-active" data-tab="orders">Pedidos</button>
           <button type="button" class="chip" data-tab="products">Productos</button>
           <button type="button" class="chip" data-tab="club">Club Huerta</button>
+          <button type="button" class="chip" data-tab="settings">Ajustes</button>
         </nav>
         <button type="button" class="link-btn" id="logout">Salir</button>
       </div>
@@ -80,6 +81,30 @@
             <tbody id="subscriptions"></tbody>
           </table>
         </div>
+      </section>
+
+      <section id="tab-settings" hidden>
+        <div class="admin-head"><h1>Ajustes</h1></div>
+        <form class="panel settings-form" id="settings-form">
+          <h2>Datos del local</h2>
+          <div class="row">
+            <label>Teléfono que se muestra<input id="s-phone" name="phone" required maxlength="25"></label>
+            <label>WhatsApp que recibe los pedidos<input id="s-whatsapp" name="whatsapp" required inputmode="numeric" maxlength="20"><small>Con código de país y solo números. Ej.: 59899123456</small></label>
+          </div>
+          <label>Dirección<input id="s-address" name="address" required maxlength="160"></label>
+          <label>Horarios<input id="s-hours" name="hours" required maxlength="120"></label>
+          <h2>Envíos y Club Huerta</h2>
+          <div class="row row-3">
+            <label>Costo de envío<input id="s-shipping" name="shippingCost" type="number" min="0" step="1" required><small>Poné 0 si el envío es siempre gratis.</small></label>
+            <label>Envío gratis desde<input id="s-free" name="freeShippingFrom" type="number" min="0" step="1" required><small>Monto de compra.</small></label>
+            <label>Cuota mensual del Club<input id="s-club" name="clubPrice" type="number" min="1" step="1" required></label>
+          </div>
+          <p class="form-error" id="settings-error" role="alert" hidden></p>
+          <div class="actions">
+            <button class="btn btn-primary">Guardar cambios</button>
+            <span class="saved" id="settings-saved" role="status" hidden>Cambios guardados. Ya se ven en la tienda.</span>
+          </div>
+        </form>
       </section>
     </main>
   </div>

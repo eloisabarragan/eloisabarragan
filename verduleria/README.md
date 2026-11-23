@@ -30,16 +30,22 @@ La primera vez se cargan productos y precios **de ejemplo**; se editan desde el 
 | Servidor y API | `server.js` |
 | Base de datos (SQLite, se crea sola en `data/`) | `db.js` |
 
-## Configuración (`.env`)
+## Configuración
+
+**Desde el panel (pestaña Ajustes):** teléfono, WhatsApp, dirección, horarios, costo de
+envío, monto de envío gratis y cuota del Club. Es lo que el negocio cambia en el día a día.
+La guía para quien atiende la tienda está en [`GUIA-DEL-PANEL.md`](GUIA-DEL-PANEL.md).
+
+**En el archivo `.env` (se configura una sola vez al publicar):**
 
 - `ADMIN_PASSWORD`: contraseña del panel. Sin esto el panel queda deshabilitado.
-- `STORE_WHATSAPP`: número que recibe los pedidos, con código de país y sin `+` (ej. `59899123456`).
-- `STORE_PHONE`, `STORE_ADDRESS`, `STORE_HOURS`: datos del local que se muestran en la web.
-- `SHIPPING_COST` y `FREE_SHIPPING_FROM`: costo de envío y monto desde el que es gratis.
-- `CLUB_PRICE`: precio mensual del Club Huerta.
-- `CURRENCY`: moneda (`UYU` por defecto).
+- `BASE_URL`: dirección pública de la web, con `https`.
 - `MP_ACCESS_TOKEN`: credencial de Mercado Pago (ver abajo).
-- `BASE_URL`: dirección pública de la web.
+- `CURRENCY`: moneda (`UYU` por defecto).
+- `DATA_DIR`: carpeta donde se guardan la base de datos y las fotos subidas.
+
+Los datos del local que figuran en `.env` (`STORE_PHONE`, `SHIPPING_COST`, etc.) son solo
+los valores iniciales: una vez guardados desde el panel, mandan los del panel.
 
 ## Club Huerta (suscripción mensual)
 
@@ -74,9 +80,27 @@ Cada producto muestra un dibujo hasta que se le sube una foto desde el panel
 (Productos → Editar → Foto). Para la foto grande de la portada, guardar la imagen como
 `public/img/hero.jpg` y aparece sola.
 
+## Pruebas
+
+```bash
+npm test
+```
+
+Levanta la tienda con una base vacía y verifica pedidos, cálculo de envío, Club Huerta,
+ajustes, panel y subida de fotos.
+
 ## Publicarla
 
-Sirve cualquier servicio que corra Node.js. Importante: la carpeta `data/` (base de
-datos y fotos subidas) tiene que estar en un disco que no se borre al reiniciar; se puede
-cambiar de lugar con la variable `DATA_DIR`. Si el servicio pone la web detrás de un
-proxy, definir `TRUST_PROXY=1`.
+Sirve cualquier servicio que corra Node.js 22 o Docker (hay un `Dockerfile` incluido).
+
+1. Definir las variables `ADMIN_PASSWORD` (una clave larga) y `BASE_URL` (la dirección
+   pública con `https`).
+2. Montar un **disco persistente** y apuntar `DATA_DIR` ahí (con Docker: `/data`). Ahí
+   viven la base de datos y las fotos; sin disco persistente se pierden al reiniciar.
+3. Comando de inicio: `npm start`. Chequeo de salud: `/salud`.
+4. Entrar a `/admin`, cargar los datos reales en Ajustes, los productos y sus fotos.
+
+La web asume que el hosting la pone detrás de un proxy (lo normal). Si se publica
+expuesta directamente a internet, definir `TRUST_PROXY=0`.
+
+**Copias de seguridad:** copiar cada tanto la carpeta de `DATA_DIR` completa.

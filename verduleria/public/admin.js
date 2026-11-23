@@ -4,6 +4,7 @@ const $ = (id) => document.getElementById(id);
 let money = (n) => `$${n}`;
 let products = [];
 let editingId = null;
+let refreshTimer;
 
 function showError(id, message) {
   $(id).textContent = message || '';
@@ -46,7 +47,7 @@ function orderCard(o) {
 
   return h(
     'article',
-    { class: `order${['entregado', 'cancelado'].includes(o.status) ? ' is-done' : ''}` },
+    { class: `order${['entregado', 'cancelado'].includes(o.status) ? ' is-done' : ''}${o.status === 'nuevo' ? ' is-new' : ''}` },
     h(
       'div',
       { class: 'order-top' },
@@ -84,6 +85,9 @@ function orderCard(o) {
 async function loadOrders() {
   try {
     const orders = await adminApi('/api/admin/orders');
+    const fresh = orders.filter((o) => o.status === 'nuevo').length;
+    document.querySelector('[data-tab=orders]').textContent = fresh ? `Pedidos (${fresh})` : 'Pedidos';
+    document.title = `${fresh ? `(${fresh}) ` : ''}Administración · Huerta Orgánica`;
     $('orders').replaceChildren(
       ...(orders.length ? orders.map(orderCard) : [h('p', { class: 'empty' }, 'Todavía no hay pedidos.')])
     );
@@ -193,14 +197,35 @@ function openProduct(p = null) {
   $('product-dialog').showModal();
 }
 
+// Las fotos del celular pesan varios megas: las achicamos antes de subirlas
+// para que la tienda cargue rápido. Si algo falla, se sube la original.
+async function shrinkPhoto(file, max = 900) {
+  try {
+    const bitmap = await createImageBitmap(file);
+    const scale = Math.min(1, max / Math.max(bitmap.width, bitmap.height));
+    const canvas = document.createElement('canvas');
+    canvas.width = Math.round(bitmap.width * scale);
+    canvas.height = Math.round(bitmap.height * scale);
+    const ctx = canvas.getContext('2d');
+    ctx.fillStyle = '#fff'; // las fotos con fondo transparente quedan sobre blanco
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(bitmap, 0, 0, canvas.width, canvas.height);
+    const blob = await new Promise((resolve) => canvas.toBlob(resolve, 'image/jpeg', 0.85));
+    return blob && blob.size < file.size ? blob : file;
+  } catch {
+    return file;
+  }
+}
+
 async function saveProduct(event) {
   event.preventDefault();
   const form = $('product-form');
   const button = form.querySelector('button[value=save]');
   button.disabled = true;
   try {
-    const file = form.elements.file.files[0];
-    if (file) {
+    const picked = form.elements.file.files[0];
+    if (picked) {
+      const file = await shrinkPhoto(picked);
       const { url } = await adminApi('/api/admin/upload', { method: 'POST', body: file, headers: { 'Content-Type': file.type } });
       setPhoto(url);
     }
@@ -230,6 +255,46 @@ async function saveProduct(event) {
   }
 }
 
+// ---------- Ajustes ----------
+
+async function loadSettings() {
+  try {
+    const s = await adminApi('/api/admin/settings');
+    for (const [key, value] of Object.entries(s)) {
+      const field = $('settings-form').elements[key];
+      if (field) field.value = value;
+    }
+  } catch (error) {
+    showError('admin-error', error.message);
+  }
+}
+
+async function saveSettings(event) {
+  event.preventDefault();
+  const f = event.target.elements;
+  $('settings-saved').hidden = true;
+  try {
+    await adminApi('/api/admin/settings', {
+      method: 'PUT',
+      body: {
+        phone: f.phone.value,
+        whatsapp: f.whatsapp.value,
+        address: f.address.value,
+        hours: f.hours.value,
+        shippingCost: Number(f.shippingCost.value),
+        freeShippingFrom: Number(f.freeShippingFrom.value),
+        clubPrice: Number(f.clubPrice.value),
+      },
+    });
+    showError('settings-error', '');
+    $('settings-saved').hidden = false;
+    const config = await api('/api/config');
+    money = moneyFormatter(config.currency);
+  } catch (error) {
+    showError('settings-error', error.message);
+  }
+}
+
 // ---------- Inicio ----------
 
 async function start() {
@@ -242,6 +307,13 @@ async function start() {
   loadOrders();
   loadProducts();
   loadSubscriptions();
+  loadSettings();
+  // Los pedidos se actualizan solos cada 45 segundos (salvo que estés cambiando un estado).
+  clearInterval(refreshTimer);
+  refreshTimer = setInterval(() => {
+    const busy = document.activeElement?.tagName === 'SELECT';
+    if (!document.hidden && !$('admin-view').hidden && !busy) loadOrders();
+  }, 45000);
 }
 
 $('login-form').addEventListener('submit', async (event) => {
@@ -271,6 +343,7 @@ for (const tab of document.querySelectorAll('[data-tab]')) {
 }
 
 $('refresh').addEventListener('click', loadOrders);
+$('settings-form').addEventListener('submit', saveSettings);
 $('refresh-club').addEventListener('click', loadSubscriptions);
 $('new-product').addEventListener('click', () => openProduct());
 $('cancel-product').addEventListener('click', () => $('product-dialog').close());

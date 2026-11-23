@@ -49,3 +49,15 @@ input[type='file'] { font-size: 0.85rem; font-weight: 400; }
 .admin-help { margin: -8px 0 18px; max-width: 46em; }
 #subscriptions select { min-width: 170px; }
 #subscriptions td:nth-child(3) { white-space: normal; min-width: 180px; }
+
+.settings-form { display: grid; gap: 16px; max-width: 760px; }
+.settings-form h2 { margin: 6px 0 0; }
+.settings-form .actions { align-items: center; }
+.saved { color: var(--verde); font-weight: 500; }
+.tabs { flex-wrap: wrap; justify-content: center; }
+.order.is-new { border-color: var(--hoja); box-shadow: inset 4px 0 0 var(--hoja); }
+@media (max-width: 760px) {
+  .admin .header-inner { height: auto; flex-wrap: wrap; padding-block: 10px; }
+  .admin .tabs { order: 3; width: 100%; justify-content: flex-start; }
+}
+.settings-form .row { align-items: start; }

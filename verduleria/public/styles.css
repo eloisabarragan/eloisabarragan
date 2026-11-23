@@ -718,3 +718,8 @@ textarea { resize: vertical; }
   .search input { width: 100%; }
   .ribbon span { font-size: 1.15rem; }
 }
+
+/* ---------- Página de privacidad ---------- */
+.legal .panel h2 { margin: 26px 0 8px; font-size: 1.45rem; }
+.legal .panel p:not(.eyebrow) { color: var(--gris); max-width: 46em; }
+.site-footer a { text-underline-offset: 3px; }

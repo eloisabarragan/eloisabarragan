@@ -75,6 +75,9 @@ db.exec(`
   );
   CREATE INDEX IF NOT EXISTS subscriptions_phone ON subscriptions(phone_key);
 `);
+// Ajustes del negocio que se editan desde el panel (teléfono, envío, precio del Club...).
+db.exec('CREATE TABLE IF NOT EXISTS settings (key TEXT PRIMARY KEY, value TEXT NOT NULL)');
+
 // Bases creadas antes del Club: agregamos la columna que marca los pedidos de socios.
 if (!db.prepare('PRAGMA table_info(orders)').all().some((c) => c.name === 'member')) {
   db.exec('ALTER TABLE orders ADD COLUMN member INTEGER NOT NULL DEFAULT 0');
