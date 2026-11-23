@@ -22,8 +22,8 @@ Nada de esto está inventado en el código. Hasta que se cargue, la tienda se co
 
 | # | Dato | Dónde | Estado actual |
 |---|---|---|---|
-| 7 | **Productos:** nombre definitivo, descripción, precio y stock por presentación | Panel → Productos | 6 borradores con las fotos de la sesión, **sin precio e inactivos**. Los nombres son provisorios |
-| 8 | **Fotos de productos nuevos**: leopardo, corazones turquesa, ojo turco, perlas, corbatas, etc. | Panel → foto desde el celular | Las fotos que se compartieron por WhatsApp nunca llegaron como archivo |
+| 7 | **Productos:** nombre definitivo, descripción, precio y stock por presentación | Panel → Productos | 17 borradores con fotos, **sin precio e inactivos**. Los nombres son provisorios |
+| 8 | **Fotos de productos nuevos** | Panel → foto desde el celular | Ya cargadas: 11 piezas de la segunda tanda (leopardo, corazones, ojo turco, perlas y corbatas) |
 | 9 | **Costos y plazos de envío** por zona | Panel → Ajustes → Envíos | Una sola opción: "Envío a coordinar", sin costo cargado |
 | 10 | **Datos bancarios**: banco, tipo de cuenta, número y titular | Panel → Ajustes → Pagos | Vacíos: la transferencia no se ofrece |
 | 11 | **Recargo por Mercado Pago** (si se cobra) | Panel → Ajustes → Pagos | 0 % |

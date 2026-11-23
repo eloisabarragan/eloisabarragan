@@ -115,7 +115,7 @@ servidor.listen(0, async () => {
   await prueba("Panel: crea un producto nuevo con foto desde el celular y lo publica", async () => {
     await panel.click("#tProd");
     await panel.click("#bNuevo");
-    await panel.fill("#eNombre", "Corazón Turquesa");
+    await panel.fill("#eNombre", "Corazón Prueba");
     await panel.selectOption("#eCat", "Cubre botones");
     await panel.setInputFiles("#eFile", path.join(RAIZ, "img", "p-corazon-perla.jpg"));
     await panel.waitForFunction(() => document.querySelectorAll("#eFotos .ph img").length === 1 && !document.querySelector("#eFotos .loading"));
@@ -126,7 +126,7 @@ servidor.listen(0, async () => {
     await panel.screenshot({ path: path.join(CAPTURAS, "panel-producto.png"), fullPage: true });
     await panel.click("#eSave");
     await panel.waitForSelector("#vProd[hidden]", { state: "attached" });
-    await panel.waitForFunction(() => /Corazón Turquesa/.test(document.querySelector("#lProd").textContent));
+    await panel.waitForFunction(() => /Corazón Prueba/.test(document.querySelector("#lProd").textContent));
     assert.equal(E.archivos.length, 1, "la foto se guardó en Drive");
     assert.ok(E.archivos[0].b.bytes.length > 1000);
   });
@@ -146,7 +146,7 @@ servidor.listen(0, async () => {
     await tienda.reload();
     await tienda.waitForSelector('#grid [data-open="camelia-azul"]');
     const txt = await tienda.textContent("#grid");
-    assert.match(txt, /Corazón Turquesa/); assert.match(txt, /\$U 1\.350/); assert.match(txt, /Camelia Azul Noche/);
+    assert.match(txt, /Corazón Prueba/); assert.match(txt, /\$U 1\.350/); assert.match(txt, /Camelia Azul Noche/);
     assert.equal((await tienda.$$("#grid article.card")).length, 2);
     await tienda.screenshot({ path: path.join(CAPTURAS, "tienda-escritorio.png") });
   });
@@ -161,7 +161,7 @@ servidor.listen(0, async () => {
     await tienda.waitForFunction(() => /Solo quedan 1/.test(document.querySelector("#toastTxt").textContent));
   });
   await prueba("Tienda: la bolsa se mantiene al recargar", async () => {
-    await tienda.hover('#grid [data-open="corazon-turquesa"].ph'); await tienda.click('.ph [data-add="corazon-turquesa"]');
+    await tienda.hover('#grid [data-open="corazon-prueba"].ph'); await tienda.click('.ph [data-add="corazon-prueba"]');
     await tienda.reload();
     await tienda.waitForSelector('#grid [data-open="camelia-azul"]');
     assert.equal(await tienda.textContent("#bagCount"), "2");
@@ -195,8 +195,8 @@ servidor.listen(0, async () => {
     E.config("banco", "Banco de prueba"); E.config("numero_cuenta", "000-TEST"); E.config("titular", "Titular de prueba");
     E.limpiarCache();
     await tienda.goto(BASE + "/");
-    await tienda.waitForSelector('#grid [data-open="corazon-turquesa"]');
-    await tienda.hover('#grid [data-open="corazon-turquesa"].ph'); await tienda.click('.ph [data-add="corazon-turquesa"]');
+    await tienda.waitForSelector('#grid [data-open="corazon-prueba"]');
+    await tienda.hover('#grid [data-open="corazon-prueba"].ph'); await tienda.click('.ph [data-add="corazon-prueba"]');
     await tienda.click("#bagBtn"); await tienda.click("#checkout"); await tienda.waitForSelector("#co.on");
     await tienda.waitForFunction(() => document.querySelectorAll('#coPay input[name="pay"]').length === 2);
     await tienda.fill("#coName", "Ana"); await tienda.fill("#coLast", "Pérez"); await tienda.fill("#coEmail", "ana@example.com"); await tienda.fill("#coPhone", "094231234");
@@ -219,7 +219,7 @@ servidor.listen(0, async () => {
     assert.equal(new URL(tienda.url()).search, "", "limpia la dirección");
   });
   await prueba("Vuelta de Mercado Pago: pago rechazado ofrece reintentar", async () => {
-    E.post({ accion: "pedido", items: [{ id: "corazon-turquesa", v: "Par", q: 1 }], cliente: { nombre: "Eva", apellido: "Gómez", email: "eva@example.com", telefono: "099111222", departamento: "Montevideo", ciudad: "Centro", direccion: "18 de Julio 1000" }, envio: "a-coordinar", pago: "mp" });
+    E.post({ accion: "pedido", items: [{ id: "corazon-prueba", v: "Par", q: 1 }], cliente: { nombre: "Eva", apellido: "Gómez", email: "eva@example.com", telefono: "099111222", departamento: "Montevideo", ciudad: "Centro", direccion: "18 de Julio 1000" }, envio: "a-coordinar", pago: "mp" });
     const codigo = g.ultimaPref.external_reference;
     await tienda.goto(BASE + "/?pedido=" + codigo + "&collection_status=rejected");
     await tienda.waitForFunction(() => /no se completó/.test(document.querySelector("#coDone h2").textContent));
@@ -276,8 +276,8 @@ servidor.listen(0, async () => {
     E.limpiarCache();
     await tienda.goto(BASE + "/");
     await tienda.waitForFunction(() => /Cyber: 15% off/.test(document.querySelector(".announce").textContent));
-    await tienda.waitForSelector('#grid [data-open="corazon-turquesa"]');
-    await tienda.hover('#grid [data-open="corazon-turquesa"].ph'); await tienda.click('.ph [data-add="corazon-turquesa"]');
+    await tienda.waitForSelector('#grid [data-open="corazon-prueba"]');
+    await tienda.hover('#grid [data-open="corazon-prueba"].ph'); await tienda.click('.ph [data-add="corazon-prueba"]');
     await tienda.click("#bagBtn"); await tienda.click("#checkout"); await tienda.waitForSelector("#co.on");
     assert.equal(await tienda.isHidden("#couponBox"), false, "con cupón activo aparece el campo");
     await tienda.selectOption("#coDep", "Montevideo"); await tienda.fill("#coCity", "Pocitos");
@@ -329,7 +329,7 @@ servidor.listen(0, async () => {
       assert.ok(ancho <= 390, pag + " mide " + ancho);
     }
     await movil.goto(BASE + "/");
-    await movil.waitForSelector('#grid [data-open="corazon-turquesa"]');
+    await movil.waitForSelector('#grid [data-open="corazon-prueba"]');
     await movil.screenshot({ path: path.join(CAPTURAS, "tienda-celular.png") });
     await movil.evaluate(() => document.getElementById("tienda").scrollIntoView());
     await movil.waitForTimeout(300);

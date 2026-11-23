@@ -40,10 +40,15 @@ prueba("Fórmulas del Resumen con «;» para planillas en español (sin #ERROR!)
 
 prueba("No hay precios ni políticas inventadas: borradores inactivos, sin precio, sin cupones", () => {
   const prods = tabla("Productos").filas;
-  assert.equal(prods.length, 6);
+  assert.equal(prods.length, 17);
   assert.ok(prods.every(p => p["Activo"] === "No" && p["Descripción"] === ""));
   assert.ok(tabla("Variantes").filas.every(v => v["Precio"] === ""));
   assert.equal(tabla("Cupones").filas.length, 0);
+  assert.equal(tabla("Variantes").filas.length, 17);
+  const fs = require("node:fs"), path = require("node:path");
+  prods.forEach(p => String(p["Fotos"]).split(",").map(x => x.trim()).forEach(f => assert.ok(fs.existsSync(path.join(__dirname, "..", f)), "falta " + f)));
+  E.run("agregarBorradores_(BORRADORES_TANDA_2)");
+  assert.equal(tabla("Productos").filas.length, 17, "volver a correr no duplica");
   const cfg = run("config_()");
   assert.equal(Number(cfg.comision_mp), 0);
   assert.equal(Number(cfg.envio_gratis_desde), 0);
@@ -101,7 +106,7 @@ prueba("Panel: todas las funciones exigen sesión válida", () => {
 
 prueba("Panel: lista los borradores y avisa lo que falta configurar", () => {
   const d = g.panelDatos(token);
-  assert.equal(d.productos.length, 6);
+  assert.equal(d.productos.length, 17);
   assert.equal(d.productos[0].fotos[0].ver, "https://merfina.netlify.app/img/p-camelia-azul.jpg");
   assert.equal(d.avisos.length, 3);
 });

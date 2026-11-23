@@ -896,6 +896,41 @@ function completarEmailAvisos_() {
   }
 }
 
+// Segunda tanda de fotos. Nombres provisorios; Merfina los cambia y completa precio y stock desde el panel.
+const BORRADORES_TANDA_2 = [
+  ["corazon-turquesa", "Corazón Turquesa", "Cubre botones", "Par"],
+  ["corazon-perla-brillantes", "Corazón Perla y Brillantes", "Cubre botones", "Par"],
+  ["ojo-turco", "Corazón Ojo Turco", "Cubre botones", "Par"],
+  ["leopardo", "Leopardo", "Cubre botones", "Par"],
+  ["racimo-perlas", "Racimo de Perlas", "Cubre botones", "Par"],
+  ["flor-rosa-perlas", "Flor Rosa con Perlas", "Cubre botones", "Par"],
+  ["corbata-lunares-marron", "Corbata Lunares Marrón", "Corbatas", "Unidad"],
+  ["corbata-beige-piedras", "Corbata Beige con Piedras", "Corbatas", "Unidad"],
+  ["corbata-rosa-broche", "Corbata Rosa con Broche", "Corbatas", "Unidad"],
+  ["corbata-azul-dorado", "Corbata Azul y Dorado", "Corbatas", "Unidad"],
+  ["corbata-lila", "Corbata Lila", "Corbatas", "Unidad"]
+];
+
+/** Agrega los borradores que falten (por ID), inactivos y sin precio. No toca los que ya existen. */
+function agregarBorradores_(lista) {
+  const tp = tabla_(HOJA.productos);
+  const ids = tp.filas.map(f => texto_(f["ID"]));
+  const nuevos = lista.filter(b => ids.indexOf(b[0]) < 0);
+  if (!nuevos.length) return 0;
+  let orden = tp.filas.reduce((m, f) => Math.max(m, Number(f["Orden"]) || 0), 0);
+  nuevos.forEach(b => {
+    const o = { "ID": b[0], "Nombre": b[1], "Categoría": b[2], "Tipo": b[2], "Descripción": "", "Fotos": "img/productos/" + b[0] + ".jpg, img/productos/" + b[0] + "-2.jpg",
+      "Colores": "", "Etiqueta": "", "Detalles": "", "Nombre de opción": "Presentación", "Activo": "No", "Orden": ++orden };
+    tp.hoja.appendRow(tp.encabezados.map(h => (h in o ? o[h] : "")));
+  });
+  const tv = tabla_(HOJA.variantes);
+  nuevos.forEach(b => {
+    const o = { "ID producto": b[0], "Variante": b[3], "Precio": "", "Precio anterior": "", "Stock": 0, "Activo": "Sí" };
+    tv.hoja.appendRow(tv.encabezados.map(h => (h in o ? o[h] : "")));
+  });
+  return nuevos.length;
+}
+
 function cargarDatosIniciales_(ss, conEmail) {
   const vacia = nombre => ss.getSheetByName(nombre).getLastRow() < 2;
   const escribir = (nombre, objetos) => {
@@ -922,6 +957,7 @@ function cargarDatosIniciales_(ss, conEmail) {
     })));
     if (vacia(HOJA.variantes)) escribir(HOJA.variantes, borradores.map(b => ({ "ID producto": b[0], "Variante": b[4], "Precio": "", "Precio anterior": "", "Stock": 0, "Activo": "Sí" })));
   }
+  agregarBorradores_(BORRADORES_TANDA_2);
 
   // Una sola forma de entrega, honesta, hasta que Merfina cargue costos reales.
   if (vacia(HOJA.envios)) escribir(HOJA.envios, [
