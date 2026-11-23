@@ -45,3 +45,7 @@ input[type='file'] { font-size: 0.85rem; font-weight: 400; }
   .order-grid, .row, .row-3 { grid-template-columns: 1fr; }
   .admin .brand-tag { display: none; }
 }
+
+.admin-help { margin: -8px 0 18px; max-width: 46em; }
+#subscriptions select { min-width: 170px; }
+#subscriptions td:nth-child(3) { white-space: normal; min-width: 180px; }

@@ -15,6 +15,7 @@ const MP_ACCESS_TOKEN = env.MP_ACCESS_TOKEN || '';
 const CURRENCY = env.CURRENCY || 'UYU';
 const SHIPPING_COST = Number(env.SHIPPING_COST ?? 90);
 const FREE_SHIPPING_FROM = Number(env.FREE_SHIPPING_FROM ?? 1500);
+const CLUB_PRICE = Number(env.CLUB_PRICE ?? 290); // precio mensual del Club Huerta
 const STORE = {
   name: 'Huerta Orgánica',
   phone: env.STORE_PHONE || '099 123 456',
@@ -26,6 +27,7 @@ const STORE = {
 const UNITS = ['kg', 'unidad', 'atado', 'docena', 'bandeja', 'frasco'];
 const ORDER_STATUSES = ['nuevo', 'preparando', 'en_camino', 'entregado', 'cancelado'];
 const PAYMENT_STATUSES = ['pendiente', 'aprobado', 'rechazado'];
+const SUBSCRIPTION_STATUSES = ['pendiente', 'activa', 'cancelada'];
 
 const app = express();
 app.disable('x-powered-by');
@@ -35,6 +37,11 @@ app.use((req, res, next) => {
   res.set('X-Content-Type-Options', 'nosniff');
   res.set('X-Frame-Options', 'DENY');
   res.set('Referrer-Policy', 'strict-origin-when-cross-origin');
+  res.set(
+    'Content-Security-Policy',
+    "default-src 'self'; img-src 'self' data: https:; style-src 'self' https://fonts.googleapis.com; " +
+      "font-src https://fonts.gstatic.com; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'"
+  );
   next();
 });
 app.use(express.json({ limit: '100kb' }));
@@ -60,6 +67,40 @@ function text(value, { min = 0, max, label }) {
   return s;
 }
 
+// Límite simple de pedidos por dirección IP, para frenar abusos y robots.
+function rateLimit(max, windowMs) {
+  const hits = new Map();
+  return (req, res, next) => {
+    const now = Date.now();
+    const entry = hits.get(req.ip);
+    if (!entry || entry.resetAt < now) {
+      if (hits.size > 5000) hits.clear();
+      hits.set(req.ip, { count: 1, resetAt: now + windowMs });
+      return next();
+    }
+    if (++entry.count > max) return next(new HttpError(429, 'Demasiados intentos. Esperá unos minutos y probá de nuevo.'));
+    next();
+  };
+}
+
+function validPhone(value) {
+  const phone = text(value, { min: 6, max: 25, label: 'Teléfono' });
+  if (!/^[\d\s+()-]+$/.test(phone)) fail(400, 'El teléfono solo puede tener números.');
+  return phone;
+}
+
+// "+598 99 123 456", "099123456" y "99 123 456" son el mismo teléfono.
+const phoneKey = (phone) => String(phone).replace(/\D/g, '').replace(/^598/, '').replace(/^0+/, '');
+
+// Es socio del Club quien tiene una suscripción activa y al día.
+function isMember(phone) {
+  const key = phoneKey(phone);
+  if (key.length < 6) return false;
+  return !!db
+    .prepare("SELECT 1 FROM subscriptions WHERE phone_key = ? AND status = 'activa' AND (paid_until = '' OR paid_until >= date('now'))")
+    .get(key);
+}
+
 const publicProduct = (p) => ({ ...p, featured: !!p.featured, available: !!p.available });
 
 function orderWithItems(order) {
@@ -76,6 +117,7 @@ app.get('/api/config', (req, res) => {
     currency: CURRENCY,
     shippingCost: SHIPPING_COST,
     freeShippingFrom: FREE_SHIPPING_FROM,
+    clubPrice: CLUB_PRICE,
     mpEnabled: !!MP_ACCESS_TOKEN,
     // Si existe public/img/hero.jpg se usa como foto de portada.
     heroImage: fs.existsSync(path.join(here, 'public', 'img', 'hero.jpg')) ? '/img/hero.jpg' : null,
@@ -89,11 +131,11 @@ app.get('/api/products', (req, res) => {
 
 app.post(
   '/api/orders',
+  rateLimit(20, 60 * 60 * 1000),
   wrap(async (req, res) => {
     const b = req.body || {};
     const customerName = text(b.name, { min: 2, max: 80, label: 'Nombre' });
-    const phone = text(b.phone, { min: 6, max: 25, label: 'Teléfono' });
-    if (!/^[\d\s+()-]+$/.test(phone)) fail(400, 'El teléfono solo puede tener números.');
+    const phone = validPhone(b.phone);
     const deliveryMethod = b.delivery === 'retiro' ? 'retiro' : 'envio';
     const address =
       deliveryMethod === 'envio' ? text(b.address, { min: 5, max: 160, label: 'Dirección de entrega' }) : '';
@@ -122,7 +164,8 @@ app.post(
     });
 
     const subtotal = lines.reduce((sum, l) => sum + l.line_total, 0);
-    const shipping = deliveryMethod === 'envio' && subtotal < FREE_SHIPPING_FROM ? SHIPPING_COST : 0;
+    const member = isMember(phone); // los socios del Club Huerta no pagan envío
+    const shipping = deliveryMethod === 'envio' && !member && subtotal < FREE_SHIPPING_FROM ? SHIPPING_COST : 0;
     const total = subtotal + shipping;
     const code = crypto.randomBytes(16).toString('hex');
 
@@ -131,10 +174,10 @@ app.post(
     try {
       orderId = db
         .prepare(
-          `INSERT INTO orders (code, customer_name, phone, delivery_method, address, notes, payment_method, subtotal, shipping, total)
-           VALUES (?,?,?,?,?,?,?,?,?,?)`
+          `INSERT INTO orders (code, customer_name, phone, delivery_method, address, notes, payment_method, subtotal, shipping, total, member)
+           VALUES (?,?,?,?,?,?,?,?,?,?,?)`
         )
-        .run(code, customerName, phone, deliveryMethod, address, notes, paymentMethod, subtotal, shipping, total)
+        .run(code, customerName, phone, deliveryMethod, address, notes, paymentMethod, subtotal, shipping, total, member ? 1 : 0)
         .lastInsertRowid;
       const insertItem = db.prepare(
         'INSERT INTO order_items (order_id, product_id, name, unit, price, qty, line_total) VALUES (?,?,?,?,?,?,?)'
@@ -173,6 +216,65 @@ app.get(
     if (!order) fail(404, 'Pedido no encontrado.');
     const { mp_payment_id, ...safe } = orderWithItems(order);
     res.json(safe);
+  })
+);
+
+// ---------- Club Huerta (suscripción mensual) ----------
+
+// La tienda consulta si un teléfono es de un socio para mostrar el envío gratis antes de confirmar.
+app.get('/api/members/check', rateLimit(60, 10 * 60 * 1000), (req, res) => {
+  res.json({ member: isMember(String(req.query.phone || '')) });
+});
+
+app.post(
+  '/api/subscriptions',
+  rateLimit(8, 60 * 60 * 1000),
+  wrap(async (req, res) => {
+    const b = req.body || {};
+    const name = text(b.name, { min: 2, max: 80, label: 'Nombre' });
+    const phone = validPhone(b.phone);
+    const address = text(b.address, { min: 5, max: 160, label: 'Dirección de entrega' });
+    const paymentMethod = b.payment === 'mercadopago' ? 'mercadopago' : 'transferencia';
+    let email = '';
+    if (paymentMethod === 'mercadopago') {
+      if (!MP_ACCESS_TOKEN) fail(400, 'El pago online no está disponible por ahora.');
+      email = text(b.email, { min: 5, max: 120, label: 'Correo electrónico' });
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) fail(400, 'El correo electrónico no es válido.');
+    }
+    const key = phoneKey(phone);
+    if (db.prepare("SELECT 1 FROM subscriptions WHERE phone_key = ? AND status != 'cancelada'").get(key)) {
+      fail(409, 'Ya hay una suscripción con ese teléfono. Escribinos por WhatsApp si necesitás ayuda.');
+    }
+    const code = crypto.randomBytes(16).toString('hex');
+    const id = db
+      .prepare('INSERT INTO subscriptions (code, name, phone, phone_key, email, address, payment_method) VALUES (?,?,?,?,?,?,?)')
+      .run(code, name, phone, key, email, address, paymentMethod).lastInsertRowid;
+
+    let payUrl = null;
+    if (paymentMethod === 'mercadopago') {
+      try {
+        payUrl = await createMpSubscription({ code, email });
+      } catch (err) {
+        console.error('Error creando la suscripción en Mercado Pago:', err.message);
+        db.prepare('DELETE FROM subscriptions WHERE id = ?').run(id);
+        fail(502, 'No pudimos iniciar el pago con Mercado Pago. Probá de nuevo o elegí transferencia por WhatsApp.');
+      }
+    }
+    res.status(201).json({ code, payUrl });
+  })
+);
+
+// Al volver de Mercado Pago, la tienda consulta cómo quedó la suscripción.
+app.get(
+  '/api/subscriptions/:code',
+  wrap(async (req, res) => {
+    const code = String(req.params.code);
+    if (!/^[0-9a-f]{32}$/.test(code)) fail(404, 'Suscripción no encontrada.');
+    const mpId = String(req.query.preapproval_id || '');
+    if (/^[0-9a-zA-Z]{8,64}$/.test(mpId)) await syncMpSubscription(mpId, code).catch((e) => console.error(e.message));
+    const sub = db.prepare('SELECT name, status, payment_method FROM subscriptions WHERE code = ?').get(code);
+    if (!sub) fail(404, 'Suscripción no encontrada.');
+    res.json(sub);
   })
 );
 
@@ -232,12 +334,52 @@ async function syncMpPayment(paymentId, expectedCode = null) {
   db.prepare('UPDATE orders SET payment_status = ?, mp_payment_id = ? WHERE id = ?').run(status, String(paymentId), order.id);
 }
 
+// Cobro automático mensual de Mercado Pago ("suscripciones" o preapproval).
+async function createMpSubscription(sub) {
+  const pre = await mpFetch('/preapproval', {
+    method: 'POST',
+    body: JSON.stringify({
+      reason: `Club Huerta - ${STORE.name}`,
+      external_reference: sub.code,
+      payer_email: sub.email,
+      auto_recurring: { frequency: 1, frequency_type: 'months', transaction_amount: CLUB_PRICE, currency_id: CURRENCY },
+      back_url: `${BASE_URL}/?club=${sub.code}`,
+      status: 'pending',
+    }),
+  });
+  if (!pre.init_point) throw new Error('La respuesta de Mercado Pago no trajo el link de pago.');
+  return pre.init_point;
+}
+
+async function syncMpSubscription(mpId, expectedCode = null) {
+  if (!MP_ACCESS_TOKEN) return;
+  const pre = await mpFetch(`/preapproval/${mpId}`);
+  const code = String(pre.external_reference || '');
+  if (expectedCode && code !== expectedCode) return;
+  const sub = db.prepare('SELECT * FROM subscriptions WHERE code = ?').get(code);
+  if (!sub || sub.payment_method !== 'mercadopago') return;
+
+  if (pre.status === 'authorized') {
+    const amount = Number(pre.auto_recurring?.transaction_amount);
+    if (!(amount >= CLUB_PRICE) || pre.auto_recurring?.currency_id !== CURRENCY) {
+      console.error(`Suscripción ${mpId}: el monto o la moneda no coinciden con el precio del Club.`);
+      return;
+    }
+    const paidUntil = /^\d{4}-\d{2}-\d{2}/.test(pre.next_payment_date || '') ? pre.next_payment_date.slice(0, 10) : '';
+    db.prepare("UPDATE subscriptions SET status = 'activa', paid_until = ?, mp_id = ? WHERE id = ?").run(paidUntil, String(mpId), sub.id);
+  } else if (['cancelled', 'paused'].includes(pre.status)) {
+    db.prepare("UPDATE subscriptions SET status = 'cancelada', mp_id = ? WHERE id = ?").run(String(mpId), sub.id);
+  }
+}
+
 app.post('/api/mp/webhook', (req, res) => {
   const type = req.body?.type || req.query.type || req.query.topic;
   const id = String(req.body?.data?.id || req.query['data.id'] || req.query.id || '');
   res.sendStatus(200); // respondemos rápido; Mercado Pago reintenta si no
   if (type === 'payment' && /^\d{1,20}$/.test(id)) {
     syncMpPayment(id).catch((err) => console.error('Webhook de Mercado Pago:', err.message));
+  } else if (type === 'subscription_preapproval' && /^[0-9a-zA-Z]{8,64}$/.test(id)) {
+    syncMpSubscription(id).catch((err) => console.error('Webhook de Mercado Pago:', err.message));
   }
 });
 
@@ -311,6 +453,27 @@ app.patch('/api/admin/orders/:id', requireAdmin, (req, res) => {
   const paymentStatus = req.body?.payment_status ?? order.payment_status;
   if (!ORDER_STATUSES.includes(status) || !PAYMENT_STATUSES.includes(paymentStatus)) fail(400, 'Estado inválido.');
   db.prepare('UPDATE orders SET status = ?, payment_status = ? WHERE id = ?').run(status, paymentStatus, order.id);
+  res.json({ ok: true });
+});
+
+app.get('/api/admin/subscriptions', requireAdmin, (req, res) => {
+  res.json(db.prepare('SELECT * FROM subscriptions ORDER BY id DESC LIMIT 500').all());
+});
+
+app.patch('/api/admin/subscriptions/:id', requireAdmin, (req, res) => {
+  const sub = db.prepare('SELECT * FROM subscriptions WHERE id = ?').get(Number(req.params.id));
+  if (!sub) fail(404, 'Suscripción no encontrada.');
+  if (req.body?.action === 'registrar_pago') {
+    // Suma un mes a partir de hoy, o a partir del vencimiento si todavía está al día.
+    db.prepare(
+      `UPDATE subscriptions SET status = 'activa',
+         paid_until = date(CASE WHEN paid_until > date('now') THEN paid_until ELSE date('now') END, '+1 month')
+       WHERE id = ?`
+    ).run(sub.id);
+  } else {
+    if (!SUBSCRIPTION_STATUSES.includes(req.body?.status)) fail(400, 'Estado inválido.');
+    db.prepare('UPDATE subscriptions SET status = ? WHERE id = ?').run(req.body.status, sub.id);
+  }
   res.json({ ok: true });
 });
 

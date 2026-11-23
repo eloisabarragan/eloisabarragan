@@ -4,54 +4,85 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Huerta Orgánica · Frutas y verduras orgánicas a domicilio</title>
-  <meta name="description" content="Huerta Orgánica: frutas y verduras orgánicas, cosechadas a mano y entregadas en el día. Pedí online y pagá con Mercado Pago o transferencia.">
+  <meta name="description" content="Huerta Orgánica: frutas y verduras orgánicas, cosechadas a mano y entregadas en el día. Sumate al Club Huerta y recibí todos tus pedidos con envío gratis.">
+  <meta name="theme-color" content="#f6f1e4">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Huerta Orgánica · De la huerta a tu casa">
+  <meta property="og:description" content="Frutas y verduras orgánicas, cosechadas a mano y entregadas en el día.">
+  <meta property="og:image" content="/img/hero.jpg">
   <link rel="icon" href="/img/favicon.svg" type="image/svg+xml">
+  <link rel="preload" as="image" href="/img/hero.jpg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
-  <header class="site-header">
+  <!-- Dibujos que se reutilizan en toda la página -->
+  <svg class="sprite" aria-hidden="true" focusable="false">
+    <symbol id="i-sprig" viewBox="0 0 120 60">
+      <path d="M4 52C30 46 62 34 116 8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+      <path d="M26 46c-2-10 3-18 14-20 1 10-4 17-14 20ZM48 38c-1-11 5-19 17-20 0 11-6 18-17 20ZM72 28c0-10 6-17 17-17-1 10-7 16-17 17ZM36 44c8 5 17 4 23-4-8-5-17-3-23 4ZM60 34c8 5 17 3 23-5-9-4-17-2-23 5ZM84 22c7 4 15 2 20-5-8-3-15-1-20 5Z" fill="currentColor"/>
+    </symbol>
+    <symbol id="i-leaf" viewBox="0 0 40 40">
+      <path d="M6 34c0-14 8-24 28-28-1 18-9 27-22 27-2 0-4 0-6 1Z" fill="currentColor"/>
+      <path d="M6 34C12 24 19 17 28 12" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/>
+      <path d="M4 22c0-7 3-11 9-13 0 5-1 9-4 12" fill="currentColor" opacity=".55"/>
+    </symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.500 4.500 4.500L19 7.500" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  </svg>
+
+  <a class="skip" href="#tienda">Ir a la tienda</a>
+
+  <p class="announce"><span class="wrap" id="announce">Entregas en el día · De la huerta a tu casa</span></p>
+
+  <header class="site-header" id="site-header">
     <div class="wrap header-inner">
       <a class="brand" href="/" aria-label="Huerta Orgánica, inicio">
-        <svg class="brand-leaf" viewBox="0 0 40 40" aria-hidden="true"><path d="M6 34c0-14 8-24 28-28-1 18-9 27-22 27-2 0-4 0-6 1Z" fill="currentColor"/><path d="M6 34C12 24 19 17 28 12" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/><path d="M4 22c0-7 3-11 9-13 0 5-1 9-4 12" fill="currentColor" opacity=".55"/></svg>
+        <svg class="brand-leaf" aria-hidden="true"><use href="#i-leaf"/></svg>
         <span>
           <span class="brand-name">Huerta Orgánica</span>
           <span class="brand-tag">De la huerta a tu casa</span>
         </span>
       </a>
-      <nav class="nav" aria-label="Principal">
+      <nav class="nav" id="nav" aria-label="Principal">
         <a href="#tienda">Tienda</a>
+        <a href="#club">Club Huerta</a>
         <a href="#como-funciona">Cómo funciona</a>
         <a href="#nosotros">Nosotros</a>
-        <a href="#contacto">Contacto</a>
+        <a href="#preguntas">Preguntas</a>
       </nav>
       <div class="header-actions">
         <a class="icon-btn" href="#tienda" id="search-link" aria-label="Buscar productos">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></svg>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.500 4.500"/></svg>
         </a>
         <button class="cart-btn" id="cart-open" aria-label="Abrir carrito">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l-1 12H6L5 8Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>
           <span class="cart-btn-text">Carrito</span>
           <span class="cart-count" id="cart-count">0</span>
         </button>
+        <button class="icon-btn menu-toggle" id="menu-toggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        </button>
       </div>
     </div>
   </header>
 
-  <main>
+  <main id="main">
     <section class="hero" id="hero">
       <div class="hero-art" aria-hidden="true">
         <span class="v v1">🥦</span><span class="v v2">🥬</span><span class="v v3">🍅</span>
         <span class="v v4">🫑</span><span class="v v5">🥕</span><span class="v v6">🍋</span>
-        <span class="v v7">🍓</span><span class="v v8">🌿</span>
       </div>
       <div class="wrap hero-inner">
-        <p class="eyebrow">Cosechado a mano · Orgánico · Siempre fresco</p>
-        <h1>Directo de la <em>huerta</em>.<br>Naturalmente tuyo.</h1>
+        <p class="eyebrow"><svg class="eyebrow-sprig" aria-hidden="true"><use href="#i-sprig"/></svg>Cosechado a mano · Orgánico · Siempre fresco</p>
+        <h1>Directo de la <em>huerta<svg viewBox="0 0 200 14" aria-hidden="true" preserveAspectRatio="none"><path d="M3 9c30-6 62-7 96-4 34 2 66 2 98-2" /></svg></em>.<br>Naturalmente tuyo.</h1>
         <p class="hero-sub">Frutas y verduras orgánicas de productores locales, elegidas una por una y entregadas en tu casa el mismo día.</p>
-        <a class="btn btn-primary" href="#tienda">Ver todos los productos <span aria-hidden="true">→</span></a>
+        <div class="hero-cta">
+          <a class="btn btn-primary" href="#tienda">Ver todos los productos <span aria-hidden="true">→</span></a>
+          <a class="btn btn-ghost" href="#club">Conocé el Club Huerta</a>
+        </div>
+        <p class="hand hero-note">recién cosechado, todos los días</p>
       </div>
     </section>
 
@@ -61,30 +92,34 @@
       <button type="button" class="car-btn car-next" id="car-next" aria-label="Ver más productos"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></button>
     </section>
 
-    <section class="wrap stats" aria-label="Por qué elegirnos">
-      <div class="stat">
-        <span class="stat-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20c0-8 4-13 14-15 0 10-4 15-11 15-1 0-2 0-3 0Z"/><path d="M5 20c3-5 6-8 10-10"/></svg></span>
-        <strong>100%</strong><span>Orgánico</span>
+    <section class="wrap values" aria-label="Por qué elegirnos">
+      <div class="value reveal">
+        <span class="value-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20c0-8 4-13 14-15 0 10-4 15-11 15-1 0-2 0-3 0Z"/><path d="M5 20c3-5 6-8 10-10"/></svg></span>
+        <div><strong>Sin agroquímicos</strong><span>Cultivo orgánico, de la tierra a tu mesa.</span></div>
       </div>
-      <div class="stat">
-        <span class="stat-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 20V10l6-5 6 5v10"/><path d="M15 13h6v7"/><path d="M7 20v-5h4v5"/><path d="M2 20h20"/></svg></span>
-        <strong>Local</strong><span>Productores de la zona</span>
+      <div class="value reveal">
+        <span class="value-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21V11"/><path d="M12 13c-5 0-7-3-7-7 5 0 7 3 7 7Z"/><path d="M12 16c4 0 6-2.500 6-6-4 0-6 2.500-6 6Z"/><path d="M6 21h12"/></svg></span>
+        <div><strong>De estación</strong><span>Lo que la huerta da en cada momento del año.</span></div>
       </div>
-      <div class="stat">
-        <span class="stat-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 7h11v9H2z"/><path d="M13 10h4l4 3v3h-8"/><circle cx="6.5" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/></svg></span>
-        <strong>En el día</strong><span>Entrega a domicilio</span>
+      <div class="value reveal">
+        <span class="value-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 20V10l6-5 6 5v10"/><path d="M15 13h6v7"/><path d="M7 20v-5h4v5"/><path d="M2 20h20"/></svg></span>
+        <div><strong>Productores locales</strong><span>Trato directo con quienes cultivan.</span></div>
+      </div>
+      <div class="value reveal">
+        <span class="value-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 7h11v9H2z"/><path d="M13 10h4l4 3v3h-8"/><circle cx="6.500" cy="17.500" r="1.800"/><circle cx="17" cy="17.500" r="1.800"/></svg></span>
+        <div><strong>Entrega en el día</strong><span>O retiro en el local, como prefieras.</span></div>
       </div>
     </section>
 
     <section class="wrap shop" id="tienda">
-      <div class="section-head">
-        <p class="eyebrow">Nuestra tienda</p>
-        <h2>Frescura que se ve.</h2>
+      <div class="section-head reveal">
+        <p class="eyebrow"><svg class="eyebrow-sprig" aria-hidden="true"><use href="#i-sprig"/></svg>Nuestra tienda</p>
+        <h2>Frescura que <em>se ve</em>.</h2>
       </div>
       <div class="shop-tools">
         <div class="chips" id="chips" role="group" aria-label="Filtrar por categoría"></div>
         <label class="search">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></svg>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.500"/><path d="m16 16 4.500 4.500"/></svg>
           <input type="search" id="search" placeholder="Buscar un producto…" aria-label="Buscar un producto">
         </label>
       </div>
@@ -92,37 +127,116 @@
       <p class="empty" id="empty" hidden>No encontramos productos con esa búsqueda.</p>
     </section>
 
+    <div class="ribbon" aria-hidden="true">
+      <div class="ribbon-track">
+        <span>Sin agroquímicos</span><span>De estación</span><span>Cosechado a mano</span><span>Productores locales</span><span>Del surco a tu mesa</span>
+        <span>Sin agroquímicos</span><span>De estación</span><span>Cosechado a mano</span><span>Productores locales</span><span>Del surco a tu mesa</span>
+      </div>
+    </div>
+
+    <!-- Club Huerta: suscripción mensual -->
+    <section class="club" id="club">
+      <svg class="club-sprig club-sprig-a" aria-hidden="true"><use href="#i-sprig"/></svg>
+      <svg class="club-sprig club-sprig-b" aria-hidden="true"><use href="#i-sprig"/></svg>
+      <div class="wrap club-inner">
+        <div class="club-text reveal">
+          <p class="eyebrow"><svg class="eyebrow-sprig" aria-hidden="true"><use href="#i-sprig"/></svg>Suscripción mensual</p>
+          <h2>Club Huerta: todos tus pedidos <em>con envío gratis</em>.</h2>
+          <p class="club-lead">Pagás una cuota por mes y te llevamos a tu casa todos los pedidos que hagas, sin costo de envío y sin mínimo de compra.</p>
+          <ul class="club-list">
+            <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><strong>Envío gratis en cada pedido.</strong> Pedí las veces que quieras durante el mes.</span></li>
+            <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><strong>Sin mínimo de compra.</strong> Aunque sea un atado de perejil.</span></li>
+            <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><strong>Se aplica solo.</strong> Al comprar ponés tu teléfono y el envío queda en $0.</span></li>
+          </ul>
+        </div>
+        <div class="club-card reveal">
+          <p class="hand club-card-note">para los que piden seguido</p>
+          <p class="club-card-name">Club Huerta</p>
+          <p class="club-price"><strong id="club-price">—</strong><span>por mes</span></p>
+          <p class="club-breakeven" id="club-breakeven"></p>
+          <button type="button" class="btn btn-light btn-block" id="club-open">Quiero sumarme</button>
+          <p class="club-small">Pagás con Mercado Pago o por transferencia.</p>
+        </div>
+      </div>
+    </section>
+
     <section class="how" id="como-funciona">
       <div class="wrap">
-        <div class="section-head">
-          <p class="eyebrow">Cómo funciona</p>
-          <h2>Tu pedido en tres pasos.</h2>
+        <div class="section-head reveal">
+          <p class="eyebrow"><svg class="eyebrow-sprig" aria-hidden="true"><use href="#i-sprig"/></svg>Cómo funciona</p>
+          <h2>Tu pedido en <em>tres pasos</em>.</h2>
         </div>
         <ol class="steps">
-          <li><span class="step-n">01</span><h3>Elegí</h3><p>Armá tu carrito con las frutas y verduras de la semana, por kilo o por unidad.</p></li>
-          <li><span class="step-n">02</span><h3>Pagá</h3><p>Con Mercado Pago o por transferencia, coordinando por WhatsApp.</p></li>
-          <li><span class="step-n">03</span><h3>Recibí</h3><p>Te lo llevamos a tu casa en el día, o pasás a retirarlo por el local.</p></li>
+          <li class="reveal"><span class="step-n">1</span><h3>Elegí</h3><p>Armá tu carrito con las frutas y verduras de la semana, por kilo o por unidad.</p></li>
+          <li class="reveal"><span class="step-n">2</span><h3>Pagá</h3><p>Con Mercado Pago o por transferencia, coordinando por WhatsApp.</p></li>
+          <li class="reveal"><span class="step-n">3</span><h3>Recibí</h3><p>Te lo llevamos a tu casa en el día, o pasás a retirarlo por el local.</p></li>
         </ol>
       </div>
     </section>
 
     <section class="wrap about" id="nosotros">
-      <div>
-        <p class="eyebrow">Nosotros</p>
-        <h2>Sabé lo que comés.<br>Queré de dónde viene.</h2>
+      <div class="about-art reveal" aria-hidden="true">
+        <svg viewBox="0 0 320 320">
+          <path class="blob" d="M160 14c62 0 132 34 144 104 12 68-28 150-104 178-70 26-150-6-180-76C-8 152 22 62 86 30c22-11 48-16 74-16Z"/>
+          <g class="plant" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M160 268V120"/>
+            <path d="M160 214c-40 0-62-22-66-60 40 0 62 22 66 60Z"/>
+            <path d="M160 180c38 0 58-20 62-56-38 0-58 20-62 56Z"/>
+            <path d="M160 150c-28 0-44-16-46-44 28 0 44 16 46 44Z"/>
+            <path d="M160 124c22 0 34-14 36-36-22 0-34 14-36 36Z"/>
+            <path d="M96 268h128"/>
+            <path d="M118 268c8-12 22-18 42-18s34 6 42 18"/>
+          </g>
+        </svg>
       </div>
-      <div class="about-text">
+      <div class="about-text reveal">
+        <p class="eyebrow"><svg class="eyebrow-sprig" aria-hidden="true"><use href="#i-sprig"/></svg>Nosotros</p>
+        <h2>Sabé lo que comés. <em>Queré</em> de dónde viene.</h2>
         <p>En Huerta Orgánica trabajamos con productores de confianza que cultivan sin agroquímicos. Elegimos cada fruta y cada verdura a mano, en su mejor momento, para que llegue a tu mesa con todo su sabor.</p>
         <p>Creemos en la comida de estación, en el trato directo y en cuidar la tierra que nos da de comer.</p>
+        <p class="hand about-sign">— el equipo de la huerta</p>
+      </div>
+    </section>
+
+    <section class="faq" id="preguntas">
+      <div class="wrap faq-inner">
+        <div class="section-head reveal">
+          <p class="eyebrow"><svg class="eyebrow-sprig" aria-hidden="true"><use href="#i-sprig"/></svg>Preguntas frecuentes</p>
+          <h2>Lo que nos <em>preguntan</em> seguido.</h2>
+        </div>
+        <div class="faq-list reveal">
+          <details>
+            <summary>¿Cómo hago un pedido?</summary>
+            <p>Sumá productos al carrito, tocá "Finalizar compra", completá tus datos y elegí cómo pagar. Al confirmar te mostramos el resumen del pedido.</p>
+          </details>
+          <details>
+            <summary>¿Qué medios de pago aceptan?</summary>
+            <p>Mercado Pago (tarjeta de crédito, débito o dinero en cuenta) o transferencia bancaria. Si elegís transferencia, nos enviás el pedido por WhatsApp y te pasamos los datos de la cuenta.</p>
+          </details>
+          <details>
+            <summary>¿Cuánto cuesta el envío?</summary>
+            <p id="faq-shipping">El costo se muestra en el carrito antes de confirmar. También podés retirar en el local sin costo.</p>
+          </details>
+          <details>
+            <summary>¿Cómo funciona el Club Huerta?</summary>
+            <p id="faq-club">Es una suscripción mensual: pagás una cuota por mes y todos tus pedidos llegan con envío gratis, sin mínimo de compra. Te sumás desde esta página; cuando registramos tu pago, el beneficio se activa y se aplica solo al comprar con tu número de teléfono.</p>
+          </details>
+          <details>
+            <summary>¿Por qué algunos productos se venden por kilo y otros por unidad?</summary>
+            <p>Depende del producto: tomates, papas o naranjas van por kilo (podés pedir de a medio kilo); lechuga, brócoli o atados de hierbas van por unidad.</p>
+          </details>
+        </div>
       </div>
     </section>
   </main>
 
   <footer class="site-footer" id="contacto">
+    <svg class="footer-sprig" aria-hidden="true"><use href="#i-sprig"/></svg>
     <div class="wrap footer-inner">
       <div>
         <p class="brand-name">Huerta Orgánica</p>
         <p class="brand-tag">De la huerta a tu casa</p>
+        <p class="hand footer-hand">gracias por comer de estación</p>
       </div>
       <div>
         <h3>Visitanos</h3>
@@ -144,6 +258,8 @@
     <strong id="cart-bar-total"></strong>
   </button>
 
+  <p class="toast" id="toast" role="status" aria-live="polite" hidden></p>
+
   <!-- Carrito -->
   <div class="backdrop" id="backdrop" hidden></div>
   <aside class="drawer" id="drawer" aria-label="Carrito de compras" aria-hidden="true" inert>
@@ -164,8 +280,9 @@
 
       <fieldset>
         <legend>Tus datos</legend>
-        <label>Nombre y apellido<input name="name" autocomplete="name" required maxlength="80"></label>
-        <label>Teléfono / WhatsApp<input name="phone" type="tel" autocomplete="tel" required maxlength="25" placeholder="099 123 456"></label>
+        <label>Nombre y apellido<input id="f-name" name="name" autocomplete="name" required maxlength="80"></label>
+        <label>Teléfono / WhatsApp<input id="f-phone" name="phone" type="tel" autocomplete="tel" required maxlength="25" placeholder="099 123 456"></label>
+        <p class="member-note" id="member-note" hidden><svg aria-hidden="true"><use href="#i-leaf"/></svg>Sos del Club Huerta: este pedido tiene envío gratis.</p>
       </fieldset>
 
       <fieldset>
@@ -174,8 +291,8 @@
           <label class="option"><input type="radio" name="delivery" value="envio" checked><span><strong>Envío a domicilio</strong><small id="shipping-hint"></small></span></label>
           <label class="option"><input type="radio" name="delivery" value="retiro"><span><strong>Retiro en el local</strong><small id="pickup-hint"></small></span></label>
         </div>
-        <label id="address-field">Dirección de entrega<input name="address" autocomplete="street-address" maxlength="160" placeholder="Calle, número, apto, barrio"></label>
-        <label>Aclaraciones (opcional)<textarea name="notes" rows="2" maxlength="300" placeholder="Horario preferido, timbre, etc."></textarea></label>
+        <label id="address-field">Dirección de entrega<input id="f-address" name="address" autocomplete="street-address" maxlength="160" placeholder="Calle, número, apto, barrio"></label>
+        <label>Aclaraciones (opcional)<textarea id="f-notes" name="notes" rows="2" maxlength="300" placeholder="Horario preferido, timbre, etc."></textarea></label>
       </fieldset>
 
       <fieldset>
@@ -198,6 +315,29 @@
       <button class="btn btn-primary btn-block" id="cart-action">Finalizar compra</button>
     </div>
   </aside>
+
+  <!-- Alta al Club Huerta -->
+  <dialog class="club-dialog" id="club-dialog" aria-labelledby="club-dialog-title">
+    <button type="button" class="icon-btn dialog-close" id="club-close" aria-label="Cerrar">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+    </button>
+    <form id="club-form" novalidate>
+      <p class="eyebrow">Club Huerta</p>
+      <h2 id="club-dialog-title">Sumate al Club</h2>
+      <p class="lead" id="club-dialog-lead">Envío gratis en todos tus pedidos del mes.</p>
+      <label>Nombre y apellido<input id="c-name" name="name" autocomplete="name" required maxlength="80"></label>
+      <label>Teléfono / WhatsApp<input id="c-phone" name="phone" type="tel" autocomplete="tel" required maxlength="25" placeholder="099 123 456"><small>Con este número te reconocemos al comprar.</small></label>
+      <label>Dirección de entrega<input id="c-address" name="address" autocomplete="street-address" required maxlength="160" placeholder="Calle, número, apto, barrio"></label>
+      <div class="options">
+        <label class="option" id="club-pay-mp"><input type="radio" name="payment" value="mercadopago"><span><strong>Mercado Pago</strong><small>Se debita solo todos los meses.</small></span></label>
+        <label class="option"><input type="radio" name="payment" value="transferencia"><span><strong>Transferencia por WhatsApp</strong><small>Te pasamos los datos y nos enviás el comprobante cada mes.</small></span></label>
+      </div>
+      <label id="club-email-field" hidden>Correo electrónico<input id="c-email" name="email" type="email" autocomplete="email" maxlength="120"><small>Mercado Pago lo pide para el débito mensual.</small></label>
+      <p class="form-error" id="club-error" role="alert" hidden></p>
+      <button class="btn btn-primary btn-block" id="club-submit">Suscribirme</button>
+    </form>
+    <div id="club-done" hidden></div>
+  </dialog>
 
   <script src="/app.js" type="module"></script>
 </body>

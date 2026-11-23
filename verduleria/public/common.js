@@ -57,4 +57,5 @@ export const STATUS_LABELS = {
   cancelado: 'Cancelado',
 };
 export const PAYMENT_LABELS = { pendiente: 'Pago pendiente', aprobado: 'Pago aprobado', rechazado: 'Pago rechazado' };
+export const SUBSCRIPTION_LABELS = { pendiente: 'Pendiente de pago', activa: 'Activa', cancelada: 'Cancelada' };
 export const METHOD_LABELS = { mercadopago: 'Mercado Pago', transferencia: 'Transferencia' };

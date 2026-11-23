@@ -90,7 +90,11 @@ function view(order, config) {
           'div',
           {},
           h('dt', {}, order.delivery_method === 'envio' ? 'Envío' : 'Entrega'),
-          h('dd', {}, order.delivery_method === 'retiro' ? 'Retiro en el local' : order.shipping ? money(order.shipping) : 'Gratis')
+          h(
+            'dd',
+            {},
+            order.delivery_method === 'retiro' ? 'Retiro en el local' : order.shipping ? money(order.shipping) : order.member ? 'Gratis · Club Huerta' : 'Gratis'
+          )
         ),
         h('div', { class: 'total' }, h('dt', {}, 'Total'), h('dd', {}, money(order.total)))
       ),

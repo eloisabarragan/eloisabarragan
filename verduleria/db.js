@@ -57,6 +57,29 @@ db.exec(`
   );
 `);
 
+// Club Huerta: suscripción mensual con envíos gratis.
+db.exec(`
+  CREATE TABLE IF NOT EXISTS subscriptions (
+    id             INTEGER PRIMARY KEY AUTOINCREMENT,
+    code           TEXT    NOT NULL UNIQUE,
+    name           TEXT    NOT NULL,
+    phone          TEXT    NOT NULL,
+    phone_key      TEXT    NOT NULL,          -- teléfono normalizado, para reconocer al socio al comprar
+    email          TEXT    NOT NULL DEFAULT '',
+    address        TEXT    NOT NULL DEFAULT '',
+    payment_method TEXT    NOT NULL,          -- mercadopago | transferencia
+    status         TEXT    NOT NULL DEFAULT 'pendiente', -- pendiente | activa | cancelada
+    paid_until     TEXT    NOT NULL DEFAULT '', -- fecha (AAAA-MM-DD) hasta la que está paga
+    mp_id          TEXT    NOT NULL DEFAULT '',
+    created_at     TEXT    NOT NULL DEFAULT (datetime('now'))
+  );
+  CREATE INDEX IF NOT EXISTS subscriptions_phone ON subscriptions(phone_key);
+`);
+// Bases creadas antes del Club: agregamos la columna que marca los pedidos de socios.
+if (!db.prepare('PRAGMA table_info(orders)').all().some((c) => c.name === 'member')) {
+  db.exec('ALTER TABLE orders ADD COLUMN member INTEGER NOT NULL DEFAULT 0');
+}
+
 // Productos de ejemplo: solo se cargan la primera vez (cuando la tabla está vacía).
 const seed = [
   // nombre, categoría, precio, unidad, paso, origen, dibujo (se usa si no hay foto), destacado
@@ -68,8 +91,8 @@ const seed = [
   ['Papa', 'Verduras', 60, 'kg', 0.5, 'San José', '🥔', 0],
   ['Cebolla', 'Verduras', 58, 'kg', 0.5, 'Canelones', '🧅', 0],
   ['Cebolla colorada', 'Verduras', 75, 'kg', 0.5, 'Canelones', '🧅', 0],
-  ['Zapallo cabutiá', 'Verduras', 48, 'kg', 0.5, 'Canelones', '🎃', 0],
-  ['Espinaca', 'Verduras', 65, 'atado', 1, 'Montevideo rural', '🍃', 0],
+  ['Zapallo cabutiá', 'Verduras', 48, 'kg', 0.5, 'Canelones', '🍈', 0],
+  ['Espinaca', 'Verduras', 65, 'atado', 1, 'Montevideo rural', '🥬', 0],
   ['Boniato', 'Verduras', 70, 'kg', 0.5, 'Canelones', '🍠', 0],
   ['Banana', 'Frutas', 85, 'kg', 0.5, 'Ecuador', '🍌', 0],
   ['Manzana roja', 'Frutas', 110, 'kg', 0.5, 'Melilla', '🍎', 0],

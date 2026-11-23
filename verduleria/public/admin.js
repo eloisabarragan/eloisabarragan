@@ -1,4 +1,4 @@
-import { h, api, moneyFormatter, formatQty, STATUS_LABELS, PAYMENT_LABELS, METHOD_LABELS } from './common.js';
+import { h, api, moneyFormatter, formatQty, STATUS_LABELS, PAYMENT_LABELS, METHOD_LABELS, SUBSCRIPTION_LABELS } from './common.js';
 
 const $ = (id) => document.getElementById(id);
 let money = (n) => `$${n}`;
@@ -63,6 +63,7 @@ function orderCard(o) {
         h('p', {}, o.delivery_method === 'envio' ? `Envío a: ${o.address}` : 'Retira en el local'),
         o.notes && h('p', {}, `Aclaraciones: ${o.notes}`),
         h('p', {}, `Pago: ${METHOD_LABELS[o.payment_method] || o.payment_method}`),
+        o.member ? h('p', {}, h('span', { class: 'tag' }, 'Socio del Club Huerta · envío gratis')) : null,
         h('p', { class: 'order-total' }, `Total: ${money(o.total)}`, o.shipping ? ` (incluye envío ${money(o.shipping)})` : '')
       ),
       h(
@@ -85,6 +86,44 @@ async function loadOrders() {
     const orders = await adminApi('/api/admin/orders');
     $('orders').replaceChildren(
       ...(orders.length ? orders.map(orderCard) : [h('p', { class: 'empty' }, 'Todavía no hay pedidos.')])
+    );
+  } catch (error) {
+    showError('admin-error', error.message);
+  }
+}
+
+// ---------- Club Huerta ----------
+
+function subscriptionRow(s) {
+  const update = (body) =>
+    adminApi(`/api/admin/subscriptions/${s.id}`, { method: 'PATCH', body })
+      .then(loadSubscriptions)
+      .catch((e) => showError('admin-error', e.message));
+  const today = new Date().toISOString().slice(0, 10);
+  const overdue = s.status === 'activa' && s.paid_until && s.paid_until < today;
+  const until = s.paid_until ? new Date(`${s.paid_until}T12:00:00`).toLocaleDateString('es-UY', { dateStyle: 'medium' }) : '—';
+  return h(
+    'tr',
+    { class: s.status === 'cancelada' ? 'is-off' : '' },
+    h('td', {}, h('strong', {}, s.name)),
+    h('td', {}, h('a', { href: `https://wa.me/${s.phone.replace(/\D/g, '')}`, target: '_blank', rel: 'noopener' }, s.phone)),
+    h('td', {}, s.address),
+    h('td', {}, METHOD_LABELS[s.payment_method] || s.payment_method),
+    h('td', {}, overdue ? h('span', { class: 'tag bad' }, `Vencido · ${until}`) : until),
+    h('td', {}, select(SUBSCRIPTION_LABELS, s.status, (status) => update({ status }))),
+    h(
+      'td',
+      { class: 'row-actions' },
+      h('button', { type: 'button', class: 'link-btn', onclick: () => update({ action: 'registrar_pago' }) }, 'Registrar pago (+1 mes)')
+    )
+  );
+}
+
+async function loadSubscriptions() {
+  try {
+    const subs = await adminApi('/api/admin/subscriptions');
+    $('subscriptions').replaceChildren(
+      ...(subs.length ? subs.map(subscriptionRow) : [h('tr', {}, h('td', { colSpan: 7, class: 'empty' }, 'Todavía no hay socios.'))])
     );
   } catch (error) {
     showError('admin-error', error.message);
@@ -202,6 +241,7 @@ async function start() {
   $('admin-view').hidden = false;
   loadOrders();
   loadProducts();
+  loadSubscriptions();
 }
 
 $('login-form').addEventListener('submit', async (event) => {
@@ -231,6 +271,7 @@ for (const tab of document.querySelectorAll('[data-tab]')) {
 }
 
 $('refresh').addEventListener('click', loadOrders);
+$('refresh-club').addEventListener('click', loadSubscriptions);
 $('new-product').addEventListener('click', () => openProduct());
 $('cancel-product').addEventListener('click', () => $('product-dialog').close());
 $('remove-photo').addEventListener('click', () => setPhoto(''));

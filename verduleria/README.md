@@ -36,9 +36,22 @@ La primera vez se cargan productos y precios **de ejemplo**; se editan desde el 
 - `STORE_WHATSAPP`: número que recibe los pedidos, con código de país y sin `+` (ej. `59899123456`).
 - `STORE_PHONE`, `STORE_ADDRESS`, `STORE_HOURS`: datos del local que se muestran en la web.
 - `SHIPPING_COST` y `FREE_SHIPPING_FROM`: costo de envío y monto desde el que es gratis.
+- `CLUB_PRICE`: precio mensual del Club Huerta.
 - `CURRENCY`: moneda (`UYU` por defecto).
 - `MP_ACCESS_TOKEN`: credencial de Mercado Pago (ver abajo).
 - `BASE_URL`: dirección pública de la web.
+
+## Club Huerta (suscripción mensual)
+
+Los socios pagan una cuota por mes (`CLUB_PRICE`) y no pagan envío en ningún pedido.
+
+1. El cliente se anota desde la sección "Club Huerta" de la web.
+2. **Por transferencia:** envía el mensaje por WhatsApp; cuando llega el pago, en el panel
+   (pestaña "Club Huerta") se toca "Registrar pago (+1 mes)". Cada mes se repite.
+3. **Por Mercado Pago:** autoriza un débito mensual y la suscripción se activa sola.
+4. Al comprar, la tienda reconoce al socio por su número de teléfono y pone el envío en $0.
+
+Si a un socio se le vence el mes y no se registra un pago nuevo, vuelve a pagar envío.
 
 ## Medios de pago
 
@@ -52,8 +65,8 @@ cliente paga en la página de Mercado Pago y el pedido se marca pago automática
 Para que Mercado Pago avise los pagos, la web tiene que estar publicada con `https` y
 `BASE_URL` apuntando a esa dirección.
 
-> La integración con Mercado Pago está programada pero **todavía no se probó con una
-> cuenta real**. Antes de salir a producción hay que probarla con credenciales de prueba.
+> La integración con Mercado Pago (pagos de pedidos y débito mensual del Club) está
+> programada pero **todavía no se probó con una cuenta real**. Antes de salir a producción hay que probarla con credenciales de prueba.
 
 ## Fotos
 
