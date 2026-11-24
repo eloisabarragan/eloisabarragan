@@ -61,3 +61,5 @@ input[type='file'] { font-size: 0.85rem; font-weight: 400; }
   .admin .tabs { order: 3; width: 100%; justify-content: flex-start; }
 }
 .settings-form .row { align-items: start; }
+
+.admin .brand-icon { height: 44px; }

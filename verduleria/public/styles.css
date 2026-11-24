@@ -1,10 +1,10 @@
-/* Huerta Orgánica: papel con textura, verdes de hoja, tierra y terracota.
+/* Huerta Orgánica: papel con textura y los colores del logo (verde hoja, lima y naranja).
    Títulos en Fraunces, texto en DM Sans y notas manuscritas en Caveat. */
 :root {
-  --verde: #2d5a37;
-  --verde-osc: #1b3823;
-  --hoja: #8fa85f;
-  --verde-suave: #e5ecd6;
+  --verde: #4a7332;
+  --verde-osc: #1c4a26;
+  --hoja: #a0b038;
+  --verde-suave: #e8eed3;
   --crema: #f6f1e4;
   --lino: #ede5d0;
   --papel: #fffdf7;
@@ -12,8 +12,8 @@
   --gris: #5b6558;
   --borde: #e0d7bf;
   --tierra: #7b5236;
-  --terracota: #a94f2a;
-  --dorado: #b98b4e;
+  --terracota: #b85d0f; /* naranja del logo, oscurecido para que el texto blanco se lea */
+  --dorado: #ea892a; /* naranja del logo */
   --rojo: #b3402a;
   --serif: 'Fraunces', 'Iowan Old Style', Georgia, serif;
   --sans: 'DM Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
@@ -24,7 +24,7 @@
 }
 
 *, *::before, *::after { box-sizing: border-box; }
-html { scroll-behavior: smooth; scroll-padding-top: 96px; }
+html { scroll-behavior: smooth; scroll-padding-top: 104px; }
 body {
   margin: 0;
   font-family: var(--sans);
@@ -82,12 +82,12 @@ h1 em, h2 em { font-style: italic; color: var(--verde); }
   transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
 }
 .btn:hover { transform: translateY(-2px); }
-.btn-primary { background: var(--verde); color: #fff; box-shadow: 0 8px 20px rgba(45, 90, 55, 0.25); }
+.btn-primary { background: var(--verde); color: #fff; box-shadow: 0 8px 20px rgba(74, 115, 50, 0.28); }
 .btn-primary:hover { background: var(--verde-osc); }
 .btn-ghost { background: rgba(255, 253, 247, 0.6); color: var(--verde-osc); box-shadow: inset 0 0 0 1px var(--verde); }
 .btn-ghost:hover { background: var(--verde-suave); }
-.btn-light { background: var(--terracota); color: #fff; box-shadow: 0 8px 20px rgba(169, 79, 42, 0.3); }
-.btn-light:hover { background: #8f4122; }
+.btn-light { background: var(--terracota); color: #fff; box-shadow: 0 8px 20px rgba(184, 93, 15, 0.3); }
+.btn-light:hover { background: #9a4d0b; }
 .btn-whatsapp { background: #1c7f45; color: #fff; }
 .btn-whatsapp:hover { background: #166638; }
 .btn:disabled { opacity: 0.6; cursor: wait; transform: none; }
@@ -137,10 +137,12 @@ h1 em, h2 em { font-style: italic; color: var(--verde); }
   transition: box-shadow 0.3s, border-color 0.3s;
 }
 .site-header.is-scrolled { border-color: var(--borde); box-shadow: 0 6px 24px rgba(46, 52, 30, 0.08); }
-.header-inner { display: flex; align-items: center; justify-content: space-between; gap: 20px; height: 76px; }
+.header-inner { display: flex; align-items: center; justify-content: space-between; gap: 20px; height: 84px; }
 .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--verde); }
-.brand-leaf { width: 36px; height: 36px; flex: none; transition: transform 0.4s; }
-.brand:hover .brand-leaf { transform: rotate(-12deg) scale(1.06); }
+.brand-icon { width: auto; height: 54px; flex: none; transition: transform 0.4s; }
+.brand-word { width: auto; height: 38px; flex: none; }
+.brand:hover .brand-icon { transform: rotate(-5deg) scale(1.05); }
+.footer-logo { width: 190px; height: auto; padding: 14px 18px; border-radius: 18px; background: var(--crema); }
 .brand-name {
   display: block;
   font-family: var(--serif);
@@ -216,7 +218,7 @@ h1 em, h2 em { font-style: italic; color: var(--verde); }
 .hero h1 { font-size: clamp(2.7rem, 6.4vw, 4.9rem); max-width: 12em; }
 .hero h1 em { position: relative; white-space: nowrap; }
 .hero h1 em svg { position: absolute; left: -2%; bottom: -0.1em; width: 104%; height: 0.2em; overflow: visible; }
-.hero h1 em path { fill: none; stroke: var(--terracota); stroke-width: 3; stroke-linecap: round; stroke-dasharray: 210; stroke-dashoffset: 0; }
+.hero h1 em path { fill: none; stroke: var(--dorado); stroke-width: 3; stroke-linecap: round; stroke-dasharray: 210; stroke-dashoffset: 0; }
 .hero-sub { max-width: 30em; margin: 24px 0 30px; color: var(--gris); font-size: 1.08rem; }
 .hero-cta { display: flex; flex-wrap: wrap; gap: 12px; }
 .hero-note { margin-top: 18px; transform: rotate(-2deg); transform-origin: left; }
@@ -497,9 +499,6 @@ details p { padding: 0 22px 20px; color: var(--gris); max-width: 46em; }
 .site-footer { position: relative; overflow: hidden; background: var(--grano), var(--verde-osc); color: #dfe6d3; padding-top: 60px; }
 .footer-sprig { position: absolute; width: 280px; height: 140px; right: -30px; top: 10px; color: rgba(143, 168, 95, 0.25); transform: rotate(8deg); pointer-events: none; }
 .footer-inner { position: relative; display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 32px; padding-bottom: 40px; }
-.site-footer .brand-name { color: #fff; }
-.site-footer .brand-tag { color: #b5c2a8; }
-.site-footer .brand-tag { font-size: 0.56rem; }
 .site-footer .footer-hand { margin-top: 16px; font-size: 1.5rem; color: #c9dc9c; }
 .site-footer h3 { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: #fff; margin-bottom: 12px; }
 .site-footer p { font-size: 0.94rem; margin-bottom: 4px; }
@@ -713,9 +712,10 @@ textarea { resize: vertical; }
   .nav a::after { display: none; }
 }
 @media (max-width: 760px) {
-  .header-inner { height: 66px; gap: 8px; }
+  .header-inner { height: 68px; gap: 8px; }
   .brand { gap: 8px; }
-  .brand-leaf { width: 28px; height: 28px; }
+  .brand-icon { height: 42px; }
+  .brand-word { height: 27px; }
   .brand-name { font-size: 0.92rem; letter-spacing: 0.1em; white-space: nowrap; }
   .brand-tag { font-size: 0.48rem; letter-spacing: 0.16em; white-space: nowrap; }
   .cart-btn-text, #search-link { display: none; }

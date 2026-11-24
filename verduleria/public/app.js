@@ -518,13 +518,13 @@ function fillStoreInfo() {
 
   const paidShipping = config.shippingCost > 0;
   $('shipping-hint').textContent = paidShipping
-    ? `${money(config.shippingCost)} · Gratis desde ${money(config.freeShippingFrom)} o con el Club Huerta.`
+    ? `${money(config.shippingCost)} · Gratis en compras mayores a ${money(config.freeShippingFrom)} o con el Club Huerta.`
     : 'Sin costo.';
   $('announce').textContent = paidShipping
-    ? `Entregas en el día · Envío gratis desde ${money(config.freeShippingFrom)} · Club Huerta: envíos gratis todo el mes`
+    ? `Entregas en el día · Envío gratis en compras mayores a ${money(config.freeShippingFrom)} · Club Huerta: envíos gratis todo el mes`
     : 'Entregas en el día · Envío gratis en todos los pedidos';
   if (paidShipping) {
-    $('faq-shipping').textContent = `El envío cuesta ${money(config.shippingCost)} y es gratis en compras desde ${money(config.freeShippingFrom)}. Con el Club Huerta es gratis siempre. También podés retirar en el local sin costo.`;
+    $('faq-shipping').textContent = `El envío cuesta ${money(config.shippingCost)} y es gratis en compras mayores a ${money(config.freeShippingFrom)}. Con el Club Huerta es gratis siempre. También podés retirar en el local sin costo.`;
   }
 
   // Club Huerta: precio y a partir de qué pedido conviene.

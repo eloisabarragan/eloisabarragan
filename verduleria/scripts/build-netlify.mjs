@@ -32,7 +32,7 @@ if (!fs.existsSync(dataFile)) {
     },
     moneda: 'UYU',
     costoEnvio: 90,
-    envioGratisDesde: 1500,
+    envioGratisDesde: 1000,
     cuotaClub: 290,
     productos,
   };

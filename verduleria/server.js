@@ -22,7 +22,7 @@ const SETTING_DEFAULTS = {
   address: env.STORE_ADDRESS || 'Av. Ejemplo 1234, Montevideo',
   hours: env.STORE_HOURS || 'Lunes a sábado de 8 a 20 h',
   shippingCost: Number(env.SHIPPING_COST ?? 90),
-  freeShippingFrom: Number(env.FREE_SHIPPING_FROM ?? 1500),
+  freeShippingFrom: Number(env.FREE_SHIPPING_FROM ?? 1000),
   clubPrice: Number(env.CLUB_PRICE ?? 290), // precio mensual del Club Huerta
 };
 const NUMERIC_SETTINGS = ['shippingCost', 'freeShippingFrom', 'clubPrice'];
