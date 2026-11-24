@@ -147,7 +147,6 @@ function card(p, zone) {
     heart(p, zone),
     h('div', { class: 'card-art' }, productArt(p)),
     h('h3', {}, p.name),
-    p.origin && h('p', { class: 'origin' }, h('span', { class: 'pin', 'aria-hidden': 'true' }), `Origen: ${p.origin}`),
     h(
       'div',
       { class: 'card-foot' },
@@ -171,7 +170,10 @@ function card(p, zone) {
 }
 
 function renderShop() {
-  const categories = ['Todos', ...new Set(products.map((p) => p.category))];
+  // Los combos van primero; después el resto en un orden fijo.
+  const order = ['Combos', 'Verduras', 'Frutas', 'Hierbas', 'Almacén'];
+  const rank = (c) => (order.includes(c) ? order.indexOf(c) : order.length);
+  const categories = ['Todos', ...[...new Set(products.map((p) => p.category))].sort((x, y) => rank(x) - rank(y))];
   if (favorites.size) categories.push('Favoritos');
   $('chips').replaceChildren(
     ...categories.map((c) =>
@@ -554,7 +556,7 @@ function fillStoreInfo() {
   const clubHow = config.static
     ? 'Te sumás desde esta página por WhatsApp; cuando registramos tu pago, al comprar marcás que sos del Club y no pagás envío.'
     : 'Te sumás desde esta página; cuando registramos tu pago, el beneficio se activa y se aplica solo al comprar con tu número de teléfono.';
-  $('faq-club').textContent = `Es una suscripción de ${money(config.clubPrice)} por mes: todos tus pedidos llegan con envío gratis, sin mínimo de compra. ${clubHow}`;
+  $('faq-club').textContent = `Es una suscripción de ${money(config.clubPrice)} por mes: todos tus pedidos llegan con envío gratis, sin mínimo de compra, y además tenés beneficios especiales, prioridad en stock y recetas exclusivas. ${clubHow}`;
 }
 
 // Las secciones aparecen suavemente al llegar a ellas.

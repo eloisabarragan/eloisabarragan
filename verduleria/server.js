@@ -39,7 +39,7 @@ function loadSettings() {
   return result;
 }
 
-const UNITS = ['kg', 'unidad', 'atado', 'docena', 'bandeja', 'frasco'];
+const UNITS = ['kg', 'unidad', 'atado', 'docena', 'bandeja', 'frasco', 'combo'];
 const ORDER_STATUSES = ['nuevo', 'preparando', 'en_camino', 'entregado', 'cancelado'];
 const PAYMENT_STATUSES = ['pendiente', 'aprobado', 'rechazado'];
 const SUBSCRIPTION_STATUSES = ['pendiente', 'activa', 'cancelada'];

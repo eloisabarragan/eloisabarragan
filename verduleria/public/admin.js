@@ -188,7 +188,7 @@ function openProduct(p = null) {
   $('product-title').textContent = p ? 'Editar producto' : 'Nuevo producto';
   showError('product-error', '');
   if (p) {
-    for (const key of ['name', 'category', 'origin', 'price', 'unit', 'emoji']) form.elements[key].value = p[key];
+    for (const key of ['name', 'category', 'price', 'unit', 'emoji']) form.elements[key].value = p[key];
     form.elements.step.value = String(p.step);
     form.elements.featured.checked = p.featured;
     form.elements.organic.checked = p.organic;
@@ -234,7 +234,7 @@ async function saveProduct(event) {
     const body = {
       name: f.name.value,
       category: f.category.value,
-      origin: f.origin.value,
+      origin: '',
       price: Number(f.price.value),
       unit: f.unit.value,
       step: Number(f.step.value),

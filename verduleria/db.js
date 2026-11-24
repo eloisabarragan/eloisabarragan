@@ -18,7 +18,7 @@ db.exec(`
     name       TEXT    NOT NULL,
     category   TEXT    NOT NULL,
     price      INTEGER NOT NULL,          -- precio por unidad de venta, sin decimales
-    unit       TEXT    NOT NULL,          -- kg, unidad, atado, docena, bandeja, frasco
+    unit       TEXT    NOT NULL,          -- kg, unidad, atado, docena, bandeja, frasco, combo
     step       REAL    NOT NULL DEFAULT 1, -- de a cuánto se puede pedir (0.5 kg, 1 unidad...)
     origin     TEXT    NOT NULL DEFAULT '',
     emoji      TEXT    NOT NULL DEFAULT '🥬', -- dibujo que se muestra si no hay foto
@@ -123,6 +123,22 @@ if (db.prepare('SELECT COUNT(*) AS n FROM products').get().n === 0) {
   for (const [name, category, price, unit, step, origin, emoji, featured] of seed) {
     insert.run(name, category, price, unit, step, origin, emoji, featured);
   }
+}
+
+// Combos: se agregan una sola vez (también en bases que ya existían).
+const combos = [
+  ['Combo del mes', 750, 1],
+  ['Combo fitness', 1290, 0],
+  ['Combo familiar', 1490, 0],
+  ['Combo ahorro', 1650, 0],
+  ['Combo frutas', 550, 0],
+];
+if (!db.prepare("SELECT 1 FROM settings WHERE key = 'combos_cargados'").get()) {
+  const insertCombo = db.prepare(
+    "INSERT INTO products (name, category, price, unit, step, origin, emoji, featured) VALUES (?, 'Combos', ?, 'combo', 1, '', '🧺', ?)"
+  );
+  for (const [name, price, featured] of combos) insertCombo.run(name, price, featured);
+  db.prepare("INSERT INTO settings (key, value) VALUES ('combos_cargados', '1')").run();
 }
 
 // Fotos incluidas en el proyecto. Se asignan a los productos que todavía no tienen foto,

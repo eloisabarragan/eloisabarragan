@@ -115,10 +115,7 @@
     <form id="product-form" method="dialog">
       <h2 id="product-title">Nuevo producto</h2>
       <label>Nombre<input name="name" required maxlength="60"></label>
-      <div class="row">
-        <label>Categoría<input name="category" required maxlength="30" list="categories"></label>
-        <label>Origen (opcional)<input name="origin" maxlength="60" placeholder="Canelones"></label>
-      </div>
+      <label>Categoría<input name="category" required maxlength="30" list="categories"><small>Por ejemplo: Combos, Verduras, Frutas, Hierbas, Almacén.</small></label>
       <datalist id="categories"></datalist>
       <div class="row row-3">
         <label>Precio<input name="price" type="number" min="1" step="1" required></label>

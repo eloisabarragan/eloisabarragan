@@ -41,7 +41,7 @@ export function moneyFormatter(currency) {
   return (n) => fmt.format(n);
 }
 
-const PLURALS = { kg: 'kg', unidad: 'unidades', atado: 'atados', docena: 'docenas', bandeja: 'bandejas', frasco: 'frascos' };
+const PLURALS = { kg: 'kg', unidad: 'unidades', atado: 'atados', docena: 'docenas', bandeja: 'bandejas', frasco: 'frascos', combo: 'combos' };
 
 // 1.5, "kg" -> "1,5 kg"   ·   2, "atado" -> "2 atados"
 export function formatQty(qty, unit) {

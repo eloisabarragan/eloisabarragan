@@ -29,6 +29,9 @@ productos y el total. Abajo tiene dos listas:
 - **Editar:** cambia nombre, precio, categoría, foto y demás.
 - **A la venta:** destildá la casilla cuando algo se termina; deja de mostrarse en la tienda
   sin borrarlo. Cuando vuelve a haber, la tildás de nuevo.
+- **Combos:** son productos comunes con categoría "Combos" y "Se vende por: combo". Para
+  sumar uno, tocá "Nuevo producto" y poné esa categoría; aparece solo en el botón Combos
+  de la tienda.
 - **Destacado:** los destacados aparecen primero, en la portada.
 - **Orgánico:** tildalo solo en los productos que realmente lo son; les agrega la etiqueta
   "Orgánico" en la tienda.
