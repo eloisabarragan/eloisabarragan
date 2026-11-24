@@ -290,7 +290,7 @@ function openDrawer(open) {
   drawer.inert = !open;
   drawer.setAttribute('aria-hidden', String(!open));
   // Mientras el carrito está abierto, el resto de la página no recibe foco ni clics.
-  for (const id of ['main', 'site-header', 'contacto']) $(id).inert = open;
+  for (const id of ['main', 'site-header', 'contacto', 'wa-float']) $(id).inert = open;
   $('backdrop').hidden = !open;
   document.body.classList.toggle('no-scroll', open);
   $('cart-bar').hidden = open || cartLines().length === 0;
@@ -513,6 +513,7 @@ function fillStoreInfo() {
   $('store-hours').textContent = store.hours;
   $('store-phone').textContent = `Tel. ${store.phone}`;
   $('store-whatsapp').href = `https://wa.me/${store.whatsapp}`;
+  $('wa-float').href = `https://wa.me/${store.whatsapp}?text=${encodeURIComponent(`¡Hola ${store.name}! Tengo una consulta.`)}`;
   $('pickup-hint').textContent = `${store.address}. Sin costo.`;
 
   const paidShipping = config.shippingCost > 0;

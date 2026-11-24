@@ -531,12 +531,37 @@ body:has(.cart-bar:not([hidden])) .site-footer { padding-bottom: 80px; }
 }
 .cart-bar:hover { background: var(--verde-osc); }
 .cart-bar strong { font-size: 1.05rem; }
+/* Botón flotante de WhatsApp */
+.wa-float {
+  position: fixed;
+  right: calc(18px + env(safe-area-inset-right, 0px));
+  bottom: calc(18px + env(safe-area-inset-bottom, 0px));
+  z-index: 24;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  height: 56px;
+  padding: 0 20px 0 14px;
+  border-radius: 28px;
+  background: #1c7f45;
+  color: #fff;
+  font-size: 0.92rem;
+  font-weight: 500;
+  text-decoration: none;
+  box-shadow: 0 12px 30px rgba(20, 60, 35, 0.35);
+  transition: transform 0.2s, background 0.2s, bottom 0.25s;
+}
+.wa-float:hover { transform: translateY(-3px); background: #166638; }
+.wa-float svg { width: 30px; height: 30px; flex: none; }
+.wa-bubble { fill: none; stroke: currentColor; stroke-width: 1.600; stroke-linejoin: round; }
+.wa-phone { fill: currentColor; }
 .toast {
   position: fixed;
   left: 50%;
   bottom: calc(86px + env(safe-area-inset-bottom, 0px));
   z-index: 50;
   transform: translateX(-50%);
+  width: max-content;
   max-width: calc(100% - 32px);
   padding: 10px 18px;
   border-radius: 20px;
@@ -696,6 +721,11 @@ textarea { resize: vertical; }
   .brand-name { font-size: 0.92rem; letter-spacing: 0.1em; white-space: nowrap; }
   .brand-tag { font-size: 0.48rem; letter-spacing: 0.16em; white-space: nowrap; }
   .cart-btn-text, #search-link { display: none; }
+  /* en celular el botón de WhatsApp es solo el ícono y sube cuando aparece la barra del carrito */
+  .wa-float { width: 56px; padding: 0; justify-content: center; }
+  .wa-float span { display: none; }
+  body:has(.cart-bar:not([hidden])) .wa-float { bottom: calc(86px + env(safe-area-inset-bottom, 0px)); }
+  body:has(.cart-bar:not([hidden])) .toast { bottom: calc(154px + env(safe-area-inset-bottom, 0px)); }
   .announce { font-size: 0.72rem; }
   .grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
   .carousel { gap: 12px; }
