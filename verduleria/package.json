@@ -10,7 +10,8 @@
   "scripts": {
     "start": "node --env-file-if-exists=.env server.js",
     "dev": "node --env-file-if-exists=.env --watch server.js",
-    "test": "node --test"
+    "test": "node --test",
+    "build:netlify": "node scripts/build-netlify.mjs"
   },
   "dependencies": {
     "express": "^4.21.2"

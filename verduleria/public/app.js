@@ -301,6 +301,7 @@ function openDrawer(open) {
 // Consulta si el teléfono es de un socio del Club, para mostrar el envío gratis.
 let memberTimer;
 function checkMember() {
+  if (config.static) return; // sin servidor, el cliente marca la casilla "Soy del Club"
   clearTimeout(memberTimer);
   memberTimer = setTimeout(async () => {
     const phone = $('f-phone').value.replace(/\D/g, '');
@@ -334,6 +335,7 @@ async function submitOrder() {
   if (data.phone.trim().length < 6) return showError('form-error', 'Escribí un teléfono para que podamos contactarte.');
   if (data.delivery === 'envio' && data.address.trim().length < 5) return showError('form-error', 'Escribí la dirección de entrega.');
   showError('form-error', '');
+  if (config.static) return orderByWhatsApp(data);
 
   const button = $('cart-action');
   button.disabled = true;
@@ -358,6 +360,48 @@ async function submitOrder() {
     }
     render();
   }
+}
+
+// Versión estática (sin servidor): el pedido viaja completo por WhatsApp.
+function orderByWhatsApp(data) {
+  const lines = cartLines();
+  const t = totals();
+  const text = [
+    `¡Hola ${config.store.name}! Quiero hacer este pedido:`,
+    '',
+    ...lines.map((l) => `• ${formatQty(l.qty, l.p.unit)} de ${l.p.name}: ${money(Math.round(l.p.price * l.qty))}`),
+    '',
+    t.delivery === 'envio' ? `Envío: ${t.shipping ? money(t.shipping) : 'gratis'}` : null,
+    `Total: ${money(t.total)}`,
+    '',
+    `Nombre: ${data.name.trim()}`,
+    `Teléfono: ${data.phone.trim()}`,
+    t.delivery === 'envio' ? `Entrega en: ${data.address.trim()}` : 'Retiro en el local',
+    data.notes.trim() ? `Aclaraciones: ${data.notes.trim()}` : null,
+    member ? 'Soy del Club Huerta (envío gratis).' : null,
+    '',
+    'Quiero pagar por transferencia. ¿Me pasan los datos de la cuenta?',
+  ]
+    .filter((l) => l !== null)
+    .join('\n');
+  const link = `https://wa.me/${config.store.whatsapp}?text=${encodeURIComponent(text)}`;
+  window.open(link, '_blank', 'noopener');
+
+  cart = {};
+  saveCart();
+  render();
+  $('cart-empty').hidden = true;
+  $('cart-list').replaceChildren(
+    h(
+      'li',
+      { class: 'done-card' },
+      h('p', { class: 'eyebrow' }, 'Último paso'),
+      h('h3', {}, `¡Gracias, ${data.name.trim().split(' ')[0]}!`),
+      h('p', {}, `Tu pedido por ${money(t.total)} ya está armado. Envialo por WhatsApp para confirmarlo y coordinar el pago.`),
+      h('a', { class: 'btn btn-whatsapp', href: link, target: '_blank', rel: 'noopener' }, 'Enviar pedido por WhatsApp'),
+      h('button', { type: 'button', class: 'btn btn-ghost', onclick: () => openDrawer(false) }, 'Seguir mirando')
+    )
+  );
 }
 
 // ---------- Club Huerta ----------
@@ -401,7 +445,7 @@ async function submitClub(event) {
   const button = $('club-submit');
   button.disabled = true;
   try {
-    const sub = await api('/api/subscriptions', { method: 'POST', body: data });
+    const sub = config.static ? {} : await api('/api/subscriptions', { method: 'POST', body: data });
     if (sub.payUrl) {
       location.href = sub.payUrl; // Mercado Pago pide autorizar el débito mensual
       return;
@@ -489,7 +533,20 @@ function fillStoreInfo() {
     const n = Math.floor(config.clubPrice / config.shippingCost) + 1;
     $('club-breakeven').textContent = `Con el envío a ${money(config.shippingCost)}, se paga solo a partir del ${n}.º pedido del mes.`;
   }
-  $('faq-club').textContent = `Es una suscripción de ${money(config.clubPrice)} por mes: todos tus pedidos llegan con envío gratis, sin mínimo de compra. Te sumás desde esta página; cuando registramos tu pago, el beneficio se activa y se aplica solo al comprar con tu número de teléfono.`;
+  // Sin Mercado Pago configurado, la web solo habla de transferencia.
+  if (!config.mpEnabled) {
+    $('how-pay').textContent = 'Por transferencia bancaria, coordinando por WhatsApp.';
+    $('faq-pay').textContent = 'Transferencia bancaria: nos enviás el pedido por WhatsApp y te pasamos los datos de la cuenta.';
+    $('club-small').textContent = 'Pagás por transferencia, coordinando por WhatsApp.';
+  }
+  if (config.static) {
+    $('club-check').hidden = false;
+    $('club-auto').replaceChildren(h('strong', {}, 'Fácil de usar.'), ' Al comprar marcás que sos del Club y el envío queda en $0.');
+  }
+  const clubHow = config.static
+    ? 'Te sumás desde esta página por WhatsApp; cuando registramos tu pago, al comprar marcás que sos del Club y no pagás envío.'
+    : 'Te sumás desde esta página; cuando registramos tu pago, el beneficio se activa y se aplica solo al comprar con tu número de teléfono.';
+  $('faq-club').textContent = `Es una suscripción de ${money(config.clubPrice)} por mes: todos tus pedidos llegan con envío gratis, sin mínimo de compra. ${clubHow}`;
 }
 
 // Las secciones aparecen suavemente al llegar a ellas.
@@ -577,6 +634,10 @@ async function init() {
   });
   form.addEventListener('change', renderCart);
   $('f-phone').addEventListener('input', checkMember);
+  $('f-club').addEventListener('change', (e) => {
+    member = e.target.checked;
+    renderCart();
+  });
   form.addEventListener('submit', (e) => {
     e.preventDefault();
     submitOrder();

@@ -146,7 +146,7 @@
           <ul class="club-list">
             <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><strong>Envío gratis en cada pedido.</strong> Pedí las veces que quieras durante el mes.</span></li>
             <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><strong>Sin mínimo de compra.</strong> Aunque sea un atado de perejil.</span></li>
-            <li><svg aria-hidden="true"><use href="#i-check"/></svg><span><strong>Se aplica solo.</strong> Al comprar ponés tu teléfono y el envío queda en $0.</span></li>
+            <li><svg aria-hidden="true"><use href="#i-check"/></svg><span id="club-auto"><strong>Se aplica solo.</strong> Al comprar ponés tu teléfono y el envío queda en $0.</span></li>
           </ul>
         </div>
         <div class="club-card reveal">
@@ -155,7 +155,7 @@
           <p class="club-price"><strong id="club-price">—</strong><span>por mes</span></p>
           <p class="club-breakeven" id="club-breakeven"></p>
           <button type="button" class="btn btn-light btn-block" id="club-open">Quiero sumarme</button>
-          <p class="club-small">Pagás con Mercado Pago o por transferencia.</p>
+          <p class="club-small" id="club-small">Pagás con Mercado Pago o por transferencia.</p>
         </div>
       </div>
     </section>
@@ -168,7 +168,7 @@
         </div>
         <ol class="steps">
           <li class="reveal"><span class="step-n">1</span><h3>Elegí</h3><p>Armá tu carrito con las frutas y verduras de la semana, por kilo o por unidad.</p></li>
-          <li class="reveal"><span class="step-n">2</span><h3>Pagá</h3><p>Con Mercado Pago o por transferencia, coordinando por WhatsApp.</p></li>
+          <li class="reveal"><span class="step-n">2</span><h3>Pagá</h3><p id="how-pay">Con Mercado Pago o por transferencia, coordinando por WhatsApp.</p></li>
           <li class="reveal"><span class="step-n">3</span><h3>Recibí</h3><p>Te lo llevamos a tu casa en el día, o pasás a retirarlo por el local.</p></li>
         </ol>
       </div>
@@ -211,7 +211,7 @@
           </details>
           <details>
             <summary>¿Qué medios de pago aceptan?</summary>
-            <p>Mercado Pago (tarjeta de crédito, débito o dinero en cuenta) o transferencia bancaria. Si elegís transferencia, nos enviás el pedido por WhatsApp y te pasamos los datos de la cuenta.</p>
+            <p id="faq-pay">Mercado Pago (tarjeta de crédito, débito o dinero en cuenta) o transferencia bancaria. Si elegís transferencia, nos enviás el pedido por WhatsApp y te pasamos los datos de la cuenta.</p>
           </details>
           <details>
             <summary>¿Cuánto cuesta el envío?</summary>
@@ -282,6 +282,7 @@
         <legend>Tus datos</legend>
         <label>Nombre y apellido<input id="f-name" name="name" autocomplete="name" required maxlength="80"></label>
         <label>Teléfono / WhatsApp<input id="f-phone" name="phone" type="tel" autocomplete="tel" required maxlength="25" placeholder="099 123 456"></label>
+        <label class="check-line" id="club-check" hidden><input type="checkbox" id="f-club" name="clubMember"> Soy del Club Huerta (envío gratis)</label>
         <p class="member-note" id="member-note" hidden><svg aria-hidden="true"><use href="#i-leaf"/></svg>Sos del Club Huerta: este pedido tiene envío gratis.</p>
       </fieldset>
 

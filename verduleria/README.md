@@ -80,6 +80,30 @@ Cada producto muestra un dibujo hasta que se le sube una foto desde el panel
 (Productos → Editar → Foto). Para la foto grande de la portada, guardar la imagen como
 `public/img/hero.jpg` y aparece sola.
 
+## Versión estática para Netlify
+
+Netlify solo aloja páginas estáticas, así que no puede correr el servidor de la tienda.
+Para esos casos hay una versión reducida:
+
+```bash
+npm run build:netlify
+```
+
+Genera la carpeta `netlify-sitio/`, que se arrastra a https://app.netlify.com/drop.
+
+| | Versión completa (servidor) | Versión estática (Netlify) |
+| --- | --- | --- |
+| Tienda, carrito, favoritos | Sí | Sí |
+| Pedidos | Se guardan y se ven en el panel | Llegan solo por WhatsApp |
+| Panel de administración | Sí | No |
+| Mercado Pago | Sí (con credenciales) | No |
+| Club Huerta | Envío gratis automático por teléfono | El cliente marca que es socio; se verifica a mano |
+| Editar productos y precios | Desde el panel | En `netlify-datos.json`, y se vuelve a generar |
+
+Los datos del local, los precios y los productos de esta versión están en
+`netlify-datos.json`. Las fotos van en `public/img/productos/`. Después de cada cambio
+hay que volver a correr el comando y subir la carpeta de nuevo.
+
 ## Pruebas
 
 ```bash
