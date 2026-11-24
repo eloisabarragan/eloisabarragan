@@ -24,6 +24,7 @@ const SETTING_DEFAULTS = {
   shippingCost: Number(env.SHIPPING_COST ?? 90),
   freeShippingFrom: Number(env.FREE_SHIPPING_FROM ?? 1000),
   clubPrice: Number(env.CLUB_PRICE ?? 290), // precio mensual del Club Huerta
+  pickup: env.STORE_PICKUP === '1', // true si hay un local donde retirar pedidos
 };
 const NUMERIC_SETTINGS = ['shippingCost', 'freeShippingFrom', 'clubPrice'];
 const STORE_NAME = 'Huerta Orgánica';
@@ -32,7 +33,8 @@ let settings = loadSettings();
 function loadSettings() {
   const result = { ...SETTING_DEFAULTS };
   for (const { key, value } of db.prepare('SELECT key, value FROM settings').all()) {
-    if (key in result) result[key] = NUMERIC_SETTINGS.includes(key) ? Number(value) : value;
+    if (!(key in result)) continue;
+    result[key] = key === 'pickup' ? value === '1' : NUMERIC_SETTINGS.includes(key) ? Number(value) : value;
   }
   return result;
 }
@@ -116,7 +118,7 @@ function isMember(phone) {
     .get(key);
 }
 
-const publicProduct = (p) => ({ ...p, featured: !!p.featured, available: !!p.available });
+const publicProduct = (p) => ({ ...p, featured: !!p.featured, available: !!p.available, organic: !!p.organic });
 
 function orderWithItems(order) {
   if (!order) return null;
@@ -133,6 +135,7 @@ app.get('/api/config', (req, res) => {
     shippingCost: settings.shippingCost,
     freeShippingFrom: settings.freeShippingFrom,
     clubPrice: settings.clubPrice,
+    pickup: settings.pickup,
     mpEnabled: !!MP_ACCESS_TOKEN,
     // Si existe public/img/hero.jpg se usa como foto de portada.
     heroImage: fs.existsSync(path.join(here, 'public', 'img', 'hero.jpg')) ? '/img/hero.jpg' : null,
@@ -152,11 +155,13 @@ app.post(
     const customerName = text(b.name, { min: 2, max: 80, label: 'Nombre' });
     const phone = validPhone(b.phone);
     const deliveryMethod = b.delivery === 'retiro' ? 'retiro' : 'envio';
+    if (deliveryMethod === 'retiro' && !settings.pickup) fail(400, 'Por ahora solo hacemos envíos a domicilio.');
     const address =
       deliveryMethod === 'envio' ? text(b.address, { min: 5, max: 160, label: 'Dirección de entrega' }) : '';
     const notes = text(b.notes, { max: 300, label: 'Aclaraciones' });
-    const paymentMethod = b.payment === 'mercadopago' ? 'mercadopago' : 'transferencia';
-    if (paymentMethod === 'mercadopago' && !MP_ACCESS_TOKEN) fail(400, 'El pago online no está disponible por ahora.');
+    // "mercadopago" cubre débito, crédito y dinero en cuenta. Sin Mercado Pago configurado,
+    // el pedido se guarda igual y el link de pago se le manda al cliente por WhatsApp.
+    const paymentMethod = ['mercadopago', 'efectivo'].includes(b.payment) ? b.payment : 'transferencia';
 
     if (!Array.isArray(b.items) || b.items.length === 0) fail(400, 'El carrito está vacío.');
     if (b.items.length > 100) fail(400, 'Demasiados productos en un solo pedido.');
@@ -205,7 +210,7 @@ app.post(
     }
 
     let payUrl = null;
-    if (paymentMethod === 'mercadopago') {
+    if (paymentMethod === 'mercadopago' && MP_ACCESS_TOKEN) {
       try {
         payUrl = await createMpPreference({ id: Number(orderId), code, total });
       } catch (err) {
@@ -480,7 +485,9 @@ app.put('/api/admin/settings', requireAdmin, (req, res) => {
   const next = {
     phone: text(b.phone, { min: 6, max: 25, label: 'Teléfono' }),
     whatsapp,
-    address: text(b.address, { min: 5, max: 160, label: 'Dirección' }),
+    pickup: !!b.pickup,
+    // La dirección solo hace falta si hay un local donde retirar.
+    address: text(b.address, { min: b.pickup ? 5 : 0, max: 160, label: 'Dirección del local' }),
     hours: text(b.hours, { min: 3, max: 120, label: 'Horarios' }),
   };
   const limits = { shippingCost: 0, freeShippingFrom: 0, clubPrice: 1 };
@@ -490,7 +497,7 @@ app.put('/api/admin/settings', requireAdmin, (req, res) => {
     next[key] = n;
   }
   const save = db.prepare('INSERT INTO settings (key, value) VALUES (?, ?) ON CONFLICT(key) DO UPDATE SET value = excluded.value');
-  for (const [key, value] of Object.entries(next)) save.run(key, String(value));
+  for (const [key, value] of Object.entries(next)) save.run(key, typeof value === 'boolean' ? (value ? '1' : '0') : String(value));
   settings = loadSettings();
   res.json(settings);
 });
@@ -538,20 +545,21 @@ function productFromBody(b = {}) {
     text(b.emoji, { max: 8, label: 'Dibujo' }) || '🥬',
     image,
     b.featured ? 1 : 0,
+    b.organic ? 1 : 0,
     b.available === false ? 0 : 1,
   ];
 }
 
 app.post('/api/admin/products', requireAdmin, (req, res) => {
   const r = db
-    .prepare('INSERT INTO products (name, category, price, unit, step, origin, emoji, image, featured, available) VALUES (?,?,?,?,?,?,?,?,?,?)')
+    .prepare('INSERT INTO products (name, category, price, unit, step, origin, emoji, image, featured, organic, available) VALUES (?,?,?,?,?,?,?,?,?,?,?)')
     .run(...productFromBody(req.body));
   res.status(201).json({ id: Number(r.lastInsertRowid) });
 });
 
 app.put('/api/admin/products/:id', requireAdmin, (req, res) => {
   const r = db
-    .prepare('UPDATE products SET name=?, category=?, price=?, unit=?, step=?, origin=?, emoji=?, image=?, featured=?, available=? WHERE id=?')
+    .prepare('UPDATE products SET name=?, category=?, price=?, unit=?, step=?, origin=?, emoji=?, image=?, featured=?, organic=?, available=? WHERE id=?')
     .run(...productFromBody(req.body), Number(req.params.id));
   if (!r.changes) fail(404, 'Producto no encontrado.');
   res.json({ ok: true });

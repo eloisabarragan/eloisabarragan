@@ -82,14 +82,21 @@ test('rechaza pedidos inválidos', async () => {
   assert.equal((await call('POST', '/api/orders', order({ items: [{ id: 1, qty: -1 }] }))).status, 400);
   assert.equal((await call('POST', '/api/orders', order({ items: [{ id: 99999, qty: 1 }] }))).status, 409);
   assert.equal((await call('POST', '/api/orders', order({ address: '' }))).status, 400);
-  assert.equal((await call('POST', '/api/orders', order({ payment: 'mercadopago' }))).status, 400);
   assert.equal((await call('GET', '/api/orders/no-existe')).status, 404);
 });
 
-test('retirar en el local no cobra envío', async () => {
-  const created = await call('POST', '/api/orders', order({ delivery: 'retiro', address: '' }));
-  const { data } = await call('GET', `/api/orders/${created.data.code}`);
-  assert.equal(data.shipping, 0);
+test('sin local físico no se puede elegir retiro', async () => {
+  assert.equal((await call('GET', '/api/config')).data.pickup, false);
+  assert.equal((await call('POST', '/api/orders', order({ delivery: 'retiro', address: '' }))).status, 400);
+});
+
+test('acepta efectivo, y tarjeta sin Mercado Pago configurado queda para coordinar', async () => {
+  for (const payment of ['efectivo', 'mercadopago']) {
+    const created = await call('POST', '/api/orders', order({ payment }));
+    assert.equal(created.status, 201);
+    assert.equal(created.data.payUrl, null);
+    assert.equal((await call('GET', `/api/orders/${created.data.code}`)).data.payment_method, payment);
+  }
 });
 
 test('el panel pide contraseña', async () => {
@@ -127,7 +134,7 @@ test('Club Huerta: el socio con el pago registrado no paga envío', async () => 
 });
 
 test('los ajustes del panel cambian la tienda', async () => {
-  const settings = { phone: '2900 0000', whatsapp: '598 91 000 000', address: 'Av. Nueva 100', hours: 'Todos los días', shippingCost: 120, freeShippingFrom: 2000, clubPrice: 350 };
+  const settings = { phone: '2900 0000', whatsapp: '598 91 000 000', address: '', pickup: false, hours: 'Todos los días', shippingCost: 120, freeShippingFrom: 2000, clubPrice: 350 };
   assert.equal((await call('PUT', '/api/admin/settings', settings)).status, 200);
   const { data: config } = await call('GET', '/api/config');
   assert.equal(config.store.whatsapp, '59891000000');
@@ -136,12 +143,19 @@ test('los ajustes del panel cambian la tienda', async () => {
   const created = await call('POST', '/api/orders', order());
   assert.equal((await call('GET', `/api/orders/${created.data.code}`)).data.shipping, 120);
   assert.equal((await call('PUT', '/api/admin/settings', { ...settings, shippingCost: 1.5 })).status, 400);
+
+  // Con local: hace falta la dirección, y retirar no cobra envío.
+  assert.equal((await call('PUT', '/api/admin/settings', { ...settings, pickup: true })).status, 400);
+  assert.equal((await call('PUT', '/api/admin/settings', { ...settings, pickup: true, address: 'Av. Nueva 100' })).status, 200);
+  const pickup = await call('POST', '/api/orders', order({ delivery: 'retiro', address: '' }));
+  assert.equal((await call('GET', `/api/orders/${pickup.data.code}`)).data.shipping, 0);
 });
 
 test('productos: alta, edición y validación', async () => {
-  const product = { name: 'Rúcula', category: 'Verduras', price: 80, unit: 'atado', step: 1, origin: '', emoji: '🥬', image: '', featured: false, available: true };
+  const product = { name: 'Rúcula', category: 'Verduras', price: 80, unit: 'atado', step: 1, origin: '', emoji: '🥬', image: '', featured: false, organic: true, available: true };
   const created = await call('POST', '/api/admin/products', product);
   assert.equal(created.status, 201);
+  assert.equal((await call('GET', '/api/products')).data.find((p) => p.id === created.data.id).organic, true);
   assert.equal((await call('PUT', `/api/admin/products/${created.data.id}`, { ...product, available: false })).status, 200);
   const { data: shop } = await call('GET', '/api/products');
   assert.ok(!shop.some((p) => p.id === created.data.id), 'un producto fuera de venta no se muestra');

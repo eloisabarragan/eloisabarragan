@@ -35,7 +35,7 @@ db.exec(`
     delivery_method TEXT    NOT NULL,          -- envio | retiro
     address         TEXT    NOT NULL DEFAULT '',
     notes           TEXT    NOT NULL DEFAULT '',
-    payment_method  TEXT    NOT NULL,          -- mercadopago | transferencia
+    payment_method  TEXT    NOT NULL,          -- mercadopago | transferencia | efectivo
     payment_status  TEXT    NOT NULL DEFAULT 'pendiente', -- pendiente | aprobado | rechazado
     status          TEXT    NOT NULL DEFAULT 'nuevo',     -- nuevo | preparando | en_camino | entregado | cancelado
     subtotal        INTEGER NOT NULL,
@@ -81,6 +81,11 @@ db.exec('CREATE TABLE IF NOT EXISTS settings (key TEXT PRIMARY KEY, value TEXT N
 // Bases creadas antes del Club: agregamos la columna que marca los pedidos de socios.
 if (!db.prepare('PRAGMA table_info(orders)').all().some((c) => c.name === 'member')) {
   db.exec('ALTER TABLE orders ADD COLUMN member INTEGER NOT NULL DEFAULT 0');
+}
+
+// Bases creadas antes de que "orgánico" fuera una marca por producto.
+if (!db.prepare('PRAGMA table_info(products)').all().some((c) => c.name === 'organic')) {
+  db.exec('ALTER TABLE products ADD COLUMN organic INTEGER NOT NULL DEFAULT 0');
 }
 
 // Productos de ejemplo: solo se cargan la primera vez (cuando la tabla está vacía).

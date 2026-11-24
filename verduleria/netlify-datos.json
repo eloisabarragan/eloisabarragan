@@ -2,8 +2,9 @@
   "local": {
     "telefono": "099 123 456",
     "whatsapp": "59899123456",
-    "direccion": "Av. Ejemplo 1234, Montevideo",
-    "horarios": "Lunes a sábado de 8 a 20 h"
+    "horarios": "Lunes a sábado de 8 a 20 h",
+    "retiroEnLocal": false,
+    "direccion": ""
   },
   "moneda": "UYU",
   "costoEnvio": 90,
@@ -20,7 +21,8 @@
       "origin": "Canelones",
       "emoji": "🥦",
       "image": "/img/productos/brocoli.jpg",
-      "featured": true
+      "featured": true,
+      "organic": false
     },
     {
       "id": 2,
@@ -32,7 +34,8 @@
       "origin": "Salto",
       "emoji": "🍅",
       "image": "/img/productos/tomate.jpg",
-      "featured": true
+      "featured": true,
+      "organic": false
     },
     {
       "id": 3,
@@ -44,7 +47,8 @@
       "origin": "Canelones",
       "emoji": "🥬",
       "image": "/img/productos/lechuga.jpg",
-      "featured": true
+      "featured": true,
+      "organic": false
     },
     {
       "id": 4,
@@ -56,7 +60,8 @@
       "origin": "Salto",
       "emoji": "🫑",
       "image": "",
-      "featured": true
+      "featured": true,
+      "organic": false
     },
     {
       "id": 5,
@@ -68,7 +73,8 @@
       "origin": "San José",
       "emoji": "🥕",
       "image": "",
-      "featured": false
+      "featured": false,
+      "organic": false
     },
     {
       "id": 6,
@@ -80,7 +86,8 @@
       "origin": "San José",
       "emoji": "🥔",
       "image": "",
-      "featured": false
+      "featured": false,
+      "organic": false
     },
     {
       "id": 7,
@@ -92,7 +99,8 @@
       "origin": "Canelones",
       "emoji": "🧅",
       "image": "/img/productos/cebolla.jpg",
-      "featured": false
+      "featured": false,
+      "organic": false
     },
     {
       "id": 8,
@@ -104,7 +112,8 @@
       "origin": "Canelones",
       "emoji": "🧅",
       "image": "/img/productos/cebolla-colorada.jpg",
-      "featured": false
+      "featured": false,
+      "organic": false
     },
     {
       "id": 9,
@@ -116,7 +125,8 @@
       "origin": "Canelones",
       "emoji": "🍈",
       "image": "",
-      "featured": false
+      "featured": false,
+      "organic": false
     },
     {
       "id": 10,
@@ -128,7 +138,8 @@
       "origin": "Montevideo rural",
       "emoji": "🥬",
       "image": "",
-      "featured": false
+      "featured": false,
+      "organic": false
     },
     {
       "id": 11,
@@ -140,7 +151,8 @@
       "origin": "Canelones",
       "emoji": "🍠",
       "image": "",
-      "featured": false
+      "featured": false,
+      "organic": false
     },
     {
       "id": 12,
@@ -152,7 +164,8 @@
       "origin": "Ecuador",
       "emoji": "🍌",
       "image": "",
-      "featured": false
+      "featured": false,
+      "organic": false
     },
     {
       "id": 13,
@@ -164,7 +177,8 @@
       "origin": "Melilla",
       "emoji": "🍎",
       "image": "",
-      "featured": false
+      "featured": false,
+      "organic": false
     },
     {
       "id": 14,
@@ -176,7 +190,8 @@
       "origin": "Salto",
       "emoji": "🍊",
       "image": "",
-      "featured": false
+      "featured": false,
+      "organic": false
     },
     {
       "id": 15,
@@ -188,7 +203,8 @@
       "origin": "Salto",
       "emoji": "🍋",
       "image": "",
-      "featured": false
+      "featured": false,
+      "organic": false
     },
     {
       "id": 16,
@@ -200,7 +216,8 @@
       "origin": "Salto",
       "emoji": "🍓",
       "image": "",
-      "featured": false
+      "featured": false,
+      "organic": false
     },
     {
       "id": 17,
@@ -212,7 +229,8 @@
       "origin": "Melilla",
       "emoji": "🍐",
       "image": "",
-      "featured": false
+      "featured": false,
+      "organic": false
     },
     {
       "id": 18,
@@ -224,7 +242,8 @@
       "origin": "Canelones",
       "emoji": "🍇",
       "image": "",
-      "featured": false
+      "featured": false,
+      "organic": false
     },
     {
       "id": 19,
@@ -236,7 +255,8 @@
       "origin": "Montevideo rural",
       "emoji": "🌿",
       "image": "",
-      "featured": false
+      "featured": false,
+      "organic": false
     },
     {
       "id": 20,
@@ -248,7 +268,8 @@
       "origin": "Montevideo rural",
       "emoji": "🌱",
       "image": "",
-      "featured": false
+      "featured": false,
+      "organic": false
     },
     {
       "id": 21,
@@ -260,7 +281,8 @@
       "origin": "Canelones",
       "emoji": "🧄",
       "image": "",
-      "featured": false
+      "featured": false,
+      "organic": false
     },
     {
       "id": 22,
@@ -272,7 +294,8 @@
       "origin": "San José",
       "emoji": "🥚",
       "image": "",
-      "featured": false
+      "featured": false,
+      "organic": false
     },
     {
       "id": 23,
@@ -284,7 +307,8 @@
       "origin": "Colonia",
       "emoji": "🍯",
       "image": "",
-      "featured": false
+      "featured": false,
+      "organic": false
     }
   ]
 }

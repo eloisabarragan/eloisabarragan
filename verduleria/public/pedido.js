@@ -1,4 +1,4 @@
-import { h, api, moneyFormatter, formatQty, STATUS_LABELS, PAYMENT_LABELS } from './common.js';
+import { h, api, moneyFormatter, formatQty, STATUS_LABELS, PAYMENT_LABELS, METHOD_LABELS, PAYMENT_ASKS } from './common.js';
 
 const content = document.getElementById('content');
 const params = new URLSearchParams(location.search);
@@ -15,16 +15,16 @@ function whatsappLink(order, config, money) {
     `Total: ${money(order.total)}`,
     order.delivery_method === 'envio' ? `Entrega en: ${order.address}` : 'Retiro en el local',
     '',
-    order.payment_method === 'transferencia'
-      ? 'Quiero pagar por transferencia. ¿Me pasan los datos de la cuenta?'
-      : 'Tengo una consulta sobre mi pedido.',
+    order.payment_status === 'aprobado' ? 'Tengo una consulta sobre mi pedido.' : PAYMENT_ASKS[order.payment_method],
   ].filter((l) => l !== null);
   return `https://wa.me/${config.store.whatsapp}?text=${encodeURIComponent(lines.join('\n'))}`;
 }
 
 function view(order, config) {
   const money = moneyFormatter(config.currency);
-  const byTransfer = order.payment_method === 'transferencia';
+  const method = order.payment_method;
+  // Pago online: Mercado Pago integrado. En los demás casos el pedido se confirma por WhatsApp.
+  const online = method === 'mercadopago' && config.mpEnabled;
   const paid = order.payment_status === 'aprobado';
   const rejected = order.payment_status === 'rechazado';
   const cancelled = order.status === 'cancelado';
@@ -35,19 +35,23 @@ function view(order, config) {
   if (cancelled) {
     title = 'Pedido cancelado';
     lead = `El pedido N.º ${order.id} fue cancelado. Si es un error, escribinos.`;
-  } else if (byTransfer && !paid) {
-    lead += ' Para terminar, envianos el pedido por WhatsApp y te pasamos los datos para la transferencia.';
-  } else if (!byTransfer && rejected) {
+  } else if (paid) {
+    lead += ' Ya lo estamos preparando.';
+  } else if (online && rejected) {
     title = 'No pudimos cobrar tu pedido';
     lead = `El pago del pedido N.º ${order.id} fue rechazado. Escribinos por WhatsApp y lo resolvemos.`;
-  } else if (!byTransfer && !paid) {
+  } else if (online) {
     lead += ' Estamos esperando la confirmación del pago de Mercado Pago; puede demorar unos minutos.';
+  } else if (method === 'transferencia') {
+    lead += ' Para terminar, envianos el pedido por WhatsApp y te pasamos los datos para la transferencia.';
+  } else if (method === 'mercadopago') {
+    lead += ' Para terminar, envianos el pedido por WhatsApp y te mandamos el link para pagar con tarjeta o Mercado Pago.';
   } else {
-    lead += ' Ya lo estamos preparando.';
+    lead += ' Pagás en efectivo al recibirlo. Envianos el pedido por WhatsApp para confirmarlo.';
   }
 
   const mainAction =
-    byTransfer && !paid && !cancelled
+    !online && !paid && !cancelled
       ? h('a', { class: 'btn btn-whatsapp', href: wa, target: '_blank', rel: 'noopener' }, 'Enviar pedido por WhatsApp')
       : h('a', { class: 'btn btn-ghost', href: wa, target: '_blank', rel: 'noopener' }, 'Consultar por WhatsApp');
 
@@ -62,7 +66,8 @@ function view(order, config) {
         'div',
         { class: 'tags' },
         h('span', { class: `tag${cancelled ? ' bad' : ''}` }, STATUS_LABELS[order.status]),
-        h('span', { class: `tag${paid ? '' : rejected ? ' bad' : ' warn'}` }, PAYMENT_LABELS[order.payment_status])
+        h('span', { class: `tag${paid ? '' : rejected ? ' bad' : ' warn'}` }, PAYMENT_LABELS[order.payment_status]),
+        h('span', { class: 'tag' }, METHOD_LABELS[method] || method)
       ),
       h('div', { class: 'actions' }, mainAction, h('a', { class: 'btn btn-ghost', href: '/' }, 'Volver a la tienda'))
     ),
@@ -105,7 +110,7 @@ function view(order, config) {
   );
 
   // Con Mercado Pago el aviso de pago puede tardar: volvemos a consultar un par de veces.
-  if (!byTransfer && order.payment_status === 'pendiente' && !cancelled && retries++ < 6) setTimeout(load, 5000);
+  if (online && order.payment_status === 'pendiente' && !cancelled && retries++ < 6) setTimeout(load, 5000);
 }
 
 async function load() {

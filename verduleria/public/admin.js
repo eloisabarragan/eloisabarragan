@@ -151,7 +151,7 @@ function productRow(p) {
     'tr',
     { class: p.available ? '' : 'is-off' },
     h('td', { class: 'thumb' }, p.image ? h('img', { src: p.image, alt: '' }) : h('span', {}, p.emoji)),
-    h('td', {}, h('strong', {}, p.name), p.featured ? ' ★' : ''),
+    h('td', {}, h('strong', {}, p.name), p.featured ? ' ★' : '', p.organic ? h('span', { class: 'tag mini' }, 'Orgánico') : null),
     h('td', {}, p.category),
     h('td', {}, `${money(p.price)} / ${p.unit}`),
     h('td', {}, h('input', { type: 'checkbox', checked: p.available, 'aria-label': `${p.name} a la venta`, onchange: toggle })),
@@ -191,6 +191,7 @@ function openProduct(p = null) {
     for (const key of ['name', 'category', 'origin', 'price', 'unit', 'emoji']) form.elements[key].value = p[key];
     form.elements.step.value = String(p.step);
     form.elements.featured.checked = p.featured;
+    form.elements.organic.checked = p.organic;
     form.elements.available.checked = p.available;
   }
   setPhoto(p?.image);
@@ -240,6 +241,7 @@ async function saveProduct(event) {
       emoji: f.emoji.value,
       image: f.image.value,
       featured: f.featured.checked,
+      organic: f.organic.checked,
       available: f.available.checked,
     };
     await adminApi(editingId ? `/api/admin/products/${editingId}` : '/api/admin/products', {
@@ -262,7 +264,9 @@ async function loadSettings() {
     const s = await adminApi('/api/admin/settings');
     for (const [key, value] of Object.entries(s)) {
       const field = $('settings-form').elements[key];
-      if (field) field.value = value;
+      if (!field) continue;
+      if (field.type === 'checkbox') field.checked = !!value;
+      else field.value = value;
     }
   } catch (error) {
     showError('admin-error', error.message);
@@ -280,6 +284,7 @@ async function saveSettings(event) {
         phone: f.phone.value,
         whatsapp: f.whatsapp.value,
         address: f.address.value,
+        pickup: f.pickup.checked,
         hours: f.hours.value,
         shippingCost: Number(f.shippingCost.value),
         freeShippingFrom: Number(f.freeShippingFrom.value),

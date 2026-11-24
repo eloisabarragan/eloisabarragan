@@ -30,6 +30,8 @@ productos y el total. Abajo tiene dos listas:
 - **A la venta:** destildá la casilla cuando algo se termina; deja de mostrarse en la tienda
   sin borrarlo. Cuando vuelve a haber, la tildás de nuevo.
 - **Destacado:** los destacados aparecen primero, en la portada.
+- **Orgánico:** tildalo solo en los productos que realmente lo son; les agrega la etiqueta
+  "Orgánico" en la tienda.
 - **Se vende por / Se pide de a:** por ejemplo, tomate "por kg" y "de a 0,5" permite pedir
   medio kilo, un kilo, kilo y medio. Lechuga "por unidad" y "de a 1".
 - **Foto:** elegí una foto del celular o la computadora; se achica sola. Quedan mejor las
@@ -57,7 +59,9 @@ número con el que se anotaron.
 
 Desde acá se cambia, sin tocar nada técnico:
 
-- Teléfono, dirección y horarios que se muestran en la web.
+- Teléfono y horarios de atención que se muestran en la web.
+- Si algún día tienen un local: tildá "Tenemos un local donde se pueden retirar pedidos" y
+  escribí la dirección. Recién ahí la web ofrece retirar en el local.
 - El número de WhatsApp que recibe los pedidos (con código de país y solo números:
   `59899123456`).
 - El costo de envío y el monto desde el que el envío es gratis.
@@ -65,11 +69,16 @@ Desde acá se cambia, sin tocar nada técnico:
 
 Los cambios se ven en la tienda apenas tocás "Guardar cambios".
 
-## Cómo llega un pedido por transferencia
+## Cómo llega un pedido
 
-1. El cliente arma el carrito y elige "Transferencia por WhatsApp".
-2. Te llega un WhatsApp con el resumen del pedido ya escrito.
-3. Le pasás los datos de la cuenta y te manda el comprobante.
-4. En el panel, marcás "Pago aprobado" y vas cambiando el estado del pedido.
+Al finalizar la compra el cliente elige cómo pagar, y te manda el pedido por WhatsApp con
+el resumen ya escrito:
+
+- **Transferencia bancaria:** le pasás los datos de la cuenta y te manda el comprobante.
+- **Débito, crédito o Mercado Pago:** le mandás un link de pago de Mercado Pago por
+  WhatsApp. (Si más adelante se conecta Mercado Pago a la web, paga solo en el momento.)
+- **Efectivo:** paga cuando recibe el pedido.
+
+Cuando cobrás, marcá "Pago aprobado" en el panel y andá cambiando el estado del pedido.
 
 El pedido queda guardado en el panel aunque el cliente no mande el WhatsApp.

@@ -58,4 +58,11 @@ export const STATUS_LABELS = {
 };
 export const PAYMENT_LABELS = { pendiente: 'Pago pendiente', aprobado: 'Pago aprobado', rechazado: 'Pago rechazado' };
 export const SUBSCRIPTION_LABELS = { pendiente: 'Pendiente de pago', activa: 'Activa', cancelada: 'Cancelada' };
-export const METHOD_LABELS = { mercadopago: 'Mercado Pago', transferencia: 'Transferencia' };
+export const METHOD_LABELS = { mercadopago: 'Débito, crédito o Mercado Pago', transferencia: 'Transferencia', efectivo: 'Efectivo al recibir' };
+
+// Lo que el cliente nos dice por WhatsApp según cómo eligió pagar.
+export const PAYMENT_ASKS = {
+  transferencia: 'Quiero pagar por transferencia. ¿Me pasan los datos de la cuenta?',
+  mercadopago: 'Quiero pagar con tarjeta o Mercado Pago. ¿Me pasan el link de pago?',
+  efectivo: 'Pago en efectivo cuando reciba el pedido.',
+};

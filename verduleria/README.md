@@ -32,8 +32,8 @@ La primera vez se cargan productos y precios **de ejemplo**; se editan desde el 
 
 ## Configuración
 
-**Desde el panel (pestaña Ajustes):** teléfono, WhatsApp, dirección, horarios, costo de
-envío, monto de envío gratis y cuota del Club. Es lo que el negocio cambia en el día a día.
+**Desde el panel (pestaña Ajustes):** teléfono, WhatsApp, horarios, si hay local para
+retirar, costo de envío, monto de envío gratis y cuota del Club. Es lo que el negocio cambia en el día a día.
 La guía para quien atiende la tienda está en [`GUIA-DEL-PANEL.md`](GUIA-DEL-PANEL.md).
 
 **En el archivo `.env` (se configura una sola vez al publicar):**
@@ -61,18 +61,21 @@ Si a un socio se le vence el mes y no se registra un pago nuevo, vuelve a pagar 
 
 ## Medios de pago
 
-**Transferencia por WhatsApp.** El pedido queda guardado y el cliente llega a una página
-con el botón "Enviar pedido por WhatsApp", que abre el chat con el resumen ya escrito.
-Cuando llega la transferencia, se marca "Pago aprobado" desde el panel.
+Al finalizar la compra el cliente elige uno de tres:
 
-**Mercado Pago.** Se activa al completar `MP_ACCESS_TOKEN` con el Access Token de la
-cuenta del negocio (se saca de https://www.mercadopago.com/developers/panel/app). El
-cliente paga en la página de Mercado Pago y el pedido se marca pago automáticamente.
-Para que Mercado Pago avise los pagos, la web tiene que estar publicada con `https` y
-`BASE_URL` apuntando a esa dirección.
+- **Transferencia bancaria.** Envía el pedido por WhatsApp y se le pasan los datos de la cuenta.
+- **Débito, crédito o Mercado Pago.** Sin `MP_ACCESS_TOKEN`, el pedido se guarda y se le
+  manda un link de pago por WhatsApp. Con `MP_ACCESS_TOKEN` (el Access Token de la cuenta
+  del negocio, de https://www.mercadopago.com/developers/panel/app) paga en el momento en
+  la página de Mercado Pago y el pedido se marca pago solo; para eso la web tiene que
+  estar publicada con `https` y `BASE_URL` apuntando a esa dirección.
+- **Efectivo.** Paga al recibir el pedido.
 
-> La integración con Mercado Pago (pagos de pedidos y débito mensual del Club) está
-> programada pero **todavía no se probó con una cuenta real**. Antes de salir a producción hay que probarla con credenciales de prueba.
+Los pagos por transferencia, link o efectivo se marcan "Pago aprobado" desde el panel.
+
+> La integración automática con Mercado Pago (pagos de pedidos y débito mensual del Club)
+> está programada pero **todavía no se probó con una cuenta real**. Antes de activarla hay
+> que probarla con credenciales de prueba.
 
 ## Fotos
 
@@ -96,7 +99,7 @@ Genera la carpeta `netlify-sitio/`, que se arrastra a https://app.netlify.com/dr
 | Tienda, carrito, favoritos | Sí | Sí |
 | Pedidos | Se guardan y se ven en el panel | Llegan solo por WhatsApp |
 | Panel de administración | Sí | No |
-| Mercado Pago | Sí (con credenciales) | No |
+| Pago con tarjeta o Mercado Pago | En el momento (con credenciales) o por link | Por link enviado por WhatsApp |
 | Club Huerta | Envío gratis automático por teléfono | El cliente marca que es socio; se verifica a mano |
 | Editar productos y precios | Desde el panel | En `netlify-datos.json`, y se vuelve a generar |
 

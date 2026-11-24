@@ -18,17 +18,18 @@ if (!fs.existsSync(dataFile)) {
   process.env.DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), 'huerta-build-'));
   const { db } = await import('../db.js');
   const productos = db
-    .prepare('SELECT id, name, category, price, unit, step, origin, emoji, image, featured FROM products ORDER BY id')
+    .prepare('SELECT id, name, category, price, unit, step, origin, emoji, image, featured, organic FROM products ORDER BY id')
     .all()
-    .map((p) => ({ ...p, featured: !!p.featured }));
+    .map((p) => ({ ...p, featured: !!p.featured, organic: !!p.organic }));
   db.close();
   fs.rmSync(process.env.DATA_DIR, { recursive: true, force: true });
   const datos = {
     local: {
       telefono: '099 123 456',
       whatsapp: '59899123456',
-      direccion: 'Av. Ejemplo 1234, Montevideo',
       horarios: 'Lunes a sábado de 8 a 20 h',
+      retiroEnLocal: false,
+      direccion: '',
     },
     moneda: 'UYU',
     costoEnvio: 90,
@@ -55,17 +56,18 @@ fs.cpSync(pub, out, {
 
 const config = {
   static: true,
-  store: { name: 'Huerta Orgánica', phone: datos.local.telefono, whatsapp: String(datos.local.whatsapp).replace(/\D/g, ''), address: datos.local.direccion, hours: datos.local.horarios },
+  store: { name: 'Huerta Orgánica', phone: datos.local.telefono, whatsapp: String(datos.local.whatsapp).replace(/\D/g, ''), address: datos.local.direccion || '', hours: datos.local.horarios },
   currency: datos.moneda,
   shippingCost: datos.costoEnvio,
   freeShippingFrom: datos.envioGratisDesde,
   clubPrice: datos.cuotaClub,
+  pickup: !!datos.local.retiroEnLocal,
   mpEnabled: false,
   heroImage: fs.existsSync(path.join(pub, 'img', 'hero.jpg')) ? '/img/hero.jpg' : null,
 };
 const productos = datos.productos
   .filter((p) => p.available !== false)
-  .map((p) => ({ available: true, origin: '', emoji: '🥬', image: '', featured: false, step: 1, ...p }))
+  .map((p) => ({ available: true, origin: '', emoji: '🥬', image: '', featured: false, organic: false, step: 1, ...p }))
   .sort((a, b) => b.featured - a.featured || a.category.localeCompare(b.category) || a.name.localeCompare(b.name));
 fs.mkdirSync(path.join(out, 'datos'));
 fs.writeFileSync(path.join(out, 'datos', 'config.json'), JSON.stringify(config));
@@ -95,9 +97,7 @@ fs.writeFileSync(commonPath, replaced);
 const privacyPath = path.join(out, 'privacidad.html');
 let privacy = fs.readFileSync(privacyPath, 'utf8');
 privacy = privacy
-  .replace(' Si pagás el Club con Mercado Pago, también tu correo electrónico, porque Mercado Pago lo necesita para el débito mensual.', ' Esos datos nos llegan por WhatsApp cuando enviás el pedido; esta web no los guarda.')
-  .replace('Los pagos con tarjeta se hacen en Mercado Pago: nosotros nunca vemos ni guardamos los datos de tu tarjeta. Si pagás por transferencia, coordinamos por WhatsApp.', 'Los pagos son por transferencia bancaria y se coordinan por WhatsApp.');
-if (privacy.includes('Mercado Pago')) throw new Error('La página de privacidad todavía menciona Mercado Pago');
+  .replace(' Si pagás el Club con Mercado Pago, también tu correo electrónico, porque Mercado Pago lo necesita para el débito mensual.', ' Esos datos nos llegan por WhatsApp cuando enviás el pedido; esta web no los guarda.');
 fs.writeFileSync(privacyPath, privacy);
 
 fs.writeFileSync(path.join(out, 'robots.txt'), 'User-agent: *\nAllow: /\n');

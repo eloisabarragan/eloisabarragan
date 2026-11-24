@@ -63,3 +63,5 @@ input[type='file'] { font-size: 0.85rem; font-weight: 400; }
 .settings-form .row { align-items: start; }
 
 .admin .brand-icon { height: 44px; }
+
+.tag.mini { margin-left: 8px; padding: 2px 8px; font-size: 0.7rem; }

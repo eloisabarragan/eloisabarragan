@@ -1,4 +1,4 @@
-import { h, api, moneyFormatter, formatQty } from './common.js';
+import { h, api, moneyFormatter, formatQty, PAYMENT_ASKS } from './common.js';
 
 const $ = (id) => document.getElementById(id);
 const CART_KEY = 'huerta-carrito';
@@ -143,7 +143,7 @@ function card(p, zone) {
   return h(
     'article',
     { class: `card${inCart ? ' in-cart' : ''}` },
-    h('span', { class: 'badge' }, 'Orgánico'),
+    p.organic && h('span', { class: 'badge' }, 'Orgánico'),
     heart(p, zone),
     h('div', { class: 'card-art' }, productArt(p)),
     h('h3', {}, p.name),
@@ -294,6 +294,7 @@ function openDrawer(open) {
   $('backdrop').hidden = !open;
   document.body.classList.toggle('no-scroll', open);
   $('cart-bar').hidden = open || cartLines().length === 0;
+  if (open) $('toast').hidden = true; // que el aviso no tape el carrito
   if (open) $('cart-close').focus();
   else $('cart-open').focus();
 }
@@ -380,7 +381,7 @@ function orderByWhatsApp(data) {
     data.notes.trim() ? `Aclaraciones: ${data.notes.trim()}` : null,
     member ? 'Soy del Club Huerta (envío gratis).' : null,
     '',
-    'Quiero pagar por transferencia. ¿Me pasan los datos de la cuenta?',
+    PAYMENT_ASKS[data.payment] || PAYMENT_ASKS.transferencia,
   ]
     .filter((l) => l !== null)
     .join('\n');
@@ -509,8 +510,16 @@ async function clubReturn() {
 
 function fillStoreInfo() {
   const { store } = config;
-  $('store-address').textContent = store.address;
   $('store-hours').textContent = store.hours;
+  // Solo si hay un local: dirección, retiro y los textos que lo mencionan.
+  if (config.pickup) {
+    $('store-heading').textContent = 'Visitanos';
+    $('store-address').textContent = store.address;
+    $('store-address').hidden = false;
+    $('pickup-option').hidden = false;
+    $('value-delivery').textContent = 'O retiro en el local, como prefieras.';
+    $('how-receive').textContent = 'Te lo llevamos a tu casa en el día, o pasás a retirarlo por el local.';
+  }
   $('store-phone').textContent = `Tel. ${store.phone}`;
   $('store-whatsapp').href = `https://wa.me/${store.whatsapp}`;
   $('wa-float').href = `https://wa.me/${store.whatsapp}?text=${encodeURIComponent(`¡Hola ${store.name}! Tengo una consulta.`)}`;
@@ -524,7 +533,7 @@ function fillStoreInfo() {
     ? `Entregas en el día · Envío gratis en compras mayores a ${money(config.freeShippingFrom)} · Club Huerta: envíos gratis todo el mes`
     : 'Entregas en el día · Envío gratis en todos los pedidos';
   if (paidShipping) {
-    $('faq-shipping').textContent = `El envío cuesta ${money(config.shippingCost)} y es gratis en compras mayores a ${money(config.freeShippingFrom)}. Con el Club Huerta es gratis siempre. También podés retirar en el local sin costo.`;
+    $('faq-shipping').textContent = `El envío cuesta ${money(config.shippingCost)} y es gratis en compras mayores a ${money(config.freeShippingFrom)}. Con el Club Huerta es gratis siempre.${config.pickup ? ' También podés retirar en el local sin costo.' : ''}`;
   }
 
   // Club Huerta: precio y a partir de qué pedido conviene.
@@ -536,8 +545,6 @@ function fillStoreInfo() {
   }
   // Sin Mercado Pago configurado, la web solo habla de transferencia.
   if (!config.mpEnabled) {
-    $('how-pay').textContent = 'Por transferencia bancaria, coordinando por WhatsApp.';
-    $('faq-pay').textContent = 'Transferencia bancaria: nos enviás el pedido por WhatsApp y te pasamos los datos de la cuenta.';
     $('club-small').textContent = 'Pagás por transferencia, coordinando por WhatsApp.';
   }
   if (config.static) {
@@ -585,8 +592,11 @@ async function init() {
   }
 
   const form = $('checkout-view');
-  $('pay-mp').hidden = !config.mpEnabled;
-  form.elements.payment.value = config.mpEnabled ? 'mercadopago' : 'transferencia';
+  // Con Mercado Pago integrado se paga en el momento; si no, mandamos el link por WhatsApp.
+  if (config.mpEnabled) {
+    $('pay-mp-hint').textContent = 'Pagás ahora, en la página de Mercado Pago.';
+    form.elements.payment.value = 'mercadopago';
+  }
   $('club-pay-mp').hidden = !config.mpEnabled;
   setClubPayment();
 
