@@ -482,7 +482,7 @@ h1 em, h2 em { font-style: italic; color: var(--verde); }
 .about-text { display: grid; gap: 16px; }
 .about-text p { color: var(--gris); font-size: 1.06rem; max-width: 36em; }
 .about-text .eyebrow { margin-bottom: 0; color: var(--verde); font-size: 0.72rem; }
-.about-text .about-sign { color: var(--tierra); font-size: 1.6rem; }
+.about-text .about-lead { font-family: var(--serif); font-style: italic; font-size: 1.45rem; line-height: 1.3; color: var(--verde); }
 
 /* ---------- Preguntas ---------- */
 .faq { background: var(--grano), var(--lino); padding-block: clamp(64px, 9vw, 110px); }
