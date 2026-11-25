@@ -97,7 +97,7 @@ function cervantes_menu_principal() {
 		if ( ! empty( $item['hijos'] ) ) {
 			echo '<ul class="submenu">';
 			foreach ( $item['hijos'] as $h ) {
-				echo '<li><a href="' . esc_url( home_url( $h['url'] ) ) . '"><i class="' . esc_attr( $h['icono'] ) . '" aria-hidden="true"></i> ' . esc_html( $h['texto'] ) . '</a></li>';
+				echo '<li><a href="' . esc_url( cervantes_url_menu( $h['url'] ) ) . '"' . ( ! empty( $h['externo'] ) ? ' target="_blank" rel="noopener"' : '' ) . '><i class="' . esc_attr( $h['icono'] ) . '" aria-hidden="true"></i> ' . esc_html( $h['texto'] ) . '</a></li>';
 			}
 			echo '</ul>';
 		}
@@ -127,7 +127,7 @@ function cervantes_menu_pie( $ubicacion ) {
 	$clave = 'pie_niveles' === $ubicacion ? 'niveles' : 'institucional';
 	echo '<ul class="cf-nav">';
 	foreach ( $pie[ $clave ] as $i ) {
-		echo '<li><a href="' . esc_url( home_url( $i['url'] ) ) . '">' . esc_html( $i['texto'] ) . '</a></li>';
+		echo '<li><a href="' . esc_url( cervantes_url_menu( $i['url'] ) ) . '"' . ( ! empty( $i['externo'] ) ? ' target="_blank" rel="noopener"' : '' ) . '>' . esc_html( $i['texto'] ) . '</a></li>';
 	}
 	echo '</ul>';
 }
@@ -140,4 +140,13 @@ function cervantes_menu_pie( $ubicacion ) {
 function cervantes_json( $archivo ) {
 	$ruta = CERVANTES_DIR . '/data/' . $archivo;
 	return file_exists( $ruta ) ? json_decode( file_get_contents( $ruta ), true ) : array(); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+}
+
+/**
+ * Dirección de un ítem de los menús de respaldo (las externas quedan igual).
+ *
+ * @param string $url Dirección.
+ */
+function cervantes_url_menu( $url ) {
+	return 0 === strpos( $url, 'http' ) ? $url : home_url( $url );
 }

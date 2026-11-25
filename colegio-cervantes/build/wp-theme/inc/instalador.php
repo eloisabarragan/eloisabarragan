@@ -382,7 +382,10 @@ function cervantes_item_menu( $menu_id, $item, $padre, $por_url ) {
 		$datos['menu-item-type']      = 'post_type';
 	} else {
 		$datos['menu-item-type'] = 'custom';
-		$datos['menu-item-url']  = '#' === $item['url'] ? '#' : home_url( $item['url'] );
+		$datos['menu-item-url']  = ( '#' === $item['url'] || 0 === strpos( $item['url'], 'http' ) ) ? $item['url'] : home_url( $item['url'] );
+	}
+	if ( ! empty( $item['externo'] ) ) {
+		$datos['menu-item-target'] = '_blank';
 	}
 	return wp_update_nav_menu_item( $menu_id, 0, $datos );
 }

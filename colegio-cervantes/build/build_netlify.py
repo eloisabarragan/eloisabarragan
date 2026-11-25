@@ -51,6 +51,9 @@ def url_pagina(slug):
     return '/' + (slug + '/' if slug else '')
 
 
+EXTERNO = ' target="_blank" rel="noopener"'
+
+
 def menu_html(actual):
     items = []
     for it in json_src('menu.json'):
@@ -59,14 +62,14 @@ def menu_html(actual):
         li = '<li><a href="%s"%s>%s</a>' % (it['url'], clase, html_mod.escape(it['texto']))
         if hijos:
             li += '\n  <ul class="submenu">' + ''.join(
-                '\n    <li><a href="%s"><i class="%s" aria-hidden="true"></i> %s</a></li>' % (h['url'], h.get('icono', ''), html_mod.escape(h['texto']))
+                '\n    <li><a href="%s"%s><i class="%s" aria-hidden="true"></i> %s</a></li>' % (h['url'], EXTERNO if h.get('externo') else '', h.get('icono', ''), html_mod.escape(h['texto']))
                 for h in hijos) + '\n  </ul>\n'
         items.append(li + '</li>')
     return '<ul class="menu" id="menu">\n' + '\n'.join(items) + '\n</ul>'
 
 
 def menu_pie(lista):
-    return '<ul class="cf-nav">' + ''.join('<li><a href="%s">%s</a></li>' % (i['url'], html_mod.escape(i['texto'])) for i in lista) + '</ul>'
+    return '<ul class="cf-nav">' + ''.join('<li><a href="%s"%s>%s</a></li>' % (i['url'], EXTERNO if i.get('externo') else '', html_mod.escape(i['texto'])) for i in lista) + '</ul>'
 
 
 def pagina_html(p, v, c, cuerpo):
