@@ -21,6 +21,8 @@ const SETTING_DEFAULTS = {
   whatsapp: env.STORE_WHATSAPP || '59899123456',
   address: env.STORE_ADDRESS || 'Av. Ejemplo 1234, Montevideo',
   hours: env.STORE_HOURS || 'Lunes a sábado de 8 a 20 h',
+  // Franjas horarias para pedidos programados, una por línea.
+  slots: 'Mañana (9 a 12 h)\nMediodía (12 a 15 h)\nTarde (15 a 19 h)',
   shippingCost: Number(env.SHIPPING_COST ?? 90),
   freeShippingFrom: Number(env.FREE_SHIPPING_FROM ?? 1000),
   clubPrice: Number(env.CLUB_PRICE ?? 290), // precio mensual del Club Huerta
@@ -28,6 +30,14 @@ const SETTING_DEFAULTS = {
 };
 const NUMERIC_SETTINGS = ['shippingCost', 'freeShippingFrom', 'clubPrice'];
 const STORE_NAME = 'Huerta Orgánica';
+const TIME_ZONE = env.TIME_ZONE || 'America/Montevideo';
+const MAX_SCHEDULE_DAYS = 60; // hasta cuántos días adelante se puede programar un pedido
+
+const slotList = (value) => String(value).split('\n').map((l) => l.trim()).filter(Boolean);
+// Fecha local del negocio (AAAA-MM-DD), con un corrimiento opcional en días.
+function localDate(offsetDays = 0) {
+  return new Intl.DateTimeFormat('en-CA', { timeZone: TIME_ZONE }).format(Date.now() + offsetDays * 86400000);
+}
 let settings = loadSettings();
 
 function loadSettings() {
@@ -136,6 +146,8 @@ app.get('/api/config', (req, res) => {
     freeShippingFrom: settings.freeShippingFrom,
     clubPrice: settings.clubPrice,
     pickup: settings.pickup,
+    slots: slotList(settings.slots),
+    maxScheduleDays: MAX_SCHEDULE_DAYS,
     mpEnabled: !!MP_ACCESS_TOKEN,
     // Si existe public/img/hero.jpg se usa como foto de portada.
     heroImage: fs.existsSync(path.join(here, 'public', 'img', 'hero.jpg')) ? '/img/hero.jpg' : null,
@@ -159,6 +171,21 @@ app.post(
     const address =
       deliveryMethod === 'envio' ? text(b.address, { min: 5, max: 160, label: 'Dirección de entrega' }) : '';
     const notes = text(b.notes, { max: 300, label: 'Aclaraciones' });
+
+    // Pedido programado: fecha y franja horaria (opcionales).
+    let deliveryDate = '';
+    let deliverySlot = '';
+    if (b.when === 'programado') {
+      deliveryDate = String(b.date || '');
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(deliveryDate) || Number.isNaN(Date.parse(deliveryDate))) fail(400, 'Elegí la fecha para tu pedido.');
+      if (deliveryDate < localDate()) fail(400, 'La fecha elegida ya pasó. Elegí otra.');
+      if (deliveryDate > localDate(MAX_SCHEDULE_DAYS)) fail(400, `Se puede programar hasta ${MAX_SCHEDULE_DAYS} días hacia adelante.`);
+      const slots = slotList(settings.slots);
+      if (slots.length) {
+        deliverySlot = String(b.slot || '');
+        if (!slots.includes(deliverySlot)) fail(400, 'Elegí un horario para tu pedido.');
+      }
+    }
     // "mercadopago" cubre débito, crédito y dinero en cuenta. Sin Mercado Pago configurado,
     // el pedido se guarda igual y el link de pago se le manda al cliente por WhatsApp.
     const paymentMethod = ['mercadopago', 'efectivo'].includes(b.payment) ? b.payment : 'transferencia';
@@ -194,10 +221,10 @@ app.post(
     try {
       orderId = db
         .prepare(
-          `INSERT INTO orders (code, customer_name, phone, delivery_method, address, notes, payment_method, subtotal, shipping, total, member)
-           VALUES (?,?,?,?,?,?,?,?,?,?,?)`
+          `INSERT INTO orders (code, customer_name, phone, delivery_method, address, notes, payment_method, subtotal, shipping, total, member, delivery_date, delivery_slot)
+           VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)`
         )
-        .run(code, customerName, phone, deliveryMethod, address, notes, paymentMethod, subtotal, shipping, total, member ? 1 : 0)
+        .run(code, customerName, phone, deliveryMethod, address, notes, paymentMethod, subtotal, shipping, total, member ? 1 : 0, deliveryDate, deliverySlot)
         .lastInsertRowid;
       const insertItem = db.prepare(
         'INSERT INTO order_items (order_id, product_id, name, unit, price, qty, line_total) VALUES (?,?,?,?,?,?,?)'
@@ -489,6 +516,7 @@ app.put('/api/admin/settings', requireAdmin, (req, res) => {
     // La dirección solo hace falta si hay un local donde retirar.
     address: text(b.address, { min: b.pickup ? 5 : 0, max: 160, label: 'Dirección del local' }),
     hours: text(b.hours, { min: 3, max: 120, label: 'Horarios' }),
+    slots: slotList(text(b.slots, { max: 600, label: 'Horarios de entrega' })).slice(0, 12).join('\n'),
   };
   const limits = { shippingCost: 0, freeShippingFrom: 0, clubPrice: 1 };
   for (const key of NUMERIC_SETTINGS) {

@@ -49,6 +49,17 @@ export function formatQty(qty, unit) {
   return `${n} ${qty === 1 ? unit : PLURALS[unit] || unit}`;
 }
 
+// "2026-11-27" -> "viernes 27 de noviembre"
+export function formatDate(iso) {
+  return new Date(`${iso}T12:00:00`).toLocaleDateString('es-UY', { weekday: 'long', day: 'numeric', month: 'long' }).replace(',', '');
+}
+
+// Texto de cuándo se entrega un pedido programado ('' si es "lo antes posible").
+export function scheduleText(date, slot) {
+  if (!date) return '';
+  return `${formatDate(date)}${slot ? `, ${slot}` : ''}`;
+}
+
 export const STATUS_LABELS = {
   nuevo: 'Recibido',
   preparando: 'En preparación',

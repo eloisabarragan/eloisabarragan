@@ -1,4 +1,4 @@
-import { h, api, moneyFormatter, formatQty, PAYMENT_ASKS } from './common.js';
+import { h, api, moneyFormatter, formatQty, scheduleText, PAYMENT_ASKS } from './common.js';
 
 const $ = (id) => document.getElementById(id);
 const CART_KEY = 'huerta-carrito';
@@ -278,6 +278,7 @@ function renderCart() {
     );
   }
   $('address-field').hidden = t.delivery === 'retiro';
+  $('schedule').hidden = $('checkout-view').elements.when.value !== 'programado';
   $('cart-action').textContent = step === 'cart' ? 'Finalizar compra' : `Confirmar pedido · ${money(t.total)}`;
 }
 
@@ -337,6 +338,14 @@ async function submitOrder() {
   if (data.name.trim().length < 2) return showError('form-error', 'Escribí tu nombre y apellido.');
   if (data.phone.trim().length < 6) return showError('form-error', 'Escribí un teléfono para que podamos contactarte.');
   if (data.delivery === 'envio' && data.address.trim().length < 5) return showError('form-error', 'Escribí la dirección de entrega.');
+  if (data.when === 'programado') {
+    if (!data.date) return showError('form-error', 'Elegí la fecha para tu pedido.');
+    if (data.date < $('f-date').min) return showError('form-error', 'La fecha elegida ya pasó. Elegí otra.');
+    if (data.date > $('f-date').max) return showError('form-error', `Se puede programar hasta ${config.maxScheduleDays} días hacia adelante.`);
+  } else {
+    data.date = '';
+    data.slot = '';
+  }
   showError('form-error', '');
   if (config.static) return orderByWhatsApp(data);
 
@@ -380,6 +389,7 @@ function orderByWhatsApp(data) {
     `Nombre: ${data.name.trim()}`,
     `Teléfono: ${data.phone.trim()}`,
     t.delivery === 'envio' ? `Entrega en: ${data.address.trim()}` : 'Retiro en el local',
+    data.date ? `Para el: ${scheduleText(data.date, data.slot)}` : 'Lo antes posible',
     data.notes.trim() ? `Aclaraciones: ${data.notes.trim()}` : null,
     member ? 'Soy del Club Huerta (envío gratis).' : null,
     '',
@@ -392,6 +402,9 @@ function orderByWhatsApp(data) {
 
   cart = {};
   saveCart();
+  // El próximo pedido arranca de nuevo en "lo antes posible".
+  $('checkout-view').elements.when.value = 'ya';
+  $('f-date').value = '';
   render();
   $('cart-empty').hidden = true;
   $('cart-list').replaceChildren(
@@ -595,6 +608,16 @@ async function init() {
   }
 
   const form = $('checkout-view');
+  // Pedidos programados: desde hoy y hasta el máximo permitido, en las franjas del negocio.
+  const day = (offset) => {
+    const d = new Date(Date.now() + offset * 86400000);
+    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+  };
+  $('f-date').min = day(0);
+  $('f-date').max = day(config.maxScheduleDays);
+  $('f-slot').replaceChildren(...config.slots.map((slot) => h('option', { value: slot }, slot)));
+  $('slot-field').hidden = config.slots.length === 0;
+
   // Con Mercado Pago integrado se paga en el momento; si no, mandamos el link por WhatsApp.
   if (config.mpEnabled) {
     $('pay-mp-hint').textContent = 'Pagás ahora, en la página de Mercado Pago.';

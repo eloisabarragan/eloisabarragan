@@ -83,6 +83,12 @@ if (!db.prepare('PRAGMA table_info(orders)').all().some((c) => c.name === 'membe
   db.exec('ALTER TABLE orders ADD COLUMN member INTEGER NOT NULL DEFAULT 0');
 }
 
+// Pedidos programados: fecha (AAAA-MM-DD) y franja horaria elegidas por el cliente.
+if (!db.prepare('PRAGMA table_info(orders)').all().some((c) => c.name === 'delivery_date')) {
+  db.exec("ALTER TABLE orders ADD COLUMN delivery_date TEXT NOT NULL DEFAULT ''");
+  db.exec("ALTER TABLE orders ADD COLUMN delivery_slot TEXT NOT NULL DEFAULT ''");
+}
+
 // Bases creadas antes de que "orgánico" fuera una marca por producto.
 if (!db.prepare('PRAGMA table_info(products)').all().some((c) => c.name === 'organic')) {
   db.exec('ALTER TABLE products ADD COLUMN organic INTEGER NOT NULL DEFAULT 0');

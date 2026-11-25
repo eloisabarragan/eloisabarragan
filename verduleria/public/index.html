@@ -236,6 +236,10 @@
             <p>Transferencia bancaria, tarjeta de débito o crédito, Mercado Pago y efectivo al recibir el pedido. Elegís el medio de pago al finalizar la compra.</p>
           </details>
           <details>
+            <summary>¿Puedo programar mi pedido para otro día?</summary>
+            <p>Sí. Al finalizar la compra elegí "Programar fecha y horario" y marcá el día y la franja horaria en que querés recibirlo.</p>
+          </details>
+          <details>
             <summary>¿Cuánto cuesta el envío?</summary>
             <p id="faq-shipping">El costo se muestra en el carrito antes de confirmar.</p>
           </details>
@@ -321,6 +325,18 @@
         </div>
         <label id="address-field">Dirección de entrega<input id="f-address" name="address" autocomplete="street-address" maxlength="160" placeholder="Calle, número, apto, barrio"></label>
         <label>Aclaraciones (opcional)<textarea id="f-notes" name="notes" rows="2" maxlength="300" placeholder="Horario preferido, timbre, etc."></textarea></label>
+      </fieldset>
+
+      <fieldset>
+        <legend>¿Cuándo lo querés?</legend>
+        <div class="options">
+          <label class="option"><input type="radio" name="when" value="ya" checked><span><strong>Lo antes posible</strong><small>Coordinamos la entrega por WhatsApp.</small></span></label>
+          <label class="option"><input type="radio" name="when" value="programado"><span><strong>Programar fecha y horario</strong><small>Elegí el día y la franja que te quede mejor.</small></span></label>
+        </div>
+        <div class="schedule" id="schedule" hidden>
+          <label>Fecha<input id="f-date" name="date" type="date"></label>
+          <label id="slot-field">Horario<select id="f-slot" name="slot"></select></label>
+        </div>
       </fieldset>
 
       <fieldset>

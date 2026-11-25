@@ -1,4 +1,4 @@
-import { h, api, moneyFormatter, formatQty, STATUS_LABELS, PAYMENT_LABELS, METHOD_LABELS, SUBSCRIPTION_LABELS } from './common.js';
+import { h, api, moneyFormatter, formatQty, scheduleText, STATUS_LABELS, PAYMENT_LABELS, METHOD_LABELS, SUBSCRIPTION_LABELS } from './common.js';
 
 const $ = (id) => document.getElementById(id);
 let money = (n) => `$${n}`;
@@ -62,6 +62,7 @@ function orderCard(o) {
         {},
         h('p', {}, 'Tel. ', h('a', { href: wa, target: '_blank', rel: 'noopener' }, o.phone)),
         h('p', {}, o.delivery_method === 'envio' ? `Envío a: ${o.address}` : 'Retira en el local'),
+        o.delivery_date ? h('p', {}, h('span', { class: 'tag warn' }, `Programado: ${scheduleText(o.delivery_date, o.delivery_slot)}`)) : null,
         o.notes && h('p', {}, `Aclaraciones: ${o.notes}`),
         h('p', {}, `Pago: ${METHOD_LABELS[o.payment_method] || o.payment_method}`),
         o.member ? h('p', {}, h('span', { class: 'tag' }, 'Socio del Club Huerta · envío gratis')) : null,
@@ -286,6 +287,7 @@ async function saveSettings(event) {
         address: f.address.value,
         pickup: f.pickup.checked,
         hours: f.hours.value,
+        slots: f.slots.value,
         shippingCost: Number(f.shippingCost.value),
         freeShippingFrom: Number(f.freeShippingFrom.value),
         clubPrice: Number(f.clubPrice.value),

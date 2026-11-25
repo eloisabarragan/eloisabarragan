@@ -18,6 +18,9 @@ segundos, y la pestaña muestra cuántos pedidos nuevos hay: "Pedidos (2)".
 Cada pedido muestra el nombre, el teléfono (tocándolo se abre WhatsApp), la dirección, los
 productos y el total. Abajo tiene dos listas:
 
+- **Programado:** si el cliente eligió día y horario, el pedido lo muestra en una etiqueta
+  amarilla, por ejemplo "Programado: viernes 27 de noviembre, Tarde (15 a 19 h)". Si no la
+  tiene, lo quiere lo antes posible.
 - **Estado del pedido:** Recibido → En preparación → En camino → Entregado (o Cancelado).
   El cliente ve este estado en la página de su pedido.
 - **Estado del pago:** cuando te llega una transferencia, cambialo a "Pago aprobado".
@@ -67,6 +70,8 @@ Desde acá se cambia, sin tocar nada técnico:
   escribí la dirección. Recién ahí la web ofrece retirar en el local.
 - El número de WhatsApp que recibe los pedidos (con código de país y solo números:
   `59899123456`).
+- Los horarios de entrega que puede elegir el cliente al programar un pedido (una franja
+  por línea, por ejemplo "Mañana (9 a 12 h)").
 - El costo de envío y el monto desde el que el envío es gratis.
 - La cuota mensual del Club Huerta.
 

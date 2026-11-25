@@ -35,6 +35,7 @@ if (!fs.existsSync(dataFile)) {
     costoEnvio: 90,
     envioGratisDesde: 1000,
     cuotaClub: 290,
+    horariosDeEntrega: ['Mañana (9 a 12 h)', 'Mediodía (12 a 15 h)', 'Tarde (15 a 19 h)'],
     productos,
   };
   fs.writeFileSync(dataFile, JSON.stringify(datos, null, 2) + '\n');
@@ -62,6 +63,8 @@ const config = {
   freeShippingFrom: datos.envioGratisDesde,
   clubPrice: datos.cuotaClub,
   pickup: !!datos.local.retiroEnLocal,
+  slots: datos.horariosDeEntrega || [],
+  maxScheduleDays: 60,
   mpEnabled: false,
   heroImage: fs.existsSync(path.join(pub, 'img', 'hero.jpg')) ? '/img/hero.jpg' : null,
 };

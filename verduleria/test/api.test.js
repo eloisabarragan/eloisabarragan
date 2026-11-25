@@ -99,6 +99,27 @@ test('acepta efectivo, y tarjeta sin Mercado Pago configurado queda para coordin
   }
 });
 
+test('pedidos programados: fecha y horario válidos', async () => {
+  const day = (offset) => new Date(Date.now() + offset * 86400000).toISOString().slice(0, 10);
+  const { data: config } = await call('GET', '/api/config');
+  assert.ok(config.slots.length >= 2);
+  const scheduled = order({ when: 'programado', date: day(3), slot: config.slots[1] });
+  const created = await call('POST', '/api/orders', scheduled);
+  assert.equal(created.status, 201);
+  const { data } = await call('GET', `/api/orders/${created.data.code}`);
+  assert.equal(data.delivery_date, day(3));
+  assert.equal(data.delivery_slot, config.slots[1]);
+
+  assert.equal((await call('POST', '/api/orders', { ...scheduled, date: day(-3) })).status, 400, 'fecha pasada');
+  assert.equal((await call('POST', '/api/orders', { ...scheduled, date: day(200) })).status, 400, 'demasiado lejos');
+  assert.equal((await call('POST', '/api/orders', { ...scheduled, date: 'mañana' })).status, 400, 'fecha inválida');
+  assert.equal((await call('POST', '/api/orders', { ...scheduled, slot: 'A las 3 de la mañana' })).status, 400, 'horario inventado');
+
+  // Sin programar, el pedido queda "lo antes posible".
+  const asap = await call('POST', '/api/orders', order({ date: day(3) }));
+  assert.equal((await call('GET', `/api/orders/${asap.data.code}`)).data.delivery_date, '');
+});
+
 test('el panel pide contraseña', async () => {
   assert.equal((await call('GET', '/api/admin/orders')).status, 401);
   assert.equal((await call('POST', '/api/admin/login', { password: 'incorrecta' })).status, 401);
@@ -134,12 +155,13 @@ test('Club Huerta: el socio con el pago registrado no paga envío', async () => 
 });
 
 test('los ajustes del panel cambian la tienda', async () => {
-  const settings = { phone: '2900 0000', whatsapp: '598 91 000 000', address: '', pickup: false, hours: 'Todos los días', shippingCost: 120, freeShippingFrom: 2000, clubPrice: 350 };
+  const settings = { phone: '2900 0000', whatsapp: '598 91 000 000', address: '', pickup: false, hours: 'Todos los días', slots: 'De 9 a 13\n\n  De 14 a 18  ', shippingCost: 120, freeShippingFrom: 2000, clubPrice: 350 };
   assert.equal((await call('PUT', '/api/admin/settings', settings)).status, 200);
   const { data: config } = await call('GET', '/api/config');
   assert.equal(config.store.whatsapp, '59891000000');
   assert.equal(config.shippingCost, 120);
   assert.equal(config.clubPrice, 350);
+  assert.deepEqual(config.slots, ['De 9 a 13', 'De 14 a 18']);
   const created = await call('POST', '/api/orders', order());
   assert.equal((await call('GET', `/api/orders/${created.data.code}`)).data.shipping, 120);
   assert.equal((await call('PUT', '/api/admin/settings', { ...settings, shippingCost: 1.5 })).status, 400);

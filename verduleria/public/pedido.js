@@ -1,4 +1,4 @@
-import { h, api, moneyFormatter, formatQty, STATUS_LABELS, PAYMENT_LABELS, METHOD_LABELS, PAYMENT_ASKS } from './common.js';
+import { h, api, moneyFormatter, formatQty, scheduleText, STATUS_LABELS, PAYMENT_LABELS, METHOD_LABELS, PAYMENT_ASKS } from './common.js';
 
 const content = document.getElementById('content');
 const params = new URLSearchParams(location.search);
@@ -14,6 +14,7 @@ function whatsappLink(order, config, money) {
     order.shipping ? `Envío: ${money(order.shipping)}` : null,
     `Total: ${money(order.total)}`,
     order.delivery_method === 'envio' ? `Entrega en: ${order.address}` : 'Retiro en el local',
+    order.delivery_date ? `Para el: ${scheduleText(order.delivery_date, order.delivery_slot)}` : null,
     '',
     order.payment_status === 'aprobado' ? 'Tengo una consulta sobre mi pedido.' : PAYMENT_ASKS[order.payment_method],
   ].filter((l) => l !== null);
@@ -104,7 +105,7 @@ function view(order, config) {
         h('div', { class: 'total' }, h('dt', {}, 'Total'), h('dd', {}, money(order.total)))
       ),
       order.delivery_method === 'envio'
-        ? h('p', { class: 'lead' }, `Entrega en: ${order.address}`)
+        ? h('p', { class: 'lead' }, `Entrega en: ${order.address}${order.delivery_date ? ` · ${scheduleText(order.delivery_date, order.delivery_slot)}` : ''}`)
         : h('p', { class: 'lead' }, `Retirás en: ${config.store.address} · ${config.store.hours}`)
     )
   );

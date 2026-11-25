@@ -657,6 +657,8 @@ textarea { resize: vertical; }
 .option input { margin-top: 4px; accent-color: var(--verde); }
 .option span { display: grid; }
 .option small { font-weight: 400; color: var(--gris); }
+.schedule { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.schedule label { min-width: 0; }
 .form-error { margin-top: 14px; padding: 10px 14px; border-radius: 10px; background: #fbeae6; color: var(--rojo); font-size: 0.9rem; }
 
 /* ---------- Alta al Club ---------- */
@@ -769,6 +771,7 @@ textarea { resize: vertical; }
   .value { padding: 14px; flex-direction: column; gap: 10px; }
   .steps, .about, .footer-inner, .club-inner, .faq-inner { grid-template-columns: 1fr; }
   .wholesale-card { flex-direction: column; align-items: stretch; }
+  .schedule { grid-template-columns: 1fr; }
   .about-art svg { width: 200px; }
   .club-card { transform: none; }
   .js .club-card.reveal.is-in { transform: none; }

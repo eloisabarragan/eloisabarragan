@@ -101,6 +101,7 @@ Genera la carpeta `netlify-sitio/`, que se arrastra a https://app.netlify.com/dr
 | Panel de administración | Sí | No |
 | Pago con tarjeta o Mercado Pago | En el momento (con credenciales) o por link | Por link enviado por WhatsApp |
 | Club Huerta | Envío gratis automático por teléfono | El cliente marca que es socio; se verifica a mano |
+| Programar pedidos (fecha y horario) | Sí, queda en el pedido y en el panel | Sí, viaja en el mensaje de WhatsApp |
 | Editar productos y precios | Desde el panel | En `netlify-datos.json`, y se vuelve a generar |
 
 Los datos del local, los precios y los productos de esta versión están en
