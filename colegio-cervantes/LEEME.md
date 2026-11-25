@@ -76,6 +76,21 @@ Los enlaces viejos del tipo `…netlify.app/#inicial` siguen funcionando: llevan
   - Redes sociales en el pie.
   - Fotos más livianas, sin datos ocultos de ubicación.
 
+## Páginas privadas (solo WordPress)
+
+Hay dos páginas con contraseña que no aparecen en menús, buscador ni Google:
+
+| Página | Dirección |
+|---|---|
+| Acceso a SIGED para padres | `/acceso-a-siged-para-padres/` |
+| Inscripciones | `/inscripciones/` |
+
+- **Contraseña provisoria: `Cervantes2027`.** Con la misma contraseña se abren las dos.
+- **Cambiar la contraseña:** abrí cada página en **Páginas → Editar → Estado → Protegida con contraseña**. Poné la misma en las dos.
+- **Links viejos:** las direcciones de la web anterior con `/index.php/` (por ejemplo el bit.ly de SIGED) redirigen solas a estas páginas.
+- **Botones de Inscripciones (pendiente):** "Formulario de inscripción", "Uniformes" y "Presupuesto y formas de pago" todavía no llevan a ningún lado. Para cargarles el link, hacé clic en cada botón en el editor y completá **Dirección del enlace** en la barra derecha.
+- En la vista de Netlify estas páginas no se publican, porque ahí no tendrían contraseña.
+
 ## 5. Datos para confirmar con el colegio
 
 - [x] **Email** de contacto: `info@colegiocervantes.edu.uy` (confirmado).
