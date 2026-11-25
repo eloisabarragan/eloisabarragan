@@ -524,6 +524,7 @@ function fillStoreInfo() {
   }
   $('store-phone').textContent = `Tel. ${store.phone}`;
   $('store-whatsapp').href = `https://wa.me/${store.whatsapp}`;
+  $('wholesale-link').href = `https://wa.me/${store.whatsapp}?text=${encodeURIComponent('Hola, estoy interesado en planes para empresas, residenciales o compras por mayor.')}`;
   $('wa-float').href = `https://wa.me/${store.whatsapp}?text=${encodeURIComponent(`¡Hola ${store.name}! Tengo una consulta.`)}`;
   $('pickup-hint').textContent = `${store.address}. Sin costo.`;
 

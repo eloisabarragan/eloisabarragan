@@ -162,8 +162,8 @@ h1 em, h2 em { font-style: italic; color: var(--verde); }
   color: var(--gris);
   margin-top: 3px;
 }
-.nav { display: flex; gap: 30px; }
-.nav a { position: relative; font-size: 0.92rem; font-weight: 500; text-decoration: none; padding: 6px 0; }
+.nav { display: flex; gap: clamp(16px, 2vw, 30px); }
+.nav a { position: relative; white-space: nowrap; font-size: 0.92rem; font-weight: 500; text-decoration: none; padding: 6px 0; }
 .nav a::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 2px; border-radius: 2px; background: var(--hoja); transform: scaleX(0); transform-origin: left; transition: transform 0.25s; }
 .nav a:hover::after { transform: scaleX(1); }
 .header-actions { display: flex; align-items: center; gap: 6px; }
@@ -454,6 +454,26 @@ h1 em, h2 em { font-style: italic; color: var(--verde); }
 .club-card .btn { margin-top: 10px; position: relative; }
 .club-small { font-size: 0.8rem; color: var(--gris); }
 
+/* ---------- Empresas y compras por mayor ---------- */
+.wholesale { padding-top: clamp(56px, 8vw, 96px); }
+.wholesale-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: clamp(24px, 5vw, 60px);
+  padding: clamp(28px, 5vw, 52px);
+  border-radius: 28px;
+  background: var(--grano), var(--verde-suave);
+  border: 1.500px dashed var(--hoja);
+}
+.wholesale-text { display: grid; gap: 14px; min-width: 0; }
+.wholesale-text .eyebrow { margin-bottom: 0; }
+.wholesale-text > p:not(.eyebrow) { color: var(--gris); font-size: 1.06rem; max-width: 34em; }
+.wholesale-tags { list-style: none; margin: 4px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.wholesale-tags li { padding: 6px 14px; border-radius: 20px; background: var(--papel); border: 1px solid var(--borde); font-size: 0.86rem; font-weight: 500; color: var(--verde-osc); }
+.wholesale-btn { flex: none; padding: 18px 28px; font-size: 0.82rem; }
+.wholesale-btn svg { width: 22px; height: 22px; fill: currentColor; }
+
 /* ---------- Cómo funciona ---------- */
 .how { padding-block: clamp(64px, 9vw, 110px); }
 .steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
@@ -692,6 +712,9 @@ textarea { resize: vertical; }
   .carousel .card { flex-basis: calc((100% - 40px) / 3); }
   .values { grid-template-columns: repeat(2, 1fr); }
   .hero-art { inset: 0 0 0 46%; opacity: 0.85; }
+}
+/* Con seis enlaces, el menú pasa a desplegable antes que el resto del diseño */
+@media (max-width: 1180px) {
   .menu-toggle { display: grid; }
   .nav {
     position: absolute;
@@ -745,6 +768,7 @@ textarea { resize: vertical; }
   .stepper span { flex: 1; }
   .value { padding: 14px; flex-direction: column; gap: 10px; }
   .steps, .about, .footer-inner, .club-inner, .faq-inner { grid-template-columns: 1fr; }
+  .wholesale-card { flex-direction: column; align-items: stretch; }
   .about-art svg { width: 200px; }
   .club-card { transform: none; }
   .js .club-card.reveal.is-in { transform: none; }
