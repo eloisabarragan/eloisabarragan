@@ -23,10 +23,10 @@ function su_defaults() {
 
 		// Portada (textos pedidos por la clienta).
 		'hero_kicker'    => '',
-		'hero_title'     => 'SARAVIAUBILLA',
-		'hero_subtitle'  => 'Remates • Inmobiliaria • Tasaciones',
-		'hero_text'      => 'Experiencia y confianza para acompañarte en tus operaciones inmobiliarias.',
-		'hero_btn1'      => 'Ver propiedades',
+		'hero_title'     => 'SARAVIA UBILLA',
+		'hero_subtitle'  => 'Remates y Servicios Inmobiliarios',
+		'hero_text'      => 'Servicio integral y especializado en arrendamientos urbanos y rurales, valuaciones y remates de bienes muebles e inmuebles, con una gestión profesional enfocada en las necesidades y objetivos de cada cliente.',
+		'hero_btn1'      => 'Inmobiliaria',
 		'hero_btn2'      => 'Próximos remates',
 		'hero_btn1_url'  => '',
 		'hero_btn2_url'  => '',
@@ -49,27 +49,35 @@ function su_defaults() {
 
 		// Accesos rápidos (debajo de la portada): título | texto. Los enlaces son fijos.
 		'access_show'    => 1,
-		'access_1'       => 'Propiedades | Encontrá propiedades disponibles.',
+		// Tres rubros: Inmobiliaria (incluye las propiedades), Remates y Tasaciones.
+		'access_1'       => 'Inmobiliaria | Propiedades y asesoramiento en operaciones inmobiliarias.',
 		'access_2'       => 'Remates | Conocé los próximos remates.',
-		'access_3'       => 'Tasaciones | Valoraciones profesionales.',
-		'access_4'       => 'Inmobiliaria | Asesoramiento en operaciones inmobiliarias.',
+		'access_3'       => 'Tasaciones | Valuaciones de todo tipo de bienes.',
+		'access_4'       => '',
 
 		// Quiénes somos (versión corta de la portada; el texto completo queda en Nosotros).
 		'about_short_title' => 'Saravia Ubilla',
-		'about_short_lead'  => 'Una trayectoria construida sobre experiencia, confianza y conocimiento del mercado.',
-		'about_short_text'  => 'Nos dedicamos desde 2013 a la actividad de remates y valuaciones, y desde 2014 también operamos como corredores inmobiliarios, con formación técnica en ambas especialidades y una constante actualización.',
+		'about_short_lead'  => '',
+		'about_short_text'  => "En <strong>Saravia Ubilla</strong> brindamos servicios profesionales en negocios inmobiliarios, valuaciones y remates de bienes muebles e inmuebles.\n\nNos especializamos en arrendamientos urbanos y rurales, operaciones inmobiliarias y valuaciones, ofreciendo asesoramiento técnico y una gestión integral en cada etapa.\n\nTrabajamos con profesionalismo, experiencia y compromiso, procurando soluciones eficientes y confiables, orientadas a las necesidades y objetivos de cada cliente.",
 		'about_values'      => "Experiencia\nProfesionalismo\nConocimiento del mercado\nAtención personalizada",
 
 		// Tasaciones.
 		'tasacion_show'  => 1,
-		'tasacion_title' => '¿Necesitás conocer el valor de una propiedad?',
-		'tasacion_text'  => 'Solicitá una tasación profesional. Nuestras tasaciones son realizadas por profesionales certificados, con metodologías precisas para asegurar valoraciones justas y confiables.',
+		'tasacion_title' => '¿Necesitás conocer el valor de un bien?',
+		'tasacion_text'  => 'Tasamos todo tipo de bienes: inmuebles, bienes muebles como maquinaria y bienes intangibles, aplicando criterios técnicos y metodologías adecuadas a las características de cada bien.',
 		'tasacion_btn'   => 'Solicitar tasación',
 		'tasacion_image' => '',
 
 		// Confianza: trayectoria y credenciales (una por línea: Dato destacado | Detalle).
 		'trust_title'    => 'Experiencia que respalda nuestro trabajo',
-		'trust_items'    => "Desde 2013 | Más de 10 años de experiencia en remates y valuaciones\nDesde 2014 | Corredores inmobiliarios\nValuador Panamericano | Credencial N° 1065 otorgada por la UPAV\nPeritos Rematadores | En la nómina de peritos del Poder Judicial\nEspecialización internacional | Diplomas en Avalúos y en Catastro Multipropósito, Universidad de Jaén (España)\nFormación nacional | UTU, capacitaciones de IUCAP (ANRTCI) y Práctica Judicial Pericial (CLAEH)",
+		'trust_items'    => "Desde 2013 | Más de 10 años de experiencia en remates y valuaciones
+Desde 2014 | Intermediación inmobiliaria
+Valuador Panamericano | Credencial N.º 1065 otorgada por la Unión Panamericana de Asociaciones de Valuación (UPAV)
+Perito Rematador | Integramos la nómina de Peritos Rematadores del Poder Judicial
+Registro Nacional de Rematadores | Habilitación para actuar en remates judiciales y oficiales
+Especialización internacional | Diploma de Especialización Internacional en Catastro Multipropósito y Diploma de Especialización Internacional en Avalúos, ambos expedidos por la Universidad de Jaén, España
+Formación técnica | Perito Rematador y Operador Inmobiliario (UTU), y capacitación en avalúos urbanos y rurales de IUCAP (ANRTCI)
+Práctica judicial pericial | Diploma expedido por la Facultad de Derecho de la Universidad CLAEH",
 		'trust_btn'      => 'Conocé nuestra trayectoria',
 
 		// Propiedades.
@@ -86,10 +94,20 @@ function su_defaults() {
 		'about_kicker'   => 'Nuestra historia',
 		'about_title'    => 'Nosotros',
 		'about_page_kicker' => 'Acerca de',
-		'about_text'     => "En <strong>Saravia Ubilla</strong>, nos dedicamos desde 2013 a la actividad de remates y valuaciones, y desde 2014, también operamos como corredores inmobiliarios. Contamos con formación técnica en ambas especialidades, obtenida en UTU, y nos hemos especializado en avalúos urbanos y rurales, participando en diversas capacitaciones ofrecidas por IUCAP (ANRTCI).\n\nA nivel internacional, hemos obtenido un Diploma en Especialización Internacional en Catastro Multipropósito y un Diploma de Especialización Internacional en Avalúos, ambos expedidos por la Universidad de Jaén (España). Además, estamos certificados como Valuador Panamericano con la credencial N° 1065, otorgada por la Unión Panamericana de Asociaciones de Valuación (UPAV).\n\nPoseemos también un Diploma en Práctica Judicial Pericial, expedido por la Facultad de Derecho de la Universidad CLAEH, y formamos parte de la nómina de Peritos Rematadores del Poder Judicial.\n\nEn cuanto a nuestros servicios, nos especializamos en la operación de movimiento de ganado dentro del Sistema Nacional de Información Ganadera (SNIG), ofreciendo a nuestros clientes un servicio integral de alta calidad. Nos destacamos por nuestra constante formación y actualización para estar siempre a la vanguardia de las mejores prácticas y avances en el sector.\n\nNuestro compromiso es proporcionar soluciones confiables, respaldadas por un equipo de profesionales experimentados, garantizando la excelencia y el éxito en cada proyecto que emprendemos.",
+		'about_text'     => "<strong>Saravia Ubilla</strong> desarrolla su actividad profesional desde 2013 en las áreas de remates y valuaciones, incorporando desde 2014 los servicios de intermediación inmobiliaria.
+
+Contamos con formación técnica en las especialidades de Perito Rematador y Operador Inmobiliario, obtenida en UTU, y una trayectoria de capacitación y perfeccionamiento en materia de avalúos urbanos y rurales, incluyendo instancias de formación impartidas por IUCAP (ANRTCI).
+
+Nuestra especialización cuenta con respaldo académico internacional. Hemos obtenido el Diploma de Especialización Internacional en Catastro Multipropósito y el Diploma de Especialización Internacional en Avalúos, ambos expedidos por la Universidad de Jaén, España. Asimismo, contamos con la certificación de Valuador Panamericano, credencial N.º 1065, otorgada por la Unión Panamericana de Asociaciones de Valuación (UPAV).
+
+En el ámbito judicial, contamos con el Diploma en Práctica Judicial Pericial, expedido por la Facultad de Derecho de la Universidad CLAEH, y formamos parte de la nómina de Peritos Rematadores del Poder Judicial.
+
+Complementamos nuestras áreas de actividad con servicios vinculados a la operativa de movimientos de ganado a través del Sistema Nacional de Información Ganadera (SNIG), brindando asesoramiento y asistencia en las gestiones correspondientes.
+
+La formación continua, la actualización profesional y el compromiso con cada trabajo constituyen los pilares de nuestra actividad. Nuestra gestión se orienta a ofrecer soluciones fundamentadas, confiables y acordes a las necesidades de cada cliente.",
 		'about_image'    => '',
-		'mission'        => 'En Saravia Ubilla, nuestra misión es brindar servicios con la más alta calidad, transparencia y profesionalismo, ofreciendo soluciones personalizadas para satisfacer las necesidades de nuestros clientes. Nos especializamos en la gestión de arrendamientos, compra-venta de propiedades, valuaciones y remates, siempre con un enfoque en la confianza y el compromiso.',
-		'vision'         => 'Aspiramos a consolidarnos como líderes en remates y valuaciones, proporcionando un servicio que supere las expectativas de nuestros clientes y ser referentes en el mercado inmobiliario, reconocidos por nuestra excelencia, innovación y capacidad de adaptación a los cambios del sector.',
+		'mission'        => 'En Saravia Ubilla, nuestra misión es brindar servicios inmobiliarios, de valuación y remates con calidad, transparencia y profesionalismo, ofreciendo soluciones integrales y personalizadas que respondan a las necesidades de nuestros clientes. Trabajamos con compromiso, responsabilidad y seriedad, construyendo relaciones basadas en la confianza.',
+		'vision'         => 'Consolidarnos como una empresa referente en el ámbito de los remates, las valuaciones y el mercado inmobiliario, distinguiéndonos por la excelencia profesional, la transparencia, la innovación y la capacidad de adaptación a los cambios del sector, manteniendo siempre el compromiso con la calidad del servicio y la satisfacción de nuestros clientes.',
 		'assoc_title'    => '',
 		'credentials'    => '',
 
@@ -99,16 +117,16 @@ function su_defaults() {
 		'contact_text'   => 'Estamos para ayudarte.',
 		'phone'          => '099 069 369',
 		'whatsapp'       => '59899069369',
-		'email'          => '',
+		'email'          => 'infosaraviaubilla@gmail.com',
 		'address'        => '',
 		'hours'          => '',
 		'instagram'      => '',
 		'facebook'       => '',
 		'linkedin'       => '',
-		'form_email'     => '',
+		'form_email'     => 'infosaraviaubilla@gmail.com',
 		'form_shortcode' => '',
 		'footer_text'    => '',
-		'footer_tagline' => 'Remates • Inmobiliaria • Tasaciones',
+		'footer_tagline' => '',
 	);
 }
 
@@ -121,31 +139,24 @@ function su_default_services() {
 			'icon'  => 'casa',
 			'title' => 'Inmobiliaria',
 			'long_title' => '',
-			'text'  => 'Servicios de arrendamiento, compra-venta y tasaciones de casas, apartamentos, chacras, campos, oficinas y locales comerciales, garantizando asesoramiento experto para cada operación.',
-			'long'  => 'En nuestra área de Inmobiliaria, nos especializamos en ofrecer servicios completos de arrendamiento, compra-venta y tasaciones de diversos tipos de propiedades, incluyendo casas, apartamentos, chacras, campos, oficinas y locales comerciales. Cada operación se gestiona con un enfoque personalizado y profesional, garantizando un acompañamiento experto desde el inicio hasta el cierre de la transacción. Nuestro equipo de especialistas inmobiliarios se asegura de brindar el mejor asesoramiento, analizando el mercado en profundidad y aplicando las normativas vigentes para ofrecer soluciones que se ajusten a las necesidades de nuestros clientes, ya sea para alquilar, vender o adquirir un inmueble. Además, nuestras tasaciones son realizadas por profesionales certificados, utilizando metodologías precisas para asegurar valoraciones justas y confiables.',
+			'text'  => 'Servicios de arrendamiento, intermediación en compra-venta y valuación de bienes inmuebles urbanos y rurales, incluyendo casas, apartamentos, chacras, campos, oficinas y locales comerciales. Brindamos asesoramiento profesional y una gestión personalizada en cada operación.',
+			'long'  => "Brindamos servicios profesionales de arrendamiento, compra-venta y tasaciones de bienes inmuebles, abarcando propiedades urbanas y rurales: casas, apartamentos, chacras, campos, oficinas y locales comerciales.\n\nCada operación es abordada con una gestión personalizada, asesoramiento especializado y conocimiento del mercado, acompañando al cliente en las distintas etapas del proceso, desde la evaluación inicial hasta su concreción.\n\nNuestro trabajo se desarrolla con criterios técnicos, responsabilidad y conocimiento de la normativa vigente, procurando soluciones acordes a los objetivos y necesidades de cada cliente.\n\nEn materia de tasaciones, realizamos valoraciones profesionales mediante metodologías reconocidas, atendiendo a las características de cada inmueble y a las condiciones del mercado, para determinar valores fundamentados y confiables.",
 		),
 		2 => array(
 			'icon'  => 'check',
-			'title' => 'Valuaciones',
-			'long_title' => '',
-			'text'  => 'De todo tipo de bienes, con valoraciones precisas y confiables. Y realizadas en colaboración con profesionales de las áreas correspondientes.',
-			'long'  => 'Ofrecemos un servicio de valuación profesional de bienes de todo tipo, con valoraciones precisas y avaladas, garantizadas por nuestra sólida formación en avalúos y catastro multipropósito a nivel internacional. Nos mantenemos en constante actualización, aplicando las metodologías más adecuadas para asegurar que cada valoración sea objetiva, justa y acorde a las normativas vigentes, lo que permite a nuestros clientes tomar decisiones informadas y confiables.',
+			'title' => 'Valuaciones de todo tipo de bienes',
+			'long_title' => 'Valuaciones',
+			'text'  => 'Realizamos valuaciones de bienes muebles e inmuebles, aplicando criterios técnicos y metodologías adecuadas a las características de cada bien. Cuando la naturaleza de la valuación lo requiere, trabajamos en colaboración con profesionales especializados en las distintas áreas, procurando resultados fundamentados y confiables.',
+			'long'  => "Ofrecemos servicios profesionales de valuación de bienes muebles e inmuebles, aplicando criterios técnicos y metodologías específicas según la naturaleza y características de cada bien.\n\nNuestra formación especializada en avalúos y catastro multipropósito, con alcance internacional, constituye un respaldo fundamental para el desarrollo de esta actividad.\n\nNos mantenemos en permanente actualización, aplicando metodologías y criterios de valoración acordes con las normativas vigentes y las particularidades del mercado.\n\nCada trabajo se desarrolla con rigor técnico, objetividad y responsabilidad profesional, documentando sus resultados mediante el correspondiente informe de tasación, como fundamento para la toma de decisiones.",
 		),
 		3 => array(
 			'icon'  => 'martillo',
 			'title' => 'Remates',
 			'long_title' => '',
-			'text'  => 'Remates de Bienes Inmuebles como también de Bienes Muebles: mobiliario, antigüedades, automotores, maquinaria, materiales de construcción y mercadería en general.',
-			'long'  => 'Nos especializamos en la comercialización de activos a través de subastas, ofreciendo remates de bienes muebles e inmuebles. Contamos con el título de Perito Rematador y somos miembros de la Asociación de Peritos del Uruguay, lo que nos permite acceder a formación continua en temas vinculados al ámbito judicial. Esto garantiza que, aunque nuestra actividad diaria no esté vinculada a procesos judiciales, contamos con un conocimiento actualizado y profesional que respalda nuestra gestión. Nos comprometemos a brindar una atención eficiente y personalizada en cada subasta, asegurando el mejor resultado para todas las partes involucradas.',
+			'text'  => "Realizamos remates de bienes inmuebles y bienes muebles, incluyendo mobiliario, antigüedades, automotores, maquinaria, materiales de construcción y mercadería en general, tanto por cuenta de particulares como en el ámbito judicial y extrajudicial.\n\nIntegramos el Registro Nacional de Rematadores, que nos habilita para actuar en remates judiciales y oficiales.\n\nOfrecemos una gestión profesional de cada subasta, adaptada a las características de los bienes y a las necesidades de nuestros clientes.",
+			'long'  => "Nos especializamos en la comercialización de bienes mediante subastas, tanto de bienes muebles como inmuebles, ofreciendo una gestión profesional en cada etapa del proceso.\n\nContamos con título de Perito Rematador y somos miembros de la Asociación de Peritos del Uruguay, lo que nos permite mantener una formación continua y una actualización permanente en materia de remates, procedimientos y normativa vinculada al ámbito judicial.\n\nNuestra preparación técnica y experiencia profesional respaldan una gestión responsable, transparente y eficiente, adaptada a las características de cada remate y a los objetivos de nuestros clientes.\n\nTrabajamos con compromiso y atención personalizada, procurando desarrollar cada operación con las mayores garantías de seriedad y transparencia para todas las partes involucradas.",
 		),
-		4 => array(
-			'icon'  => 'campo',
-			'title' => 'Servicios rurales',
-			'long_title' => '',
-			// Armado con lo que la empresa ya dice de sí misma (arrendamientos y avalúos rurales, SNIG).
-			'text'  => 'Arrendamientos y avalúos rurales, y operaciones de movimiento de ganado dentro del Sistema Nacional de Información Ganadera (SNIG).',
-			'long'  => 'Gestionamos arrendamientos rurales y realizamos avalúos rurales. Además, nos especializamos en la operación de movimiento de ganado dentro del Sistema Nacional de Información Ganadera (SNIG), ofreciendo a nuestros clientes un servicio integral de alta calidad.',
-		),
+		4 => array( 'icon' => 'campo', 'title' => '', 'long_title' => '', 'text' => '', 'long' => '' ),
 		5 => array( 'icon' => 'balanza', 'title' => '', 'long_title' => '', 'text' => '', 'long' => '' ),
 		6 => array( 'icon' => 'documento', 'title' => '', 'long_title' => '', 'text' => '', 'long' => '' ),
 	);
@@ -153,13 +164,14 @@ function su_default_services() {
 
 /** Asociaciones de las que son miembros (el logo se sube desde el Personalizador). */
 function su_default_associations() {
+	// Logos institucionales tal cual (assets/img); se pueden reemplazar en el Personalizador por versiones en alta resolución.
 	return array(
-		1 => array( 'name' => 'ANRTCI', 'full' => 'Asociación Nacional de Rematadores, Tasadores y Corredores Inmobiliarios' ),
-		2 => array( 'name' => 'UPAV', 'full' => 'Unión Panamericana de Asociaciones de Valuación' ),
-		3 => array( 'name' => 'A.U.PE.', 'full' => 'Asociación Uruguaya de Peritos' ),
-		4 => array( 'name' => 'ADIU', 'full' => 'Asociación de Agentes Inmobiliarios del Uruguay' ),
-		5 => array( 'name' => '', 'full' => '' ),
-		6 => array( 'name' => '', 'full' => '' ),
+		1 => array( 'name' => 'ANRTCI', 'full' => 'Asociación Nacional de Rematadores, Tasadores y Corredores Inmobiliarios', 'file' => 'assoc-anrtci.png' ),
+		2 => array( 'name' => 'UPAV', 'full' => 'Unión Panamericana de Asociaciones de Valuación', 'file' => 'assoc-upav.png' ),
+		3 => array( 'name' => 'A.U.PE.', 'full' => 'Asociación Uruguaya de Peritos', 'file' => 'assoc-aupe.png' ),
+		4 => array( 'name' => '', 'full' => '', 'file' => '' ),
+		5 => array( 'name' => '', 'full' => '', 'file' => '' ),
+		6 => array( 'name' => '', 'full' => '', 'file' => '' ),
 	);
 }
 

@@ -13,8 +13,8 @@ function su_gestion_defaults() {
 	return array(
 		'phone'            => '099 069 369',
 		'whatsapp'         => '59899069369',
-		'email'            => '',
-		'form_email'       => '',
+		'email'            => 'infosaraviaubilla@gmail.com',
+		'form_email'       => 'infosaraviaubilla@gmail.com',
 		'address'          => '',
 		'hours'            => '',
 		'instagram'        => '',

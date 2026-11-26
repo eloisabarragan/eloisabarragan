@@ -22,7 +22,7 @@ add_filter( 'post_type_archive_title', function ( $title, $post_type ) {
 		return __( 'Inmobiliaria', 'saraviaubilla-gestion' );
 	}
 	if ( 'remate' === $post_type ) {
-		return __( 'Próximo remate', 'saraviaubilla-gestion' );
+		return __( 'Próximos remates', 'saraviaubilla-gestion' );
 	}
 	return $title;
 }, 10, 2 );
@@ -335,7 +335,7 @@ add_action( 'wp_head', function () {
 		}
 		$graph[] = su_seo_breadcrumbs( array(
 			array( get_bloginfo( 'name' ), home_url( '/' ) ),
-			array( __( 'Próximo remate', 'saraviaubilla-gestion' ), get_post_type_archive_link( 'remate' ) ),
+			array( __( 'Próximos remates', 'saraviaubilla-gestion' ), get_post_type_archive_link( 'remate' ) ),
 			array( get_the_title( $id ), get_permalink( $id ) ),
 		) );
 	}

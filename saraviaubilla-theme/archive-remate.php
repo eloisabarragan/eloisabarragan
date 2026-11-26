@@ -1,6 +1,6 @@
 <?php
 /**
- * Próximo remate: próximos (con fecha y a confirmar), historial de realizados
+ * Próximos remates: próximos (con fecha y a confirmar), historial de realizados
  * y preguntas frecuentes. Textos editables en Ajustes → Saravia Ubilla.
  */
 
@@ -15,22 +15,23 @@ $su_faq       = su_remates_faq();
 $su_n_prox    = $su_proximos->post_count + $su_sinfecha->post_count;
 $su_wa_avisar = su_whatsapp_url( __( 'Hola, quiero que me avisen cuando haya un próximo remate.', 'saraviaubilla' ) );
 
-$su_nav = array( array( __( 'Próximos', 'saraviaubilla' ), '#proximos', $su_n_prox ? (string) $su_n_prox : '' ) );
-if ( $su_hist->found_posts ) {
-	$su_nav[] = array( __( 'Historial', 'saraviaubilla' ), '#realizados', (string) $su_hist->found_posts );
-}
+// Siempre las dos pestañas: Próximos · Historial.
+$su_nav = array(
+	array( __( 'Próximos', 'saraviaubilla' ), '#proximos', $su_n_prox ? (string) $su_n_prox : '' ),
+	array( __( 'Historial', 'saraviaubilla' ), '#realizados', $su_hist->found_posts ? (string) $su_hist->found_posts : '' ),
+);
 if ( $su_faq ) {
 	$su_nav[] = array( __( 'Cómo participar', 'saraviaubilla' ), '#participar' );
 }
 ?>
 <main id="contenido">
-	<?php su_page_hero( post_type_archive_title( '', false ), '', su_gestion_option( 'remates_intro' ), count( $su_nav ) > 1 ? $su_nav : array() ); ?>
+	<?php su_page_hero( post_type_archive_title( '', false ), '', su_gestion_option( 'remates_intro' ), $su_nav ); ?>
 
 	<section class="su-section su-section--tint su-section--tight" id="proximos" aria-labelledby="su-proximos-title">
 		<div class="su-wrap">
 			<?php if ( $su_n_prox ) : ?>
 				<?php if ( $su_proximos->have_posts() ) : ?>
-					<h2 class="su-subtitle su-subtitle--first" id="su-proximos-title"><?php esc_html_e( 'Próximos remates', 'saraviaubilla' ); ?></h2>
+					<h2 class="screen-reader-text" id="su-proximos-title"><?php esc_html_e( 'Próximos remates', 'saraviaubilla' ); ?></h2>
 					<?php
 					// El más cercano, destacado; el resto en grilla.
 					$su_first = true;
@@ -69,7 +70,7 @@ if ( $su_faq ) {
 					</div>
 				<?php endif; ?>
 			<?php else : ?>
-				<h2 class="su-subtitle su-subtitle--first" id="su-proximos-title"><?php esc_html_e( 'Próximos remates', 'saraviaubilla' ); ?></h2>
+				<h2 class="screen-reader-text" id="su-proximos-title"><?php esc_html_e( 'Próximos remates', 'saraviaubilla' ); ?></h2>
 				<div class="su-empty su-empty--remates">
 					<?php echo su_icon( 'martillo' ); // phpcs:ignore WordPress.Security.EscapeOutput ?>
 					<p class="su-empty__title"><?php echo esc_html( su_gestion_option( 'remates_empty' ) ); ?></p>
@@ -86,10 +87,12 @@ if ( $su_faq ) {
 		</div>
 	</section>
 
-	<?php if ( $su_hist->have_posts() ) : ?>
-		<section class="su-section su-section--tight" id="realizados" aria-labelledby="su-realizados-title">
-			<div class="su-wrap">
-				<h2 class="su-subtitle su-subtitle--first" id="su-realizados-title"><?php esc_html_e( 'Historial de remates', 'saraviaubilla' ); ?></h2>
+	<section class="su-section su-section--tight" id="realizados" aria-labelledby="su-realizados-title">
+		<div class="su-wrap">
+			<h2 class="su-subtitle su-subtitle--first" id="su-realizados-title"><?php esc_html_e( 'Historial de remates', 'saraviaubilla' ); ?></h2>
+			<?php if ( ! $su_hist->have_posts() ) : ?>
+				<p class="su-hist-empty"><?php esc_html_e( 'Todavía no hay remates realizados publicados.', 'saraviaubilla' ); ?></p>
+			<?php else : ?>
 				<div class="su-cards">
 					<?php
 					while ( $su_hist->have_posts() ) {
@@ -112,9 +115,9 @@ if ( $su_faq ) {
 					echo '<nav class="su-pagination" aria-label="' . esc_attr__( 'Páginas del historial', 'saraviaubilla' ) . '"><div class="nav-links">' . $su_links . '</div></nav>'; // phpcs:ignore WordPress.Security.EscapeOutput
 				}
 				?>
-			</div>
-		</section>
-	<?php endif; ?>
+			<?php endif; ?>
+		</div>
+	</section>
 
 	<?php if ( $su_faq ) : ?>
 		<section class="su-section su-section--tint su-section--tight" id="participar" aria-labelledby="su-faq-title">

@@ -14,7 +14,7 @@
 <?php wp_body_open(); ?>
 <a class="su-skip" href="#contenido"><?php esc_html_e( 'Ir al contenido', 'saraviaubilla' ); ?></a>
 
-<header class="su-header<?php echo is_front_page() ? ' su-header--over' : ''; ?>" data-su-header>
+<header class="su-header" data-su-header>
 	<div class="su-wrap su-header__inner">
 		<?php su_logo(); ?>
 

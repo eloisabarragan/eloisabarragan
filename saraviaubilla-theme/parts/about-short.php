@@ -15,7 +15,7 @@ $su_img    = (int) su_mod( 'about_image' );
 				<p class="su-intro__lead" data-su-reveal><?php echo wp_kses_post( su_mod( 'about_short_lead' ) ); ?></p>
 			<?php endif; ?>
 			<?php if ( su_mod( 'about_short_text' ) ) : ?>
-				<p class="su-intro__text" data-su-reveal><?php echo wp_kses_post( su_mod( 'about_short_text' ) ); ?></p>
+				<div class="su-intro__text su-justify" data-su-reveal><?php echo su_paragraphs( su_mod( 'about_short_text' ) ); // phpcs:ignore WordPress.Security.EscapeOutput ?></div>
 			<?php endif; ?>
 			<?php if ( $su_values ) : ?>
 				<ul class="su-intro__values" data-su-reveal>

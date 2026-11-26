@@ -18,6 +18,8 @@ if ( ! $su_assocs ) {
 				<li data-su-reveal title="<?php echo esc_attr( $su_assoc['full'] ); ?>">
 					<?php if ( $su_assoc['logo'] ) : ?>
 						<?php echo wp_get_attachment_image( $su_assoc['logo'], 'medium', false, array( 'alt' => $su_assoc['short'] . ( $su_assoc['full'] ? ' — ' . $su_assoc['full'] : '' ), 'loading' => 'lazy' ) ); ?>
+					<?php elseif ( $su_assoc['src'] ) : ?>
+						<img class="su-assoc__logo" src="<?php echo esc_url( $su_assoc['src'] ); ?>" alt="<?php echo esc_attr( $su_assoc['short'] . ( $su_assoc['full'] ? ' — ' . $su_assoc['full'] : '' ) ); ?>" loading="lazy" decoding="async">
 					<?php else : ?>
 						<span class="su-assoc__seal"><b><?php echo esc_html( $su_assoc['short'] ); ?></b><small><?php echo esc_html( $su_assoc['full'] ); ?></small></span>
 					<?php endif; ?>

@@ -346,10 +346,13 @@ function su_associations() {
 			continue;
 		}
 		$parts = array_map( 'trim', explode( '—', $name, 2 ) );
+		// Sin logo subido: el logo institucional incluido en el tema (nunca se reemplaza por texto si existe).
+		$file  = ! empty( $assoc['file'] ) && $parts[0] === $assoc['name'] ? $assoc['file'] : '';
 		$out[] = array(
 			'short' => $parts[0],
 			'full'  => isset( $parts[1] ) ? $parts[1] : '',
 			'logo'  => $logo,
+			'src'   => $file && file_exists( get_template_directory() . '/assets/img/' . $file ) ? get_template_directory_uri() . '/assets/img/' . $file : '',
 		);
 	}
 	return $out;

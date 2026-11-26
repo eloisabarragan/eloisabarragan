@@ -1,6 +1,7 @@
 <?php
 /**
- * Inicio: accesos rápidos (Propiedades, Remates, Tasaciones, Inmobiliaria).
+ * Inicio: accesos rápidos de los tres rubros (Inmobiliaria —con las propiedades—, Remates y Tasaciones).
+ * Un cuarto acceso opcional (a Servicios) se puede cargar en el Personalizador.
  * Títulos y textos en Apariencia → Personalizar; Propiedades y Remates suman
  * datos reales (cantidad publicada y fecha del próximo remate).
  */

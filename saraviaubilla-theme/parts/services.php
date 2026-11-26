@@ -20,7 +20,7 @@ $su_page     = get_page_by_path( 'servicios' );
 					<span class="su-service__icon"><?php echo su_icon( $su_service['icon'] ); // phpcs:ignore WordPress.Security.EscapeOutput ?></span>
 					<?php $su_h = ! empty( $args['hide_head'] ) ? 'h2' : 'h3'; ?>
 					<<?php echo $su_h; // phpcs:ignore WordPress.Security.EscapeOutput ?> class="su-service__title"><?php echo esc_html( $su_long && $su_service['long_title'] ? $su_service['long_title'] : $su_service['title'] ); ?></<?php echo $su_h; // phpcs:ignore WordPress.Security.EscapeOutput ?>>
-					<div class="su-service__text"><?php echo su_paragraphs( $su_long && $su_service['long'] ? $su_service['long'] : $su_service['text'] ); // phpcs:ignore WordPress.Security.EscapeOutput ?></div>
+					<div class="su-service__text su-justify"><?php echo su_paragraphs( $su_long && $su_service['long'] ? $su_service['long'] : $su_service['text'] ); // phpcs:ignore WordPress.Security.EscapeOutput ?></div>
 				</article>
 			<?php endforeach; ?>
 		</div>

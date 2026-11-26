@@ -63,26 +63,16 @@ function su_icon( $name, $class = '' ) {
  * @param string|null $tagline Bajada distinta a la del encabezado (la usa el pie).
  */
 function su_logo( $size = '', $tagline = null ) {
-	$tag   = null === $tagline ? su_mod( 'logo_tagline' ) : $tagline;
-	$dark  = false !== strpos( $size, 'su-logo--light' );
-	$light = (int) su_mod( 'logo_light' );
-	$word  = function () use ( $tag ) {
-		$out = '<span class="su-logo__word"><b>SARAVIA</b><span>UBILLA</span></span>';
-		if ( '' !== (string) $tag ) {
-			$out .= '<span class="su-logo__tag">' . esc_html( $tag ) . '</span>';
-		}
-		return $out;
-	};
-	$alt = $light ? wp_get_attachment_image( $light, 'full', false, array( 'class' => 'su-logo__img', 'alt' => get_bloginfo( 'name' ) ) ) : $word();
+	$tag = null === $tagline ? su_mod( 'logo_tagline' ) : $tagline;
 	echo '<a class="su-logo ' . esc_attr( $size ) . '" href="' . esc_url( home_url( '/' ) ) . '" rel="home">';
-	if ( ! has_custom_logo() ) {
-		echo $word(); // phpcs:ignore WordPress.Security.EscapeOutput
-	} elseif ( $dark ) {
-		echo $alt; // phpcs:ignore WordPress.Security.EscapeOutput
+	if ( has_custom_logo() ) {
+		// Siempre el logo original, tal cual (encabezado y pie).
+		echo wp_get_attachment_image( get_theme_mod( 'custom_logo' ), 'full', false, array( 'class' => 'su-logo__img', 'alt' => get_bloginfo( 'name' ) ) );
 	} else {
-		// Encabezado: el logo original y, oculta, la versión clara (se muestra sobre la portada).
-		echo '<span class="su-logo__normal">' . wp_get_attachment_image( get_theme_mod( 'custom_logo' ), 'full', false, array( 'class' => 'su-logo__img', 'alt' => get_bloginfo( 'name' ) ) ) . '</span>';
-		echo '<span class="su-logo__alt" aria-hidden="true">' . $alt . '</span>'; // phpcs:ignore WordPress.Security.EscapeOutput
+		echo '<span class="su-logo__word"><b>SARAVIA</b><span>UBILLA</span></span>';
+		if ( '' !== (string) $tag ) {
+			echo '<span class="su-logo__tag">' . esc_html( $tag ) . '</span>';
+		}
 	}
 	echo '</a>';
 }

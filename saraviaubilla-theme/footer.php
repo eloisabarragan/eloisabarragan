@@ -7,7 +7,7 @@
 	<div class="su-wrap">
 		<div class="su-footer__grid">
 			<div class="su-footer__brand">
-				<?php su_logo( 'su-logo--light', su_mod( 'footer_tagline' ) ); ?>
+				<?php su_logo( 'su-logo--light su-logo--card', su_mod( 'logo_tagline' ) ); ?>
 				<?php if ( su_mod( 'footer_text' ) ) : ?>
 					<p><?php echo wp_kses_post( su_mod( 'footer_text' ) ); ?></p>
 				<?php endif; ?>

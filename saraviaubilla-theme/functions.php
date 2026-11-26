@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'SU_VERSION', '1.3.1' );
+define( 'SU_VERSION', '1.4.0' );
 
 require get_template_directory() . '/inc/defaults.php';
 require get_template_directory() . '/inc/customizer.php';
@@ -185,11 +185,11 @@ function su_section_url( $key ) {
  * Menú de respaldo si todavía no se armó uno en Apariencia → Menús
  * ---------------------------------------------------------------------- */
 function su_menu_fallback( $args = array() ) {
-	// Orden pedido: Inicio · Remates · Propiedades · Tasaciones · Nosotros (Contacto va en el botón "Consultar").
+	// Orden pedido: Inicio · Remates · Inmobiliaria · Tasaciones · Nosotros (Contacto va en el botón "Consultar").
 	$items = array(
 		array( home_url( '/' ), __( 'Inicio', 'saraviaubilla' ), is_front_page() ),
 		array( su_section_url( 'remates' ), __( 'Remates', 'saraviaubilla' ), is_post_type_archive( 'remate' ) || is_singular( 'remate' ) ),
-		array( su_section_url( 'propiedades' ), __( 'Propiedades', 'saraviaubilla' ), is_post_type_archive( 'propiedad' ) || is_singular( 'propiedad' ) || is_tax( array( 'operacion', 'tipo_propiedad', 'zona' ) ) ),
+		array( su_section_url( 'propiedades' ), __( 'Inmobiliaria', 'saraviaubilla' ), is_post_type_archive( 'propiedad' ) || is_singular( 'propiedad' ) || is_tax( array( 'operacion', 'tipo_propiedad', 'zona' ) ) ),
 		array( su_section_url( 'tasaciones' ), __( 'Tasaciones', 'saraviaubilla' ), false ),
 		array( su_section_url( 'nosotros' ), __( 'Nosotros', 'saraviaubilla' ), is_page( 'nosotros' ) ),
 	);

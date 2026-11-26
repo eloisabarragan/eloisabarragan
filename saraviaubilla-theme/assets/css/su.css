@@ -215,8 +215,7 @@ p { margin: 0 0 1em; }
 		var(--marino);
 	color: #fff;
 	padding: clamp(64px, 10vw, 140px) 0 clamp(120px, 14vw, 180px);
-	margin-top: calc(var(--header-h) * -1);
-	padding-top: calc(var(--header-h) + clamp(56px, 9vw, 120px));
+	padding-top: clamp(56px, 9vw, 120px);
 }
 .su-header--over { background: transparent; backdrop-filter: none; -webkit-backdrop-filter: none; }
 .su-header--over .su-menu a { color: rgba(255, 255, 255, .82); }
@@ -1090,8 +1089,19 @@ p { margin: 0 0 1em; }
 .su-footer .su-logo__tag { letter-spacing: .16em; }
 .su-footer__menu a { display: inline-block; padding: 2px 0; }
 
-/* Logo subido: sobre la portada (encabezado transparente) se muestra la versión clara */
-.su-logo__normal, .su-logo__alt { display: contents; }
-.su-logo__alt { display: none; }
-.su-header--over:not(.is-scrolled):not(.is-menu) .su-logo__normal { display: none; }
-.su-header--over:not(.is-scrolled):not(.is-menu) .su-logo__alt { display: contents; }
+/* v1.4: logo original siempre visible; en el pie, sobre una tarjeta blanca */
+.su-header { background: #fff; }
+.su-logo--card:has(.su-logo__img) { background: #fff; border-radius: 14px; padding: 12px 18px; display: inline-flex; }
+.su-logo--card .su-logo__img { max-height: 64px; }
+
+/* Asociaciones: logos institucionales sin modificar */
+.su-assoc__list img, .su-assoc__list .su-assoc__logo { filter: none; opacity: 1; max-height: 72px; width: auto; }
+
+/* Textos largos justificados */
+.su-justify p, .su-service__text p, .su-about__text p, .su-prose p, .su-intro__text p, .su-mv p { text-align: justify; hyphens: auto; -webkit-hyphens: auto; }
+.su-intro__text p { margin: 0 0 1em; }
+.su-hist-empty { color: var(--gris, #5b6875); margin: 8px 0 0; }
+.su-intro__text { margin-top: 18px; }
+/* Tres accesos: en celular, uno por fila; en tablet, tres columnas */
+@media (max-width: 599px) { .su-access__grid--3 { grid-template-columns: minmax(0, 1fr); } }
+@media (min-width: 600px) { .su-access__grid--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); } }

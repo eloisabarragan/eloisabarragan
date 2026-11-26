@@ -1,4 +1,4 @@
-# Saravia Ubilla — Instalación y manual del panel (v1.3)
+# Saravia Ubilla — Instalación y manual del panel (tema 1.4 · plugin 1.2.2)
 
 ## A. Instalación nueva
 1. **Plugins → Añadir nuevo → Subir plugin** → `saraviaubilla-gestion.zip` → **Activar**.
@@ -74,17 +74,17 @@ También se puede hacer todo desde la propiedad, con "+ Agregar nuevo…".
   - **foto de fondo** (recomendado: horizontal, de 1920 px o más);
   - título, subtítulo y frase;
   - los dos botones.
-- **Accesos, propiedades y remates:** título y texto de los 4 accesos rápidos, título de "Propiedades destacadas" y cuántas mostrar.
-- **Servicios:** los 4 servicios. Para ocultar uno, se deja vacío su título.
+- **Accesos, propiedades y remates:** título y texto de los 3 accesos rápidos (Inmobiliaria, Remates, Tasaciones; el 4.º es opcional), título de "Propiedades destacadas" y cuántas mostrar.
+- **Servicios:** Inmobiliaria, Valuaciones y Remates (texto corto y largo). Para ocultar uno, se deja vacío su título.
 - **Nosotros:**
   - el texto completo, que va en la página Nosotros;
   - la versión corta de la portada (frase, párrafo y valores, uno por línea);
   - la trayectoria destacada (una por línea: `Dato | Detalle`);
-  - misión, visión y logos de asociaciones.
+  - misión, visión y logos de asociaciones (el tema ya trae los de ANRTCI, UPAV y A.U.PE.; si subís una versión en alta resolución, reemplaza a la incluida).
 - **Tasaciones:** título, texto, botón y foto opcional. El botón abre el formulario con "Valuaciones" elegido.
 - **Contacto y redes:** datos de contacto y la bajada del logo en el pie.
 
-**Menú:** si no se arma ninguno en Apariencia → Menús, se usa el predeterminado: Inicio · Remates · Propiedades · Tasaciones · Nosotros, más el botón Consultar.
+**Menú:** si no se arma ninguno en Apariencia → Menús, se usa el predeterminado: Inicio · Remates · Inmobiliaria · Tasaciones · Nosotros, más el botón Consultar.
 
 ## F. Remates
 **Remates → Agregar remate:**
@@ -99,3 +99,9 @@ También se puede hacer todo desde la propiedad, con "+ Agregar nuevo…".
 - Otra documentación, enlace para ofertar online, mapa opcional y comentario para el historial.
 
 **Consultas recibidas:** menú **Consultas**, con email, teléfono, interés y página de origen. Se pueden marcar como "Respondida".
+
+## G. Fotos de las propiedades
+1. **Propiedades → Agregar propiedad** (o pasá el mouse sobre una existente → **Editar**).
+2. Columna derecha → **Foto principal** → *Establecer imagen destacada* → subir la foto.
+3. Debajo de la descripción → **Galería** → botón **"Elegir / ordenar fotos"**: seleccioná varias a la vez (Ctrl/Cmd) y arrastrá para ordenarlas.
+4. **Publicar** (o **Actualizar**). Desde el celular funciona igual, pero es más cómodo en la computadora.
