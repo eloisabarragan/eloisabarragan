@@ -37,6 +37,8 @@ if (!fs.existsSync(dataFile)) {
     envioGratisDesde: 1000,
     cuotaClub: 290,
     horariosDeEntrega: ['Mañana (9 a 12 h)', 'Mediodía (12 a 15 h)', 'Tarde (15 a 19 h)'],
+    planillaProductos: '',
+    planillaAjustes: '',
     productos,
   };
   fs.writeFileSync(dataFile, JSON.stringify(datos, null, 2) + '\n');
@@ -56,6 +58,14 @@ fs.cpSync(pub, out, {
   filter: (src) => !/^(admin\.(html|js|css)|pedido\.(html|js))$/.test(path.basename(src)),
 });
 
+function sheetUrl(value, field) {
+  const url = String(value || '').trim();
+  if (url && !/^https:\/\/docs\.google\.com\/spreadsheets\/.+output=csv/.test(url)) {
+    throw new Error(`${field} tiene que ser el enlace CSV de "Publicar en la web" de Google Sheets.`);
+  }
+  return url;
+}
+
 const config = {
   static: true,
   store: { name: 'Huerta Orgánica', phone: datos.local.telefono, whatsapp: String(datos.local.whatsapp).replace(/\D/g, ''), instagram: String(datos.local.instagram || '').replace(/^@/, ''), address: datos.local.direccion || '', hours: datos.local.horarios },
@@ -65,6 +75,9 @@ const config = {
   clubPrice: datos.cuotaClub,
   pickup: !!datos.local.retiroEnLocal,
   slots: datos.horariosDeEntrega || [],
+  // Direcciones CSV de la planilla publicada (pestañas Productos y Ajustes). Vacías = se usan los datos de este archivo.
+  sheetProducts: sheetUrl(datos.planillaProductos, 'planillaProductos'),
+  sheetSettings: sheetUrl(datos.planillaAjustes, 'planillaAjustes'),
   maxScheduleDays: 60,
   mpEnabled: false,
   heroImage: fs.existsSync(path.join(pub, 'img', 'hero.jpg')) ? '/img/hero.jpg' : null,
@@ -77,25 +90,12 @@ fs.mkdirSync(path.join(out, 'datos'));
 fs.writeFileSync(path.join(out, 'datos', 'config.json'), JSON.stringify(config));
 fs.writeFileSync(path.join(out, 'datos', 'productos.json'), JSON.stringify(productos));
 
-// En vez de llamar al servidor, la tienda lee los archivos de datos.
+// En vez de llamar al servidor, la tienda lee la planilla de Google Sheets (ver scripts/static-api.js).
 const commonPath = path.join(out, 'common.js');
 const common = fs.readFileSync(commonPath, 'utf8');
-const staticApi = `export async function api(path) {
-  const file = { '/api/config': '/datos/config.json', '/api/products': '/datos/productos.json' }[path];
-  if (!file) throw new Error('No disponible en esta versión.');
-  let response;
-  try {
-    response = await fetch(file);
-  } catch {
-    throw new Error('No pudimos conectarnos. Revisá tu conexión y probá de nuevo.');
-  }
-  if (!response.ok) throw new Error('No pudimos cargar la tienda. Probá de nuevo.');
-  return response.json();
-}
-`;
-const replaced = common.replace(/export async function api\([\s\S]*?\n}\n/, staticApi);
-if (replaced === common) throw new Error('No se pudo adaptar common.js');
-fs.writeFileSync(commonPath, replaced);
+const withoutApi = common.replace(/export async function api\([\s\S]*?\n}\n/, '');
+if (withoutApi === common) throw new Error('No se pudo adaptar common.js');
+fs.writeFileSync(commonPath, withoutApi + '\n' + fs.readFileSync(path.join(root, 'scripts', 'static-api.js'), 'utf8'));
 
 // La página de privacidad no tiene que prometer lo que esta versión no hace.
 const privacyPath = path.join(out, 'privacidad.html');
@@ -112,7 +112,7 @@ fs.writeFileSync(
   X-Content-Type-Options: nosniff
   X-Frame-Options: DENY
   Referrer-Policy: strict-origin-when-cross-origin
-  Content-Security-Policy: default-src 'self'; img-src 'self' data: https:; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; object-src 'none'; base-uri 'self'; frame-ancestors 'none'
+  Content-Security-Policy: default-src 'self'; img-src 'self' data: https:; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src 'self' https://docs.google.com https://*.googleusercontent.com; object-src 'none'; base-uri 'self'; frame-ancestors 'none'
 
 /datos/*
   Cache-Control: public, max-age=0, must-revalidate

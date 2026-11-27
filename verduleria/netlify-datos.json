@@ -16,6 +16,8 @@
     "Mediodía (12 a 15 h)",
     "Tarde (15 a 19 h)"
   ],
+  "planillaProductos": "",
+  "planillaAjustes": "",
   "productos": [
     {
       "id": 1,

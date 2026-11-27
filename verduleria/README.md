@@ -102,10 +102,11 @@ Genera la carpeta `netlify-sitio/`, que se arrastra a https://app.netlify.com/dr
 | Pago con tarjeta o Mercado Pago | En el momento (con credenciales) o por link | Por link enviado por WhatsApp |
 | Club Huerta | Envío gratis automático por teléfono | El cliente marca que es socio; se verifica a mano |
 | Programar pedidos (fecha y horario) | Sí, queda en el pedido y en el panel | Sí, viaja en el mensaje de WhatsApp |
-| Editar productos y precios | Desde el panel | En `netlify-datos.json`, y se vuelve a generar |
+| Editar productos y precios | Desde el panel | Desde una planilla de Google Sheets, sin volver a subir el sitio |
 
-Los datos del local, los precios y los productos de esta versión están en
-`netlify-datos.json`. Las fotos van en `public/img/productos/`. Después de cada cambio
+Los productos, precios y ajustes se manejan desde una planilla de Google Sheets del
+negocio: ver [`GUIA-DE-LA-PLANILLA.md`](GUIA-DE-LA-PLANILLA.md). `netlify-datos.json` guarda los
+enlaces a esa planilla y una copia de respaldo de los datos. Las fotos van en `public/img/productos/`. Después de cada cambio
 hay que volver a correr el comando y subir la carpeta de nuevo.
 
 ## Pruebas
