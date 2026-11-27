@@ -25,8 +25,9 @@ if (!fs.existsSync(dataFile)) {
   fs.rmSync(process.env.DATA_DIR, { recursive: true, force: true });
   const datos = {
     local: {
-      telefono: '099 123 456',
-      whatsapp: '59899123456',
+      telefono: '098 681 581',
+      whatsapp: '59898681581',
+      instagram: 'huerta_organica_envios',
       horarios: 'Lunes a sábado de 8 a 20 h',
       retiroEnLocal: false,
       direccion: '',
@@ -57,7 +58,7 @@ fs.cpSync(pub, out, {
 
 const config = {
   static: true,
-  store: { name: 'Huerta Orgánica', phone: datos.local.telefono, whatsapp: String(datos.local.whatsapp).replace(/\D/g, ''), address: datos.local.direccion || '', hours: datos.local.horarios },
+  store: { name: 'Huerta Orgánica', phone: datos.local.telefono, whatsapp: String(datos.local.whatsapp).replace(/\D/g, ''), instagram: String(datos.local.instagram || '').replace(/^@/, ''), address: datos.local.direccion || '', hours: datos.local.horarios },
   currency: datos.moneda,
   shippingCost: datos.costoEnvio,
   freeShippingFrom: datos.envioGratisDesde,

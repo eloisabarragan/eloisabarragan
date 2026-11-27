@@ -155,10 +155,12 @@ test('Club Huerta: el socio con el pago registrado no paga envío', async () => 
 });
 
 test('los ajustes del panel cambian la tienda', async () => {
-  const settings = { phone: '2900 0000', whatsapp: '598 91 000 000', address: '', pickup: false, hours: 'Todos los días', slots: 'De 9 a 13\n\n  De 14 a 18  ', shippingCost: 120, freeShippingFrom: 2000, clubPrice: 350 };
+  const settings = { phone: '2900 0000', whatsapp: '598 91 000 000', instagram: '@mi.huerta', address: '', pickup: false, hours: 'Todos los días', slots: 'De 9 a 13\n\n  De 14 a 18  ', shippingCost: 120, freeShippingFrom: 2000, clubPrice: 350 };
   assert.equal((await call('PUT', '/api/admin/settings', settings)).status, 200);
   const { data: config } = await call('GET', '/api/config');
   assert.equal(config.store.whatsapp, '59891000000');
+  assert.equal(config.store.instagram, 'mi.huerta');
+  assert.equal((await call('PUT', '/api/admin/settings', { ...settings, instagram: 'https://instagram.com/x' })).status, 400);
   assert.equal(config.shippingCost, 120);
   assert.equal(config.clubPrice, 350);
   assert.deepEqual(config.slots, ['De 9 a 13', 'De 14 a 18']);

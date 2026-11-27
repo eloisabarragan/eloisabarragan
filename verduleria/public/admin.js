@@ -284,6 +284,7 @@ async function saveSettings(event) {
       body: {
         phone: f.phone.value,
         whatsapp: f.whatsapp.value,
+        instagram: f.instagram.value,
         address: f.address.value,
         pickup: f.pickup.checked,
         hours: f.hours.value,

@@ -537,6 +537,11 @@ function fillStoreInfo() {
   }
   $('store-phone').textContent = `Tel. ${store.phone}`;
   $('store-whatsapp').href = `https://wa.me/${store.whatsapp}`;
+  if (store.instagram) {
+    $('store-instagram').href = `https://www.instagram.com/${store.instagram}`;
+    $('store-instagram').lastElementChild.textContent = `@${store.instagram}`;
+    $('store-instagram-line').hidden = false;
+  }
   $('wholesale-link').href = `https://wa.me/${store.whatsapp}?text=${encodeURIComponent('Hola, estoy interesado en planes para empresas, residenciales o compras por mayor.')}`;
   $('wa-float').href = `https://wa.me/${store.whatsapp}?text=${encodeURIComponent(`¡Hola ${store.name}! Tengo una consulta.`)}`;
   $('pickup-hint').textContent = `${store.address}. Sin costo.`;

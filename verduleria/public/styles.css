@@ -784,3 +784,5 @@ textarea { resize: vertical; }
 .legal .panel h2 { margin: 26px 0 8px; font-size: 1.45rem; }
 .legal .panel p:not(.eyebrow) { color: var(--gris); max-width: 46em; }
 .site-footer a { text-underline-offset: 3px; }
+.insta { display: inline-flex; align-items: center; gap: 8px; }
+.insta svg { width: 20px; height: 20px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.600; }

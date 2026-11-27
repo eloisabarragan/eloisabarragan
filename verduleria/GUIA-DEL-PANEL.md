@@ -69,7 +69,7 @@ Desde acá se cambia, sin tocar nada técnico:
 - Si algún día tienen un local: tildá "Tenemos un local donde se pueden retirar pedidos" y
   escribí la dirección. Recién ahí la web ofrece retirar en el local.
 - El número de WhatsApp que recibe los pedidos (con código de país y solo números:
-  `59899123456`).
+  `59898681581`).
 - Los horarios de entrega que puede elegir el cliente al programar un pedido (una franja
   por línea, por ejemplo "Mañana (9 a 12 h)").
 - El costo de envío y el monto desde el que el envío es gratis.

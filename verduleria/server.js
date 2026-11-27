@@ -17,8 +17,9 @@ const CURRENCY = env.CURRENCY || 'UYU';
 // Datos del negocio. Los valores del archivo .env son el punto de partida;
 // lo que se guarda desde el panel (pestaña Ajustes) tiene prioridad.
 const SETTING_DEFAULTS = {
-  phone: env.STORE_PHONE || '099 123 456',
-  whatsapp: env.STORE_WHATSAPP || '59899123456',
+  phone: env.STORE_PHONE || '098 681 581',
+  whatsapp: env.STORE_WHATSAPP || '59898681581',
+  instagram: env.STORE_INSTAGRAM || 'huerta_organica_envios', // usuario, sin @
   address: env.STORE_ADDRESS || 'Av. Ejemplo 1234, Montevideo',
   hours: env.STORE_HOURS || 'Lunes a sábado de 8 a 20 h',
   // Franjas horarias para pedidos programados, una por línea.
@@ -140,7 +141,7 @@ function orderWithItems(order) {
 
 app.get('/api/config', (req, res) => {
   res.json({
-    store: { name: STORE_NAME, phone: settings.phone, whatsapp: settings.whatsapp, address: settings.address, hours: settings.hours },
+    store: { name: STORE_NAME, phone: settings.phone, whatsapp: settings.whatsapp, instagram: settings.instagram, address: settings.address, hours: settings.hours },
     currency: CURRENCY,
     shippingCost: settings.shippingCost,
     freeShippingFrom: settings.freeShippingFrom,
@@ -508,16 +509,18 @@ app.get('/api/admin/settings', requireAdmin, (req, res) => res.json(settings));
 app.put('/api/admin/settings', requireAdmin, (req, res) => {
   const b = req.body || {};
   const whatsapp = String(b.whatsapp ?? '').replace(/\D/g, '');
-  if (whatsapp.length < 8 || whatsapp.length > 15) fail(400, 'El WhatsApp va con código de país y solo números, por ejemplo 59899123456.');
+  if (whatsapp.length < 8 || whatsapp.length > 15) fail(400, 'El WhatsApp va con código de país y solo números, por ejemplo 59898681581.');
   const next = {
     phone: text(b.phone, { min: 6, max: 25, label: 'Teléfono' }),
     whatsapp,
+    instagram: text(b.instagram ?? '', { max: 30, label: 'Instagram' }).replace(/^@/, ''),
     pickup: !!b.pickup,
     // La dirección solo hace falta si hay un local donde retirar.
     address: text(b.address, { min: b.pickup ? 5 : 0, max: 160, label: 'Dirección del local' }),
     hours: text(b.hours, { min: 3, max: 120, label: 'Horarios' }),
     slots: slotList(text(b.slots, { max: 600, label: 'Horarios de entrega' })).slice(0, 12).join('\n'),
   };
+  if (!/^[\w.]*$/.test(next.instagram)) fail(400, 'Escribí solo el usuario de Instagram, por ejemplo huerta_organica_envios.');
   const limits = { shippingCost: 0, freeShippingFrom: 0, clubPrice: 1 };
   for (const key of NUMERIC_SETTINGS) {
     const n = Number(b[key]);
